@@ -84,3 +84,11 @@
 审查还促成了可执行验收修正：320px 使用显式 viewport；移动菜单覆盖 focus 与 no-JS；资源参数区分 `resourceTopic`、`knowledgeTopic`、`capability`；主题覆盖完整系统/显式矩阵；范围节点展示起止 span；RED 命令不再用 `&&` 隐藏后续失败；发布不使用 `git add .`，部署证据采用有限的 runtime/evidence 两段链。
 
 修正后完成新的文档阶段门禁：placeholder scan 与 `git diff --check` 无输出；`DESIGN.md` lint 保持 0 errors / 18 条已解释 warning；`npm run build` 完成 Astro check 0 errors / warnings / hints、Vitest 27/27 与 14 个静态页面；`CI=1 npm run test:e2e` 完成桌面和移动共 44/44。
+
+## 10. Foundation 导航与 About 实现（部分会话导出）
+
+本小节记录当前运行时可见的导航实现过程，仍不补造不可访问的原始聊天内容。实现先把浏览器断言改为五项中文主导航并运行 RED：旧站点仍显示 8 项英文和项目治理链接，新的 `主导航` 断言因此得到 0 个链接。
+
+随后完成最小实现：`BaseLayout` 用 `ui.ts` 的稳定术语生成五项中文导航；桌面单行，移动端使用原生 `details/summary`，无 JavaScript 也可键盘打开和关闭；`/about/` 作为 Roadmap、Changelog、Devlog、Methodology、Contributing、README 的项目资料总入口；`/careers/` 直接读取 `aaa-game-designer` catalog 画像，展示依据、边界、公开链接、复核日期与同一能力地图锚点；首页三行动改为地图、职业、资源。旧 `/project/*` 和 `/devlog/` URL 保持静态可达。
+
+调试过程中，首次移动断言错误地把收起的紧凑菜单当作桌面导航；另有 About 与首页卡片的链接可访问名称包含说明文案。修正后的测试显式区分桌面与紧凑菜单，并用 `aria-labelledby` 与 `aria-describedby` 分离标题和说明。完整门禁结果：Astro check 0 errors / warnings / hints、Vitest 44/44、fresh build 25 pages、定向 E2E 25 passed / 1 skipped、完整 E2E 53 passed / 1 skipped。Playwright 截图检查确认桌面导航单行，320px 展开原生菜单后 HTML/body 都为 320px 宽，无横向溢出；临时 preview 已停止。

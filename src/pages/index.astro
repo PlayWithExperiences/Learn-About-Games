@@ -16,17 +16,17 @@ await loadCatalog();
     </div>
 
     <div class="journey-index" aria-label="三个入口">
-      <a href={sitePath('map/')}>
-        <span>看地图</span>
-        <p>从九个领域认识游戏设计及相邻知识的整体轮廓。</p>
+      <a href={sitePath('map/')} aria-labelledby="home-map-action" aria-describedby="home-map-description">
+        <span id="home-map-action">看全貌</span>
+        <p id="home-map-description">从九个领域认识游戏设计及相邻知识的整体轮廓。</p>
       </a>
-      <a href={sitePath('map/#map-intro')}>
-        <span>找位置</span>
-        <p>用 AAA · Game Designer 参考画像理解一种生产语境；它基于可复核的岗位样本和行业说明，不作个人评分。</p>
+      <a href={sitePath('careers/')} aria-labelledby="home-careers-action" aria-describedby="home-careers-description">
+        <span id="home-careers-action">职业方向</span>
+        <p id="home-careers-description">用 AAA · Game Designer 参考画像理解一种生产语境。它不作个人评分，也不提供唯一答案。</p>
       </a>
-      <a href={sitePath('map/#playtesting')}>
-        <span>向前走</span>
-        <p>从一个能力进入无顺序的主题资源集合、具体资源与个人实践记录。</p>
+      <a href={sitePath('resources/')} aria-labelledby="home-resources-action" aria-describedby="home-resources-description">
+        <span id="home-resources-action">成长资源</span>
+        <p id="home-resources-description">按主题和能力寻找可以进一步阅读、观看或练习的具体内容。</p>
       </a>
     </div>
   </section>

@@ -63,7 +63,13 @@ test('keeps JavaScript-only controls visible but unavailable without JavaScript'
   await page.goto('./map/');
   await expect(page.getByRole('heading', { name: '用领域建立方向，用能力选择行动。' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Playtest', exact: true })).toBeVisible();
-  await expect(page.getByRole('navigation').getByRole('link', { name: 'Resources', exact: true })).toBeVisible();
+  const compactMenu = page.locator('details.site-nav__compact');
+  if (await compactMenu.isVisible()) {
+    await compactMenu.locator('summary').click();
+    await expect(compactMenu.getByRole('link', { name: '成长资源', exact: true })).toBeVisible();
+  } else {
+    await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '成长资源', exact: true })).toBeVisible();
+  }
   await expect(page.getByLabel('参考职业画像')).toBeDisabled();
   await expect(page.getByText('启用 JavaScript 后可以应用或清除参考职业画像。', { exact: true })).toBeVisible();
 

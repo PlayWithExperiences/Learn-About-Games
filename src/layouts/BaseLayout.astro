@@ -1,5 +1,6 @@
 ---
 import { sitePath } from '../lib/site-path';
+import { ui } from '../i18n/ui';
 import '../styles/global.css';
 
 interface Props {
@@ -13,14 +14,11 @@ const {
 } = Astro.props;
 
 const navigation = [
-  { label: 'Map', href: sitePath('map/') },
-  { label: 'Resources', href: sitePath('resources/') },
-  { label: 'Atlas', href: sitePath('atlas/') },
-  { label: 'Roadmap', href: sitePath('project/roadmap/') },
-  { label: 'Changelog', href: sitePath('project/changelog/') },
-  { label: 'Devlog', href: sitePath('devlog/') },
-  { label: 'Methodology', href: sitePath('project/methodology/') },
-  { label: 'Contributing', href: sitePath('project/contributing/') },
+  { label: ui['zh-CN'].expertiseMap, href: sitePath('map/') },
+  { label: ui['zh-CN'].careerLenses, href: sitePath('careers/') },
+  { label: ui['zh-CN'].learningResources, href: sitePath('resources/') },
+  { label: ui['zh-CN'].innovationAtlas, href: sitePath('atlas/') },
+  { label: ui['zh-CN'].about, href: sitePath('about/') },
 ];
 ---
 
@@ -40,13 +38,23 @@ const navigation = [
           <span>Learn About Games</span>
           <small>by PlayWithExperiences</small>
         </a>
-        <nav aria-label="共享导航">
+        <nav class="site-nav site-nav--desktop" aria-label="主导航">
           <ul>
             {navigation.map((item) => (
               <li><a href={item.href}>{item.label}</a></li>
             ))}
           </ul>
         </nav>
+        <details class="site-nav__compact">
+          <summary>主导航</summary>
+          <nav class="site-nav" aria-label="主导航">
+            <ul>
+              {navigation.map((item) => (
+                <li><a href={item.href}>{item.label}</a></li>
+              ))}
+            </ul>
+          </nav>
+        </details>
       </div>
     </header>
     <main id="main-content">

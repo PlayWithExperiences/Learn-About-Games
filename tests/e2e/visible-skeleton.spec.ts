@@ -1,13 +1,42 @@
 import { expect, test } from '@playwright/test';
 
+test('focuses desktop navigation on exactly five Chinese user tasks', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop navigation is intentionally replaced by the compact menu on mobile.');
+  await page.goto('./');
+
+  const navigation = page.getByRole('navigation', { name: '主导航' });
+  const links = navigation.getByRole('link');
+
+  await expect(links).toHaveCount(5);
+  await expect(links).toHaveText([
+    '能力地图',
+    '职业方向',
+    '成长资源',
+    '创新变迁',
+    '关于本项目',
+  ]);
+
+  for (const [name, href] of [
+    ['能力地图', '/Learn-About-Games/map/'],
+    ['职业方向', '/Learn-About-Games/careers/'],
+    ['成长资源', '/Learn-About-Games/resources/'],
+    ['创新变迁', '/Learn-About-Games/atlas/'],
+    ['关于本项目', '/Learn-About-Games/about/'],
+  ] as const) {
+    await expect(navigation.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+  }
+
+  for (const oldItem of ['Roadmap', 'Changelog', 'Devlog', 'Methodology', 'Contributing']) {
+    await expect(navigation.getByRole('link', { name: oldItem, exact: true })).toHaveCount(0);
+  }
+});
+
 test('publishes the visible map skeleton and repository-backed project pages', async ({ page }) => {
   await page.goto('./');
 
-  await expect(page.getByRole('link', { name: '看地图' })).toBeVisible();
-  await expect(page.getByText('找位置', { exact: true })).toBeVisible();
-  await expect(page.getByText('向前走', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: '看全貌' })).toBeVisible();
 
-  await page.getByRole('link', { name: '看地图' }).click();
+  await page.getByRole('link', { name: '看全貌' }).click();
 
   for (const heading of [
     '体验设计',
@@ -33,9 +62,57 @@ test('publishes the visible map skeleton and repository-backed project pages', a
     ['Contributing', '贡献指南'],
   ] as const;
 
+  await page.goto('./about/');
   for (const [navName, heading] of repositoryPages) {
     await page.getByRole('link', { name: navName, exact: true }).click();
     await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+    await page.goto('./about/');
+  }
+});
+
+test('uses About as the project-materials entry point while preserving legacy document routes', async ({ page }) => {
+  await page.goto('./about/');
+
+  await expect(page.getByRole('heading', { name: '关于本项目', exact: true })).toBeVisible();
+  for (const [name, href] of [
+    ['Roadmap', '/Learn-About-Games/project/roadmap/'],
+    ['Changelog', '/Learn-About-Games/project/changelog/'],
+    ['Devlog', '/Learn-About-Games/devlog/'],
+    ['Methodology', '/Learn-About-Games/project/methodology/'],
+    ['Contributing', '/Learn-About-Games/project/contributing/'],
+    ['README', '/Learn-About-Games/project/readme/'],
+  ] as const) {
+    await expect(page.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
+    await page.goto(href);
+    await expect(page.locator('main')).toBeVisible();
+    await page.goto('./about/');
+  }
+});
+
+test('makes the AAA Game Designer lens useful without pretending it is a score or separate map', async ({ page }) => {
+  await page.goto('./careers/');
+
+  await expect(page.getByRole('heading', { name: '职业方向', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'AAA · Game Designer', exact: true })).toBeVisible();
+  await expect(page.getByText(/不是行业标准或唯一答案/)).toBeVisible();
+  await expect(page.getByText('最近复核：2026-08-09', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Ubisoft Massive：Senior AI Game Designer', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: '查看能力地图', exact: true })).toHaveAttribute(
+    'href',
+    '/Learn-About-Games/map/',
+  );
+});
+
+test('sends the three home actions to map, careers, and resources', async ({ page }) => {
+  await page.goto('./');
+  const journeyIndex = page.getByLabel('三个入口');
+
+  for (const [name, href] of [
+    ['看全貌', '/Learn-About-Games/map/'],
+    ['职业方向', '/Learn-About-Games/careers/'],
+    ['成长资源', '/Learn-About-Games/resources/'],
+  ] as const) {
+    await expect(journeyIndex.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
 });
 
@@ -54,31 +131,35 @@ test('describes the shipped Playtest topic collection as available now', async (
   ).toBeVisible();
 });
 
-test('describes the available role lens as a reference rather than future work', async ({ page }) => {
+test('describes the careers entry as a reference rather than future work', async ({ page }) => {
   await page.goto('./');
 
   await expect(
     page.getByText(
-      '用 AAA · Game Designer 参考画像理解一种生产语境；它基于可复核的岗位样本和行业说明，不作个人评分。',
+      '用 AAA · Game Designer 参考画像理解一种生产语境。它不作个人评分，也不提供唯一答案。',
       { exact: true },
     ),
   ).toBeVisible();
 });
 
-test('keeps every shared navigation link in the 320px viewport', async ({ page }) => {
+test('uses a keyboard-accessible compact menu without horizontal overflow at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('./');
 
-  for (const navName of [
-    'Map',
-    'Roadmap',
-    'Changelog',
-    'Devlog',
-    'Methodology',
-    'Contributing',
-  ]) {
-    await expect(page.getByRole('navigation').getByRole('link', { name: navName, exact: true })).toBeInViewport();
-  }
+  const compactMenu = page.locator('details.site-nav__compact');
+  const summary = compactMenu.locator('summary');
+
+  await expect(compactMenu).not.toHaveAttribute('open', '');
+  await expect(summary).toHaveText('主导航');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(compactMenu).toHaveAttribute('open', '');
+  await expect(compactMenu.getByRole('link', { name: '关于本项目', exact: true })).toBeInViewport();
+  await page.keyboard.press('Enter');
+  await expect(compactMenu).not.toHaveAttribute('open', '');
+
+  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+  await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
 });
 
 test('maps repository-backed Markdown links to public site routes', async ({ page }) => {

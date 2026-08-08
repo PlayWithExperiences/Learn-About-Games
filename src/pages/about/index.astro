@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sitePath } from '../../lib/site-path';
+
+const materials = [
+  {
+    title: 'Roadmap',
+    description: '公开项目当前方向与优先级，不把计划写成固定承诺。',
+    href: sitePath('project/roadmap/'),
+  },
+  {
+    title: 'Changelog',
+    description: '已经发生的产品行为与发布记录。',
+    href: sitePath('project/changelog/'),
+  },
+  {
+    title: 'Devlog',
+    description: '项目的重要设计、实现与发布决策。',
+    href: sitePath('devlog/'),
+  },
+  {
+    title: 'Methodology',
+    description: '资料如何被组织、表述不确定性与保留依据。',
+    href: sitePath('project/methodology/'),
+  },
+  {
+    title: 'Contributing',
+    description: '如何为这张公开、可修订的参考地图贡献内容。',
+    href: sitePath('project/contributing/'),
+  },
+  {
+    title: 'README',
+    description: '仓库入口、项目背景与维护连续性资料。',
+    href: sitePath('project/readme/'),
+  },
+];
+---
+
+<BaseLayout title="关于本项目" description="Learn About Games 的项目资料、方法与贡献入口。">
+  <section class="about-page page-shell">
+    <header class="about-page__intro">
+      <p class="plain-label">关于本项目</p>
+      <h1>关于本项目</h1>
+      <p class="lede">Learn About Games 是一张公开、可修订的游戏知识参考地图。它帮助学习者与实践者提出更好的问题，不提供职业认证、资源评分或唯一道路。</p>
+    </header>
+
+    <nav class="about-materials" aria-label="项目资料">
+      <ul>
+        {materials.map((material) => {
+          const labelId = `about-material-${material.title.toLowerCase()}-label`;
+          const descriptionId = `about-material-${material.title.toLowerCase()}-description`;
+
+          return (
+          <li>
+            <a href={material.href} aria-labelledby={labelId} aria-describedby={descriptionId}>
+              <strong id={labelId}>{material.title}</strong>
+              <span id={descriptionId}>{material.description}</span>
+            </a>
+          </li>
+          );
+        })}
+      </ul>
+    </nav>
+  </section>
+</BaseLayout>

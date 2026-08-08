@@ -9,6 +9,11 @@ export const ui = {
     resources: '资源',
     atlas: '游戏创新图谱',
     roadmap: '路线图',
+    expertiseMap: '能力地图',
+    careerLenses: '职业方向',
+    learningResources: '成长资源',
+    innovationAtlas: '创新变迁',
+    about: '关于本项目',
   },
   en: {
     productName: 'Learn About Games',
@@ -18,5 +23,10 @@ export const ui = {
     resources: 'Resources',
     atlas: 'Game Innovation Atlas',
     roadmap: 'Roadmap',
+    expertiseMap: 'Expertise Map',
+    careerLenses: 'Career Lenses',
+    learningResources: 'Learning Resources',
+    innovationAtlas: 'Innovation Atlas',
+    about: 'About',
   },
 } as const;

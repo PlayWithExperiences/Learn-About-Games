@@ -2,7 +2,13 @@ import { expect, test } from '@playwright/test';
 
 test('reaches the evidence-backed Atlas seed through shared navigation', async ({ page }) => {
   await page.goto('./');
-  await page.getByRole('navigation').getByRole('link', { name: 'Atlas', exact: true }).click();
+  const compactMenu = page.locator('details.site-nav__compact');
+  if (await compactMenu.isVisible()) {
+    await compactMenu.locator('summary').click();
+    await compactMenu.getByRole('link', { name: '创新变迁', exact: true }).click();
+  } else {
+    await page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '创新变迁', exact: true }).click();
+  }
 
   await expect(page).toHaveURL(/\/Learn-About-Games\/atlas\/$/);
   await expect(page.getByRole('heading', { name: 'Game Innovation Atlas', exact: true })).toBeVisible();

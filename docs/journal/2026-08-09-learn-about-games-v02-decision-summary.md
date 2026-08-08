@@ -20,6 +20,8 @@ v0.2 开始前的 clean baseline 已实际运行：`npm run build` 完成 Astro 
 
 规格、`DESIGN.md` 与四份阶段计划已经写入工作树，尚未提交或发布。`DESIGN.md` lint 为 0 errors；18 条 orphaned-token warning 是 linter 无法从 Markdown 组件示例推导 token 使用，不是运行时错误。文档更新后的首次全量 E2E 有 4 项失败，均来自仍锁定旧 M0 summary/spec 路径和旧 README 精确文案的测试；对照真实页面确认根因后只更新测试契约，定向 18/18、随后全量 44/44。完成规格对抗修正后重新执行：`npm run build` 为 Astro check 0 errors / warnings / hints、Vitest 27/27、14 pages；`CI=1 npm run test:e2e` 为 44/44；placeholder scan 与 `git diff --check` 均无命中。
 
+本次 Foundation 导航切片已完成但尚未发布：顶层只保留能力地图、职业方向、成长资源、创新变迁与关于本项目五项用户任务；About 集中项目治理资料并保留旧路由；`/careers/` 直接复用 `AAA · Game Designer` catalog 画像、公开依据与复核日期，不复制角色知识树；首页三入口分别抵达地图、职业方向和资源。桌面导航单行，320px 改为原生 `details/summary` 紧凑菜单，JavaScript 不可用时仍可打开。行为测试先在旧导航上取得 RED，最终 `npm run build` 为 0 errors / warnings / hints、Vitest 44/44、25 个静态页面；导航定向桌面/移动 E2E 为 25 passed / 1 desktop-only skipped，完整 E2E 为 53 passed / 1 skipped。实测 320px HTML 与 body 均为 `clientWidth=320`、`scrollWidth=320`，临时 preview 已关闭。
+
 ## 用户反馈与结论
 
 ### 能力地图
@@ -73,7 +75,7 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 ## 精确下一步
 
 1. 重新运行文档阶段的 build、E2E、lint 与 diff gate，并提交 v0.2 规格、`DESIGN.md` 与四份可执行计划。
-2. 先迁移语义契约、导航、About 和三态主题。
+2. 导航、About 与职业入口已完成；继续 Foundation 中尚未实现的三态主题，不把它和本次导航提交混在一起。
 3. 再依次交付能力地图与职业方向、成长资源、全局 Innovation Atlas。
 4. 每阶段执行 RED-GREEN、规格审查、代码质量审查、连续性留档与独立提交。
 5. 最后完成桌面/移动、双主题、无 JavaScript、Pages 子路径与线上部署验收。

@@ -7,7 +7,7 @@ const playtestArticleUrl = 'https://medill-east.github.io/2025/08/24/20250824-ho
 
 test('guides a learner from the home page to the unordered Playtest topic collection', async ({ page }) => {
   await page.goto('./');
-  await page.getByRole('link', { name: '看地图' }).click();
+  await page.getByRole('link', { name: '看全貌' }).click();
 
   const playtestLink = page.getByRole('link', { name: 'Playtest', exact: true });
   await expect(playtestLink).toHaveAttribute('href', '/Learn-About-Games/capabilities/playtesting/');
@@ -60,7 +60,13 @@ test('reapplies the selected language filter after history back', async ({ page 
   const playtestArticle = page.locator('.resource-card').filter({ hasText: '如何进行好的 Playtest' });
 
   await languageSelect.selectOption('zh-CN');
-  await page.getByRole('link', { name: 'Map', exact: true }).click();
+  const compactMenu = page.locator('details.site-nav__compact');
+  if (await compactMenu.isVisible()) {
+    await compactMenu.locator('summary').click();
+    await compactMenu.getByRole('link', { name: '能力地图', exact: true }).click();
+  } else {
+    await page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '能力地图', exact: true }).click();
+  }
   await page.goBack();
 
   await expect(languageSelect).toHaveValue('zh-CN');

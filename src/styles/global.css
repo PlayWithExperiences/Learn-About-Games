@@ -104,11 +104,11 @@ a:hover {
   letter-spacing: 0;
 }
 
-nav {
+.site-nav {
   min-width: 0;
 }
 
-nav ul {
+.site-nav ul {
   display: flex;
   margin: 0;
   padding: 0;
@@ -118,15 +118,19 @@ nav ul {
   white-space: nowrap;
 }
 
-nav a {
+.site-nav a {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 650;
   text-decoration: none;
 }
 
-nav a:hover {
+.site-nav a:hover {
   color: var(--accent-dark);
+}
+
+.site-nav__compact {
+  display: none;
 }
 
 .plain-label {
@@ -237,6 +241,115 @@ h2 {
 .text-link {
   color: var(--accent-dark);
   font-weight: 720;
+}
+
+.about-page,
+.careers-page {
+  max-width: 920px;
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.about-page__intro,
+.careers-page__intro {
+  max-width: 46rem;
+}
+
+.about-page__intro h1,
+.careers-page__intro h1 {
+  max-width: 15ch;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+}
+
+.about-materials {
+  margin-top: clamp(3rem, 7vw, 5rem);
+  border-top: 1px solid var(--line);
+}
+
+.about-materials ul,
+.career-profile ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-materials a {
+  display: grid;
+  padding-block: 1.3rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  gap: 0.35rem;
+}
+
+.about-materials a:hover {
+  color: var(--accent-dark);
+}
+
+.about-materials strong {
+  font-size: 1.1rem;
+}
+
+.about-materials span,
+.career-profile li span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.career-profile {
+  margin-top: clamp(3rem, 7vw, 5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink);
+}
+
+.career-profile__heading h2,
+.career-profile h3 {
+  margin: 0;
+}
+
+.career-profile__heading p,
+.career-profile__caveat,
+.career-profile__reviewed {
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+.career-profile__caveat {
+  margin-top: 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.career-profile__reviewed {
+  font-size: 0.9rem;
+}
+
+.career-profile__focus,
+.career-profile__sources {
+  margin-top: 2.5rem;
+}
+
+.career-profile__focus ul,
+.career-profile__sources ul {
+  display: grid;
+  margin-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.career-profile li {
+  display: grid;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  gap: 0.2rem;
+}
+
+.career-profile li a {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.career-profile > .text-link {
+  display: inline-block;
+  margin-top: 2.5rem;
 }
 
 .map-intro {
@@ -1162,16 +1275,43 @@ a.capability-node:active {
     width: fit-content;
   }
 
-  nav {
-    width: 100%;
-    margin-top: 0.65rem;
-    padding-bottom: 0.25rem;
+  .site-nav--desktop {
+    display: none;
   }
 
-  nav ul {
-    width: auto;
-    flex-wrap: wrap;
-    gap: 0.35rem 1.15rem;
+  .site-nav__compact {
+    display: block;
+    margin-top: 0.65rem;
+  }
+
+  .site-nav__compact summary {
+    width: fit-content;
+    cursor: pointer;
+    color: var(--accent-dark);
+    font-size: 0.9rem;
+    font-weight: 720;
+  }
+
+  .site-nav__compact .site-nav {
+    margin-top: 0.65rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+  }
+
+  .site-nav__compact .site-nav ul {
+    display: grid;
+    gap: 0;
+  }
+
+  .site-nav__compact .site-nav li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .site-nav__compact .site-nav a {
+    display: block;
+    padding-block: 0.65rem;
   }
 
   .home-hero {
@@ -1287,7 +1427,9 @@ a.capability-node:active {
   }
 
   .detail-page,
-  .resource-page {
+  .resource-page,
+  .about-page,
+  .careers-page {
     padding-block: 3.5rem;
   }
 
