@@ -1,240 +1,320 @@
 [
   {
     "id": "wichman-rogue-history",
+    "sourceTitle": "A Brief History of Rogue",
+    "originalLanguage": "en",
     "title": { "zh-CN": "A Brief History of Rogue", "en": "A Brief History of Rogue" },
     "url": "https://wichman.org/roguehistory.html",
     "summary": { "zh-CN": "Rogue 联合作者 Glenn Wichman 的回顾，用于支持程序生成让每局不同，以及最早之一的谨慎边界。" }
   },
   {
     "id": "nethack-license-history",
+    "sourceTitle": "NetHack License History",
+    "originalLanguage": "en",
     "title": { "zh-CN": "NetHack LICENSE_HISTORY", "en": "NetHack LICENSE_HISTORY" },
     "url": "https://www.nethack.org/download/LICENSE_HISTORY.html",
     "summary": { "zh-CN": "NetHack 官方许可历史，说明 Hack 与 Rogue 的关系。" }
   },
   {
     "id": "nethack-git-history",
+    "sourceTitle": "NetHack/dat/history at NetHack-5.0.0_Released · NetHack/NetHack · GitHub",
+    "originalLanguage": "en",
     "title": { "zh-CN": "NetHack 项目历史文件", "en": "NetHack project history" },
     "url": "https://github.com/NetHack/NetHack/blob/NetHack-5.0.0_Released/dat/history",
     "summary": { "zh-CN": "NetHack 官方仓库历史文件，记录多个 Hack 版本的合并。" }
   },
   {
     "id": "umoria-history",
+    "sourceTitle": "A History of Moria - A Classic Roguelike",
+    "originalLanguage": "en",
     "title": { "zh-CN": "The Dungeons of Moria History", "en": "The Dungeons of Moria History" },
     "url": "https://umoria.org/history",
     "summary": { "zh-CN": "Moria 作者 Robert Alan Koeneke 的回顾，说明 Rogue 的直接启发。" }
   },
   {
     "id": "angband-version-history",
+    "sourceTitle": "Version Information",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Angband Version History", "en": "Angband Version History" },
     "url": "https://raw.githubusercontent.com/angband/angband/master/docs/version.rst",
     "summary": { "zh-CN": "Angband 官方版本史，说明 Angband 1.0 基于 Umoria 5.2.1。" }
   },
   {
     "id": "rpgfan-brevik-interview",
+    "sourceTitle": "David Brevik Interview | RPGFan",
+    "originalLanguage": "en",
     "title": { "zh-CN": "David Brevik Interview", "en": "David Brevik Interview" },
     "url": "https://www.rpgfan.com/feature/david-brevik-interview/",
     "summary": { "zh-CN": "David Brevik 说明 Diablo 原型以 Angband 式 Roguelike 为模型，并从回合制转为实时。" }
   },
   {
     "id": "rps-spelunky-interview",
+    "sourceTitle": "IGF Factor 2012: Spelunky",
+    "originalLanguage": "en",
     "title": { "zh-CN": "IGF Factor 2012: Spelunky", "en": "IGF Factor 2012: Spelunky" },
     "url": "https://www.rockpapershotgun.com/igf-factor-2012-spelunky",
     "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自两种原型的融合。" }
   },
   {
     "id": "gamedeveloper-kasavin-interview",
+    "sourceTitle": "Roguelikes and narrative design with Hades creative director Greg Kasavin",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Roguelikes and Narrative Design with Hades", "en": "Roguelikes and Narrative Design with Hades" },
     "url": "https://www.gamedeveloper.com/design/roguelikes-and-narrative-design-with-i-hades-i-creative-director-greg-kasavin",
     "summary": { "zh-CN": "Greg Kasavin 说明团队从 Spelunky 已经推进的知识出发，并构思让角色记住每次死亡的叙事连续性。" }
   },
   {
     "id": "supergiant-hades-faq",
+    "sourceTitle": "Hades FAQ | Supergiant Games",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Hades FAQ", "en": "Hades FAQ" },
     "url": "https://www.supergiantgames.com/blog/hades-faq/",
     "summary": { "zh-CN": "Supergiant 官方 FAQ，用于区分传统回合制 Roguelike 与 Hades 的动作型跨类型变体。" }
   },
   {
     "id": "nintendo-metroid-dread-report-vol-4",
+    "sourceTitle": "Metroid Dread Report vol. 4: Unraveling a saga 35 years in the making",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Metroid Dread Report Vol. 4", "en": "Metroid Dread Report Vol. 4" },
     "url": "https://metroid.nintendo.com/dread/news/metroid-dread-report-vol-4/",
     "summary": { "zh-CN": "Nintendo 官方回顾初代、Metroid II 与 Super Metroid 的系列位置、故事延续及基础探索结构。" }
   },
   {
     "id": "nintendo-super-metroid-interview",
+    "sourceTitle": "Entrevista con desarrolladores de juegos para Nintendo Classic Mini: SNES – Parte 3: Super Metroid",
+    "originalLanguage": "es",
     "title": { "zh-CN": "Super Metroid 开发者访谈", "en": "Super Metroid developer interview" },
-    "url": "https://www.nintendo.com/en-za/News/2017/September/Nintendo-Classic-Mini-SNES-developer-interview-Volume-3-Super-Metroid-1285309.html",
+    "url": "https://www.nintendo.com/es-es/Noticias/2017/septiembre/Entrevista-con-desarrolladores-de-juegos-para-Nintendo-Classic-Mini-SNES-Parte-3-Super-Metroid-1285309.html",
     "summary": { "zh-CN": "Nintendo 对 Super Metroid 开发者的官方访谈，补充系列次序与作品背景。" }
   },
   {
     "id": "konami-castlevania-ii-history",
+    "sourceTitle": "ドラキュラII 呪いの封印",
+    "originalLanguage": "ja",
     "title": { "zh-CN": "Castlevania II 官方历史", "en": "Castlevania II official history" },
     "url": "https://www.konami.com/games/castlevania/jp/ja/page/history_1987_fcd",
     "summary": { "zh-CN": "Konami 官方记录其 1987 年发行，以及 RPG 式城镇、迷宫、道具与昼夜结构。" }
   },
   {
     "id": "nintendo-zelda-ii",
+    "sourceTitle": "リンクの冒険 | ファミリーコンピュータ | 任天堂",
+    "originalLanguage": "ja",
     "title": { "zh-CN": "Zelda II 官方页面", "en": "Zelda II official page" },
     "url": "https://www.nintendo.com/jp/software/zelda2/index.html",
     "summary": { "zh-CN": "Nintendo 的 Zelda II 官方软件页面，用于作品与发行事实。" }
   },
   {
     "id": "nintendo-faxanadu",
+    "sourceTitle": "Faxanadu",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Faxanadu 官方页面", "en": "Faxanadu official page" },
     "url": "https://www.nintendo.com/en-gb/Games/Virtual-Console-Wii-/Faxanadu-277259.html",
     "summary": { "zh-CN": "Nintendo 将 Faxanadu 描述为 action RPG。" }
   },
   {
     "id": "mobygames-faxanadu-release",
+    "sourceTitle": "Faxanadu (1987)",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Faxanadu 发行记录", "en": "Faxanadu release record" },
     "url": "https://www.mobygames.com/game/7331/faxanadu/",
     "summary": { "zh-CN": "MobyGames 的发行记录，用于补足 1987 年年份；不承担影响关系。" }
   },
   {
     "id": "nintendo-link-to-past",
+    "sourceTitle": "ゼルダの伝説 神々のトライフォース | New ニンテンドー3DS | 任天堂",
+    "originalLanguage": "ja",
     "title": { "zh-CN": "A Link to the Past 官方页面", "en": "A Link to the Past official page" },
     "url": "https://www.nintendo.com/jp/titles/50010000039699.html",
     "summary": { "zh-CN": "Nintendo 记录作品与 1991 年发行背景，并描述以道具解开场地和迷宫谜题。" }
   },
   {
     "id": "konami-sotn-history",
+    "sourceTitle": "Castlevania: Symphony of the Night",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Symphony of the Night 官方历史", "en": "Symphony of the Night official history" },
     "url": "https://www.konami.com/games/castlevania/us/en-us/page/history_1997_ps",
     "summary": { "zh-CN": "Konami 官方记录 SOTN 的 1997 年发行、隐藏武器、秘密与变身。" }
   },
   {
     "id": "igarashi-metroidvania-interview",
+    "sourceTitle": "Castlevania's Koji Igarashi offers advice to today's Metroidvania devs",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Igarashi 谈 Metroidvania 设计关系", "en": "Igarashi on Metroidvania design relations" },
     "url": "https://www.gamedeveloper.com/design/-i-castlevania-i-s-koji-igarashi-offers-advice-to-today-s-metroidvania-devs",
     "summary": { "zh-CN": "Igarashi 说明 Zelda 对 SOTN 的直接启发，并区分与 Metroid 的结构相似。" }
   },
   {
     "id": "gamespot-igarashi-zelda",
+    "sourceTitle": "Castlevania's Koji Igarashi Explains the Influence of Zelda in Exclusive New Interview",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Igarashi 解释 Zelda 对 SOTN 的影响", "en": "Igarashi explains Zelda's influence on SOTN" },
     "url": "https://www.gamespot.com/articles/castlevanias-koji-igarashi-explains-the-influence-/1100-6481658/",
     "summary": { "zh-CN": "对 Igarashi 录制访谈的报道，记录探索与取得物品后解锁下一区域的 Zelda 灵感。" }
   },
   {
     "id": "konami-circle-of-the-moon-history",
+    "sourceTitle": "Castlevania: Circle of the Moon",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Circle of the Moon 官方历史", "en": "Circle of the Moon official history" },
     "url": "https://www.konami.com/games/castlevania/eu/en/page/history_2001_gba",
     "summary": { "zh-CN": "Konami 官方记录其 2001 年发行、探索、DSS、地图完成度与收集。" }
   },
   {
     "id": "metroidvania-2001-usenet",
+    "sourceTitle": "Metroidvania is great... Thumbs up for Castlevania: Circle of the Moon.",
+    "originalLanguage": "en",
     "title": { "zh-CN": "2001 年 Metroidvania 用例存档", "en": "Archived 2001 Metroidvania usage" },
     "url": "https://groups.google.com/g/rec.games.video.nintendo/c/Iq7Q2fqdkIE/m/hOLAJKzHR8QJ",
     "summary": { "zh-CN": "目前找到的 2001 年存档帖子把 Metroidvania 用于 Circle of the Moon；不用于宣称唯一首创者。" }
   },
   {
     "id": "critical-hit-metroidvania-term-history",
+    "sourceTitle": "Exploring Metroidvania: The History Of A Word",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Metroidvania 命名档案研究", "en": "Archival research on the Metroidvania term" },
     "url": "https://www.acriticalhit.com/exploring-metroidvania-meaning-history/",
     "summary": { "zh-CN": "追踪 2001 年以后词语用法的历史研究，并明确保留遗失档案造成的起源不确定性。" }
   },
   {
     "id": "gamedeveloper-metroidvania-allure",
+    "sourceTitle": "The undying allure of the Metroidvania",
+    "originalLanguage": "en",
     "title": { "zh-CN": "The Undying Allure of the Metroidvania", "en": "The Undying Allure of the Metroidvania" },
     "url": "https://www.gamedeveloper.com/design/the-undying-allure-of-the-metroidvania",
     "summary": { "zh-CN": "2015 年对类别形成、Cave Story 与 Shadow Complex 复兴语境的开发者和行业历史综合。" }
   },
   {
     "id": "cave-story-amaya-interview",
+    "sourceTitle": "The-O Network - Daisuke Amaya: Cave Story Creator Interview",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Daisuke Amaya 访谈存档", "en": "Daisuke Amaya interview archive" },
     "url": "https://archive.cavestory.org/onetwork/",
     "summary": { "zh-CN": "Amaya 明确把 Metroid 与 Dragon Quest 说成 Cave Story 最强的两项灵感。" }
   },
   {
     "id": "gdc-cave-story",
+    "sourceTitle": "GDC Vault - The Story of CAVE STORY",
+    "originalLanguage": "en",
     "title": { "zh-CN": "The Story of CAVE", "en": "The Story of CAVE" },
     "url": "https://gdcvault.com/play/1014621/The-Story-of-CAVE",
     "summary": { "zh-CN": "GDC Vault 的 Cave Story 创作回顾，用于作品和独立开发背景。" }
   },
   {
     "id": "mustard-shadow-complex-interview",
+    "sourceTitle": "Making Shadow Complex: Donald Mustard Speaks",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Donald Mustard 谈 Shadow Complex", "en": "Donald Mustard on Shadow Complex" },
     "url": "https://www.gamedeveloper.com/design/making-i-shadow-complex-i-donald-mustard-speaks",
     "summary": { "zh-CN": "Mustard 明确称 Super Metroid 为个人最爱，并说明作品有意处理 Metroid 式非线性世界。" }
   },
   {
     "id": "xbox-shadow-complex-release",
+    "sourceTitle": "Shadow Complex Now Available on Xbox LIVE Arcade",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Shadow Complex 发行公告", "en": "Shadow Complex release announcement" },
     "url": "https://news.xbox.com/en-us/2009/08/19/arcade-shadow-complex/",
     "summary": { "zh-CN": "Xbox 官方 2009 年发行公告，用于作品年份。" }
   },
   {
     "id": "tom-happ-axiom-verge",
+    "sourceTitle": "Axiom Verge: Sci-fi Sidescroller coming to PS4, Vita",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Tom Happ 介绍 Axiom Verge", "en": "Tom Happ introduces Axiom Verge" },
     "url": "https://blog.playstation.com/2014/04/30/axiom-verge-sci-fi-sidescroller-coming-to-ps4-vita/",
     "summary": { "zh-CN": "创作者 Tom Happ 明确把 Metroid 列为 Axiom Verge 的多项灵感之一。" }
   },
   {
     "id": "axiom-verge-release",
+    "sourceTitle": "Axiom Verge Releases March 31st on PS4!",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Axiom Verge 发行公告", "en": "Axiom Verge release announcement" },
     "url": "https://www.axiomverge.com/blog/axiom-verge-releases-march-31st-on-ps4",
     "summary": { "zh-CN": "创作者官网的 2015 年 3 月 31 日发行公告。" }
   },
   {
     "id": "moon-studios-ori-postmortem",
+    "sourceTitle": "Postmortem: Moon Studios' heartfelt Ori and the Blind Forest",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Ori and the Blind Forest Postmortem", "en": "Ori and the Blind Forest Postmortem" },
     "url": "https://www.gamedeveloper.com/audio/postmortem-moon-studios-heartfelt-i-ori-and-the-blind-forest-i-",
     "summary": { "zh-CN": "Moon Studios 把原型描述为 Metroidvania 与 platformer 的混合，并明确列出 Super Metroid 与 SOTN。" }
   },
   {
     "id": "xbox-ori-release",
+    "sourceTitle": "Ori and the Blind Forest is Now Available for Xbox One",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Ori and the Blind Forest 发行公告", "en": "Ori and the Blind Forest release announcement" },
     "url": "https://news.xbox.com/en-us/2015/03/10/ori-blind-forest-now-available-xbox/",
     "summary": { "zh-CN": "Xbox 官方 2015 年发行公告，用于作品年份。" }
   },
   {
     "id": "team-cherry-nintendo-interview",
+    "sourceTitle": "The Metamorphosis of Hollow Knight, with Team Cherry, Aussie Developer Interview",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Nintendo 采访 Team Cherry", "en": "Nintendo interviews Team Cherry" },
     "url": "https://www.nintendo.com/au/news-and-articles/the-metamorphosis-of-hollow-knight-with-team-cherry-aussie-developer-interview/",
     "summary": { "zh-CN": "Team Cherry 说明工作室围绕对 Zelda II 与 Faxanadu 等作品的共同喜爱形成。" }
   },
   {
     "id": "team-cherry-nintendolife-interview",
+    "sourceTitle": "Bugging Out With Hollow Knight's Team Cherry",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Team Cherry 谈 Hollow Knight 灵感", "en": "Team Cherry on Hollow Knight inspirations" },
     "url": "https://www.nintendolife.com/news/2018/01/feature_bugging_out_with_hollow_knights_team_cherry",
     "summary": { "zh-CN": "Team Cherry 明确提到 Metroid、Faxanadu 与 Zelda II 带来的感受。" }
   },
   {
     "id": "team-cherry-release",
+    "sourceTitle": "2017 BEGINS WITH A SWITCH!",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Hollow Knight 发行公告", "en": "Hollow Knight release announcement" },
     "url": "https://www.teamcherry.com.au/blog/2017-begins-with-a-switch",
     "summary": { "zh-CN": "Team Cherry 官方发布信息，用于 2017 年作品背景。" }
   },
   {
     "id": "motion-twin-presskit",
+    "sourceTitle": "Motion Twin",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Motion Twin 官方 Press Kit", "en": "Motion Twin official press kit" },
     "url": "https://motiontwin.com/presskit/",
     "summary": { "zh-CN": "Motion Twin 把 Dead Cells 描述为现代 Roguelite 与旧式 MetroidVania 的融合，并列出 Spelunky、SOTN 等来源。" }
   },
   {
     "id": "motion-twin-xbox-interview",
+    "sourceTitle": "Made in France : entretien exclusif avec Motion Twin",
+    "originalLanguage": "fr",
     "title": { "zh-CN": "Motion Twin 访谈", "en": "Motion Twin interview" },
     "url": "https://news.xbox.com/fr-fr/2018/06/25/made-in-france-entretien-exclusif-avec-motion-twin/",
     "summary": { "zh-CN": "Motion Twin 说明团队有意混合 Metroidvania 与 Roguelite。" }
   },
   {
     "id": "dead-cells-products",
+    "sourceTitle": "Dead Cells - Rogue-lite metroidvania with some souls-lite combat on top! Kill, die, learn, repeat.",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Dead Cells 官方产品页", "en": "Dead Cells official products page" },
     "url": "https://deadcells.com/products",
     "summary": { "zh-CN": "Dead Cells 官方产品页，用于 2018 年发行与作品事实。" }
   },
   {
     "id": "bloodstained-kickstarter",
+    "sourceTitle": "Bloodstained: Ritual of the Night",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Bloodstained Kickstarter", "en": "Bloodstained Kickstarter" },
     "url": "https://www.kickstarter.com/projects/iga/bloodstained-ritual-of-the-night",
     "summary": { "zh-CN": "Igarashi 的官方众筹页面以 Igavania 和探索动作平台游戏描述项目。" }
   },
   {
     "id": "igarashi-bloodstained-interview",
+    "sourceTitle": "Koji Igarashi on the power and responsibility of being Kickstarter-funded",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Igarashi 谈 Bloodstained", "en": "Igarashi on Bloodstained" },
     "url": "https://www.gamedeveloper.com/business/koji-igarashi-on-the-power-and-responsibility-of-being-kickstarter-funded",
     "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作。" }
   },
   {
     "id": "bloodstained-launch-trailer",
+    "sourceTitle": "Bloodstained: Ritual of the Night - Launch Trailer | PS4",
+    "originalLanguage": "en",
     "title": { "zh-CN": "Bloodstained Launch Trailer", "en": "Bloodstained Launch Trailer" },
     "url": "https://www.youtube.com/watch?v=d79KArgmgcc",
     "summary": { "zh-CN": "PlayStation 发行预告，用于 2019 年 6 月作品发行背景。" }

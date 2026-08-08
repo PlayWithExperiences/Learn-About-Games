@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import atlasEvidence from '../../src/data/atlas-evidence.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
 import atlasRelations from '../../src/data/atlas-relations.json';
 import atlasThemes from '../../src/data/atlas-themes.json';
@@ -13,6 +14,28 @@ describe('global Atlas graph contract', () => {
     expect(atlasRelations.length).toBeLessThanOrEqual(25);
     expect(atlasNodes).toHaveLength(27);
     expect(atlasRelations).toHaveLength(25);
+  });
+
+  it('preserves the original source title and language for every evidence item', () => {
+    const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
+
+    expect(atlasEvidence).toHaveLength(40);
+    for (const evidence of atlasEvidence) {
+      expect(evidence).toHaveProperty('sourceTitle');
+      expect(evidence).toHaveProperty('originalLanguage');
+      expect(evidence.sourceTitle?.trim().length ?? 0, evidence.id).toBeGreaterThan(0);
+      expect(originalLanguages.has(evidence.originalLanguage), evidence.id).toBe(true);
+    }
+    expect(new Set(atlasEvidence.map(({ originalLanguage }) => originalLanguage))).toEqual(
+      new Set(['en', 'ja', 'fr', 'es']),
+    );
+    expect(atlasEvidence).toContainEqual(
+      expect.objectContaining({
+        id: 'konami-castlevania-ii-history',
+        sourceTitle: 'ドラキュラII 呪いの封印',
+        originalLanguage: 'ja',
+      }),
+    );
   });
 
   it('defines Roguelike and Metroidvania as tag-only lenses', () => {

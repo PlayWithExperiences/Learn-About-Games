@@ -241,6 +241,8 @@ const atlasEvidence = defineCollection({
     .object({
       id: z.string().trim().min(1),
       title: localizedText,
+      sourceTitle: z.string().trim().min(1),
+      originalLanguage: z.enum(['en', 'ja', 'fr', 'es']),
       url: httpUrl,
       summary: localizedText,
     })
@@ -269,8 +271,25 @@ const atlasRelations = defineCollection({
       tags: z.array(z.string().trim().min(1)).min(1),
       summary: localizedText,
       chronologyExplanation: localizedText.optional(),
+      directionalityNote: localizedText.optional(),
     })
-    .strict(),
+    .strict()
+    .superRefine((relation, context) => {
+      if (relation.fromId === relation.toId) {
+        context.addIssue({
+          code: 'custom',
+          path: ['toId'],
+          message: 'Atlas relations cannot reference the same node at both endpoints',
+        });
+      }
+      if (relation.type === 'disputed' && !relation.directionalityNote?.['zh-CN']?.trim()) {
+        context.addIssue({
+          code: 'custom',
+          path: ['directionalityNote'],
+          message: 'Disputed Atlas relations must justify their directionality',
+        });
+      }
+    }),
 });
 
 const atlasThemes = defineCollection({

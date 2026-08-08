@@ -35,6 +35,8 @@ export type AtlasEvidenceStatus = 'confirmed' | 'credible' | 'inferred' | 'dispu
 
 export type AtlasDirectionality = 'directed' | 'undirected';
 
+export type AtlasEvidenceOriginalLanguage = 'en' | 'ja' | 'fr' | 'es';
+
 export type Catalog = {
   domains: Array<{
     id: string;
@@ -144,6 +146,8 @@ export type Catalog = {
   atlasEvidence: Array<{
     id: string;
     title: LocalizedText;
+    sourceTitle: string;
+    originalLanguage: AtlasEvidenceOriginalLanguage;
     url: string;
     summary: LocalizedText;
   }>;
@@ -158,6 +162,7 @@ export type Catalog = {
     tags: string[];
     summary: LocalizedText;
     chronologyExplanation?: LocalizedText;
+    directionalityNote?: LocalizedText;
   }>;
   atlasThemes: Array<{
     id: string;
@@ -216,12 +221,16 @@ export type CatalogValidationCode =
   | 'ATLAS_NODE_DATE_RANGE_INVALID'
   | 'ATLAS_NODE_EVIDENCE_REQUIRED'
   | 'ATLAS_NODE_EVIDENCE_MISSING'
+  | 'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID'
+  | 'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID'
   | 'ATLAS_RELATION_ENDPOINT_MISSING'
+  | 'ATLAS_RELATION_SELF_REFERENCE'
   | 'ATLAS_RELATION_TYPE_INVALID'
   | 'ATLAS_RELATION_STATUS_INVALID'
   | 'ATLAS_RELATION_DIRECTIONALITY_INVALID'
   | 'ATLAS_RELATION_EVIDENCE_REQUIRED'
   | 'ATLAS_RELATION_EVIDENCE_MISSING'
+  | 'ATLAS_RELATION_DIRECTIONALITY_NOTE_REQUIRED'
   | 'ATLAS_RELATION_CHRONOLOGY_UNEXPLAINED';
 
 export type CatalogValidationError = {
@@ -254,6 +263,12 @@ const atlasEvidenceStatuses = new Set<AtlasEvidenceStatus>([
   'credible',
   'inferred',
   'disputed',
+]);
+const atlasEvidenceOriginalLanguages = new Set<AtlasEvidenceOriginalLanguage>([
+  'en',
+  'ja',
+  'fr',
+  'es',
 ]);
 const directedAtlasRelationTypes = new Set<AtlasRelationType>([
   'direct-influence',
@@ -872,6 +887,29 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     }
   }
 
+  for (const evidence of catalog.atlasEvidence) {
+    if (typeof evidence.sourceTitle !== 'string' || evidence.sourceTitle.trim().length === 0) {
+      appendError(
+        errors,
+        'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID',
+        'atlasEvidence',
+        evidence.id,
+        'sourceTitle',
+        '',
+      );
+    }
+    if (!atlasEvidenceOriginalLanguages.has(evidence.originalLanguage)) {
+      appendError(
+        errors,
+        'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID',
+        'atlasEvidence',
+        evidence.id,
+        'originalLanguage',
+        evidence.originalLanguage,
+      );
+    }
+  }
+
   for (const node of catalog.atlasNodes) {
     const hasInvalidDateRange =
       !Number.isInteger(node.startYear) ||
@@ -924,6 +962,17 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
       }
     }
 
+    if (relation.fromId === relation.toId) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_SELF_REFERENCE',
+        'atlasRelations',
+        relation.id,
+        'fromId/toId',
+        relation.fromId,
+      );
+    }
+
     if (!atlasRelationTypes.has(relation.type)) {
       appendError(
         errors,
@@ -957,6 +1006,17 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         'atlasRelations',
         relation.id,
         'directionality',
+        relation.directionality,
+      );
+    }
+
+    if (relation.type === 'disputed' && !relation.directionalityNote?.['zh-CN']?.trim()) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_DIRECTIONALITY_NOTE_REQUIRED',
+        'atlasRelations',
+        relation.id,
+        'directionalityNote',
         relation.directionality,
       );
     }

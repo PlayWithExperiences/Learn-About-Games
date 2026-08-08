@@ -199,12 +199,19 @@ describe('validateCatalog', () => {
 
   it('validates Atlas shared tags across nodes, relations, and themes', () => {
     const catalog = emptyCatalog();
+    catalog.atlasTags.push({
+      id: 'valid-tag',
+      name: localized('有效标签'),
+      summary: localized('示例标签。'),
+    });
     catalog.atlasEvidence.push({
       id: 'evidence',
       title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en',
       url: 'https://example.com/evidence',
       summary: localized('示例证据。'),
-    });
+    } as Catalog['atlasEvidence'][number]);
     catalog.atlasNodes.push(
       {
         id: 'node',
@@ -216,12 +223,22 @@ describe('validateCatalog', () => {
         tags: ['missing-node-tag'],
         evidenceIds: ['evidence'],
       } as unknown as Catalog['atlasNodes'][number],
+      {
+        id: 'other-node',
+        kind: 'game',
+        name: localized('另一款游戏'),
+        summary: localized('另一款示例游戏。'),
+        startYear: 2001,
+        lane: 2,
+        tags: ['valid-tag'],
+        evidenceIds: ['evidence'],
+      } as unknown as Catalog['atlasNodes'][number],
     );
     catalog.atlasRelations.push(
       {
         id: 'self-context',
         fromId: 'node',
-        toId: 'node',
+        toId: 'other-node',
         type: 'structural-similarity',
         status: 'credible',
         directionality: 'undirected',
@@ -244,6 +261,122 @@ describe('validateCatalog', () => {
       'ATLAS_TAG_REFERENCE_MISSING',
       'ATLAS_TAG_REFERENCE_MISSING',
     ]);
+  });
+
+  it('requires original provenance fields on Atlas evidence', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasEvidence.push(
+      {
+        id: 'missing-provenance',
+        title: localized('证据'),
+        sourceTitle: ' ',
+        originalLanguage: 'de',
+        url: 'https://example.com/evidence',
+        summary: localized('示例证据。'),
+      } as unknown as Catalog['atlasEvidence'][number],
+    );
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID',
+      'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID',
+    ]);
+  });
+
+  it('requires disputed Atlas relations to justify their explicit directionality', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasTags.push({
+      id: 'lens',
+      name: localized('透镜'),
+      summary: localized('示例标签。'),
+    });
+    catalog.atlasEvidence.push({
+      id: 'evidence',
+      title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en',
+      url: 'https://example.com/evidence',
+      summary: localized('示例证据。'),
+    } as Catalog['atlasEvidence'][number]);
+    for (const [id, startYear] of [
+      ['one', 2000],
+      ['two', 2001],
+    ] as const) {
+      catalog.atlasNodes.push({
+        id,
+        kind: 'game',
+        name: localized(id),
+        summary: localized('示例节点。'),
+        startYear,
+        lane: 1,
+        tags: ['lens'],
+        evidenceIds: ['evidence'],
+      });
+    }
+    catalog.atlasRelations.push({
+      id: 'unjustified-dispute',
+      fromId: 'one',
+      toId: 'two',
+      type: 'disputed',
+      status: 'disputed',
+      directionality: 'undirected',
+      evidenceIds: ['evidence'],
+      tags: ['lens'],
+      summary: localized('存在争议。'),
+    } as Catalog['atlasRelations'][number]);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'ATLAS_RELATION_DIRECTIONALITY_NOTE_REQUIRED',
+      collection: 'atlasRelations',
+      id: 'unjustified-dispute',
+      field: 'directionalityNote',
+      targetId: 'undirected',
+    });
+  });
+
+  it('rejects Atlas self-edges even when every other field is valid', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasTags.push({
+      id: 'lens',
+      name: localized('透镜'),
+      summary: localized('示例标签。'),
+    });
+    catalog.atlasEvidence.push({
+      id: 'evidence',
+      title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en',
+      url: 'https://example.com/evidence',
+      summary: localized('示例证据。'),
+    } as Catalog['atlasEvidence'][number]);
+    catalog.atlasNodes.push({
+      id: 'node',
+      kind: 'game',
+      name: localized('节点'),
+      summary: localized('示例节点。'),
+      startYear: 2000,
+      lane: 1,
+      tags: ['lens'],
+      evidenceIds: ['evidence'],
+    });
+    catalog.atlasRelations.push({
+      id: 'self-edge',
+      fromId: 'node',
+      toId: 'node',
+      type: 'structural-similarity',
+      status: 'credible',
+      directionality: 'undirected',
+      evidenceIds: ['evidence'],
+      tags: ['lens'],
+      summary: localized('自环。'),
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'ATLAS_RELATION_SELF_REFERENCE',
+      collection: 'atlasRelations',
+      id: 'self-edge',
+      field: 'fromId/toId',
+      targetId: 'node',
+    });
   });
 
   it('requires valid Atlas node date ranges and evidence references', () => {
@@ -285,8 +418,8 @@ describe('validateCatalog', () => {
     catalog.atlasRelations.push(
       {
         id: 'invalid-relation',
-        fromId: 'missing',
-        toId: 'missing',
+        fromId: 'missing-from',
+        toId: 'missing-to',
         type: 'descendant',
         status: 'certain',
         directionality: 'both',
@@ -355,6 +488,8 @@ describe('validateCatalog', () => {
     catalog.atlasEvidence.push({
       id: 'evidence',
       title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en',
       url: 'https://example.com/evidence',
       summary: localized('示例证据。'),
     });
