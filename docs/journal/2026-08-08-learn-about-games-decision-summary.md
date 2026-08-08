@@ -79,7 +79,7 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - Final review 修复首页把唯一已发布的 `AAA / Game Designer` 画像写成未来功能的问题；当前文案明确它只是一种生产语境参考、不作评分，更多画像后续扩展。产品设计同时明确 M0 遇损坏或版本不兼容只回退安全空状态，迁移、导出、导入与手动清除属于正式第一版待评估范围。
 - 行为修复均先取得 targeted RED；fresh build 后，no-JS 资源、已发布 Playtest 文案与两篇 Devlog 标题三项 targeted Chromium 回归通过。
 - Task 7 full gate：两次 `astro check` 均为 0 errors / warnings / hints，Vitest 26/26，通过 14 个静态页面的 fresh build，desktop Chromium 21/21、mobile Chromium 21/21，`git diff --check` 退出 0。
-- Final-review 首页断言在旧文案上取得 element-not-found RED，fresh build 后 targeted Chromium 1/1 GREEN；随后 full gate 为两次 `astro check` 0 errors / warnings / hints、Vitest 26/26、14 个静态页面、desktop Chromium 22/22、mobile Chromium 22/22，`git diff --check` 退出 0。
+- Final-review 首页断言在旧文案上取得 element-not-found RED，fresh build 后 targeted Chromium 1/1 GREEN；另以单元测试锁定不兼容 localStorage 版本回退安全空状态。随后 full gate 为两次 `astro check` 0 errors / warnings / hints、Vitest 27/27、14 个静态页面、desktop Chromium 22/22、mobile Chromium 22/22，`git diff --check` 退出 0。
 - 按计划用 `rg -l` 执行脱敏 secret scan，排除 `node_modules`、`.git` 与 `dist` 后没有返回文件名；没有打印任何匹配值。
 
 ## 事故与教训

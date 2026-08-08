@@ -19,6 +19,19 @@ describe('progress store', () => {
     expect(parseProgressStore('{not-json')).toEqual(EMPTY_PROGRESS_STORE);
   });
 
+  it('returns an empty version-one store for an incompatible version', () => {
+    expect(
+      parseProgressStore(
+        JSON.stringify({
+          version: 2,
+          capabilities: {
+            playtesting: 'practiced',
+          },
+        }),
+      ),
+    ).toEqual(EMPTY_PROGRESS_STORE);
+  });
+
   it('preserves valid saved states', () => {
     expect(
       parseProgressStore(
