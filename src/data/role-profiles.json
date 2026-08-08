@@ -39,5 +39,117 @@
       { "capabilityId": "narrative-architecture", "priority": "suggested", "responsibility": "contribute" },
       { "capabilityId": "aesthetic-direction", "priority": "suggested", "responsibility": "contribute" }
     ]
+  },
+  {
+    "id": "aaa-creative-director",
+    "title": { "zh-CN": "AAA · Creative Director", "en": "AAA · Creative Director" },
+    "roleId": "creative-director",
+    "productionContextId": "aaa",
+    "basis": {
+      "zh-CN": "此画像基于公开 AAA 招聘样本与相邻岗位职责整理，描述大型、多专业、可能含联合开发的项目中，Creative Director 对共同创意方向、跨职能一致性和取舍的参考责任范围。",
+      "en": "This profile synthesizes public AAA job samples and adjacent-role evidence as a reference for a Creative Director’s responsibility for shared direction, cross-discipline coherence, and tradeoffs in large, multidisciplinary, potentially co-developed projects."
+    },
+    "caveats": {
+      "zh-CN": "这不是行业标准或唯一答案。Creative Director 在不同公司可能偏游戏整体、叙事、品牌或工作室领导；Game Director、Design Director、Art Director 与制作人之间的边界也会改变。招聘 JD 是特定项目、组织和招聘时点的样本，不能据此推断该角色必须亲自实现全部玩法、关卡、叙事或美术能力。",
+      "en": "This is not an industry standard or the only answer. A Creative Director may be game-, narrative-, brand-, or studio-oriented depending on the company; boundaries with Game, Design, Art, and Production Directors also vary. Job descriptions are project-, organization-, and time-specific samples, not evidence that this role must personally execute every gameplay, level, narrative, or art capability."
+    },
+    "basisLinks": [
+      {
+        "title": { "zh-CN": "Ubisoft Montreal：Creative Director [Assassin's Creed]", "en": "Ubisoft Montreal: Creative Director [Assassin's Creed]" },
+        "url": "https://jobs.smartrecruiters.com/Ubisoft2/744000125816642-creative-director-assassin-s-creed-",
+        "sourceNote": { "zh-CN": "官方公开岗位页，2026-08-09 核验。明确要求定义并传达高层创意愿景，联结制作、美术与设计领导层，维持体验与品质一致性，并与制作方共同处理优先级、范围和时间线。", "en": "Official public job page, checked 2026-08-09. It calls for defining and communicating high-level creative vision, aligning production, art, and design leadership, maintaining experience and quality coherence, and aligning priorities, scope, and timelines with production." }
+      },
+      {
+        "title": { "zh-CN": "Niantic：Creative Director", "en": "Niantic: Creative Director" },
+        "url": "https://careers.nianticlabs.com/openings/creative-director/",
+        "sourceNote": { "zh-CN": "官方公开岗位页，2026-08-09 核验。虽非 AAA 样本，作为职位边界对照：涵盖愿景、设计标准、商业目标、跨职能协作、反馈与导师职责，说明职位覆盖面会随公司而变。", "en": "Official public job page, checked 2026-08-09. Although not an AAA sample, it is a useful title-boundary comparison: vision, design standards, commercial goals, cross-functional collaboration, feedback, and mentorship all appear, showing that the role’s coverage changes by company." }
+      },
+      {
+        "title": { "zh-CN": "PlayStation / Haven：Design Director", "en": "PlayStation / Haven: Design Director" },
+        "url": "https://job-boards.greenhouse.io/sonyinteractiveentertainmentglobal/jobs/6098184004",
+        "sourceNote": { "zh-CN": "官方 AAA 招聘页，2026-08-09 核验。Design Director 直接向 Creative Director 汇报，并把创意支柱转译为玩法循环、系统架构、评审和团队执行；这是将 Creative Director 画像保持在“方向与判断”而不是“默认亲自执行系统设计”的关键反证。", "en": "Official AAA job page, checked 2026-08-09. The Design Director reports to the Creative Director and translates creative pillars into gameplay loops, systems architecture, review, and team execution; this is key counter-evidence for keeping the Creative Director lens focused on direction and judgment rather than assuming hands-on system execution." }
+      },
+      {
+        "title": { "zh-CN": "Ubisoft：Gameplay Animation Director — BGE2", "en": "Ubisoft: Gameplay Animation Director — BGE2" },
+        "url": "https://jobs.smartrecruiters.com/Ubisoft2/744000112493097-gameplay-animation-director-bge2-m-f-nb",
+        "sourceNote": { "zh-CN": "官方公开岗位页，2026-08-09 核验。该专项总监与 Creative Director 及项目总监协作，负责把方向落实为动画意图、原型、交付物与质量；进一步说明 AAA 中专项执行责任常由不同负责人承担。", "en": "Official public job page, checked 2026-08-09. This specialist director works with the Creative Director and project directors while owning animation intent, prototypes, deliverables, and quality; it further shows that specialized execution responsibilities are often held by separate leaders in AAA." }
+      }
+    ],
+    "reviewedAt": "2026-08-09",
+    "capabilities": [
+      { "capabilityId": "experience-framing", "priority": "core", "responsibility": "direct" },
+      { "capabilityId": "creative-vision-stewardship", "priority": "core", "responsibility": "direct" },
+      { "capabilityId": "alignment-facilitation", "priority": "core", "responsibility": "direct" },
+      { "capabilityId": "cross-discipline-communication", "priority": "core", "responsibility": "direct" },
+      { "capabilityId": "constraint-aware-decision-making", "priority": "important", "responsibility": "decide" },
+      { "capabilityId": "scope-prioritization", "priority": "important", "responsibility": "decide" },
+      { "capabilityId": "aesthetic-direction", "priority": "important", "responsibility": "decide" },
+      { "capabilityId": "design-critique-feedback", "priority": "important", "responsibility": "direct" },
+      { "capabilityId": "audience-positioning", "priority": "suggested", "responsibility": "decide" },
+      { "capabilityId": "value-proposition-framing", "priority": "suggested", "responsibility": "decide" }
+    ]
+  },
+  {
+    "id": "indie-solo-developer",
+    "title": { "zh-CN": "Indie · Solo Developer", "en": "Indie · Solo Developer" },
+    "roleId": "solo-developer",
+    "productionContextId": "indie",
+    "basis": {
+      "zh-CN": "此画像综合 GDC 的一人开发、自发行、独立团队营销、商务与 Playtest 资料。它描述独立个人在未将事项交由合作者、承包商或发行商承担时，可能需要在产品、验证、范围和对外工作之间作取舍的参考分布。",
+      "en": "This profile synthesizes GDC material on one-person development, self-publishing, indie marketing, business development, and playtesting. It describes the tradeoffs an independent individual may need to make across product, validation, scope, and external work when those responsibilities are not delegated to collaborators, contractors, or publishers."
+    },
+    "caveats": {
+      "zh-CN": "这不是行业标准或“一个人必须全能”的清单。Indie 不等于 solo；solo 也不等于不与发行商、自由职业者、社区、测试者或联合开发者合作。是否自发行、预算、平台、项目阶段和已有专长会显著改变优先级。成功案例与 GDC 演讲可说明具体做法及其限制，但存在幸存者偏差，不能被当作可复制保证。",
+      "en": "This is not an industry standard or a demand that one person master everything. Indie does not mean solo, and solo does not mean working without publishers, freelancers, communities, testers, or co-developers. Self-publishing status, budget, platform, project phase, and existing expertise substantially change priorities. Success stories and GDC talks illuminate concrete practices and limits, but carry survivor bias and are not reproducible guarantees."
+    },
+    "basisLinks": [
+      {
+        "title": { "zh-CN": "GDC：David & Goliath — How a Newbie Solo Developer Landed on Xbox Game Pass", "en": "GDC: David & Goliath: How a Newbie Solo Developer Landed on Xbox Game Pass" },
+        "url": "https://gdcvault.com/play/1026817/David-Goliath-How-a-Newbie",
+        "sourceNote": { "zh-CN": "GDC 官方会议页，2026-08-09 核验。一人工作室从个人项目走向多平台发布，同时面对有限预算、商务开发、大公司协作与保持创作动力。", "en": "Official GDC session page, checked 2026-08-09. A one-person studio’s path from a personal project to multi-platform release includes limited-budget work, business development, working with large companies, and sustaining creative momentum." }
+      },
+      {
+        "title": { "zh-CN": "GDC：How to Make and Self-Publish a Game in 12 Months", "en": "GDC: How to Make and Self-Publish a Game in 12 Months" },
+        "url": "https://gdcvault.com/play/1022056/How-to-Make-and-Self",
+        "sourceNote": { "zh-CN": "GDC 官方会议页，2026-08-09 核验。新独立工作室资料明确把做游戏之外的自筹资、自营销、自发行与公司事务列为同一阶段的责任。", "en": "Official GDC session page, checked 2026-08-09. This new-indie-studio account explicitly places self-funding, self-marketing, self-publishing, and company work alongside making the game." }
+      },
+      {
+        "title": { "zh-CN": "GDC：Independent Games Summit — No-Budget DIY Marketing for Indie Games", "en": "GDC: Independent Games Summit: No-Budget DIY Marketing for Indie Games" },
+        "url": "https://gdcvault.com/play/1029192/Independent-Games-Summit-No-Budget",
+        "sourceNote": { "zh-CN": "GDC 官方会议页，2026-08-09 核验。以独立游戏可发现性为依据，讨论低时间投入下的营销与 PR 计划、媒体触达和社交媒体。", "en": "Official GDC session page, checked 2026-08-09. Grounded in indie-game discoverability, it covers low-time marketing and PR planning, press outreach, and social media." }
+      },
+      {
+        "title": { "zh-CN": "GDC：Independent Games Summit — Never Skip Playtest Day!", "en": "GDC: Independent Games Summit: Never Skip Playtest Day! Five Tips for Running Better Playtests" },
+        "url": "https://gdcvault.com/play/1029191/Independent-Games-Summit-Never-Skip",
+        "sourceNote": { "zh-CN": "GDC 官方会议页，2026-08-09 核验。Coin Crew Games 以 200 余次测试为例，说明独立团队把 Playtest 作为开发核心并用其数据改善首作。", "en": "Official GDC session page, checked 2026-08-09. Coin Crew Games uses more than 200 sessions to show an indie team putting playtesting at the center of development and using the resulting data to improve its debut game." }
+      },
+      {
+        "title": { "zh-CN": "GDC：Independent Games Summit — Business Development for Self-Publishing Studios and Developers", "en": "GDC: Independent Games Summit: Business Development for Self-Publishing Studios and Developers" },
+        "url": "https://gdcvault.com/play/1029176/Independent-Games-Summit-Business-Development",
+        "sourceNote": { "zh-CN": "GDC 官方会议页，2026-08-09 核验。直接讨论自发行与发行合作的差异，以及商务开发如何连接游戏开发的多个阶段。", "en": "Official GDC session page, checked 2026-08-09. It directly discusses self-publishing versus publishing partnerships and how business development connects to multiple stages of game development." }
+      },
+      {
+        "title": { "zh-CN": "GDC 2024 幻灯片：Developing and Sharpening", "en": "GDC 2024 slides: Developing and Sharpening" },
+        "url": "https://media.gdcvault.com/gdc2024/Slides/GDC%2Bslide%2Bpresentations/Nikolich_Evan_Developing%2Band%2BSharpening.pdf",
+        "sourceNote": { "zh-CN": "GDC 官方公开幻灯片，2026-08-09 核验。材料以技能受限的一人开发者为例，强调围绕系统、玩家、早期反馈和可完成约束作聚焦；仅用作范围与验证的参考，不推广其成功结果。", "en": "Official public GDC slide deck, checked 2026-08-09. It uses a skill-limited solo developer to emphasize focus on systems, players, early feedback, and finishable constraints; it is used only as evidence for scope and validation, not as a prescription for its outcome." }
+      }
+    ],
+    "reviewedAt": "2026-08-09",
+    "capabilities": [
+      { "capabilityId": "experience-framing", "priority": "core", "responsibility": "decide" },
+      { "capabilityId": "core-loop-design", "priority": "core", "responsibility": "execute" },
+      { "capabilityId": "learning-prototype-design", "priority": "core", "responsibility": "execute" },
+      { "capabilityId": "scope-prioritization", "priority": "core", "responsibility": "decide" },
+      { "capabilityId": "iteration-planning", "priority": "core", "responsibility": "execute" },
+      { "capabilityId": "playtesting", "priority": "core", "responsibility": "execute" },
+      { "capabilityId": "player-behavior-observation", "priority": "important", "responsibility": "execute" },
+      { "capabilityId": "qualitative-evidence-synthesis", "priority": "important", "responsibility": "execute" },
+      { "capabilityId": "task-breakdown", "priority": "important", "responsibility": "execute" },
+      { "capabilityId": "audience-positioning", "priority": "important", "responsibility": "decide" },
+      { "capabilityId": "market-reference-analysis", "priority": "important", "responsibility": "execute" },
+      { "capabilityId": "value-proposition-framing", "priority": "important", "responsibility": "decide" },
+      { "capabilityId": "cross-discipline-communication", "priority": "suggested", "responsibility": "contribute" },
+      { "capabilityId": "aesthetic-direction", "priority": "suggested", "responsibility": "decide" }
+    ]
   }
 ]
