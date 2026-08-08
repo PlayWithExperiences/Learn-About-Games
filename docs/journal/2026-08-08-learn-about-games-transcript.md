@@ -247,3 +247,9 @@ Atlas 只写入 7 条经 lead 审批的关系：Rogue 到 Hack、Hack 到 NetHac
 实现只新增一条项目路径 E2E，不建立 crawler。它在首页读取可见绝对内部链接并要求每个以 `/Learn-About-Games/` 起始；然后请求地图、`capabilities/playtesting`、`trails/playtesting-foundations`、资源库、Atlas、真实项目文档和首页读取到的 stylesheet，均要求 HTTP 200。由于子路径实现已在先前任务存在，测试的首次意图是验证既有行为而非伪造 RED。首次命令确实被新测试的 TypeScript 错误阻断：`getAttribute()` 的可能空值用作 matcher message，另有未使用的常量。根因确认后仅用控制流窄化和该常量本身修正测试；fresh build 与 Chromium 定向验收随后通过，未修改站点运行时代码。
 
 新增 workflow 只在 `main` 推送和手动触发时运行：checkout、以 `.nvmrc` 的 Node 24 使用 npm cache、`npm ci`、Chromium 安装、Pages 配置、构建、Chromium E2E 和 `dist` artifact 上传。部署 job 依赖 build，且只在该 job 赋予 `pages: write` 与 `id-token: write`；未加入第三方 action、遥测、crawler、PR 部署或非计划的 concurrency。Changelog 记录的是 workflow 和验收已加入，不声称站点已上线；Roadmap 保持 Now，等待实际远端部署证据。
+
+### 29. M0 Task 6：Pages 配置读取权限质量修复
+
+记录说明：以下为当前实现任务可访问范围内的脱敏摘要，是 partial export，不是完整聊天 UI 的逐字导出。缺失范围与第 28 节相同。
+
+质量审查确认 `actions/configure-pages@v6` 在 build job 中使用 `github.token` 调用 Pages 配置读取接口，因此仅有顶层 `contents: read` 会阻断首次 workflow。实现先运行一次性 AWK 文本契约，确认 `build` block 不含 `pages: read`（RED）；首次脚本因 zsh 保留变量名 `status` 中止，重命名为 `result_code` 后获得有效 RED。最小修复只在 build job 添加 job-level `contents: read` 与 `pages: read`，保留顶层 `contents: read`，没有给 build 写权限。deploy job 继续仅有 `pages: write` 和 `id-token: write`。此修复不构成远端部署成功证据，Roadmap 与部署状态均未更新为已上线。
