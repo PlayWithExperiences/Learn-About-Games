@@ -9,6 +9,47 @@ const localizedText = z
   })
   .strict();
 
+const isoDate = z.iso.date();
+
+const externalSignal = z
+  .object({
+    provider: z.string().trim().min(1),
+    label: z.string().trim().min(1),
+    value: z.union([z.string().trim().min(1), z.number().finite()]),
+    observedAt: isoDate,
+    url: z.url(),
+  })
+  .strict();
+
+const accessVersion = z
+  .object({
+    language: z.string().trim().min(1),
+    url: z.url(),
+    accessModel: z.enum(['free', 'paid', 'subscription']),
+    regionRestrictions: z
+      .array(
+        z
+          .object({
+            regions: z.array(z.string().trim().min(1)).min(1),
+            note: localizedText,
+          })
+          .strict(),
+      )
+      .min(1)
+      .optional(),
+    translationKind: z.enum(['original', 'official', 'community', 'bilingual', 'subtitled']),
+    checkedAt: isoDate,
+  })
+  .strict();
+
+const basisLink = z
+  .object({
+    title: localizedText,
+    url: z.url(),
+    sourceNote: localizedText,
+  })
+  .strict();
+
 const domains = defineCollection({
   loader: file('src/data/domains.json'),
   schema: z.object({
@@ -27,33 +68,78 @@ const capabilities = defineCollection({
   }),
 });
 
+const knowledgeTopics = defineCollection({
+  loader: file('src/data/knowledge-topics.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      name: localizedText,
+      summary: localizedText,
+      domainId: z.string().trim().min(1),
+    })
+    .strict(),
+});
+
+const capabilityRelations = defineCollection({
+  loader: file('src/data/capability-relations.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      fromId: z.string().trim().min(1),
+      toId: z.string().trim().min(1),
+      type: z.enum(['supports', 'complements']),
+      summary: localizedText,
+    })
+    .strict(),
+});
+
+const resourceTopics = defineCollection({
+  loader: file('src/data/resource-topics.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      summary: localizedText,
+      capabilityIds: z.array(z.string().trim().min(1)),
+      knowledgeTopicIds: z.array(z.string().trim().min(1)),
+    })
+    .strict(),
+});
+
 const sources = defineCollection({
   loader: file('src/data/sources.json'),
-  schema: z.object({
-    name: localizedText,
-    homepage: z.url(),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      name: localizedText,
+      kind: z.enum(['creator', 'channel', 'organization', 'publisher', 'website']),
+      summary: localizedText,
+      homepage: z.url(),
+      languages: z.array(z.string().trim().min(1)).min(1),
+      externalSignals: z.array(externalSignal).optional(),
+    })
+    .strict(),
 });
 
 const resources = defineCollection({
   loader: file('src/data/resources.json'),
-  schema: z.object({
-    title: localizedText,
-    summary: localizedText,
-    sourceId: z.string().trim().min(1),
-    capabilityIds: z.array(z.string().trim().min(1)),
-    mediaType: z.string().trim().min(1),
-    reviewStatus: z.string().trim().min(1),
-    accessVersions: z.array(
-      z.object({
-        language: z.string().trim().min(1),
-        url: z.url(),
-        access: z.string().trim().min(1),
-        translationKind: z.string().trim().min(1),
-        checkedAt: z.string().trim().min(1),
-      }),
-    ),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      summary: localizedText,
+      sourceId: z.string().trim().min(1),
+      capabilityIds: z.array(z.string().trim().min(1)),
+      knowledgeTopicIds: z.array(z.string().trim().min(1)),
+      resourceTopicIds: z.array(z.string().trim().min(1)),
+      mediaType: z.enum(['article', 'book', 'course', 'paper', 'podcast', 'talk', 'video', 'website']),
+      canonicalUrl: z.url(),
+      whyRelevant: localizedText,
+      originalLanguage: z.string().trim().min(1),
+      externalSignals: z.array(externalSignal).optional(),
+      accessVersions: z.array(accessVersion).min(1),
+    })
+    .strict(),
 });
 
 const learningTrails = defineCollection({
@@ -71,20 +157,27 @@ const learningTrails = defineCollection({
 
 const roleProfiles = defineCollection({
   loader: file('src/data/role-profiles.json'),
-  schema: z.object({
-    title: localizedText,
-    roleId: z.string().trim().min(1),
-    productionContextId: z.string().trim().min(1),
-    basis: localizedText,
-    caveats: localizedText,
-    capabilities: z.array(
-      z.object({
-        capabilityId: z.string().trim().min(1),
-        priority: z.string().trim().min(1),
-        responsibility: z.string().trim().min(1),
-      }),
-    ),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      roleId: z.string().trim().min(1),
+      productionContextId: z.string().trim().min(1),
+      basis: localizedText,
+      basisLinks: z.array(basisLink).min(1),
+      reviewedAt: isoDate,
+      caveats: localizedText,
+      capabilities: z.array(
+        z
+          .object({
+            capabilityId: z.string().trim().min(1),
+            priority: z.enum(['core', 'important', 'suggested']),
+            responsibility: z.enum(['execute', 'contribute', 'decide', 'direct']),
+          })
+          .strict(),
+      ),
+    })
+    .strict(),
 });
 
 const atlasCategories = defineCollection({
@@ -157,6 +250,9 @@ const devlog = defineCollection({
 export const collections = {
   domains,
   capabilities,
+  knowledgeTopics,
+  capabilityRelations,
+  resourceTopics,
   sources,
   resources,
   learningTrails,
