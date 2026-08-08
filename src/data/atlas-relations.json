@@ -4,8 +4,10 @@
     "fromId": "rogue",
     "toId": "hack",
     "type": "derived-variant",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["nethack-license-history"],
+    "tags": ["roguelike-lens", "run-based-structure"],
     "summary": { "zh-CN": "NetHack 官方许可历史将 Hack 描述为基本上是 Rogue 的实现或变体。" }
   },
   {
@@ -13,8 +15,10 @@
     "fromId": "hack",
     "toId": "nethack",
     "type": "derived-variant",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["nethack-git-history"],
+    "tags": ["roguelike-lens", "run-based-structure"],
     "summary": { "zh-CN": "NetHack 官方历史记录多个 Hack 版本的工作被合并，产生了 NetHack。" }
   },
   {
@@ -22,8 +26,10 @@
     "fromId": "rogue",
     "toId": "moria",
     "type": "direct-influence",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["umoria-history"],
+    "tags": ["roguelike-lens", "run-based-structure"],
     "summary": { "zh-CN": "Moria 作者自述受到 Rogue 的直接启发，且早期版本很像 Rogue。" }
   },
   {
@@ -31,8 +37,10 @@
     "fromId": "moria",
     "toId": "angband",
     "type": "derived-variant",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["angband-version-history"],
+    "tags": ["roguelike-lens", "run-based-structure"],
     "summary": { "zh-CN": "Angband 官方版本史说明 Angband 1.0 基于 Umoria 5.2.1。" }
   },
   {
@@ -40,8 +48,10 @@
     "fromId": "angband",
     "toId": "diablo",
     "type": "fusion",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["rpgfan-brevik-interview"],
+    "tags": ["roguelike-lens", "fusion", "real-time-action"],
     "summary": { "zh-CN": "Brevik 说明 Diablo 原型以 Angband 式 Roguelike 为模型，随后把回合制改为实时。" }
   },
   {
@@ -49,17 +59,219 @@
     "fromId": "roguelike-run-structure",
     "toId": "spelunky",
     "type": "fusion",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["rps-spelunky-interview"],
-    "summary": { "zh-CN": "Derek Yu 说明这款 Roguelike-inspired platformer 来自 Roguelike 与平台游戏原型的融合。" }
+    "tags": ["roguelike-lens", "run-based-structure", "fusion"],
+    "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自 Roguelike 与平台游戏原型的融合。" }
   },
   {
     "id": "spelunky-to-hades",
     "fromId": "spelunky",
     "toId": "hades",
     "type": "direct-influence",
-    "evidenceStatus": "confirmed",
+    "status": "confirmed",
+    "directionality": "directed",
     "evidenceIds": ["gamedeveloper-kasavin-interview"],
+    "tags": ["roguelike-lens", "run-based-structure", "narrative-continuity"],
     "summary": { "zh-CN": "Kasavin 说明团队从 Spelunky 已经推进的知识出发，构思让角色记住每次死亡的叙事连续性。" }
+  },
+  {
+    "id": "metroid-to-metroid-ii",
+    "fromId": "metroid",
+    "toId": "metroid-ii-return-of-samus",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "story-continuity"],
+    "summary": { "zh-CN": "Nintendo 将 Metroid II 列为第二款 2D Metroid，并延续初代之后的任务；这里只表达官方系列与故事延续。" }
+  },
+  {
+    "id": "metroid-ii-to-super-metroid",
+    "fromId": "metroid-ii-return-of-samus",
+    "toId": "super-metroid",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "story-continuity"],
+    "summary": { "zh-CN": "Nintendo 将 Super Metroid 列为第三款 2D Metroid，其故事承接 Metroid II；不把系列次序扩大成排他设计因果。" }
+  },
+  {
+    "id": "zelda-link-to-past-to-sotn",
+    "fromId": "zelda-a-link-to-the-past",
+    "toId": "castlevania-symphony-of-the-night",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["igarashi-metroidvania-interview", "gamespot-igarashi-zelda"],
+    "tags": ["metroidvania-lens", "zelda-lineage", "item-gated-exploration"],
+    "summary": { "zh-CN": "Igarashi 说明团队喜爱 Zelda，并把探索、取得物品后解锁下一区域的结构用于 SOTN 的方向。" }
+  },
+  {
+    "id": "super-metroid-and-sotn",
+    "fromId": "super-metroid",
+    "toId": "castlevania-symphony-of-the-night",
+    "type": "structural-similarity",
+    "status": "confirmed",
+    "directionality": "undirected",
+    "evidenceIds": ["igarashi-metroidvania-interview"],
+    "tags": ["metroidvania-lens", "ability-gated-exploration", "backtracking"],
+    "summary": { "zh-CN": "Igarashi 承认两者在获得新能力后回访、继续探索的结构上相似，同时把 SOTN 的有意灵感指向 Zelda。" }
+  },
+  {
+    "id": "run-structure-to-dead-cells",
+    "fromId": "roguelike-run-structure",
+    "toId": "dead-cells",
+    "type": "fusion",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["motion-twin-presskit", "motion-twin-xbox-interview"],
+    "tags": ["roguelike-lens", "metroidvania-lens", "cross-theme", "run-based-structure", "fusion"],
+    "summary": { "zh-CN": "Motion Twin 明确说 Dead Cells 有意混合 Roguelite 与 Metroidvania；单局结构节点表达前者的设计概念。" }
+  },
+  {
+    "id": "metroid-to-cave-story",
+    "fromId": "metroid",
+    "toId": "cave-story",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["cave-story-amaya-interview"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "indie"],
+    "summary": { "zh-CN": "Amaya 把 Metroid 与 Dragon Quest 说成 Cave Story 最强的两项灵感；Metroid 是多项来源之一。" }
+  },
+  {
+    "id": "cave-story-to-indie-expansion",
+    "fromId": "cave-story",
+    "toId": "indie-metroidvania-expansion",
+    "type": "revival",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gamedeveloper-metroidvania-allure", "gdc-cave-story"],
+    "tags": ["metroidvania-lens", "indie", "revival-context", "category-formation"],
+    "summary": { "zh-CN": "历史回顾把 Cave Story 视为后来独立探索平台游戏扩张的重要早期转折点之一，而不是唯一原因。" }
+  },
+  {
+    "id": "super-metroid-to-shadow-complex",
+    "fromId": "super-metroid",
+    "toId": "shadow-complex",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["mustard-shadow-complex-interview"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "nonlinear-world"],
+    "summary": { "zh-CN": "Donald Mustard 明确说 Super Metroid 是个人最爱，并说明 Shadow Complex 有意处理 Metroid 式非线性世界。" }
+  },
+  {
+    "id": "shadow-complex-to-indie-expansion",
+    "fromId": "shadow-complex",
+    "toId": "indie-metroidvania-expansion",
+    "type": "revival",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["mustard-shadow-complex-interview", "gamedeveloper-metroidvania-allure"],
+    "tags": ["metroidvania-lens", "revival-context", "category-formation"],
+    "summary": { "zh-CN": "同期访谈与后来的历史回顾把 Shadow Complex 视为一次有意的商业复兴，并显示该结构仍有受众。" }
+  },
+  {
+    "id": "metroid-to-axiom-verge",
+    "fromId": "metroid",
+    "toId": "axiom-verge",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["tom-happ-axiom-verge"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "indie"],
+    "summary": { "zh-CN": "Tom Happ 明确把 Metroid 列为 Axiom Verge 的多项灵感之一。" }
+  },
+  {
+    "id": "super-metroid-to-ori",
+    "fromId": "super-metroid",
+    "toId": "ori-and-the-blind-forest",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["moon-studios-ori-postmortem"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "ability-gated-exploration"],
+    "summary": { "zh-CN": "Moon Studios 的 postmortem 明确把 Super Metroid 列为 Ori 的参考来源之一。" }
+  },
+  {
+    "id": "sotn-to-ori",
+    "fromId": "castlevania-symphony-of-the-night",
+    "toId": "ori-and-the-blind-forest",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["moon-studios-ori-postmortem"],
+    "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "ability-gated-exploration"],
+    "summary": { "zh-CN": "同一 postmortem 明确把 SOTN 列为 Ori 的参考来源之一，与 Super Metroid 关系并存以保留多源事实。" }
+  },
+  {
+    "id": "faxanadu-to-hollow-knight",
+    "fromId": "faxanadu",
+    "toId": "hollow-knight",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["team-cherry-nintendo-interview", "team-cherry-nintendolife-interview"],
+    "tags": ["metroidvania-lens", "platform-adventure", "indie"],
+    "summary": { "zh-CN": "Team Cherry 说明工作室由对 Faxanadu 与 Zelda II 等作品的喜爱聚合，并希望唤起玩 Faxanadu 时的感受。" }
+  },
+  {
+    "id": "zelda-ii-to-hollow-knight",
+    "fromId": "zelda-ii-adventure-of-link",
+    "toId": "hollow-knight",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["team-cherry-nintendo-interview", "team-cherry-nintendolife-interview"],
+    "tags": ["metroidvania-lens", "zelda-lineage", "indie"],
+    "summary": { "zh-CN": "Team Cherry 明确把 Zelda II 列入工作室共同喜爱的作品与 Hollow Knight 希望唤起的体验来源。" }
+  },
+  {
+    "id": "metroid-to-hollow-knight",
+    "fromId": "metroid",
+    "toId": "hollow-knight",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["team-cherry-nintendolife-interview"],
+    "tags": ["metroidvania-lens", "metroid-lineage", "indie"],
+    "summary": { "zh-CN": "Team Cherry 明确说 Hollow Knight 希望唤起玩 Metroid、Faxanadu 或 Zelda II 时的感受，保留多来源结构。" }
+  },
+  {
+    "id": "sotn-to-dead-cells",
+    "fromId": "castlevania-symphony-of-the-night",
+    "toId": "dead-cells",
+    "type": "fusion",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["motion-twin-presskit", "motion-twin-xbox-interview"],
+    "tags": ["roguelike-lens", "metroidvania-lens", "cross-theme", "castlevania-exploration-lineage", "fusion"],
+    "summary": { "zh-CN": "Motion Twin 把 Dead Cells 描述为现代 Roguelite 与旧式 MetroidVania 的融合，并明确列出 SOTN。" }
+  },
+  {
+    "id": "spelunky-to-dead-cells",
+    "fromId": "spelunky",
+    "toId": "dead-cells",
+    "type": "fusion",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["motion-twin-presskit"],
+    "tags": ["roguelike-lens", "metroidvania-lens", "cross-theme", "run-based-structure", "fusion"],
+    "summary": { "zh-CN": "Motion Twin 官方描述把 Spelunky 列入 Dead Cells 的现代 Roguelite 来源组；它是多个来源之一。" }
+  },
+  {
+    "id": "sotn-to-bloodstained",
+    "fromId": "castlevania-symphony-of-the-night",
+    "toId": "bloodstained-ritual-of-the-night",
+    "type": "revival",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["bloodstained-kickstarter", "igarashi-bloodstained-interview"],
+    "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "revival-context"],
+    "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作；这不是法定系列续作。" }
   }
 ]

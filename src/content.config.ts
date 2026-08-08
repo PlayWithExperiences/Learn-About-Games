@@ -207,54 +207,82 @@ const roleProfiles = defineCollection({
     .strict(),
 });
 
-const atlasCategories = defineCollection({
-  loader: file('src/data/atlas-categories.json'),
-  schema: z.object({
-    name: localizedText,
-    summary: localizedText,
-    order: z.number().int(),
-  }),
+const atlasTags = defineCollection({
+  loader: file('src/data/atlas-tags.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      name: localizedText,
+      summary: localizedText,
+    })
+    .strict(),
 });
 
 const atlasNodes = defineCollection({
   loader: file('src/data/atlas-nodes.json'),
-  schema: z.object({
-    kind: z.enum(['game', 'innovation']),
-    name: localizedText,
-    summary: localizedText,
-    year: z.number().int(),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      kind: z.enum(['game', 'innovation', 'category']),
+      name: localizedText,
+      summary: localizedText,
+      startYear: z.number().int(),
+      endYear: z.number().int().optional(),
+      lane: z.number().int().min(0),
+      tags: z.array(z.string().trim().min(1)).min(1),
+      evidenceIds: z.array(z.string().trim().min(1)).min(1),
+    })
+    .strict(),
 });
 
 const atlasEvidence = defineCollection({
   loader: file('src/data/atlas-evidence.json'),
-  schema: z.object({
-    title: localizedText,
-    url: httpUrl,
-    summary: localizedText,
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      url: httpUrl,
+      summary: localizedText,
+    })
+    .strict(),
 });
 
 const atlasRelations = defineCollection({
   loader: file('src/data/atlas-relations.json'),
-  schema: z.object({
-    fromId: z.string().trim().min(1),
-    toId: z.string().trim().min(1),
-    type: z.string().trim().min(1),
-    evidenceStatus: z.string().trim().min(1),
-    evidenceIds: z.array(z.string().trim().min(1)).min(1),
-    summary: localizedText,
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      fromId: z.string().trim().min(1),
+      toId: z.string().trim().min(1),
+      type: z.enum([
+        'direct-influence',
+        'derived-variant',
+        'fusion',
+        'revival',
+        'parallel-origin',
+        'structural-similarity',
+        'disputed',
+      ]),
+      status: z.enum(['confirmed', 'credible', 'inferred', 'disputed']),
+      directionality: z.enum(['directed', 'undirected']),
+      evidenceIds: z.array(z.string().trim().min(1)).min(1),
+      tags: z.array(z.string().trim().min(1)).min(1),
+      summary: localizedText,
+      chronologyExplanation: localizedText.optional(),
+    })
+    .strict(),
 });
 
 const atlasThemes = defineCollection({
   loader: file('src/data/atlas-themes.json'),
-  schema: z.object({
-    title: localizedText,
-    summary: localizedText,
-    nodeIds: z.array(z.string().trim().min(1)),
-    relationIds: z.array(z.string().trim().min(1)),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      summary: localizedText,
+      tags: z.array(z.string().trim().min(1)).min(1),
+    })
+    .strict(),
 });
 
 const projectDocs = defineCollection({
@@ -283,7 +311,7 @@ export const collections = {
   sources,
   resources,
   roleProfiles,
-  atlasCategories,
+  atlasTags,
   atlasNodes,
   atlasEvidence,
   atlasRelations,

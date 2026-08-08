@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest';
 
 import resourceIntake from '../../docs/research/2026-08-09-resource-intake.md?raw';
 
-import atlasCategories from '../../src/data/atlas-categories.json';
 import atlasEvidence from '../../src/data/atlas-evidence.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
 import atlasRelations from '../../src/data/atlas-relations.json';
+import atlasTags from '../../src/data/atlas-tags.json';
 import atlasThemes from '../../src/data/atlas-themes.json';
 import capabilities from '../../src/data/capabilities.json';
 import capabilityRelations from '../../src/data/capability-relations.json';
@@ -26,7 +26,7 @@ const collections = {
   sources,
   resources,
   roleProfiles,
-  atlasCategories,
+  atlasTags,
   atlasNodes,
   atlasEvidence,
   atlasRelations,

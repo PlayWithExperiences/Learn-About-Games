@@ -1,0 +1,137 @@
+[
+  {
+    "id": "roguelike-lens",
+    "name": { "zh-CN": "Roguelike 证据透镜", "en": "Roguelike evidence lens" },
+    "summary": { "zh-CN": "标记与 Roguelike 历史、结构或有证据关系相关的节点与边；不等于类别成员判定。" }
+  },
+  {
+    "id": "metroidvania-lens",
+    "name": { "zh-CN": "Metroidvania 证据透镜", "en": "Metroidvania evidence lens" },
+    "summary": { "zh-CN": "标记与 Metroidvania 命名、结构或有证据关系相关的节点与边；不把后来的类别名倒灌到早期作品。" }
+  },
+  {
+    "id": "cross-theme",
+    "name": { "zh-CN": "跨主题", "en": "Cross-theme" },
+    "summary": { "zh-CN": "连接两个或更多证据透镜的节点或关系。" }
+  },
+  {
+    "id": "run-based-structure",
+    "name": { "zh-CN": "单局循环结构", "en": "Run-based structure" },
+    "summary": { "zh-CN": "以失败、重开与单局变化形成重复尝试的设计结构。" }
+  },
+  {
+    "id": "procedural-generation",
+    "name": { "zh-CN": "程序生成", "en": "Procedural generation" },
+    "summary": { "zh-CN": "通过算法生成关卡、布局或内容变化。" }
+  },
+  {
+    "id": "permadeath",
+    "name": { "zh-CN": "单局永久死亡", "en": "Permadeath" },
+    "summary": { "zh-CN": "单局失败会结束当前进程并要求重新开始。" }
+  },
+  {
+    "id": "metroid-lineage",
+    "name": { "zh-CN": "Metroid 系列脉络", "en": "Metroid lineage" },
+    "summary": { "zh-CN": "Metroid 系列事实或由开发者明确提及的影响脉络。" }
+  },
+  {
+    "id": "castlevania-exploration-lineage",
+    "name": { "zh-CN": "Castlevania 探索脉络", "en": "Castlevania exploration lineage" },
+    "summary": { "zh-CN": "Castlevania 中与探索、成长和回访结构相关的作品脉络。" }
+  },
+  {
+    "id": "zelda-lineage",
+    "name": { "zh-CN": "Zelda 影响脉络", "en": "Zelda influence lineage" },
+    "summary": { "zh-CN": "Zelda 系列事实或由开发者明确提及的影响脉络。" }
+  },
+  {
+    "id": "ability-gated-exploration",
+    "name": { "zh-CN": "能力门控探索", "en": "Ability-gated exploration" },
+    "summary": { "zh-CN": "取得新能力后可以进入此前不可达区域的探索结构。" }
+  },
+  {
+    "id": "item-gated-exploration",
+    "name": { "zh-CN": "道具门控探索", "en": "Item-gated exploration" },
+    "summary": { "zh-CN": "取得道具后可以解开场地、迷宫或区域的探索结构。" }
+  },
+  {
+    "id": "backtracking",
+    "name": { "zh-CN": "回访", "en": "Backtracking" },
+    "summary": { "zh-CN": "以新能力或新信息返回既有空间。" }
+  },
+  {
+    "id": "map-exploration",
+    "name": { "zh-CN": "地图探索", "en": "Map exploration" },
+    "summary": { "zh-CN": "将空间发现、路径理解与区域连接作为核心体验。" }
+  },
+  {
+    "id": "platform-adventure",
+    "name": { "zh-CN": "平台冒险", "en": "Platform adventure" },
+    "summary": { "zh-CN": "结合平台动作与持续空间探索的中性结构标签。" }
+  },
+  {
+    "id": "action-rpg",
+    "name": { "zh-CN": "动作角色扮演", "en": "Action RPG" },
+    "summary": { "zh-CN": "结合即时行动与角色成长系统。" }
+  },
+  {
+    "id": "action-adventure",
+    "name": { "zh-CN": "动作冒险", "en": "Action adventure" },
+    "summary": { "zh-CN": "结合即时行动、探索与谜题的中性作品描述。" }
+  },
+  {
+    "id": "rpg-progression",
+    "name": { "zh-CN": "RPG 成长", "en": "RPG progression" },
+    "summary": { "zh-CN": "通过等级、装备或数值形成持续成长。" }
+  },
+  {
+    "id": "term-history",
+    "name": { "zh-CN": "命名史", "en": "Term history" },
+    "summary": { "zh-CN": "记录名称的可核查用例与传播，不宣称唯一发明者。" }
+  },
+  {
+    "id": "category-formation",
+    "name": { "zh-CN": "类别形成", "en": "Category formation" },
+    "summary": { "zh-CN": "一个名称或创作场域在一段时间内逐步形成的历史过程。" }
+  },
+  {
+    "id": "indie",
+    "name": { "zh-CN": "独立开发", "en": "Independent development" },
+    "summary": { "zh-CN": "与独立开发者或独立创作场域有关的作品与历史。" }
+  },
+  {
+    "id": "revival-context",
+    "name": { "zh-CN": "复兴语境", "en": "Revival context" },
+    "summary": { "zh-CN": "旧有结构在新的平台、市场或开发场域中重新获得可见度。" }
+  },
+  {
+    "id": "nonlinear-world",
+    "name": { "zh-CN": "非线性世界", "en": "Nonlinear world" },
+    "summary": { "zh-CN": "允许多方向探索或非固定关卡顺序的空间结构。" }
+  },
+  {
+    "id": "fusion",
+    "name": { "zh-CN": "结构融合", "en": "Structural fusion" },
+    "summary": { "zh-CN": "开发者明确组合不同作品或类型结构。" }
+  },
+  {
+    "id": "self-description",
+    "name": { "zh-CN": "开发者自述类别", "en": "Developer self-description" },
+    "summary": { "zh-CN": "只表示开发者或官方如何描述作品，不作为站内客观评分或唯一分类。" }
+  },
+  {
+    "id": "story-continuity",
+    "name": { "zh-CN": "故事连续", "en": "Story continuity" },
+    "summary": { "zh-CN": "官方明确记录作品之间的故事或系列延续。" }
+  },
+  {
+    "id": "real-time-action",
+    "name": { "zh-CN": "实时动作转译", "en": "Real-time action translation" },
+    "summary": { "zh-CN": "将原本回合或其他结构转译为实时动作。" }
+  },
+  {
+    "id": "narrative-continuity",
+    "name": { "zh-CN": "跨单局叙事连续", "en": "Cross-run narrative continuity" },
+    "summary": { "zh-CN": "让角色与故事记住重复失败并保持叙事推进。" }
+  }
+]

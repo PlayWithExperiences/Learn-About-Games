@@ -4,11 +4,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 
 const catalog = await loadCatalog();
-const theme = catalog.atlasThemes.find(({ id }) => id === 'roguelike-run-variants');
-
-if (!theme) {
-  throw new Error('The reviewed Roguelike Atlas seed is missing.');
-}
 ---
 
 <BaseLayout
@@ -25,10 +20,10 @@ if (!theme) {
   </section>
 
   <AtlasSeed
-    categories={catalog.atlasCategories}
+    tags={catalog.atlasTags}
     evidence={catalog.atlasEvidence}
     nodes={catalog.atlasNodes}
     relations={catalog.atlasRelations}
-    theme={theme}
+    themes={catalog.atlasThemes}
   />
 </BaseLayout>

@@ -4,62 +4,271 @@
     "kind": "game",
     "name": { "zh-CN": "Rogue", "en": "Rogue" },
     "summary": { "zh-CN": "以程序生成地城与单局死亡为主题起点之一；这里不把它写成绝对第一款。" },
-    "year": 1980
-  },
-  {
-    "id": "hack",
-    "kind": "game",
-    "name": { "zh-CN": "Hack", "en": "Hack" },
-    "summary": { "zh-CN": "NetHack 官方许可历史将其描述为基本上是 Rogue 的实现或变体。" },
-    "year": 1982
-  },
-  {
-    "id": "moria",
-    "kind": "game",
-    "name": { "zh-CN": "Moria", "en": "Moria" },
-    "summary": { "zh-CN": "作者回顾称其直接受 Rogue 启发，早期版本与 Rogue 很相似。" },
-    "year": 1983
-  },
-  {
-    "id": "nethack",
-    "kind": "game",
-    "name": { "zh-CN": "NetHack", "en": "NetHack" },
-    "summary": { "zh-CN": "由多个 Hack 版本的工作合并而来。" },
-    "year": 1987
-  },
-  {
-    "id": "angband",
-    "kind": "game",
-    "name": { "zh-CN": "Angband", "en": "Angband" },
-    "summary": { "zh-CN": "官方版本史说明 Angband 1.0 基于 Umoria 5.2.1。" },
-    "year": 1990
-  },
-  {
-    "id": "diablo",
-    "kind": "game",
-    "name": { "zh-CN": "Diablo", "en": "Diablo" },
-    "summary": { "zh-CN": "早期原型以 Angband 式 Roguelike 为模型，随后把回合制转为实时动作。" },
-    "year": 1996
-  },
-  {
-    "id": "spelunky",
-    "kind": "game",
-    "name": { "zh-CN": "Spelunky", "en": "Spelunky" },
-    "summary": { "zh-CN": "把 Roguelike 启发的单局结构与平台游戏原型融合。" },
-    "year": 2008
-  },
-  {
-    "id": "hades",
-    "kind": "game",
-    "name": { "zh-CN": "Hades", "en": "Hades" },
-    "summary": { "zh-CN": "以动作玩法承载反复尝试，并让角色记住死亡来保持叙事连续性。" },
-    "year": 2020
+    "startYear": 1980,
+    "lane": 2,
+    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "evidenceIds": ["wichman-rogue-history"]
   },
   {
     "id": "roguelike-run-structure",
     "kind": "innovation",
     "name": { "zh-CN": "Roguelike run-based 单局结构", "en": "Roguelike run-based structure" },
     "summary": { "zh-CN": "把程序生成、单局失败与重新开始视为可跨类型转译的设计概念，而不是某一款游戏。" },
-    "year": 1980
+    "startYear": 1980,
+    "lane": 0,
+    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "evidenceIds": ["wichman-rogue-history"]
+  },
+  {
+    "id": "hack",
+    "kind": "game",
+    "name": { "zh-CN": "Hack", "en": "Hack" },
+    "summary": { "zh-CN": "NetHack 官方许可历史将其描述为基本上是 Rogue 的实现或变体。" },
+    "startYear": 1982,
+    "lane": 3,
+    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "evidenceIds": ["nethack-license-history"]
+  },
+  {
+    "id": "moria",
+    "kind": "game",
+    "name": { "zh-CN": "Moria", "en": "Moria" },
+    "summary": { "zh-CN": "作者回顾称其直接受 Rogue 启发，早期版本与 Rogue 很相似。" },
+    "startYear": 1983,
+    "lane": 4,
+    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "evidenceIds": ["umoria-history"]
+  },
+  {
+    "id": "metroid",
+    "kind": "game",
+    "name": { "zh-CN": "Metroid", "en": "Metroid" },
+    "summary": { "zh-CN": "Nintendo 回顾将迷宫式区域、取得能力后到达新地点列为初代建立的系列基础结构；这不是品类发明声明。" },
+    "startYear": 1986,
+    "lane": 2,
+    "tags": ["metroidvania-lens", "metroid-lineage", "ability-gated-exploration", "map-exploration", "platform-adventure"],
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4"]
+  },
+  {
+    "id": "zelda-ii-adventure-of-link",
+    "kind": "game",
+    "name": { "zh-CN": "Zelda II: The Adventure of Link", "en": "Zelda II: The Adventure of Link" },
+    "summary": { "zh-CN": "作为 Team Cherry 明确提到的灵感来源进入网络，不把它改写为 Metroidvania 类别成员。" },
+    "startYear": 1987,
+    "lane": 3,
+    "tags": ["metroidvania-lens", "zelda-lineage", "action-rpg", "platform-adventure"],
+    "evidenceIds": ["nintendo-zelda-ii", "team-cherry-nintendo-interview"]
+  },
+  {
+    "id": "castlevania-ii-simons-quest",
+    "kind": "game",
+    "name": { "zh-CN": "Castlevania II: Simon's Quest", "en": "Castlevania II: Simon's Quest" },
+    "summary": { "zh-CN": "Konami 将其描述为 RPG 式的城镇、迷宫、道具与昼夜结构；本轮没有验证它与 Metroid 的直接影响或平行发明关系。" },
+    "startYear": 1987,
+    "lane": 4,
+    "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "action-rpg", "nonlinear-world"],
+    "evidenceIds": ["konami-castlevania-ii-history"]
+  },
+  {
+    "id": "faxanadu",
+    "kind": "game",
+    "name": { "zh-CN": "Faxanadu", "en": "Faxanadu" },
+    "summary": { "zh-CN": "官方页面将其描述为 action RPG；它因 Team Cherry 的直接灵感陈述进入网络，而不是因为今天的标签回填。" },
+    "startYear": 1987,
+    "lane": 5,
+    "tags": ["metroidvania-lens", "action-rpg", "platform-adventure"],
+    "evidenceIds": ["nintendo-faxanadu", "mobygames-faxanadu-release"]
+  },
+  {
+    "id": "nethack",
+    "kind": "game",
+    "name": { "zh-CN": "NetHack", "en": "NetHack" },
+    "summary": { "zh-CN": "由多个 Hack 版本的工作合并而来。" },
+    "startYear": 1987,
+    "lane": 6,
+    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "evidenceIds": ["nethack-git-history"]
+  },
+  {
+    "id": "angband",
+    "kind": "game",
+    "name": { "zh-CN": "Angband", "en": "Angband" },
+    "summary": { "zh-CN": "官方版本史说明 Angband 1.0 基于 Umoria 5.2.1。" },
+    "startYear": 1990,
+    "lane": 3,
+    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "evidenceIds": ["angband-version-history"]
+  },
+  {
+    "id": "metroid-ii-return-of-samus",
+    "kind": "game",
+    "name": { "zh-CN": "Metroid II: Return of Samus", "en": "Metroid II: Return of Samus" },
+    "summary": { "zh-CN": "Nintendo 将其列为第二款 2D Metroid；这里只记录系列与故事连续性。" },
+    "startYear": 1991,
+    "lane": 4,
+    "tags": ["metroidvania-lens", "metroid-lineage", "story-continuity", "platform-adventure"],
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4"]
+  },
+  {
+    "id": "zelda-a-link-to-the-past",
+    "kind": "game",
+    "name": { "zh-CN": "The Legend of Zelda: A Link to the Past", "en": "The Legend of Zelda: A Link to the Past" },
+    "summary": { "zh-CN": "Nintendo 将其描述为通过道具解开场地与迷宫谜题的 action adventure；Igarashi 明确提到其对 SOTN 的影响。" },
+    "startYear": 1991,
+    "lane": 5,
+    "tags": ["metroidvania-lens", "zelda-lineage", "item-gated-exploration", "action-adventure"],
+    "evidenceIds": ["nintendo-link-to-past", "igarashi-metroidvania-interview"]
+  },
+  {
+    "id": "super-metroid",
+    "kind": "game",
+    "name": { "zh-CN": "Super Metroid", "en": "Super Metroid" },
+    "summary": { "zh-CN": "Nintendo 将其列为第三款 2D Metroid；后来作品的影响关系只在开发者明确提及时建立。" },
+    "startYear": 1994,
+    "lane": 2,
+    "tags": ["metroidvania-lens", "metroid-lineage", "ability-gated-exploration", "backtracking", "map-exploration"],
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4", "nintendo-super-metroid-interview"]
+  },
+  {
+    "id": "diablo",
+    "kind": "game",
+    "name": { "zh-CN": "Diablo", "en": "Diablo" },
+    "summary": { "zh-CN": "早期原型以 Angband 式 Roguelike 为模型，随后把回合制转为实时动作。" },
+    "startYear": 1996,
+    "lane": 3,
+    "tags": ["roguelike-lens", "fusion", "real-time-action"],
+    "evidenceIds": ["rpgfan-brevik-interview"]
+  },
+  {
+    "id": "castlevania-symphony-of-the-night",
+    "kind": "game",
+    "name": { "zh-CN": "Castlevania: Symphony of the Night", "en": "Castlevania: Symphony of the Night" },
+    "summary": { "zh-CN": "Igarashi 把 Zelda 说成有意设计来源，并承认成品与 Metroid 存在结构相似；两类关系需要分开表达。" },
+    "startYear": 1997,
+    "lane": 4,
+    "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "rpg-progression", "ability-gated-exploration", "backtracking"],
+    "evidenceIds": ["konami-sotn-history", "igarashi-metroidvania-interview"]
+  },
+  {
+    "id": "castlevania-circle-of-the-moon",
+    "kind": "game",
+    "name": { "zh-CN": "Castlevania: Circle of the Moon", "en": "Castlevania: Circle of the Moon" },
+    "summary": { "zh-CN": "2001 年存档帖将 Metroidvania 一词用于这款作品；这证明一个用例，不证明发帖者创造了该词。" },
+    "startYear": 2001,
+    "lane": 2,
+    "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "term-history", "map-exploration"],
+    "evidenceIds": ["konami-circle-of-the-moon-history", "metroidvania-2001-usenet"]
+  },
+  {
+    "id": "metroidvania-term-category-formation",
+    "kind": "category",
+    "name": { "zh-CN": "Metroidvania 命名与类别形成", "en": "Metroidvania term and category formation" },
+    "summary": { "zh-CN": "从目前找到的 2001 年存档用例，到媒体与开发者逐步扩展、稳定使用该名称；它不是唯一作者的瞬时发明。" },
+    "startYear": 2001,
+    "endYear": 2015,
+    "lane": 1,
+    "tags": ["metroidvania-lens", "term-history", "category-formation"],
+    "evidenceIds": ["metroidvania-2001-usenet", "critical-hit-metroidvania-term-history", "gamedeveloper-metroidvania-allure"]
+  },
+  {
+    "id": "cave-story",
+    "kind": "game",
+    "name": { "zh-CN": "Cave Story", "en": "Cave Story" },
+    "summary": { "zh-CN": "Amaya 明确说 Metroid 与 Dragon Quest 是最强灵感；这里不把 Cave Story 写成独自开启独立游戏运动。" },
+    "startYear": 2004,
+    "lane": 3,
+    "tags": ["metroidvania-lens", "indie", "platform-adventure", "map-exploration"],
+    "evidenceIds": ["cave-story-amaya-interview", "gdc-cave-story"]
+  },
+  {
+    "id": "indie-metroidvania-expansion",
+    "kind": "category",
+    "name": { "zh-CN": "独立探索平台游戏扩张", "en": "Independent exploration-platformer expansion" },
+    "summary": { "zh-CN": "从 Cave Story 到 2015 年已可观察到广泛、持续的独立创作场域；扩张不归因于单一游戏。" },
+    "startYear": 2004,
+    "endYear": 2015,
+    "lane": 1,
+    "tags": ["metroidvania-lens", "category-formation", "indie", "revival-context"],
+    "evidenceIds": ["gamedeveloper-metroidvania-allure"]
+  },
+  {
+    "id": "spelunky",
+    "kind": "game",
+    "name": { "zh-CN": "Spelunky", "en": "Spelunky" },
+    "summary": { "zh-CN": "把 Roguelike 启发的单局结构与平台游戏原型融合。" },
+    "startYear": 2008,
+    "lane": 2,
+    "tags": ["roguelike-lens", "cross-theme", "run-based-structure", "platform-adventure", "fusion"],
+    "evidenceIds": ["rps-spelunky-interview"]
+  },
+  {
+    "id": "shadow-complex",
+    "kind": "game",
+    "name": { "zh-CN": "Shadow Complex", "en": "Shadow Complex" },
+    "summary": { "zh-CN": "Donald Mustard 明确说团队要处理 Metroid 式问题，并称 Super Metroid 是个人最爱。" },
+    "startYear": 2009,
+    "lane": 3,
+    "tags": ["metroidvania-lens", "revival-context", "nonlinear-world", "map-exploration"],
+    "evidenceIds": ["mustard-shadow-complex-interview", "xbox-shadow-complex-release"]
+  },
+  {
+    "id": "axiom-verge",
+    "kind": "game",
+    "name": { "zh-CN": "Axiom Verge", "en": "Axiom Verge" },
+    "summary": { "zh-CN": "Tom Happ 把 Metroid 列入多项灵感来源；这里不把它改写为唯一血统。" },
+    "startYear": 2015,
+    "lane": 2,
+    "tags": ["metroidvania-lens", "metroid-lineage", "indie", "platform-adventure"],
+    "evidenceIds": ["tom-happ-axiom-verge", "axiom-verge-release"]
+  },
+  {
+    "id": "ori-and-the-blind-forest",
+    "kind": "game",
+    "name": { "zh-CN": "Ori and the Blind Forest", "en": "Ori and the Blind Forest" },
+    "summary": { "zh-CN": "Moon Studios 把原型描述为 Metroidvania 与 platformer 的混合，并列出 Super Metroid、SOTN 等影响。" },
+    "startYear": 2015,
+    "lane": 4,
+    "tags": ["metroidvania-lens", "self-description", "indie", "platform-adventure", "ability-gated-exploration"],
+    "evidenceIds": ["moon-studios-ori-postmortem", "xbox-ori-release"]
+  },
+  {
+    "id": "hollow-knight",
+    "kind": "game",
+    "name": { "zh-CN": "Hollow Knight", "en": "Hollow Knight" },
+    "summary": { "zh-CN": "Team Cherry 明确提到 Metroid、Faxanadu 与 Zelda II 带来的感受；这里保留多来源构成。" },
+    "startYear": 2017,
+    "lane": 3,
+    "tags": ["metroidvania-lens", "indie", "platform-adventure", "map-exploration"],
+    "evidenceIds": ["team-cherry-nintendo-interview", "team-cherry-nintendolife-interview", "team-cherry-release"]
+  },
+  {
+    "id": "dead-cells",
+    "kind": "game",
+    "name": { "zh-CN": "Dead Cells", "en": "Dead Cells" },
+    "summary": { "zh-CN": "Motion Twin 把作品描述为现代 Roguelite 与旧式 MetroidVania 的融合，为两个透镜提供明确桥接。" },
+    "startYear": 2018,
+    "lane": 2,
+    "tags": ["roguelike-lens", "metroidvania-lens", "cross-theme", "run-based-structure", "fusion", "self-description"],
+    "evidenceIds": ["motion-twin-presskit", "dead-cells-products"]
+  },
+  {
+    "id": "bloodstained-ritual-of-the-night",
+    "kind": "game",
+    "name": { "zh-CN": "Bloodstained: Ritual of the Night", "en": "Bloodstained: Ritual of the Night" },
+    "summary": { "zh-CN": "Igarashi 把项目定位为其 2D Castlevania/SOTN 工作的精神续作；这不等于法定系列续作。" },
+    "startYear": 2019,
+    "lane": 4,
+    "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "revival-context", "rpg-progression", "self-description"],
+    "evidenceIds": ["bloodstained-kickstarter", "igarashi-bloodstained-interview", "bloodstained-launch-trailer"]
+  },
+  {
+    "id": "hades",
+    "kind": "game",
+    "name": { "zh-CN": "Hades", "en": "Hades" },
+    "summary": { "zh-CN": "以动作玩法承载反复尝试，并让角色记住死亡来保持叙事连续性。" },
+    "startYear": 2020,
+    "lane": 3,
+    "tags": ["roguelike-lens", "run-based-structure", "real-time-action", "narrative-continuity"],
+    "evidenceIds": ["gamedeveloper-kasavin-interview", "supergiant-hades-faq"]
   }
 ]

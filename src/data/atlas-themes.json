@@ -1,30 +1,14 @@
 [
   {
-    "id": "roguelike-run-variants",
-    "title": {
-      "zh-CN": "从 Rogue 的随机地城与单局死亡，到跨类型的 run-based 变体",
-      "en": "From Rogue's random dungeons and permadeath to cross-genre run-based variants"
-    },
-    "summary": { "zh-CN": "一条只呈现有来源关系的首批证据种子，不把时间相邻自动写成影响。" },
-    "nodeIds": [
-      "rogue",
-      "hack",
-      "moria",
-      "nethack",
-      "angband",
-      "diablo",
-      "spelunky",
-      "hades",
-      "roguelike-run-structure"
-    ],
-    "relationIds": [
-      "rogue-to-hack",
-      "hack-to-nethack",
-      "rogue-to-moria",
-      "moria-to-angband",
-      "angband-to-diablo",
-      "run-structure-to-spelunky",
-      "spelunky-to-hades"
-    ]
+    "id": "roguelike",
+    "title": { "zh-CN": "Roguelike", "en": "Roguelike" },
+    "summary": { "zh-CN": "高亮与 Roguelike 历史、run-based 结构及跨类型转译有证据关系的节点与边；不隐藏全局上下文。" },
+    "tags": ["roguelike-lens"]
+  },
+  {
+    "id": "metroidvania",
+    "title": { "zh-CN": "Metroidvania", "en": "Metroidvania" },
+    "summary": { "zh-CN": "高亮命名史、探索结构、直接影响、融合与类别形成；不寻找唯一第一款，也不隐藏全局上下文。" },
+    "tags": ["metroidvania-lens"]
   }
 ]

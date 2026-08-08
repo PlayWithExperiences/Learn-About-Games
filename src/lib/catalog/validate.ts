@@ -22,6 +22,19 @@ export type MapBounds = MapPoint & {
   height: number;
 };
 
+export type AtlasRelationType =
+  | 'direct-influence'
+  | 'derived-variant'
+  | 'fusion'
+  | 'revival'
+  | 'parallel-origin'
+  | 'structural-similarity'
+  | 'disputed';
+
+export type AtlasEvidenceStatus = 'confirmed' | 'credible' | 'inferred' | 'disputed';
+
+export type AtlasDirectionality = 'directed' | 'undirected';
+
 export type Catalog = {
   domains: Array<{
     id: string;
@@ -112,18 +125,21 @@ export type Catalog = {
       responsibility: 'execute' | 'contribute' | 'decide' | 'direct';
     }>;
   }>;
-  atlasCategories: Array<{
+  atlasTags: Array<{
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
-    order: number;
   }>;
   atlasNodes: Array<{
     id: string;
-    kind: 'game' | 'innovation';
+    kind: 'game' | 'innovation' | 'category';
     name: LocalizedText;
     summary: LocalizedText;
-    year: number;
+    startYear: number;
+    endYear?: number;
+    lane: number;
+    tags: string[];
+    evidenceIds: string[];
   }>;
   atlasEvidence: Array<{
     id: string;
@@ -135,17 +151,19 @@ export type Catalog = {
     id: string;
     fromId: string;
     toId: string;
-    type: string;
-    evidenceStatus: string;
+    type: AtlasRelationType;
+    status: AtlasEvidenceStatus;
+    directionality: AtlasDirectionality;
     evidenceIds: string[];
+    tags: string[];
     summary: LocalizedText;
+    chronologyExplanation?: LocalizedText;
   }>;
   atlasThemes: Array<{
     id: string;
     title: LocalizedText;
     summary: LocalizedText;
-    nodeIds: string[];
-    relationIds: string[];
+    tags: string[];
   }>;
 };
 
@@ -194,8 +212,17 @@ export type CatalogValidationCode =
   | 'PROFILE_CAPABILITY_MISSING'
   | 'PROFILE_PRIORITY_INVALID'
   | 'PROFILE_RESPONSIBILITY_INVALID'
+  | 'ATLAS_TAG_REFERENCE_MISSING'
+  | 'ATLAS_NODE_DATE_RANGE_INVALID'
+  | 'ATLAS_NODE_EVIDENCE_REQUIRED'
+  | 'ATLAS_NODE_EVIDENCE_MISSING'
   | 'ATLAS_RELATION_ENDPOINT_MISSING'
-  | 'ATLAS_RELATION_EVIDENCE_MISSING';
+  | 'ATLAS_RELATION_TYPE_INVALID'
+  | 'ATLAS_RELATION_STATUS_INVALID'
+  | 'ATLAS_RELATION_DIRECTIONALITY_INVALID'
+  | 'ATLAS_RELATION_EVIDENCE_REQUIRED'
+  | 'ATLAS_RELATION_EVIDENCE_MISSING'
+  | 'ATLAS_RELATION_CHRONOLOGY_UNEXPLAINED';
 
 export type CatalogValidationError = {
   code: CatalogValidationCode;
@@ -213,6 +240,31 @@ const versionRelations = new Set(['original', 'official', 'community']);
 const presentationModes = new Set(['original', 'translated', 'bilingual', 'subtitled', 'dubbed']);
 const profilePriorities = new Set(['core', 'important', 'suggested']);
 const profileResponsibilities = new Set(['execute', 'contribute', 'decide', 'direct']);
+const atlasRelationTypes = new Set<AtlasRelationType>([
+  'direct-influence',
+  'derived-variant',
+  'fusion',
+  'revival',
+  'parallel-origin',
+  'structural-similarity',
+  'disputed',
+]);
+const atlasEvidenceStatuses = new Set<AtlasEvidenceStatus>([
+  'confirmed',
+  'credible',
+  'inferred',
+  'disputed',
+]);
+const directedAtlasRelationTypes = new Set<AtlasRelationType>([
+  'direct-influence',
+  'derived-variant',
+  'fusion',
+  'revival',
+]);
+const undirectedAtlasRelationTypes = new Set<AtlasRelationType>([
+  'parallel-origin',
+  'structural-similarity',
+]);
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 
 const collectionNames = [
@@ -224,7 +276,7 @@ const collectionNames = [
   'sources',
   'resources',
   'roleProfiles',
-  'atlasCategories',
+  'atlasTags',
   'atlasNodes',
   'atlasEvidence',
   'atlasRelations',
@@ -379,7 +431,9 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   const resourceTopicIds = new Set(catalog.resourceTopics.map(({ id }) => id));
   const sourceIds = new Set(catalog.sources.map(({ id }) => id));
   const atlasNodeIds = new Set(catalog.atlasNodes.map(({ id }) => id));
+  const atlasNodesById = new Map(catalog.atlasNodes.map((node) => [node.id, node]));
   const atlasEvidenceIds = new Set(catalog.atlasEvidence.map(({ id }) => id));
+  const atlasTagIds = new Set(catalog.atlasTags.map(({ id }) => id));
 
   for (const collection of collectionNames) {
     const seen = new Set<string>();
@@ -818,6 +872,41 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     }
   }
 
+  for (const node of catalog.atlasNodes) {
+    const hasInvalidDateRange =
+      !Number.isInteger(node.startYear) ||
+      (node.kind === 'game' && node.endYear !== undefined) ||
+      (node.kind === 'category' &&
+        (!Number.isInteger(node.endYear) || (node.endYear as number) <= node.startYear)) ||
+      (node.kind === 'innovation' &&
+        node.endYear !== undefined &&
+        (!Number.isInteger(node.endYear) || node.endYear < node.startYear));
+    if (hasInvalidDateRange) {
+      appendError(errors, 'ATLAS_NODE_DATE_RANGE_INVALID', 'atlasNodes', node.id, 'startYear/endYear', '');
+    }
+
+    if (node.evidenceIds.length === 0) {
+      appendError(errors, 'ATLAS_NODE_EVIDENCE_REQUIRED', 'atlasNodes', node.id, 'evidenceIds', '');
+    }
+    for (const evidenceId of node.evidenceIds) {
+      if (!atlasEvidenceIds.has(evidenceId)) {
+        appendError(
+          errors,
+          'ATLAS_NODE_EVIDENCE_MISSING',
+          'atlasNodes',
+          node.id,
+          'evidenceIds',
+          evidenceId,
+        );
+      }
+    }
+    for (const tag of node.tags) {
+      if (!atlasTagIds.has(tag)) {
+        appendError(errors, 'ATLAS_TAG_REFERENCE_MISSING', 'atlasNodes', node.id, 'tags', tag);
+      }
+    }
+  }
+
   for (const relation of catalog.atlasRelations) {
     for (const [field, targetId] of [
       ['fromId', relation.fromId],
@@ -835,6 +924,53 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
       }
     }
 
+    if (!atlasRelationTypes.has(relation.type)) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_TYPE_INVALID',
+        'atlasRelations',
+        relation.id,
+        'type',
+        relation.type,
+      );
+    }
+
+    if (!atlasEvidenceStatuses.has(relation.status)) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_STATUS_INVALID',
+        'atlasRelations',
+        relation.id,
+        'status',
+        relation.status,
+      );
+    }
+
+    const directionalityIsInvalid =
+      !['directed', 'undirected'].includes(relation.directionality) ||
+      (directedAtlasRelationTypes.has(relation.type) && relation.directionality !== 'directed') ||
+      (undirectedAtlasRelationTypes.has(relation.type) && relation.directionality !== 'undirected');
+    if (directionalityIsInvalid) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_DIRECTIONALITY_INVALID',
+        'atlasRelations',
+        relation.id,
+        'directionality',
+        relation.directionality,
+      );
+    }
+
+    if (relation.evidenceIds.length === 0) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_EVIDENCE_REQUIRED',
+        'atlasRelations',
+        relation.id,
+        'evidenceIds',
+        '',
+      );
+    }
     for (const evidenceId of relation.evidenceIds) {
       if (!atlasEvidenceIds.has(evidenceId)) {
         appendError(
@@ -845,6 +981,40 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
           'evidenceIds',
           evidenceId,
         );
+      }
+    }
+
+    for (const tag of relation.tags) {
+      if (!atlasTagIds.has(tag)) {
+        appendError(errors, 'ATLAS_TAG_REFERENCE_MISSING', 'atlasRelations', relation.id, 'tags', tag);
+      }
+    }
+
+    const fromNode = atlasNodesById.get(relation.fromId);
+    const toNode = atlasNodesById.get(relation.toId);
+    if (
+      relation.type === 'direct-influence' &&
+      relation.status === 'confirmed' &&
+      fromNode &&
+      toNode &&
+      fromNode.startYear > toNode.startYear &&
+      !relation.chronologyExplanation?.['zh-CN']?.trim()
+    ) {
+      appendError(
+        errors,
+        'ATLAS_RELATION_CHRONOLOGY_UNEXPLAINED',
+        'atlasRelations',
+        relation.id,
+        'chronologyExplanation',
+        `${fromNode.id}:${fromNode.startYear}>${toNode.id}:${toNode.startYear}`,
+      );
+    }
+  }
+
+  for (const theme of catalog.atlasThemes) {
+    for (const tag of theme.tags) {
+      if (!atlasTagIds.has(tag)) {
+        appendError(errors, 'ATLAS_TAG_REFERENCE_MISSING', 'atlasThemes', theme.id, 'tags', tag);
       }
     }
   }

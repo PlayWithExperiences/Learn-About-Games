@@ -13,7 +13,7 @@ const productCollections: ProductCollection[] = [
   'sources',
   'resources',
   'roleProfiles',
-  'atlasCategories',
+  'atlasTags',
   'atlasNodes',
   'atlasEvidence',
   'atlasRelations',
@@ -27,7 +27,7 @@ export async function loadCatalog(): Promise<Catalog> {
         const entries = await getCollection(collection);
         return [
           collection,
-          entries.map((entry) => ({ id: entry.id, ...entry.data })),
+          entries.map((entry) => Object.assign({}, entry.data, { id: entry.id })),
         ];
       }),
     ),
