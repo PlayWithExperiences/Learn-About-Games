@@ -24,6 +24,28 @@ const priorityBorderStyles = {
   suggested: 'dotted',
 };
 
+function parseRgb(color: string): [number, number, number] {
+  const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+  if (!channels || channels.length !== 3) throw new Error(`Unsupported computed color: ${color}`);
+  return channels as [number, number, number];
+}
+
+function relativeLuminance(color: string): number {
+  const [red, green, blue] = parseRgb(color).map((channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.04045
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+}
+
+function contrastRatio(foreground: string, background: string): number {
+  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
 test('server renders three explicit disabled choices, then enables them without changing the complete map', async ({ page, request }) => {
   const response = await request.get('careers/');
   expect(response.status()).toBe(200);
@@ -189,6 +211,121 @@ test('keeps the same lens semantics in the 320px relationship outline', async ({
   await expect(mobileFocusTarget).toBeInViewport();
   await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
   await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+});
+
+test('keeps unlisted capabilities readable in light and dark desktop and mobile views', async ({ page }) => {
+  const profile = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
+  if (!profile) throw new Error('Missing AAA Game Designer profile');
+
+  await page.goto('./careers/');
+  const explorer = page.locator('[data-career-explorer]');
+  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+
+  for (const theme of ['light', 'dark']) {
+    await page.locator('html').evaluate((element, selectedTheme) => {
+      element.dataset.theme = selectedTheme;
+    }, theme);
+
+    await page.setViewportSize({ width: 1440, height: 1100 });
+    const desktopMap = explorer.locator('[data-capability-map-canvas]');
+    const desktopUnlisted = desktopMap.locator(
+      '[data-career-node][data-capability-id="experience-deconstruction"]',
+    );
+    await expect(desktopUnlisted).toHaveAttribute('data-role-state', 'unlisted');
+    const desktopStyles = await desktopUnlisted.evaluate((node) => {
+      const nodeStyle = getComputedStyle(node);
+      const labelStyle = getComputedStyle(node.querySelector('span') as HTMLElement);
+      const canvasStyle = getComputedStyle(node.closest('[data-capability-map-canvas]') as HTMLElement);
+      return {
+        opacity: Number(nodeStyle.opacity),
+        visibility: nodeStyle.visibility,
+        display: nodeStyle.display,
+        color: labelStyle.color,
+        background: nodeStyle.backgroundColor,
+        border: nodeStyle.borderTopColor,
+        surroundings: canvasStyle.backgroundColor,
+      };
+    });
+    expect(desktopStyles.opacity).toBe(1);
+    expect(desktopStyles.visibility).not.toBe('hidden');
+    expect(desktopStyles.display).not.toBe('none');
+    expect(contrastRatio(desktopStyles.color, desktopStyles.background)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(desktopStyles.border, desktopStyles.surroundings)).toBeGreaterThanOrEqual(3);
+
+    const desktopRoleLabel = desktopMap.locator('[data-role-priority] [data-role-label]:not([hidden])').first();
+    expect(Number.parseFloat(await desktopRoleLabel.evaluate((label) => getComputedStyle(label).fontSize)))
+      .toBeGreaterThanOrEqual(10);
+
+    await page.setViewportSize({ width: 320, height: 900 });
+    const outline = explorer.locator('[data-mobile-map-outline]');
+    const mobileUnlisted = outline.locator(
+      '[data-career-node][data-capability-id="experience-deconstruction"]',
+    );
+    await expect(mobileUnlisted).toHaveAttribute('data-role-state', 'unlisted');
+    await mobileUnlisted.locator('details > summary').click();
+    const mobileStyles = await mobileUnlisted.evaluate((node) => {
+      const nodeStyle = getComputedStyle(node);
+      const headingStyle = getComputedStyle(node.querySelector('.map-outline-node__heading a') as HTMLElement);
+      const summaryStyle = getComputedStyle(node.querySelector('.map-outline-node__summary span') as HTMLElement);
+      const relationStyle = getComputedStyle(node.querySelector('.map-outline-node__relations li span') as HTMLElement);
+      const pageStyle = getComputedStyle(document.documentElement);
+      return {
+        opacity: Number(nodeStyle.opacity),
+        visibility: nodeStyle.visibility,
+        display: nodeStyle.display,
+        heading: headingStyle.color,
+        summary: summaryStyle.color,
+        relation: relationStyle.color,
+        background: nodeStyle.backgroundColor,
+        border: nodeStyle.borderTopColor,
+        surroundings: pageStyle.backgroundColor,
+      };
+    });
+    expect(mobileStyles.opacity).toBe(1);
+    expect(mobileStyles.visibility).not.toBe('hidden');
+    expect(mobileStyles.display).not.toBe('none');
+    expect(contrastRatio(mobileStyles.heading, mobileStyles.background)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(mobileStyles.summary, mobileStyles.background)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(mobileStyles.relation, mobileStyles.background)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(mobileStyles.border, mobileStyles.surroundings)).toBeGreaterThanOrEqual(3);
+    await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+    await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+  }
+});
+
+test('keeps all 42 desktop capability anchors collision-free with the largest lens', async ({ page }) => {
+  const profile = roleProfiles.find(({ id }) => id === 'indie-solo-developer');
+  if (!profile) throw new Error('Missing Indie Solo Developer profile');
+
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./careers/');
+  const explorer = page.locator('[data-career-explorer]');
+  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+  const nodes = explorer.locator('[data-capability-map-canvas] [data-career-node]');
+  await expect(nodes).toHaveCount(42);
+
+  const collisions = await nodes.evaluateAll((elements) => {
+    const boxes = elements.map((element) => ({
+      id: element.getAttribute('data-capability-id'),
+      rect: element.getBoundingClientRect(),
+    }));
+    const overlaps: string[] = [];
+    for (let first = 0; first < boxes.length; first += 1) {
+      for (let second = first + 1; second < boxes.length; second += 1) {
+        const a = boxes[first];
+        const b = boxes[second];
+        if (
+          Math.max(a.rect.left, b.rect.left) < Math.min(a.rect.right, b.rect.right)
+          && Math.max(a.rect.top, b.rect.top) < Math.min(a.rect.bottom, b.rect.bottom)
+        ) {
+          overlaps.push(`${a.id}:${b.id}`);
+        }
+      }
+    }
+    return overlaps;
+  });
+  expect(collisions).toEqual([]);
+  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
 });
 
 test('keeps evidence and the full map readable without JavaScript', async ({ browser }) => {

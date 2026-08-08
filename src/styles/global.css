@@ -935,13 +935,23 @@ h2 {
 .map-node .career-node-role-label {
   margin-top: 0.12rem;
   color: var(--accent-strong);
-  font-size: 0.5rem;
+  font-size: 0.625rem;
   font-weight: 800;
   line-height: 1.1;
 }
 
-[data-career-node][data-role-state='unlisted'] {
-  opacity: 0.38;
+.map-node[data-role-state='unlisted'],
+.map-outline-node[data-role-state='unlisted'] {
+  border-color: var(--muted);
+  background: var(--surface);
+}
+
+.map-node[data-role-state='unlisted'] > span {
+  color: var(--ink-soft);
+}
+
+.map-outline-node[data-role-state='unlisted'] .map-outline-node__heading > span {
+  color: var(--muted);
 }
 
 .map-node[data-role-priority='core'],
