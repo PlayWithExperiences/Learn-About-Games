@@ -5,6 +5,7 @@ declare const process: { env: Record<string, string | undefined> };
 const baseURL = 'http://127.0.0.1:4321/Learn-About-Games/';
 
 export default defineConfig({
+  testDir: 'tests/e2e',
   use: {
     baseURL,
     trace: 'retain-on-failure',
