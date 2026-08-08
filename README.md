@@ -36,10 +36,13 @@ npm run test:e2e
 ## 交接入口
 
 - [项目入口](AGENTS.md)
+- [Claude 入口](CLAUDE.md)
 - [当前决策摘要](docs/journal/2026-08-08-learn-about-games-decision-summary.md)
 - [产品设计](docs/superpowers/specs/2026-08-08-learn-about-games-design.md)
 - [Roadmap](ROADMAP.md)
 - [Changelog](CHANGELOG.md)
+- [Methodology](METHODOLOGY.md)
+- [Contributing](CONTRIBUTING.md)
 - [Devlog](docs/devlog/2026-08-08-project-origin.md)
 
 需要精确恢复历史时，再打开决策摘要链接的脱敏会话记录。

@@ -1,6 +1,7 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
+import ProjectDocContent from '../../components/ProjectDocContent.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 interface Props {
@@ -17,12 +18,16 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
 const title = entry.id.replace(/\.md$/, '');
+const html = entry.rendered?.html;
+
+if (html === undefined) {
+  throw new Error(`Project document ${entry.id} was not rendered by Astro.`);
+}
 ---
 
 <BaseLayout title={title}>
   <article class="prose page-shell">
-    <Content />
+    <ProjectDocContent html={html} sourceFilePath={entry.filePath ?? entry.id} />
   </article>
 </BaseLayout>

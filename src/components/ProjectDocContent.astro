@@ -1,0 +1,13 @@
+---
+import { rewriteProjectDocLinks } from '../lib/project-doc-link';
+
+interface Props {
+  html: string;
+  sourceFilePath: string;
+}
+
+const { html, sourceFilePath } = Astro.props;
+const linkedHtml = rewriteProjectDocLinks(html, sourceFilePath, import.meta.env.BASE_URL);
+---
+
+<Fragment set:html={linkedHtml} />

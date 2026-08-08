@@ -54,3 +54,51 @@ test('keeps every shared navigation link in the 320px viewport', async ({ page }
     await expect(page.getByRole('navigation').getByRole('link', { name: navName, exact: true })).toBeInViewport();
   }
 });
+
+test('maps repository-backed Markdown links to public site routes', async ({ page }) => {
+  await page.goto('./project/readme/');
+  const document = page.locator('article.prose');
+
+  for (const [label, href] of [
+    ['Roadmap', '/Learn-About-Games/project/roadmap/'],
+    ['Changelog', '/Learn-About-Games/project/changelog/'],
+    ['Methodology', '/Learn-About-Games/project/methodology/'],
+    ['Contributing', '/Learn-About-Games/project/contributing/'],
+    ['Devlog', '/Learn-About-Games/devlog/2026-08-08-project-origin/'],
+  ] as const) {
+    await expect(document.getByRole('link', { name: label, exact: true })).toHaveAttribute('href', href);
+  }
+
+  await page.goto('./project/roadmap/');
+  await expect(page.locator('article.prose').getByRole('link', { name: 'CHANGELOG.md' })).toHaveAttribute(
+    'href',
+    '/Learn-About-Games/project/changelog/',
+  );
+});
+
+test('maps non-public Markdown links to absolute repository URLs', async ({ page }) => {
+  await page.goto('./project/readme/');
+  const document = page.locator('article.prose');
+
+  for (const [label, repoPath] of [
+    ['项目入口', 'AGENTS.md'],
+    ['Claude 入口', 'CLAUDE.md'],
+    ['当前决策摘要', 'docs/journal/2026-08-08-learn-about-games-decision-summary.md'],
+    ['产品设计', 'docs/superpowers/specs/2026-08-08-learn-about-games-design.md'],
+  ] as const) {
+    await expect(document.getByRole('link', { name: label, exact: true })).toHaveAttribute(
+      'href',
+      `https://github.com/PlayWithExperiences/Learn-About-Games/blob/main/${repoPath}`,
+    );
+  }
+});
+
+test('does not claim that the M0 skeleton is already published', async ({ page }) => {
+  await page.goto('./project/changelog/');
+
+  await expect(
+    page.getByText('发布 M0 的首个可见能力地图骨架，展示 9 个领域与 9 个能力入口，并明确尚未策展的路径状态。', {
+      exact: true,
+    }),
+  ).toHaveCount(0);
+});
