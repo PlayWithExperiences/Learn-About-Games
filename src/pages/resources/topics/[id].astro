@@ -1,7 +1,8 @@
 ---
-import ResourceExplorer from '../../../components/ResourceExplorer.astro';
+import ResourceResults from '../../../components/ResourceResults.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../../lib/catalog/load';
+import { sitePath } from '../../../lib/site-path';
 
 export async function getStaticPaths() {
   const catalog = await loadCatalog();
@@ -13,7 +14,18 @@ const resources = catalog.resources.filter((resource) => resource.resourceTopicI
 ---
 
 <BaseLayout title={topic.title['zh-CN']} description={topic.summary['zh-CN']}>
-  <div class="page-shell resource-page">
-    <ResourceExplorer resources={resources} sources={catalog.sources} title={topic.title['zh-CN']} lede={topic.summary['zh-CN']} />
-  </div>
+  <article class="page-shell resource-page topic-resource-page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href={sitePath('resources/')}>成长资源</a>
+      <span aria-hidden="true">/</span>
+      <span>资源主题</span>
+    </nav>
+    <p class="plain-label">无顺序资源主题</p>
+    <h1>{topic.title['zh-CN']}</h1>
+    <p class="lede">{topic.summary['zh-CN']}</p>
+    <a class="topic-resource-page__filter-link" href={`${sitePath('resources/')}?resourceTopic=${topic.id}`}>
+      在全部资源中继续筛选
+    </a>
+    <ResourceResults resources={resources} sources={catalog.sources} />
+  </article>
 </BaseLayout>

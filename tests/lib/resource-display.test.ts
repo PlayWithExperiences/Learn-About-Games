@@ -2,9 +2,14 @@ import { describe, expect, it } from 'vitest';
 
 import {
   formatAccessVersion,
+  formatAccessModel,
   formatExternalSignal,
+  formatLanguage,
   formatMediaType,
+  formatPresentationMode,
   formatRegionRestriction,
+  formatSourceKind,
+  formatVersionRelation,
 } from '../../src/lib/resource-display';
 
 describe('resource factual display', () => {
@@ -17,6 +22,18 @@ describe('resource factual display', () => {
     expect(formatMediaType('talk')).toBe('演讲');
     expect(formatMediaType('video')).toBe('视频');
     expect(formatMediaType('website')).toBe('网站');
+    expect(formatLanguage('zh-Hans')).toBe('中文');
+    expect(formatLanguage('en')).toBe('英文');
+    expect(formatLanguage('ja')).toBe('日文');
+    expect(formatLanguage('fr')).toBe('fr');
+    expect(formatSourceKind('creator')).toBe('创作者');
+    expect(formatSourceKind('channel')).toBe('频道');
+    expect(formatSourceKind('organization')).toBe('机构');
+    expect(formatSourceKind('publisher')).toBe('出版方');
+    expect(formatSourceKind('website')).toBe('网站');
+    expect(formatAccessModel('subscription')).toBe('订阅');
+    expect(formatVersionRelation('official')).toBe('官方译制');
+    expect(formatPresentationMode('bilingual')).toBe('双语');
     expect(
       formatAccessVersion({
         language: 'en',

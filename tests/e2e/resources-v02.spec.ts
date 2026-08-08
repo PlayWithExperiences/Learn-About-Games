@@ -1,0 +1,179 @@
+import { expect, test } from '@playwright/test';
+import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
+import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
+import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
+import resources from '../../src/data/resources.json' with { type: 'json' };
+import sources from '../../src/data/sources.json' with { type: 'json' };
+import { formatLanguage } from '../../src/lib/resource-display';
+
+const projectBasePath = '/Learn-About-Games/';
+
+function matchingResources(target: (typeof resources)[number]) {
+  const targetAccessModel = target.accessVersions[0].accessModel;
+  const targetLanguage = target.accessVersions[0].language;
+
+  return resources.filter((resource) =>
+    resource.resourceTopicIds.includes(target.resourceTopicIds[0])
+    && resource.knowledgeTopicIds.includes(target.knowledgeTopicIds[0])
+    && resource.capabilityIds.includes(target.capabilityIds[0])
+    && (resource.originalLanguage === targetLanguage
+      || resource.accessVersions.some(({ language }) => language === targetLanguage))
+    && resource.mediaType === target.mediaType
+    && resource.accessVersions.some(({ accessModel }) => accessModel === targetAccessModel)
+    && resource.sourceId === target.sourceId,
+  );
+}
+
+test('server renders distinct Source and Work Item result kinds without host merging', async ({ page, request }) => {
+  const response = await request.get('resources/');
+  expect(response.status()).toBe(200);
+  const html = await response.text();
+
+  expect(html.match(/<article[^>]+data-result-kind="source"/g) ?? []).toHaveLength(sources.length);
+  expect(html.match(/<article[^>]+data-result-kind="work-item"/g) ?? []).toHaveLength(resources.length);
+
+  await page.goto('./resources/');
+  await expect(page.locator('[data-result-kind="source"]')).toHaveCount(sources.length);
+  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(resources.length);
+  await expect(page.locator('.source-result')).toHaveCount(sources.length);
+  await expect(page.locator('.work-item-result')).toHaveCount(resources.length);
+
+  const source = sources.find(({ id }) => id === resources[0].sourceId);
+  expect(source).toBeTruthy();
+  await expect(page.locator(`[data-result-kind="source"][data-result-id="${source?.id}"]`)).toHaveCount(1);
+  await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resources[0].id}"]`)).toHaveCount(1);
+});
+
+test('exposes fifteen unordered topic entries and combines factual filters in a shareable URL', async ({ page }) => {
+  const target = resources[0];
+  const expected = matchingResources(target);
+
+  await page.goto('./resources/');
+  await expect(page.locator('[data-resource-topic-control]')).toHaveCount(resourceTopics.length);
+  await expect(page.locator('[data-resource-topic-control]')).toHaveCount(15);
+
+  await page.getByLabel('资源主题', { exact: true }).selectOption(target.resourceTopicIds[0]);
+  await page.getByLabel('知识主题').selectOption(target.knowledgeTopicIds[0]);
+  await page.getByLabel('能力').selectOption(target.capabilityIds[0]);
+  await page.getByLabel('可消费语言').selectOption(target.accessVersions[0].language);
+  await page.getByLabel('媒介').selectOption(target.mediaType);
+  await page.getByLabel('访问方式').selectOption(target.accessVersions[0].accessModel);
+  await page.getByLabel('Source').selectOption(target.sourceId);
+
+  const url = new URL(page.url());
+  expect(url.searchParams.get('resourceTopic')).toBe(target.resourceTopicIds[0]);
+  expect(url.searchParams.get('knowledgeTopic')).toBe(target.knowledgeTopicIds[0]);
+  expect(url.searchParams.get('capability')).toBe(target.capabilityIds[0]);
+  expect(url.searchParams.get('language')).toBe(target.accessVersions[0].language);
+  expect(url.searchParams.get('mediaType')).toBe(target.mediaType);
+  expect(url.searchParams.get('accessModel')).toBe(target.accessVersions[0].accessModel);
+  expect(url.searchParams.get('source')).toBe(target.sourceId);
+
+  await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(expected.length);
+  await expect(page.locator('[data-result-kind="source"]:visible')).toHaveCount(
+    new Set(expected.map(({ sourceId }) => sourceId)).size,
+  );
+  await expect(page.getByRole('status')).toHaveText(
+    `共 ${new Set(expected.map(({ sourceId }) => sourceId)).size} 个 Source，${expected.length} 条 Work Item`,
+  );
+});
+
+test('restores filter state from reload, history and pageshow', async ({ page }) => {
+  const target = resources[0];
+  const expectedTopicCount = resources.filter(({ resourceTopicIds }) =>
+    resourceTopicIds.includes(target.resourceTopicIds[0]),
+  ).length;
+
+  await page.goto(`./resources/?resourceTopic=${target.resourceTopicIds[0]}`);
+  await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
+  await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(expectedTopicCount);
+
+  await page.getByLabel('媒介').selectOption(target.mediaType);
+  await page.reload();
+  await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
+  await expect(page.getByLabel('媒介')).toHaveValue(target.mediaType);
+
+  await page.getByLabel('Source').selectOption(target.sourceId);
+  await page.goBack();
+  await expect(page.getByLabel('Source')).toHaveValue('all');
+  await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
+  await expect(page.getByLabel('媒介')).toHaveValue(target.mediaType);
+});
+
+test('keeps Source facts and their Work Items available on static Source pages', async ({ page }) => {
+  const source = sources[0];
+  const sourceResources = resources.filter(({ sourceId }) => sourceId === source.id);
+
+  await page.goto(`./sources/${source.id}/`);
+  await expect(page.getByRole('heading', { name: source.name['zh-CN'], exact: true })).toBeVisible();
+  await expect(page.getByText(source.summary['zh-CN'], { exact: true })).toBeVisible();
+  await expect(
+    page.locator('.source-detail-page__facts').getByText(source.languages.map(formatLanguage).join('、'), { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: '访问 Source 主页' })).toHaveAttribute('href', source.homepage);
+  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(sourceResources.length);
+
+  const externalSignals = 'externalSignals' in source && Array.isArray(source.externalSignals)
+    ? source.externalSignals
+    : [];
+  for (const signal of externalSignals) {
+    await expect(page.locator(`a[href="${signal.url}"]`)).toContainText(String(signal.value));
+  }
+});
+
+test('renders raw external observations in catalog order without quality badges', async ({ page }) => {
+  const resource = resources.find(({ externalSignals }) => (externalSignals?.length ?? 0) > 1);
+  expect(resource).toBeTruthy();
+
+  await page.goto('./resources/');
+  const row = page.locator(`[data-result-id="${resource?.id}"]`);
+  const observations = row.locator('[data-external-observation]');
+  await expect(observations).toHaveCount(resource?.externalSignals?.length ?? 0);
+
+  for (const [index, signal] of (resource?.externalSignals ?? []).entries()) {
+    await expect(observations.nth(index)).toContainText(signal.provider);
+    await expect(observations.nth(index)).toContainText(String(signal.value));
+    await expect(observations.nth(index)).toContainText(signal.observedAt);
+  }
+
+  await expect(page.locator('main')).not.toContainText(/本站评分|排名|精选|已审核/);
+});
+
+test('keeps all Sources and Work Items readable without JavaScript while controls explain their state', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto(`${projectBasePath}resources/`);
+  await expect(page.locator('[data-result-kind="source"]')).toHaveCount(sources.length);
+  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(resources.length);
+  await expect(page.locator('[data-resource-filter]')).toHaveCount(7);
+  for (const control of await page.locator('[data-resource-filter]').all()) {
+    await expect(control).toBeDisabled();
+  }
+  await expect(page.locator('.script-required-note')).toContainText('当前列出全部 Source 与 Work Item');
+
+  await context.close();
+});
+
+test('keeps topic collection pages available with their complete factual result set', async ({ page }) => {
+  const topic = resourceTopics.find(({ id }) => id === 'playtesting');
+  expect(topic).toBeTruthy();
+  const topicResources = resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes(topic?.id ?? ''));
+
+  await page.goto('./resources/topics/playtesting/');
+  await expect(page.getByRole('heading', { name: topic?.title['zh-CN'], exact: true })).toBeVisible();
+  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(topicResources.length);
+  await expect(page.getByRole('link', { name: '在全部资源中继续筛选' })).toHaveAttribute(
+    'href',
+    `${projectBasePath}resources/?resourceTopic=playtesting`,
+  );
+});
+
+test('filter option sets come from the catalog', async ({ page }) => {
+  await page.goto('./resources/');
+
+  await expect(page.getByLabel('资源主题').locator('option:not([value="all"])')).toHaveCount(resourceTopics.length);
+  await expect(page.getByLabel('知识主题').locator('option:not([value="all"])')).toHaveCount(knowledgeTopics.length);
+  await expect(page.getByLabel('能力').locator('option:not([value="all"])')).toHaveCount(capabilities.length);
+  await expect(page.getByLabel('Source').locator('option:not([value="all"])')).toHaveCount(sources.length);
+});

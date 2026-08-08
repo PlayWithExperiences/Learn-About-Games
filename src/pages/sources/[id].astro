@@ -1,0 +1,60 @@
+---
+import ResourceResults from '../../components/ResourceResults.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+import { formatLanguage, formatSourceKind } from '../../lib/resource-display';
+import { sitePath } from '../../lib/site-path';
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalog();
+  return catalog.sources.map((source) => ({
+    params: { id: source.id },
+    props: { source, catalog },
+  }));
+}
+
+const { source, catalog } = Astro.props;
+const resources = catalog.resources.filter(({ sourceId }) => sourceId === source.id);
+---
+
+<BaseLayout title={source.name['zh-CN']} description={source.summary['zh-CN']}>
+  <article class="page-shell detail-page source-detail-page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href={sitePath('resources/')}>成长资源</a>
+      <span aria-hidden="true">/</span>
+      <span>Source</span>
+    </nav>
+    <p class="plain-label">Source · {formatSourceKind(source.kind)}</p>
+    <h1>{source.name['zh-CN']}</h1>
+    <p class="lede">{source.summary['zh-CN']}</p>
+
+    <dl class="source-detail-page__facts">
+      <div><dt>实体类型</dt><dd>{formatSourceKind(source.kind)}</dd></div>
+      <div><dt>内容语言</dt><dd>{source.languages.map(formatLanguage).join('、')}</dd></div>
+      <div><dt>收录 Work Item</dt><dd>{resources.length}</dd></div>
+    </dl>
+
+    <a class="source-detail-page__homepage" href={source.homepage}>访问 Source 主页</a>
+
+    {source.externalSignals && source.externalSignals.length > 0 && (
+      <section class="source-detail-page__observations" aria-labelledby="source-observations-title">
+        <h2 id="source-observations-title">外部公开观察</h2>
+        <p>以下是带来源与日期的公开事实，不构成本站评价。</p>
+        <ul>
+          {source.externalSignals.map((signal) => (
+            <li data-external-observation>
+              <a href={signal.url}>
+                <span>{signal.provider}</span>
+                <span>{signal.label}：{signal.value}</span>
+                {signal.sampleSize && <span>样本：{signal.sampleSize}</span>}
+                <span>观察于 {signal.observedAt}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <ResourceResults resources={resources} sources={catalog.sources} />
+  </article>
+</BaseLayout>

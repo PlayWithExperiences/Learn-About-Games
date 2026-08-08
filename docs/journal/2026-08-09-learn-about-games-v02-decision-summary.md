@@ -32,6 +32,12 @@ v0.2 开始前的 clean baseline 已实际运行：`npm run build` 完成 Astro 
 
 review fix 的地图定向桌面/移动为 14/14；fresh build 完成 Astro check 0 errors / warnings / hints、Vitest 59/59 与 84 pages。1440px/320px、System Light/explicit Dark 四张原图确认两种主题下开放地域与默认关系可辨；320px HTML/body 均严格为 320px，总高从 11212px 降到 8273px，减少 2939px（约 26%）。当时完整 E2E 为 71 passed / 8 failed / 1 skipped；8 项都来自资源扩充后尚未同步的旧 `playtest-flow.spec.ts` URL、标题和非唯一 locator，不涉及地图，交回 Resources UI task 修复后重跑。最终留档复跑又遇到并发 Career Lens 的预期 TDD RED：未跟踪测试引用尚未实现的 `src/lib/career-lens`，产生 2 个 check error；地图 agent 没有修改或暂存该文件。
 
+Resources Tasks 3-4 已完成但尚未发布：主资源页把 20 个 Source 与 128 个 Work Item 作为不同结果类型全部 server render，不按域名合并；20 个 Source 均有静态详情页，15 个 Resource Topic 均有无顺序集合页。七维筛选固定使用 `resourceTopic`、`knowledgeTopic`、`capability`、`language`、`mediaType`、`accessModel`、`source` 参数，组合语义为 AND，保持 catalog 顺序且绝不读取 external signals 排序。更改会写入 history，reload、back 与 pageshow 都从 URL 重建 DOM；无 JavaScript 时七个控件禁用并明确说明，全部 Source 与 Work Item 仍可读。
+
+本切片先取得纯函数 module-missing RED 和浏览器 8/8 RED；最终资源定向桌面/移动为 30/30，完整 E2E 为 95 passed / 1 desktop-only skipped。Astro check 为 0 errors / warnings / hints，Vitest 70/70，fresh build 生成 104 pages。视觉验收覆盖 Resources、GDC Vault Source 与 Playtest Topic 在 1440px/显式 320px、light/dark；发现并修复一条 DOI 连续文本把 Resources 撑到 334px 的问题，复测 `scrollWidth=clientWidth=320`。Source 使用目录条目形状，Work Item 使用紧凑编辑行；外部观察只按 catalog 原始顺序展示 provider/value/date，不生成站内评分、排名或质量徽章。临时 preview 已停止。
+
+提交前再次执行目标资源 unit 17/17、直接 Astro fresh build 104 pages、资源/base-path/Playtest 桌面与移动 30/30，均通过。共享工作树的最终 `npm test` 同时读到并发 Atlas Task 2 尚未实现的 RED tests，结果为资源及既有测试 69 passed、Atlas 12 failed；失败集中在 `atlas-network.test.ts` 与 Atlas validator 新契约，本资源提交不修改或暂存这些文件。主任务将在 Atlas GREEN 后重新运行全仓 unit/build 门禁。
+
 ## 用户反馈与结论
 
 ### 能力地图
@@ -86,14 +92,14 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 1. 重新运行文档阶段的 build、E2E、lint 与 diff gate，并提交 v0.2 规格、`DESIGN.md` 与四份可执行计划。
 2. 导航、About、三态主题与能力地图 Tasks 2-3 已完成；首页和地图显示数量从 catalog 派生，不把当前 42/12/64 写成未来上限。
-3. 下一步完成 Map / Career 计划 Task 4：三个有公开依据、边界与复核日期的职业透镜必须复用同一张地图并保持个人状态独立。
+3. 职业透镜数据与资源发现切片已经进入工作树；下一步由主任务统一复核三类职业透镜在同一张地图上的投影，并进入 Atlas / Release 阶段。
 4. 每阶段执行 RED-GREEN、规格审查、代码质量审查、连续性留档与独立提交。
 5. 最后完成桌面/移动、双主题、无 JavaScript、Pages 子路径与线上部署验收。
 
 ## 当前未决风险
 
 - 三个职业画像的公开依据需要逐项收集并保留适用边界。
-- 当前只有 Playtest 有直接资源，其他能力和多数知识议题详情会诚实显示仍在整理；资源切片完成前不能把可达页面误写成内容覆盖完成。
-- 100-150 项资源必须真实去重和核查，不能让数量目标压过元数据质量。
+- 当前已收录 128 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
+- 资源筛选只表达目录事实；不能把外部公开计数或观察转译成本站推荐、评分、排名或审核结论。
 - Metroidvania 的命名史、机制史与直接影响证据必须分开表达。
 - 全局时间网络需要可解释的固定布局，不能退化为横向卡片列表或不可控力导图。

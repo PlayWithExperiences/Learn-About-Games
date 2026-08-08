@@ -126,3 +126,21 @@ GREEN 实现新增 `CapabilityMap.astro`。桌面使用固定 1180×850 的 0-10
 最小实现只调整 `CapabilityMap.astro` 与地图 CSS：Domain bounds 与节点坐标不变，边界改为不封口的上边+左边，底场降到 20%；两类关系默认提高到 `1.3px / opacity .46-.50`，supports 保持实线中点箭头，complements 保持无箭头虚线，focus 进一步增强到 `2.2px / .96`；能力摘要进入原有“查看关系” disclosure，知识议题摘要进入“查看摘要” disclosure，节点类型和详情链接仍常驻。
 
 地图定向桌面/移动完成 14/14；fresh build 完成 Astro check 0 errors / warnings / hints、Vitest 59/59 与 84 pages。原图检查覆盖 1440px/320px 的 System Light 与 explicit Dark，确认默认线在两种主题可辨但不盖节点，地域不再封闭。320px HTML/body 的 clientWidth 与 scrollWidth 都为 320px，总高从 11212px 降到 8273px，减少 2939px（约 26%）。完整 E2E 当时为 71 passed / 8 failed / 1 skipped；8 项全部来自资源扩充后仍锁旧 URL、标题和非唯一文本 locator 的 `playtest-flow.spec.ts`，地图 agent 按范围没有修改资源测试。最终留档后的 `npm run check` 又遇到并发 Career Lens 的预期 RED：新测试引用尚未实现的 `src/lib/career-lens`，得到 2 个 TypeScript error；该测试不属于地图暂存范围。
+
+## 14. Source 与 Work Item 可发现性、事实筛选（部分会话导出）
+
+本小节记录当前 agent 可访问的脱敏任务合同、实现决定和验证证据，不补造聊天 UI 中不可访问的逐字内容。任务要求把已正规化的 20 个 Source、128 个 Work Item 与 15 个 Resource Topic 变成公开可发现的目录；Source 和具体内容必须保持不同实体，筛选只能表达主题、能力、语言、媒介、访问与来源事实，不能引入精选、审核、站内评分、排名或新的运行时网络服务。
+
+实现先新增 `resource-filter` 纯函数测试。首个目标运行因 module 不存在得到预期 RED；最小实现使用七个可选条件的 AND 语义，语言同时检查 original language 与 access-version language，直接 `Array.filter` 保持 catalog 顺序，完全不读取 external signals。目标 Vitest 随后 9/9 GREEN。展示 formatter 的新增 Source kind、Access Model、Version Relation、Presentation Mode 与可见语言名称同样逐项先取得 function-missing RED 再实现；URL 与 data attribute 继续保留 `zh-Hans/en/ja` 原码，可见 UI 统一显示中文、英文、日文。
+
+浏览器 RED 新增八项契约：主资源 HTML 必须同时含 Source 与 Work Item；15 个主题与七类筛选必须来自 catalog；URL 参数可 reload、back 与 pageshow；20 个 Source 路由公开实体类型、summary、语言、主页、外部观察和所属 Work Item；external observations 保持原顺序；no-JS 保留全量内容；Topic 页面继续可达。旧站构建成功后八项全部按预期失败，证明失败来自缺少新 UI 与 Source route，而不是环境问题。
+
+GREEN 把事实结果抽成共享的 `ResourceResults.astro`。主资源页 server render 全部 20 个 Source 和 128 个 Work Item；Source 使用带实体类型、summary、语言和 Work count 的目录条目，站内链接进入 20 个静态 Source 详情；Work Item 使用无大卡片的编辑列表，逐项显示站内 Source、媒介、原始语言、why relevant、Access Version 的语言/关系/呈现/访问/检查日期、明确外链，以及仅在有数据时出现的地区限制和外部观察。主题页与 Source 页复用同一结果组件，因此当前 15 个主题和全部 Source 不会形成另两套展示规则。
+
+七个 disabled server controls 在脚本加载后才启用。用户更改以稳定参数写入 history，页面初始加载、popstate 与 pageshow 都从 URL 派生 controls 与 hidden 状态；脚本只切换现有 DOM 的 `hidden` 和结果数，未移除 server HTML。外部观察按数据顺序原样显示 provider、label、value、sampleSize（若有）与 observedAt，不影响筛选或排序。无 JavaScript 测试确认七个控件都不可操作且有解释，同时全部 Source 与 Work Item 可见。
+
+首次浏览器 GREEN 为 6/8，其余两项暴露出包裹式 label 的 accessible name 会吸收 option 文本；七个 select 因此补了明确的 `aria-label`。资源定向桌面/移动随后 30/30。视觉检查覆盖 Resources、GDC Vault Source 和 Playtest Topic 的 1440px / 显式 320px 与 light/dark；一次 320px 审计发现包含连续 DOI 的关联说明把 Resources `scrollWidth` 撑到 334px，最小修复为结果 body `min-width: 0`、单列使用 `minmax(0, 1fr)` 并允许事实文本换行，复测严格为 320px。截图确认 Source 与 Work Item 的形状区分、紧凑筛选和编辑列表密度。
+
+阶段门禁记录为 Astro check 0 errors / warnings / hints、Vitest 70/70、fresh build 104 pages、完整桌面/移动 E2E 95 passed / 1 desktop-only skipped。临时 preview 在检查后停止；最终提交前继续执行 diff、secret、preview 与 clean-worktree 复核。
+
+提交前再次运行目标资源 unit 为 17/17，直接 Astro fresh build 保持 104 pages，资源/base-path/Playtest 桌面与移动仍为 30/30。此时共享工作树已有并发 Atlas Task 2 的新 RED tests：全量 `npm test` 显示资源及既有测试 69 passed，Atlas 12 failed；失败只涉及尚未实现的 Atlas network/schema/validator 契约。资源 agent 没有修改或暂存 `atlas-network.test.ts` 和并发修改的 `catalog-validate.test.ts`，由主任务在 Atlas GREEN 后重跑全仓 gate。

@@ -1,6 +1,7 @@
 import type { Catalog, ExternalSignal, LocalizedText } from './catalog/validate';
 
 type AccessVersion = Catalog['resources'][number]['accessVersions'][number];
+type Source = Catalog['sources'][number];
 
 const mediaLabels: Record<Catalog['resources'][number]['mediaType'], string> = {
   article: '文章',
@@ -33,8 +34,42 @@ const presentationModeLabels: Record<AccessVersion['presentationMode'], string> 
   dubbed: '配音',
 };
 
+const sourceKindLabels: Record<Source['kind'], string> = {
+  creator: '创作者',
+  channel: '频道',
+  organization: '机构',
+  publisher: '出版方',
+  website: '网站',
+};
+
+const languageLabels: Record<string, string> = {
+  'zh-Hans': '中文',
+  en: '英文',
+  ja: '日文',
+};
+
 export function formatMediaType(mediaType: Catalog['resources'][number]['mediaType']) {
   return mediaLabels[mediaType];
+}
+
+export function formatLanguage(language: string) {
+  return languageLabels[language] ?? language;
+}
+
+export function formatSourceKind(kind: Source['kind']) {
+  return sourceKindLabels[kind];
+}
+
+export function formatAccessModel(accessModel: AccessVersion['accessModel']) {
+  return accessLabels[accessModel];
+}
+
+export function formatVersionRelation(versionRelation: AccessVersion['versionRelation']) {
+  return versionRelationLabels[versionRelation];
+}
+
+export function formatPresentationMode(presentationMode: AccessVersion['presentationMode']) {
+  return presentationModeLabels[presentationMode];
 }
 
 export function formatAccessVersion(
