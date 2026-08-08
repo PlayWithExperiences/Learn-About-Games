@@ -19,7 +19,7 @@ const externalSignal = z
   .object({
     provider: z.string().trim().min(1),
     label: z.string().trim().min(1),
-    value: z.union([z.string().trim().min(1), z.number().finite()]),
+    value: z.union([z.string().trim().min(1), z.number()]),
     observedAt: isoDate,
     url: httpUrl,
   })
