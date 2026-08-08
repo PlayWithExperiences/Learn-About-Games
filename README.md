@@ -17,7 +17,9 @@ M0 是验证数据契约、GitHub Pages 子路径与核心用户旅程的可运�
 - 仅保存在当前浏览器的 Playtest 个人学习状态，与职业画像独立，不生成分数。
 - Game Innovation Atlas 的八类框架与 Roguelike 证据种子：8 个 Game、1 个 Innovation、7 条已证实关系和 9 项来源。
 
-M0 不冒充内容完整的正式第一版。40-60 个节点、300 个候选资源、100 个已审核资源、10-15 条路径与 3-4 个画像仍属于后续内容扩展目标。
+M0 不冒充内容完整的正式第一版。v0.2 已进入实施，将把卡片骨架改造成语义地图，扩充约 100-150 项资源，提供三个职业透镜，并把 Innovation Atlas 改成可按主题高亮的全局时间网络。
+
+v0.2 不建立候选、已审核、精选或站内评分层级，也不把学习路径作为统一答案。资源只按能力、议题、语言、媒介与访问事实组织；可核验的外部评价会保留来源和观察日期，不合并成平台分数。
 
 ## 本地命令
 
@@ -44,8 +46,9 @@ npm run test:e2e
 
 - [项目入口](AGENTS.md)
 - [Claude 入口](CLAUDE.md)
-- [当前决策摘要](docs/journal/2026-08-08-learn-about-games-decision-summary.md)
-- [产品设计](docs/superpowers/specs/2026-08-08-learn-about-games-design.md)
+- [当前决策摘要](docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md)
+- [产品设计](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
+- [视觉系统](DESIGN.md)
 - [Roadmap](ROADMAP.md)
 - [Changelog](CHANGELOG.md)
 - [Methodology](METHODOLOGY.md)

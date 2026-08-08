@@ -116,8 +116,8 @@ test('maps non-public Markdown links to absolute repository URLs', async ({ page
   for (const [label, repoPath] of [
     ['项目入口', 'AGENTS.md'],
     ['Claude 入口', 'CLAUDE.md'],
-    ['当前决策摘要', 'docs/journal/2026-08-08-learn-about-games-decision-summary.md'],
-    ['产品设计', 'docs/superpowers/specs/2026-08-08-learn-about-games-design.md'],
+    ['当前决策摘要', 'docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md'],
+    ['产品设计', 'docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md'],
   ] as const) {
     await expect(document.getByRole('link', { name: label, exact: true })).toHaveAttribute(
       'href',
@@ -126,11 +126,11 @@ test('maps non-public Markdown links to absolute repository URLs', async ({ page
   }
 });
 
-test('does not claim that M0 reached the formal first-release scale', async ({ page }) => {
+test('keeps M0 separate from the approved v0.2 implementation', async ({ page }) => {
   await page.goto('./project/readme/');
 
   await expect(
-    page.getByText(/M0 不冒充内容完整的正式第一版。40-60 个节点/),
+    page.getByText(/M0 不冒充内容完整的正式第一版。v0.2 已进入实施/),
   ).toBeVisible();
 });
 

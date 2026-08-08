@@ -1,5 +1,7 @@
 # Learn About Games 产品设计
 
+> M0 历史设计。2026-08-09 起，v0.2 的资源模型、学习路径地位、信息架构、能力地图、职业透镜、主题系统与 Innovation Atlas 交互由 [2026-08-09-learn-about-games-v02-design.md](2026-08-09-learn-about-games-v02-design.md) 取代。本文件保留用于理解项目来源与 M0 决策，冲突处以 v0.2 设计为准。
+
 - 状态：已完成对话确认；M0 纵向切片已部署，正式第一版内容规模仍待扩展
 - 日期：2026-08-08
 - 发起品牌：PlayWithExperiences

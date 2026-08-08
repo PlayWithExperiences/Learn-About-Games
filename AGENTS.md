@@ -1,17 +1,19 @@
 # Project entrypoint
 
-Verified state: M0 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/>. The next direction is a separate, evidence-backed content expansion plan; do not treat M0 as the 40-60-node formal first release.
+Verified state: M0 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/>. The user has approved the v0.2 redesign and content expansion and explicitly authorized implementation without another design-review pause. Do not treat M0 as the formal content-complete release.
 
 Before making substantive changes, read these files in order:
 
-1. [Latest decision summary](docs/journal/2026-08-08-learn-about-games-decision-summary.md)
-2. [Current product design](docs/superpowers/specs/2026-08-08-learn-about-games-design.md)
+1. [Latest decision summary](docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md)
+2. [Current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
 3. [Public roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)
-4. [Conversation record](docs/journal/2026-08-08-learn-about-games-transcript.md) only when exact project history is needed
+4. [Current conversation record](docs/journal/2026-08-09-learn-about-games-v02-transcript.md) only when exact v0.2 wording is needed; follow its link to the M0 record for older history
 
 Keep the decision summary and sanitized conversation record current at project milestones. Update the Roadmap when direction changes, the Changelog for every release, and `docs/devlog/` for material public decisions. Preserve the distinction between domains, knowledge topics, capabilities, practices, roles, production contexts, resource items, language versions, innovations, game artifacts, innovation relations and evidence.
 
-Game Innovation Atlas is a lower-priority section inside Learn About Games, not a separate project, repository, or product. The first release must still expose its category framework and evidence-backed seed content; implement complex Atlas interactions and broad coverage after the core capability map and resource navigation.
+Innovation Atlas remains a section inside Learn About Games, not a separate project, repository or product. v0.2 renders one global horizontal time network; Roguelike, Metroidvania and later topics are highlight lenses over the same network, not isolated subgraphs.
+
+v0.2 removes site-authored resource quality tiers and demotes Learning Trail from the core product model. Resources are organized by capability and topic with factual metadata and traceable external observations only. Do not reintroduce candidate/reviewed/featured labels, rankings, ratings or a mandatory learning sequence.
 
 ## Continuity contract
 
