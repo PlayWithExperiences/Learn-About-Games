@@ -54,6 +54,17 @@ test('describes the shipped Playtest slice as available now', async ({ page }) =
   ).toBeVisible();
 });
 
+test('describes the available role lens as a reference rather than future work', async ({ page }) => {
+  await page.goto('./');
+
+  await expect(
+    page.getByText(
+      '用已发布的 AAA / Game Designer 参考画像理解一种生产语境；它只是参考，不作评分，更多画像后续扩展。',
+      { exact: true },
+    ),
+  ).toBeVisible();
+});
+
 test('keeps every shared navigation link in the 320px viewport', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('./');
@@ -123,7 +134,7 @@ test('does not claim that M0 reached the formal first-release scale', async ({ p
   ).toBeVisible();
 });
 
-test('records the deployment that published the final M0 acceptance fixes', async ({ page }) => {
+test('records the deployment of the Task 7 acceptance bundle', async ({ page }) => {
   await page.goto('./project/changelog/');
 
   await expect(

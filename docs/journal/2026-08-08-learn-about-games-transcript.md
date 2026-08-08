@@ -279,3 +279,15 @@ Task 7 还记录了一次验收环境事故：fresh build 前启动的 preview �
 主 agent 随后实际 push 了 Task 7 commit `d079d83c14d2823c597d9c831c907f61fd6e62c8`。GitHub Pages workflow run `31265746032` 的结论为 success，记录的 head SHA 是 `d079d83c14d2823c597d9c831c907f61fd6e62c8`。线上 HTML 三项抽查确认：home 包含新的 Playtest 已发布文案；resources 包含 server-rendered disabled select 与 no-JS 说明；devlog 索引包含 `Devlog 002`。
 
 较早的 run `31264625728` 仍保留为首次基础部署历史，但它不能作为 Task 7 fixes 的发布证据。本次后续 commit 只更新 README、Changelog、decision summary、transcript 和部署证据 E2E 的 metadata；它不改变 runtime 行为，也不宣称这个更晚的 metadata commit 本身就是 `d079d83` 或已经由 run `31265746032` 发布。此 commit 在当前记录时未 push。
+
+### 32. Final review：已发布画像文案与 localStorage 分期
+
+记录说明：以下为 final reviewer 与 handoff audit 转发给当前实现运行时的脱敏范围，是 partial export，不是原始聊天 UI 的完整逐字导出。缺失范围包括 reviewer 的完整审查过程、主 agent 私有推理与未转发消息；未获取的内容不声称完整，也未记录 token、凭据或环境变量值。
+
+Final reviewer 指出首页“找位置”仍把职业与生产环境透镜整体写成未来能力，但 M0 已发布一个 `AAA / Game Designer` 参考画像。实现先在 `visible-skeleton.spec.ts` 加入当前态 exact-copy 断言；旧页面因找不到“已发布、只是一种生产语境参考、不作评分、更多画像后续扩展”的文案而取得有效 RED。最小运行时修复只替换首页这一句，没有增加画像、评分、账号或筛选功能。
+
+Handoff audit 同时指出产品设计的 localStorage 失败处理把多个阶段混在一起。规格现明确：M0 遇损坏或版本不兼容只回退安全空状态；迁移、导出、导入与手动清除是正式第一版按真实需求待评估的目标，不是 M0 已交付能力。
+
+远端事实没有在本节扩写或猜测新 run ID。`d079d83c14d2823c597d9c831c907f61fd6e62c8` 与 run `31265746032` 只描述 Task 7 acceptance bundle 的已验证发布；其后仍有发布证据 metadata 对齐和本次 final-review copy/docs 修正。本次修正记录时没有 push，也不把当前本地 HEAD 循环宣称为 `d079d83`。
+
+fresh build 后首页 targeted Chromium 1/1 GREEN。写入交接记录后的第一次复核被一个父进程已退出、工作目录位于临时 review 目录的旧 Astro preview 占用 4321 端口，Playwright 因 `reuseExistingServer` 读到旧首页而出现 21/22；`src` 与 fresh `dist` 同时包含新文案，定位并停止这个精确 preview 后，targeted 再次 1/1 GREEN。随后在无残留服务条件下重跑 full gate：两次 `astro check` 均为 0 errors / warnings / hints，Vitest 26/26，fresh build 生成 14 个静态页面，desktop Chromium 22/22、mobile Chromium 22/22，`git diff --check` 退出 0；这些计数记录的是当前 final-review 文件树，不改写 Task 7 当时的 21/21 历史。

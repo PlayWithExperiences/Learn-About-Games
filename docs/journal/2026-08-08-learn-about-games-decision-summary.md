@@ -15,9 +15,9 @@ Learn About Games 来自用户对“拥有地图、认识自己、持续学习�
 
 - GitHub 公开仓库是 `PlayWithExperiences/Learn-About-Games`，默认分支为 `main`。
 - 首次基础部署源 HEAD 为 `7f982bbdf074e56a99ec2ee5ca2a568fe25f5fca`，对应 GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728)。
-- 最终 M0 验收功能发布 HEAD 为 `d079d83c14d2823c597d9c831c907f61fd6e62c8`，对应 [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032)；build 与 deploy jobs 均成功。
+- Task 7 acceptance bundle 的发布 HEAD 为 `d079d83c14d2823c597d9c831c907f61fd6e62c8`，对应 [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032)；build 与 deploy jobs 均成功。
 - Pages 使用 workflow build type。线上复核确认：首页包含新的 Playtest 当前态文案，Resources HTML 包含 disabled no-JS select 与说明，Devlog 索引包含 `Devlog 002`。
-- 本摘要之后的 metadata 修正 commit 只对齐发布证据，不应被描述为上述 runtime 功能发布 HEAD，也不循环宣称仓库当前 HEAD 仍是 `d079d83`。
+- Task 7 bundle 之后还有发布证据 metadata 对齐与 final-review copy/docs 修正；这些后续 commit 不应被描述为上述 bundle 的发布 HEAD，也不循环宣称仓库当前 HEAD 仍是 `d079d83`。
 - M0 公开 9 个领域与 9 个能力入口。只有 Playtest 已形成“地图 - 能力 - 路径 - 具体 Work Item”的完整学习切片。
 - Playtest 路径抵达 GMTK 的 `Valve's “Secret Weapon”` 视频与 PlayWithExperiences 的双语 Playtest 文章。它们是具体 Work Item，不是频道入口。
 - 双语文章只保存为一个 Work Item，通过 `zh-CN` 与 `en` 两个可消费 access version 参与筛选。语言表示用户能实际阅读或观看的版本，不只是原作语言。
@@ -76,8 +76,10 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 职业透镜和个人进度以独立容器、标签与说明表达；页面没有 score、percentage、radar 或唯一答案文案。
 - Atlas 关系显示方向、类型、confirmed 状态与证据链接；Innovation、Game 与 Evidence 使用不同视觉形状，并明确 chronology 不等于 causality。
 - Devlog collection 使用每篇 Markdown frontmatter 的真实标题；新增第二篇 M0 Devlog，不再在索引硬编码所有标题。
+- Final review 修复首页把唯一已发布的 `AAA / Game Designer` 画像写成未来功能的问题；当前文案明确它只是一种生产语境参考、不作评分，更多画像后续扩展。产品设计同时明确 M0 遇损坏或版本不兼容只回退安全空状态，迁移、导出、导入与手动清除属于正式第一版待评估范围。
 - 行为修复均先取得 targeted RED；fresh build 后，no-JS 资源、已发布 Playtest 文案与两篇 Devlog 标题三项 targeted Chromium 回归通过。
 - Task 7 full gate：两次 `astro check` 均为 0 errors / warnings / hints，Vitest 26/26，通过 14 个静态页面的 fresh build，desktop Chromium 21/21、mobile Chromium 21/21，`git diff --check` 退出 0。
+- Final-review 首页断言在旧文案上取得 element-not-found RED，fresh build 后 targeted Chromium 1/1 GREEN；随后 full gate 为两次 `astro check` 0 errors / warnings / hints、Vitest 26/26、14 个静态页面、desktop Chromium 22/22、mobile Chromium 22/22，`git diff --check` 退出 0。
 - 按计划用 `rg -l` 执行脱敏 secret scan，排除 `node_modules`、`.git` 与 `dist` 后没有返回文件名；没有打印任何匹配值。
 
 ## 事故与教训
@@ -90,7 +92,7 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - Atlas 测试必须锁定 relation id、fromId、toId、type 与 status 的 tuple。方向箭头桌面向右、移动向下；endpoint CSS 选择器必须收窄，避免箭头继承节点边框并变成第三种实体。
 - 远端 HTTPS 曾因 macOS Keychain 凭据路径返回 403。诊断改用命令级显式 SSH URL，确认认证与连通性；没有修改 global Git 配置或仓库 `origin`。该诊断不曾被当作部署证据。
 - `actions/configure-pages@v6` 在 build job 读取 Pages 配置，需要 `pages: read`。build job 只增加 `contents: read` 与 `pages: read`，deploy job 才拥有 `pages: write` 与 `id-token: write`。
-- 部署配置存在不等于上线。run 31264625728 证明首次基础部署，run 31265746032 与线上 HTML 抽查共同证明最终 M0 验收功能已经发布；因此 M0 才从 Roadmap Now 移到 Shipped。
+- 部署配置存在不等于上线。run 31264625728 证明首次基础部署，run 31265746032 与线上 HTML 抽查共同证明 Task 7 acceptance bundle 已经发布；因此 M0 才从 Roadmap Now 移到 Shipped。其后 copy/docs 修正必须单独记录，不能倒填进该 run。
 
 ## 未决问题
 
