@@ -172,3 +172,53 @@ GREEN 新增 `CareerExplorer.astro`，从现有 catalog 调用纯 `projectCareer
 实现后的 Career 定向桌面/移动为 12/12；与 map-v02、profile-progress 组合回归为 34/34。全量测试首次发现 `visible-skeleton.spec.ts` 仍锁定旧静态 Career 文章；该相邻契约最小同步为三按钮、默认完整地图与应用后公开依据，随后 Career 与 visible-skeleton 桌面/移动为 37 passed / 1 desktop-only skipped。1440px 原图覆盖 System Light 默认、三个 applied、clear 与 explicit Dark；320px 覆盖 explicit Dark applied、即时聚焦节点和 no-JS 依据。全部检查场景中 HTML/body 的 `scrollWidth` 与 `clientWidth` 相等；clear 后页面高度、可见 summary 和 role 属性都恢复到默认。
 
 Resources Task 5 原子提交后的 fresh `npm run build` 完成 Astro check 0 errors / warnings / hints、Vitest 81/81 与 104 pages。完整 `CI=1 npm run test:e2e` 为 103 passed / 8 failed / 1 desktop-only skipped；8 项全部属于 Atlas Task 3 尚未替换的旧 M0 断言，仍要求 8 个 category、1 个 Innovation、8 个 Game 与 7 条关系，而当前 Atlas 数据已是 27 个节点与 25 条关系。Career、Map、Progress、Resources、主题与导航在这次全量运行中均无失败。
+
+## 17. Career Lens 未收录节点可读性审查修复（部分会话导出）
+
+独立审查指出一个 Important 与一个 Minor。Important 是 `[data-career-node][data-role-state='unlisted'] { opacity: .38 }` 会把整个能力节点及移动 disclosure 内的能力简介、关系文字一起合成变淡；实际对比约为浅色 2.29:1、深色 3.23:1，违背“全部节点始终可读”。Minor 是桌面地图上的职业文字标签只有 `0.5rem`（8px）。任务范围明确只允许修改 Career 相关 CSS、独立 Career E2E 与必要留档，不得碰 Atlas 文件或 Atlas 样式。
+
+实现先扩展 `career-lenses.spec.ts`，直接读取两种显式主题、1440px 与 320px 下未收录节点的 computed opacity、display、visibility、正文色、背景色、边框色和周围底色；契约禁止整节点 opacity 小于 1，并要求正文至少 4.5:1、边框至少 3:1。测试同时锁定 desktop role label 至少 10px、HTML/body 无横向溢出，并在最大 `Indie · Solo Developer` 画像下两两检查 42 个桌面 Capability 的真实 bounding boxes。旧实现首先得到 `Expected: 1, Received: 0.38` 的有效 RED。
+
+最小 CSS 修复删除整节点 opacity。未收录的桌面与移动节点改为完整不透明的 muted 边框和 surface 背景；桌面能力名称只局部使用 `ink-soft`，移动类型文字只局部使用 `muted`，名称、能力简介与关系正文继续使用既有高对比文字 token。桌面职业标签提高到 `0.625rem`（10px）。mapped 节点原有实线、虚线、点线和中文标签保持不变，未收录节点仍相对弱化但不再隐藏或降低正文可读性。
+
+定向 GREEN 记录为：新 review tests Chromium 2/2、Career 桌面/移动 16/16、Career + Map 桌面/移动 34/34，`git diff --check` 无输出。原尺寸截图复核覆盖 1440px/320px 的显式 light/dark 四种组合，确认未收录节点和展开的移动关系在两种主题下均可读；42 个能力节点零碰撞，HTML/body 无横向溢出。直接 `npx astro build` fresh 生成 104 pages。共享工作树当时同时存在 Atlas Task 3 未提交的 `src/lib/atlas-network.ts` 与 `tests/lib/atlas-network.test.ts`，使 `npm run build` 的 check 阶段出现 4 个 Atlas 类型 RED；本修复未修改或暂存这些并发文件，并把 Atlas 原子提交后的全量 check/unit/build 交回主任务补跑。
+
+## 18. Innovation Atlas 全局时间网络（部分会话导出）
+
+本小节记录当前 agent 可访问的脱敏任务合同、实现决定与验证证据，不补造聊天 UI 中不可访问的逐字内容。用户要求 Innovation Atlas 是同一张按时间展开的网状图，Roguelike、Metroidvania 或未来主题只能高亮同一网络；位置、连线、方向与形状都必须有可解释语义，不能把多条卡片时间线拼成图，也不能因主题切换丢掉上下文。
+
+数据阶段先形成 27 node / 25 relation / 40 evidence / 2 theme / 27 tag 的全局闭包。所有节点和边都有 Evidence；Games 只保存 start year，两条 Category Formation 保存真实 start/end；relations 显式区分 type、status 与 directed/undirected。独立审查发现 3 个合同缺口：Evidence 没有原始题名与语言、`disputed` 没有方向理由、自环边可通过。Review fix 先取得 4 个有效 RED，再让 40/40 Evidence 保存 `sourceTitle` / `originalLanguage`、争议边强制 `directionalityNote`、schema 与 validator 都拒绝 self-edge；目标 35/35、全量 85/85、fresh build 104 pages。
+
+UI 阶段先用 unit 锁定固定时间投影、零节点碰撞与移动年代大纲，再用 E2E 在旧 `AtlasSeed` 上取得 12 fail / 4 project-specific skip 的有效 RED。`AtlasNetwork.astro` server render 一张 27 节点、25 关系的固定图；横轴只由 startYear 推导，lane 只用于避碰和实体类型邻近，不表达质量、重要性或固定演进。Game 用矩形，Innovation 用胶囊，Category Formation 用真实跨度的切角条；Evidence 只进入节点和关系详情文献行。
+
+Roguelike / Metroidvania 控件在 server HTML 中禁用，脚本成功绑定后才启用。切换只更新 `data-theme-match` 与状态文案，前后 entity ID、数量、position、path、顺序都不变。directed 关系显示目标箭头，undirected 双端对称且无箭头。320px 隐藏桌面画布，改为 5 个年代段、27 个节点的关系等价大纲；每个节点列 incoming、outgoing、undirected，并可进入同一 node/relation detail。no-JS 下透镜不可操作，但完整图、原生 details、sourceTitle、originalLanguage 与外部 evidence link 都可读。
+
+浏览器验收暴露四个具体问题。第一，边终点落在节点中心时 marker 被 HTML node 遮住；改用矩形／椭圆边界投影并锁定端点在边界且不等于中心。第二，SVG `<a>` 没有 HTMLAnchorElement 的 `.hash`；改读 `href` attribute 才能打开详情。第三，长作品名虽然 node box 零碰撞，type/name/time 的 child boxes 仍互相重叠；增加内容框浏览器断言后扩大节点和画布尺度。第四，关系 link 的 bbox 中心可能落在另一节点之下；测试改为沿 SVG path 采样 `getPointAtLength`，用 `elementFromPoint` 找到真实可见线段后点击，不把边层错误抬到节点上方。
+
+最终 targeted E2E 为 12 passed / 4 expected skipped；完整 E2E 为 115 passed / 5 intentional skipped；Astro check 0 errors / warnings / hints、Vitest 88/88、fresh build 104 pages。14 张原始截图覆盖 1440px/320px、Light/Dark、两种透镜、node/edge detail、no-JS 与网络右半段；document overflow 为 0，移动端 27/25 全量可达。实现 commit `a144c5e` 未 push；共享 journals 由主任务统一整合。
+
+## 19. v0.2 发布文档诚实性审查（部分会话导出）
+
+Atlas 运行时完成后，独立整站审查没有发现非 Atlas 范围的 Critical/Important。审查实际核对 8 Domain、42 Capability、12 Knowledge Topic、64 relation、3 Career Lenses、20 Source、128 Work Item、15 Resource Topic 与七维事实筛选；无 JavaScript、320px、Light/Dark、base path 与兼容 Trail redirect 均符合合同。一次完整 E2E 的 `ERR_CONNECTION_REFUSED` 来自两个只读审查同时争用 4321 preview，不是页面断言失败；最终全仓 E2E 必须在所有 reviewer 停止后由主任务串行重跑。
+
+唯一确定的发布前 Important 是公开 `/project/readme/`、Roadmap 与 Changelog 仍把 M0 描述成当前产品，且 README / M0 历史段保留 `AAA / Game Designer` 斜杠。主任务以最小发布留档切片修正：README 改写为 v0.2 当前真实规模与边界；Roadmap 把完成内容放入待部署验收；Changelog 补齐三个 Career Lenses、全局 Atlas 与本 Devlog；新增 `Devlog 003`；旧 M0 文字统一用 `AAA · Game Designer`。一条具体 Resource 的 whyRelevant / summary 仍写“适于学习路径”，同步改成“适于结构化学习”，不改变 catalog 关联、顺序或数量。发布成功前不把 v0.2 写成已部署，runtime run 与线上契约留待 GitHub Pages 成功后回写。
+
+## 20. Atlas UI 独立审查修复与复审（部分会话导出）
+
+独立 reviewer 在 `a144c5e` 上先重跑 Atlas unit/check/build/targeted E2E，并亲自检查 1440px、320px、Light、Dark 与 no-JS 原图。结论为 0 Critical、5 Important、3 Minor：主题透镜只降低 path 而没有降低 marker、undirected endpoints 与 mobile relation refs；点击 node/edge 会把画布抛到页面上方 2475–4010px；40 个 Evidence 在 DOM 中变成 78 个 row；Innovation 的 schema range 被布局忽略；320px no-JS 页头中 brand、select、note 发生真实 bounding-box 碰撞。Minor 是横向滚动不易发现、关系键盘/ARIA 顺序不稳定、27/25 状态文案硬编码。
+
+主任务按 receiving-code-review 先验证再决定范围。前四项和页头碰撞都能由真实运行或规格直接证明；实现保持最小，不引入 router、drawer framework、状态机或图布局依赖。Layout 先取得 ranged Innovation `spanEndX === yearX` 与反转 relation 导致渲染顺序反转的 RED，修为 Innovation/Category 有 `endYear` 即投影 span、Game 运行时拒绝 span、relation/outline adjacency 按时间/空间稳定排序。
+
+主题 RED 实测浅色非匹配 directed path 对 canvas 为 1.325:1，mobile ref 缺 theme tags。修复使用 `var(--muted)` + 4/4 dash，marker 用 `context-stroke`，undirected endpoints 与 path 同色，mobile refs 同步 `data-theme-match` 与 dashed underline；Light/Dark 的 computed contrast 均 ≥3:1。详情 RED 是 `dialog[data-atlas-selected-detail]` 不存在；最小实现用一个 native dialog clone 已存在的 server detail body/title，关闭时恢复触发 link、page scroll 与 canvas scroll。no-JS 保留原 anchor/native details。
+
+Evidence 改为页面底部 40 rows / 40 unique IDs / 40 external links 的单一索引，node/relation/dialog 只保留 refs。modal 内 fragment 首次只滚动被遮住的背景，因此实现显式关闭 dialog、聚焦唯一 Evidence row、显示“返回网络”，再恢复原网络位置和焦点；全局 smooth scroll 导致首次即时位置断言读到旧值，按已验证模式在恢复瞬间临时切换 `scrollBehavior:auto`。320 no-JS header 则让 theme tools 独占第二行、compact nav 位于第三行，brand/select/note 无碰撞和横向溢出。
+
+最终实现提交 `0deb96d`，未 push。`npm run build` 为 check 0/0/0、Vitest 90/90、105 pages；Atlas + Theme targeted 27 passed / 7 expected skipped；完整 E2E 120 passed / 8 expected skipped。8 张新截图保存于 `/tmp/atlas-review-fix.mtU13j/`。原 reviewer 使用独立 4337 preview fresh 复审：target unit 12/12、check 0、build 90/90、Atlas/theme/base-path 29 passed / 7 expected skipped；dialog Escape/button、打开瞬间坐标、Evidence return、focus restore、40 unique DOM 与 320 header 均实际验证，最终结论 Ready。review preview 已精确停止，4321 与 4337 均无 listener。
+
+## 21. v0.2 本地发布候选总验收（部分会话导出）
+
+所有实现与独立审查收敛后，主任务在没有共享 preview 或并发写入的条件下独立串行重跑发布门禁。结果为：`npm run check` 0 errors / 0 warnings / 0 hints，Vitest 90/90，fresh `npm run build` 生成 105 pages，完整 Playwright E2E 120 passed / 8 intentional skipped / 0 failed。`npm audit --audit-level=high` 返回 0 vulnerabilities；`git diff --check`、credential filename scan 与 4321 listener 检查均无异常。
+
+主任务另在 4338 fresh preview 上生成最终视觉矩阵 `/tmp/learn-about-games-v02-final/`：首页、Map、Career、Resources、Atlas、About、Devlog 各有 1440px Light 与显式 320px Dark 原图；另外保存 Atlas“当前选择”dialog 和 320px no-JS Atlas。每条路由均实测 `documentElement.clientWidth === documentElement.scrollWidth === body.scrollWidth`（1440 或 320）；桌面 Atlas 只保留产品合同允许的网络内部横向滚动。原图确认五项导航、开放地图、三职业透镜、128 条资源目录、全局时间网络、项目资料聚合和 Devlog 003 均为当前态；4338 preview 随后精确停止。
+
+此时 v0.2 仍只存在于本地 `codex/v02`，尚未 push、快进到 `main` 或由 GitHub Pages 发布。发布事实、Actions run、公开 URL 与 live HTML 契约必须等实际成功后另行回写，不能由本地门禁推断。

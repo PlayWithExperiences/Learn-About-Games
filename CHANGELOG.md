@@ -4,6 +4,12 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 新增 `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 三个带生产语境、依据和复核日期的 Career Lenses；它们复用同一张能力地图，只改变强调，不生成评分、缺口、完成率或统一建议步骤。
+- Innovation Atlas 从 Roguelike 种子列表重构为一张可横向浏览的全局时间网络，包含 27 个节点、25 条有证据关系和 40 项文献；Roguelike 与 Metroidvania 透镜只改变强调，不隐藏、不重排、不移动实体。
+- Atlas 的 Game、Innovation 与 Category Formation 使用不同形状；有向关系在目标节点边界显示箭头，无向关系双端对称。320px 使用按年代组织的关系等价大纲，并保留节点、关系与原始题名／语种证据详情。
+- Atlas 节点与关系在 JavaScript 可用时打开原生选中详情，关闭后恢复网络焦点、页面位置和横向位置；无 JavaScript 时继续使用原生详情。40 项 Evidence 集中为唯一文献索引，实体详情只保留可返回网络的引用。
+- 修复 Atlas 主题切换后非匹配箭头、无向端点与移动关系引用仍保持高亮的问题；非匹配关系现在使用满足对比要求的中性色和非颜色线型反馈。修复 320px 无 JavaScript 页头中品牌、外观控件与说明发生碰撞的问题。
+- 新增 `Devlog 003`，记录 v0.2 为什么从卡片、单一画像、两条资源与独立时间线转向知识网络、事实资源目录和证据透镜。
 - 能力与知识议题详情现在直接按运行时 catalog 顺序显示关联 Work Item，并提供 `capability`、`knowledgeTopic`、`resourceTopic` 稳定筛选深链；没有直接资源的能力诚实显示空状态与贡献入口，不经过 Trail 或规定学习顺序。
 - 成长资源现在把 20 个 Source 与 128 个 Work Item 作为两类独立、可发现的实体：主资源页服务端输出完整目录，20 个 Source 均有静态详情页，15 个无顺序资源主题继续保留独立入口。
 - 新增资源主题、知识主题、能力、可消费语言、媒介、访问方式与 Source 七维事实筛选；筛选状态写入稳定 URL 参数并支持 reload、history back 与 pageshow，无 JavaScript 时仍可阅读全部目录。
@@ -21,7 +27,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ### Deployed
 
-- GitHub Pages workflow [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 成功发布 final-review commit `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2`；线上首页已复核新的 `AAA / Game Designer` 当前态说明。
+- GitHub Pages workflow [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 成功发布 final-review commit `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2`；线上首页已复核当时的 `AAA · Game Designer` 当前态说明。
 - GitHub Pages workflow [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032) 成功发布 Task 7 acceptance bundle commit `d079d83c14d2823c597d9c831c907f61fd6e62c8`，站点位于 [https://playwithexperiences.github.io/Learn-About-Games/](https://playwithexperiences.github.io/Learn-About-Games/)。
 - 线上复核确认：首页包含已发布 Playtest 文案，Resources HTML 包含 disabled no-JS select 与说明，Devlog 索引包含 `Devlog 002`。
 - 较早的 [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 是首次基础部署历史，不包含后续 Task 7 验收修复。
@@ -29,15 +35,15 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ### Added
 
-- 发布 9 个领域与 9 个能力入口的能力地图骨架，只有已策展的 Playtest 节点进入学习路径。
-- 发布 Playtest 能力页、基础学习路径、两条已审核 Work Item，以及按可消费 access version 工作的中文与英文筛选。
-- 发布 `AAA / Game Designer` 参考画像与浏览器本地个人学习状态；两者独立表达，不计算职业或个人分数。
+- 发布 9 个领域与 9 个能力入口的能力地图骨架；Playtest 作为当时唯一完整纵向切片进入具体内容。
+- 发布 Playtest 能力页、基础主题页、两条具体 Work Item，以及按可消费 access version 工作的中文与英文筛选。
+- 发布 `AAA · Game Designer` 参考画像与浏览器本地个人学习状态；两者独立表达，不计算职业或个人分数。
 - 发布站内 Game Innovation Atlas 八类框架与 Roguelike 证据种子，包含 8 个 Game、1 个 Innovation、7 条已证实关系和 9 项来源。
 - 发布 Roadmap、Changelog、Devlog、Methodology、Contributing 与跨 AI 连续性记录。
 
 ### Fixed
 
-- 修复首页把已发布的单一 `AAA / Game Designer` 参考画像写成未来功能；文案现明确它只用于理解一种生产语境、不作评分，更多画像后续扩展。
+- 修复首页把已发布的单一 `AAA · Game Designer` 参考画像写成未来功能；文案现明确它只用于理解一种生产语境、不作评分，更多画像后续扩展。
 - 修复未应用或已清除画像时仍可见的职业标签，并让依赖脚本的职业、个人进度与语言筛选控件在无 JavaScript 时保持可信的禁用状态与说明。
 - 修复浏览器 history 与 bfcache 返回后职业透镜或资源语言筛选未重放派生状态的问题。
 - 修复移动端共享导航溢出、Atlas 关系方向不明确、箭头误继承节点样式，以及 Devlog 索引重复显示同一标题的问题。

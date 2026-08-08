@@ -177,6 +177,7 @@ test('maps repository-backed Markdown links to public site routes', async ({ pag
     ['Methodology', '/Learn-About-Games/project/methodology/'],
     ['Contributing', '/Learn-About-Games/project/contributing/'],
     ['Devlog', '/Learn-About-Games/devlog/2026-08-08-project-origin/'],
+    ['v0.2 milestone', '/Learn-About-Games/devlog/2026-08-09-v02-knowledge-network/'],
   ] as const) {
     await expect(document.getByRole('link', { name: label, exact: true })).toHaveAttribute('href', href);
   }
@@ -193,6 +194,7 @@ test('lists each Devlog entry with its own title', async ({ page }) => {
 
   await expect(page.getByRole('link', { name: /Devlog 001：Learn About Games 从哪里来/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Devlog 002：M0 为什么从纵向切片开始/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Devlog 003：v0.2 为什么改成知识网络/ })).toBeVisible();
 });
 
 test('maps non-public Markdown links to absolute repository URLs', async ({ page }) => {
@@ -212,12 +214,15 @@ test('maps non-public Markdown links to absolute repository URLs', async ({ page
   }
 });
 
-test('keeps M0 separate from the approved v0.2 implementation', async ({ page }) => {
+test('publishes the current v0.2 scope without retaining the M0 roadmap as current', async ({ page }) => {
   await page.goto('./project/readme/');
 
-  await expect(
-    page.getByText(/M0 不冒充内容完整的正式第一版。v0.2 已进入实施/),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: '当前版本｜v0.2', exact: true })).toBeVisible();
+  await expect(page.getByText(/8 个开放领域、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
+  await expect(page.getByText(/20 个 Source、128 个具体 Work Item 与 15 个无顺序资源主题/)).toBeVisible();
+  await expect(page.getByText(/27 节点、25 条有证据关系与 40 项文献/)).toBeVisible();
+  await expect(page.locator('article.prose')).not.toContainText('v0.2 已进入实施');
+  await expect(page.locator('article.prose')).not.toContainText('AAA / Game Designer');
 });
 
 test('records the verified deployment chain through the final-review fix', async ({ page }) => {

@@ -6,20 +6,19 @@ Learn About Games 是一个公开的游戏知识地图、职业参考、学习�
 
 网站用“看地图、找位置、向前走”组织入口。地图提供方向，不提供资格认证；职业画像是带生产语境的参考，不是统一标准。
 
-## 已部署的 M0
+## 当前版本｜v0.2
 
-M0 是验证数据契约、GitHub Pages 子路径与核心用户旅程的可运行纵向切片，已经包含：
+v0.2 把 M0 的纵向切片扩展成一张可以继续生长的公开知识网络：
 
-- 9 个领域与 9 个能力入口，其中 Playtest 已有完整学习切片。
-- 从 Playtest 能力页进入基础路径，再抵达两条经过审核的具体 Work Item。
-- 以 access version 表达的中文与英文可消费语言筛选。
-- 一个明确带 AAA 生产语境的 `AAA / Game Designer` 参考画像。
-- 仅保存在当前浏览器的 Playtest 个人学习状态，与职业画像独立，不生成分数。
-- Game Innovation Atlas 的八类框架与 Roguelike 证据种子：8 个 Game、1 个 Innovation、7 条已证实关系和 9 项来源。
+- 能力地图包含 8 个开放领域、42 个可实践能力、12 个知识议题和 64 条 `supports` / `complements` 关系；桌面使用相连地域图，移动端使用关系等价大纲。
+- `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 是三种带生产语境和公开依据的参考透镜。它们只在同一张地图上改变强调，不评分、不隐藏节点，也不生成统一成长路线。
+- 成长资源收录 20 个 Source、128 个具体 Work Item 与 15 个无顺序资源主题，可按主题、知识议题、能力、可消费语言、媒介、访问方式和来源筛选。
+- Innovation Atlas 是一张 27 节点、25 条有证据关系与 40 项文献构成的全局时间网络；Roguelike 与 Metroidvania 只作为高亮透镜，不拥有或过滤节点。
+- 外观支持跟随系统、浅色和深色三种模式；无 JavaScript 时，地图、资源、依据与原生详情仍可阅读。
 
-M0 不冒充内容完整的正式第一版。v0.2 已进入实施，将把卡片骨架改造成语义地图，扩充约 100-150 项资源，提供三个职业透镜，并把 Innovation Atlas 改成可按主题高亮的全局时间网络。
+本站不建立候选、已审核、精选、星级或站内评分层级，也不把学习路径规定成统一答案。收录只表示某条公开资料存在并与主题相关；可核验的外部观察会保留来源与日期，但不参与排序或平台评分。
 
-v0.2 不建立候选、已审核、精选或站内评分层级，也不把学习路径作为统一答案。资源只按能力、议题、语言、媒介与访问事实组织；可核验的外部评价会保留来源和观察日期，不合并成平台分数。
+当前界面以中文为主，资源可以保留英文、日文、中文等原始语言及可消费版本。完整英文界面属于后续工作。
 
 ## 本地命令
 
@@ -40,7 +39,7 @@ npm run test:e2e
 
 首次基础部署由 GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 完成。Task 7 acceptance bundle commit `d079d83c14d2823c597d9c831c907f61fd6e62c8` 由 [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032) 成功构建并部署。Final-review 修复与不兼容进度版本回退测试所在 commit `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2` 由 [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 成功构建并部署。
 
-线上复核确认：首页包含 Playtest 已可走通的当前态文案，以及 `AAA / Game Designer` 画像“只是参考、不作评分、更多画像后续扩展”的当前态说明；Resources HTML 包含 no-JS 的 disabled select 与说明，Devlog 索引包含 `Devlog 002`。
+M0 线上复核确认：首页包含当时的 Playtest 纵向切片与 `AAA · Game Designer` 参考说明；Resources HTML 包含 no-JS 的 disabled select 与说明，Devlog 索引包含 `Devlog 002`。v0.2 的 GitHub Pages run 与线上契约会在本次发布成功后补入 Changelog。
 
 ## 交接入口
 
@@ -55,5 +54,6 @@ npm run test:e2e
 - [Contributing](CONTRIBUTING.md)
 - [Devlog](docs/devlog/2026-08-08-project-origin.md)
 - [M0 milestone](docs/devlog/2026-08-08-m0-vertical-slice.md)
+- [v0.2 milestone](docs/devlog/2026-08-09-v02-knowledge-network.md)
 
 需要精确恢复历史时，再打开决策摘要链接的脱敏会话记录。

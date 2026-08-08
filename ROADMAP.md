@@ -6,20 +6,20 @@
 
 - Astro + TypeScript 静态站点已经部署到 GitHub Pages 项目子路径。
 - 9 个领域与 9 个能力入口构成首个可见地图骨架。
-- Playtest 已走通“地图 - 能力 - 学习路径 - 具体 Work Item”的端到端路径。
+- Playtest 已走通“地图 - 能力 - 主题 - 具体 Work Item”的端到端纵向切片。
 - 资源库按可消费 access version 支持中文与英文筛选，无 JavaScript 时保留全部内容。
-- `AAA / Game Designer` 参考画像与浏览器本地个人进度使用独立语义，不生成分数。
+- `AAA · Game Designer` 参考画像与浏览器本地个人进度使用独立语义，不生成分数。
 - Game Innovation Atlas 已发布八类框架与一个带证据状态的 Roguelike 种子。
 - 构建期引用校验、桌面与移动端 E2E、项目历史文档和 GitHub Pages workflow 已建立。
 
-## Now｜实施 v0.2 地图与内容扩展
+## Ready｜v0.2 发布验收
 
-- 把两列能力卡片重构为具有领域地域、能力节点、知识议题与明确关系的地图。
-- 发布 `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 三个参考透镜，不生成职业评分。
-- 把资源按能力与主题统一整理，移除站内候选、审核、精选与学习路径强制顺序。
-- 收录约 100-150 项具有真实 URL、语言版本和主题关联的资源，不生成站内评分或排名。
-- 把 Innovation Atlas 重构为一张全局横向时间网络，以 Roguelike 与 Metroidvania 作为高亮透镜。
-- 重组一级导航与 About，增加跟随系统、浅色、深色三态外观。
+- 8 个领域、42 个能力、12 个知识议题和 64 条关系已经形成相连的能力地图；移动端保留关系等价大纲。
+- `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 三个参考透镜已经叠加在同一张地图上，不生成职业评分。
+- 20 个 Source、128 个 Work Item 与 15 个无顺序主题已经进入统一资源目录；七维筛选只表达可核查事实。
+- Innovation Atlas 已成为 27 节点、25 条证据关系与 40 项文献构成的全局时间网络，Roguelike 与 Metroidvania 仅改变强调。
+- 五项一级导航、About 项目资料入口与跟随系统／浅色／深色外观已经完成。
+- 当前只剩 GitHub Pages 发布、线上契约核验与发布证据回写；完成后本节整体移入 Shipped。
 
 ## Next｜扩大地图和资源覆盖
 

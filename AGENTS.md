@@ -1,6 +1,6 @@
 # Project entrypoint
 
-Verified state: M0 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/>. The user has approved the v0.2 redesign and content expansion and explicitly authorized implementation without another design-review pause. Do not treat M0 as the formal content-complete release.
+Verified state: M0 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/>. The v0.2 runtime is complete through `0deb96d`, has passed independent product/Atlas review, and is in release-document and GitHub Pages acceptance; it is not deployed yet. The user explicitly authorized direct implementation and deployment without another design-review pause.
 
 Before making substantive changes, read these files in order:
 
