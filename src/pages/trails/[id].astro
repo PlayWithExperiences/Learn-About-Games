@@ -1,10 +1,25 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { Catalog } from '../../lib/catalog/validate';
 import { loadCatalog } from '../../lib/catalog/load';
 import { sitePath } from '../../lib/site-path';
 
 const mediaLabels: Record<string, string> = { article: '文章', video: '视频' };
 const accessLabels: Record<string, string> = { free: '免费' };
+const translationLabels: Record<string, string> = { bilingual: '双语', original: '原作' };
+type AccessVersion = Catalog['resources'][number]['accessVersions'][number];
+
+function groupAccessVersions(versions: AccessVersion[]) {
+  return versions.reduce<{ url: string; versions: AccessVersion[] }[]>((groups, version) => {
+    const group = groups.find(({ url }) => url === version.url);
+    if (group) {
+      group.versions.push(version);
+    } else {
+      groups.push({ url: version.url, versions: [version] });
+    }
+    return groups;
+  }, []);
+}
 
 export async function getStaticPaths() {
   const catalog = await loadCatalog();
@@ -42,15 +57,21 @@ const resources = trail.resourceIds
       <div class="trail-resource-list">
         {resources.map((resource) => {
           const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+          const accessVersionsByUrl = groupAccessVersions(resource.accessVersions);
           return (
             <article>
               <h3>{resource.title['zh-CN']}</h3>
               <p>{resource.summary['zh-CN']}</p>
               <p class="trail-resource-list__meta">Source：{source?.name['zh-CN']} · {mediaLabels[resource.mediaType] ?? resource.mediaType}</p>
               <ul>
-                {resource.accessVersions.map((version) => (
+                {accessVersionsByUrl.map((group) => (
                   <li>
-                    <a href={version.url}>{version.language} · {accessLabels[version.access] ?? version.access}</a>
+                    <a href={group.url}>{resource.title['zh-CN']}</a>
+                    <ul class="access-version-list__metadata">
+                      {group.versions.map((version) => (
+                        <li>{version.language} · {accessLabels[version.access] ?? version.access} · {translationLabels[version.translationKind] ?? version.translationKind}</li>
+                      ))}
+                    </ul>
                   </li>
                 ))}
               </ul>

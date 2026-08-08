@@ -16,7 +16,9 @@ test('guides a learner from the home page to the Playtest trail and its work ite
 
   await expect(page.getByRole('heading', { name: 'Playtest 基础：把设计当作可验证的假设' })).toBeVisible();
   await expect(page.locator(`a[href="${valveVideoUrl}"]`)).toHaveCount(1);
-  await expect(page.locator(`a[href="${playtestArticleUrl}"]`)).toHaveCount(2);
+  await expect(page.locator(`a[href="${playtestArticleUrl}"]`)).toHaveCount(1);
+  await expect(page.getByText('zh-CN · 免费 · 原作', { exact: true })).toBeVisible();
+  await expect(page.getByText('en · 免费 · 双语', { exact: true })).toBeVisible();
 });
 
 test('filters work items by consumable access-version language', async ({ page }) => {
@@ -41,6 +43,26 @@ test('filters work items by consumable access-version language', async ({ page }
   await expect(playtestArticle).toBeVisible();
   await expect(valveVideo).toBeVisible();
   await expect(resultCount).toHaveText('共 2 条 Work Item');
+  await expect(playtestArticle.locator(`a[href="${playtestArticleUrl}"]`)).toHaveCount(1);
+  await expect(playtestArticle.getByText('zh-CN · 免费 · 原作', { exact: true })).toBeVisible();
+  await expect(playtestArticle.getByText('en · 免费 · 双语', { exact: true })).toBeVisible();
+});
+
+test('reapplies the selected language filter after history back', async ({ page }) => {
+  await page.goto('./resources/');
+
+  const languageSelect = page.getByLabel('可消费语言');
+  const valveVideo = page.locator('.resource-card').filter({ hasText: 'Valve\'s “Secret Weapon”' });
+  const playtestArticle = page.locator('.resource-card').filter({ hasText: '如何进行好的 Playtest' });
+
+  await languageSelect.selectOption('zh-CN');
+  await page.getByRole('link', { name: 'Map', exact: true }).click();
+  await page.goBack();
+
+  await expect(languageSelect).toHaveValue('zh-CN');
+  await expect(page.getByRole('status')).toHaveText('共 1 条 Work Item');
+  await expect(playtestArticle).toBeVisible();
+  await expect(valveVideo).toBeHidden();
 });
 
 test('keeps all work items available without JavaScript', async ({ browser }) => {

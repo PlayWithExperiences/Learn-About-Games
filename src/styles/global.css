@@ -571,13 +571,27 @@ h2 {
   list-style: none;
 }
 
-.access-version-list li {
+.access-version-list > li {
   display: flex;
   padding-top: 0.75rem;
   border-top: 1px solid var(--line);
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.access-version-list__metadata {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  list-style: none;
+  text-align: right;
+}
+
+.access-version-list__metadata li {
+  margin: 0;
 }
 
 .access-version-list span {
@@ -793,9 +807,13 @@ h2 {
     margin-top: 1.5rem;
   }
 
-  .access-version-list li {
+  .access-version-list > li {
     display: grid;
     gap: 0.25rem;
+  }
+
+  .access-version-list__metadata {
+    text-align: left;
   }
 
   .devlog-index li a {

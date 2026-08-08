@@ -21,6 +21,20 @@ const translationLabels: Record<string, string> = {
   bilingual: '双语',
   original: '原作',
 };
+
+type AccessVersion = Catalog['resources'][number]['accessVersions'][number];
+
+function groupAccessVersions(versions: AccessVersion[]) {
+  return versions.reduce<{ url: string; versions: AccessVersion[] }[]>((groups, version) => {
+    const group = groups.find(({ url }) => url === version.url);
+    if (group) {
+      group.versions.push(version);
+    } else {
+      groups.push({ url: version.url, versions: [version] });
+    }
+    return groups;
+  }, []);
+}
 ---
 
 <section class="resource-explorer" aria-labelledby="resource-list-title">
@@ -46,6 +60,7 @@ const translationLabels: Record<string, string> = {
     {resources.map((resource) => {
       const source = sources.find(({ id }) => id === resource.sourceId);
       const languages = resource.accessVersions.map(({ language }) => language).join(' ');
+      const accessVersionsByUrl = groupAccessVersions(resource.accessVersions);
 
       return (
         <article class="resource-card" data-languages={languages}>
@@ -63,10 +78,14 @@ const translationLabels: Record<string, string> = {
             <div><dt>审核</dt><dd>{resource.reviewStatus === 'reviewed' ? '已审核' : resource.reviewStatus}</dd></div>
           </dl>
           <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
-            {resource.accessVersions.map((version) => (
+            {accessVersionsByUrl.map((group) => (
               <li>
-                <a href={version.url}>{resource.title['zh-CN']}</a>
-                <span>{version.language} · {accessLabels[version.access] ?? version.access} · {translationLabels[version.translationKind] ?? version.translationKind}</span>
+                <a href={group.url}>{resource.title['zh-CN']}</a>
+                <ul class="access-version-list__metadata">
+                  {group.versions.map((version) => (
+                    <li>{version.language} · {accessLabels[version.access] ?? version.access} · {translationLabels[version.translationKind] ?? version.translationKind}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>
@@ -96,4 +115,5 @@ const translationLabels: Record<string, string> = {
   }
 
   select?.addEventListener('change', updateResources);
+  window.addEventListener('pageshow', updateResources);
 </script>
