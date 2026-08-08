@@ -22,6 +22,12 @@ v0.2 开始前的 clean baseline 已实际运行：`npm run build` 完成 Astro 
 
 本次 Foundation 导航切片已完成但尚未发布：顶层只保留能力地图、职业方向、成长资源、创新变迁与关于本项目五项用户任务；About 集中项目治理资料并保留旧路由；`/careers/` 直接复用 `AAA · Game Designer` catalog 画像、公开依据与复核日期，不复制角色知识树；首页三入口分别抵达地图、职业方向和资源。桌面导航单行，320px 改为原生 `details/summary` 紧凑菜单，JavaScript 不可用时仍可打开。行为测试先在旧导航上取得 RED，最终 `npm run build` 为 0 errors / warnings / hints、Vitest 44/44、25 个静态页面；导航定向桌面/移动 E2E 为 25 passed / 1 desktop-only skipped，完整 E2E 为 53 passed / 1 skipped。实测 320px HTML 与 body 均为 `clientWidth=320`、`scrollWidth=320`，临时 preview 已关闭。
 
+能力地图 Tasks 2-3 已完成但尚未发布：`CapabilityMap.astro` 从同一 catalog server render 桌面地域图与移动关系大纲。桌面画布包含 8 个开放地域、42 个 Capability、12 个 Knowledge Topic 和 64 条关系；supports 使用中点方向标记，complements 使用无箭头虚线，focus 只增强相邻边与端点而不隐藏全图。移动端在 320px 直接显示全部节点链接，每个 Capability 可展开“它支持 / 受到支持 / 互补”的同源文字关系。所有 Capability 详情都有独立 `CapabilityProgress`，12 个 Knowledge Topic 均有静态详情页；fresh build 生成 70 pages。
+
+本切片先运行 fresh build 证明测试产物可用，再在旧 bento 上取得浏览器 RED 14/14；实现后地图/base-path 桌面与移动定向为 14/14。相邻回归更新移除了已经退休的 Map 内嵌职业控件契约，并锁定每个能力页都有个人记录；最终 `npm run check` 为 0 errors / warnings / hints、Vitest 57/57、fresh build 70 pages，地图/base-path/profile-progress 定向 18/18，完整 E2E 为 77 passed / 1 desktop-only skipped。视觉验收覆盖 Map、Playtest 详情与“玩家动机与差异”议题详情在 1440px/320px、System Light/explicit Dark 共 12 张截图。对抗检查发现并修复 SVG 箭头被 viewBox 放大、移动节点详情链接藏在闭合 disclosure、4 对节点碰撞与 1 对跨域擦边；最终节点碰撞审计为 0，320px HTML/body scrollWidth 等于 clientWidth，节点链接 42/42 直接可见。临时 preview 已停止，`git diff --check` 与 secret filename scan 均无输出。
+
+地图切片留档后的全仓复跑遇到并发资源切片正在进行的预期 TDD RED：资源测试新增 2 条、其中 4 项仍等待资源 catalog GREEN；Astro check 仍为 0/0/0，地图文件没有新增失败。本摘要不把该共享工作树瞬时状态伪装成最终全仓 GREEN；主任务会在资源提交后重新执行 fresh build、unit 与完整 E2E。
+
 ## 用户反馈与结论
 
 ### 能力地图
@@ -75,14 +81,15 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 ## 精确下一步
 
 1. 重新运行文档阶段的 build、E2E、lint 与 diff gate，并提交 v0.2 规格、`DESIGN.md` 与四份可执行计划。
-2. 导航、About 与职业入口已完成。三态主题切片已完成：仅接受 `system`、`light`、`dark`，未知 localStorage 回退系统；控件在脚本绑定前禁用，head boot 在样式绘制前恢复显式选择。fresh check 为 0 errors / warnings / hints、全量 Vitest 57/57、fresh build 58 pages，主题与既有 Resources 定向桌面/移动 E2E 24/24，1440px/320px 系统浅色与显式深色截图已检查。全量 E2E 已重新运行；主题修复 no-JS 说明 locator 集成回归后，仍有 4 项 Map 页面旧断言等待同步到 8-domain 地图内容，不能把完整 gate 写成 GREEN。
-3. 再依次交付能力地图与职业方向、成长资源、全局 Innovation Atlas。
+2. 导航、About、三态主题与能力地图 Tasks 2-3 已完成；首页和地图显示数量从 catalog 派生，不把当前 42/12/64 写成未来上限。
+3. 下一步完成 Map / Career 计划 Task 4：三个有公开依据、边界与复核日期的职业透镜必须复用同一张地图并保持个人状态独立。
 4. 每阶段执行 RED-GREEN、规格审查、代码质量审查、连续性留档与独立提交。
 5. 最后完成桌面/移动、双主题、无 JavaScript、Pages 子路径与线上部署验收。
 
 ## 当前未决风险
 
 - 三个职业画像的公开依据需要逐项收集并保留适用边界。
+- 当前只有 Playtest 有直接资源，其他能力和多数知识议题详情会诚实显示仍在整理；资源切片完成前不能把可达页面误写成内容覆盖完成。
 - 100-150 项资源必须真实去重和核查，不能让数量目标压过元数据质量。
 - Metroidvania 的命名史、机制史与直接影响证据必须分开表达。
 - 全局时间网络需要可解释的固定布局，不能退化为横向卡片列表或不可控力导图。

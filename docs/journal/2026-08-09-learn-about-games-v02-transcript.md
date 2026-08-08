@@ -99,4 +99,20 @@
 
 页面 head 增加最小 boot：只在存储值为显式浅色或深色时设置 `document.documentElement.dataset.theme`，在 CSS 绘制前避免显式偏好的明显闪烁；存储不可读或损坏时保留 system。顶部 utility 区增加原生 System / Light / Dark select，server render 时禁用，脚本完成绑定后才启用；更改会立即应用并持久化，`pageshow` 会重放当前偏好。无 JavaScript 保持 disabled 控件和简洁说明。
 
-全局 CSS 改为 DESIGN.md 规定的蓝灰浅色与蓝炭深色 token，显式 `data-theme` 优先于系统媒体查询，并收敛现有组件对正文浅色硬编码的依赖。浏览器矩阵覆盖 system 的浅/深、两种显式反向覆盖、reload、损坏存储、pageshow、无 JS 与 320px。地图提交后 fresh check 为 0 errors / warnings / hints、全量 Vitest 57/57、fresh build 58 pages，主题与既有 Resources 定向桌面/移动 E2E 24/24；已查看首页、About、Resources 在 1440px/320px、系统浅色/显式深色共 12 张截图，以及两种主题的焦点截图。完整 E2E 重跑初始为 59 passed / 6 failed / 1 skipped，其中主题引入的 no-JS 通用 class locator 冲突已修复；余下 4 项失败锁定了地图扩充前的 9 个领域和旧 Playtest 文案，等待地图页面测试契约同步。这个导出不把该仍在修复中的完整 gate 写成 GREEN。
+全局 CSS 改为 DESIGN.md 规定的蓝灰浅色与蓝炭深色 token，显式 `data-theme` 优先于系统媒体查询，并收敛现有组件对正文浅色硬编码的依赖。浏览器矩阵覆盖 system 的浅/深、两种显式反向覆盖、reload、损坏存储、pageshow、无 JS 与 320px。地图提交后 fresh check 为 0 errors / warnings / hints、全量 Vitest 57/57、fresh build 58 pages，主题与既有 Resources 定向桌面/移动 E2E 24/24；已查看首页、About、Resources 在 1440px/320px、系统浅色/显式深色共 12 张截图，以及两种主题的焦点截图。该主题切片当时的完整 E2E 重跑为 59 passed / 6 failed / 1 skipped，其中主题引入的 no-JS 通用 class locator 冲突已修复，余下 4 项失败锁定地图扩充前的 9 个领域和旧 Playtest 文案；这些旧断言随后由地图切片同步并转绿。
+
+## 12. 能力地图与通用节点详情（部分会话导出）
+
+本小节是当前 agent 运行时可见范围内的脱敏实现记录，不是聊天 UI 的完整逐字导出。实现任务明确要求用真实语义地图替换便当盒，保持 Capability 与 Knowledge Topic 的实体差异，让 64 条关系由全局锚点实际连接，并让所有节点可进入；职业透镜留给后续独立任务，Map 页先删除旧的一选项 select。
+
+测试先行：新增 `map-v02.spec.ts`，锁定 8 个地域、42 个能力节点、12 个知识议题节点、64 条关系、supports/complements 方向语义、每条边的 from/to 与 start/end 锚点、focus 后总边数不变、桌面画布与显式 320px 大纲互斥、no-JS 文字关系、双主题可读性，以及 Capability/Knowledge Topic 详情。base-path sampler 增加全部 12 个议题 URL。fresh build 在旧 UI 上仍成功生成 58 pages；随后浏览器阶段 14/14 按预期失败，根因分别是无语义画布、无 SVG 边、无移动大纲、无 topic route 与详情关系，而非环境或拼写错误。
+
+GREEN 实现新增 `CapabilityMap.astro`。桌面使用固定 1180×850 的 0-100 全局画布，Domain 是无圆角轻底色地域，Capability 是紧凑圆角链接，Knowledge Topic 是方形虚线节点并显式标注“知识议题”。SVG 主路径直接读取 `projectRelationEndpoints()`；supports 在直线路径中点显示方向 marker，complements 无箭头且使用虚线。脚本只在 pointer/focus 时给相邻边和端点添加 `data-adjacent`，不会删除或隐藏其他边。移动端不缩小画布，改为 8 个 Domain 分组；每个节点名称直接链接详情，每个 Capability 的原生 disclosure 展开同源的“它支持 / 受到支持 / 互补”关系。
+
+详情路由泛化为全部 42 个 Capability，并新增全部 12 个 Knowledge Topic 静态页。Capability 页公开领域 breadcrumb、三类关系、相关主题/具体资源与独立 `CapabilityProgress`；Knowledge Topic 页公开领域和相关资源。首页与 Map 的当前数量从 catalog 派生，避免把本轮 42/12/64 固化成未来内容上限。
+
+视觉验收首次发现四类实际问题：SVG marker 使用 `userSpaceOnUse` 后被 0-100 viewBox 放大成大三角；移动详情链接藏在闭合 disclosure；四对桌面节点边界碰撞；移动端旧测试仍寻找已按计划删除的职业 select。实现分别改用 `markerUnits="strokeWidth"` 并把方向标记移到路径中点、把节点链接移到 disclosure 外、微调仍在 Domain bounds 内的锚点、更新旧契约。1440px 与显式 320px 下检查 Map、Playtest 详情和“玩家动机与差异”议题详情，覆盖 System Light 与 explicit Dark，共 12 张截图。最终节点碰撞审计为 0；320px 实测 HTML/body 均无横向溢出，全部 42 个能力链接直接可见；资源覆盖仍只有 Playtest，空资源页保持诚实说明。
+
+最终门禁在完整实现与留档内容上重新运行：`npm run check` 为 0 errors / warnings / hints；Vitest 57/57；fresh build 生成 70 个静态页面；地图、base-path、个人记录桌面/移动定向为 18/18；`CI=1 npm run test:e2e` 为 77 passed / 1 desktop-only skipped。`git diff --check` 与脱敏 secret filename scan 均无输出，临时 preview 已停止。
+
+地图留档完成后再次启动全仓验证时，共享工作树已有并发资源切片的新测试 RED：Vitest 从 57 墕至 59，其中 4 项资源 catalog 断言等待该切片实现；Astro check 仍为 0 errors / warnings / hints。地图 agent 核对变更归属后没有修改或暂存资源文件，保留上一个隔离 Map GREEN 作为本切片证据，并把资源提交后的 fresh 全仓门禁交回主任务。
