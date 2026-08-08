@@ -14,8 +14,10 @@ Learn About Games 来自用户对“拥有地图、认识自己、持续学习�
 ## 当前已验证状态
 
 - GitHub 公开仓库是 `PlayWithExperiences/Learn-About-Games`，默认分支为 `main`。
-- M0 部署源 HEAD 为 `7f982bbdf074e56a99ec2ee5ca2a568fe25f5fca`。GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 的 build 与 deploy jobs 均成功。
-- Pages 使用 workflow build type。线上首页、地图、Playtest 能力、资源库与 Atlas 已抽查为 HTTP 200。
+- 首次基础部署源 HEAD 为 `7f982bbdf074e56a99ec2ee5ca2a568fe25f5fca`，对应 GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728)。
+- 最终 M0 验收功能发布 HEAD 为 `d079d83c14d2823c597d9c831c907f61fd6e62c8`，对应 [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032)；build 与 deploy jobs 均成功。
+- Pages 使用 workflow build type。线上复核确认：首页包含新的 Playtest 当前态文案，Resources HTML 包含 disabled no-JS select 与说明，Devlog 索引包含 `Devlog 002`。
+- 本摘要之后的 metadata 修正 commit 只对齐发布证据，不应被描述为上述 runtime 功能发布 HEAD，也不循环宣称仓库当前 HEAD 仍是 `d079d83`。
 - M0 公开 9 个领域与 9 个能力入口。只有 Playtest 已形成“地图 - 能力 - 路径 - 具体 Work Item”的完整学习切片。
 - Playtest 路径抵达 GMTK 的 `Valve's “Secret Weapon”` 视频与 PlayWithExperiences 的双语 Playtest 文章。它们是具体 Work Item，不是频道入口。
 - 双语文章只保存为一个 Work Item，通过 `zh-CN` 与 `en` 两个可消费 access version 参与筛选。语言表示用户能实际阅读或观看的版本，不只是原作语言。
@@ -88,7 +90,7 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - Atlas 测试必须锁定 relation id、fromId、toId、type 与 status 的 tuple。方向箭头桌面向右、移动向下；endpoint CSS 选择器必须收窄，避免箭头继承节点边框并变成第三种实体。
 - 远端 HTTPS 曾因 macOS Keychain 凭据路径返回 403。诊断改用命令级显式 SSH URL，确认认证与连通性；没有修改 global Git 配置或仓库 `origin`。该诊断不曾被当作部署证据。
 - `actions/configure-pages@v6` 在 build job 读取 Pages 配置，需要 `pages: read`。build job 只增加 `contents: read` 与 `pages: read`，deploy job 才拥有 `pages: write` 与 `id-token: write`。
-- 部署配置存在不等于上线。只有 Actions run 31264625728 的 build/deploy 成功和公开 URL HTTP 200 才把 M0 从 Roadmap Now 移到 Shipped。
+- 部署配置存在不等于上线。run 31264625728 证明首次基础部署，run 31265746032 与线上 HTML 抽查共同证明最终 M0 验收功能已经发布；因此 M0 才从 Roadmap Now 移到 Shipped。
 
 ## 未决问题
 

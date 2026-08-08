@@ -10,8 +10,10 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ### Deployed
 
-- GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 的 build 与 deploy jobs 成功，站点上线于 [https://playwithexperiences.github.io/Learn-About-Games/](https://playwithexperiences.github.io/Learn-About-Games/)。
-- 公开首页、地图、Playtest 能力、资源库与 Atlas 路径均通过 HTTP 200 抽查；构建产物保留 `/Learn-About-Games/` 项目子路径。
+- GitHub Pages workflow [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032) 成功发布最终验收功能 commit `d079d83c14d2823c597d9c831c907f61fd6e62c8`，站点位于 [https://playwithexperiences.github.io/Learn-About-Games/](https://playwithexperiences.github.io/Learn-About-Games/)。
+- 线上复核确认：首页包含已发布 Playtest 文案，Resources HTML 包含 disabled no-JS select 与说明，Devlog 索引包含 `Devlog 002`。
+- 较早的 [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 是首次基础部署历史，不包含后续 Task 7 验收修复。
+- 公开页面保留 `/Learn-About-Games/` 项目子路径。
 
 ### Added
 

@@ -271,3 +271,11 @@ Task 7 还记录了一次验收环境事故：fresh build 前启动的 preview �
 公开文档随后改为真实部署状态。README 链接线上 URL 并列出 M0 的 Playtest、AAA lens、本地 progress 与 Atlas seed；Roadmap 把实际完成的 M0 移到 Shipped，Now 只保留正式第一版的内容扩展规划；Changelog 只记录上线行为与修复，并链接 run 31264625728；第二篇 Devlog 解释 thin slice、已验证内容、刻意延后范围、事故与下一步。决策摘要保留项目来源、关键理由、远端部署证据、TS7 到 TS6 兼容、Astro Markdown link rewrite、preview、history/pageshow、role hidden/no-JS、Atlas tuple/arrow、HTTPS Keychain 403 到显式 SSH 且未改 global/origin、Pages `pages: read` 与精确下一步。
 
 最终门禁记录为：`astro check` 0 errors / warnings / hints，Vitest 26/26，fresh build 生成 14 个静态页面，desktop Chromium 21/21、mobile Chromium 21/21，`git diff --check` 退出 0。按计划执行的 `rg -l` secret scan 在排除依赖、Git 元数据和构建产物后没有返回文件名；没有输出任何匹配值。
+
+### 31. Task 7 发布证据 metadata 修正
+
+记录说明：以下为主 agent 转发给当前实现运行时的已验证远端事实。它补充第 30 节在首次基础部署之后缺失的发布链路，不改写当时实际发生的验收过程。
+
+主 agent 随后实际 push 了 Task 7 commit `d079d83c14d2823c597d9c831c907f61fd6e62c8`。GitHub Pages workflow run `31265746032` 的结论为 success，记录的 head SHA 是 `d079d83c14d2823c597d9c831c907f61fd6e62c8`。线上 HTML 三项抽查确认：home 包含新的 Playtest 已发布文案；resources 包含 server-rendered disabled select 与 no-JS 说明；devlog 索引包含 `Devlog 002`。
+
+较早的 run `31264625728` 仍保留为首次基础部署历史，但它不能作为 Task 7 fixes 的发布证据。本次后续 commit 只更新 README、Changelog、decision summary、transcript 和部署证据 E2E 的 metadata；它不改变 runtime 行为，也不宣称这个更晚的 metadata commit 本身就是 `d079d83` 或已经由 run `31265746032` 发布。此 commit 在当前记录时未 push。

@@ -123,11 +123,12 @@ test('does not claim that M0 reached the formal first-release scale', async ({ p
   ).toBeVisible();
 });
 
-test('records the verified M0 deployment', async ({ page }) => {
+test('records the deployment that published the final M0 acceptance fixes', async ({ page }) => {
   await page.goto('./project/changelog/');
 
   await expect(
     page.getByRole('link', { name: 'https://playwithexperiences.github.io/Learn-About-Games/' }),
   ).toBeVisible();
-  await expect(page.getByText(/31264625728/)).toBeVisible();
+  await expect(page.getByText(/31265746032/)).toBeVisible();
+  await expect(page.getByText(/d079d83c14d2823c597d9c831c907f61fd6e62c8/)).toBeVisible();
 });
