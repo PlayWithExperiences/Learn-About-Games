@@ -1,5 +1,5 @@
 ---
-import AtlasSeed from '../../components/AtlasSeed.astro';
+import AtlasNetwork from '../../components/AtlasNetwork.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 
@@ -15,11 +15,11 @@ const catalog = await loadCatalog();
     <h1>Game Innovation Atlas</h1>
     <p class="lede">Learn About Games 站内的历史与创新观察维度</p>
     <p class="reference-note">
-      Atlas 与能力地图共享同一产品、导航、证据和贡献流程。它观察游戏形式如何出现、变化与跨类型转译，不把相似或时间相邻自动写成影响。
+      这不是多条彼此隔离的品类时间线，而是一张可核查的全局网络。Roguelike 与 Metroidvania 只是证据透镜，只改变强调，不隐藏节点、不改位置，也不把后来的类别名倒灌到早期作品。
     </p>
   </section>
 
-  <AtlasSeed
+  <AtlasNetwork
     tags={catalog.atlasTags}
     evidence={catalog.atlasEvidence}
     nodes={catalog.atlasNodes}

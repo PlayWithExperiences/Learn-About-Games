@@ -1,0 +1,445 @@
+---
+import type { Catalog } from '../lib/catalog/validate';
+import {
+  buildAtlasLayout,
+  groupAtlasNodesByEra,
+  indexAtlasRelations,
+  matchAtlasTheme,
+} from '../lib/atlas-network';
+
+type AtlasEvidence = Catalog['atlasEvidence'][number];
+type AtlasNode = Catalog['atlasNodes'][number];
+type AtlasRelation = Catalog['atlasRelations'][number];
+
+interface Props {
+  evidence: Catalog['atlasEvidence'];
+  nodes: Catalog['atlasNodes'];
+  relations: Catalog['atlasRelations'];
+  tags: Catalog['atlasTags'];
+  themes: Catalog['atlasThemes'];
+}
+
+const { evidence, nodes, relations, tags, themes } = Astro.props;
+const layout = buildAtlasLayout(nodes, relations);
+const eras = groupAtlasNodesByEra(nodes);
+const adjacency = indexAtlasRelations(nodes, relations);
+const nodeById = new Map(nodes.map((node) => [node.id, node]));
+const placedNodeById = new Map(layout.nodes.map((node) => [node.id, node]));
+const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+const tagById = new Map(tags.map((tag) => [tag.id, tag]));
+const relationById = new Map(relations.map((relation) => [relation.id, relation]));
+
+const kindLabels: Record<AtlasNode['kind'], string> = {
+  game: 'Game',
+  innovation: 'Innovation',
+  category: 'Category Formation',
+};
+
+const relationLabels: Record<AtlasRelation['type'], string> = {
+  'direct-influence': '直接影响',
+  'derived-variant': '派生变体',
+  fusion: '结构融合',
+  revival: '复兴或重新流行',
+  'parallel-origin': '平行或独立产生',
+  'structural-similarity': '结构相似，影响未知',
+  disputed: '存在争议',
+};
+
+const statusLabels: Record<AtlasRelation['status'], string> = {
+  confirmed: '已直接支持',
+  credible: '可信历史综合',
+  inferred: '推断',
+  disputed: '有争议',
+};
+
+const languageLabels: Record<AtlasEvidence['originalLanguage'], string> = {
+  en: 'English',
+  ja: '日本語',
+  fr: 'Français',
+  es: 'Español',
+};
+
+const evidenceFor = (ids: string[]) => ids
+  .map((id) => evidenceById.get(id))
+  .filter((item): item is AtlasEvidence => Boolean(item));
+const tagsFor = (ids: string[]) => ids
+  .map((id) => tagById.get(id))
+  .filter((item): item is Catalog['atlasTags'][number] => Boolean(item));
+const nodeTime = (node: AtlasNode) => node.endYear
+  ? `${node.startYear}-${node.endYear}`
+  : String(node.startYear);
+const otherEndpoint = (relation: AtlasRelation, nodeId: string) =>
+  nodeById.get(relation.fromId === nodeId ? relation.toId : relation.fromId);
+const themeMatches = Object.fromEntries(
+  themes.map((theme) => [theme.id, matchAtlasTheme(nodes, relations, theme)]),
+);
+const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u003c');
+---
+
+<section class="atlas-network page-shell" data-atlas-explorer aria-labelledby="atlas-network-title">
+  <header class="atlas-network__heading">
+    <h2 id="atlas-network-title">同一张全局时间网络</h2>
+    <p>横向位置只表示开始年份。纵向分道只避免碰撞并让实体类型相邻，不表示质量、重要性或固定演进顺序。</p>
+  </header>
+
+  <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
+    <legend>选择证据透镜</legend>
+    <div class="atlas-lens-control__buttons">
+      <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
+      {themes.map((theme) => (
+        <button type="button" data-atlas-theme-button={theme.id} aria-pressed="false" disabled>
+          {theme.title['zh-CN']}
+        </button>
+      ))}
+    </div>
+    <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 27 个节点与 25 条关系。</p>
+    <noscript>
+      <p class="script-required-note" data-atlas-no-js-note>启用 JavaScript 后可以切换强调。完整网络、关系详情与证据不依赖 JavaScript。</p>
+    </noscript>
+  </fieldset>
+
+  <section class="atlas-legend" aria-labelledby="atlas-legend-title">
+    <div>
+      <h3 id="atlas-legend-title">图例与阅读边界</h3>
+      <p>Evidence 只出现在详情文献行，不作为网络节点。时间相邻也不会自动产生关系。</p>
+    </div>
+    <ul>
+      <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game</strong><span>单一发行年份</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation</strong><span>可讨论的设计结构</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--category" aria-hidden="true"></span><strong>Category Formation</strong><span>真实时间范围</span></li>
+      <li><span class="atlas-legend__line atlas-legend__line--directed" aria-hidden="true"></span><strong>有向关系</strong><span>箭头只用于有证据的方向</span></li>
+      <li><span class="atlas-legend__line atlas-legend__line--undirected" aria-hidden="true"></span><strong>无向关系</strong><span>结构对照不冒充影响</span></li>
+    </ul>
+  </section>
+
+  <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
+    <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可横向浏览的全局时间网络">
+      <div
+        class="atlas-network__canvas"
+        style={`--atlas-canvas-width:${layout.width}px;--atlas-canvas-height:${layout.height}px`}
+      >
+        <div class="atlas-network__years" aria-hidden="true">
+          {layout.yearTicks.map(({ year, x }) => (
+            <span style={`--atlas-year-x:${x}px`}><b>{year}</b></span>
+          ))}
+        </div>
+
+        <svg
+          class="atlas-network__relations"
+          viewBox={`0 0 ${layout.width} ${layout.height}`}
+          role="img"
+          aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
+        >
+          <title id="atlas-relation-map-title">有证据关系网络</title>
+          <desc id="atlas-relation-map-description">有向关系使用箭头，无向关系使用对称实线。选择任一关系可进入详情与证据。</desc>
+          <defs>
+            <marker id="atlas-direction-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse" markerUnits="strokeWidth">
+              <path d="M 0 0 L 10 5 L 0 10 Z"></path>
+            </marker>
+          </defs>
+          {layout.relations.map((placedRelation) => {
+            const relation = relationById.get(placedRelation.id);
+            const from = nodeById.get(placedRelation.fromId);
+            const to = nodeById.get(placedRelation.toId);
+            if (!relation || !from || !to) return null;
+            return (
+              <g
+                data-atlas-relation={relation.id}
+                data-from-id={relation.fromId}
+                data-to-id={relation.toId}
+                data-relation-type={relation.type}
+                data-relation-status={relation.status}
+                data-relation-directionality={relation.directionality}
+                data-start-x={placedRelation.start.x}
+                data-start-y={placedRelation.start.y}
+                data-end-x={placedRelation.end.x}
+                data-end-y={placedRelation.end.y}
+                data-theme-tags={relation.tags.join(' ')}
+                data-theme-match="true"
+              >
+                <a
+                  href={`#atlas-relation-detail-${relation.id}`}
+                  data-atlas-relation-link
+                  aria-label={`${from.name['zh-CN']} 与 ${to.name['zh-CN']}：${relationLabels[relation.type]}`}
+                >
+                  <path
+                    class:list={['atlas-network__relation-path', relation.directionality === 'undirected' && 'atlas-network__relation-path--undirected']}
+                    d={placedRelation.path}
+                    fill="none"
+                    marker-end={relation.directionality === 'directed' ? 'url(#atlas-direction-arrow)' : undefined}
+                    data-atlas-relation-path
+                    vector-effect="non-scaling-stroke"
+                  >
+                    <title>{from.name['zh-CN']}，{relationLabels[relation.type]}，{to.name['zh-CN']}</title>
+                  </path>
+                  <path class="atlas-network__relation-hit" d={placedRelation.path} fill="none" vector-effect="non-scaling-stroke"></path>
+                  {relation.directionality === 'undirected' && (
+                    <>
+                      <circle cx={placedRelation.start.x} cy={placedRelation.start.y} r="4" data-undirected-endpoint="start"></circle>
+                      <circle cx={placedRelation.end.x} cy={placedRelation.end.y} r="4" data-undirected-endpoint="end"></circle>
+                    </>
+                  )}
+                </a>
+              </g>
+            );
+          })}
+        </svg>
+
+        <div class="atlas-network__nodes">
+          {nodes.map((node) => {
+            const placed = placedNodeById.get(node.id);
+            if (!placed) return null;
+            return (
+              <article
+                class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
+                data-atlas-node
+                data-atlas-node-id={node.id}
+                data-atlas-node-kind={node.kind}
+                data-start-year={node.startYear}
+                data-end-year={node.endYear}
+                data-year-x={placed.yearX}
+                data-center-x={placed.centerX}
+                data-center-y={placed.centerY}
+                data-node-left={placed.left}
+                data-node-top={placed.top}
+                data-node-width={placed.width}
+                data-node-height={placed.height}
+                data-theme-tags={node.tags.join(' ')}
+                data-theme-match="true"
+                style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
+              >
+                <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-link>
+                  <span class="atlas-network-node__type">{kindLabels[node.kind]}</span>
+                  <strong>{node.name['zh-CN']}</strong>
+                  <time datetime={String(node.startYear)}>{nodeTime(node)}</time>
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+
+    <div class="atlas-outline" data-atlas-mobile-outline aria-label="按时期分组的关系等价大纲">
+      <p class="atlas-outline__note">每个节点都列出进入、发出与无向关系。三栏为空时表示当前发布集没有记录对应关系。</p>
+      {eras.map((era) => (
+        <section class="atlas-outline__era" data-atlas-era={era.label} aria-labelledby={`atlas-era-${era.startYear}`}>
+          <h3 id={`atlas-era-${era.startYear}`}>{era.label}</h3>
+          {era.nodes.map((node) => {
+            const nodeAdjacency = adjacency.get(node.id) ?? { incoming: [], outgoing: [], undirected: [] };
+            return (
+              <article
+                class="atlas-outline-node"
+                data-atlas-outline-node={node.id}
+                data-theme-tags={node.tags.join(' ')}
+                data-theme-match="true"
+              >
+                <header>
+                  <span>{kindLabels[node.kind]}</span>
+                  <time datetime={String(node.startYear)}>{nodeTime(node)}</time>
+                  <strong>{node.name['zh-CN']}</strong>
+                </header>
+                <details>
+                  <summary>查看关系与证据</summary>
+                  <p>{node.summary['zh-CN']}</p>
+                  <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-detail-link>打开节点详情与文献</a>
+                  {([
+                    ['incoming', '进入此节点', nodeAdjacency.incoming],
+                    ['outgoing', '从此节点发出', nodeAdjacency.outgoing],
+                    ['undirected', '无向关系', nodeAdjacency.undirected],
+                  ] as const).map(([direction, label, related]) => (
+                    <section data-outline-direction={direction}>
+                      <h4>{label}</h4>
+                      {related.length > 0 ? (
+                        <ul>
+                          {related.map((relation) => (
+                            <li>
+                              <a
+                                href={`#atlas-relation-detail-${relation.id}`}
+                                data-atlas-outline-relation-ref={relation.id}
+                              >
+                                {relationLabels[relation.type]}：{otherEndpoint(relation, node.id)?.name['zh-CN']}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : <p>当前没有记录。</p>}
+                    </section>
+                  ))}
+                </details>
+              </article>
+            );
+          })}
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="atlas-details" aria-labelledby="atlas-details-title">
+    <header>
+      <h2 id="atlas-details-title">节点、关系与文献</h2>
+      <p>展开条目可以核对原始题名、原始语言、中文说明与外部链接。</p>
+    </header>
+
+    <section class="atlas-details__group" aria-labelledby="atlas-node-details-title">
+      <h3 id="atlas-node-details-title">节点详情</h3>
+      {nodes.map((node) => {
+        const nodeAdjacency = adjacency.get(node.id) ?? { incoming: [], outgoing: [], undirected: [] };
+        const relatedRelations = [...nodeAdjacency.incoming, ...nodeAdjacency.outgoing, ...nodeAdjacency.undirected];
+        return (
+          <details id={`atlas-node-detail-${node.id}`} data-atlas-node-detail={node.id}>
+            <summary><span>{kindLabels[node.kind]}</span><strong>{node.name['zh-CN']}</strong><time>{nodeTime(node)}</time></summary>
+            <div class="atlas-detail__body">
+              <p>{node.summary['zh-CN']}</p>
+              <dl class="atlas-detail__facts">
+                <div><dt>时间</dt><dd><time datetime={String(node.startYear)}>{nodeTime(node)}</time></dd></div>
+                <div><dt>实体类型</dt><dd>{kindLabels[node.kind]}</dd></div>
+              </dl>
+              <ul class="atlas-detail__tags" data-atlas-node-tags>
+                {tagsFor(node.tags).map((tag) => <li>{tag.name['zh-CN']}</li>)}
+              </ul>
+              <section class="atlas-detail__relations">
+                <h4>关联关系</h4>
+                <ul>
+                  {relatedRelations.map((relation) => (
+                    <li>
+                      <a href={`#atlas-relation-detail-${relation.id}`} data-atlas-node-relation-ref={relation.id}>
+                        {relationLabels[relation.type]}：{otherEndpoint(relation, node.id)?.name['zh-CN']}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+              <section class="atlas-detail__evidence">
+                <h4>节点文献</h4>
+                <ul>
+                  {evidenceFor(node.evidenceIds).map((item) => (
+                    <li data-atlas-evidence-row={item.id}>
+                      <p data-evidence-public-label>{item.title['zh-CN']}</p>
+                      <a href={item.url} target="_blank" rel="noreferrer" data-atlas-evidence-link>
+                        <cite data-evidence-source-title>{item.sourceTitle}</cite>
+                      </a>
+                      <span data-evidence-language>原始语言：{languageLabels[item.originalLanguage]}</span>
+                      <p>{item.summary['zh-CN']}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+          </details>
+        );
+      })}
+    </section>
+
+    <section class="atlas-details__group" aria-labelledby="atlas-relation-details-title">
+      <h3 id="atlas-relation-details-title">关系详情</h3>
+      {relations.map((relation) => {
+        const from = nodeById.get(relation.fromId);
+        const to = nodeById.get(relation.toId);
+        if (!from || !to) return null;
+        return (
+          <details id={`atlas-relation-detail-${relation.id}`} data-atlas-relation-detail={relation.id}>
+            <summary><span>{relationLabels[relation.type]}</span><strong>{from.name['zh-CN']} 与 {to.name['zh-CN']}</strong></summary>
+            <div class="atlas-detail__body">
+              <dl class="atlas-detail__facts">
+                <div><dt>关系类型</dt><dd data-relation-detail-type>{relationLabels[relation.type]}</dd></div>
+                <div><dt>证据状态</dt><dd data-relation-detail-status>{statusLabels[relation.status]}</dd></div>
+                <div>
+                  <dt>方向</dt>
+                  <dd data-relation-detail-direction>
+                    {relation.directionality === 'directed'
+                      ? `有向：${from.name['zh-CN']} 到 ${to.name['zh-CN']}`
+                      : '无向：仅表示两者之间的结构对照'}
+                  </dd>
+                </div>
+              </dl>
+              <p data-relation-detail-summary>{relation.summary['zh-CN']}</p>
+              {relation.chronologyExplanation && <p>{relation.chronologyExplanation['zh-CN']}</p>}
+              {relation.directionalityNote && <p>{relation.directionalityNote['zh-CN']}</p>}
+              <section class="atlas-detail__evidence">
+                <h4>关系文献</h4>
+                <ul>
+                  {evidenceFor(relation.evidenceIds).map((item) => (
+                    <li data-atlas-evidence-row={item.id}>
+                      <p data-evidence-public-label>{item.title['zh-CN']}</p>
+                      <a href={item.url} target="_blank" rel="noreferrer" data-atlas-evidence-link>
+                        <cite data-evidence-source-title>{item.sourceTitle}</cite>
+                      </a>
+                      <span data-evidence-language>原始语言：{languageLabels[item.originalLanguage]}</span>
+                      <p>{item.summary['zh-CN']}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+          </details>
+        );
+      })}
+    </section>
+  </section>
+
+  <script is:inline type="application/json" data-atlas-theme-data set:html={serializedThemeMatches}></script>
+</section>
+
+<script>
+  type ThemeMatch = { nodeIds: string[]; relationIds: string[] };
+
+  const explorer = document.querySelector<HTMLElement>('[data-atlas-explorer]');
+  const payload = explorer?.querySelector<HTMLScriptElement>('[data-atlas-theme-data]');
+
+  if (explorer && payload) {
+    const themeMatches = JSON.parse(payload.textContent ?? '{}') as Record<string, ThemeMatch>;
+    const buttons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-atlas-theme-button]'));
+    const status = explorer.querySelector<HTMLElement>('[data-atlas-lens-status]');
+    const networkNodes = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-node]'));
+    const networkRelations = Array.from(explorer.querySelectorAll<SVGGElement>('[data-atlas-relation]'));
+    const outlineNodes = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-outline-node]'));
+
+    const applyTheme = (themeId: string) => {
+      const match = themeId === 'all' ? null : themeMatches[themeId];
+      const matchingNodeIds = new Set(match?.nodeIds ?? []);
+      const matchingRelationIds = new Set(match?.relationIds ?? []);
+      networkNodes.forEach((node) => {
+        node.dataset.themeMatch = String(!match || matchingNodeIds.has(node.dataset.atlasNodeId ?? ''));
+      });
+      networkRelations.forEach((relation) => {
+        relation.dataset.themeMatch = String(!match || matchingRelationIds.has(relation.dataset.atlasRelation ?? ''));
+      });
+      outlineNodes.forEach((node) => {
+        node.dataset.themeMatch = String(!match || matchingNodeIds.has(node.dataset.atlasOutlineNode ?? ''));
+      });
+      buttons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.atlasThemeButton === themeId));
+      });
+      const activeButton = buttons.find((button) => button.dataset.atlasThemeButton === themeId);
+      if (status) {
+        status.textContent = themeId === 'all'
+          ? '当前显示全部 27 个节点与 25 条关系。'
+          : `已强调 ${activeButton?.textContent?.trim() ?? ''}，全局节点、关系与位置保持不变。`;
+      }
+    };
+
+    buttons.forEach((button) => {
+      button.disabled = false;
+      button.addEventListener('click', () => applyTheme(button.dataset.atlasThemeButton ?? 'all'));
+    });
+
+    const detailLinks = Array.from(explorer.querySelectorAll<SVGAElement | HTMLAnchorElement>('a[href^="#atlas-node-detail-"], a[href^="#atlas-relation-detail-"]'));
+    detailLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const targetSelector = link.getAttribute('href');
+        if (!targetSelector?.startsWith('#atlas-')) return;
+        const target = explorer.querySelector<HTMLDetailsElement>(targetSelector);
+        if (!target) return;
+        event.preventDefault();
+        explorer.querySelectorAll<HTMLDetailsElement>('.atlas-details details[open]').forEach((detail) => {
+          if (detail !== target) detail.open = false;
+        });
+        target.open = true;
+        window.history.replaceState(null, '', targetSelector);
+        target.scrollIntoView({ block: 'start' });
+        target.querySelector<HTMLElement>('summary')?.focus();
+      });
+    });
+  }
+</script>

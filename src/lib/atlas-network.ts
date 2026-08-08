@@ -7,6 +7,57 @@ type AtlasThemeLens = {
   tags: readonly string[];
 };
 
+type AtlasNodeKind = 'game' | 'innovation' | 'category';
+
+type AtlasNodeForLayout = {
+  id: string;
+  kind: AtlasNodeKind;
+  startYear: number;
+  endYear?: number;
+  lane: number;
+};
+
+type AtlasRelationForLayout = {
+  id: string;
+  fromId: string;
+  toId: string;
+  directionality: 'directed' | 'undirected';
+};
+
+export type AtlasPlacedNode = AtlasNodeForLayout & {
+  yearX: number;
+  spanEndX: number;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  centerX: number;
+  centerY: number;
+  displayLane: number;
+};
+
+export type AtlasPlacedRelation = AtlasRelationForLayout & {
+  start: { x: number; y: number };
+  end: { x: number; y: number };
+  path: string;
+};
+
+export type AtlasLayout = {
+  width: number;
+  height: number;
+  minYear: number;
+  maxYear: number;
+  yearTicks: Array<{ year: number; x: number }>;
+  nodes: AtlasPlacedNode[];
+  relations: AtlasPlacedRelation[];
+};
+
+export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
+  incoming: Relation[];
+  outgoing: Relation[];
+  undirected: Relation[];
+};
+
 export type AtlasThemeMatch = {
   nodeIds: string[];
   relationIds: string[];
@@ -24,4 +75,165 @@ export function matchAtlasTheme(
     nodeIds: nodes.filter(matchesTheme).map(({ id }) => id),
     relationIds: relations.filter(matchesTheme).map(({ id }) => id),
   };
+}
+
+const atlasLayoutDefaults = {
+  width: 2200,
+  height: 900,
+  minYear: 1980,
+  maxYear: 2020,
+  horizontalInset: 100,
+  firstLaneY: 100,
+  laneGap: 104,
+} as const;
+
+function projectAtlasYear(year: number): number {
+  const { width, minYear, maxYear, horizontalInset } = atlasLayoutDefaults;
+  const usableWidth = width - horizontalInset * 2;
+  return horizontalInset + ((year - minYear) / (maxYear - minYear)) * usableWidth;
+}
+
+function relationPath(
+  start: AtlasPlacedRelation['start'],
+  end: AtlasPlacedRelation['end'],
+): string {
+  const horizontalDistance = end.x - start.x;
+  const firstControlX = start.x + horizontalDistance * 0.36;
+  const secondControlX = end.x - horizontalDistance * 0.36;
+  return `M ${start.x} ${start.y} C ${firstControlX} ${start.y}, ${secondControlX} ${end.y}, ${end.x} ${end.y}`;
+}
+
+function nodeBoundaryAnchor(
+  node: AtlasPlacedNode,
+  toward: Pick<AtlasPlacedNode, 'centerX' | 'centerY'>,
+): AtlasPlacedRelation['start'] {
+  const deltaX = toward.centerX - node.centerX;
+  const deltaY = toward.centerY - node.centerY;
+  const normalizedDistance = Math.max(
+    Math.abs(deltaX) / (node.width / 2),
+    Math.abs(deltaY) / (node.height / 2),
+  );
+  if (normalizedDistance === 0) {
+    throw new Error(`Atlas node ${node.id} cannot project a boundary anchor to itself.`);
+  }
+  return {
+    x: node.centerX + deltaX / normalizedDistance,
+    y: node.centerY + deltaY / normalizedDistance,
+  };
+}
+
+export function buildAtlasLayout(
+  nodes: readonly AtlasNodeForLayout[],
+  relations: readonly AtlasRelationForLayout[],
+): AtlasLayout {
+  const categoryLaneById = new Map(
+    nodes
+      .filter(({ kind }) => kind === 'category')
+      .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
+      .map(({ id }, index) => [id, index + 1]),
+  );
+
+  const placedNodes = nodes.map((node): AtlasPlacedNode => {
+    const yearX = projectAtlasYear(node.startYear);
+    const spanEndX = node.kind === 'category' && node.endYear
+      ? projectAtlasYear(node.endYear)
+      : yearX;
+    const displayLane = node.kind === 'innovation'
+      ? 0
+      : node.kind === 'category'
+        ? (categoryLaneById.get(node.id) ?? 1)
+        : Math.max(3, node.lane + 1);
+    const width = node.kind === 'category'
+      ? Math.max(200, spanEndX - yearX)
+      : node.kind === 'innovation'
+        ? 180
+        : 140;
+    const height = node.kind === 'category' ? 46 : node.kind === 'innovation' ? 84 : 86;
+    const centerY = atlasLayoutDefaults.firstLaneY + displayLane * atlasLayoutDefaults.laneGap;
+    const left = node.kind === 'category' ? yearX : yearX - width / 2;
+    const top = centerY - height / 2;
+
+    return {
+      ...node,
+      yearX,
+      spanEndX,
+      left,
+      top,
+      width,
+      height,
+      centerX: left + width / 2,
+      centerY,
+      displayLane,
+    };
+  });
+
+  const nodeById = new Map(placedNodes.map((node) => [node.id, node]));
+  const placedRelations = relations.map((relation): AtlasPlacedRelation => {
+    const from = nodeById.get(relation.fromId);
+    const to = nodeById.get(relation.toId);
+    if (!from || !to) {
+      throw new Error(`Atlas layout relation ${relation.id} has a missing endpoint.`);
+    }
+    const start = nodeBoundaryAnchor(from, to);
+    const end = nodeBoundaryAnchor(to, from);
+    return { ...relation, start, end, path: relationPath(start, end) };
+  });
+
+  return {
+    width: atlasLayoutDefaults.width,
+    height: atlasLayoutDefaults.height,
+    minYear: atlasLayoutDefaults.minYear,
+    maxYear: atlasLayoutDefaults.maxYear,
+    yearTicks: [1980, 1990, 2000, 2010, 2020].map((year) => ({
+      year,
+      x: projectAtlasYear(year),
+    })),
+    nodes: placedNodes,
+    relations: placedRelations,
+  };
+}
+
+export function groupAtlasNodesByEra<Node extends AtlasNodeForLayout>(nodes: readonly Node[]) {
+  const groups = new Map<number, Node[]>();
+  for (const node of nodes) {
+    const startYear = Math.floor(node.startYear / 10) * 10;
+    const group = groups.get(startYear) ?? [];
+    group.push(node);
+    groups.set(startYear, group);
+  }
+
+  return [...groups.entries()]
+    .sort(([left], [right]) => left - right)
+    .map(([startYear, groupNodes]) => ({
+      startYear,
+      endYear: startYear + 9,
+      label: `${startYear}-${startYear + 9}`,
+      nodes: [...groupNodes].sort(
+        (left, right) => left.startYear - right.startYear || left.lane - right.lane || left.id.localeCompare(right.id),
+      ),
+    }));
+}
+
+export function indexAtlasRelations<
+  Node extends { id: string },
+  Relation extends AtlasRelationForLayout,
+>(nodes: readonly Node[], relations: readonly Relation[]) {
+  const adjacency = new Map<string, AtlasRelationAdjacency<Relation>>(
+    nodes.map(({ id }) => [id, { incoming: [], outgoing: [], undirected: [] }]),
+  );
+
+  for (const relation of relations) {
+    const from = adjacency.get(relation.fromId);
+    const to = adjacency.get(relation.toId);
+    if (!from || !to) continue;
+    if (relation.directionality === 'undirected') {
+      from.undirected.push(relation);
+      to.undirected.push(relation);
+    } else {
+      from.outgoing.push(relation);
+      to.incoming.push(relation);
+    }
+  }
+
+  return adjacency;
 }

@@ -4,7 +4,16 @@ import atlasEvidence from '../../src/data/atlas-evidence.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
 import atlasRelations from '../../src/data/atlas-relations.json';
 import atlasThemes from '../../src/data/atlas-themes.json';
-import { matchAtlasTheme } from '../../src/lib/atlas-network';
+import type { Catalog } from '../../src/lib/catalog/validate';
+import {
+  buildAtlasLayout,
+  groupAtlasNodesByEra,
+  indexAtlasRelations,
+  matchAtlasTheme,
+} from '../../src/lib/atlas-network';
+
+const typedAtlasNodes = atlasNodes as Catalog['atlasNodes'];
+const typedAtlasRelations = atlasRelations as Catalog['atlasRelations'];
 
 describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
@@ -139,5 +148,101 @@ describe('global Atlas graph contract', () => {
     expect(relations).toEqual(beforeRelations);
     expect(nodes).toHaveLength(27);
     expect(relations).toHaveLength(25);
+  });
+});
+
+describe('global Atlas presentation geometry', () => {
+  it('maps start years monotonically and reserves real spans only for categories', () => {
+    const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
+    const ordered = [...layout.nodes].sort(
+      (left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id),
+    );
+
+    for (let index = 1; index < ordered.length; index += 1) {
+      const previous = ordered[index - 1];
+      const current = ordered[index];
+      if (current.startYear === previous.startYear) {
+        expect(current.yearX, current.id).toBe(previous.yearX);
+      } else {
+        expect(current.yearX, current.id).toBeGreaterThan(previous.yearX);
+      }
+    }
+
+    const games = layout.nodes.filter(({ kind }) => kind === 'game');
+    const categories = layout.nodes.filter(({ kind }) => kind === 'category');
+    expect(games.every(({ spanEndX, yearX }) => spanEndX === yearX)).toBe(true);
+    expect(categories).toHaveLength(2);
+    expect(categories.every(({ spanEndX, yearX }) => spanEndX > yearX)).toBe(true);
+  });
+
+  it('places all nodes without collisions and terminates relations at visible node boundaries', () => {
+    const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
+
+    for (let leftIndex = 0; leftIndex < layout.nodes.length; leftIndex += 1) {
+      const left = layout.nodes[leftIndex];
+      for (let rightIndex = leftIndex + 1; rightIndex < layout.nodes.length; rightIndex += 1) {
+        const right = layout.nodes[rightIndex];
+        const overlaps =
+          left.left < right.left + right.width &&
+          left.left + left.width > right.left &&
+          left.top < right.top + right.height &&
+          left.top + left.height > right.top;
+        expect(overlaps, `${left.id} overlaps ${right.id}`).toBe(false);
+      }
+    }
+
+    const nodeById = new Map(layout.nodes.map((node) => [node.id, node]));
+    for (const relation of layout.relations) {
+      const from = nodeById.get(relation.fromId);
+      const to = nodeById.get(relation.toId);
+      expect(from, relation.id).toBeDefined();
+      expect(to, relation.id).toBeDefined();
+      const startsOnBoundary = from && (
+        Math.abs(relation.start.x - from.left) < 0.001 ||
+        Math.abs(relation.start.x - (from.left + from.width)) < 0.001 ||
+        Math.abs(relation.start.y - from.top) < 0.001 ||
+        Math.abs(relation.start.y - (from.top + from.height)) < 0.001
+      );
+      const endsOnBoundary = to && (
+        Math.abs(relation.end.x - to.left) < 0.001 ||
+        Math.abs(relation.end.x - (to.left + to.width)) < 0.001 ||
+        Math.abs(relation.end.y - to.top) < 0.001 ||
+        Math.abs(relation.end.y - (to.top + to.height)) < 0.001
+      );
+      expect(startsOnBoundary, `${relation.id} start is hidden under its source node`).toBe(true);
+      expect(endsOnBoundary, `${relation.id} arrow is hidden under its target node`).toBe(true);
+      expect(relation.start, relation.id).not.toEqual({ x: from?.centerX, y: from?.centerY });
+      expect(relation.end, relation.id).not.toEqual({ x: to?.centerX, y: to?.centerY });
+    }
+  });
+
+  it('builds a complete era outline with incoming, outgoing and undirected relations', () => {
+    const eras = groupAtlasNodesByEra(typedAtlasNodes);
+    const adjacency = indexAtlasRelations(typedAtlasNodes, typedAtlasRelations);
+    const outlinedNodeIds = eras.flatMap(({ nodes }) => nodes.map(({ id }) => id));
+    const outlinedRelationIds = new Set(
+      [...adjacency.values()].flatMap(({ incoming, outgoing, undirected }) =>
+        [...incoming, ...outgoing, ...undirected].map(({ id }) => id),
+      ),
+    );
+
+    expect(eras.map(({ label }) => label)).toEqual([
+      '1980-1989',
+      '1990-1999',
+      '2000-2009',
+      '2010-2019',
+      '2020-2029',
+    ]);
+    expect(outlinedNodeIds).toHaveLength(27);
+    expect(new Set(outlinedNodeIds).size).toBe(27);
+    expect(outlinedRelationIds.size).toBe(25);
+    expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
+      'super-metroid-and-sotn',
+    );
+    expect(adjacency.get('castlevania-symphony-of-the-night')?.undirected.map(({ id }) => id)).toContain(
+      'super-metroid-and-sotn',
+    );
+    expect(adjacency.get('rogue')?.outgoing.map(({ id }) => id)).toContain('rogue-to-hack');
+    expect(adjacency.get('hack')?.incoming.map(({ id }) => id)).toContain('rogue-to-hack');
   });
 });
