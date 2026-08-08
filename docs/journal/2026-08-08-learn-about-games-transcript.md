@@ -126,3 +126,12 @@
 
 用户确认整体设计没有问题。下一步是书面审阅、实施计划和首个可运行版本。
 
+### 18. 游戏创新沿革与项目公开路径
+
+用户回忆起一个由学校开展的游戏创新研究项目，希望 Learn About Games 也能展示游戏形式、玩法和其他创新如何出现、变化、分支与互相关联。用户同时希望公开项目自身的来源、发展方向与每次更新日志。
+
+助手通过公开研究找到高度吻合的 Carnegie Mellon University Entertainment Technology Center `Game Innovation Database`。该项目从 2004 年起记录游戏创新，让用户查看创新之间的启发关系并参与贡献。助手同时研究了 Maastricht University `Digital Ludeme Project`，其方法说明游戏可以拆成组成单元研究传播，但相似性也可能来自独立产生。
+
+双方确认新增独立的 Game Innovation Atlas。它使用 Innovation、Game Artifact、Innovation Relation 和 Innovation Evidence，并区分已证实、较可信、推测和争议。第一版只完成一条端到端垂直样例，完整历史网络在能力地图与资源导航稳定后扩展。
+
+双方还确认新增公开 Roadmap、Changelog 与里程碑 Devlog。原始会话记录继续用于恢复上下文，面向公众的 Devlog 负责解释项目选择。

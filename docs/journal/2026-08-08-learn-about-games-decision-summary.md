@@ -11,6 +11,7 @@
 - 本地仓库已关联同名 `origin`。
 - 仓库此前为空，尚无网站代码或历史提交。
 - 产品、内容模型、首版范围、贡献机制、技术栈和部署方式已经通过对话确认。
+- Game Innovation Atlas、公开 Roadmap、Changelog 与 Devlog 已加入设计。
 
 ## 决策与理由
 
@@ -46,6 +47,14 @@ GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接
 
 使用 Astro、TypeScript、GitHub Actions 与 GitHub Pages。第一版无账号、数据库和 CMS，个人进度保存在浏览器本地。
 
+### Game Innovation Atlas 独立于能力地图
+
+能力地图回答“如何学习与前进”，Innovation Atlas 回答“游戏创新如何出现和演变”。创新、游戏作品、关系与证据是独立对象；时间轴与关系网络是独立视图。相似性不能自动证明影响关系。
+
+### 公开项目自身的发展路径
+
+Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释关键选择。原始会话记录继续作为跨 agent 的证据层，不直接替代面向公众的 Devlog。
+
 ## 第一版范围
 
 - Game Design 为核心，包含通往 Creative Direction 的相邻能力。
@@ -55,6 +64,7 @@ GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接
 - 3–4 个职业与生产环境参考画像。
 - 中文和英文资源筛选均可用。
 - 学术资源优先覆盖与游戏设计、玩家体验和设计方法直接相关的内容。
+- 1 条有证据的 Game Innovation Atlas 垂直样例。
 
 ## 已完成的验证
 
@@ -62,6 +72,8 @@ GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接
 - 通过 GitHub CLI 确认远程仓库公开、为空，且本地 `origin` 正确关联。
 - 通过官方文档确认 Astro 可用 GitHub Actions 部署至 GitHub Pages，并需正确处理项目子路径。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
+- 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
+- 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
 
 ## 事故与教训
 
@@ -76,11 +88,12 @@ GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接
 - 首批 40–60 个节点的确切分类名称。
 - 首批 3–4 个职业与生产环境画像的最终名单。
 - 英文界面发布时间。
+- 第一条 Game Innovation Atlas 样例选择哪个创新主题。
 
 ## 下一步
 
 1. 用户审阅书面设计。
 2. 审阅通过后编写分阶段实施计划。
 3. 建立最小可运行 Astro 站点与 GitHub Pages 部署。
-4. 先完成一个端到端垂直切片，再并行扩大资源候选库。
-
+4. 完成能力学习路径与 Game Innovation Atlas 各一条端到端垂直切片。
+5. 垂直切片验证后再扩大资源候选库与创新主题。
