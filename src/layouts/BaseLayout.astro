@@ -1,0 +1,60 @@
+---
+import { sitePath } from '../lib/site-path';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = '一张公开、可修订的游戏知识与能力地图。',
+} = Astro.props;
+
+const navigation = [
+  { label: 'Map', href: sitePath('map/') },
+  { label: 'Roadmap', href: sitePath('project/roadmap/') },
+  { label: 'Changelog', href: sitePath('project/changelog/') },
+  { label: 'Devlog', href: sitePath('devlog/') },
+  { label: 'Methodology', href: sitePath('project/methodology/') },
+  { label: 'Contributing', href: sitePath('project/contributing/') },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title} | Learn About Games</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href={sitePath()} aria-label="Learn About Games 首页">
+          <span>Learn About Games</span>
+          <small>by PlayWithExperiences</small>
+        </a>
+        <nav aria-label="共享导航">
+          <ul>
+            {navigation.map((item) => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="page-shell site-footer__inner">
+        <p>一张公开、可修订的参考地图。参考不是标准。</p>
+        <a href={sitePath('project/readme/')}>项目说明</a>
+      </div>
+    </footer>
+  </body>
+</html>

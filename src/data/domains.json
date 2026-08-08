@@ -1,0 +1,56 @@
+[
+  {
+    "id": "experience-design",
+    "name": { "zh-CN": "体验设计", "en": "Experience Design" },
+    "summary": { "zh-CN": "明确希望玩家获得的体验，并把目标转化为可讨论的设计问题。", "en": "Frame intended player experiences as design questions that a team can discuss." },
+    "order": 1
+  },
+  {
+    "id": "gameplay-challenges",
+    "name": { "zh-CN": "玩法与挑战", "en": "Gameplay and Challenges" },
+    "summary": { "zh-CN": "组织行动、规则、反馈与挑战，形成可理解且可持续的游玩过程。", "en": "Organize actions, rules, feedback, and challenge into a legible play experience." },
+    "order": 2
+  },
+  {
+    "id": "narrative",
+    "name": { "zh-CN": "叙事", "en": "Narrative" },
+    "summary": { "zh-CN": "协调故事、世界、角色与玩家行动之间的关系。", "en": "Coordinate story, world, characters, and player action." },
+    "order": 3
+  },
+  {
+    "id": "aesthetics",
+    "name": { "zh-CN": "美学与表现", "en": "Aesthetics and Expression" },
+    "summary": { "zh-CN": "让视觉、声音、文字与交互表现共同服务体验意图。", "en": "Align visual, audio, verbal, and interactive expression with the intended experience." },
+    "order": 4
+  },
+  {
+    "id": "production",
+    "name": { "zh-CN": "生产与落地", "en": "Production and Delivery" },
+    "summary": { "zh-CN": "把设计意图拆解成团队能够实现、检查与调整的工作。", "en": "Turn design intent into work a team can implement, inspect, and revise." },
+    "order": 5
+  },
+  {
+    "id": "iteration",
+    "name": { "zh-CN": "迭代与验证", "en": "Iteration and Validation" },
+    "summary": { "zh-CN": "通过原型、观察与反馈检验判断，并持续修正设计。", "en": "Test design judgments through prototypes, observation, and feedback." },
+    "order": 6
+  },
+  {
+    "id": "leadership-collaboration",
+    "name": { "zh-CN": "领导与协作", "en": "Leadership and Collaboration" },
+    "summary": { "zh-CN": "在跨职能团队中建立共同理解、做出取舍并推进决策。", "en": "Build shared understanding and advance decisions across disciplines." },
+    "order": 7
+  },
+  {
+    "id": "product-business",
+    "name": { "zh-CN": "产品与商业", "en": "Product and Business" },
+    "summary": { "zh-CN": "理解受众、定位与约束如何影响产品选择。", "en": "Understand how audiences, positioning, and constraints shape product choices." },
+    "order": 8
+  },
+  {
+    "id": "innovation",
+    "name": { "zh-CN": "创新与沿革", "en": "Innovation and Lineage" },
+    "summary": { "zh-CN": "带着证据理解游戏形式如何出现、传播、融合与变化。", "en": "Use evidence to understand how game forms emerge, spread, combine, and change." },
+    "order": 9
+  }
+]

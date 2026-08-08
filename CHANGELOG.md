@@ -6,6 +6,10 @@ Learn About Games 的重要变化记录在这里。项目尚未发布正式版�
 
 ### Added
 
+- 发布 M0 的首个可见能力地图骨架，展示 9 个领域与 9 个能力入口，并明确尚未策展的路径状态。
+- 建立 Astro file loader 与 Zod 内容契约，以及构建期产品引用校验。
+- 新增首页、能力地图、仓库文档、Devlog 浏览和 GitHub Pages 基础路径端到端测试。
+- 新增公开 README、方法论和贡献指南。
 - 建立 Learn About Games 产品设计，确定能力地图、职业透镜、学习路径和资源导航结构。
 - 增加 Knowledge Topic，以容纳学术研究、历史、价值观与其他非能力型知识。
 - 增加 Game Innovation Atlas 设计，区分创新、游戏作品、关系与证据。

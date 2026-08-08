@@ -1,7 +1,7 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：产品设计与精简后的 M0 实施计划已完成，等待选择执行方式
+- 状态：M0 基础工程与首个可见能力地图骨架已完成，下一步扩展 Playtest 纵向切片
 - 设计文档：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
 
@@ -94,6 +94,8 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 - 读取并核对用户的《如何成为更好的设计师》文章，确认“拥有地图—认识自己—持续准备”的产品主线。
 - 通过 GitHub CLI 确认远程仓库公开、为空，且本地 `origin` 正确关联。
 - 通过官方文档确认 Astro 可用 GitHub Actions 部署至 GitHub Pages，并需正确处理项目子路径。
+- 通过本地 Astro 7.2 loader 源码和实际 `astro check` / build 确认，JSON 数组的 `id` 用作 collection entry 保留字段，schema 校验普通 data 字段，`loadCatalog()` 再聚合 entry id。
+- Task 2 validator 单测 6 项通过；完整 Vitest 9 项通过；Astro check 0 errors；静态构建生成 9 个页面；Chromium visible skeleton E2E 通过。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
@@ -105,6 +107,8 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 - 巨型思维导图如果混合领域、能力、方法、原则和资源，会失去可解释性。网站数据与视觉必须区分对象类型。
 - 第一份 M0 计划虽可验证，但把未来数据规模所需的全量 schema、防御性校验和进度功能过早前置，延迟了可见结果。修订后先交付真实纵向切片，再由失败证据增加复杂度。
 - Task 1 首次安装暴露真实 peer 冲突：`@astrojs/check@0.9.10` 只接受 TypeScript 5/6，而原计划锁定 7.0.2。npm 官方 registry 确认 6.0.3 为当前兼容版本，因此只下调 TypeScript，不使用 `--legacy-peer-deps` 绕过依赖契约。
+- Task 2 建立了 Astro file loader 与 Zod 数据契约、稳定引用错误码、构建期 `loadCatalog()` 阻断、9 个领域与 9 个能力入口，以及仓库文档和 Devlog 静态页面。
+- 首个可见设计采用单一浅色、冷中性色与钴蓝强调色。Domain 使用结构分区，Capability 使用可点击矩形节点；移动端退化为严格单列大纲，不缩小桌面地图。
 
 ## 未决问题
 
@@ -118,8 +122,7 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 
 ## 下一步
 
-1. 选择 sub-agent-driven 或当前任务内串行执行方式并开始 M0。
-2. 建立 Astro 数据契约与 GitHub Pages 基线。
-3. 完成 Playtest 学习链路、资源导航、角色透镜和本地进度。
-4. 发布 Atlas 八类框架与 Roguelike 证据种子。
-5. 验证 M0 后再编写正式第一版内容扩展计划。
+1. 扩展 Playtest 学习链路与真实资源导航。
+2. 增加角色透镜和与角色重要性分离的本地个人状态。
+3. 发布 Atlas 八类框架与 Roguelike 证据种子。
+4. 验证 M0 后再编写正式第一版内容扩展计划。

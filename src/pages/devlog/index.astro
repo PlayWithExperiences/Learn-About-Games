@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sitePath } from '../../lib/site-path';
+
+const entries = (await getCollection('devlog')).sort((a, b) => b.id.localeCompare(a.id));
+---
+
+<BaseLayout title="项目 Devlog">
+  <div class="devlog-index page-shell">
+    <header>
+      <h1>项目 Devlog</h1>
+      <p class="lede">记录 Learn About Games 的关键选择、证据与舍弃方案。</p>
+    </header>
+    <ol>
+      {entries.map((entry) => (
+        <li>
+          <a href={sitePath(`devlog/${entry.id.replace(/\.md$/, '')}/`)}>
+            <span>{entry.id.replace(/\.md$/, '')}</span>
+            <strong>Learn About Games 从哪里来</strong>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import MapExplorer from '../../components/MapExplorer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+
+const { domains, capabilities } = await loadCatalog();
+---
+
+<BaseLayout title="能力地图" description="从九个领域进入 Learn About Games 的能力地图骨架。">
+  <header class="map-intro page-shell" id="map-intro">
+    <p class="plain-label">能力地图</p>
+    <h1>用领域建立方向，用能力选择行动。</h1>
+    <p class="lede">领域是结构区域，能力是可进入的节点。当前骨架只标示真实策展状态，不用节点大小暗示价值或资源数量。</p>
+  </header>
+
+  <div class="page-shell">
+    <MapExplorer domains={domains} capabilities={capabilities} />
+  </div>
+</BaseLayout>

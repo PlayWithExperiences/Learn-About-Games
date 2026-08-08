@@ -1,0 +1,45 @@
+---
+import { sitePath } from '../lib/site-path';
+import type { Catalog } from '../lib/catalog/validate';
+
+interface Props {
+  domains: Catalog['domains'];
+  capabilities: Catalog['capabilities'];
+}
+
+const { domains, capabilities } = Astro.props;
+const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
+---
+
+<div class="map-explorer" aria-label="能力地图">
+  {orderedDomains.map((domain) => {
+    const domainCapabilities = capabilities.filter(
+      (capability) => capability.domainId === domain.id,
+    );
+
+    return (
+      <section class="domain-region" aria-labelledby={`domain-${domain.id}`}>
+        <div class="domain-region__heading">
+          <h2 id={`domain-${domain.id}`}>{domain.name['zh-CN']}</h2>
+          <p>{domain.summary['zh-CN']}</p>
+        </div>
+        <div class="capability-list">
+          {domainCapabilities.map((capability) => (
+            <a
+              class:list={[
+                'capability-node',
+                { 'capability-node--next': capability.id === 'playtesting' },
+              ]}
+              id={capability.id}
+              href={sitePath(`map/#${capability.id}`)}
+              aria-label={capability.name['zh-CN']}
+            >
+              <strong>{capability.name['zh-CN']}</strong>
+              <span>{capability.summary['zh-CN']}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</div>

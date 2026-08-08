@@ -1,0 +1,27 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface Props {
+  entry: CollectionEntry<'devlog'>;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('devlog');
+
+  return entries.map((entry) => ({
+    params: { id: entry.id.replace(/\.md$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title="项目 Devlog">
+  <article class="prose page-shell">
+    <Content />
+  </article>
+</BaseLayout>
