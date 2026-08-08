@@ -227,3 +227,13 @@ Atlas 只写入 7 条经 lead 审批的关系：Rogue 到 Hack、Hack 到 NetHac
 后续 CSS 审查发现宽泛的 relation span 选择器也命中了箭头，使它继承 endpoint 的 padding、边框与背景，视觉上像第三个节点。实现新增箭头无 endpoint 边框的 computed-style 回归，先观察到 1px 边框的 RED，再把 endpoint 规则收窄到直接子级 `[data-endpoint-kind]`；最终截图中的箭头保持独立、最小的方向标记。
 
 当时验证记录为：`npm run check` 0 errors、Vitest 26 项、静态构建 13 个页面、Atlas Chromium 4 项、完整 Chromium 与 mobile Chromium 32 项通过。截图写入 `/tmp/learn-about-games-task5/atlas-desktop.png` 和 `/tmp/learn-about-games-task5/atlas-320.png` 并按原始尺寸查看；320px 浏览器测量的 `clientWidth`、文档 `scrollWidth` 和 body `scrollWidth` 均为 320。Roadmap 仍保留在 Now，没有把未部署的 Atlas 标为 shipped 或 deployed。
+
+### 27. M0 Task 5：质量审查补强关系回归
+
+记录说明：以下为 Task 5 review-fix 代理可访问范围内的脱敏摘要，是 partial export，不是原始聊天 UI 的完整逐字导出。缺失范围包括主任务私有推理、未转发消息和运行时无法导出的完整工具记录；未获取的内容不声称完整。
+
+质量审查指出一个 Important 与两个低成本 Minor。Important 是原 Atlas E2E 只断言 7 条关系、confirmed 状态和可见证据，没有精确锁定 relation id、fromId、toId 与 type，因此关系数据被改错时可能仍然通过。两个 Minor 是移动测试没有直接证明箭头旋转，以及 `categories.sort()` 原地修改传入数组。
+
+实现先扩展浏览器测试。旧页面在 Chromium 和 mobile Chromium 中都能读到正确 relation id 与 confirmed status，但 7 条关系的 fromId、toId、type 均为 null，因此 tuple 测试两项 RED。新增的方向 computed-style 测试在旧实现上直接通过：desktop 的 transform 为 `none`，mobile 的 transform 为 90 度 matrix，说明行为本身已正确，只是此前缺少回归覆盖；记录没有伪造这项 RED。
+
+最小修复只在 relation article 输出 `data-from-id`、`data-to-id` 与 `data-relation-type`，E2E 按 theme 顺序精确断言 7 个五元组；分类改为 `[...categories].sort()`，没有增加数据模型测试框架或未来抽象。fresh build 后，tuple 与方向的 Chromium/mobile targeted 测试 4 项通过。此次没有用户可见文案或样式变化，因此没有重生成截图或修改 Changelog。

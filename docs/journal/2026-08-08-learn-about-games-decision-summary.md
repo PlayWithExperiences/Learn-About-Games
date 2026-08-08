@@ -105,6 +105,7 @@ Atlas 页面先展示八类未来组织框架，再展示一个独立于作品�
 - Task 4 先获得两条 RED：progress 单测因模块不存在失败，profile/progress E2E 因地图控件不存在失败。实现后发现 bfcache 会恢复画像 select 的值而不恢复由脚本派生的地图标记，因此在 `pageshow` 重新应用透镜，避免增加职业状态存储。最终 `npm run check`、26 项 Vitest、静态构建、Chromium 11 项、mobile Chromium 11 项均通过；1440px 与 320px 地图和 Playtest 页截图人工复查，均无横向溢出。
 - Task 4 质量复查发现 CSS `.role-marker` 会覆盖原生 `hidden`，导致未应用画像时仍显示空分类行；同时无 JavaScript 时两个本应依赖脚本的 select 仍可操作。修复后 marker 的 `[hidden]` 强制不显示，两个 select 初始禁用且仅在脚本成功绑定时启用，并各自显示局部 no-JS 说明。E2E 覆盖初始 0、应用后 7、清除后 0 个可见 marker，以及无 JavaScript 下内容可读而控件不可操作。
 - Task 5 先观察到 Atlas Chromium E2E 4 项全部 RED：共享导航没有 Atlas、分类与关系均为 0、主题标题缺失。最小实现填入精确 8 类、8 个 Game、1 个 Innovation、9 个锁定来源和仅 7 条已证实关系，静态构建增至 13 个页面；Atlas Chromium 4 项与完整 Chromium/mobile 32 项通过。原尺寸截图复查后为关系增加显式方向箭头，移动端箭头向下；对应回归先 RED 后 GREEN。320px 实测 `clientWidth`、文档与 body `scrollWidth` 均为 320。
+- Task 5 质量审查补强 Atlas 关系回归：E2E 现在精确锁定 7 组 relation id、fromId、toId、type 与 confirmed status，并在 desktop/mobile 项目分别验证箭头无 transform 与 90 度 transform。旧页面缺少 from/to/type data attributes，双项目先得到 tuple RED；添加语义属性后 targeted 测试通过。分类渲染改为 clone 后排序，避免原地修改 catalog 数组。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。

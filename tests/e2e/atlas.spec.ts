@@ -67,6 +67,25 @@ test('publishes exactly seven confirmed causal relations with evidence links and
   const relations = page.locator('[data-atlas-relation]');
   await expect(relations).toHaveCount(7);
   await expect(relations.locator('[data-evidence-status="confirmed"]')).toHaveCount(7);
+  await expect(
+    relations.evaluateAll((elements) =>
+      elements.map((element) => [
+        element.getAttribute('data-atlas-relation'),
+        element.getAttribute('data-from-id'),
+        element.getAttribute('data-to-id'),
+        element.getAttribute('data-relation-type'),
+        element.querySelector('[data-evidence-status]')?.getAttribute('data-evidence-status'),
+      ]),
+    ),
+  ).resolves.toEqual([
+    ['rogue-to-hack', 'rogue', 'hack', 'derived-variant', 'confirmed'],
+    ['hack-to-nethack', 'hack', 'nethack', 'derived-variant', 'confirmed'],
+    ['rogue-to-moria', 'rogue', 'moria', 'direct-influence', 'confirmed'],
+    ['moria-to-angband', 'moria', 'angband', 'derived-variant', 'confirmed'],
+    ['angband-to-diablo', 'angband', 'diablo', 'fusion', 'confirmed'],
+    ['run-structure-to-spelunky', 'roguelike-run-structure', 'spelunky', 'fusion', 'confirmed'],
+    ['spelunky-to-hades', 'spelunky', 'hades', 'direct-influence', 'confirmed'],
+  ]);
 
   for (const relation of await relations.all()) {
     await expect(relation.locator('a[data-atlas-evidence-link]')).not.toHaveCount(0);
@@ -99,4 +118,20 @@ test('publishes exactly seven confirmed causal relations with evidence links and
   await expect(
     page.getByText('传统 Roguelike 常以回合制推进；Hades 是跨类型的动作变体。', { exact: true }),
   ).toBeVisible();
+});
+
+test('keeps relation arrows horizontal on desktop and rotates them downward on mobile', async ({ page }, testInfo) => {
+  await page.goto('./atlas/');
+
+  const arrows = page.locator('[data-atlas-direction-arrow]');
+  await expect(arrows).toHaveCount(7);
+  const transforms = await arrows.evaluateAll((elements) =>
+    elements.map((element) => getComputedStyle(element).transform),
+  );
+
+  if (testInfo.project.name === 'mobile-chromium') {
+    expect(transforms).toEqual(Array(7).fill('matrix(0, 1, -1, 0, 0, 0)'));
+  } else {
+    expect(transforms).toEqual(Array(7).fill('none'));
+  }
 });

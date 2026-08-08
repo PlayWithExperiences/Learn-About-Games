@@ -49,7 +49,7 @@ const relationBoundaryNotes: Record<string, string> = {
     <p>八类只定义未来的组织维度，不表示 M0 已均衡覆盖。</p>
   </div>
   <ol class="atlas-category-index">
-    {categories
+    {[...categories]
       .sort((a, b) => a.order - b.order)
       .map((category) => (
         <li>
@@ -110,7 +110,12 @@ const relationBoundaryNotes: Record<string, string> = {
           .filter((item): item is AtlasEvidence => Boolean(item));
 
         return (
-          <article data-atlas-relation={relation.id}>
+          <article
+            data-atlas-relation={relation.id}
+            data-from-id={relation.fromId}
+            data-to-id={relation.toId}
+            data-relation-type={relation.type}
+          >
             <div class="atlas-relation__path">
               <span data-endpoint-kind={from?.kind}>{from?.name['zh-CN']}</span>
               <b>
