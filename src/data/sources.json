@@ -1,24 +1,304 @@
 [
   {
-    "id": "game-makers-toolkit",
-    "name": { "zh-CN": "Game Maker's Toolkit", "en": "Game Maker's Toolkit" },
-    "kind": "channel",
-    "summary": {
-      "zh-CN": "Mark Brown 运营的游戏设计分析频道，按单期视频讨论具体设计实践与案例。",
-      "en": "A game-design analysis channel by Mark Brown, with individual videos on specific practices and cases."
+    "id": "acm-digital-library",
+    "name": {
+      "zh-CN": "ACM Digital Library",
+      "en": "ACM Digital Library"
     },
-    "homepage": "https://www.youtube.com/@GMTK",
-    "languages": ["en"]
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "ACM 的官方数字图书馆。"
+    },
+    "homepage": "https://dl.acm.org/",
+    "languages": [
+      "en"
+    ]
   },
   {
-    "id": "play-with-experiences",
-    "name": { "zh-CN": "PlayWithExperiences", "en": "PlayWithExperiences" },
+    "id": "aias-game-makers-notebook",
+    "name": {
+      "zh-CN": "AIAS Game Maker’s Notebook",
+      "en": "AIAS Game Maker’s Notebook"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "互动艺术与科学学院制作的从业者访谈节目。"
+    },
+    "homepage": "https://www.interactive.org/Interviews/game_makers_notebook.asp",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "elsevier",
+    "name": {
+      "zh-CN": "Elsevier",
+      "en": "Elsevier"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Elsevier 官方出版平台。"
+    },
+    "homepage": "https://www.elsevier.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "gdc-vault",
+    "name": {
+      "zh-CN": "GDC Vault",
+      "en": "GDC Vault"
+    },
     "kind": "organization",
     "summary": {
-      "zh-CN": "PlayWithExperiences 公开发布关于游戏设计实践与经验的文章。",
-      "en": "PlayWithExperiences publishes public writing about game-design practice and experience."
+      "zh-CN": "Game Developers Conference 的官方演讲资料库。"
     },
-    "homepage": "https://medill-east.github.io/",
-    "languages": ["zh-CN", "en"]
+    "homepage": "https://www.gdcvault.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-makers-toolkit",
+    "name": {
+      "zh-CN": "Game Maker's Toolkit",
+      "en": "Game Maker's Toolkit"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "Mark Brown 制作的游戏设计分析频道。"
+    },
+    "homepage": "https://www.youtube.com/@GMTK",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-studies",
+    "name": {
+      "zh-CN": "Game Studies",
+      "en": "Game Studies"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "开放获取的游戏研究学术期刊。"
+    },
+    "homepage": "https://gamestudies.org/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "jones-bartlett-learning",
+    "name": {
+      "zh-CN": "Jones & Bartlett Learning",
+      "en": "Jones & Bartlett Learning"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Jones & Bartlett Learning 官方出版平台。"
+    },
+    "homepage": "https://www.jblearning.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "mit-press",
+    "name": {
+      "zh-CN": "MIT Press",
+      "en": "MIT Press"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "MIT Press 官方出版平台。"
+    },
+    "homepage": "https://mitpress.mit.edu/",
+    "languages": [
+      "en",
+      "zh-Hans"
+    ]
+  },
+  {
+    "id": "masterclass",
+    "name": {
+      "zh-CN": "MasterClass",
+      "en": "MasterClass"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "由从业者教授课程的官方订阅平台。"
+    },
+    "homepage": "https://www.masterclass.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "oreilly-media",
+    "name": {
+      "zh-CN": "O'Reilly Media",
+      "en": "O'Reilly Media"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "O'Reilly 官方出版与学习平台。"
+    },
+    "homepage": "https://www.oreilly.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "pearson",
+    "name": {
+      "zh-CN": "Pearson",
+      "en": "Pearson"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Pearson 官方出版平台。"
+    },
+    "homepage": "https://www.pearson.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "routledge",
+    "name": {
+      "zh-CN": "Routledge",
+      "en": "Routledge"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Routledge 与 Focal Press 书目所在的官方出版平台。"
+    },
+    "homepage": "https://www.routledge.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "springer-nature",
+    "name": {
+      "zh-CN": "Springer Nature",
+      "en": "Springer Nature"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Springer Nature 官方出版平台。"
+    },
+    "homepage": "https://www.springernature.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-design-roundtable",
+    "name": {
+      "zh-CN": "The Game Design Roundtable",
+      "en": "The Game Design Roundtable"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "聚焦游戏设计实践的播客节目。"
+    },
+    "homepage": "https://thegamedesignroundtable.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "level-design-book",
+    "name": {
+      "zh-CN": "The Level Design Book",
+      "en": "The Level Design Book"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "由关卡设计从业者维护的开放在线书。"
+    },
+    "homepage": "https://book.leveldesignbook.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "valve",
+    "name": {
+      "zh-CN": "Valve",
+      "en": "Valve"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Valve 官方网站与公开资料来源。"
+    },
+    "homepage": "https://www.valvesoftware.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "wiley",
+    "name": {
+      "zh-CN": "Wiley",
+      "en": "Wiley"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Wiley 官方出版平台。"
+    },
+    "homepage": "https://www.wiley.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "g-bits-games",
+    "name": {
+      "zh-CN": "吉比特游戏",
+      "en": "吉比特游戏"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "吉比特游戏在哔哩哔哩的官方账号。"
+    },
+    "homepage": "https://space.bilibili.com/556214167",
+    "languages": [
+      "zh-Hans"
+    ]
+  },
+  {
+    "id": "masahiro-sakurai-on-creating-games",
+    "name": {
+      "zh-CN": "桜井政博のゲーム作るには",
+      "en": "桜井政博のゲーム作るには"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "樱井政博公开讲解游戏制作的官方频道。"
+    },
+    "homepage": "https://www.youtube.com/@sora_sakurai_jp",
+    "languages": [
+      "en",
+      "ja"
+    ]
+  },
+  {
+    "id": "tencent-games-academy",
+    "name": {
+      "zh-CN": "腾讯游戏学堂",
+      "en": "腾讯游戏学堂"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "腾讯游戏学堂在哔哩哔哩的官方账号。"
+    },
+    "homepage": "https://space.bilibili.com/425475475",
+    "languages": [
+      "zh-Hans"
+    ]
   }
 ]

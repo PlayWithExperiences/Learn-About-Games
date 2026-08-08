@@ -241,6 +241,26 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('keeps Source homepages unique and separate from Work Item URLs', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.sources.push({
+      id: 'duplicate-source-homepage',
+      name: localized('重复来源'),
+      kind: 'publisher',
+      summary: localized('示例来源。'),
+      homepage: 'https://example.com/source',
+      languages: ['en'],
+    });
+    catalog.resources.push(validV02Resource('work-is-not-source', 'https://example.com/source'));
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'SOURCE_HOMEPAGE_DUPLICATE',
+      'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT',
+      'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT',
+    ]);
+  });
+
   it('validates typed resource topic references and requires one topical connection', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);

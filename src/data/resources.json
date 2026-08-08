@@ -1,67 +1,5054 @@
 [
   {
-    "id": "valves-secret-weapon",
-    "title": { "zh-CN": "Valve's “Secret Weapon”", "en": "Valve's “Secret Weapon”" },
-    "summary": {
-      "zh-CN": "以 Valve 的测试实践说明观察玩家如何暴露设计判断中的盲点。",
-      "en": "A Valve case study on how observing players exposes blind spots in design judgment."
+    "id": "a-001-the-art-of-game-design-a-book-of-lenses",
+    "title": {
+      "zh-CN": "The Art of Game Design: A Book of Lenses",
+      "en": "The Art of Game Design: A Book of Lenses"
     },
-    "sourceId": "game-makers-toolkit",
-    "capabilityIds": ["playtesting", "player-behavior-observation"],
-    "knowledgeTopicIds": [],
-    "resourceTopicIds": ["playtesting"],
-    "mediaType": "video",
-    "canonicalUrl": "https://www.youtube.com/watch?v=9Yomqk0C6kE",
+    "summary": {
+      "zh-CN": "出版方列为 Jesse Schell 第三版的游戏设计方法书。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "experience-framing",
+      "experience-deconstruction",
+      "iteration-planning",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/The-Art-of-Game-Design-A-Book-of-Lenses-Third-Edition/Schell/p/book/9781138632059",
     "whyRelevant": {
-      "zh-CN": "这期内容直接以 Valve 的案例说明，观察真实玩家如何帮助团队发现设计盲点。",
-      "en": "This episode uses Valve's case to show how observing real players helps teams uncover design blind spots."
+      "zh-CN": "出版方列为 Jesse Schell 第三版的游戏设计方法书。"
     },
     "originalLanguage": "en",
     "accessVersions": [
       {
         "language": "en",
-        "url": "https://www.youtube.com/watch?v=9Yomqk0C6kE",
-        "accessModel": "free",
+        "url": "https://www.routledge.com/The-Art-of-Game-Design-A-Book-of-Lenses-Third-Edition/Schell/p/book/9781138632059",
+        "accessModel": "paid",
         "versionRelation": "original",
         "presentationMode": "original",
-        "checkedAt": "2026-08-08"
+        "checkedAt": "2026-08-09"
       }
     ]
   },
   {
-    "id": "how-to-run-a-good-playtest",
-    "title": { "zh-CN": "如何进行好的 Playtest", "en": "How to Run a Good Playtest" },
+    "id": "a-002-rules-of-play-game-design-fundamentals",
+    "title": {
+      "zh-CN": "Rules of Play: Game Design Fundamentals",
+      "en": "Rules of Play: Game Design Fundamentals"
+    },
     "summary": {
-      "zh-CN": "用可观察的目标、适当的时机与不干预的观察，获得能支持判断的 Playtest 数据。",
-      "en": "Use observable goals, suitable timing, and non-intervention to collect playtest data that supports decisions."
+      "zh-CN": "MIT Press 将其描述为以统一模型分析各类游戏的基础教材。"
     },
-    "sourceId": "play-with-experiences",
-    "capabilityIds": ["playtesting", "player-behavior-observation"],
-    "knowledgeTopicIds": [],
-    "resourceTopicIds": ["playtesting"],
-    "mediaType": "article",
-    "canonicalUrl": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-framing",
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262240451/rules-of-play/",
     "whyRelevant": {
-      "zh-CN": "文章把测试目标、观察时机与不干预观察连接到可用于设计判断的 Playtest 证据。",
-      "en": "The article connects test goals, timing, and non-intervention to playtest evidence usable in design decisions."
+      "zh-CN": "MIT Press 将其描述为以统一模型分析各类游戏的基础教材。"
     },
-    "originalLanguage": "zh-CN",
+    "originalLanguage": "en",
     "accessVersions": [
       {
-        "language": "zh-CN",
-        "url": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262240451/rules-of-play/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-003-game-design-workshop-5th-ed",
+    "title": {
+      "zh-CN": "Game Design Workshop, 5th ed.",
+      "en": "Game Design Workshop, 5th ed."
+    },
+    "summary": {
+      "zh-CN": "出版方说明该版以练习驱动，覆盖原型、测试与修订。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "experience-framing",
+      "rules-system-modeling",
+      "playtesting",
+      "learning-prototype-design",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Game-Design-Workshop-A-Playcentric-Approach-to-Creating-Innovative-Games/Fullerton/p/book/9781032607009",
+    "whyRelevant": {
+      "zh-CN": "出版方说明该版以练习驱动，覆盖原型、测试与修订。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Game-Design-Workshop-A-Playcentric-Approach-to-Creating-Innovative-Games/Fullerton/p/book/9781032607009",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-004-fundamentals-of-game-design",
+    "title": {
+      "zh-CN": "Fundamentals of Game Design",
+      "en": "Fundamentals of Game Design"
+    },
+    "summary": {
+      "zh-CN": "Pearson 的作者页将其定位为游戏设计基础教材。"
+    },
+    "sourceId": "pearson",
+    "capabilityIds": [
+      "experience-framing",
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.pearson.com/en-us/subject-catalog/p/fundamentals-of-game-design/P200000000096/9780133435719",
+    "whyRelevant": {
+      "zh-CN": "Pearson 的作者页将其定位为游戏设计基础教材。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.pearson.com/en-us/subject-catalog/p/fundamentals-of-game-design/P200000000096/9780133435719",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-005-challenges-for-game-designers",
+    "title": {
+      "zh-CN": "Challenges for Game Designers",
+      "en": "Challenges for Game Designers"
+    },
+    "summary": {
+      "zh-CN": "这是 Brenda Romero 与 Ian Schreiber 的练习式游戏设计书。"
+    },
+    "sourceId": "oreilly-media",
+    "capabilityIds": [
+      "experience-framing",
+      "rules-system-modeling",
+      "learning-prototype-design",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.oreilly.com/library/view/challenges-for-game/9781449363209/",
+    "whyRelevant": {
+      "zh-CN": "这是 Brenda Romero 与 Ian Schreiber 的练习式游戏设计书。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.oreilly.com/library/view/challenges-for-game/9781449363209/",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-001-c-1-01-09",
+    "title": {
+      "zh-CN": "C: 企画・ゲーム設計1（まとめ動画）#01～#09"
+    },
+    "summary": {
+      "zh-CN": "官方双语同一编排；含“先让玩家玩”“奖励可见”“分解/分析/重构”。日文版 369,878 views / 3,500 likes。"
+    },
+    "sourceId": "masahiro-sakurai-on-creating-games",
+    "capabilityIds": [
+      "experience-framing",
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "video",
+    "canonicalUrl": "https://www.youtube.com/watch?v=hTNA84vJNEc",
+    "whyRelevant": {
+      "zh-CN": "官方双语同一编排；含“先让玩家玩”“奖励可见”“分解/分析/重构”。日文版 369,878 views / 3,500 likes。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.youtube.com/watch?v=hTNA84vJNEc",
         "accessModel": "free",
         "versionRelation": "original",
         "presentationMode": "original",
-        "checkedAt": "2026-08-08"
+        "checkedAt": "2026-08-09"
       },
       {
         "language": "en",
-        "url": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
+        "url": "https://www.youtube.com/watch?v=E4ZUgPoDrvY",
         "accessModel": "free",
         "versionRelation": "official",
-        "presentationMode": "bilingual",
-        "checkedAt": "2026-08-08"
+        "presentationMode": "translated",
+        "checkedAt": "2026-08-09"
+      }
+    ],
+    "externalSignals": [
+      {
+        "provider": "YouTube",
+        "label": "views",
+        "value": 369878,
+        "observedAt": "2026-08-09",
+        "url": "https://www.youtube.com/watch?v=hTNA84vJNEc"
+      },
+      {
+        "provider": "YouTube",
+        "label": "likes",
+        "value": 3500,
+        "observedAt": "2026-08-09",
+        "url": "https://www.youtube.com/watch?v=hTNA84vJNEc"
+      }
+    ]
+  },
+  {
+    "id": "c-002-n-1-01-05",
+    "title": {
+      "zh-CN": "N: 企画コンセプト1（まとめ動画）#01～#05"
+    },
+    "summary": {
+      "zh-CN": "以 Kirby、Smash Bros. 的设计起点作第一人称案例；617,353 views / 3,800 likes。"
+    },
+    "sourceId": "masahiro-sakurai-on-creating-games",
+    "capabilityIds": [
+      "experience-framing"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "video",
+    "canonicalUrl": "https://www.youtube.com/watch?v=_gbJw7orSI8",
+    "whyRelevant": {
+      "zh-CN": "以 Kirby、Smash Bros. 的设计起点作第一人称案例；617,353 views / 3,800 likes。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.youtube.com/watch?v=_gbJw7orSI8",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ],
+    "externalSignals": [
+      {
+        "provider": "YouTube",
+        "label": "views",
+        "value": 617353,
+        "observedAt": "2026-08-09",
+        "url": "https://www.youtube.com/watch?v=_gbJw7orSI8"
+      },
+      {
+        "provider": "YouTube",
+        "label": "likes",
+        "value": 3800,
+        "observedAt": "2026-08-09",
+        "url": "https://www.youtube.com/watch?v=_gbJw7orSI8"
+      }
+    ]
+  },
+  {
+    "id": "a-007-advanced-game-design-a-systems-approach",
+    "title": {
+      "zh-CN": "Advanced Game Design: A Systems Approach",
+      "en": "Advanced Game Design: A Systems Approach"
+    },
+    "summary": {
+      "zh-CN": "Michael Sellers 的出版方页面将其定位为系统方法的高级游戏设计书。"
+    },
+    "sourceId": "pearson",
+    "capabilityIds": [
+      "core-loop-design",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.pearson.com/en-us/subject-catalog/p/advanced-game-design-a-systems-approach/P200000009594/9780134669458",
+    "whyRelevant": {
+      "zh-CN": "Michael Sellers 的出版方页面将其定位为系统方法的高级游戏设计书。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.pearson.com/en-us/subject-catalog/p/advanced-game-design-a-systems-approach/P200000009594/9780134669458",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-010-game-balance",
+    "title": {
+      "zh-CN": "Game Balance",
+      "en": "Game Balance"
+    },
+    "summary": {
+      "zh-CN": "出版方列为 Schreiber 与 Romero 的专门游戏平衡教材。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "core-loop-design",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Game-Balance/Schreiber-Romero/p/book/9781498799577",
+    "whyRelevant": {
+      "zh-CN": "出版方列为 Schreiber 与 Romero 的专门游戏平衡教材。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Game-Balance/Schreiber-Romero/p/book/9781498799577",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-011-playing-with-balance-game-economy-design",
+    "title": {
+      "zh-CN": "Playing with Balance: Game Economy Design",
+      "en": "Playing with Balance: Game Economy Design"
+    },
+    "summary": {
+      "zh-CN": "Oscar Clark 的书聚焦游戏经济与平衡。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "core-loop-design",
+      "rules-system-modeling",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Playing-with-Balance-Game-Economy-Design/Clark/p/book/9781032971599",
+    "whyRelevant": {
+      "zh-CN": "Oscar Clark 的书聚焦游戏经济与平衡。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Playing-with-Balance-Game-Economy-Design/Clark/p/book/9781032971599",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-012-fast-fail-your-systems-with-modeling",
+    "title": {
+      "zh-CN": "Fast Fail Your Systems with Modeling",
+      "en": "Fast Fail Your Systems with Modeling"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要说明其以棋盘游戏与 Unity 模拟器预估机制和奖励节奏表现。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "core-loop-design",
+      "rules-system-modeling",
+      "pacing-control"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1021574/Fast-Fail-Your-Systems-with",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要说明其以棋盘游戏与 Unity 模拟器预估机制和奖励节奏表现。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1021574/Fast-Fail-Your-Systems-with",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-013-beyond-spreadsheets-building-a-metagame-simulator-for-ba",
+    "title": {
+      "zh-CN": "Beyond Spreadsheets: Building a Metagame Simulator for Balance and Prototyping",
+      "en": "Beyond Spreadsheets: Building a Metagame Simulator for Balance and Prototyping"
+    },
+    "summary": {
+      "zh-CN": "GDC 页面说明 David Morris 以模拟器处理复杂元游戏平衡和原型验证。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "core-loop-design",
+      "rules-system-modeling",
+      "progression-economy-design",
+      "telemetry-interpretation",
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1026489/Beyond-Spreadsheets-Building-a-Metagame",
+    "whyRelevant": {
+      "zh-CN": "GDC 页面说明 David Morris 以模拟器处理复杂元游戏平衡和原型验证。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1026489/Beyond-Spreadsheets-Building-a-Metagame",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-014-a-course-about-game-balance",
+    "title": {
+      "zh-CN": "A Course About Game Balance",
+      "en": "A Course About Game Balance"
+    },
+    "summary": {
+      "zh-CN": "这是 GDC Vault 的具体游戏平衡课程讲座页，而非频道或专题页。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "experience-deconstruction",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1023032/A-Course-About-Game",
+    "whyRelevant": {
+      "zh-CN": "这是 GDC Vault 的具体游戏平衡课程讲座页，而非频道或专题页。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1023032/A-Course-About-Game",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-015-slay-the-spire-metrics-driven-design-and-balance",
+    "title": {
+      "zh-CN": "Slay the Spire: Metrics Driven Design and Balance",
+      "en": "Slay the Spire: Metrics Driven Design and Balance"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要明确说明其讲述以指标和社区反馈持续调整《Slay the Spire》平衡。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "progression-economy-design",
+      "blockout-spatial-validation",
+      "playtesting",
+      "telemetry-interpretation",
+      "iteration-planning",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1026309/-Slay-the-Spire-Metrics",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要明确说明其讲述以指标和社区反馈持续调整《Slay the Spire》平衡。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1026309/-Slay-the-Spire-Metrics",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-016-balancing-your-game-a-formula-driven-approach",
+    "title": {
+      "zh-CN": "Balancing Your Game: A Formula-Driven Approach",
+      "en": "Balancing Your Game: A Formula-Driven Approach"
+    },
+    "summary": {
+      "zh-CN": "GDC Vault 将其明确命名为公式驱动的游戏平衡方法。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1023865/Balancing-Your-Game-A-Formula",
+    "whyRelevant": {
+      "zh-CN": "GDC Vault 将其明确命名为公式驱动的游戏平衡方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1023865/Balancing-Your-Game-A-Formula",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-017-balancing-league-of-legends-for-every-player-from-bronze",
+    "title": {
+      "zh-CN": "Balancing League of Legends for Every Player, from Bronze to Bengi",
+      "en": "Balancing League of Legends for Every Player, from Bronze to Bengi"
+    },
+    "summary": {
+      "zh-CN": "该讲座以不同水平段位玩家的《英雄联盟》平衡为案例。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1024237/Balancing-League-of-Legends-for",
+    "whyRelevant": {
+      "zh-CN": "该讲座以不同水平段位玩家的《英雄联盟》平衡为案例。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1024237/Balancing-League-of-Legends-for",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-018-economic-decision-making-in-game-design",
+    "title": {
+      "zh-CN": "Economic Decision Making in Game Design",
+      "en": "Economic Decision Making in Game Design"
+    },
+    "summary": {
+      "zh-CN": "GDC Vault 的具体演讲条目，主题直指游戏设计中的经济决策。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "rules-system-modeling",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1013861/Economic-Decision-Making-in-Game",
+    "whyRelevant": {
+      "zh-CN": "GDC Vault 的具体演讲条目，主题直指游戏设计中的经济决策。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1013861/Economic-Decision-Making-in-Game",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-019-240-ryan-scott-aims-for-balanceable-not-balanced",
+    "title": {
+      "zh-CN": "#240 Ryan Scott Aims for Balanceable, Not Balanced",
+      "en": "#240 Ryan Scott Aims for Balanceable, Not Balanced"
+    },
+    "summary": {
+      "zh-CN": "该单集讨论把系统设计成“可被持续平衡”，而非宣称一次性完成平衡。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "rules-system-modeling",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/240-ryan-scott-aims-for-balanceable-not-balanced/",
+    "whyRelevant": {
+      "zh-CN": "该单集讨论把系统设计成“可被持续平衡”，而非宣称一次性完成平衡。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/240-ryan-scott-aims-for-balanceable-not-balanced/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-020-fun-or-frustration-game-balance-pitfalls-and-recipes",
+    "title": {
+      "zh-CN": "Fun or Frustration: Game Balance Pitfalls and Recipes",
+      "en": "Fun or Frustration: Game Balance Pitfalls and Recipes"
+    },
+    "summary": {
+      "zh-CN": "GDC Vault 的具体讲座专门讨论游戏平衡的常见陷阱与处理方法。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1021413/Fun-or-Frustration-Game-Balance",
+    "whyRelevant": {
+      "zh-CN": "GDC Vault 的具体讲座专门讨论游戏平衡的常见陷阱与处理方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1021413/Fun-or-Frustration-Game-Balance",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-021-game-feel-a-game-designer-s-guide-to-virtual-sensation",
+    "title": {
+      "zh-CN": "Game Feel: A Game Designer’s Guide to Virtual Sensation",
+      "en": "Game Feel: A Game Designer’s Guide to Virtual Sensation"
+    },
+    "summary": {
+      "zh-CN": "出版方说明该书系统化讨论动作、声音和辅助指示如何构成游戏感受。"
+    },
+    "sourceId": "elsevier",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "rules-system-modeling",
+      "multimodal-presentation-integration",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "audiovisual-semiotics"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://shop.elsevier.com/books/game-feel/swink/978-0-12-374328-2",
+    "whyRelevant": {
+      "zh-CN": "出版方说明该书系统化讨论动作、声音和辅助指示如何构成游戏感受。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://shop.elsevier.com/books/game-feel/swink/978-0-12-374328-2",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-022-why-does-celeste-feel-so-good-to-play",
+    "title": {
+      "zh-CN": "Why Does Celeste Feel So Good to Play?",
+      "en": "Why Does Celeste Feel So Good to Play?"
+    },
+    "summary": {
+      "zh-CN": "GMTK 的具体视频分析《Celeste》的加减速、跳跃宽容和即时反馈。"
+    },
+    "sourceId": "game-makers-toolkit",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "experience-deconstruction",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "video",
+    "canonicalUrl": "https://www.youtube.com/watch?v=yorTG9at90g",
+    "whyRelevant": {
+      "zh-CN": "GMTK 的具体视频分析《Celeste》的加减速、跳跃宽容和即时反馈。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.youtube.com/watch?v=yorTG9at90g",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-023-game-feel-why-your-death-animation-sucks",
+    "title": {
+      "zh-CN": "Game Feel: Why Your Death Animation Sucks",
+      "en": "Game Feel: Why Your Death Animation Sucks"
+    },
+    "summary": {
+      "zh-CN": "该 GDC 讲座聚焦死亡动画为何影响玩家感受。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "multimodal-presentation-integration",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1022759/Game-Feel-Why-Your-Death",
+    "whyRelevant": {
+      "zh-CN": "该 GDC 讲座聚焦死亡动画为何影响玩家感受。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1022759/Game-Feel-Why-Your-Death",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-024-oh-my-that-sound-made-the-game-feel-better",
+    "title": {
+      "zh-CN": "Oh My! That Sound Made the Game Feel Better!",
+      "en": "Oh My! That Sound Made the Game Feel Better!"
+    },
+    "summary": {
+      "zh-CN": "标题和 GDC 页面均明确将声音设计与游戏感受直接关联。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "multimodal-presentation-integration",
+      "cross-discipline-communication",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "audiovisual-semiotics",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1022808/Oh-My-That-Sound-Made",
+    "whyRelevant": {
+      "zh-CN": "标题和 GDC 页面均明确将声音设计与游戏感受直接关联。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1022808/Oh-My-That-Sound-Made",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-025-dreamscaper-killer-combat-on-an-indie-budget",
+    "title": {
+      "zh-CN": "Dreamscaper: Killer Combat on an Indie Budget",
+      "en": "Dreamscaper: Killer Combat on an Indie Budget"
+    },
+    "summary": {
+      "zh-CN": "GDC 的案例演讲以独立项目《Dreamscaper》的战斗体验为对象。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "experience-framing",
+      "rules-system-modeling",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1027785/-Dreamscaper-Killer-Combat-on",
+    "whyRelevant": {
+      "zh-CN": "GDC 的案例演讲以独立项目《Dreamscaper》的战斗体验为对象。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1027785/-Dreamscaper-Killer-Combat-on",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-026-designing-journey",
+    "title": {
+      "zh-CN": "Designing Journey",
+      "en": "Designing Journey"
+    },
+    "summary": {
+      "zh-CN": "该 GDC Vault Work Item 是《Journey》设计的具体演讲页。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "experience-framing",
+      "emotional-arc-shaping",
+      "pacing-control"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1017700/Designing",
+    "whyRelevant": {
+      "zh-CN": "该 GDC Vault Work Item 是《Journey》设计的具体演讲页。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1017700/Designing",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-027-audio-summit-how-sound-can-make-you-feel",
+    "title": {
+      "zh-CN": "Audio Summit: How Sound Can Make You Feel",
+      "en": "Audio Summit: How Sound Can Make You Feel"
+    },
+    "summary": {
+      "zh-CN": "GDC Audio Summit 的具体演讲聚焦声音如何塑造感受。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "emotional-arc-shaping",
+      "multimodal-presentation-integration",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "audiovisual-semiotics"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1034463/Audio-Summit-How-Sound-Can",
+    "whyRelevant": {
+      "zh-CN": "GDC Audio Summit 的具体演讲聚焦声音如何塑造感受。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1034463/Audio-Summit-How-Sound-Can",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-028-what-is-level-design",
+    "title": {
+      "zh-CN": "What is level design",
+      "en": "What is level design"
+    },
+    "summary": {
+      "zh-CN": "作者维护的书中导言界定了关卡设计的对象、范围与阅读路径。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design",
+      "spatial-flow-design",
+      "scope-prioritization"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/introduction",
+    "whyRelevant": {
+      "zh-CN": "作者维护的书中导言界定了关卡设计的对象、范围与阅读路径。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/introduction",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-029-layout",
+    "title": {
+      "zh-CN": "Layout",
+      "en": "Layout"
+    },
+    "summary": {
+      "zh-CN": "这是该在线书的具体 Layout 章节，而非整站链接。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/layout",
+    "whyRelevant": {
+      "zh-CN": "这是该在线书的具体 Layout 章节，而非整站链接。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/layout",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-030-blockout",
+    "title": {
+      "zh-CN": "Blockout",
+      "en": "Blockout"
+    },
+    "summary": {
+      "zh-CN": "这是专门讲 Blockout 的具体章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design",
+      "blockout-spatial-validation"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/blockout",
+    "whyRelevant": {
+      "zh-CN": "这是专门讲 Blockout 的具体章节。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/blockout",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-031-metrics",
+    "title": {
+      "zh-CN": "Metrics",
+      "en": "Metrics"
+    },
+    "summary": {
+      "zh-CN": "该章节专门处理关卡 blockout 的尺度与度量。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design",
+      "blockout-spatial-validation",
+      "world-character-coherence",
+      "telemetry-interpretation"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/blockout/metrics",
+    "whyRelevant": {
+      "zh-CN": "该章节专门处理关卡 blockout 的尺度与度量。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/blockout/metrics",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-032-flow",
+    "title": {
+      "zh-CN": "Flow",
+      "en": "Flow"
+    },
+    "summary": {
+      "zh-CN": "该在线章节单独分析空间 flow。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design",
+      "experience-deconstruction",
+      "spatial-flow-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/layout/flow",
+    "whyRelevant": {
+      "zh-CN": "该在线章节单独分析空间 flow。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/layout/flow",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-033-pacing",
+    "title": {
+      "zh-CN": "Pacing",
+      "en": "Pacing"
+    },
+    "summary": {
+      "zh-CN": "这是针对关卡预制作节奏的具体章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design",
+      "pacing-control"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/preproduction/pacing",
+    "whyRelevant": {
+      "zh-CN": "这是针对关卡预制作节奏的具体章节。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/preproduction/pacing",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-034-wayfinding",
+    "title": {
+      "zh-CN": "Wayfinding",
+      "en": "Wayfinding"
+    },
+    "summary": {
+      "zh-CN": "该章节专门讨论在 blockout 阶段处理玩家寻路。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design",
+      "navigation-wayfinding-design",
+      "blockout-spatial-validation"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/blockout/wayfinding",
+    "whyRelevant": {
+      "zh-CN": "该章节专门讨论在 blockout 阶段处理玩家寻路。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/blockout/wayfinding",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-035-critical-path",
+    "title": {
+      "zh-CN": "Critical Path",
+      "en": "Critical Path"
+    },
+    "summary": {
+      "zh-CN": "这是针对关卡关键路径的独立章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "level-structure-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/layout/criticalpath",
+    "whyRelevant": {
+      "zh-CN": "这是针对关卡关键路径的独立章节。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/layout/criticalpath",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-036-level-design-concept-theory-and-practice",
+    "title": {
+      "zh-CN": "Level Design: Concept, Theory, and Practice",
+      "en": "Level Design: Concept, Theory, and Practice"
+    },
+    "summary": {
+      "zh-CN": "Rudolf Kremers 的出版方书目页。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "level-structure-design",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Level-Design-Concept-Theory-and-Practice/Kremers/p/book/9781568813387",
+    "whyRelevant": {
+      "zh-CN": "Rudolf Kremers 的出版方书目页。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Level-Design-Concept-Theory-and-Practice/Kremers/p/book/9781568813387",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-037-an-architectural-approach-to-level-design-3rd-ed",
+    "title": {
+      "zh-CN": "An Architectural Approach to Level Design, 3rd ed.",
+      "en": "An Architectural Approach to Level Design, 3rd ed."
+    },
+    "summary": {
+      "zh-CN": "Christopher Totten 的书以建筑视角处理关卡空间。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "level-structure-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/An-Architectural-Approach-to-Level-Design/Totten/p/book/9781003863205",
+    "whyRelevant": {
+      "zh-CN": "Christopher Totten 的书以建筑视角处理关卡空间。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/An-Architectural-Approach-to-Level-Design/Totten/p/book/9781003863205",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-038-fundamental-level-design-and-analysis-a-to-b",
+    "title": {
+      "zh-CN": "Fundamental Level Design and Analysis: A to B",
+      "en": "Fundamental Level Design and Analysis: A to B"
+    },
+    "summary": {
+      "zh-CN": "Michael Beardwood 的出版方书目页，聚焦基础关卡设计与分析。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "level-structure-design",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Fundamental-Level-Design-and-Analysis-A-to-B/Beardwood/p/book/9781032528700",
+    "whyRelevant": {
+      "zh-CN": "Michael Beardwood 的出版方书目页，聚焦基础关卡设计与分析。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Fundamental-Level-Design-and-Analysis-A-to-B/Beardwood/p/book/9781032528700",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-039-level-design-fundamentals-techniques",
+    "title": {
+      "zh-CN": "Level Design Fundamentals & Techniques",
+      "en": "Level Design Fundamentals & Techniques"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要明确覆盖布局、节奏、难度平衡和叙事技巧。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design",
+      "challenge-difficulty-design",
+      "pacing-control",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1022456/Level-Design-Fundamentals",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要明确覆盖布局、节奏、难度平衡和叙事技巧。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1022456/Level-Design-Fundamentals",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-040-level-design-workshop-architecture-in-level-design",
+    "title": {
+      "zh-CN": "Level Design Workshop: Architecture in Level Design",
+      "en": "Level Design Workshop: Architecture in Level Design"
+    },
+    "summary": {
+      "zh-CN": "GDC 的具体 workshop 条目。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1023554/Level-Design-Workshop-Architecture-in",
+    "whyRelevant": {
+      "zh-CN": "GDC 的具体 workshop 条目。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1023554/Level-Design-Workshop-Architecture-in",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-041-the-importance-of-nothing-using-negative-space-in-level-",
+    "title": {
+      "zh-CN": "The Importance of Nothing: Using Negative Space in Level Design",
+      "en": "The Importance of Nothing: Using Negative Space in Level Design"
+    },
+    "summary": {
+      "zh-CN": "GDC Vault 的演讲明确以负空间在关卡设计中的作用为主题。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design",
+      "pacing-control",
+      "spatial-flow-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1020426/The-Importance-of-Nothing-Using",
+    "whyRelevant": {
+      "zh-CN": "GDC Vault 的演讲明确以负空间在关卡设计中的作用为主题。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1020426/The-Importance-of-Nothing-Using",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-042-level-design-in-a-day-wayfinding-storytelling-techniques",
+    "title": {
+      "zh-CN": "Level Design in a Day: Wayfinding & Storytelling Techniques",
+      "en": "Level Design in a Day: Wayfinding & Storytelling Techniques"
+    },
+    "summary": {
+      "zh-CN": "GDC 的具体演讲将 wayfinding 与 storytelling 结合讨论。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design",
+      "navigation-wayfinding-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1022117/Level-Design-in-a-Day",
+    "whyRelevant": {
+      "zh-CN": "GDC 的具体演讲将 wayfinding 与 storytelling 结合讨论。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1022117/Level-Design-in-a-Day",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-043-hitman-levels-as-social-spaces-the-social-anthropology-o",
+    "title": {
+      "zh-CN": "Hitman Levels as Social Spaces: The Social Anthropology of Level Design",
+      "en": "Hitman Levels as Social Spaces: The Social Anthropology of Level Design"
+    },
+    "summary": {
+      "zh-CN": "该 workshop 以《Hitman》关卡作为社会空间研究对象。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design",
+      "spatial-flow-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1026531/Level-Design-Workshop-Hitman-Levels",
+    "whyRelevant": {
+      "zh-CN": "该 workshop 以《Hitman》关卡作为社会空间研究对象。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1026531/Level-Design-Workshop-Hitman-Levels",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-044-empowering-the-player-level-design-in-n",
+    "title": {
+      "zh-CN": "Empowering the Player: Level Design in N++",
+      "en": "Empowering the Player: Level Design in N++"
+    },
+    "summary": {
+      "zh-CN": "GDC 具体案例讨论《N++》的关卡设计与玩家赋能。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design",
+      "game-feel-tuning"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "narratology-agency-authorship",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1023282/Empowering-the-Player-Level-Design",
+    "whyRelevant": {
+      "zh-CN": "GDC 具体案例讨论《N++》的关卡设计与玩家赋能。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1023282/Empowering-the-Player-Level-Design",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-045-level-design-in-a-day-how-we-used-iterative-level-design",
+    "title": {
+      "zh-CN": "Level Design in a Day: How We Used Iterative Level Design to Ship Skyrim and Fallout 3",
+      "en": "Level Design in a Day: How We Used Iterative Level Design to Ship Skyrim and Fallout 3"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要说明其分享 Bethesda 在《Skyrim》《Fallout 3》使用的迭代式关卡流程。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "level-structure-design",
+      "world-character-coherence",
+      "playtesting",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1021074/Level-Design-in-a-Day",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要说明其分享 Bethesda 在《Skyrim》《Fallout 3》使用的迭代式关卡流程。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1021074/Level-Design-in-a-Day",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-046-237-old-world-utilizing-playtesters-effectively",
+    "title": {
+      "zh-CN": "#237 Old World: Utilizing Playtesters Effectively",
+      "en": "#237 Old World: Utilizing Playtesters Effectively"
+    },
+    "summary": {
+      "zh-CN": "单集页列出了如何处理不同核心测试者的反馈及早期访问更新节奏。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "research-question-framing",
+      "pacing-control",
+      "world-character-coherence",
+      "playtesting",
+      "iteration-planning",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/237-old-world-utilizing-playtesters-effectively/",
+    "whyRelevant": {
+      "zh-CN": "单集页列出了如何处理不同核心测试者的反馈及早期访问更新节奏。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/237-old-world-utilizing-playtesters-effectively/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-047-playtesting-and-metrics-getting-the-most-out-of-your-usa",
+    "title": {
+      "zh-CN": "Playtesting and Metrics: Getting the Most Out of Your Usability Testing",
+      "en": "Playtesting and Metrics: Getting the Most Out of Your Usability Testing"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要描述将后端数据记录接入既有测试计划的方法。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "blockout-spatial-validation",
+      "playtesting",
+      "telemetry-interpretation"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1015581/Playtesting-and-Metrics-Getting-the",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要描述将后端数据记录接入既有测试计划的方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1015581/Playtesting-and-Metrics-Getting-the",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-049-tools-tutorial-day-playtesting-overwatch",
+    "title": {
+      "zh-CN": "Tools Tutorial Day: Playtesting Overwatch",
+      "en": "Tools Tutorial Day: Playtesting Overwatch"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要说明《Overwatch》团队如何让 12 人测试的创建与加入流程更快。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting",
+      "design-specification-handoff"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1025012/Tools-Tutorial-Day-Playtesting-Overwatch",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要说明《Overwatch》团队如何让 12 人测试的创建与加入流程更快。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1025012/Tools-Tutorial-Day-Playtesting-Overwatch",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "a-050-implementing-an-in-house-playtesting-process",
+    "title": {
+      "zh-CN": "Implementing an In-House Playtesting Process",
+      "en": "Implementing an In-House Playtesting Process"
+    },
+    "summary": {
+      "zh-CN": "GDC 概要将其描述为可在预算内实行、用于减少偏见并支持设计决策的完整流程。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1016703/Implementing-an-In-House-Playtesting",
+    "whyRelevant": {
+      "zh-CN": "GDC 概要将其描述为可在预算内实行、用于减少偏见并支持设计决策的完整流程。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1016703/Implementing-an-In-House-Playtesting",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-012-valve-s-approach-to-playtesting-the-application-of-empir",
+    "title": {
+      "zh-CN": "Valve’s Approach to Playtesting: The Application of Empiricism",
+      "en": "Valve’s Approach to Playtesting: The Application of Empiricism"
+    },
+    "summary": {
+      "zh-CN": "Valve 的 Mike Ambinder GDC 2009 原始官方 slides，涵盖观察、反馈与持续迭代的试玩方法。"
+    },
+    "sourceId": "valve",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting",
+      "player-behavior-observation",
+      "iteration-planning",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.valvesoftware.com/en/company/publications/2009/GDC2009_ValvesApproachToPlaytesting.pdf",
+    "whyRelevant": {
+      "zh-CN": "Valve 的 Mike Ambinder GDC 2009 原始官方 slides，涵盖观察、反馈与持续迭代的试玩方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.valvesoftware.com/en/company/publications/2009/GDC2009_ValvesApproachToPlaytesting.pdf",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-013-the-science-of-play-testing-ea-s-methods-for-user-resear",
+    "title": {
+      "zh-CN": "The Science of Play Testing: EA’s Methods for User Research",
+      "en": "The Science of Play Testing: EA’s Methods for User Research"
+    },
+    "summary": {
+      "zh-CN": "EA 的 Veronica Zammitto 以用户研究方法作为该具体演讲的核心主题。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing",
+    "whyRelevant": {
+      "zh-CN": "EA 的 Veronica Zammitto 以用户研究方法作为该具体演讲的核心主题。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-014-games-user-research-bootcamp-running-a-study",
+    "title": {
+      "zh-CN": "Games User Research Bootcamp: Running a Study",
+      "en": "Games User Research Bootcamp: Running a Study"
+    },
+    "summary": {
+      "zh-CN": "资源明确覆盖研究设计、招募、测试搭建、主持会话与将数据化为建议。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-deconstruction",
+      "telemetry-interpretation"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1017666/Games-User-Research-Bootcamp-Running",
+    "whyRelevant": {
+      "zh-CN": "资源明确覆盖研究设计、招募、测试搭建、主持会话与将数据化为建议。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1017666/Games-User-Research-Bootcamp-Running",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-015-games-user-research-bootcamp-recruiting-participants",
+    "title": {
+      "zh-CN": "Games User Research Bootcamp: Recruiting Participants",
+      "en": "Games User Research Bootcamp: Recruiting Participants"
+    },
+    "summary": {
+      "zh-CN": "该 Bootcamp 的独立环节聚焦游戏用户研究中关键的参与者招募工作。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1017665/Games-User-Research-Bootcamp-Recruiting",
+    "whyRelevant": {
+      "zh-CN": "该 Bootcamp 的独立环节聚焦游戏用户研究中关键的参与者招募工作。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1017665/Games-User-Research-Bootcamp-Recruiting",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-016-using-user-research-to-improve-game-narratives",
+    "title": {
+      "zh-CN": "Using User Research to Improve Game Narratives",
+      "en": "Using User Research to Improve Game Narratives"
+    },
+    "summary": {
+      "zh-CN": "Microsoft Studios 用户研究组以玩家难以回忆叙事为问题，说明如何用研究改善游戏叙事。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1021175/Using-User-Research-to-Improve",
+    "whyRelevant": {
+      "zh-CN": "Microsoft Studios 用户研究组以玩家难以回忆叙事为问题，说明如何用研究改善游戏叙事。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1021175/Using-User-Research-to-Improve",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-017-every-game-is-a-hit-a-user-research-process-to-deliver-g",
+    "title": {
+      "zh-CN": "Every Game Is a Hit: A User Research Process To Deliver Great Player Experiences",
+      "en": "Every Game Is a Hit: A User Research Process To Deliver Great Player Experiences"
+    },
+    "summary": {
+      "zh-CN": "Graham McAllister 给出从设计第一天到上线后的完整用户研究流程。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1021724/Every-Game-Is-A-Hit",
+    "whyRelevant": {
+      "zh-CN": "Graham McAllister 给出从设计第一天到上线后的完整用户研究流程。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1021724/Every-Game-Is-A-Hit",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-042-playtesting",
+    "title": {
+      "zh-CN": "Playtesting",
+      "en": "Playtesting"
+    },
+    "summary": {
+      "zh-CN": "官方章节说明试玩用于识别受众并解释玩家反馈。"
+    },
+    "sourceId": "masterclass",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting",
+      "design-critique-feedback",
+      "audience-positioning"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://www.masterclass.com/classes/will-wright-teaches-game-design-and-theory/chapters/playtesting",
+    "whyRelevant": {
+      "zh-CN": "官方章节说明试玩用于识别受众并解释玩家反馈。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.masterclass.com/classes/will-wright-teaches-game-design-and-theory/chapters/playtesting",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-001-the-design-in-narrative-design",
+    "title": {
+      "zh-CN": "The Design in Narrative Design",
+      "en": "The Design in Narrative Design"
+    },
+    "summary": {
+      "zh-CN": "Jurie Horneman 提出将系统设计与叙事设计视为同一设计问题的框架。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "rules-system-modeling",
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1022305/The-Design-in-Narrative",
+    "whyRelevant": {
+      "zh-CN": "Jurie Horneman 提出将系统设计与叙事设计视为同一设计问题的框架。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1022305/The-Design-in-Narrative",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-002-the-forest-paths-method-for-accessible-narrative-design",
+    "title": {
+      "zh-CN": "The Forest Paths Method for Accessible Narrative Design",
+      "en": "The Forest Paths Method for Accessible Narrative Design"
+    },
+    "summary": {
+      "zh-CN": "演讲以戏剧问题与 sequence method 构建可供团队在开发早期使用的叙事模式。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1026705/Game-Narrative-Summit-The-Forest",
+    "whyRelevant": {
+      "zh-CN": "演讲以戏剧问题与 sequence method 构建可供团队在开发早期使用的叙事模式。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1026705/Game-Narrative-Summit-The-Forest",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-003-creating-playable-stories-approaches-for-integrating-mec",
+    "title": {
+      "zh-CN": "Creating Playable Stories: Approaches for Integrating Mechanics and Narrative",
+      "en": "Creating Playable Stories: Approaches for Integrating Mechanics and Narrative"
+    },
+    "summary": {
+      "zh-CN": "Lauren Bond 给出四种将游戏机制与故事结合的可操作策略。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "rules-system-modeling",
+      "interactive-narrative-design",
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1035559/Game-Narrative-Summit-Creating-Playable",
+    "whyRelevant": {
+      "zh-CN": "Lauren Bond 给出四种将游戏机制与故事结合的可操作策略。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1035559/Game-Narrative-Summit-Creating-Playable",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-004-narrative-design-between-the-lines-game-development-conv",
+    "title": {
+      "zh-CN": "Narrative Design Between the Lines: Game Development Conversation Standards",
+      "en": "Narrative Design Between the Lines: Game Development Conversation Standards"
+    },
+    "summary": {
+      "zh-CN": "以《Fallout: New Vegas》等案例讨论界面、语气和配音等叙事惯例如何匹配玩法与类型。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "narrative-exposition"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1013775/Narrative-Design-Between-the-Lines",
+    "whyRelevant": {
+      "zh-CN": "以《Fallout: New Vegas》等案例讨论界面、语气和配音等叙事惯例如何匹配玩法与类型。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1013775/Narrative-Design-Between-the-Lines",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-005-writing-and-narrative-design-a-relationship",
+    "title": {
+      "zh-CN": "Writing and Narrative Design: A Relationship",
+      "en": "Writing and Narrative Design: A Relationship"
+    },
+    "summary": {
+      "zh-CN": "Telltale 的 writer 与 narrative designer 直接讨论写作与设计的职责边界及分歧处理。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1025476/Writing-and-Narrative-Design-A",
+    "whyRelevant": {
+      "zh-CN": "Telltale 的 writer 与 narrative designer 直接讨论写作与设计的职责边界及分歧处理。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1025476/Writing-and-Narrative-Design-A",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-006-sunless-skies-a-narrative-postmortem",
+    "title": {
+      "zh-CN": "Sunless Skies: A Narrative Postmortem",
+      "en": "Sunless Skies: A Narrative Postmortem"
+    },
+    "summary": {
+      "zh-CN": "Failbetter 的 Narrative Director 用设计文档复盘高文本量反应式故事的生产、定调与提案流程。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1027407/-Sunless-Skies-A-Narrative",
+    "whyRelevant": {
+      "zh-CN": "Failbetter 的 Narrative Director 用设计文档复盘高文本量反应式故事的生产、定调与提案流程。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1027407/-Sunless-Skies-A-Narrative",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-007-getting-a-team-on-board-with-narrative-design",
+    "title": {
+      "zh-CN": "Getting a Team on Board with Narrative Design",
+      "en": "Getting a Team on Board with Narrative Design"
+    },
+    "summary": {
+      "zh-CN": "该演讲专门处理非叙事导向团队中叙事设计的管线、审批与协商障碍。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "design-specification-handoff",
+      "cross-discipline-communication",
+      "alignment-facilitation"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1018959/Getting-a-Team-on-Board",
+    "whyRelevant": {
+      "zh-CN": "该演讲专门处理非叙事导向团队中叙事设计的管线、审批与协商障碍。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1018959/Getting-a-Team-on-Board",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-008-making-storytelling-a-fundamental-part-of-the-gameplay-e",
+    "title": {
+      "zh-CN": "Making Storytelling a Fundamental Part of the Gameplay Experience",
+      "en": "Making Storytelling a Fundamental Part of the Gameplay Experience"
+    },
+    "summary": {
+      "zh-CN": "资源描述一种先保证玩法、再逐层加入故事元素的叙事设计框架。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "experience-framing"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1020115/Making-Storytelling-a-Fundamental-Part",
+    "whyRelevant": {
+      "zh-CN": "资源描述一种先保证玩法、再逐层加入故事元素的叙事设计框架。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1020115/Making-Storytelling-a-Fundamental-Part",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-009-turn-your-writers-into-programmers-greyboxing-narrative-",
+    "title": {
+      "zh-CN": "Turn Your Writers Into Programmers: Greyboxing Narrative with Story Languages",
+      "en": "Turn Your Writers Into Programmers: Greyboxing Narrative with Story Languages"
+    },
+    "summary": {
+      "zh-CN": "Ryan North 与 Jon Manning 讨论如何让写作者在较早阶段制作可运行的叙事逻辑。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "blockout-spatial-validation",
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1027215/Game-Narrative-Summit-Turn-Your",
+    "whyRelevant": {
+      "zh-CN": "Ryan North 与 Jon Manning 讨论如何让写作者在较早阶段制作可运行的叙事逻辑。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1027215/Game-Narrative-Summit-Turn-Your",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-010-let-players-break-your-story-narrative-design-in-immersi",
+    "title": {
+      "zh-CN": "Let Players Break Your Story: Narrative Design in Immersive Sims",
+      "en": "Let Players Break Your Story: Narrative Design in Immersive Sims"
+    },
+    "summary": {
+      "zh-CN": "Lucas Loredo 讨论在关键角色可被杀死的高自由度游戏中构建可承受破坏的故事。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "interactive-narrative-design",
+      "world-character-coherence"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1027952/Game-Narrative-Summit-Let-Players",
+    "whyRelevant": {
+      "zh-CN": "Lucas Loredo 讨论在关键角色可被杀死的高自由度游戏中构建可承受破坏的故事。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1027952/Game-Narrative-Summit-Let-Players",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-011-making-linear-story-playable-the-narrative-design-of-ala",
+    "title": {
+      "zh-CN": "Making Linear Story Playable: The Narrative Design of Alan Wake 2",
+      "en": "Making Linear Story Playable: The Narrative Design of Alan Wake 2"
+    },
+    "summary": {
+      "zh-CN": "Remedy 以《Alan Wake 2》的双主角与调查体验为例讨论让线性故事保持可玩的具体问题。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "narrative-architecture",
+      "experience-framing"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1034358/",
+    "whyRelevant": {
+      "zh-CN": "Remedy 以《Alan Wake 2》的双主角与调查体验为例讨论让线性故事保持可玩的具体问题。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1034358/",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-043-the-game-narrative-toolbox-2nd-edition",
+    "title": {
+      "zh-CN": "The Game Narrative Toolbox, 2nd Edition",
+      "en": "The Game Narrative Toolbox, 2nd Edition"
+    },
+    "summary": {
+      "zh-CN": "出版方将其定位为从概念到最终测试、由四位职业叙事设计师撰写的行业指南。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "narrative-architecture"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/The-Game-Narrative-Toolbox/Heussner-Finley-BrandesHepler-Lemay/p/book/9781032438962",
+    "whyRelevant": {
+      "zh-CN": "出版方将其定位为从概念到最终测试、由四位职业叙事设计师撰写的行业指南。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/The-Game-Narrative-Toolbox/Heussner-Finley-BrandesHepler-Lemay/p/book/9781032438962",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-044-interactive-storytelling-for-video-games",
+    "title": {
+      "zh-CN": "Interactive Storytelling for Video Games",
+      "en": "Interactive Storytelling for Video Games"
+    },
+    "summary": {
+      "zh-CN": "出版方页面明确围绕互动故事、玩家控制与可记忆角色/故事的方法。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "narrative-architecture",
+      "interactive-narrative-design",
+      "world-character-coherence"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Interactive-Storytelling-for-Video-Games-A-Player-Centered-Approach-to-Creating-Memorable-Characters-and-Stories/Lebowitz-Klug/p/book/9780240817170",
+    "whyRelevant": {
+      "zh-CN": "出版方页面明确围绕互动故事、玩家控制与可记忆角色/故事的方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Interactive-Storytelling-for-Video-Games-A-Player-Centered-Approach-to-Creating-Memorable-Characters-and-Stories/Lebowitz-Klug/p/book/9780240817170",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-018-prototyping-based-design-a-better-faster-way-to-design-y",
+    "title": {
+      "zh-CN": "Prototyping Based Design: A Better, Faster Way to Design Your Game",
+      "en": "Prototyping Based Design: A Better, Faster Way to Design Your Game"
+    },
+    "summary": {
+      "zh-CN": "Lee Perry 以 Epic 的经验说明用原型替代长文档和假设式争论。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1012473/Prototyping-Based-Design-A-Better",
+    "whyRelevant": {
+      "zh-CN": "Lee Perry 以 Epic 的经验说明用原型替代长文档和假设式争论。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1012473/Prototyping-Based-Design-A-Better",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-019-animation-bootcamp-animation-prototyping-for-games",
+    "title": {
+      "zh-CN": "Animation Bootcamp: Animation Prototyping for Games",
+      "en": "Animation Bootcamp: Animation Prototyping for Games"
+    },
+    "summary": {
+      "zh-CN": "该演讲讨论动画师如何在灰盒期制作快速资产以支持设计迭代。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "blockout-spatial-validation",
+      "multimodal-presentation-integration",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1020032/Animation-Bootcamp-Animation-Prototyping-for",
+    "whyRelevant": {
+      "zh-CN": "该演讲讨论动画师如何在灰盒期制作快速资产以支持设计迭代。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1020032/Animation-Bootcamp-Animation-Prototyping-for",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-020-advanced-prototyping",
+    "title": {
+      "zh-CN": "Advanced Prototyping",
+      "en": "Advanced Prototyping"
+    },
+    "summary": {
+      "zh-CN": "资源明确区分游戏设计、UI 与技术原型所需的独特技能。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1013252/Advanced",
+    "whyRelevant": {
+      "zh-CN": "资源明确区分游戏设计、UI 与技术原型所需的独特技能。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1013252/Advanced",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-021-prototyping-for-innovation-how-to-prototype-effectively",
+    "title": {
+      "zh-CN": "Prototyping for Innovation: How to Prototype Effectively",
+      "en": "Prototyping for Innovation: How to Prototype Effectively"
+    },
+    "summary": {
+      "zh-CN": "演讲把原型与迭代原则连接到管理常规和创新型项目。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1021659/Prototyping-for-Innovation-How-to",
+    "whyRelevant": {
+      "zh-CN": "演讲把原型与迭代原则连接到管理常规和创新型项目。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1021659/Prototyping-for-Innovation-How-to",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-022-guerilla-prototyping-a-design-post-mortem-of-hoard",
+    "title": {
+      "zh-CN": "Guerilla Prototyping: A Design Post-mortem of HOARD",
+      "en": "Guerilla Prototyping: A Design Post-mortem of HOARD"
+    },
+    "summary": {
+      "zh-CN": "HOARD 案例具体列出纸面游戏、2D 低保真原型、Excel 工具和模块化设计。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1015523",
+    "whyRelevant": {
+      "zh-CN": "HOARD 案例具体列出纸面游戏、2D 低保真原型、Excel 工具和模块化设计。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1015523",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-023-how-to-prototype-a-game-in-under-7-days",
+    "title": {
+      "zh-CN": "How to Prototype a Game in Under 7 Days",
+      "en": "How to Prototype a Game in Under 7 Days"
+    },
+    "summary": {
+      "zh-CN": "Carnegie Mellon 团队用明确的七天、单人和主题约束描述快速制作实验游戏。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1013294/How-to-Prototype-a-Game",
+    "whyRelevant": {
+      "zh-CN": "Carnegie Mellon 团队用明确的七天、单人和主题约束描述快速制作实验游戏。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1013294/How-to-Prototype-a-Game",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-024-early-prototyping",
+    "title": {
+      "zh-CN": "Early Prototyping",
+      "en": "Early Prototyping"
+    },
+    "summary": {
+      "zh-CN": "官方课程章节明确将 rapid prototyping 作为 Will Wright 设计过程的中心部分。"
+    },
+    "sourceId": "masterclass",
+    "capabilityIds": [
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://www.masterclass.com/classes/will-wright-teaches-game-design-and-theory/chapters/early-prototyping",
+    "whyRelevant": {
+      "zh-CN": "官方课程章节明确将 rapid prototyping 作为 Will Wright 设计过程的中心部分。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.masterclass.com/classes/will-wright-teaches-game-design-and-theory/chapters/early-prototyping",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-025-animal-days-post-mortem-developing-a-city-building-game-",
+    "title": {
+      "zh-CN": "Animal Days Post-Mortem: Developing a City-Building Game That’s Ready for Quick Content-Iteration",
+      "en": "Animal Days Post-Mortem: Developing a City-Building Game That’s Ready for Quick Content-Iteration"
+    },
+    "summary": {
+      "zh-CN": "GREE 用实际项目说明如何让城市建造游戏支持快速内容迭代。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "task-breakdown",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1016512/Animal-Days-Post-Mortem-Developing",
+    "whyRelevant": {
+      "zh-CN": "GREE 用实际项目说明如何让城市建造游戏支持快速内容迭代。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1016512/Animal-Days-Post-Mortem-Developing",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-026-beyond-scrum-agile-project-management-for-games",
+    "title": {
+      "zh-CN": "Beyond Scrum: Agile Project Management for Games",
+      "en": "Beyond Scrum: Agile Project Management for Games"
+    },
+    "summary": {
+      "zh-CN": "Clinton Keith 讨论 Scrum 如何随概念、前期与生产阶段变化，并结合 Kanban/价值流。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "task-breakdown",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1012737/Beyond-Scrum-Agile-Project-Management",
+    "whyRelevant": {
+      "zh-CN": "Clinton Keith 讨论 Scrum 如何随概念、前期与生产阶段变化，并结合 Kanban/价值流。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1012737/Beyond-Scrum-Agile-Project-Management",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-027-agile-game-development",
+    "title": {
+      "zh-CN": "Agile Game Development",
+      "en": "Agile Game Development"
+    },
+    "summary": {
+      "zh-CN": "Clinton Keith 的独立 GDC Production session，聚焦游戏敏捷开发。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "task-breakdown",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/638/Agile-Game",
+    "whyRelevant": {
+      "zh-CN": "Clinton Keith 的独立 GDC Production session，聚焦游戏敏捷开发。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/638/Agile-Game",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-028-advanced-agile-game-development-practices",
+    "title": {
+      "zh-CN": "Advanced Agile Game Development Practices",
+      "en": "Advanced Agile Game Development Practices"
+    },
+    "summary": {
+      "zh-CN": "该演讲面向“实践已主流但实施仍困难”的具体游戏开发场景。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "task-breakdown",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1024507/Advanced-Agile-Game-Development",
+    "whyRelevant": {
+      "zh-CN": "该演讲面向“实践已主流但实施仍困难”的具体游戏开发场景。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1024507/Advanced-Agile-Game-Development",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-029-agile-methodology-in-game-development-year-3",
+    "title": {
+      "zh-CN": "Agile Methodology in Game Development: Year 3",
+      "en": "Agile Methodology in Game Development: Year 3"
+    },
+    "summary": {
+      "zh-CN": "High Moon Studio 基于全团队/全项目实施 Scrum 和 XP 的第三年经验进行说明。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "task-breakdown",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1013175/Agile-Methodology-in-Game-Development",
+    "whyRelevant": {
+      "zh-CN": "High Moon Studio 基于全团队/全项目实施 Scrum 和 XP 的第三年经验进行说明。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1013175/Agile-Methodology-in-Game-Development",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-030-production-essentials-summit-the-agile-vs-waterfall-myth",
+    "title": {
+      "zh-CN": "Production Essentials Summit: The Agile vs Waterfall Myth",
+      "en": "Production Essentials Summit: The Agile vs Waterfall Myth"
+    },
+    "summary": {
+      "zh-CN": "该 session 将“敏捷或瀑布哪种更好”落在游戏项目的排期和预算问题上。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "task-breakdown",
+      "iteration-planning",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1027680/AI-in-Game-Development",
+    "whyRelevant": {
+      "zh-CN": "该 session 将“敏捷或瀑布哪种更好”落在游戏项目的排期和预算问题上。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1027680/AI-in-Game-Development",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-031-the-game-production-handbook-third-edition",
+    "title": {
+      "zh-CN": "The Game Production Handbook, Third Edition",
+      "en": "The Game Production Handbook, Third Edition"
+    },
+    "summary": {
+      "zh-CN": "出版方说明该书覆盖从概念到 gold master 的前期、生产、测试与发布。"
+    },
+    "sourceId": "jones-bartlett-learning",
+    "capabilityIds": [
+      "task-breakdown"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.jblearning.com/catalog/productdetails/9781449688097",
+    "whyRelevant": {
+      "zh-CN": "出版方说明该书覆盖从概念到 gold master 的前期、生产、测试与发布。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.jblearning.com/catalog/productdetails/9781449688097",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-032-production-through-collaboration-escalating-demands-on-t",
+    "title": {
+      "zh-CN": "Production Through Collaboration: Escalating Demands on the Producer",
+      "en": "Production Through Collaboration: Escalating Demands on the Producer"
+    },
+    "summary": {
+      "zh-CN": "Dave Perry 的 Production session 专门以协作为切口讨论制作人不断升级的要求。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1019222/Production-Through-Collaboration-Escalating-Demands",
+    "whyRelevant": {
+      "zh-CN": "Dave Perry 的 Production session 专门以协作为切口讨论制作人不断升级的要求。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1019222/Production-Through-Collaboration-Escalating-Demands",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-033-cracking-collaboration-insights-and-best-practices-for-e",
+    "title": {
+      "zh-CN": "Cracking Collaboration: Insights and Best Practices for Effective Co-Devs",
+      "en": "Cracking Collaboration: Insights and Best Practices for Effective Co-Devs"
+    },
+    "summary": {
+      "zh-CN": "资源直接针对全球化团队及组织/外部伙伴之间的 co-development 协作。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1026389/Cracking-Collaboration-Insights-and-Best",
+    "whyRelevant": {
+      "zh-CN": "资源直接针对全球化团队及组织/外部伙伴之间的 co-development 协作。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1026389/Cracking-Collaboration-Insights-and-Best",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-034-working-together-solutions-for-collaborative-asset-creat",
+    "title": {
+      "zh-CN": "Working Together: Solutions for Collaborative Asset Creation",
+      "en": "Working Together: Solutions for Collaborative Asset Creation"
+    },
+    "summary": {
+      "zh-CN": "演讲处理游戏生产中多人共享数据造成的文件锁定和 merge conflict 问题。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "telemetry-interpretation",
+      "design-specification-handoff"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1017738/Working-Together-Solutions-for-Collaborative",
+    "whyRelevant": {
+      "zh-CN": "演讲处理游戏生产中多人共享数据造成的文件锁定和 merge conflict 问题。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1017738/Working-Together-Solutions-for-Collaborative",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-035-better-teams-through-game-design",
+    "title": {
+      "zh-CN": "Better Teams Through Game Design",
+      "en": "Better Teams Through Game Design"
+    },
+    "summary": {
+      "zh-CN": "资源将组织多人任务的管理问题作为可借用游戏设计思维解决的对象。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "rules-system-modeling",
+      "task-breakdown"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1019323/Better-Teams-Through-Game",
+    "whyRelevant": {
+      "zh-CN": "资源将组织多人任务的管理问题作为可借用游戏设计思维解决的对象。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1019323/Better-Teams-Through-Game",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-036-ensuring-a-positive-collaborative-team-culture",
+    "title": {
+      "zh-CN": "Ensuring a Positive, Collaborative Team Culture",
+      "en": "Ensuring a Positive, Collaborative Team Culture"
+    },
+    "summary": {
+      "zh-CN": "演讲针对项目质量与交付压力下团队健康下降、微观管理增加的实际问题。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1027330/Ensuring-a-Positive-Collaborative-Team",
+    "whyRelevant": {
+      "zh-CN": "演讲针对项目质量与交付压力下团队健康下降、微观管理增加的实际问题。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1027330/Ensuring-a-Positive-Collaborative-Team",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-037-designing-your-design-team",
+    "title": {
+      "zh-CN": "Designing Your Design Team",
+      "en": "Designing Your Design Team"
+    },
+    "summary": {
+      "zh-CN": "资源同时面向设计师、招聘者与制作人，讨论角色成长及更好地组建设计团队。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "world-character-coherence"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1021922/Designing-Your-Design",
+    "whyRelevant": {
+      "zh-CN": "资源同时面向设计师、招聘者与制作人，讨论角色成长及更好地组建设计团队。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1021922/Designing-Your-Design",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-038-qa-is-your-strongest-design-ally",
+    "title": {
+      "zh-CN": "QA is Your Strongest Design Ally",
+      "en": "QA is Your Strongest Design Ally"
+    },
+    "summary": {
+      "zh-CN": "该演讲主张将 QA 团队作为领域专家纳入有意图的设计协作。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gdcvault.com/play/1035942/QA-is-Your-Strongest-Design",
+    "whyRelevant": {
+      "zh-CN": "该演讲主张将 QA 团队作为领域专家纳入有意图的设计协作。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gdcvault.com/play/1035942/QA-is-Your-Strongest-Design",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-039-creative-direction-101-improve-your-creative-direction-a",
+    "title": {
+      "zh-CN": "Creative Direction 101: Improve Your Creative Direction and Feedback",
+      "en": "Creative Direction 101: Improve Your Creative Direction and Feedback"
+    },
+    "summary": {
+      "zh-CN": "Respawn 的 Evan Nikolich 基于 Destiny 与 Apex 经验讲解创意方向、团队赋能和直接沟通。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1028750/Creative-Direction-101-Improve-Your",
+    "whyRelevant": {
+      "zh-CN": "Respawn 的 Evan Nikolich 基于 Destiny 与 Apex 经验讲解创意方向、团队赋能和直接沟通。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1028750/Creative-Direction-101-Improve-Your",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-040-a-torch-in-the-dark-using-creative-direction-to-light-th",
+    "title": {
+      "zh-CN": "A Torch in the Dark: Using Creative Direction to Light The Flame in the Flood",
+      "en": "A Torch in the Dark: Using Creative Direction to Light The Flame in the Flood"
+    },
+    "summary": {
+      "zh-CN": "该案例明确将创意方向作为跨美术、音频、设计的对齐工具及生产取舍的“剃刀”。"
+    },
+    "sourceId": "gdc-vault",
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "scope-prioritization",
+      "alignment-facilitation",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.gdcvault.com/play/1023082/A-Torch-in-the-Dark",
+    "whyRelevant": {
+      "zh-CN": "该案例明确将创意方向作为跨美术、音频、设计的对齐工具及生产取舍的“剃刀”。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gdcvault.com/play/1023082/A-Torch-in-the-Dark",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "b-041-pitching-ideas",
+    "title": {
+      "zh-CN": "Pitching Ideas",
+      "en": "Pitching Ideas"
+    },
+    "summary": {
+      "zh-CN": "官方章节页将 Will Wright 的课程定位为包含生成与推介游戏想法的方法。"
+    },
+    "sourceId": "masterclass",
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "value-proposition-framing"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://www.masterclass.com/classes/will-wright-teaches-game-design-and-theory/chapters/pitching-ideas",
+    "whyRelevant": {
+      "zh-CN": "官方章节页将 Will Wright 的课程定位为包含生成与推介游戏想法的方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.masterclass.com/classes/will-wright-teaches-game-design-and-theory/chapters/pitching-ideas",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-003",
+    "title": {
+      "zh-CN": "桜井政博のゲーム作るには 紹介映像"
+    },
+    "summary": {
+      "zh-CN": "适合作为这套官方课程的入口 Work Item；187,906 views / 9,300 likes。"
+    },
+    "sourceId": "masahiro-sakurai-on-creating-games",
+    "capabilityIds": [
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "video",
+    "canonicalUrl": "https://www.youtube.com/watch?v=3U5AUkWU5Qw",
+    "whyRelevant": {
+      "zh-CN": "适合作为这套官方课程的入口 Work Item；187,906 views / 9,300 likes。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.youtube.com/watch?v=3U5AUkWU5Qw",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ],
+    "externalSignals": [
+      {
+        "provider": "YouTube",
+        "label": "views",
+        "value": 187906,
+        "observedAt": "2026-08-09",
+        "url": "https://www.youtube.com/watch?v=3U5AUkWU5Qw"
+      },
+      {
+        "provider": "YouTube",
+        "label": "likes",
+        "value": 9300,
+        "observedAt": "2026-08-09",
+        "url": "https://www.youtube.com/watch?v=3U5AUkWU5Qw"
+      }
+    ]
+  },
+  {
+    "id": "c-004-values-at-play-in-digital-games",
+    "title": {
+      "zh-CN": "Values at Play in Digital Games",
+      "en": "Values at Play in Digital Games"
+    },
+    "summary": {
+      "zh-CN": "与《玩以载道：游戏设计中的价值观》是同一 identity；简中译者孙静、中国国际广播出版社、ISBN 9787507860412、2026-04。英文版 DOI https://doi.org/10.7551/mitpress/9016.001.0001。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262324458/values-at-play-in-digital-games/",
+    "whyRelevant": {
+      "zh-CN": "与《玩以载道：游戏设计中的价值观》是同一 identity；简中译者孙静、中国国际广播出版社、ISBN 9787507860412、2026-04。英文版 DOI https://doi.org/10.7551/mitpress/9016.001.0001。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262324458/values-at-play-in-digital-games/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "zh-Hans",
+        "url": "https://www.megbook.com.hk/mall/detail.jsp?proID=4218152",
+        "accessModel": "paid",
+        "versionRelation": "official",
+        "presentationMode": "translated",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-005-critical-play-radical-game-design",
+    "title": {
+      "zh-CN": "Critical Play: Radical Game Design",
+      "en": "Critical Play: Radical Game Design"
+    },
+    "summary": {
+      "zh-CN": "将设计作为社会／美学批判实践，不与纯机制资源重复。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling",
+      "aesthetic-direction"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262518659/critical-play/",
+    "whyRelevant": {
+      "zh-CN": "将设计作为社会／美学批判实践，不与纯机制资源重复。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262518659/critical-play/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-006-the-ethics-of-computer-games",
+    "title": {
+      "zh-CN": "The Ethics of Computer Games",
+      "en": "The Ethics of Computer Games"
+    },
+    "summary": {
+      "zh-CN": "将“游戏作为设计物”和“玩家作为伦理主体”并置。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262012652/the-ethics-of-computer-games/",
+    "whyRelevant": {
+      "zh-CN": "将“游戏作为设计物”和“玩家作为伦理主体”并置。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262012652/the-ethics-of-computer-games/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-007-persuasive-games-the-expressive-power-of-videogames",
+    "title": {
+      "zh-CN": "Persuasive Games: The Expressive Power of Videogames",
+      "en": "Persuasive Games: The Expressive Power of Videogames"
+    },
+    "summary": {
+      "zh-CN": "为系统意义、表达与说服提供核心批判框架。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262514880/persuasive-games/",
+    "whyRelevant": {
+      "zh-CN": "为系统意义、表达与说服提供核心批判框架。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262514880/persuasive-games/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-008-beyond-choices-the-design-of-ethical-gameplay",
+    "title": {
+      "zh-CN": "Beyond Choices: The Design of Ethical Gameplay",
+      "en": "Beyond Choices: The Design of Ethical Gameplay"
+    },
+    "summary": {
+      "zh-CN": "避免把伦理简化成分支对话／善恶条。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "choice-consequence-design",
+      "narrative-exposition",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262317139/beyond-choices/",
+    "whyRelevant": {
+      "zh-CN": "避免把伦理简化成分支对话／善恶条。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262317139/beyond-choices/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-009-unit-operations-an-approach-to-videogame-criticism",
+    "title": {
+      "zh-CN": "Unit Operations: An Approach to Videogame Criticism",
+      "en": "Unit Operations: An Approach to Videogame Criticism"
+    },
+    "summary": {
+      "zh-CN": "可作为游戏文本／系统分析方法。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262261890/unit-operations/",
+    "whyRelevant": {
+      "zh-CN": "可作为游戏文本／系统分析方法。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262261890/unit-operations/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-010-playing-software-homo-ludens-in-computational-culture",
+    "title": {
+      "zh-CN": "Playing Software: Homo Ludens in Computational Culture",
+      "en": "Playing Software: Homo Ludens in Computational Culture"
+    },
+    "summary": {
+      "zh-CN": "补足“游戏外的软件游玩”与平台资本批判。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "design-critique-feedback",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262047722/playing-software/",
+    "whyRelevant": {
+      "zh-CN": "补足“游戏外的软件游玩”与平台资本批判。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262047722/playing-software/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-011-newsgames-journalism-at-play",
+    "title": {
+      "zh-CN": "Newsgames: Journalism at Play",
+      "en": "Newsgames: Journalism at Play"
+    },
+    "summary": {
+      "zh-CN": "具体连接媒体、公共议题和游戏系统。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262014878/newsgames/",
+    "whyRelevant": {
+      "zh-CN": "具体连接媒体、公共议题和游戏系统。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262014878/newsgames/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-012-racing-the-beam-the-atari-video-computer-system",
+    "title": {
+      "zh-CN": "Racing the Beam: The Atari Video Computer System",
+      "en": "Racing the Beam: The Atari Video Computer System"
+    },
+    "summary": {
+      "zh-CN": "以硬件约束解释设计与历史，适合 Atlas／生产语境。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "narratology-agency-authorship",
+      "production-pipelines-constraints",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262012577/racing-the-beam/",
+    "whyRelevant": {
+      "zh-CN": "以硬件约束解释设计与历史，适合 Atlas／生产语境。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262012577/racing-the-beam/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-013-optimizing-play",
+    "title": {
+      "zh-CN": "Optimizing Play",
+      "en": "Optimizing Play"
+    },
+    "summary": {
+      "zh-CN": "MIT Press 标明开放获取；反思效率／最优解如何塑造游戏与玩家。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "design-critique-feedback",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262547789/optimizing-play/",
+    "whyRelevant": {
+      "zh-CN": "MIT Press 标明开放获取；反思效率／最优解如何塑造游戏与玩家。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262547789/optimizing-play/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-015-against-procedurality",
+    "title": {
+      "zh-CN": "Against Procedurality",
+      "en": "Against Procedurality"
+    },
+    "summary": {
+      "zh-CN": "对“规则即意义”的关键反驳；防止资源地图只强调设计者编码。"
+    },
+    "sourceId": "game-studies",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://gamestudies.org/1103/articles/sicart_ap",
+    "whyRelevant": {
+      "zh-CN": "对“规则即意义”的关键反驳；防止资源地图只强调设计者编码。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gamestudies.org/1103/articles/sicart_ap",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-038-how-pac-man-eats",
+    "title": {
+      "zh-CN": "How Pac-Man Eats",
+      "en": "How Pac-Man Eats"
+    },
+    "summary": {
+      "zh-CN": "以独立／艺术／研究游戏解释“游戏能说什么”，适合连接实践与批评。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "aesthetic-direction",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262044653/how-pac-man-eats/",
+    "whyRelevant": {
+      "zh-CN": "以独立／艺术／研究游戏解释“游戏能说什么”，适合连接实践与批评。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262044653/how-pac-man-eats/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-014-game-analysis-developing-a-methodological-toolkit-for-th",
+    "title": {
+      "zh-CN": "Game analysis: Developing a methodological toolkit for the qualitative study of games",
+      "en": "Game analysis: Developing a methodological toolkit for the qualitative study of games"
+    },
+    "summary": {
+      "zh-CN": "可操作的四件套分析法，适于学习路径和案例拆解。"
+    },
+    "sourceId": "game-studies",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-deconstruction",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://gamestudies.org/06010601/articles/consalvo_dutton",
+    "whyRelevant": {
+      "zh-CN": "可操作的四件套分析法，适于学习路径和案例拆解。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gamestudies.org/06010601/articles/consalvo_dutton",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-016-player-centred-game-design-experiences-in-using-scenario",
+    "title": {
+      "zh-CN": "Player-Centred Game Design: Experiences in Using Scenario Study to Inform Mobile Game Design",
+      "en": "Player-Centred Game Design: Experiences in Using Scenario Study to Inform Mobile Game Design"
+    },
+    "summary": {
+      "zh-CN": "将真实玩家研究转为设计需求，明确不等同于 playtest。"
+    },
+    "sourceId": "game-studies",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing",
+      "player-perspective-taking",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://www.gamestudies.org/0501/ermi_mayra/",
+    "whyRelevant": {
+      "zh-CN": "将真实玩家研究转为设计需求，明确不等同于 playtest。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gamestudies.org/0501/ermi_mayra/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-017-gameflow-a-model-for-evaluating-player-enjoyment-in-game",
+    "title": {
+      "zh-CN": "GameFlow: A Model for Evaluating Player Enjoyment in Games",
+      "en": "GameFlow: A Model for Evaluating Player Enjoyment in Games"
+    },
+    "summary": {
+      "zh-CN": "8 个体验维度的经典可追溯模型。"
+    },
+    "sourceId": "acm-digital-library",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing",
+      "spatial-flow-design"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1145/1077246.1077253",
+    "whyRelevant": {
+      "zh-CN": "8 个体验维度的经典可追溯模型。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/1077246.1077253",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/1077246.1077253",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-018-gameflow-heuristics-for-designing-and-evaluating-real-ti",
+    "title": {
+      "zh-CN": "GameFlow heuristics for designing and evaluating real-time strategy games",
+      "en": "GameFlow heuristics for designing and evaluating real-time strategy games"
+    },
+    "summary": {
+      "zh-CN": "将一般 GameFlow 具体化为 165 条 RTS 设计／评估启发式。"
+    },
+    "sourceId": "acm-digital-library",
+    "capabilityIds": [
+      "research-question-framing",
+      "spatial-flow-design"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1145/2336727.2336728",
+    "whyRelevant": {
+      "zh-CN": "将一般 GameFlow 具体化为 165 条 RTS 设计／评估启发式。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/2336727.2336728",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/2336727.2336728",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-019-gameflow-2020-15-years-of-a-model-of-player-enjoyment",
+    "title": {
+      "zh-CN": "GameFlow 2020: 15 Years of a Model of Player Enjoyment",
+      "en": "GameFlow 2020: 15 Years of a Model of Player Enjoyment"
+    },
+    "summary": {
+      "zh-CN": "用于呈现模型的适用边界与后续发展。"
+    },
+    "sourceId": "acm-digital-library",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing",
+      "spatial-flow-design",
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "perception-attention-emotion",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1145/3441000.3441048",
+    "whyRelevant": {
+      "zh-CN": "用于呈现模型的适用边界与后续发展。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/3441000.3441048",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/3441000.3441048",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-020-gameflow-affordances-towards-a-tool-for-designing-gamefu",
+    "title": {
+      "zh-CN": "GameFlow Affordances: Towards a Tool for Designing Gameful Experiences",
+      "en": "GameFlow Affordances: Towards a Tool for Designing Gameful Experiences"
+    },
+    "summary": {
+      "zh-CN": "从评估转向早期设计工具。"
+    },
+    "sourceId": "acm-digital-library",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing",
+      "spatial-flow-design"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1145/3613905.3650887",
+    "whyRelevant": {
+      "zh-CN": "从评估转向早期设计工具。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/3613905.3650887",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/3613905.3650887",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-021-the-motivational-pull-of-video-games-a-self-determinatio",
+    "title": {
+      "zh-CN": "The Motivational Pull of Video Games: A Self-Determination Theory Approach",
+      "en": "The Motivational Pull of Video Games: A Self-Determination Theory Approach"
+    },
+    "summary": {
+      "zh-CN": "游戏动机与 Need Satisfaction 的基线研究。"
+    },
+    "sourceId": "springer-nature",
+    "capabilityIds": [
+      "research-question-framing"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1007/s11031-006-9051-8",
+    "whyRelevant": {
+      "zh-CN": "游戏动机与 Need Satisfaction 的基线研究。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1007/s11031-006-9051-8",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1007/s11031-006-9051-8",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-022-validation-of-two-game-experience-scales-pens-and-geq",
+    "title": {
+      "zh-CN": "Validation of two game experience scales: PENS and GEQ",
+      "en": "Validation of two game experience scales: PENS and GEQ"
+    },
+    "summary": {
+      "zh-CN": "n=571 的因子分析；适合作为“不要照抄量表”的方法提醒。"
+    },
+    "sourceId": "elsevier",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1016/j.ijhcs.2018.05.003",
+    "whyRelevant": {
+      "zh-CN": "n=571 的因子分析；适合作为“不要照抄量表”的方法提醒。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1016/j.ijhcs.2018.05.003",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1016/j.ijhcs.2018.05.003",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-023-applied-user-research-in-games",
+    "title": {
+      "zh-CN": "Applied User Research in Games",
+      "en": "Applied User Research in Games"
+    },
+    "summary": {
+      "zh-CN": "稳定 DOI 的 GUR 总览，直接补产品实践与学术间断层。"
+    },
+    "sourceId": "wiley",
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://doi.org/10.1002/9781118976005.ch16",
+    "whyRelevant": {
+      "zh-CN": "稳定 DOI 的 GUR 总览，直接补产品实践与学术间断层。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1002/9781118976005.ch16",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1002/9781118976005.ch16",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-024-a-grounded-investigation-of-game-immersion",
+    "title": {
+      "zh-CN": "A grounded investigation of game immersion",
+      "en": "A grounded investigation of game immersion"
+    },
+    "summary": {
+      "zh-CN": "以扎根研究区分沉浸的不同层次。"
+    },
+    "sourceId": "acm-digital-library",
+    "capabilityIds": [
+      "research-question-framing",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1145/985921.986048",
+    "whyRelevant": {
+      "zh-CN": "以扎根研究区分沉浸的不同层次。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/985921.986048",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/985921.986048",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-025-measuring-and-defining-the-experience-of-immersion-in-ga",
+    "title": {
+      "zh-CN": "Measuring and defining the experience of immersion in games",
+      "en": "Measuring and defining the experience of immersion in games"
+    },
+    "summary": {
+      "zh-CN": "对沉浸概念和测量进行经验研究。"
+    },
+    "sourceId": "elsevier",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-framing"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1016/j.ijhcs.2008.04.004",
+    "whyRelevant": {
+      "zh-CN": "对沉浸概念和测量进行经验研究。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1016/j.ijhcs.2008.04.004",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      },
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1016/j.ijhcs.2008.04.004",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-026-the-digital-game-analysis-protocol-digap",
+    "title": {
+      "zh-CN": "The Digital Game Analysis Protocol (DiGAP)",
+      "en": "The Digital Game Analysis Protocol (DiGAP)"
+    },
+    "summary": {
+      "zh-CN": "更新的可复核游戏分析协议，适合证据层。"
+    },
+    "sourceId": "game-studies",
+    "capabilityIds": [
+      "research-question-framing",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://gamestudies.org/2202/articles/gap_daneels_denoo_vandewalle_dupont_malliet",
+    "whyRelevant": {
+      "zh-CN": "更新的可复核游戏分析协议，适合证据层。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gamestudies.org/2202/articles/gap_daneels_denoo_vandewalle_dupont_malliet",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-027-jenova-chen-from-thatgamecompany",
+    "title": {
+      "zh-CN": "Jenova Chen from thatgamecompany",
+      "en": "Jenova Chen from thatgamecompany"
+    },
+    "summary": {
+      "zh-CN": "单集而非整档；讨论 Journey、测试数据与创作风险；68 分钟。"
+    },
+    "sourceId": "aias-game-makers-notebook",
+    "capabilityIds": [
+      "experience-framing",
+      "emotional-arc-shaping",
+      "playtesting",
+      "telemetry-interpretation"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://podcasts.apple.com/ie/podcast/jenova-chen-from-thatgamecompany/id1313004515?i=1000420971862",
+    "whyRelevant": {
+      "zh-CN": "单集而非整档；讨论 Journey、测试数据与创作风险；68 分钟。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://podcasts.apple.com/ie/podcast/jenova-chen-from-thatgamecompany/id1313004515?i=1000420971862",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-028-industry-veteran-jen-maclean-talks-gen-z-audiences-and-e",
+    "title": {
+      "zh-CN": "Industry Veteran Jen MacLean Talks Gen Z Audiences and Evolving Expectations",
+      "en": "Industry Veteran Jen MacLean Talks Gen Z Audiences and Evolving Expectations"
+    },
+    "summary": {
+      "zh-CN": "讨论首小时体验与 Gen Z/Alpha 期待；69 分钟。"
+    },
+    "sourceId": "aias-game-makers-notebook",
+    "capabilityIds": [
+      "experience-framing",
+      "alignment-facilitation",
+      "audience-positioning"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "research-ethics-bias",
+      "production-pipelines-constraints",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://podcasts.apple.com/us/podcast/industry-veteran-jen-maclean-talks-gen-z-audiences/id1313004515?i=1000678661219",
+    "whyRelevant": {
+      "zh-CN": "讨论首小时体验与 Gen Z/Alpha 期待；69 分钟。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://podcasts.apple.com/us/podcast/industry-veteran-jen-maclean-talks-gen-z-audiences/id1313004515?i=1000678661219",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-029-arc-raiders-design-director-virgil-watkins",
+    "title": {
+      "zh-CN": "Arc Raiders Design Director Virgil Watkins",
+      "en": "Arc Raiders Design Director Virgil Watkins"
+    },
+    "summary": {
+      "zh-CN": "Apple 中文页仅界面／文案本地化，不是中文音频或字幕；78 分钟。"
+    },
+    "sourceId": "aias-game-makers-notebook",
+    "capabilityIds": [
+      "experience-framing",
+      "rules-system-modeling",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://podcasts.apple.com/us/podcast/arc-raiders-design-director-virgil-watkins/id1313004515?i=1000757781449",
+    "whyRelevant": {
+      "zh-CN": "Apple 中文页仅界面／文案本地化，不是中文音频或字幕；78 分钟。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://podcasts.apple.com/us/podcast/arc-raiders-design-director-virgil-watkins/id1313004515?i=1000757781449",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-030-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：主论坛"
+    },
+    "summary": {
+      "zh-CN": "官方账号上传；整套 77,470 views、2,645 likes、5,192 favorites。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=1",
+    "whyRelevant": {
+      "zh-CN": "官方账号上传；整套 77,470 views、2,645 likes、5,192 favorites。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=1",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ],
+    "externalSignals": [
+      {
+        "provider": "Bilibili",
+        "label": "series views",
+        "value": 77470,
+        "observedAt": "2026-08-09",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=1"
+      },
+      {
+        "provider": "Bilibili",
+        "label": "series likes",
+        "value": 2645,
+        "observedAt": "2026-08-09",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=1"
+      },
+      {
+        "provider": "Bilibili",
+        "label": "series favorites",
+        "value": 5192,
+        "observedAt": "2026-08-09",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=1"
+      }
+    ]
+  },
+  {
+    "id": "c-031-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：产品专场"
+    },
+    "summary": {
+      "zh-CN": "同一官方大会的独立分 P，按 Work Item 而非把整场大会当单项。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=2",
+    "whyRelevant": {
+      "zh-CN": "同一官方大会的独立分 P，按 Work Item 而非把整场大会当单项。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=2",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-032-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：技术专场"
+    },
+    "summary": {
+      "zh-CN": "官方来源。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=3",
+    "whyRelevant": {
+      "zh-CN": "官方来源。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=3",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-033-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：艺术专场"
+    },
+    "summary": {
+      "zh-CN": "官方来源。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "aesthetic-direction"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=4",
+    "whyRelevant": {
+      "zh-CN": "官方来源。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=4",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-034-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：独立游戏专场"
+    },
+    "summary": {
+      "zh-CN": "官方来源。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "scope-prioritization",
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=5",
+    "whyRelevant": {
+      "zh-CN": "官方来源。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=5",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-035-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：市场专场"
+    },
+    "summary": {
+      "zh-CN": "官方来源；应与设计能力保持“生产语境”关系，不伪装为设计理论。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "audience-positioning",
+      "market-reference-analysis"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=6",
+    "whyRelevant": {
+      "zh-CN": "官方来源；应与设计能力保持“生产语境”关系，不伪装为设计理论。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=6",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-036-2021-tgdc",
+    "title": {
+      "zh-CN": "2021 腾讯游戏开发者大会 TGDC：游戏社会价值专场"
+    },
+    "summary": {
+      "zh-CN": "与 #4、#5、#6 形成中文可消费的实践／批判连接。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1Cg411P72p?p=7",
+    "whyRelevant": {
+      "zh-CN": "与 #4、#5、#6 形成中文可消费的实践／批判连接。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1Cg411P72p?p=7",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ]
+  },
+  {
+    "id": "c-037",
+    "title": {
+      "zh-CN": "为什么说交互设计师在游戏设计中不可或缺？"
+    },
+    "summary": {
+      "zh-CN": "公司官方账号；17,244 views、955 likes、532 favorites；需标注为岗位科普而非方法论证据。"
+    },
+    "sourceId": "g-bits-games",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "video",
+    "canonicalUrl": "https://www.bilibili.com/video/BV1X14y1R78h",
+    "whyRelevant": {
+      "zh-CN": "公司官方账号；17,244 views、955 likes、532 favorites；需标注为岗位科普而非方法论证据。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.bilibili.com/video/BV1X14y1R78h",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-09"
+      }
+    ],
+    "externalSignals": [
+      {
+        "provider": "Bilibili",
+        "label": "views",
+        "value": 17244,
+        "observedAt": "2026-08-09",
+        "url": "https://www.bilibili.com/video/BV1X14y1R78h"
+      },
+      {
+        "provider": "Bilibili",
+        "label": "likes",
+        "value": 955,
+        "observedAt": "2026-08-09",
+        "url": "https://www.bilibili.com/video/BV1X14y1R78h"
+      },
+      {
+        "provider": "Bilibili",
+        "label": "favorites",
+        "value": 532,
+        "observedAt": "2026-08-09",
+        "url": "https://www.bilibili.com/video/BV1X14y1R78h"
       }
     ]
   }

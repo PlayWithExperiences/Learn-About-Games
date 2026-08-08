@@ -184,6 +184,8 @@ export type CatalogValidationCode =
   | 'RESOURCE_EXTERNAL_SIGNAL_INVALID'
   | 'SOURCE_KIND_INVALID'
   | 'SOURCE_HOMEPAGE_INVALID'
+  | 'SOURCE_HOMEPAGE_DUPLICATE'
+  | 'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT'
   | 'SOURCE_LANGUAGES_REQUIRED'
   | 'SOURCE_EXTERNAL_SIGNAL_INVALID'
   | 'PROFILE_BASIS_LINK_REQUIRED'
@@ -544,12 +546,43 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     }
   }
 
+  const sourceHomepages = new Set<string>();
+  for (const source of catalog.sources) {
+    if (sourceHomepages.has(source.homepage)) {
+      appendError(
+        errors,
+        'SOURCE_HOMEPAGE_DUPLICATE',
+        'sources',
+        source.id,
+        'homepage',
+        source.homepage,
+      );
+    }
+    sourceHomepages.add(source.homepage);
+  }
+
+  const resourceUrls = new Set(
+    catalog.resources.flatMap((resource) => [
+      resource.canonicalUrl,
+      ...resource.accessVersions.map(({ url }) => url),
+    ]),
+  );
   for (const source of catalog.sources) {
     if (!sourceKinds.has(source.kind)) {
       appendError(errors, 'SOURCE_KIND_INVALID', 'sources', source.id, 'kind', source.kind);
     }
     if (!isUrl(source.homepage)) {
       appendError(errors, 'SOURCE_HOMEPAGE_INVALID', 'sources', source.id, 'homepage', source.homepage);
+    }
+    if (resourceUrls.has(source.homepage)) {
+      appendError(
+        errors,
+        'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT',
+        'sources',
+        source.id,
+        'homepage',
+        source.homepage,
+      );
     }
     if (source.languages.length === 0) {
       appendError(errors, 'SOURCE_LANGUAGES_REQUIRED', 'sources', source.id, 'languages', '');

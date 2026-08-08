@@ -1,12 +1,286 @@
 [
   {
-    "id": "playtesting",
-    "title": { "zh-CN": "Playtest 主题资源集合", "en": "Playtesting Topic Collection" },
-    "summary": {
-      "zh-CN": "围绕观察玩家、提出可验证问题与使用测试证据的无顺序资源集合。",
-      "en": "An unordered collection about observing players, framing testable questions, and using playtest evidence."
+    "id": "design-fundamentals",
+    "title": {
+      "zh-CN": "设计基础与概念",
+      "en": "Design Fundamentals"
     },
-    "capabilityIds": ["playtesting", "player-behavior-observation"],
-    "knowledgeTopicIds": []
+    "summary": {
+      "zh-CN": "理解游戏设计对象、分析框架与基础工作方法的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "experience-framing",
+      "experience-deconstruction",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ]
+  },
+  {
+    "id": "systems-mechanics",
+    "title": {
+      "zh-CN": "系统与机制",
+      "en": "Systems and Mechanics"
+    },
+    "summary": {
+      "zh-CN": "围绕规则、资源流、机制关系与涌现结果的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "core-loop-design",
+      "rules-system-modeling",
+      "progression-economy-design"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ]
+  },
+  {
+    "id": "balance-economy",
+    "title": {
+      "zh-CN": "平衡与经济",
+      "en": "Balance and Economy"
+    },
+    "summary": {
+      "zh-CN": "围绕数值、概率、经济与持续平衡方法的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "challenge-difficulty-design",
+      "progression-economy-design",
+      "telemetry-interpretation"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ]
+  },
+  {
+    "id": "game-feel-feedback",
+    "title": {
+      "zh-CN": "手感与反馈",
+      "en": "Game Feel and Feedback"
+    },
+    "summary": {
+      "zh-CN": "围绕操控、动画、声音与即时反馈如何塑造体验的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "game-feel-tuning",
+      "multimodal-presentation-integration"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "audiovisual-semiotics"
+    ]
+  },
+  {
+    "id": "level-spatial-design",
+    "title": {
+      "zh-CN": "关卡与空间",
+      "en": "Level and Spatial Design"
+    },
+    "summary": {
+      "zh-CN": "围绕布局、尺度、动线、寻路、灰盒与空间叙事的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "level-structure-design",
+      "spatial-flow-design",
+      "navigation-wayfinding-design",
+      "blockout-spatial-validation"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ]
+  },
+  {
+    "id": "playtesting",
+    "title": {
+      "zh-CN": "Playtest 主题资源集合",
+      "en": "Playtesting and Games User Research"
+    },
+    "summary": {
+      "zh-CN": "围绕提出研究问题、观察玩家与使用测试证据的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "research-question-framing",
+      "playtesting",
+      "player-behavior-observation",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias"
+    ]
+  },
+  {
+    "id": "narrative-expression",
+    "title": {
+      "zh-CN": "叙事与表达",
+      "en": "Narrative and Expression"
+    },
+    "summary": {
+      "zh-CN": "围绕互动叙事、信息呈现、故事生产与多模态表达的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "narrative-architecture",
+      "interactive-narrative-design",
+      "narrative-exposition",
+      "world-character-coherence"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "audiovisual-semiotics"
+    ]
+  },
+  {
+    "id": "prototyping-experimentation",
+    "title": {
+      "zh-CN": "原型与实验",
+      "en": "Prototyping and Experimentation"
+    },
+    "summary": {
+      "zh-CN": "围绕低成本试验、快速学习与原型策略的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "learning-prototype-design",
+      "scope-prioritization",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ]
+  },
+  {
+    "id": "production-iteration",
+    "title": {
+      "zh-CN": "生产与迭代",
+      "en": "Production and Iteration"
+    },
+    "summary": {
+      "zh-CN": "围绕任务、范围、管线与迭代节奏的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "task-breakdown",
+      "scope-prioritization",
+      "iteration-planning",
+      "design-specification-handoff"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ]
+  },
+  {
+    "id": "collaboration-teams",
+    "title": {
+      "zh-CN": "协作与团队",
+      "en": "Collaboration and Teams"
+    },
+    "summary": {
+      "zh-CN": "围绕跨职能沟通、反馈、团队结构与组织协作的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "design-critique-feedback",
+      "alignment-facilitation"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ]
+  },
+  {
+    "id": "leadership-creative-direction",
+    "title": {
+      "zh-CN": "领导与创意方向",
+      "en": "Leadership and Creative Direction"
+    },
+    "summary": {
+      "zh-CN": "围绕愿景维护、反馈、对齐与约束下取舍的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "alignment-facilitation",
+      "constraint-aware-decision-making",
+      "aesthetic-direction"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power"
+    ]
+  },
+  {
+    "id": "criticism-values-history",
+    "title": {
+      "zh-CN": "批判、价值观与历史语境",
+      "en": "Criticism, Values, and History"
+    },
+    "summary": {
+      "zh-CN": "围绕游戏价值、文化语境、平台历史与批判方法的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "experience-deconstruction",
+      "ethical-cultural-evaluation",
+      "market-reference-analysis"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "game-industry-platform-economics"
+    ]
+  },
+  {
+    "id": "research-player-experience",
+    "title": {
+      "zh-CN": "研究方法与玩家体验",
+      "en": "Research Methods and Player Experience"
+    },
+    "summary": {
+      "zh-CN": "围绕玩家体验模型、质性分析、量表与研究边界的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "research-question-framing",
+      "qualitative-evidence-synthesis",
+      "telemetry-interpretation",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "player-motivation-difference",
+      "perception-attention-emotion"
+    ]
+  },
+  {
+    "id": "practitioner-interviews-podcasts",
+    "title": {
+      "zh-CN": "从业者访谈与播客",
+      "en": "Practitioner Interviews and Podcasts"
+    },
+    "summary": {
+      "zh-CN": "从具体从业者经验观察设计判断、受众变化与创作风险的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "experience-framing",
+      "audience-positioning",
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "game-industry-platform-economics"
+    ]
+  },
+  {
+    "id": "chinese-industry-cross-discipline",
+    "title": {
+      "zh-CN": "中文行业实践与跨专业语境",
+      "en": "Chinese Industry and Cross-disciplinary Practice"
+    },
+    "summary": {
+      "zh-CN": "连接中文行业实践、技术、美术、市场与社会价值语境的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "market-reference-analysis",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "games-values-culture",
+      "organizational-dynamics-power"
+    ]
   }
 ]
