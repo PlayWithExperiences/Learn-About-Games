@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "game-makers-toolkit",
+    "name": { "zh-CN": "Game Maker's Toolkit", "en": "Game Maker's Toolkit" },
+    "homepage": "https://www.youtube.com/@GMTK"
+  },
+  {
+    "id": "play-with-experiences",
+    "name": { "zh-CN": "PlayWithExperiences", "en": "PlayWithExperiences" },
+    "homepage": "https://medill-east.github.io/"
+  }
+]

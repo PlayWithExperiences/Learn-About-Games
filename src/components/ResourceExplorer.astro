@@ -1,0 +1,99 @@
+---
+import type { Catalog } from '../lib/catalog/validate';
+
+interface Props {
+  resources: Catalog['resources'];
+  sources: Catalog['sources'];
+}
+
+const { resources, sources } = Astro.props;
+
+const mediaLabels: Record<string, string> = {
+  article: '文章',
+  video: '视频',
+};
+
+const accessLabels: Record<string, string> = {
+  free: '免费',
+};
+
+const translationLabels: Record<string, string> = {
+  bilingual: '双语',
+  original: '原作',
+};
+---
+
+<section class="resource-explorer" aria-labelledby="resource-list-title">
+  <div class="resource-explorer__controls">
+    <div>
+      <p class="plain-label">资源导航</p>
+      <h1 id="resource-list-title">按可消费版本浏览 Work Item</h1>
+      <p class="lede">Source 是发布者或创作者；Work Item 是可直接学习的一条具体内容。</p>
+    </div>
+    <label>
+      <span>可消费语言</span>
+      <select id="resource-language-filter" name="language">
+        <option value="all">All</option>
+        <option value="zh-CN">zh-CN</option>
+        <option value="en">en</option>
+      </select>
+    </label>
+  </div>
+
+  <p id="resource-result-count" role="status" aria-live="polite">共 {resources.length} 条 Work Item</p>
+
+  <div class="resource-list">
+    {resources.map((resource) => {
+      const source = sources.find(({ id }) => id === resource.sourceId);
+      const languages = resource.accessVersions.map(({ language }) => language).join(' ');
+
+      return (
+        <article class="resource-card" data-languages={languages}>
+          <p class="resource-card__label">Work Item</p>
+          <h2>{resource.title['zh-CN']}</h2>
+          <p>{resource.summary['zh-CN']}</p>
+          {source && (
+            <p class="resource-card__source">
+              <span>Source</span>
+              <a href={source.homepage}>{source.name['zh-CN']}</a>
+            </p>
+          )}
+          <dl class="resource-card__meta">
+            <div><dt>媒介</dt><dd>{mediaLabels[resource.mediaType] ?? resource.mediaType}</dd></div>
+            <div><dt>审核</dt><dd>{resource.reviewStatus === 'reviewed' ? '已审核' : resource.reviewStatus}</dd></div>
+          </dl>
+          <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
+            {resource.accessVersions.map((version) => (
+              <li>
+                <a href={version.url}>{resource.title['zh-CN']}</a>
+                <span>{version.language} · {accessLabels[version.access] ?? version.access} · {translationLabels[version.translationKind] ?? version.translationKind}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  const select = document.querySelector<HTMLSelectElement>('#resource-language-filter');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.resource-card'));
+  const resultCount = document.querySelector<HTMLElement>('#resource-result-count');
+
+  function updateResources() {
+    if (!select || !resultCount) return;
+
+    const language = select.value;
+    const visibleCards = cards.filter((card) => {
+      const availableLanguages = card.dataset.languages?.split(' ') ?? [];
+      const isVisible = language === 'all' || availableLanguages.includes(language);
+      card.hidden = !isVisible;
+      return isVisible;
+    });
+
+    resultCount.textContent = `共 ${visibleCards.length} 条 Work Item`;
+  }
+
+  select?.addEventListener('change', updateResources);
+</script>

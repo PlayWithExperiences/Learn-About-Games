@@ -1,0 +1,78 @@
+import { expect, test } from '@playwright/test';
+
+const valveVideoUrl = 'https://www.youtube.com/watch?v=9Yomqk0C6kE';
+const playtestArticleUrl = 'https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/';
+
+test('guides a learner from the home page to the Playtest trail and its work items', async ({ page }) => {
+  await page.goto('./');
+  await page.getByRole('link', { name: '看地图' }).click();
+
+  const playtestLink = page.getByRole('link', { name: 'Playtest', exact: true });
+  await expect(playtestLink).toHaveAttribute('href', '/Learn-About-Games/capabilities/playtesting/');
+  await playtestLink.click();
+
+  await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Playtest 基础：把设计当作可验证的假设' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Playtest 基础：把设计当作可验证的假设' })).toBeVisible();
+  await expect(page.locator(`a[href="${valveVideoUrl}"]`)).toHaveCount(1);
+  await expect(page.locator(`a[href="${playtestArticleUrl}"]`)).toHaveCount(2);
+});
+
+test('filters work items by consumable access-version language', async ({ page }) => {
+  await page.goto('./resources/');
+
+  const languageSelect = page.getByLabel('可消费语言');
+  const valveVideo = page.locator('.resource-card').filter({ hasText: 'Valve\'s “Secret Weapon”' });
+  const playtestArticle = page.locator('.resource-card').filter({ hasText: '如何进行好的 Playtest' });
+  const resultCount = page.getByRole('status');
+
+  await languageSelect.selectOption('zh-CN');
+  await expect(playtestArticle).toBeVisible();
+  await expect(valveVideo).toBeHidden();
+  await expect(resultCount).toHaveText('共 1 条 Work Item');
+
+  await languageSelect.selectOption('en');
+  await expect(playtestArticle).toBeVisible();
+  await expect(valveVideo).toBeVisible();
+  await expect(resultCount).toHaveText('共 2 条 Work Item');
+
+  await languageSelect.selectOption('all');
+  await expect(playtestArticle).toBeVisible();
+  await expect(valveVideo).toBeVisible();
+  await expect(resultCount).toHaveText('共 2 条 Work Item');
+});
+
+test('keeps all work items available without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto('./resources/');
+  await expect(page.locator('.resource-card').filter({ hasText: 'Valve\'s “Secret Weapon”' })).toBeVisible();
+  await expect(page.locator('.resource-card').filter({ hasText: '如何进行好的 Playtest' })).toBeVisible();
+
+  await context.close();
+});
+
+test('only the curated Playtest node is interactive on the map', async ({ page }) => {
+  await page.goto('./map/');
+
+  await expect(page.getByRole('link', { name: 'Playtest', exact: true })).toBeVisible();
+  await expect(page.getByText('查看已策展路径', { exact: true })).toBeVisible();
+
+  for (const capability of [
+    '体验目标与拆解',
+    '核心循环',
+    '叙事架构',
+    '美学与表现方向',
+    '任务拆解与落地',
+    '跨职能沟通',
+    '受众与定位',
+    '游戏创新沿革素养',
+  ]) {
+    await expect(page.getByRole('link', { name: capability, exact: true })).toHaveCount(0);
+    await expect(
+      page.locator('.capability-node').filter({ hasText: capability }).getByText('路径尚未策展', { exact: true }),
+    ).toHaveCount(1);
+  }
+});

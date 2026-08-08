@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+import { sitePath } from '../../lib/site-path';
+
+const mediaLabels: Record<string, string> = { article: '文章', video: '视频' };
+const accessLabels: Record<string, string> = { free: '免费' };
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalog();
+  return catalog.learningTrails.map((trail) => ({ params: { id: trail.id }, props: { trail, catalog } }));
+}
+
+const { trail, catalog } = Astro.props;
+const capability = catalog.capabilities.find(({ id }) => id === trail.capabilityId);
+const resources = trail.resourceIds
+  .map((id) => catalog.resources.find((resource) => resource.id === id))
+  .filter((resource) => resource !== undefined);
+---
+
+<BaseLayout title={trail.title['zh-CN']} description={trail.summary['zh-CN']}>
+  <article class="page-shell detail-page trail-page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href={sitePath('map/')}>能力地图</a>
+      <span aria-hidden="true">/</span>
+      {capability && <a href={sitePath(`capabilities/${capability.id}/`)}>{capability.name['zh-CN']}</a>}
+      <span aria-hidden="true">/</span>
+      <span>学习路径</span>
+    </nav>
+    <p class="plain-label">学习路径</p>
+    <h1>{trail.title['zh-CN']}</h1>
+    <p class="lede">{trail.summary['zh-CN']}</p>
+    <aside class="reference-callout">起点参考，不是认证或唯一答案。</aside>
+
+    <section aria-labelledby="concept-heading">
+      <h2 id="concept-heading">核心概念</h2>
+      <ol>{trail.concepts.map((concept) => <li>{concept}</li>)}</ol>
+    </section>
+
+    <section aria-labelledby="trail-resource-heading">
+      <h2 id="trail-resource-heading">按顺序阅读或观看</h2>
+      <div class="trail-resource-list">
+        {resources.map((resource) => {
+          const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+          return (
+            <article>
+              <h3>{resource.title['zh-CN']}</h3>
+              <p>{resource.summary['zh-CN']}</p>
+              <p class="trail-resource-list__meta">Source：{source?.name['zh-CN']} · {mediaLabels[resource.mediaType] ?? resource.mediaType}</p>
+              <ul>
+                {resource.accessVersions.map((version) => (
+                  <li>
+                    <a href={version.url}>{version.language} · {accessLabels[version.access] ?? version.access}</a>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section aria-labelledby="exercise-heading">
+      <h2 id="exercise-heading">练习</h2>
+      <ol>{trail.exercises.map((exercise) => <li>{exercise}</li>)}</ol>
+    </section>
+
+    <section aria-labelledby="self-check-heading">
+      <h2 id="self-check-heading">自我检验</h2>
+      <ul>{trail.selfChecks.map((selfCheck) => <li>{selfCheck}</li>)}</ul>
+    </section>
+  </article>
+</BaseLayout>

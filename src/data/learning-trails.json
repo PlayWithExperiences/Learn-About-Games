@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": "playtesting-foundations",
+    "title": { "zh-CN": "Playtest 基础：把设计当作可验证的假设", "en": "Playtesting Foundations" },
+    "summary": {
+      "zh-CN": "这是一个帮助你开始观察和判断的参考路径，不是认证，也不是唯一答案。",
+      "en": "This is a starting reference for observing and judging design, not a certification or the only answer."
+    },
+    "capabilityId": "playtesting",
+    "resourceIds": ["valves-secret-weapon", "how-to-run-a-good-playtest"],
+    "concepts": [
+      "先明确测试目标：把设计判断写成能被玩家行为支持或推翻的问题。",
+      "尽早且频繁测试，让判断在投入扩大前接受检验。",
+      "观察时闭嘴：避免用解释、提示或辩护干预玩家的行为。",
+      "反馈是数据，不是设计命令：区分感受、问题诊断与方案建议。"
+    ],
+    "exercises": [
+      "为当前原型写一个可观察、可证伪的测试目标。",
+      "进行一次五分钟无提示观察，只记录玩家行为和原话。"
+    ],
+    "selfChecks": [
+      "能否区分玩家感受、问题诊断与方案建议？",
+      "能否解释测试对象和测试时机如何影响你能得出的结论？"
+    ]
+  }
+]

@@ -24,20 +24,32 @@ const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
           <p>{domain.summary['zh-CN']}</p>
         </div>
         <div class="capability-list">
-          {domainCapabilities.map((capability) => (
-            <a
-              class:list={[
-                'capability-node',
-                { 'capability-node--next': capability.id === 'playtesting' },
-              ]}
-              id={capability.id}
-              href={sitePath(`map/#${capability.id}`)}
-              aria-label={capability.name['zh-CN']}
-            >
-              <strong>{capability.name['zh-CN']}</strong>
-              <span>{capability.summary['zh-CN']}</span>
-            </a>
-          ))}
+          {domainCapabilities.map((capability) => {
+            const isCurated = capability.id === 'playtesting';
+            const labelId = `capability-${capability.id}-label`;
+            const summaryId = `capability-${capability.id}-summary`;
+            const statusId = `capability-${capability.id}-status`;
+
+            return isCurated ? (
+              <a
+                class:list={['capability-node', 'capability-node--next']}
+                id={capability.id}
+                href={sitePath('capabilities/playtesting/')}
+                aria-labelledby={labelId}
+                aria-describedby={`${summaryId} ${statusId}`}
+              >
+                <strong id={labelId}>{capability.name['zh-CN']}</strong>
+                <span id={summaryId}>{capability.summary['zh-CN']}</span>
+                <small id={statusId}>查看已策展路径</small>
+              </a>
+            ) : (
+              <div class="capability-node" id={capability.id}>
+                <strong>{capability.name['zh-CN']}</strong>
+                <span>{capability.summary['zh-CN']}</span>
+                <small>路径尚未策展</small>
+              </div>
+            );
+          })}
         </div>
       </section>
     );

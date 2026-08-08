@@ -1,7 +1,7 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：M0 基础工程与首个可见能力地图骨架已完成，下一步扩展 Playtest 纵向切片
+- 状态：M0 已完成首条 Playtest 学习纵向切片；下一步是职业透镜与本地个人状态
 - 设计文档：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
 
@@ -96,6 +96,7 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 - 通过官方文档确认 Astro 可用 GitHub Actions 部署至 GitHub Pages，并需正确处理项目子路径。
 - 通过本地 Astro 7.2 loader 源码和实际 `astro check` / build 确认，JSON 数组的 `id` 用作 collection entry 保留字段，schema 校验普通 data 字段，`loadCatalog()` 再聚合 entry id。
 - Task 2 validator 单测 6 项通过；完整 Vitest 9 项通过；Astro check 0 errors；静态构建生成 9 个页面；Chromium visible skeleton E2E 通过。
+- Task 3 新增 Playtest 能力详情、基础路径、两条已审核 Work Item 与资源语言筛选；同一双语文章以一个 Work Item 和两个 access version 表达。测试先观察到目标路由和地图链接缺失而失败，随后 Chromium Playtest E2E 4 项、移动 Chromium Playtest E2E 4 项、既有 visible skeleton Chromium E2E 5 项均通过；`npm run check`、`npm test`、`npm run build` 通过。桌面与 320px 的 capability、trail、resources 截图已人工复查。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
@@ -122,7 +123,6 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 
 ## 下一步
 
-1. 扩展 Playtest 学习链路与真实资源导航。
-2. 增加角色透镜和与角色重要性分离的本地个人状态。
-3. 发布 Atlas 八类框架与 Roguelike 证据种子。
-4. 验证 M0 后再编写正式第一版内容扩展计划。
+1. 增加角色透镜和与角色重要性分离的本地个人状态。
+2. 发布 Atlas 八类框架与 Roguelike 证据种子。
+3. 验证 M0 后再编写正式第一版内容扩展计划。

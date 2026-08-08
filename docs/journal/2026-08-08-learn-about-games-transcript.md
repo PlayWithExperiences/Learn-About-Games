@@ -173,3 +173,15 @@ Atlas 证据比较结果支持 Roguelike 谱系作为首版种子：它比 Jumpi
 首个界面使用单一浅色、冷中性背景和一个钴蓝强调色。首页用非等宽文字导引呈现“看地图、找位置、向前走”；能力地图把 Domain 画成有间距和分隔线的区域，把 Capability 画成可点击矩形节点。Playtest 标为下一步扩展，其他能力明确显示尚未策展。移动端采用单列大纲，导航、skip link、可见 focus 与 reduced motion 均纳入基础样式。
 
 桌面与移动截图的实际查看发现，320px 下横向导航会把 Contributing 截出初始视口。实现代理先增加 viewport 回归测试并观察到失败，再把移动导航改为自然换行；相同测试随后通过。复查截图确认桌面首页保持非居中的双区结构，移动地图维持单列，Domain 与 Capability 的形状语义没有混淆。
+
+### 23. M0 Task 3：Playtest 真实学习切片
+
+记录说明：以下为实现代理在本任务中可访问范围内的脱敏摘要，不是完整聊天导出；没有记录主任务或并行任务的私有内容和工具细节。
+
+任务固定了真实用户路径：首页到能力地图，到 Playtest 能力页，到 Playtest 基础路径，再到两条可访问的具体 Work Item。实现严格区分 Source 和 Work Item。新增 Game Maker's Toolkit 与 PlayWithExperiences 两个 Source，新增 GMTK 的 Valve 视频和一篇双语 Playtest 文章。后者只有一个 Work Item，并以两个 access version 记录中文和英文可消费版本，未复制资源条目。
+
+实现先新增 Playwright E2E 并运行。现有地图中的 Playtest 仍是站内 self-hash，目标能力路由也不存在，测试因此失败。随后以最小改动新增 Playtest 能力页、学习路径页和资源库页，资源库只提供原生语言 select。客户端以每条 Work Item 的 access version language 过滤；无 JavaScript 时服务端渲染的全部资源保持可见。
+
+地图只让已策展的 Playtest 成为链接，其余八项保持相同 Capability 节点视觉但不进入 tab 顺序，并显示“路径尚未策展”。Playtest 链接以可见的“查看已策展路径”状态和描述关系表达当前可用性，不用覆盖可见文本的 aria-label。共享导航增加 Resources，所有站内路径继续使用 GitHub Pages 子路径 helper。
+
+GREEN 验证包括：`npm run check` 0 errors，Vitest 22 项通过，静态构建成功，桌面 Chromium 的新 Playtest E2E 4 项通过，移动 Chromium 的同一流程 4 项通过，既有 visible skeleton Chromium E2E 5 项通过。实现代理人工查看了 capability、trail 和 resources 的 1440px 与 320px 截图，确认移动端保持单列、语言 select 可见、没有把 Source 与 Work Item 混作同一对象。构建仍会报告既有空 Atlas 与 role profile 文件 loader 提示，未将其误判为本任务失败或用占位数据消除。

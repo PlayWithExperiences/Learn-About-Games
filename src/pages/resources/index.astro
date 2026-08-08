@@ -1,0 +1,13 @@
+---
+import ResourceExplorer from '../../components/ResourceExplorer.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+
+const { resources, sources } = await loadCatalog();
+---
+
+<BaseLayout title="资源库" description="按可消费语言浏览经过审核的具体游戏学习资源。">
+  <div class="page-shell resource-page">
+    <ResourceExplorer resources={resources} sources={sources} />
+  </div>
+</BaseLayout>

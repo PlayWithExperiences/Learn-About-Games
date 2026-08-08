@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+import { sitePath } from '../../lib/site-path';
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalog();
+  return catalog.capabilities
+    .filter((capability) => catalog.learningTrails.some((trail) => trail.capabilityId === capability.id))
+    .map((capability) => ({ params: { id: capability.id }, props: { capability, catalog } }));
+}
+
+const { capability, catalog } = Astro.props;
+const trails = catalog.learningTrails.filter((trail) => trail.capabilityId === capability.id);
+const resources = catalog.resources.filter((resource) => resource.capabilityIds.includes(capability.id));
+---
+
+<BaseLayout title={capability.name['zh-CN']} description={capability.summary['zh-CN']}>
+  <article class="page-shell detail-page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href={sitePath('map/')}>能力地图</a>
+      <span aria-hidden="true">/</span>
+      <span>能力</span>
+    </nav>
+    <p class="plain-label">能力</p>
+    <h1>{capability.name['zh-CN']}</h1>
+    <p class="lede">{capability.summary['zh-CN']}</p>
+
+    <section aria-labelledby="trail-heading">
+      <h2 id="trail-heading">已策展路径</h2>
+      <div class="detail-card-list">
+        {trails.map((trail) => (
+          <a class="detail-card" href={sitePath(`trails/${trail.id}/`)}>
+            <span>学习路径</span>
+            <h3>{trail.title['zh-CN']}</h3>
+            <p>{trail.summary['zh-CN']}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="resource-heading">
+      <h2 id="resource-heading">相关具体资源</h2>
+      <ul class="compact-resource-list">
+        {resources.map((resource) => {
+          const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+          return (
+            <li>
+              <strong>{resource.title['zh-CN']}</strong>
+              <span>{source?.name['zh-CN']} · {resource.mediaType === 'video' ? '视频' : '文章'}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </article>
+</BaseLayout>
