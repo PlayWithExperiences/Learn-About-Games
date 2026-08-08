@@ -152,7 +152,7 @@ describe('global Atlas graph contract', () => {
 });
 
 describe('global Atlas presentation geometry', () => {
-  it('maps start years monotonically and reserves real spans only for categories', () => {
+  it('maps start years monotonically and preserves the current category ranges', () => {
     const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
     const ordered = [...layout.nodes].sort(
       (left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id),
@@ -173,6 +173,34 @@ describe('global Atlas presentation geometry', () => {
     expect(games.every(({ spanEndX, yearX }) => spanEndX === yearX)).toBe(true);
     expect(categories).toHaveLength(2);
     expect(categories.every(({ spanEndX, yearX }) => spanEndX > yearX)).toBe(true);
+  });
+
+  it('projects ranges for non-Game entities and rejects a ranged Game', () => {
+    const rangedInnovation = buildAtlasLayout([
+      {
+        id: 'synthetic-ranged-innovation',
+        kind: 'innovation',
+        startYear: 1980,
+        endYear: 1990,
+        lane: 0,
+      },
+    ], []);
+    const placedInnovation = rangedInnovation.nodes[0];
+
+    expect(placedInnovation.spanEndX).toBeGreaterThan(placedInnovation.yearX);
+    expect(placedInnovation.left).toBe(placedInnovation.yearX);
+    expect(placedInnovation.width).toBeGreaterThanOrEqual(
+      placedInnovation.spanEndX - placedInnovation.yearX,
+    );
+    expect(() => buildAtlasLayout([
+      {
+        id: 'invalid-ranged-game',
+        kind: 'game',
+        startYear: 1980,
+        endYear: 1981,
+        lane: 0,
+      },
+    ], [])).toThrow(/Game.*range/i);
   });
 
   it('places all nodes without collisions and terminates relations at visible node boundaries', () => {
@@ -213,6 +241,19 @@ describe('global Atlas presentation geometry', () => {
       expect(endsOnBoundary, `${relation.id} arrow is hidden under its target node`).toBe(true);
       expect(relation.start, relation.id).not.toEqual({ x: from?.centerX, y: from?.centerY });
       expect(relation.end, relation.id).not.toEqual({ x: to?.centerX, y: to?.centerY });
+    }
+  });
+
+  it('keeps relation render and outline focus order stable when source data order changes', () => {
+    const reversedRelations = [...typedAtlasRelations].reverse();
+    const renderedIds = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations).relations.map(({ id }) => id);
+    const reversedRenderedIds = buildAtlasLayout(typedAtlasNodes, reversedRelations).relations.map(({ id }) => id);
+    const adjacency = indexAtlasRelations(typedAtlasNodes, typedAtlasRelations);
+    const reversedAdjacency = indexAtlasRelations(typedAtlasNodes, reversedRelations);
+
+    expect(reversedRenderedIds).toEqual(renderedIds);
+    for (const node of typedAtlasNodes) {
+      expect(reversedAdjacency.get(node.id)).toEqual(adjacency.get(node.id));
     }
   });
 

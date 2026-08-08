@@ -111,3 +111,45 @@ test('uses readable system colors and an honestly disabled control without JavaS
     await context.close();
   }
 });
+
+test('keeps the 320px no-JavaScript brand, appearance control and note in non-overlapping rows', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-chromium', 'The 320px no-JavaScript header is tested once.');
+  const context = await browser.newContext({
+    colorScheme: 'light',
+    javaScriptEnabled: false,
+    viewport: { width: 320, height: 760 },
+  });
+  const page = await context.newPage();
+  await page.goto('./atlas/');
+
+  const boxes = await page.locator('.site-header').evaluate((header) => {
+    const box = (selector: string) => {
+      const rect = header.querySelector(selector)?.getBoundingClientRect();
+      return rect && { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+    };
+    return {
+      brand: box('.brand'),
+      tools: box('.site-header__tools'),
+      select: box('.theme-control select'),
+      note: box('.theme-control__note'),
+    };
+  });
+  expect(boxes.brand).not.toBeNull();
+  expect(boxes.tools).not.toBeNull();
+  expect(boxes.select).not.toBeNull();
+  expect(boxes.note).not.toBeNull();
+  expect(boxes.tools!.top).toBeGreaterThanOrEqual(boxes.brand!.bottom);
+  for (const candidate of [boxes.brand!, boxes.tools!, boxes.select!, boxes.note!]) {
+    expect(candidate.left).toBeGreaterThanOrEqual(0);
+    expect(candidate.right).toBeLessThanOrEqual(320);
+  }
+  const selectOverlapsNote = boxes.select!.left < boxes.note!.right
+    && boxes.select!.right > boxes.note!.left
+    && boxes.select!.top < boxes.note!.bottom
+    && boxes.select!.bottom > boxes.note!.top;
+  expect(selectOverlapsNote).toBe(false);
+  await expect(page.getByText('启用 JavaScript 后可以保存外观偏好。', { exact: true })).toBeVisible();
+  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+
+  await context.close();
+});

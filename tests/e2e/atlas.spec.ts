@@ -9,6 +9,26 @@ const entityIds = async (locator: Locator) =>
     ),
   );
 
+function parseRgb(color: string): [number, number, number] {
+  const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+  if (!channels || channels.length !== 3) throw new Error(`Expected an RGB color, received ${color}`);
+  return channels as [number, number, number];
+}
+
+function relativeLuminance(color: string): number {
+  const channels = parseRgb(color).map((channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+  });
+  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+}
+
+function contrastRatio(foreground: string, background: string): number {
+  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
 async function clickVisibleRelationSegment(page: Page, relationId: string) {
   const relation = page.locator(`[data-atlas-relation="${relationId}"]`);
   await relation.locator('[data-atlas-relation-path]').scrollIntoViewIfNeeded();
@@ -55,6 +75,14 @@ test('server renders one fixed 27-node and 25-relation time network', async ({ p
   await expect(network).toHaveCount(1);
   await expect(nodes).toHaveCount(27);
   await expect(relations).toHaveCount(25);
+  await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-node-count', String(await nodes.count()));
+  await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-relation-count', String(await relations.count()));
+  const scrollNote = page.getByText('左右滚动查看 1980–2020', { exact: true });
+  if (testInfo.project.name === 'mobile-chromium') {
+    await expect(scrollNote).toBeHidden();
+  } else {
+    await expect(scrollNote).toBeVisible();
+  }
   expect(new Set(await entityIds(nodes)).size).toBe(27);
   expect(new Set(await entityIds(relations)).size).toBe(25);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(24);
@@ -158,6 +186,61 @@ test('theme controls only change emphasis without changing graph identity or geo
   await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).toHaveCount(25);
 });
 
+test('non-matching desktop edges keep neutral direction semantics and 3:1 contrast in light and dark', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop edge styling is tested once.');
+
+  for (const appearance of ['light', 'dark']) {
+    await page.goto('./atlas/');
+    await page.getByLabel('Appearance').selectOption(appearance);
+    await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+
+    const directed = page.locator('[data-atlas-relation="rogue-to-hack"]');
+    const directedPath = directed.locator('[data-atlas-relation-path]');
+    await expect(directed).toHaveAttribute('data-theme-match', 'false');
+    const directedStyle = await directedPath.evaluate((element) => ({
+      stroke: getComputedStyle(element).stroke,
+      dash: getComputedStyle(element).strokeDasharray,
+      background: getComputedStyle(document.querySelector('[data-atlas-canvas]')!).backgroundColor,
+      markerFill: getComputedStyle(document.querySelector('#atlas-direction-arrow path')!).fill,
+    }));
+    expect(contrastRatio(directedStyle.stroke, directedStyle.background), appearance).toBeGreaterThanOrEqual(3);
+    expect(directedStyle.dash).not.toBe('none');
+    expect(directedStyle.markerFill).toBe('context-stroke');
+
+    await page.locator('[data-atlas-theme-button="roguelike"]').click();
+    const undirected = page.locator('[data-atlas-relation="super-metroid-and-sotn"]');
+    const undirectedStyle = await undirected.evaluate((element) => ({
+      stroke: getComputedStyle(element.querySelector('[data-atlas-relation-path]')!).stroke,
+      endpointFills: Array.from(element.querySelectorAll('[data-undirected-endpoint]')).map(
+        (endpoint) => getComputedStyle(endpoint).fill,
+      ),
+    }));
+    await expect(undirected).toHaveAttribute('data-theme-match', 'false');
+    expect(new Set(undirectedStyle.endpointFills)).toEqual(new Set([undirectedStyle.stroke]));
+  }
+});
+
+test('mobile relation references participate in theme emphasis with readable non-color styling', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-chromium', 'Mobile relation emphasis is tested once.');
+  await page.setViewportSize({ width: 320, height: 760 });
+
+  for (const appearance of ['light', 'dark']) {
+    await page.goto('./atlas/');
+    await page.getByLabel('Appearance').selectOption(appearance);
+    await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+    const relationRef = page.locator('[data-atlas-outline-relation-ref="rogue-to-hack"]').first();
+    await expect(relationRef).toHaveAttribute('data-theme-tags', /\S+/);
+    await expect(relationRef).toHaveAttribute('data-theme-match', 'false');
+    const styles = await relationRef.evaluate((element) => ({
+      color: getComputedStyle(element).color,
+      background: getComputedStyle(document.body).backgroundColor,
+      decoration: getComputedStyle(element).textDecorationStyle,
+    }));
+    expect(contrastRatio(styles.color, styles.background), appearance).toBeGreaterThanOrEqual(3);
+    expect(styles.decoration).toBe('dashed');
+  }
+});
+
 test('relation geometry preserves endpoints, arrows and an undirected structural comparison', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop geometry is tested once.');
   await page.goto('./atlas/');
@@ -217,37 +300,84 @@ test('relation geometry preserves endpoints, arrows and an undirected structural
   await expect(comparison).toHaveAttribute('data-relation-directionality', 'undirected');
   await expect(comparison.locator('[data-atlas-relation-path]')).not.toHaveAttribute('marker-end', /.+/);
   await expect(comparison.locator('[data-undirected-endpoint]')).toHaveCount(2);
+  await expect(network.locator('[data-atlas-relation="rogue-to-hack"] [data-atlas-relation-link]')).toHaveAttribute('aria-label', /→/);
+  await expect(comparison.locator('[data-atlas-relation-link]')).toHaveAttribute('aria-label', /↔/);
+  await expect(page.locator('[data-atlas-outline-relation-ref="rogue-to-hack"]').first()).toHaveAttribute('aria-label', /→/);
+  await expect(page.locator('[data-atlas-outline-relation-ref="super-metroid-and-sotn"]').first()).toHaveAttribute('aria-label', /↔/);
 });
 
-test('node and relation details retain source titles, languages and evidence links', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium', 'Detail interactions are tested once.');
+test('selected detail dialog preserves the network position and returns focus to its origin', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop detail flow is tested once.');
   await page.goto('./atlas/');
 
-  await page.locator('[data-atlas-node-id="dead-cells"][data-atlas-node] [data-atlas-node-link]').click();
-  const nodeDetail = page.locator('#atlas-node-detail-dead-cells');
-  await expect(nodeDetail).toHaveAttribute('open', '');
-  await expect(nodeDetail.locator('time').first()).toContainText('2018');
-  await expect(nodeDetail.locator('[data-atlas-node-tags]')).toContainText('Roguelike');
-  await expect(nodeDetail.locator('[data-atlas-node-relation-ref]')).not.toHaveCount(0);
-  await expect(nodeDetail.locator('[data-evidence-source-title]')).not.toHaveCount(0);
-  await expect(nodeDetail.locator('[data-evidence-language]')).not.toHaveCount(0);
-  await expect(nodeDetail.locator('a[data-atlas-evidence-link]')).not.toHaveCount(0);
+  const nodeLink = page.locator('[data-atlas-node-id="dead-cells"][data-atlas-node] [data-atlas-node-link]');
+  await nodeLink.scrollIntoViewIfNeeded();
+  const before = await page.evaluate(() => ({
+    pageX: window.scrollX,
+    pageY: window.scrollY,
+    canvasX: document.querySelector<HTMLElement>('[data-atlas-canvas]')?.scrollLeft ?? 0,
+  }));
+  await nodeLink.click();
 
-  await clickVisibleRelationSegment(page, 'metroid-ii-to-super-metroid');
-  await expect(page.locator('#atlas-relation-detail-metroid-ii-to-super-metroid')).toHaveAttribute('open', '');
-  const comparisonLink = page.locator('[data-atlas-relation="super-metroid-and-sotn"] [data-atlas-relation-link]');
-  await comparisonLink.focus();
-  await page.keyboard.press('Enter');
-  const relationDetail = page.locator('#atlas-relation-detail-super-metroid-and-sotn');
-  await expect(relationDetail).toHaveAttribute('open', '');
-  await expect(relationDetail.locator('[data-relation-detail-type]')).toContainText('结构相似');
-  await expect(relationDetail.locator('[data-relation-detail-status]')).toContainText('已直接支持');
-  await expect(relationDetail.locator('[data-relation-detail-direction]')).toContainText('无向');
-  await expect(relationDetail.locator('[data-relation-detail-summary]')).not.toBeEmpty();
-  await expect(relationDetail.locator('[data-evidence-source-title]')).not.toHaveCount(0);
-  await expect(relationDetail.locator('[data-evidence-public-label]')).not.toHaveCount(0);
-  await expect(relationDetail.locator('[data-evidence-language]')).not.toHaveCount(0);
-  await expect(relationDetail.locator('a[data-atlas-evidence-link]')).not.toHaveCount(0);
+  const dialog = page.locator('dialog[data-atlas-selected-detail]');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText('当前选择', { exact: true })).toBeVisible();
+  await expect(dialog.locator('[data-atlas-dialog-title]')).toContainText('Dead Cells');
+  await expect(dialog.locator('[data-atlas-node-tags]')).toContainText('Roguelike');
+  await expect(dialog.locator('[data-atlas-evidence-ref]')).not.toHaveCount(0);
+  await expect(page.locator('#atlas-node-detail-dead-cells')).not.toHaveAttribute('open', '');
+
+  const evidenceTarget = await dialog.locator('[data-atlas-evidence-ref]').first().getAttribute('href');
+  await dialog.locator('[data-atlas-evidence-ref]').first().click();
+  await expect(dialog).not.toBeVisible();
+  await expect(page.locator(evidenceTarget!)).toBeVisible();
+  await expect(page.locator(evidenceTarget!)).toBeFocused();
+  const returnFromEvidence = page.locator(`${evidenceTarget} [data-atlas-evidence-return]`);
+  await expect(returnFromEvidence).toBeVisible();
+  await returnFromEvidence.click();
+  const after = await page.evaluate(() => ({
+    pageX: window.scrollX,
+    pageY: window.scrollY,
+    canvasX: document.querySelector<HTMLElement>('[data-atlas-canvas]')?.scrollLeft ?? 0,
+  }));
+  expect(after).toEqual(before);
+  await expect(nodeLink).toBeFocused();
+
+  await nodeLink.click();
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole('button', { name: '返回网络' }).click();
+  await expect(dialog).not.toBeVisible();
+  await expect(nodeLink).toBeFocused();
+
+  await clickVisibleRelationSegment(page, 'super-metroid-and-sotn');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('[data-atlas-dialog-title]')).toContainText('Super Metroid');
+  await expect(dialog.locator('[data-relation-detail-type]')).toContainText('结构相似');
+  await expect(dialog.locator('[data-relation-detail-status]')).toContainText('已直接支持');
+  await expect(dialog.locator('[data-relation-detail-direction]')).toContainText('无向');
+  await expect(dialog.locator('[data-relation-detail-summary]')).not.toBeEmpty();
+});
+
+test('renders one 40-item Evidence index and keeps node and relation references reachable', async ({ page }) => {
+  await page.goto('./atlas/');
+
+  const index = page.locator('[data-atlas-evidence-index]');
+  const rows = index.locator('[data-atlas-evidence-row]');
+  await expect(rows).toHaveCount(40);
+  await expect(index.locator('a[data-atlas-evidence-link]')).toHaveCount(40);
+  const evidenceIds = await rows.evaluateAll((elements) => elements.map((element) => element.id));
+  expect(new Set(evidenceIds).size).toBe(40);
+  expect(evidenceIds.every((id) => id.startsWith('atlas-evidence-'))).toBe(true);
+  await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(40);
+
+  for (const detailSelector of ['#atlas-node-detail-dead-cells', '#atlas-relation-detail-super-metroid-and-sotn']) {
+    const refs = page.locator(`${detailSelector} [data-atlas-evidence-ref]`);
+    await expect(refs).not.toHaveCount(0);
+    await expect(page.locator(`${detailSelector} a[data-atlas-evidence-link]`)).toHaveCount(0);
+    const target = await refs.first().getAttribute('href');
+    expect(target).toMatch(/^#atlas-evidence-/);
+    await expect(page.locator(target!)).toHaveCount(1);
+  }
 });
 
 test('mobile uses a relation-equivalent era outline without horizontal overflow', async ({ page }, testInfo) => {
@@ -273,9 +403,13 @@ test('mobile uses a relation-equivalent era outline without horizontal overflow'
 
   await outline.locator('[data-atlas-outline-node="dead-cells"] summary').click();
   await outline.locator('[data-atlas-outline-node="dead-cells"] [data-atlas-node-detail-link]').click();
-  await expect(page.locator('#atlas-node-detail-dead-cells')).toHaveAttribute('open', '');
+  const dialog = page.locator('dialog[data-atlas-selected-detail]');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('[data-atlas-dialog-title]')).toContainText('Dead Cells');
+  await dialog.getByRole('button', { name: '返回网络' }).click();
   await outline.locator('[data-atlas-outline-node="dead-cells"] [data-atlas-outline-relation-ref="spelunky-to-dead-cells"]').click();
-  await expect(page.locator('#atlas-relation-detail-spelunky-to-dead-cells')).toHaveAttribute('open', '');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('[data-atlas-dialog-title]')).toContainText('Spelunky');
 });
 
 test('without JavaScript the complete graph, native details and evidence remain readable', async ({ browser }, testInfo) => {
@@ -292,8 +426,12 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(25);
   const detail = page.locator('#atlas-relation-detail-super-metroid-and-sotn');
   await detail.locator('summary').click();
-  await expect(detail.locator('[data-evidence-source-title]')).not.toHaveCount(0);
-  await expect(detail.locator('a[data-atlas-evidence-link]')).not.toHaveCount(0);
+  const evidenceRef = detail.locator('[data-atlas-evidence-ref]').first();
+  await expect(evidenceRef).toBeVisible();
+  const evidenceTarget = await evidenceRef.getAttribute('href');
+  await evidenceRef.click();
+  await expect(page.locator(evidenceTarget!)).toBeVisible();
+  await expect(page.locator(`${evidenceTarget} a[data-atlas-evidence-link]`)).toBeVisible();
 
   await context.close();
 });

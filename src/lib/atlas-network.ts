@@ -134,23 +134,28 @@ export function buildAtlasLayout(
   );
 
   const placedNodes = nodes.map((node): AtlasPlacedNode => {
+    if (node.kind === 'game' && node.endYear !== undefined) {
+      throw new Error(`Atlas Game ${node.id} cannot define a time range.`);
+    }
     const yearX = projectAtlasYear(node.startYear);
-    const spanEndX = node.kind === 'category' && node.endYear
-      ? projectAtlasYear(node.endYear)
+    const rangeEndYear = node.kind === 'game' ? undefined : node.endYear;
+    const hasRange = rangeEndYear !== undefined;
+    const spanEndX = hasRange
+      ? projectAtlasYear(rangeEndYear)
       : yearX;
     const displayLane = node.kind === 'innovation'
       ? 0
       : node.kind === 'category'
         ? (categoryLaneById.get(node.id) ?? 1)
         : Math.max(3, node.lane + 1);
-    const width = node.kind === 'category'
+    const width = hasRange
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'
         ? 180
         : 140;
     const height = node.kind === 'category' ? 46 : node.kind === 'innovation' ? 84 : 86;
     const centerY = atlasLayoutDefaults.firstLaneY + displayLane * atlasLayoutDefaults.laneGap;
-    const left = node.kind === 'category' ? yearX : yearX - width / 2;
+    const left = hasRange ? yearX : yearX - width / 2;
     const top = centerY - height / 2;
 
     return {
@@ -168,16 +173,32 @@ export function buildAtlasLayout(
   });
 
   const nodeById = new Map(placedNodes.map((node) => [node.id, node]));
-  const placedRelations = relations.map((relation): AtlasPlacedRelation => {
-    const from = nodeById.get(relation.fromId);
-    const to = nodeById.get(relation.toId);
-    if (!from || !to) {
-      throw new Error(`Atlas layout relation ${relation.id} has a missing endpoint.`);
-    }
-    const start = nodeBoundaryAnchor(from, to);
-    const end = nodeBoundaryAnchor(to, from);
-    return { ...relation, start, end, path: relationPath(start, end) };
-  });
+  const placedRelations = relations
+    .map((relation): AtlasPlacedRelation => {
+      const from = nodeById.get(relation.fromId);
+      const to = nodeById.get(relation.toId);
+      if (!from || !to) {
+        throw new Error(`Atlas layout relation ${relation.id} has a missing endpoint.`);
+      }
+      const start = nodeBoundaryAnchor(from, to);
+      const end = nodeBoundaryAnchor(to, from);
+      return { ...relation, start, end, path: relationPath(start, end) };
+    })
+    .sort((left, right) => {
+      const leftMinX = Math.min(left.start.x, left.end.x);
+      const rightMinX = Math.min(right.start.x, right.end.x);
+      const leftMaxX = Math.max(left.start.x, left.end.x);
+      const rightMaxX = Math.max(right.start.x, right.end.x);
+      const leftMinY = Math.min(left.start.y, left.end.y);
+      const rightMinY = Math.min(right.start.y, right.end.y);
+      const leftMaxY = Math.max(left.start.y, left.end.y);
+      const rightMaxY = Math.max(right.start.y, right.end.y);
+      return leftMinX - rightMinX
+        || leftMaxX - rightMaxX
+        || leftMinY - rightMinY
+        || leftMaxY - rightMaxY
+        || left.id.localeCompare(right.id);
+    });
 
   return {
     width: atlasLayoutDefaults.width,
@@ -215,7 +236,7 @@ export function groupAtlasNodesByEra<Node extends AtlasNodeForLayout>(nodes: rea
 }
 
 export function indexAtlasRelations<
-  Node extends { id: string },
+  Node extends { id: string; startYear?: number; lane?: number },
   Relation extends AtlasRelationForLayout,
 >(nodes: readonly Node[], relations: readonly Relation[]) {
   const adjacency = new Map<string, AtlasRelationAdjacency<Relation>>(
@@ -234,6 +255,23 @@ export function indexAtlasRelations<
       to.incoming.push(relation);
     }
   }
+
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const sortForNode = (nodeId: string) => (left: Relation, right: Relation) => {
+    const leftOtherId = left.fromId === nodeId ? left.toId : left.fromId;
+    const rightOtherId = right.fromId === nodeId ? right.toId : right.fromId;
+    const leftOther = nodeById.get(leftOtherId);
+    const rightOther = nodeById.get(rightOtherId);
+    return (leftOther?.startYear ?? 0) - (rightOther?.startYear ?? 0)
+      || (leftOther?.lane ?? 0) - (rightOther?.lane ?? 0)
+      || leftOtherId.localeCompare(rightOtherId)
+      || left.id.localeCompare(right.id);
+  };
+  adjacency.forEach((relationGroups, nodeId) => {
+    relationGroups.incoming.sort(sortForNode(nodeId));
+    relationGroups.outgoing.sort(sortForNode(nodeId));
+    relationGroups.undirected.sort(sortForNode(nodeId));
+  });
 
   return adjacency;
 }
