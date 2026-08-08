@@ -6,7 +6,7 @@
 
 **Architecture:** Astro 7 generates a static Chinese-first site for the GitHub Pages project path `/Learn-About-Games/`. Build-time JSON collections keep different entity types separate, but M0 validates only references that current pages use. Native browser scripts handle language filtering and local progress; no framework island, account, database, CMS, analytics, hosted search, or graph library is introduced.
 
-**Tech stack:** Astro 7.2.0, TypeScript 7.0.2, Astro Content Collections, Vitest 4.1.10, Playwright 1.62.1, npm, GitHub Actions, GitHub Pages.
+**Tech stack:** Astro 7.2.0, TypeScript 6.0.3, Astro Content Collections, Vitest 4.1.10, Playwright 1.62.1, npm, GitHub Actions, GitHub Pages.
 
 ---
 
@@ -141,7 +141,7 @@ Use this direct dependency set and no UI framework or server adapter:
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@playwright/test": "1.62.1",
-    "typescript": "7.0.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.10"
   }
 }
