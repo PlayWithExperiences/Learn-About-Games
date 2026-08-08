@@ -1,5 +1,7 @@
 # Project entrypoint
 
+Verified state: M0 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/>. The next direction is a separate, evidence-backed content expansion plan; do not treat M0 as the 40-60-node formal first release.
+
 Before making substantive changes, read these files in order:
 
 1. [Latest decision summary](docs/journal/2026-08-08-learn-about-games-decision-summary.md)

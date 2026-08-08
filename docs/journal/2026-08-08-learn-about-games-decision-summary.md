@@ -1,143 +1,107 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：M0 已完成 Playtest 学习纵向切片、AAA / Game Designer 参考透镜、本地个人状态与 Atlas 证据种子；本地 Pages 部署配置与项目子路径验收已加入，等待远端 workflow 首次成功运行
-- 设计文档：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
+- 状态：M0 纵向切片已部署并完成本地对抗验收；正式第一版的内容规模尚未开始扩展
+- 线上站点：[https://playwithexperiences.github.io/Learn-About-Games/](https://playwithexperiences.github.io/Learn-About-Games/)
+- 产品设计：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
+- M0 Devlog：[2026-08-08-m0-vertical-slice.md](../devlog/2026-08-08-m0-vertical-slice.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
 
-## 当前状态
+## 项目来源
 
-- GitHub 公开仓库 `PlayWithExperiences/Learn-About-Games` 已创建。
-- 本地仓库已关联同名 `origin`。
-- 远端 `main` 已包含首次推送；默认分支为 `main`。
-- GitHub Pages 已预配置为 workflow 构建，目标 URL 为 `https://playwithexperiences.github.io/Learn-About-Games/`；尚无成功部署状态，不能据此宣称网站已上线。
-- 远端 HTTPS 访问曾返回 403，显式 SSH 诊断用于确认远端连通性与认证路径；不把该诊断结果误写为部署证据。
-- 产品、内容模型、首版范围、贡献机制、技术栈和部署方式已经通过对话确认。
-- Game Innovation Atlas、公开 Roadmap、Changelog 与 Devlog 已加入设计。
-- 设计已获用户批准，实施将在 `codex/initial-site` 隔离分支进行。
-- 已完成 M0 可运行垂直切片实施计划；M0 用于验证架构和真实用户路径，不冒充达到正式第一版的内容规模。
-- 对抗审查发现初稿把过多未来边界处理提前到 M0；计划已从 12 个横向基础任务缩为 7 个纵向交付任务，第 2 个任务即可看到真实地图骨架。
+Learn About Games 来自用户对“拥有地图、认识自己、持续学习与实践”的长期思考，以及文章《如何成为更好的设计师》。项目不是资源黄页或职业认证，而是把游戏知识、能力、职业语境、具体学习内容与历史证据连接起来的公开参考地图。
 
-## 决策与理由
+## 当前已验证状态
 
-### 能力地图作为主干
+- GitHub 公开仓库是 `PlayWithExperiences/Learn-About-Games`，默认分支为 `main`。
+- M0 部署源 HEAD 为 `7f982bbdf074e56a99ec2ee5ca2a568fe25f5fca`。GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 的 build 与 deploy jobs 均成功。
+- Pages 使用 workflow build type。线上首页、地图、Playtest 能力、资源库与 Atlas 已抽查为 HTTP 200。
+- M0 公开 9 个领域与 9 个能力入口。只有 Playtest 已形成“地图 - 能力 - 路径 - 具体 Work Item”的完整学习切片。
+- Playtest 路径抵达 GMTK 的 `Valve's “Secret Weapon”` 视频与 PlayWithExperiences 的双语 Playtest 文章。它们是具体 Work Item，不是频道入口。
+- 双语文章只保存为一个 Work Item，通过 `zh-CN` 与 `en` 两个可消费 access version 参与筛选。语言表示用户能实际阅读或观看的版本，不只是原作语言。
+- `AAA / Game Designer` 是唯一 M0 职业参考画像，明确带维护者 AAA 背景与 indie/solo 局限。五档个人学习状态只保存在当前浏览器，和职业标签独立，不生成总分、百分比或标准答案。
+- Atlas 是 Learn About Games 站内的次级历史知识视图。M0 包含八类框架、8 个 Game、1 个 Innovation、7 条已证实关系和 9 项来源；年份只排序 Game，不自动证明因果。
+- M0 仍不是内容完整的正式第一版。40-60 个节点、300 个候选资源、100 个已审核资源、10-15 条路径、3-4 个画像与完整英文界面都尚未交付。
 
-选择“能力地图优先，职业与资源作为透镜”，避免项目退化为书签目录，也避免把职业路线描述成唯一答案。
+## 核心决策与理由
 
-### 增加知识议题
+### 能力地图作为学习主干
 
-学术研究、游戏史、价值观和玩家研究不一定是生产能力，因此使用独立的 Knowledge Topic 表达，并允许资源同时连接知识议题与能力。
+用户先看全貌，再用职业和生产语境找参考位置，最后沿能力进入学习路径。这样不会把网站退化为书签目录，也不会把某条职业经历包装成唯一答案。
 
-### 职业必须带生产语境
+### 不同对象保持独立
 
-AAA 的细分岗位、独立团队的多边形能力和个人开发者的取舍不同。Role Lens 与 Production Context 共同构成参考画像。
+Domain、Knowledge Topic、Capability、Practice、Role、Production Context、Source、Work Item、Access Version、Innovation、Game、Relation 与 Evidence 各自拥有稳定语义。不同对象不共享形状或分数字段，资源数量也不表示能力价值。
 
 ### 单项内容是默认资源粒度
 
-GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接能力。重点内容可以继续细化到时间戳或章节。
+GMTK 是 Source，一期视频才是 Work Item。重点内容未来可以细化到章节或时间戳，但 M0 不建立不需要的抽象。
 
-### 中文优先，多语言数据先行
+### 多语言按可消费版本建模
 
-首版采用中文界面，但从第一天记录原作、译本、字幕、访问版本及中英文字段，后续可增加完整英文界面。
+原作、译本、字幕与双语版本保持关联。同一作品不因语言不同复制成多个资源；过滤依据是用户能消费的 access version。
 
-### 广泛收录与严格推荐分层
+### 职业语境与个人状态分开
 
-资源状态分为已收录、已归类、已审核、编辑精选和已归档。这样可以先获得足够覆盖，又不会把抓取结果伪装成质量推荐。
+角色必须和生产环境共同出现。职业画像说明某一语境中的重要性与责任范围，个人状态说明自己做过什么。两者不共享存储、视觉标签或评分。
 
-### 公开反馈作为证据，不做总分
+### Atlas 属于同一产品，但不复用能力语义
 
-第一版人工整理公开反馈摘要、出处和采样日期，不跨平台合并播放量、点赞和评分。
-
-### 静态优先并部署 GitHub Pages
-
-使用 Astro、TypeScript、GitHub Actions 与 GitHub Pages。第一版无账号、数据库和 CMS，个人进度保存在浏览器本地。
-
-### Game Innovation Atlas 是站内的次级知识视图
-
-能力地图回答“如何学习与前进”，Innovation Atlas 回答“游戏创新如何出现和演变”。两者属于同一个 Learn About Games 产品，共享网站、品牌、资源和贡献流程。创新、游戏作品、关系与证据在数据语义上与能力对象分开；相似性不能自动证明影响关系。Atlas 优先级低于核心能力地图与资源导航。
-
-### 公开项目自身的发展路径
-
-Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释关键选择。原始会话记录继续作为跨 agent 的证据层，不直接替代面向公众的 Devlog。
-
-### 仓库是跨 AI 连续性的事实来源
-
-留档的核心目的之一，是让任何 AI 在没有原聊天界面的情况下继续项目。根入口、决策摘要、脱敏会话记录、Roadmap、Changelog 与 Devlog 必须共同保存项目来源、发展过程、已验证现状和下一步方向。
+Atlas 回答创新如何出现和演变，能力地图回答如何学习与前进。它们共享品牌、导航、资源、证据与贡献入口，但 Game、Innovation、Relation 和 Evidence 不伪装成 Capability。
 
 ### M0 与正式第一版分开
 
-M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态、语言筛选、公开项目历史和 Atlas 种子。40–60 节点、300/100 资源、10–15 路径与 3–4 画像仍是后续正式第一版内容扩展目标。
+M0 用一个真实纵向切片验证数据契约、导航、语言、个人状态、Atlas 证据与部署。规模扩展必须另写计划，并由内容审核能力支撑，不能把候选数量写成推荐质量。
 
-### 早期版本设定复杂度预算
+### 复杂度由当前失败证明
 
-复杂度必须由当前用户路径、真实失败、部署正确性或误导性关系证明。M0 只处理现有引用完整性、Atlas 证据、GitHub Pages 子路径、语言筛选和本地进度损坏回退；不提前实现 URL 高级去重、自动因果推断、进度导入导出、迁移框架、复杂搜索和极限边界穷举。对抗审查优先删除误导与多余机制，而不是扩大系统。
+M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStorage 损坏回退与证据关系。账号、云同步、复杂搜索、进度导入导出、自动因果推断、力导图和迁移框架均被延后。
 
-### 动态模型数据只作为分配信号
+## M0 改动与验收
 
-2026-08-08 核查 Codex Radar 时，其 DeepSWE 数据显示模型、effort、任务类型和成本表现差异显著，因此后续分配会记录访问时间与任务上下文，不写死单一 IQ 阈值。第三方排名不能替代任务验收；价格和“免费”必须用官方条款复核。Luna 的 ChatGPT Free 无限文本聊天不等于免费 Codex 子代理或免费 API，且当前桌面运行时只暴露 Sol 与 Terra。
+### 基础与内容
 
-### Atlas 首版种子选择 Roguelike 谱系
+- Astro 7.2、TypeScript 6.0.3、Content Collections、Vitest 与 Playwright 建立静态站点和构建期引用校验。
+- 地图、Playtest 能力与路径、资源库、职业透镜、本地进度、Atlas、仓库文档与 Devlog 均有公开路由。
+- GitHub Actions 以 Node 24 构建、测试并上传 Pages artifact；deploy job 是唯一拥有 Pages 写入与 OIDC 权限的 job。
 
-在 Jumping、Roguelike 和 Valve Playtesting 三个候选中，Roguelike 具有最完整的可核查关系证据。首版使用 Rogue、Hack、NetHack、Moria、Angband、Diablo、Spelunky、Hades，并严格区分直接影响、派生、融合和设计启发。
+### Task 7 对抗验收
 
-### Atlas M0 只发布可解释的证据索引
-
-Atlas 页面先展示八类未来组织框架，再展示一个独立于作品年份的 Innovation 概念、按简化发行年份排序的 8 个 Game、仅 7 条经人工批准的因果关系，以及 9 条来源。Game 使用矩形时间节点，Innovation 使用切角概念节点，Evidence 使用文献行；关系在桌面与移动端都显式标出方向。M0 不引入力导图、缩放、平移、自动布局、相似性边或动画库。
-
-## 第一版范围
-
-- Game Design 为核心，包含通往 Creative Direction 的相邻能力。
-- 40–60 个知识议题与能力节点。
-- 300 个以上候选资源，至少 100 个完成审核。
-- 10–15 条重点学习路径。
-- 3–4 个职业与生产环境参考画像。
-- 中文和英文资源筛选均可用。
-- 学术资源优先覆盖与游戏设计、玩家体验和设计方法直接相关的内容。
-- Game Innovation Atlas 在第一版列出八类框架，并提供至少 1 个含 6–10 个节点和证据状态的种子主题。
-
-## 已完成的验证
-
-- 读取并核对用户的《如何成为更好的设计师》文章，确认“拥有地图—认识自己—持续准备”的产品主线。
-- 通过 GitHub CLI 确认远程仓库公开、为空，且本地 `origin` 正确关联。
-- 通过官方文档确认 Astro 可用 GitHub Actions 部署至 GitHub Pages，并需正确处理项目子路径。
-- 通过本地 Astro 7.2 loader 源码和实际 `astro check` / build 确认，JSON 数组的 `id` 用作 collection entry 保留字段，schema 校验普通 data 字段，`loadCatalog()` 再聚合 entry id。
-- Task 2 validator 单测 6 项通过；完整 Vitest 9 项通过；Astro check 0 errors；静态构建生成 9 个页面；Chromium visible skeleton E2E 通过。
-- Task 3 新增 Playtest 能力详情、基础路径、两条已审核 Work Item 与资源语言筛选；同一双语文章以一个 Work Item 和两个 access version 表达。测试先观察到目标路由和地图链接缺失而失败，随后 Chromium Playtest E2E 4 项、移动 Chromium Playtest E2E 4 项、既有 visible skeleton Chromium E2E 5 项均通过；`npm run check`、`npm test`、`npm run build` 通过。桌面与 320px 的 capability、trail、resources 截图已人工复查。
-- Task 4 新增唯一 `AAA / Game Designer` 参考画像。其依据和局限明确说明维护者 AAA 背景、业界语境，以及 indie/solo 的不同能力多边形；地图只显示核心、重要、建议了解与执行/协作/理解等分类标签。Playtest 页面新增五档个人学习状态，使用版本化 localStorage 键 `learn-about-games:progress:v1`，损坏 JSON 安全回退为空状态。职业参考与个人状态使用不同容器、文字和边框编码，不显示任何总分、百分比或雷达图。
-- Task 4 先获得两条 RED：progress 单测因模块不存在失败，profile/progress E2E 因地图控件不存在失败。实现后发现 bfcache 会恢复画像 select 的值而不恢复由脚本派生的地图标记，因此在 `pageshow` 重新应用透镜，避免增加职业状态存储。最终 `npm run check`、26 项 Vitest、静态构建、Chromium 11 项、mobile Chromium 11 项均通过；1440px 与 320px 地图和 Playtest 页截图人工复查，均无横向溢出。
-- Task 4 质量复查发现 CSS `.role-marker` 会覆盖原生 `hidden`，导致未应用画像时仍显示空分类行；同时无 JavaScript 时两个本应依赖脚本的 select 仍可操作。修复后 marker 的 `[hidden]` 强制不显示，两个 select 初始禁用且仅在脚本成功绑定时启用，并各自显示局部 no-JS 说明。E2E 覆盖初始 0、应用后 7、清除后 0 个可见 marker，以及无 JavaScript 下内容可读而控件不可操作。
-- Task 5 先观察到 Atlas Chromium E2E 4 项全部 RED：共享导航没有 Atlas、分类与关系均为 0、主题标题缺失。最小实现填入精确 8 类、8 个 Game、1 个 Innovation、9 个锁定来源和仅 7 条已证实关系，静态构建增至 13 个页面；Atlas Chromium 4 项与完整 Chromium/mobile 32 项通过。原尺寸截图复查后为关系增加显式方向箭头，移动端箭头向下；对应回归先 RED 后 GREEN。320px 实测 `clientWidth`、文档与 body `scrollWidth` 均为 320。
-- Task 5 质量审查补强 Atlas 关系回归：E2E 现在精确锁定 7 组 relation id、fromId、toId、type 与 confirmed status，并在 desktop/mobile 项目分别验证箭头无 transform 与 90 度 transform。旧页面缺少 from/to/type data attributes，双项目先得到 tuple RED；添加语义属性后 targeted 测试通过。分类渲染改为 clone 后排序，避免原地修改 catalog 数组。
-- Task 6 新增项目子路径 E2E：首页可见的绝对内部链接必须以 `/Learn-About-Games/` 开头，并逐项请求地图、Playtest 能力与路径、资源、Atlas、真实项目文档和构建 stylesheet。首次构建被测试自身的 TypeScript 可空值窄化错误拦截；根因仅在新测试，最小修正后 fresh build 与 Chromium 定向验收通过，未改变运行时代码。新增的 workflow 仅在 `main` 推送或手动触发时运行，以 Node 24、Chromium、Pages artifact 和最小部署权限构建与部署；质量审查确认 `configure-pages@v6` 在 build 中也需要 `pages: read`，因此 build job 显式限制为 `contents: read` 与 `pages: read`，deploy job 仍是唯一拥有 Pages 写入与 OIDC 权限的 job。远端成功运行前不将 Roadmap 标为 deployed。
-- 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
-- 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
-- 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
-- 核查 [Codex Radar](https://deng.codexradar.com/) 的动态 DeepSWE 指标与 OpenAI 官方 Luna 可用性：[产品公告](https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt/) 和 [帮助页](https://help.openai.com/en/articles/20001354-gpt-56-in-chatgpt) 说明 Luna 对 ChatGPT Free 的文本聊天有条件免费；[API 模型页](https://developers.openai.com/api/docs/models/gpt-5.6-luna) 明确 Free 不受支持，当前也不属于免费 Codex 子代理。
+- 1440px 与 320px 实际运行并截图检查 home、map、Playtest、trail、resources、atlas 与 devlog；所有关键页实测 `clientWidth`、document `scrollWidth` 与 body `scrollWidth` 一致，没有横向溢出。
+- 新手可以从“看地图”认识 Domain 是结构区域、Capability 是可进入节点，并选择唯一显示“查看已策展路径”的 Playtest。验收修正了仍把已发布 Playtest 写成“下一步扩展”的过期文案。
+- 从业者可以从 Playtest 能力页进入基础路径，并抵达两条精确外部 Work Item URL。
+- `zh-CN` 只显示双语文章，`en` 显示文章和 GMTK 视频；history back 后 `pageshow` 重新应用筛选。无 JavaScript 时两条内容都可读，select 禁用并说明当前列出全部 Work Item。
+- 职业透镜和个人进度以独立容器、标签与说明表达；页面没有 score、percentage、radar 或唯一答案文案。
+- Atlas 关系显示方向、类型、confirmed 状态与证据链接；Innovation、Game 与 Evidence 使用不同视觉形状，并明确 chronology 不等于 causality。
+- Devlog collection 使用每篇 Markdown frontmatter 的真实标题；新增第二篇 M0 Devlog，不再在索引硬编码所有标题。
+- 行为修复均先取得 targeted RED；fresh build 后，no-JS 资源、已发布 Playtest 文案与两篇 Devlog 标题三项 targeted Chromium 回归通过。
+- Task 7 full gate：两次 `astro check` 均为 0 errors / warnings / hints，Vitest 26/26，通过 14 个静态页面的 fresh build，desktop Chromium 21/21、mobile Chromium 21/21，`git diff --check` 退出 0。
+- 按计划用 `rg -l` 执行脱敏 secret scan，排除 `node_modules`、`.git` 与 `dist` 后没有返回文件名；没有打印任何匹配值。
 
 ## 事故与教训
 
-- 一次 Exa 搜索命令因英文撇号与 shell 引号冲突而未执行；移除撇号后成功。后续搜索参数避免把未转义撇号嵌入单引号。
-- 巨型思维导图如果混合领域、能力、方法、原则和资源，会失去可解释性。网站数据与视觉必须区分对象类型。
-- 第一份 M0 计划虽可验证，但把未来数据规模所需的全量 schema、防御性校验和进度功能过早前置，延迟了可见结果。修订后先交付真实纵向切片，再由失败证据增加复杂度。
-- Task 1 首次安装暴露真实 peer 冲突：`@astrojs/check@0.9.10` 只接受 TypeScript 5/6，而原计划锁定 7.0.2。npm 官方 registry 确认 6.0.3 为当前兼容版本，因此只下调 TypeScript，不使用 `--legacy-peer-deps` 绕过依赖契约。
-- Task 2 建立了 Astro file loader 与 Zod 数据契约、稳定引用错误码、构建期 `loadCatalog()` 阻断、9 个领域与 9 个能力入口，以及仓库文档和 Devlog 静态页面。
-- 首个可见设计采用单一浅色、冷中性色与钴蓝强调色。Domain 使用结构分区，Capability 使用可点击矩形节点；移动端退化为严格单列大纲，不缩小桌面地图。
-- Task 5 的首次 GREEN E2E 读取了 RED 前的旧 `dist`，因为项目的 Playwright `webServer` 只运行 `astro preview`，不会自动构建。检查发现 `dist/atlas/index.html` 不存在且静态产物早于 Atlas 源文件；按既有流程先运行 fresh build 后测试恢复正常，没有为此修改测试配置。
-- Task 5 初次加入方向箭头时，宽泛的 `.atlas-relation__path span` 也让箭头继承了 endpoint 的边框与背景，视觉上像第三种节点。新增 computed-style 回归先得到 `border-top-width: 1px` 的 RED，再把 endpoint 选择器收窄到直接子级 `[data-endpoint-kind]`，避免不同实体共享形状。
-- Task 6 的新验收首次未执行到浏览器，因为 `astro check` 正确指出 `getAttribute()` 的 `string | null` 不能作为 matcher message，并发现未使用常量。先确认这只来自新增测试，再加控制流窄化并实际使用基路径常量；没有放宽断言或修改产品代码。
-- Task 6 quality review 发现部署 workflow 的 build job 只有顶层继承的 `contents: read`，但 `configure-pages@v6` 需以 `github.token` 调用 Pages 配置读取接口。先以一次性文本契约确认 build block 不含 `pages: read`（RED），再只添加 job-level `contents: read` 与 `pages: read`；不扩大为写权限、第三方 action 或新依赖。
+- 初始依赖计划使用 TypeScript 7.0.2，但 `@astrojs/check@0.9.10` 的 peer 范围只兼容 TypeScript 5/6。最终采用 TypeScript 6.0.3，不使用 `--legacy-peer-deps` 绕过契约。后续简称为 TS7 到 TS6 兼容修正。
+- Astro 会重写 Markdown 内部链接。公开项目文档需要把 README、Roadmap、Changelog、Methodology、Contributing 与 Devlog 映射到站内路由；其他仓库文件必须改写为绝对 GitHub URL。
+- `astro preview` 只服务现有 `dist`，不会执行 fresh build。旧产物曾制造 Atlas 假 GREEN；Task 7 又发现已启动 preview 会被 Playwright `reuseExistingServer` 复用。正确顺序是停止残留 preview，fresh build，再跑 E2E。
+- 资源语言 select 与 history 会被浏览器恢复，但卡片 hidden 状态来自脚本。`pageshow` 必须重放筛选；无 JavaScript 时控件必须禁用且说明全部资源仍可读。
+- bfcache 同样会恢复职业画像 select 而不恢复派生 marker。职业透镜在 `pageshow` 重放；`.role-marker[hidden]` 必须显式保持不可见，role 与 progress 的 no-JS 控件不能假装可操作。
+- Atlas 测试必须锁定 relation id、fromId、toId、type 与 status 的 tuple。方向箭头桌面向右、移动向下；endpoint CSS 选择器必须收窄，避免箭头继承节点边框并变成第三种实体。
+- 远端 HTTPS 曾因 macOS Keychain 凭据路径返回 403。诊断改用命令级显式 SSH URL，确认认证与连通性；没有修改 global Git 配置或仓库 `origin`。该诊断不曾被当作部署证据。
+- `actions/configure-pages@v6` 在 build job 读取 Pages 配置，需要 `pages: read`。build job 只增加 `contents: read` 与 `pages: read`，deploy job 才拥有 `pages: write` 与 `id-token: write`。
+- 部署配置存在不等于上线。只有 Actions run 31264625728 的 build/deploy 成功和公开 URL HTTP 200 才把 M0 从 Roadmap Now 移到 Shipped。
 
 ## 未决问题
 
-以下问题已明确延后到实现计划或后续版本，不阻塞第一版设计：
+- 首批 40-60 个知识议题与能力节点的确切名单和审核顺序。
+- 首批 10-15 条路径的选择标准与内容模板。
+- 候选资源、人工审核与贡献流程在扩大到 300/100 规模前如何小批量验证。
+- AAA 之外首个职业与生产环境画像，以及第一版最终 3-4 个画像名单。
+- 完整英文界面的发布时间。
+- Atlas 何时拥有足够主题证明需要时间轴或关系网络交互。
 
-- 第一版最终视觉语言与品牌样式。
-- 首批 40–60 个节点的确切分类名称。
-- 首批 3–4 个职业与生产环境画像的最终名单。
-- 英文界面发布时间。
-- Codex Radar 与模型价格会持续变化；每轮重要分配需要重新取样，不能把本次数据固化为永久结论。
+## 精确下一步
 
-## 下一步
-
-1. 在远端 `main` 触发并确认 GitHub Pages workflow 成功部署后，再记录 URL 的实际可访问证据。
-2. M0 验证完成后再编写正式第一版内容扩展计划。
+1. 保持 M0 数据语义与五条真实用户路径不回退，不立即扩展交互框架。
+2. 单独编写正式第一版内容扩展计划，先确定 40-60 个节点与 10-15 条路径的分批审核顺序。
+3. 用一小批候选资源验证提交、归类、审核、版本关联与归档流程，再决定如何扩大到 300/100 规模。
+4. 只有在证据和维护能力足够时增加下一个角色画像或 Atlas 主题；复杂 Atlas 交互继续晚于核心地图与资源导航。

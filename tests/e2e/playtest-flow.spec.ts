@@ -72,6 +72,10 @@ test('keeps all work items available without JavaScript', async ({ browser }) =>
   await page.goto('./resources/');
   await expect(page.locator('.resource-card').filter({ hasText: 'Valve\'s “Secret Weapon”' })).toBeVisible();
   await expect(page.locator('.resource-card').filter({ hasText: '如何进行好的 Playtest' })).toBeVisible();
+  await expect(page.getByLabel('可消费语言')).toBeDisabled();
+  await expect(page.locator('.script-required-note')).toHaveText(
+    '启用 JavaScript 后可以按可消费语言筛选；当前列出全部 Work Item。',
+  );
 
   await context.close();
 });

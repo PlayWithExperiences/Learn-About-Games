@@ -149,6 +149,9 @@ const devlog = defineCollection({
     base: 'docs/devlog',
     pattern: '**/*.md',
   }),
+  schema: z.object({
+    title: z.string().trim().min(1),
+  }),
 });
 
 export const collections = {

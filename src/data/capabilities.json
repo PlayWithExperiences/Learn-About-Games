@@ -32,7 +32,7 @@
   {
     "id": "playtesting",
     "name": { "zh-CN": "Playtest", "en": "Playtesting" },
-    "summary": { "zh-CN": "通过观察玩家检验设计判断。将于 M0 扩展，下一步进入。", "en": "Test design judgments by observing players. This is the next M0 capability to expand." },
+    "summary": { "zh-CN": "通过观察玩家检验设计判断，沿能力页进入 Playtest 基础路径。", "en": "Test design judgments by observing players, then enter the Playtest foundations trail from the capability page." },
     "domainId": "iteration"
   },
   {

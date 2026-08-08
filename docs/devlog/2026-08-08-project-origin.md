@@ -1,3 +1,7 @@
+---
+title: Devlog 001：Learn About Games 从哪里来
+---
+
 # Devlog 001：Learn About Games 从哪里来
 
 - 日期：2026-08-08

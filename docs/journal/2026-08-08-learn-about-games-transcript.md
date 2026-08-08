@@ -253,3 +253,21 @@ Atlas 只写入 7 条经 lead 审批的关系：Rogue 到 Hack、Hack 到 NetHac
 记录说明：以下为当前实现任务可访问范围内的脱敏摘要，是 partial export，不是完整聊天 UI 的逐字导出。缺失范围与第 28 节相同。
 
 质量审查确认 `actions/configure-pages@v6` 在 build job 中使用 `github.token` 调用 Pages 配置读取接口，因此仅有顶层 `contents: read` 会阻断首次 workflow。实现先运行一次性 AWK 文本契约，确认 `build` block 不含 `pages: read`（RED）；首次脚本因 zsh 保留变量名 `status` 中止，重命名为 `result_code` 后获得有效 RED。最小修复只在 build job 添加 job-level `contents: read` 与 `pages: read`，保留顶层 `contents: read`，没有给 build 写权限。deploy job 继续仅有 `pages: write` 和 `id-token: write`。此修复不构成远端部署成功证据，Roadmap 与部署状态均未更新为已上线。
+
+### 30. M0 Task 7：对抗验收、部署事实与连续性交接
+
+记录说明：以下为 Task 7 fresh implementer 当前运行时可访问范围内的脱敏摘要，是 partial export，不是原始聊天 UI 的完整逐字导出。缺失范围包括主 agent 的私有推理、未转发消息、完整远端工具原始输出、早期任务逐字对话及系统运行记录；未获取的内容不声称完整。本文没有记录 token、凭据、Keychain 内容或环境变量值。
+
+主 agent 提供的已验证远端事实是：远端 `main` 与本任务起始 HEAD 均为 `7f982bbdf074e56a99ec2ee5ca2a568fe25f5fca`；Pages 使用 workflow build type；Actions run `31264625728` 的 build 与 deploy jobs 成功；公开 URL `https://playwithexperiences.github.io/Learn-About-Games/` 的 home、map、capability、resources 与 atlas 均已获得 HTTP 200。Task 7 被明确禁止 push 或修改远端。
+
+任务要求用实际运行和原尺寸截图回答五个问题：新手能否解释地图并选择 Playtest；从业者能否抵达精确 Work Item；language filter 是否表达可消费 access version 且 history/no-JS 可信；role lens 与 personal progress 是否明确独立且没有分数；Atlas 是否在同一产品内表达 evidence、uncertainty 并避免 chronology 等于 causality。验收覆盖 1440px 与 320px 的 home、map、Playtest、trail、resources、atlas 和 devlog，截图写入 `/tmp/learn-about-games-task7/`。
+
+实际走查确认桌面与移动关键页都没有横向溢出。用户路径从首页进入地图，再进入 Playtest 能力与基础路径，最终到达 GMTK 视频和双语文章两个精确外链。中文筛选只显示双语文章，英文筛选显示两项；history back 保留 select 值并在 `pageshow` 重放卡片状态。职业画像与个人状态使用不同容器、标签和说明，没有 score、percentage 或唯一答案。Atlas 展示 8 类、8 个 Game、1 个 Innovation、7 条关系与 9 项 Evidence；移动关系箭头向下，年份说明明确不构成因果。
+
+对抗走查发现三个 current-scope 问题。第一，Devlog 索引把所有 entry 标题硬编码为“Learn About Games 从哪里来”。实现先增加第二标题断言并获得 RED，再给 Devlog Markdown 增加最小 `title` frontmatter、收紧 collection schema，并渲染 `entry.data.title`。第二，资源语言 select 在无 JavaScript 时仍 enabled，却不能过滤且没有说明。实现先获得 `Received: enabled` 的 RED，再让 select 服务端 disabled、脚本绑定后启用，并在 no-JS 下说明当前列出全部 Work Item。第三，首页与 Playtest 节点仍把已经发布的切片写成“下一步扩展”。实现先获得可见文案 RED，再改成已提供可走通路径的当前事实。
+
+Task 7 还记录了一次验收环境事故：fresh build 前启动的 preview 被 Playwright `reuseExistingServer` 复用，使 targeted 测试看见旧 manifest。诊断对照 `dist` 与 no-JS DOM 后确认产品产物已经更新；停止残留 preview 并修正测试对完整段落和 `noscript` 元素的定位后，三个 targeted 回归通过。没有通过放宽产品要求掩盖问题。
+
+公开文档随后改为真实部署状态。README 链接线上 URL 并列出 M0 的 Playtest、AAA lens、本地 progress 与 Atlas seed；Roadmap 把实际完成的 M0 移到 Shipped，Now 只保留正式第一版的内容扩展规划；Changelog 只记录上线行为与修复，并链接 run 31264625728；第二篇 Devlog 解释 thin slice、已验证内容、刻意延后范围、事故与下一步。决策摘要保留项目来源、关键理由、远端部署证据、TS7 到 TS6 兼容、Astro Markdown link rewrite、preview、history/pageshow、role hidden/no-JS、Atlas tuple/arrow、HTTPS Keychain 403 到显式 SSH 且未改 global/origin、Pages `pages: read` 与精确下一步。
+
+最终门禁记录为：`astro check` 0 errors / warnings / hints，Vitest 26/26，fresh build 生成 14 个静态页面，desktop Chromium 21/21、mobile Chromium 21/21，`git diff --check` 退出 0。按计划执行的 `rg -l` secret scan 在排除依赖、Git 元数据和构建产物后没有返回文件名；没有输出任何匹配值。

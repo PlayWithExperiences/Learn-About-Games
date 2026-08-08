@@ -1,6 +1,6 @@
 # Learn About Games 产品设计
 
-- 状态：已完成对话确认，等待书面审阅
+- 状态：已完成对话确认；M0 纵向切片已部署，正式第一版内容规模仍待扩展
 - 日期：2026-08-08
 - 发起品牌：PlayWithExperiences
 - 项目仓库：https://github.com/PlayWithExperiences/Learn-About-Games

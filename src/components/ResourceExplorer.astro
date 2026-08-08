@@ -46,11 +46,12 @@ function groupAccessVersions(versions: AccessVersion[]) {
     </div>
     <label>
       <span>可消费语言</span>
-      <select id="resource-language-filter" name="language">
+      <select id="resource-language-filter" name="language" disabled>
         <option value="all">All</option>
         <option value="zh-CN">zh-CN</option>
         <option value="en">en</option>
       </select>
+      <noscript><span class="script-required-note">启用 JavaScript 后可以按可消费语言筛选；当前列出全部 Work Item。</span></noscript>
     </label>
   </div>
 
@@ -99,6 +100,10 @@ function groupAccessVersions(versions: AccessVersion[]) {
   const select = document.querySelector<HTMLSelectElement>('#resource-language-filter');
   const cards = Array.from(document.querySelectorAll<HTMLElement>('.resource-card'));
   const resultCount = document.querySelector<HTMLElement>('#resource-result-count');
+
+  if (select) {
+    select.disabled = false;
+  }
 
   function updateResources() {
     if (!select || !resultCount) return;

@@ -18,7 +18,7 @@ const entries = (await getCollection('devlog')).sort((a, b) => b.id.localeCompar
         <li>
           <a href={sitePath(`devlog/${entry.id.replace(/\.md$/, '')}/`)}>
             <span>{entry.id.replace(/\.md$/, '')}</span>
-            <strong>Learn About Games 从哪里来</strong>
+            <strong>{entry.data.title}</strong>
           </a>
         </li>
       ))}

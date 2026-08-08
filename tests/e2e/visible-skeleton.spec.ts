@@ -39,6 +39,21 @@ test('publishes the visible map skeleton and repository-backed project pages', a
   }
 });
 
+test('describes the shipped Playtest slice as available now', async ({ page }) => {
+  await page.goto('./');
+  await expect(
+    page.getByText(
+      '当前 M0 公开 9 个领域和 9 个能力入口。Playtest 已提供可走通的学习切片；其他路径不会伪装成已经完成。',
+      { exact: true },
+    ),
+  ).toBeVisible();
+
+  await page.getByRole('link', { name: '打开能力地图' }).click();
+  await expect(
+    page.getByText('通过观察玩家检验设计判断，沿能力页进入 Playtest 基础路径。', { exact: true }),
+  ).toBeVisible();
+});
+
 test('keeps every shared navigation link in the 320px viewport', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('./');
@@ -76,6 +91,13 @@ test('maps repository-backed Markdown links to public site routes', async ({ pag
   );
 });
 
+test('lists each Devlog entry with its own title', async ({ page }) => {
+  await page.goto('./devlog/');
+
+  await expect(page.getByRole('link', { name: /Devlog 001：Learn About Games 从哪里来/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Devlog 002：M0 为什么从纵向切片开始/ })).toBeVisible();
+});
+
 test('maps non-public Markdown links to absolute repository URLs', async ({ page }) => {
   await page.goto('./project/readme/');
   const document = page.locator('article.prose');
@@ -93,12 +115,19 @@ test('maps non-public Markdown links to absolute repository URLs', async ({ page
   }
 });
 
-test('does not claim that the M0 skeleton is already published', async ({ page }) => {
+test('does not claim that M0 reached the formal first-release scale', async ({ page }) => {
+  await page.goto('./project/readme/');
+
+  await expect(
+    page.getByText(/M0 不冒充内容完整的正式第一版。40-60 个节点/),
+  ).toBeVisible();
+});
+
+test('records the verified M0 deployment', async ({ page }) => {
   await page.goto('./project/changelog/');
 
   await expect(
-    page.getByText('发布 M0 的首个可见能力地图骨架，展示 9 个领域与 9 个能力入口，并明确尚未策展的路径状态。', {
-      exact: true,
-    }),
-  ).toHaveCount(0);
+    page.getByRole('link', { name: 'https://playwithexperiences.github.io/Learn-About-Games/' }),
+  ).toBeVisible();
+  await expect(page.getByText(/31264625728/)).toBeVisible();
 });
