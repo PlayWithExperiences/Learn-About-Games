@@ -1,7 +1,7 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：M0 已完成 Playtest 学习纵向切片、AAA / Game Designer 参考透镜、本地个人状态与 Atlas 证据种子；下一步是整体验证与部署
+- 状态：M0 已完成 Playtest 学习纵向切片、AAA / Game Designer 参考透镜、本地个人状态与 Atlas 证据种子；本地 Pages 部署配置与项目子路径验收已加入，等待远端 workflow 首次成功运行
 - 设计文档：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
 
@@ -9,7 +9,9 @@
 
 - GitHub 公开仓库 `PlayWithExperiences/Learn-About-Games` 已创建。
 - 本地仓库已关联同名 `origin`。
-- 仓库此前为空，尚无网站代码或历史提交。
+- 远端 `main` 已包含首次推送；默认分支为 `main`。
+- GitHub Pages 已预配置为 workflow 构建，目标 URL 为 `https://playwithexperiences.github.io/Learn-About-Games/`；尚无成功部署状态，不能据此宣称网站已上线。
+- 远端 HTTPS 访问曾返回 403，显式 SSH 诊断用于确认远端连通性与认证路径；不把该诊断结果误写为部署证据。
 - 产品、内容模型、首版范围、贡献机制、技术栈和部署方式已经通过对话确认。
 - Game Innovation Atlas、公开 Roadmap、Changelog 与 Devlog 已加入设计。
 - 设计已获用户批准，实施将在 `codex/initial-site` 隔离分支进行。
@@ -106,6 +108,7 @@ Atlas 页面先展示八类未来组织框架，再展示一个独立于作品�
 - Task 4 质量复查发现 CSS `.role-marker` 会覆盖原生 `hidden`，导致未应用画像时仍显示空分类行；同时无 JavaScript 时两个本应依赖脚本的 select 仍可操作。修复后 marker 的 `[hidden]` 强制不显示，两个 select 初始禁用且仅在脚本成功绑定时启用，并各自显示局部 no-JS 说明。E2E 覆盖初始 0、应用后 7、清除后 0 个可见 marker，以及无 JavaScript 下内容可读而控件不可操作。
 - Task 5 先观察到 Atlas Chromium E2E 4 项全部 RED：共享导航没有 Atlas、分类与关系均为 0、主题标题缺失。最小实现填入精确 8 类、8 个 Game、1 个 Innovation、9 个锁定来源和仅 7 条已证实关系，静态构建增至 13 个页面；Atlas Chromium 4 项与完整 Chromium/mobile 32 项通过。原尺寸截图复查后为关系增加显式方向箭头，移动端箭头向下；对应回归先 RED 后 GREEN。320px 实测 `clientWidth`、文档与 body `scrollWidth` 均为 320。
 - Task 5 质量审查补强 Atlas 关系回归：E2E 现在精确锁定 7 组 relation id、fromId、toId、type 与 confirmed status，并在 desktop/mobile 项目分别验证箭头无 transform 与 90 度 transform。旧页面缺少 from/to/type data attributes，双项目先得到 tuple RED；添加语义属性后 targeted 测试通过。分类渲染改为 clone 后排序，避免原地修改 catalog 数组。
+- Task 6 新增项目子路径 E2E：首页可见的绝对内部链接必须以 `/Learn-About-Games/` 开头，并逐项请求地图、Playtest 能力与路径、资源、Atlas、真实项目文档和构建 stylesheet。首次构建被测试自身的 TypeScript 可空值窄化错误拦截；根因仅在新测试，最小修正后 fresh build 与 Chromium 定向验收通过，未改变运行时代码。新增的 workflow 仅在 `main` 推送或手动触发时运行，以 Node 24、Chromium、Pages artifact 和最小部署权限构建与部署；远端成功运行前不将 Roadmap 标为 deployed。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
@@ -121,6 +124,7 @@ Atlas 页面先展示八类未来组织框架，再展示一个独立于作品�
 - 首个可见设计采用单一浅色、冷中性色与钴蓝强调色。Domain 使用结构分区，Capability 使用可点击矩形节点；移动端退化为严格单列大纲，不缩小桌面地图。
 - Task 5 的首次 GREEN E2E 读取了 RED 前的旧 `dist`，因为项目的 Playwright `webServer` 只运行 `astro preview`，不会自动构建。检查发现 `dist/atlas/index.html` 不存在且静态产物早于 Atlas 源文件；按既有流程先运行 fresh build 后测试恢复正常，没有为此修改测试配置。
 - Task 5 初次加入方向箭头时，宽泛的 `.atlas-relation__path span` 也让箭头继承了 endpoint 的边框与背景，视觉上像第三种节点。新增 computed-style 回归先得到 `border-top-width: 1px` 的 RED，再把 endpoint 选择器收窄到直接子级 `[data-endpoint-kind]`，避免不同实体共享形状。
+- Task 6 的新验收首次未执行到浏览器，因为 `astro check` 正确指出 `getAttribute()` 的 `string | null` 不能作为 matcher message，并发现未使用常量。先确认这只来自新增测试，再加控制流窄化并实际使用基路径常量；没有放宽断言或修改产品代码。
 
 ## 未决问题
 
@@ -134,5 +138,5 @@ Atlas 页面先展示八类未来组织框架，再展示一个独立于作品�
 
 ## 下一步
 
-1. 验证并部署同一份 M0 静态输出。
+1. 在远端 `main` 触发并确认 GitHub Pages workflow 成功部署后，再记录 URL 的实际可访问证据。
 2. M0 验证完成后再编写正式第一版内容扩展计划。

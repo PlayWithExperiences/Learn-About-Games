@@ -237,3 +237,13 @@ Atlas 只写入 7 条经 lead 审批的关系：Rogue 到 Hack、Hack 到 NetHac
 实现先扩展浏览器测试。旧页面在 Chromium 和 mobile Chromium 中都能读到正确 relation id 与 confirmed status，但 7 条关系的 fromId、toId、type 均为 null，因此 tuple 测试两项 RED。新增的方向 computed-style 测试在旧实现上直接通过：desktop 的 transform 为 `none`，mobile 的 transform 为 90 度 matrix，说明行为本身已正确，只是此前缺少回归覆盖；记录没有伪造这项 RED。
 
 最小修复只在 relation article 输出 `data-from-id`、`data-to-id` 与 `data-relation-type`，E2E 按 theme 顺序精确断言 7 个五元组；分类改为 `[...categories].sort()`，没有增加数据模型测试框架或未来抽象。fresh build 后，tuple 与方向的 Chromium/mobile targeted 测试 4 项通过。此次没有用户可见文案或样式变化，因此没有重生成截图或修改 Changelog。
+
+### 28. M0 Task 6：项目子路径验收与 Pages workflow
+
+记录说明：以下为当前实现任务可访问范围内的脱敏摘要，是 partial export，不是完整聊天 UI 的逐字导出。缺失范围包括未导出的主任务对话、远端服务响应细节和完整工具输出；未获取的内容不声称完整。
+
+远端公开仓库 `PlayWithExperiences/Learn-About-Games` 的首次提交已经推送到默认分支 `main`。GitHub Pages 已由主任务预配置为 workflow 构建，目标 URL 是 `https://playwithexperiences.github.io/Learn-About-Games/`，但状态尚未表明 workflow 成功部署。一次 HTTPS 访问返回 403；后续以显式 SSH 诊断确认认证/连通性路径，不能把该诊断或预配置当作上线证据。
+
+实现只新增一条项目路径 E2E，不建立 crawler。它在首页读取可见绝对内部链接并要求每个以 `/Learn-About-Games/` 起始；然后请求地图、`capabilities/playtesting`、`trails/playtesting-foundations`、资源库、Atlas、真实项目文档和首页读取到的 stylesheet，均要求 HTTP 200。由于子路径实现已在先前任务存在，测试的首次意图是验证既有行为而非伪造 RED。首次命令确实被新测试的 TypeScript 错误阻断：`getAttribute()` 的可能空值用作 matcher message，另有未使用的常量。根因确认后仅用控制流窄化和该常量本身修正测试；fresh build 与 Chromium 定向验收随后通过，未修改站点运行时代码。
+
+新增 workflow 只在 `main` 推送和手动触发时运行：checkout、以 `.nvmrc` 的 Node 24 使用 npm cache、`npm ci`、Chromium 安装、Pages 配置、构建、Chromium E2E 和 `dist` artifact 上传。部署 job 依赖 build，且只在该 job 赋予 `pages: write` 与 `id-token: write`；未加入第三方 action、遥测、crawler、PR 部署或非计划的 concurrency。Changelog 记录的是 workflow 和验收已加入，不声称站点已上线；Roadmap 保持 Now，等待实际远端部署证据。
