@@ -230,3 +230,11 @@ release docs commit `b0c575712a2461ef4b72f449e7097d8b61371079` 完成后，主�
 GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 skipped / 1 failed，因此没有上传 artifact 或部署。唯一失败为 Atlas 选中详情从 Evidence 返回网络：Ubuntu 记录的 pageY 为 1345，保存值为 1342；pageX=0 与 canvasX=1022 均精确恢复，node link 也继续恢复焦点。该 3px 差异属于字体／设备像素取整，不能解释为用户位置丢失；严格对象全等测试过度约束了浏览器实现。
 
 最小测试修复保持 pageX 与 canvasX 精确相等，并要求 `abs(after.pageY - before.pageY) <= 4`，不改产品恢复逻辑。使用与 workflow 相同的 `GITHUB_PAGES=true CI=1`、Chromium、5 workers 并对该 flow 重复 20 次，结果 20/20。此时修复尚未 commit/push，run `31282121063` 明确记录为失败，公开 Pages 仍是 M0。
+
+## 23. v0.2 部署成功与公开站验收（部分会话导出）
+
+测试合同修复以 commit `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` 独立提交，并通过 SSH 非强制快进到远端 `codex/v02` 与 `main`。GitHub Pages run `31282275108` 成功完成 build（含 Chromium E2E）、artifact upload 和 deploy；runtime 发布事实固定为 SHA `0b6bfb4` → run `31282275108` → public Pages。
+
+部署后首先使用无缓存 HTTP 请求确认首页、Map、Career、Resources、Atlas、About、Devlog 索引和 Devlog 003 八条路由均返回 200。随后以 fresh Chromium 直接访问公开 URL，实测 Map 为 54 个可进入节点与 64 条关系；Career 为 3 个按钮，应用 `AAA · Creative Director` 后状态明确且全图保留；Resources 为 20 个 Source、128 个 Work Item、7 个事实筛选，选择 Playtesting 能力后显示 8 个 Source／15 条 Work Item；Atlas 为 27 个节点、25 条关系、40 项 Evidence，Metroidvania 透镜状态明确且“当前选择”dialog 可打开。About 与两个 Devlog 入口标题正确。
+
+公开站另以 320px Dark 逐页访问首页、Map、Career、Resources、Atlas、About 与 Devlog；所有页面的 documentElement/body scrollWidth 均为 320，与 clientWidth 相等。公开验收截图位于 `/tmp/learn-about-games-v02-live/`。这些 runtime 事实随后写入 README、Roadmap、Changelog、AGENTS、CLAUDE、Devlog 与本连续性记录；该 evidence commit 只更新发布事实，不改变已验证产品运行时。

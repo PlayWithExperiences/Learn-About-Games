@@ -1,6 +1,6 @@
 # Project entrypoint
 
-Verified state: M0 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/>. The v0.2 runtime is complete through `0deb96d`, has passed independent product/Atlas review, and is in release-document and GitHub Pages acceptance; it is not deployed yet. The user explicitly authorized direct implementation and deployment without another design-review pause.
+Verified state: v0.2 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/> from runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` via GitHub Pages run `31282275108`. It passed independent product/Atlas review and live route/interaction checks. The user explicitly authorized direct implementation and deployment without another design-review pause.
 
 Before making substantive changes, read these files in order:
 

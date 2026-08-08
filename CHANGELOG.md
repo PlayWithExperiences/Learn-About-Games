@@ -4,6 +4,18 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 暂无未发布的产品行为。
+
+## [v0.2] - 2026-08-09
+
+### Deployed
+
+- GitHub Pages workflow [run 31282275108](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31282275108) 成功发布 runtime commit `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`；build、Chromium E2E、artifact 与 deploy 全部成功。
+- 线上复核确认 8 条关键路由均为 HTTP 200；地图 54 个节点／64 条关系、3 个 Career Lenses、20 个 Source／128 个 Work Item、Atlas 27 个节点／25 条关系／40 项 Evidence 与 320px 无横向溢出合同均成立。
+- 较早的 [run 31282121063](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31282121063) 因 Ubuntu 浏览器产生 3px 垂直滚动取整差异而在单条 E2E 断言失败，没有上传 artifact 或部署；测试改为保留横向位置精确合同，并允许不超过 4px 的纵向取整差异。
+
+### Added and changed
+
 - 新增 `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 三个带生产语境、依据和复核日期的 Career Lenses；它们复用同一张能力地图，只改变强调，不生成评分、缺口、完成率或统一建议步骤。
 - Innovation Atlas 从 Roguelike 种子列表重构为一张可横向浏览的全局时间网络，包含 27 个节点、25 条有证据关系和 40 项文献；Roguelike 与 Metroidvania 透镜只改变强调，不隐藏、不重排、不移动实体。
 - Atlas 的 Game、Innovation 与 Category Formation 使用不同形状；有向关系在目标节点边界显示箭头，无向关系双端对称。320px 使用按年代组织的关系等价大纲，并保留节点、关系与原始题名／语种证据详情。

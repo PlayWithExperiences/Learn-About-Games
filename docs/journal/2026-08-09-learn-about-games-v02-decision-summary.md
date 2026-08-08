@@ -1,8 +1,8 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：v0.2 运行时已推送到 `main`，首次 Pages run 未部署；CI 像素取整修复待重发
-- 线上 M0：https://playwithexperiences.github.io/Learn-About-Games/
+- 状态：v0.2 已部署并完成线上契约验收
+- 线上 v0.2：https://playwithexperiences.github.io/Learn-About-Games/
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 视觉系统：[DESIGN.md](../../DESIGN.md)
 - Foundation 计划：[2026-08-09-v02-foundation-implementation-plan.md](../superpowers/plans/2026-08-09-v02-foundation-implementation-plan.md)
@@ -14,7 +14,7 @@
 
 ## 当前状态
 
-M0 发布 HEAD 为 `373ef17bbcc7646e8b5183d300a7a394fe15e0ae`，对应 GitHub Pages run `31267011204`。v0.2 使用独立工作树 `.worktrees/v02` 和分支 `codex/v02`；发布候选已快进到远端 `main`，但首次 Pages run `31282121063` 在 E2E 阶段失败、没有部署，公开站仍为 M0。
+v0.2 runtime HEAD 为 `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`，对应成功 GitHub Pages run `31282275108`。远端 `main` 与 `codex/v02` 均指向该 runtime commit；公开站已完成八条关键路由、核心交互、数据计数与 320px 页面宽度验收。M0 的最后发布 HEAD `373ef17bbcc7646e8b5183d300a7a394fe15e0ae` 与 run `31267011204` 作为历史证据保留。
 
 v0.2 开始前的 clean baseline 已实际运行：`npm run build` 完成 Astro check 0 errors / warnings / hints、Vitest 27/27 和 14 个静态页面；`CI=1 npm run test:e2e` 为 44/44。
 
@@ -64,7 +64,9 @@ Atlas UI 独立审查最初判定 Not Ready，并给出 5 个 Important：非匹
 
 主任务在所有并发实现与复审结束后又执行了一次独立串行发布门禁：`npm run check` 为 0 errors / warnings / hints，Vitest 90/90，fresh build 105 pages，完整 E2E 为 120 passed / 8 intentional skipped，0 failed；`npm audit --audit-level=high` 为 0 vulnerabilities，`git diff --check` 与 credential filename scan 均无输出。最终视觉矩阵位于 `/tmp/learn-about-games-v02-final/`，覆盖首页、能力地图、职业方向、成长资源、Innovation Atlas、About 与 Devlog 的 1440px Light 和显式 320px Dark，并额外检查 Atlas dialog 与 320px no-JS；所有页面的 HTML/body `scrollWidth` 等于 `clientWidth`。临时 4338 preview 已精确停止。以上仍是本地发布候选证据，不冒充 GitHub Pages 已部署事实。
 
-发布候选 `b0c575712a2461ef4b72f449e7097d8b61371079` 已以 fast-forward 推送到远端 `main`。HTTPS push 因本机凭据身份 `Medill-East` 对组织仓库返回 403；SSH key 同一身份具有仓库写权限，因此改用已配置 SSH remote 完成非强制 push，没有改写历史。GitHub Pages run `31282121063` 的 build 成功，但 Chromium E2E 因 Atlas 返回位置断言在 Ubuntu 得到 3px 的垂直取整差异而失败，artifact/deploy 均未执行。运行时仍正确恢复焦点、横向画布位置与几乎同一视口；测试合同改为 pageX/canvasX 精确相等、pageY 允许不超过 4px 的浏览器取整差异，并用 CI 环境变量、5 workers、20 次重复得到 20/20。该修复尚待独立提交并触发新的 Pages run，因此当前公开站仍是 M0。
+发布候选 `b0c575712a2461ef4b72f449e7097d8b61371079` 已以 fast-forward 推送到远端 `main`。HTTPS push 因本机凭据身份 `Medill-East` 对组织仓库返回 403；SSH key 同一身份具有仓库写权限，因此改用已配置 SSH remote 完成非强制 push，没有改写历史。GitHub Pages run `31282121063` 的 build 成功，但 Chromium E2E 因 Atlas 返回位置断言在 Ubuntu 得到 3px 的垂直取整差异而失败，artifact/deploy 均未执行。运行时仍正确恢复焦点、横向画布位置与几乎同一视口；测试合同改为 pageX/canvasX 精确相等、pageY 允许不超过 4px 的浏览器取整差异，并用 CI 环境变量、5 workers、20 次重复得到 20/20。
+
+修复 commit `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` 随后快进到 `main`。GitHub Pages run `31282275108` 的 build、Chromium E2E、artifact upload 与 deploy 全部成功。公开站浏览器验收确认：首页当前态、54 个 Map 节点与 64 条关系、3 个 Career Lenses、20 个 Source 与 128 个 Work Item、七维资源筛选、27 个 Atlas 节点／25 条关系／40 项 Evidence、Metroidvania 透镜、Atlas“当前选择”dialog、About 与 Devlog 003 都可用；八条关键路由为 HTTP 200。首页、Map、Career、Resources、Atlas、About、Devlog 的 320px HTML/body 均无页面级横向溢出。v0.2 至此完成发布验收。
 
 ## 用户反馈与结论
 
@@ -118,10 +120,10 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 精确下一步
 
-1. 对发布文档切片执行 fresh check、unit、build 与主任务串行完整 E2E，并重新生成关键 1440px/320px、Light/Dark、no-JS 截图。
-2. 提交 release docs，push `codex/v02`，以非破坏方式集成到 `main`。
-3. 等待 GitHub Pages runtime run 成功，核验公开首页、地图、职业、资源、Atlas、About 与 Devlog 契约。
-4. 用独立 evidence commit 回写实际 SHA/run/线上事实并再次验证，随后才把目标标为完成。
+1. 继续按 canonical Work Item 扩大资源覆盖和语言版本，不把数量或外部观察变成质量评分。
+2. 为当前资源稀疏的能力补具体内容，同时保持 Capability、Knowledge Topic 与 Resource Topic 的语义边界。
+3. 扩展 Atlas 主题前先补节点、关系与 Evidence，不为视觉密度添加无证据连线。
+4. 根据真实使用反馈决定完整英文界面与更多专业方向的优先级；账号、后台与同步仍不预先引入。
 
 ## 当前未决风险
 

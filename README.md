@@ -37,9 +37,11 @@ npm run test:e2e
 
 ## 部署证据
 
+v0.2 runtime commit `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` 由 GitHub Pages workflow [run 31282275108](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31282275108) 成功完成 build、Chromium E2E、artifact 与 deploy。线上复核确认 8 条关键路由均为 HTTP 200；地图为 54 个可进入节点与 64 条关系，职业方向包含 3 个画像，资源目录包含 20 个 Source 与 128 个 Work Item，Atlas 包含 27 个节点、25 条关系和 40 项 Evidence。320px 关键页面无页面级横向溢出。
+
 首次基础部署由 GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728) 完成。Task 7 acceptance bundle commit `d079d83c14d2823c597d9c831c907f61fd6e62c8` 由 [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032) 成功构建并部署。Final-review 修复与不兼容进度版本回退测试所在 commit `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2` 由 [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 成功构建并部署。
 
-M0 线上复核确认：首页包含当时的 Playtest 纵向切片与 `AAA · Game Designer` 参考说明；Resources HTML 包含 no-JS 的 disabled select 与说明，Devlog 索引包含 `Devlog 002`。v0.2 的 GitHub Pages run 与线上契约会在本次发布成功后补入 Changelog。
+M0 线上复核确认：首页包含当时的 Playtest 纵向切片与 `AAA · Game Designer` 参考说明；Resources HTML 包含 no-JS 的 disabled select 与说明，Devlog 索引包含 `Devlog 002`。这些 run 保留为历史证据，不代表当前内容规模。
 
 ## 交接入口
 
