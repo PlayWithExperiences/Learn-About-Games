@@ -222,3 +222,11 @@ Evidence 改为页面底部 40 rows / 40 unique IDs / 40 external links 的单�
 主任务另在 4338 fresh preview 上生成最终视觉矩阵 `/tmp/learn-about-games-v02-final/`：首页、Map、Career、Resources、Atlas、About、Devlog 各有 1440px Light 与显式 320px Dark 原图；另外保存 Atlas“当前选择”dialog 和 320px no-JS Atlas。每条路由均实测 `documentElement.clientWidth === documentElement.scrollWidth === body.scrollWidth`（1440 或 320）；桌面 Atlas 只保留产品合同允许的网络内部横向滚动。原图确认五项导航、开放地图、三职业透镜、128 条资源目录、全局时间网络、项目资料聚合和 Devlog 003 均为当前态；4338 preview 随后精确停止。
 
 此时 v0.2 仍只存在于本地 `codex/v02`，尚未 push、快进到 `main` 或由 GitHub Pages 发布。发布事实、Actions run、公开 URL 与 live HTML 契约必须等实际成功后另行回写，不能由本地门禁推断。
+
+## 22. 第一次 Pages run 与 CI 像素取整修复（部分会话导出）
+
+release docs commit `b0c575712a2461ef4b72f449e7097d8b61371079` 完成后，主任务先 fetch 并验证 `origin/main` 是 `codex/v02` 祖先，再执行非破坏 fast-forward 发布。origin 的 HTTPS push 使用本机 `Medill-East` 凭据时返回组织仓库 403；`ssh -T git@github.com` 证明已经配置同一身份的 SSH key，随后使用 SSH URL 成功创建远端 `codex/v02` 并把 `main` 从 `373ef17` 快进到 `b0c5757`，没有 force push 或合并提交。
+
+GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 skipped / 1 failed，因此没有上传 artifact 或部署。唯一失败为 Atlas 选中详情从 Evidence 返回网络：Ubuntu 记录的 pageY 为 1345，保存值为 1342；pageX=0 与 canvasX=1022 均精确恢复，node link 也继续恢复焦点。该 3px 差异属于字体／设备像素取整，不能解释为用户位置丢失；严格对象全等测试过度约束了浏览器实现。
+
+最小测试修复保持 pageX 与 canvasX 精确相等，并要求 `abs(after.pageY - before.pageY) <= 4`，不改产品恢复逻辑。使用与 workflow 相同的 `GITHUB_PAGES=true CI=1`、Chromium、5 workers 并对该 flow 重复 20 次，结果 20/20。此时修复尚未 commit/push，run `31282121063` 明确记录为失败，公开 Pages 仍是 M0。

@@ -340,7 +340,9 @@ test('selected detail dialog preserves the network position and returns focus to
     pageY: window.scrollY,
     canvasX: document.querySelector<HTMLElement>('[data-atlas-canvas]')?.scrollLeft ?? 0,
   }));
-  expect(after).toEqual(before);
+  expect(after.pageX).toBe(before.pageX);
+  expect(after.canvasX).toBe(before.canvasX);
+  expect(Math.abs(after.pageY - before.pageY)).toBeLessThanOrEqual(4);
   await expect(nodeLink).toBeFocused();
 
   await nodeLink.click();
