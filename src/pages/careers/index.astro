@@ -1,76 +1,18 @@
 ---
+import CareerExplorer from '../../components/CareerExplorer.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
-import { sitePath } from '../../lib/site-path';
 
-const { capabilities, roleProfiles } = await loadCatalog();
-const profile = roleProfiles.find((item) => item.id === 'aaa-game-designer');
-
-if (profile === undefined) {
-  throw new Error('The AAA Game Designer reference profile is required for the careers entry page.');
-}
-
-const capabilityById = new Map(capabilities.map((capability) => [capability.id, capability]));
-const priorityLabels = {
-  core: '核心关注',
-  important: '重要关注',
-  suggested: '建议了解',
-};
-const responsibilityLabels = {
-  execute: '亲自执行',
-  contribute: '协作贡献',
-  decide: '判断',
-  direct: '指导',
-};
+const catalog = await loadCatalog();
 ---
 
 <BaseLayout title="职业方向" description="用公开依据理解职业与生产语境如何参考同一张能力地图。">
-  <section class="careers-page page-shell">
-    <header class="careers-page__intro">
-      <p class="plain-label">职业方向</p>
-      <h1>职业方向</h1>
-      <p class="lede">从生产语境看同一张能力地图。职业方向是参考高亮，不是另一套角色知识树，也不计算匹配度、个人分数或标准答案。</p>
-    </header>
-
-    <article class="career-profile" aria-labelledby="career-profile-title">
-      <div class="career-profile__heading">
-        <h2 id="career-profile-title">{profile.title['zh-CN']}</h2>
-        <p>{profile.basis['zh-CN']}</p>
-      </div>
-
-      <p class="career-profile__caveat">{profile.caveats['zh-CN']}</p>
-      <p class="career-profile__reviewed">最近复核：{profile.reviewedAt}</p>
-
-      <section class="career-profile__focus" aria-labelledby="career-focus-title">
-        <h3 id="career-focus-title">在同一张地图上关注什么</h3>
-        <ul>
-          {profile.capabilities.map((profileCapability) => {
-            const capability = capabilityById.get(profileCapability.capabilityId);
-            if (capability === undefined) return null;
-
-            return (
-              <li>
-                <a href={sitePath(`map/#${capability.id}`)}>{capability.name['zh-CN']}</a>
-                <span>{priorityLabels[profileCapability.priority]}，{responsibilityLabels[profileCapability.responsibility]}</span>
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-
-      <section class="career-profile__sources" aria-labelledby="career-sources-title">
-        <h3 id="career-sources-title">公开依据</h3>
-        <ul>
-          {profile.basisLinks.map((basisLink) => (
-            <li>
-              <a href={basisLink.url}>{basisLink.title['zh-CN']}</a>
-              <span>{basisLink.sourceNote['zh-CN']}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <a class="text-link" href={sitePath('map/')}>查看能力地图</a>
-    </article>
-  </section>
+  <CareerExplorer
+    domains={catalog.domains}
+    capabilities={catalog.capabilities}
+    knowledgeTopics={catalog.knowledgeTopics}
+    capabilityRelations={catalog.capabilityRelations}
+    roleProfiles={catalog.roleProfiles}
+    resources={catalog.resources}
+  />
 </BaseLayout>

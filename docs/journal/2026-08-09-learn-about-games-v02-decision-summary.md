@@ -38,6 +38,12 @@ Resources Tasks 3-4 已完成但尚未发布：主资源页把 20 个 Source 与
 
 提交前再次执行目标资源 unit 17/17、直接 Astro fresh build 104 pages、资源/base-path/Playtest 桌面与移动 30/30，均通过。共享工作树的最终 `npm test` 同时读到并发 Atlas Task 2 尚未实现的 RED tests，结果为资源及既有测试 69 passed、Atlas 12 failed；失败集中在 `atlas-network.test.ts` 与 Atlas validator 新契约，本资源提交不修改或暂存这些文件。主任务将在 Atlas GREEN 后重新运行全仓 unit/build 门禁。
 
+Career Lenses Task 4 已完成但尚未发布：`/careers/` 提供 `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 三个明确按钮；控件在 server HTML 中禁用，脚本完成绑定后才启用，无 JavaScript 时保留完整地图、禁用说明和三个可展开的公开依据。页面只组合现有 `CapabilityMap.astro` 一次，桌面地域图和移动关系大纲都继续显示 42 个 Capability、12 个 Knowledge Topic 与 64 条关系，没有复制第二棵角色树。
+
+应用画像后，已映射 Capability 使用核心实线、重要虚线、建议了解点线与中文文字标签，并公开 responsibility；未收录能力只降低强调而不隐藏。摘要按三档列出能力、责任范围、直接关联 Work Item 的 catalog 事实数量，以及即时聚焦当前可见节点、能力详情和 `resources/?capability=<id>` 三个动作。清除会移除全部画像 DOM 属性并恢复完整地图；控制器不读取或写入个人进度 storage。依据区公开 basis、caveat、basisLinks、sourceNote 与 reviewedAt，不生成职业适配、个人评价、雷达图或建议步骤。
+
+本切片先在旧单画像页面取得有效浏览器 RED：server HTML 没有任何职业按钮，交互测试也无法找到 Career Explorer。实现后的 career 桌面/移动定向为 12/12，叠加 map/profile-progress 回归为 34/34；同步旧 Career skeleton 后，Career 与 visible-skeleton 桌面/移动为 37 passed / 1 desktop-only skipped。视觉验收覆盖 1440px 的 System Light 默认、三个 applied、clear 与 explicit Dark，以及 320px 的 explicit Dark applied 和 no-JS；全部 HTML/body `scrollWidth` 等于 `clientWidth`。审查时发现移动聚焦虽转移键盘焦点，却受全局平滑滚动延迟而未立即进入视口；最终改为在聚焦操作内临时使用即时滚动，并新增桌面/移动 `toBeInViewport` 断言。Resources Task 5 合并后的 fresh build 完成 Astro check 0 errors / warnings / hints、Vitest 81/81 与 104 pages；完整 E2E 为 103 passed / 8 failed / 1 skipped，8 项全部来自 Atlas Task 3 尚未替换的旧 8-category / 7-edge UI 契约，Career 不再有失败。
+
 Resources Task 5 已把地图节点直接连接到具体资源，而没有恢复 Trail：全部 Capability 与 Knowledge Topic 详情按运行时 catalog 顺序列出直接关联的 Work Item；资源主题、能力与知识议题分别使用 `resourceTopic`、`capability`、`knowledgeTopic` 稳定参数进入同一个事实筛选器。没有直接资源的能力仍保留全目录筛选入口，并诚实显示空状态与贡献指南链接。测试先在旧详情页取得 2/2 预期 RED，最小实现后地图、资源、base-path 与 Playtest flow 的桌面/移动定向为 48/48。
 
 Atlas Task 2 合并后重新执行 fresh `npm run build`：Astro check 为 0 errors / warnings / hints、Vitest 81/81、静态生成 104 pages。视觉验收覆盖 Playtest、无直接资源的 `encounter-space-composition` 与知识议题 `emergence-complexity` 在 1440px/显式 320px、light/dark 六张截图；三类页面均无横向溢出，分别确认 15、0、12 个直接关联 Work Item，空状态贡献入口可达。Task 5 的 48/48 定向保持 GREEN；随后全量 E2E 为 94 passed / 17 failed / 1 desktop-only skipped，其中 8 项来自 Atlas 新数据仍配旧 M0 UI 断言，9 项来自正在实现的 Career Lens 浏览器契约，均不涉及本切片拥有的页面与测试。临时 preview 已停止。
@@ -96,7 +102,7 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 1. 重新运行文档阶段的 build、E2E、lint 与 diff gate，并提交 v0.2 规格、`DESIGN.md` 与四份可执行计划。
 2. 导航、About、三态主题与能力地图 Tasks 2-3 已完成；首页和地图显示数量从 catalog 派生，不把当前 42/12/64 写成未来上限。
-3. 职业透镜数据与资源发现切片已经进入工作树；下一步由主任务统一复核三类职业透镜在同一张地图上的投影，并进入 Atlas / Release 阶段。
+3. 三类职业透镜已经在同一张地图上完成可撤销投影；下一步进入 Atlas UI、全站质量门禁与 Release 阶段。
 4. 每阶段执行 RED-GREEN、规格审查、代码质量审查、连续性留档与独立提交。
 5. 最后完成桌面/移动、双主题、无 JavaScript、Pages 子路径与线上部署验收。
 

@@ -156,3 +156,19 @@ GREEN 把事实结果抽成共享的 `ResourceResults.astro`。主资源页 serv
 Atlas Task 2 提交后执行 fresh `npm run build`，结果为 Astro check 0 errors / warnings / hints、Vitest 81/81、104 pages。视觉验收覆盖 Playtest（15 项）、无直接资源能力 `encounter-space-composition`（0 项）和知识议题 `emergence-complexity`（12 项），分别检查 1440px 与显式 320px、light/dark；所有页面 `scrollWidth` 等于 `clientWidth`，筛选深链和空状态贡献入口均正确。截图保存在临时目录 `/tmp/lag-task5-review/`，不作为仓库产物提交。
 
 随后全量 `CI=1 npm run test:e2e` 共运行 112 项，结果为 94 passed、17 failed、1 desktop-only skipped。17 项失败经定位均不在 Task 5 范围：8 项是 Atlas 新网络数据已经合并、旧 `atlas.spec.ts` 仍锁 M0 数量和标题；9 项是 Career Lens 正在实现期间新增的浏览器契约。Task 5 自有 48/48 定向结果保持 GREEN，agent 没有修改或暂存 Atlas、Career、`global.css` 或 `ResourceExplorer` 文件。临时 preview 已停止。
+
+## 16. 三个职业透镜的同图投影（部分会话导出）
+
+本小节记录当前 agent 可访问的脱敏任务合同、实现决定和验证证据，不补造聊天 UI 中不可访问的逐字内容。任务要求把已经具备公开依据的三个 Role Profile 变成同一张能力地图上的可见覆盖层：必须保留全部 42 个 Capability，不复制角色知识树，不建立职业适配、个人评价、雷达图或建议步骤，并与浏览器本地的个人实践记录严格分离。
+
+实现继续采用浏览器测试先行。独立 `career-lenses.spec.ts` 首先锁定三个精确 middle-dot 标题按钮、server-disabled / JS-enabled 契约、无 select、桌面与移动各 42 个职业节点、三档 border pattern 与中文标签、责任范围、未收录 dim、分组摘要、直接 Work Item 数量、聚焦动作、能力详情、能力筛选资源链接、公开依据、clear 恢复、个人 progress storage 不变、no-JS 与 320px 无溢出。旧 `/careers/` 只有 `AAA · Game Designer` 的静态文章，没有任何 Career Explorer 按钮；server HTML 与交互定位因此得到预期 RED，而不是环境或数据错误。
+
+GREEN 新增 `CareerExplorer.astro`，从现有 catalog 调用纯 `projectCareerLens()` 生成三份投影，并只组合一次现有 `CapabilityMap.astro`。`CapabilityMap` 只增加稳定的 capability ID、focus target 和默认隐藏的 role-label hooks；普通 `/map/` 不出现 role priority、responsibility 或 state。客户端控制器只在应用时写入 DOM dataset：mapped 节点得到 `core | important | suggested` 与 responsibility，unlisted 节点只得到 dim state；clear 删除所有这些属性。三个 summary 都由 server render，应用时只切换对应内容，资源数量由当前 128 个 Work Item 的 `capabilityIds` 直接计数。
+
+页面视觉沿用现有 editorial 地图系统：三按钮是连续工具条，不使用 one-option select；摘要按三条编辑栏组织，不做卡片墙；核心、重要、建议了解分别使用实线、虚线、点线并同时显示中文；依据使用原生 details 公开 basis、适用边界、来源说明与复核日期。无 JavaScript 时按钮诚实禁用，三个依据仍可手动展开，完整移动大纲继续可读。
+
+首次 GREEN 浏览器运行发现 server HTML 测试把客户端 selector 字符串误计为第四个按钮；测试改为只解析实际 `<button>` 标签。视觉审查又发现 320px 的摘要“在地图中聚焦”已把 activeElement 转移到正确移动节点，但全局 `scroll-behavior: smooth` 让截图时节点仍在视口外。控制器因此只在该动作执行期间临时将根滚动改为 auto，完成 focus 与 `scrollIntoView` 后恢复，并把桌面、移动 `toBeInViewport` 纳入回归。
+
+实现后的 Career 定向桌面/移动为 12/12；与 map-v02、profile-progress 组合回归为 34/34。全量测试首次发现 `visible-skeleton.spec.ts` 仍锁定旧静态 Career 文章；该相邻契约最小同步为三按钮、默认完整地图与应用后公开依据，随后 Career 与 visible-skeleton 桌面/移动为 37 passed / 1 desktop-only skipped。1440px 原图覆盖 System Light 默认、三个 applied、clear 与 explicit Dark；320px 覆盖 explicit Dark applied、即时聚焦节点和 no-JS 依据。全部检查场景中 HTML/body 的 `scrollWidth` 与 `clientWidth` 相等；clear 后页面高度、可见 summary 和 role 属性都恢复到默认。
+
+Resources Task 5 原子提交后的 fresh `npm run build` 完成 Astro check 0 errors / warnings / hints、Vitest 81/81 与 104 pages。完整 `CI=1 npm run test:e2e` 为 103 passed / 8 failed / 1 desktop-only skipped；8 项全部属于 Atlas Task 3 尚未替换的旧 M0 断言，仍要求 8 个 category、1 个 Innovation、8 个 Game 与 7 条关系，而当前 Atlas 数据已是 27 个节点与 25 条关系。Career、Map、Progress、Resources、主题与导航在这次全量运行中均无失败。

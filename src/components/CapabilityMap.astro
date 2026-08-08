@@ -103,12 +103,16 @@ const relationDirection = (type: 'supports' | 'complements') =>
           data-map-node
           data-map-node-id={capability.id}
           data-map-node-kind="capability"
+          data-career-node
+          data-career-focus-target
+          data-capability-id={capability.id}
           data-entity-label="能力"
           data-anchor-x={capability.position.x}
           data-anchor-y={capability.position.y}
           style={`--node-x:${capability.position.x}%;--node-y:${capability.position.y}%`}
         >
           <span>{capability.name['zh-CN']}</span>
+          <small class="career-node-role-label" data-role-label hidden></small>
         </a>
       ))}
       {knowledgeTopics.map((topic) => (
@@ -156,10 +160,20 @@ const relationDirection = (type: 'supports' | 'complements') =>
                   type === 'complements' && (fromId === capability.id || toId === capability.id),
               );
               return (
-                <div class="map-outline-node" data-outline-node-kind="capability">
+                <div
+                  class="map-outline-node"
+                  data-outline-node-kind="capability"
+                  data-career-node
+                  data-capability-id={capability.id}
+                >
                   <div class="map-outline-node__heading">
                     <span>能力</span>
-                    <a href={sitePath(`capabilities/${capability.id}/`)}>{capability.name['zh-CN']}</a>
+                    <a
+                      href={sitePath(`capabilities/${capability.id}/`)}
+                      data-career-focus-target
+                      data-capability-id={capability.id}
+                    >{capability.name['zh-CN']}</a>
+                    <small class="career-node-role-label" data-role-label hidden></small>
                   </div>
                   <details>
                     <summary>查看关系</summary>

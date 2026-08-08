@@ -92,18 +92,20 @@ test('uses About as the project-materials entry point while preserving legacy do
   }
 });
 
-test('makes the AAA Game Designer lens useful without pretending it is a score or separate map', async ({ page }) => {
+test('makes three career lenses useful without creating a separate map', async ({ page }) => {
   await page.goto('./careers/');
 
-  await expect(page.getByRole('heading', { name: '职业方向', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'AAA · Game Designer', exact: true })).toBeVisible();
-  await expect(page.getByText(/不是行业标准或唯一答案/)).toBeVisible();
-  await expect(page.getByText('最近复核：2026-08-09', { exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Ubisoft Massive：Senior AI Game Designer', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: '查看能力地图', exact: true })).toHaveAttribute(
-    'href',
-    '/Learn-About-Games/map/',
-  );
+  await expect(page.getByRole('heading', { name: '把职业语境叠加到同一张地图。', exact: true })).toBeVisible();
+  const explorer = page.locator('[data-career-explorer]');
+  await expect(explorer.locator('[data-career-lens-button]')).toHaveCount(3);
+  await expect(explorer.locator('[data-career-node]')).toHaveCount(capabilities.length * 2);
+
+  await explorer.getByRole('button', { name: 'AAA · Game Designer', exact: true }).click();
+  const evidence = explorer.locator('[data-career-evidence="aaa-game-designer"]');
+  await expect(evidence).toHaveAttribute('open', '');
+  await expect(evidence.getByText(/不是行业标准或唯一答案/)).toBeVisible();
+  await expect(evidence.getByText('最近复核：2026-08-09', { exact: true })).toBeVisible();
+  await expect(evidence.getByRole('link', { name: 'Ubisoft Massive：Senior AI Game Designer', exact: true })).toBeVisible();
 });
 
 test('sends the three home actions to map, careers, and resources', async ({ page }) => {
