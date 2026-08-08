@@ -1,7 +1,7 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：M0 已完成 Playtest 学习纵向切片、AAA / Game Designer 参考透镜与本地个人状态；下一步是 Atlas 证据种子
+- 状态：M0 已完成 Playtest 学习纵向切片、AAA / Game Designer 参考透镜、本地个人状态与 Atlas 证据种子；下一步是整体验证与部署
 - 设计文档：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
 
@@ -78,6 +78,10 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 
 在 Jumping、Roguelike 和 Valve Playtesting 三个候选中，Roguelike 具有最完整的可核查关系证据。首版使用 Rogue、Hack、NetHack、Moria、Angband、Diablo、Spelunky、Hades，并严格区分直接影响、派生、融合和设计启发。
 
+### Atlas M0 只发布可解释的证据索引
+
+Atlas 页面先展示八类未来组织框架，再展示一个独立于作品年份的 Innovation 概念、按简化发行年份排序的 8 个 Game、仅 7 条经人工批准的因果关系，以及 9 条来源。Game 使用矩形时间节点，Innovation 使用切角概念节点，Evidence 使用文献行；关系在桌面与移动端都显式标出方向。M0 不引入力导图、缩放、平移、自动布局、相似性边或动画库。
+
 ## 第一版范围
 
 - Game Design 为核心，包含通往 Creative Direction 的相邻能力。
@@ -100,6 +104,7 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 - Task 4 新增唯一 `AAA / Game Designer` 参考画像。其依据和局限明确说明维护者 AAA 背景、业界语境，以及 indie/solo 的不同能力多边形；地图只显示核心、重要、建议了解与执行/协作/理解等分类标签。Playtest 页面新增五档个人学习状态，使用版本化 localStorage 键 `learn-about-games:progress:v1`，损坏 JSON 安全回退为空状态。职业参考与个人状态使用不同容器、文字和边框编码，不显示任何总分、百分比或雷达图。
 - Task 4 先获得两条 RED：progress 单测因模块不存在失败，profile/progress E2E 因地图控件不存在失败。实现后发现 bfcache 会恢复画像 select 的值而不恢复由脚本派生的地图标记，因此在 `pageshow` 重新应用透镜，避免增加职业状态存储。最终 `npm run check`、26 项 Vitest、静态构建、Chromium 11 项、mobile Chromium 11 项均通过；1440px 与 320px 地图和 Playtest 页截图人工复查，均无横向溢出。
 - Task 4 质量复查发现 CSS `.role-marker` 会覆盖原生 `hidden`，导致未应用画像时仍显示空分类行；同时无 JavaScript 时两个本应依赖脚本的 select 仍可操作。修复后 marker 的 `[hidden]` 强制不显示，两个 select 初始禁用且仅在脚本成功绑定时启用，并各自显示局部 no-JS 说明。E2E 覆盖初始 0、应用后 7、清除后 0 个可见 marker，以及无 JavaScript 下内容可读而控件不可操作。
+- Task 5 先观察到 Atlas Chromium E2E 4 项全部 RED：共享导航没有 Atlas、分类与关系均为 0、主题标题缺失。最小实现填入精确 8 类、8 个 Game、1 个 Innovation、9 个锁定来源和仅 7 条已证实关系，静态构建增至 13 个页面；Atlas Chromium 4 项与完整 Chromium/mobile 32 项通过。原尺寸截图复查后为关系增加显式方向箭头，移动端箭头向下；对应回归先 RED 后 GREEN。320px 实测 `clientWidth`、文档与 body `scrollWidth` 均为 320。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
@@ -113,6 +118,8 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 - Task 1 首次安装暴露真实 peer 冲突：`@astrojs/check@0.9.10` 只接受 TypeScript 5/6，而原计划锁定 7.0.2。npm 官方 registry 确认 6.0.3 为当前兼容版本，因此只下调 TypeScript，不使用 `--legacy-peer-deps` 绕过依赖契约。
 - Task 2 建立了 Astro file loader 与 Zod 数据契约、稳定引用错误码、构建期 `loadCatalog()` 阻断、9 个领域与 9 个能力入口，以及仓库文档和 Devlog 静态页面。
 - 首个可见设计采用单一浅色、冷中性色与钴蓝强调色。Domain 使用结构分区，Capability 使用可点击矩形节点；移动端退化为严格单列大纲，不缩小桌面地图。
+- Task 5 的首次 GREEN E2E 读取了 RED 前的旧 `dist`，因为项目的 Playwright `webServer` 只运行 `astro preview`，不会自动构建。检查发现 `dist/atlas/index.html` 不存在且静态产物早于 Atlas 源文件；按既有流程先运行 fresh build 后测试恢复正常，没有为此修改测试配置。
+- Task 5 初次加入方向箭头时，宽泛的 `.atlas-relation__path span` 也让箭头继承了 endpoint 的边框与背景，视觉上像第三种节点。新增 computed-style 回归先得到 `border-top-width: 1px` 的 RED，再把 endpoint 选择器收窄到直接子级 `[data-endpoint-kind]`，避免不同实体共享形状。
 
 ## 未决问题
 
@@ -126,5 +133,5 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 
 ## 下一步
 
-1. 发布 Atlas 八类框架与 Roguelike 证据种子。
-2. 验证 M0 后再编写正式第一版内容扩展计划。
+1. 验证并部署同一份 M0 静态输出。
+2. M0 验证完成后再编写正式第一版内容扩展计划。

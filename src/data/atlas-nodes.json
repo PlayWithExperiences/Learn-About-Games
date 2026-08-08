@@ -1,1 +1,65 @@
-[]
+[
+  {
+    "id": "rogue",
+    "kind": "game",
+    "name": { "zh-CN": "Rogue", "en": "Rogue" },
+    "summary": { "zh-CN": "以程序生成地城与单局死亡为主题起点之一；这里不把它写成绝对第一款。" },
+    "year": 1980
+  },
+  {
+    "id": "hack",
+    "kind": "game",
+    "name": { "zh-CN": "Hack", "en": "Hack" },
+    "summary": { "zh-CN": "NetHack 官方许可历史将其描述为基本上是 Rogue 的实现或变体。" },
+    "year": 1982
+  },
+  {
+    "id": "moria",
+    "kind": "game",
+    "name": { "zh-CN": "Moria", "en": "Moria" },
+    "summary": { "zh-CN": "作者回顾称其直接受 Rogue 启发，早期版本与 Rogue 很相似。" },
+    "year": 1983
+  },
+  {
+    "id": "nethack",
+    "kind": "game",
+    "name": { "zh-CN": "NetHack", "en": "NetHack" },
+    "summary": { "zh-CN": "由多个 Hack 版本的工作合并而来。" },
+    "year": 1987
+  },
+  {
+    "id": "angband",
+    "kind": "game",
+    "name": { "zh-CN": "Angband", "en": "Angband" },
+    "summary": { "zh-CN": "官方版本史说明 Angband 1.0 基于 Umoria 5.2.1。" },
+    "year": 1990
+  },
+  {
+    "id": "diablo",
+    "kind": "game",
+    "name": { "zh-CN": "Diablo", "en": "Diablo" },
+    "summary": { "zh-CN": "早期原型以 Angband 式 Roguelike 为模型，随后把回合制转为实时动作。" },
+    "year": 1996
+  },
+  {
+    "id": "spelunky",
+    "kind": "game",
+    "name": { "zh-CN": "Spelunky", "en": "Spelunky" },
+    "summary": { "zh-CN": "把 Roguelike 启发的单局结构与平台游戏原型融合。" },
+    "year": 2008
+  },
+  {
+    "id": "hades",
+    "kind": "game",
+    "name": { "zh-CN": "Hades", "en": "Hades" },
+    "summary": { "zh-CN": "以动作玩法承载反复尝试，并让角色记住死亡来保持叙事连续性。" },
+    "year": 2020
+  },
+  {
+    "id": "roguelike-run-structure",
+    "kind": "innovation",
+    "name": { "zh-CN": "Roguelike run-based 单局结构", "en": "Roguelike run-based structure" },
+    "summary": { "zh-CN": "把程序生成、单局失败与重新开始视为可跨类型转译的设计概念，而不是某一款游戏。" },
+    "year": 1980
+  }
+]

@@ -1,0 +1,157 @@
+---
+import type { Catalog } from '../lib/catalog/validate';
+
+type AtlasCategory = Catalog['atlasCategories'][number];
+type AtlasEvidence = Catalog['atlasEvidence'][number];
+type AtlasNode = Catalog['atlasNodes'][number];
+type AtlasRelation = Catalog['atlasRelations'][number];
+type AtlasTheme = Catalog['atlasThemes'][number];
+
+interface Props {
+  categories: AtlasCategory[];
+  evidence: AtlasEvidence[];
+  nodes: AtlasNode[];
+  relations: AtlasRelation[];
+  theme: AtlasTheme;
+}
+
+const { categories, evidence, nodes, relations, theme } = Astro.props;
+const nodeById = new Map(nodes.map((node) => [node.id, node]));
+const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+const themeNodes = theme.nodeIds
+  .map((id) => nodeById.get(id))
+  .filter((node): node is AtlasNode => Boolean(node));
+const games = themeNodes.filter((node) => node.kind === 'game').sort((a, b) => a.year - b.year);
+const innovation = themeNodes.find((node) => node.kind === 'innovation');
+const themeRelations = theme.relationIds
+  .map((id) => relations.find((relation) => relation.id === id))
+  .filter((relation): relation is AtlasRelation => Boolean(relation));
+
+if (!innovation) {
+  throw new Error(`Atlas theme ${theme.id} is missing its Innovation node.`);
+}
+
+const relationLabels: Record<string, string> = {
+  'derived-variant': '派生变体',
+  'direct-influence': '直接影响',
+  fusion: '融合',
+};
+
+const relationBoundaryNotes: Record<string, string> = {
+  'angband-to-diablo': 'Diablo 是融合与转译，不是完整传统 Roguelike 的直系继承。',
+  'spelunky-to-hades': 'Spelunky 对 Hades 的关系是有记录的设计与叙事启发，不是代码继承。',
+};
+---
+
+<section class="atlas-framework page-shell" aria-labelledby="atlas-framework-title">
+  <div class="atlas-section-heading">
+    <h2 id="atlas-framework-title">八类框架</h2>
+    <p>八类只定义未来的组织维度，不表示 M0 已均衡覆盖。</p>
+  </div>
+  <ol class="atlas-category-index">
+    {categories
+      .sort((a, b) => a.order - b.order)
+      .map((category) => (
+        <li>
+          <span data-atlas-category={category.id}>{category.name['zh-CN']}</span>
+          <p>{category.summary['zh-CN']}</p>
+        </li>
+      ))}
+  </ol>
+</section>
+
+<article class="atlas-theme page-shell" aria-labelledby="atlas-theme-title">
+  <header class="atlas-theme__header">
+    <p class="plain-label">首批证据种子</p>
+    <h2 id="atlas-theme-title">{theme.title['zh-CN']}</h2>
+    <p>{theme.summary['zh-CN']}</p>
+  </header>
+
+  <section class="atlas-concept" aria-labelledby="atlas-concept-title">
+    <div class="atlas-concept__node" data-atlas-node-kind="innovation" data-atlas-node-id={innovation.id}>
+      <p class="atlas-entity-label">Innovation</p>
+      <h3 id="atlas-concept-title">{innovation.name['zh-CN']}</h3>
+      <p>{innovation.summary['zh-CN']}</p>
+    </div>
+    <div class="atlas-concept__boundary">
+      <p>Innovation 是设计概念，不是 Game，也不使用作品发行年份表达起源。</p>
+      <p>传统 Roguelike 常以回合制推进；Hades 是跨类型的动作变体。</p>
+    </div>
+  </section>
+
+  <section class="atlas-chronology" aria-labelledby="atlas-chronology-title">
+    <div class="atlas-section-heading">
+      <h3 id="atlas-chronology-title">Game 年代顺序</h3>
+      <p>年份仅用于排列 Game，不用于证明“第一款”或创新起源。</p>
+    </div>
+    <ol class="atlas-game-timeline">
+      {games.map((game) => (
+        <li data-atlas-node-kind="game" data-atlas-node-id={game.id}>
+          <p class="atlas-entity-label">Game</p>
+          <time datetime={String(game.year)}>{game.year}</time>
+          <strong data-atlas-node-name>{game.name['zh-CN']}</strong>
+          <p>{game.summary['zh-CN']}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="atlas-relations" aria-labelledby="atlas-relations-title">
+    <div class="atlas-section-heading">
+      <h3 id="atlas-relations-title">七条有证据关系</h3>
+      <p>只呈现来源支持的方向与因果动词。时间相邻本身不构成影响。</p>
+    </div>
+    <div class="atlas-relation-grid">
+      {themeRelations.map((relation) => {
+        const from = nodeById.get(relation.fromId);
+        const to = nodeById.get(relation.toId);
+        const relationEvidence = relation.evidenceIds
+          .map((id) => evidenceById.get(id))
+          .filter((item): item is AtlasEvidence => Boolean(item));
+
+        return (
+          <article data-atlas-relation={relation.id}>
+            <div class="atlas-relation__path">
+              <span data-endpoint-kind={from?.kind}>{from?.name['zh-CN']}</span>
+              <b>
+                <span class="atlas-relation__arrow" data-atlas-direction-arrow aria-hidden="true">→</span>
+                <span>{relationLabels[relation.type] ?? relation.type}</span>
+              </b>
+              <span data-endpoint-kind={to?.kind}>{to?.name['zh-CN']}</span>
+            </div>
+            <p>{relation.summary['zh-CN']}</p>
+            {relationBoundaryNotes[relation.id] && (
+              <p class="atlas-boundary-note">{relationBoundaryNotes[relation.id]}</p>
+            )}
+            <div class="atlas-relation__evidence">
+              <span data-evidence-status={relation.evidenceStatus}>证据状态：已证实</span>
+              {relationEvidence.map((item) => (
+                <a href={item.url} target="_blank" rel="noreferrer" data-atlas-evidence-link>
+                  查看证据：{item.title['zh-CN']}
+                </a>
+              ))}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="atlas-evidence-index" aria-labelledby="atlas-evidence-title">
+    <div class="atlas-section-heading">
+      <h3 id="atlas-evidence-title">Evidence 索引</h3>
+      <p>Evidence 使用文献条目表达，不与 Game 或 Innovation 共用节点形状。</p>
+    </div>
+    <ol>
+      {evidence.map((item) => (
+        <li data-atlas-evidence={item.id}>
+          <span class="atlas-entity-label">Evidence</span>
+          <a href={item.url} target="_blank" rel="noreferrer" data-atlas-evidence-link>
+            {item.title['zh-CN']}
+          </a>
+          <p>{item.summary['zh-CN']}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+</article>

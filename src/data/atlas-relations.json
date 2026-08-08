@@ -1,1 +1,65 @@
-[]
+[
+  {
+    "id": "rogue-to-hack",
+    "fromId": "rogue",
+    "toId": "hack",
+    "type": "derived-variant",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["nethack-license-history"],
+    "summary": { "zh-CN": "NetHack 官方许可历史将 Hack 描述为基本上是 Rogue 的实现或变体。" }
+  },
+  {
+    "id": "hack-to-nethack",
+    "fromId": "hack",
+    "toId": "nethack",
+    "type": "derived-variant",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["nethack-git-history"],
+    "summary": { "zh-CN": "NetHack 官方历史记录多个 Hack 版本的工作被合并，产生了 NetHack。" }
+  },
+  {
+    "id": "rogue-to-moria",
+    "fromId": "rogue",
+    "toId": "moria",
+    "type": "direct-influence",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["umoria-history"],
+    "summary": { "zh-CN": "Moria 作者自述受到 Rogue 的直接启发，且早期版本很像 Rogue。" }
+  },
+  {
+    "id": "moria-to-angband",
+    "fromId": "moria",
+    "toId": "angband",
+    "type": "derived-variant",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["angband-version-history"],
+    "summary": { "zh-CN": "Angband 官方版本史说明 Angband 1.0 基于 Umoria 5.2.1。" }
+  },
+  {
+    "id": "angband-to-diablo",
+    "fromId": "angband",
+    "toId": "diablo",
+    "type": "fusion",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["rpgfan-brevik-interview"],
+    "summary": { "zh-CN": "Brevik 说明 Diablo 原型以 Angband 式 Roguelike 为模型，随后把回合制改为实时。" }
+  },
+  {
+    "id": "run-structure-to-spelunky",
+    "fromId": "roguelike-run-structure",
+    "toId": "spelunky",
+    "type": "fusion",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["rps-spelunky-interview"],
+    "summary": { "zh-CN": "Derek Yu 说明这款 Roguelike-inspired platformer 来自 Roguelike 与平台游戏原型的融合。" }
+  },
+  {
+    "id": "spelunky-to-hades",
+    "fromId": "spelunky",
+    "toId": "hades",
+    "type": "direct-influence",
+    "evidenceStatus": "confirmed",
+    "evidenceIds": ["gamedeveloper-kasavin-interview"],
+    "summary": { "zh-CN": "Kasavin 说明团队从 Spelunky 已经推进的知识出发，构思让角色记住每次死亡的叙事连续性。" }
+  }
+]

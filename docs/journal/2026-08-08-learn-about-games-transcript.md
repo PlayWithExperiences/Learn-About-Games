@@ -205,3 +205,25 @@ GREEN 验证包括：`npm run check` 0 errors、Vitest 26 项、静态构建、C
 质量复查确认两项重要问题：`hidden` role marker 被组件的 `display: block` 样式覆盖，因此在没有应用职业画像时仍占据可见空间；职业画像和个人进度 select 在 JavaScript 关闭时仍可操作，却不会持久化或应用变化。实现先扩展 E2E，观察到初始可见 marker 为 9（目标为 0），并观察到无 JavaScript 时画像 select 处于 enabled 状态（目标为 disabled）。
 
 最小修复为给 `.role-marker[hidden]` 设定 `display: none`，并让两处 select 在服务端渲染时带 `disabled`，仅在各自客户端脚本成功绑定后解除禁用。两个控件旁增加局部 no-JS 说明；地图文字也明确分类标签前项表示参考重要性、后项表示责任范围。GREEN E2E 覆盖初始 0、画像应用后 7、清除后 0 个可见 marker，及无 JavaScript 时地图和 Playtest 内容/导航可读而控件不可操作。截图保存在运行时临时目录 `/tmp/learn-about-games-task4-fix/`，已按原始尺寸查看。
+
+### 26. M0 Task 5：Atlas 八类框架与 Roguelike 证据种子
+
+记录说明：以下为 Task 5 实现代理可访问范围内的脱敏摘要，是 partial export，不是原始聊天 UI 的完整逐字导出。缺失范围包括主任务的私有推理、其他代理上下文、未转发的工具输出与当前运行时无法导出的完整原始消息；未获取的内容不声称完整。
+
+任务锁定 Atlas 是 Learn About Games 站内的历史与创新观察维度，不是单独项目。第一屏之后先列出玩法、技术、控制与界面、叙事、视听、社交、生产方式、发行与商业八类框架，并明确框架只表示未来组织维度，不暗示 M0 内容均衡。
+
+种子主题固定为“从 Rogue 的随机地城与单局死亡，到跨类型的 run-based 变体”。数据保持 8 个 Game 和 1 个 Innovation 分离：Game 按 Rogue 1980、Hack 1982、Moria 1983、NetHack 1987、Angband 1990、Diablo 1996、Spelunky 2008、Hades 2020 排序；`roguelike-run-structure` 是设计概念，不把 schema 所需的 year 渲染成作品发行年份或起源证明。页面明确年份只用于排列 Game，不能据此声称“第一款”。
+
+Atlas 只写入 7 条经 lead 审批的关系：Rogue 到 Hack、Hack 到 NetHack、Rogue 到 Moria、Moria 到 Angband、Angband 到 Diablo、run structure 到 Spelunky、Spelunky 到 Hades。关系类型仅使用派生变体、直接影响和融合，状态均为已证实。时间相邻没有自动变成影响关系；Diablo 明确为融合与转译，不是完整传统 Roguelike 的直系继承；Spelunky 到 Hades 明确为设计与叙事启发，不是代码继承。
+
+证据只使用计划锁定的 9 个来源：Wichman Rogue history、NetHack LICENSE_HISTORY、NetHack GitHub history、Umoria history、Angband version history、RPGFan Brevik interview、Rock Paper Shotgun Spelunky interview、Game Developer Kasavin interview 与 Supergiant Hades FAQ。Wichman 只支持 Rogue 的程序生成、每局差异和“最早之一”的谨慎边界；Hades FAQ 用于传统回合制与动作型跨类型变体的边界。每条关系至少有一个来源入口，Evidence 索引展示全部 9 个锁定 URL。
+
+实现先写 `tests/e2e/atlas.spec.ts`。首次有效 RED 为 4 项全部失败：共享导航等待不到 Atlas，分类数量为 0，主题标题缺失，关系数量为 0。随后以既有 Atlas collections、原生 Astro 与 CSS 做最小实现，没有改 schema/validator，没有加入图物理、缩放、平移、自动布局、相似性边、动画库或未来主题抽象。
+
+第一次 GREEN 尝试停在旧静态产物：Playwright 配置的 webServer 只运行 `astro preview`，不自动执行 build。诊断确认 `dist/atlas/index.html` 不存在，旧产物时间早于 Atlas 源文件；fresh `npm run build` 后 Atlas Chromium 4 项通过。这个环境问题没有通过放宽测试或改配置掩盖。
+
+视觉沿用冷中性、钴蓝的 editorial cartographic index。Game 是圆角矩形时间节点，Innovation 是切角概念节点，Evidence 是左侧文献线条目。原始尺寸截图复查发现关系在移动单列中缺少明确方向，因此新增箭头断言并先观察到缺失箭头的 RED，再实现桌面向右、移动向下的单一方向标记并获得 GREEN。
+
+后续 CSS 审查发现宽泛的 relation span 选择器也命中了箭头，使它继承 endpoint 的 padding、边框与背景，视觉上像第三个节点。实现新增箭头无 endpoint 边框的 computed-style 回归，先观察到 1px 边框的 RED，再把 endpoint 规则收窄到直接子级 `[data-endpoint-kind]`；最终截图中的箭头保持独立、最小的方向标记。
+
+当时验证记录为：`npm run check` 0 errors、Vitest 26 项、静态构建 13 个页面、Atlas Chromium 4 项、完整 Chromium 与 mobile Chromium 32 项通过。截图写入 `/tmp/learn-about-games-task5/atlas-desktop.png` 和 `/tmp/learn-about-games-task5/atlas-320.png` 并按原始尺寸查看；320px 浏览器测量的 `clientWidth`、文档 `scrollWidth` 和 body `scrollWidth` 均为 320。Roadmap 仍保留在 Now，没有把未部署的 Atlas 标为 shipped 或 deployed。

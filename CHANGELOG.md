@@ -6,6 +6,7 @@ Learn About Games 的重要变化记录在这里。项目尚未发布正式版�
 
 ### Added
 
+- 新增站内 Game Innovation Atlas 页面、八类框架与 Roguelike run-based 证据种子；8 个 Game、1 个 Innovation、7 条已证实关系和 9 项来源保持独立语义，并明确年份、跨类型融合与设计启发的边界。
 - 新增 AAA / Game Designer 参考画像与分类能力标签；画像明确为维护者 AAA 背景下的业界语境参考，不生成职业或个人分数。
 - 新增仅在当前浏览器保存的 Playtest 个人学习状态，支持刷新后保留，且不与职业参考画像混合表达。
 - 新增 Playtest 的能力详情、基础学习路径、两条已审核 Work Item 与资源库语言筛选；同一双语文章保留为一条 Work Item 和两个可消费版本。

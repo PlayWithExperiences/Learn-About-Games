@@ -1,0 +1,34 @@
+---
+import AtlasSeed from '../../components/AtlasSeed.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+
+const catalog = await loadCatalog();
+const theme = catalog.atlasThemes.find(({ id }) => id === 'roguelike-run-variants');
+
+if (!theme) {
+  throw new Error('The reviewed Roguelike Atlas seed is missing.');
+}
+---
+
+<BaseLayout
+  title="Game Innovation Atlas"
+  description="Learn About Games 站内的历史与创新观察维度，以可核查证据呈现游戏创新关系。"
+>
+  <section class="atlas-intro page-shell">
+    <p class="plain-label">历史与创新观察</p>
+    <h1>Game Innovation Atlas</h1>
+    <p class="lede">Learn About Games 站内的历史与创新观察维度</p>
+    <p class="reference-note">
+      Atlas 与能力地图共享同一产品、导航、证据和贡献流程。它观察游戏形式如何出现、变化与跨类型转译，不把相似或时间相邻自动写成影响。
+    </p>
+  </section>
+
+  <AtlasSeed
+    categories={catalog.atlasCategories}
+    evidence={catalog.atlasEvidence}
+    nodes={catalog.atlasNodes}
+    relations={catalog.atlasRelations}
+    theme={theme}
+  />
+</BaseLayout>

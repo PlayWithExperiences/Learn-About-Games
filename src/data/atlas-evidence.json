@@ -1,1 +1,56 @@
-[]
+[
+  {
+    "id": "wichman-rogue-history",
+    "title": { "zh-CN": "A Brief History of Rogue", "en": "A Brief History of Rogue" },
+    "url": "https://wichman.org/roguehistory.html",
+    "summary": { "zh-CN": "Rogue 联合作者 Glenn Wichman 的回顾，用于支持程序生成让每局不同，以及“最早之一”的谨慎边界，不用于宣称绝对第一。" }
+  },
+  {
+    "id": "nethack-license-history",
+    "title": { "zh-CN": "NetHack LICENSE_HISTORY", "en": "NetHack LICENSE_HISTORY" },
+    "url": "https://www.nethack.org/download/LICENSE_HISTORY.html",
+    "summary": { "zh-CN": "NetHack 官方许可历史，说明 Hack 与 Rogue 的关系。" }
+  },
+  {
+    "id": "nethack-git-history",
+    "title": { "zh-CN": "NetHack 项目历史文件", "en": "NetHack project history" },
+    "url": "https://github.com/NetHack/NetHack/blob/NetHack-5.0.0_Released/dat/history",
+    "summary": { "zh-CN": "NetHack 官方仓库历史文件，记录多个 Hack 版本的合并。" }
+  },
+  {
+    "id": "umoria-history",
+    "title": { "zh-CN": "The Dungeons of Moria History", "en": "The Dungeons of Moria History" },
+    "url": "https://umoria.org/history",
+    "summary": { "zh-CN": "Moria 作者 Robert Alan Koeneke 的回顾，说明 Rogue 的直接启发。" }
+  },
+  {
+    "id": "angband-version-history",
+    "title": { "zh-CN": "Angband Version History", "en": "Angband Version History" },
+    "url": "https://raw.githubusercontent.com/angband/angband/master/docs/version.rst",
+    "summary": { "zh-CN": "Angband 官方版本史，说明 Angband 1.0 基于 Umoria 5.2.1。" }
+  },
+  {
+    "id": "rpgfan-brevik-interview",
+    "title": { "zh-CN": "David Brevik Interview", "en": "David Brevik Interview" },
+    "url": "https://www.rpgfan.com/feature/david-brevik-interview/",
+    "summary": { "zh-CN": "David Brevik 访谈，说明 Diablo 原型以 Angband 式 Roguelike 为模型，并从回合制转为实时。" }
+  },
+  {
+    "id": "rps-spelunky-interview",
+    "title": { "zh-CN": "IGF Factor 2012: Spelunky", "en": "IGF Factor 2012: Spelunky" },
+    "url": "https://www.rockpapershotgun.com/igf-factor-2012-spelunky",
+    "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自两种原型的融合。" }
+  },
+  {
+    "id": "gamedeveloper-kasavin-interview",
+    "title": { "zh-CN": "Roguelikes and Narrative Design with Hades", "en": "Roguelikes and Narrative Design with Hades" },
+    "url": "https://www.gamedeveloper.com/design/roguelikes-and-narrative-design-with-i-hades-i-creative-director-greg-kasavin",
+    "summary": { "zh-CN": "Greg Kasavin 说明团队从 Spelunky 已经推进的知识出发，并构思让角色记住每次死亡的叙事连续性。" }
+  },
+  {
+    "id": "supergiant-hades-faq",
+    "title": { "zh-CN": "Hades FAQ", "en": "Hades FAQ" },
+    "url": "https://www.supergiantgames.com/blog/hades-faq/",
+    "summary": { "zh-CN": "Supergiant 官方 FAQ，用于区分传统回合制 Roguelike 与 Hades 的动作型跨类型变体。" }
+  }
+]
