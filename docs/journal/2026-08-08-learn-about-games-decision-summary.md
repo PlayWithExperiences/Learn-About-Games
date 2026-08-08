@@ -1,7 +1,7 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：产品设计已确认并写入，等待书面审阅
+- 状态：产品设计与精简后的 M0 实施计划已完成，等待选择执行方式
 - 设计文档：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
 
@@ -12,6 +12,9 @@
 - 仓库此前为空，尚无网站代码或历史提交。
 - 产品、内容模型、首版范围、贡献机制、技术栈和部署方式已经通过对话确认。
 - Game Innovation Atlas、公开 Roadmap、Changelog 与 Devlog 已加入设计。
+- 设计已获用户批准，实施将在 `codex/initial-site` 隔离分支进行。
+- 已完成 M0 可运行垂直切片实施计划；M0 用于验证架构和真实用户路径，不冒充达到正式第一版的内容规模。
+- 对抗审查发现初稿把过多未来边界处理提前到 M0；计划已从 12 个横向基础任务缩为 7 个纵向交付任务，第 2 个任务即可看到真实地图骨架。
 
 ## 决策与理由
 
@@ -55,6 +58,26 @@ GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接
 
 Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释关键选择。原始会话记录继续作为跨 agent 的证据层，不直接替代面向公众的 Devlog。
 
+### 仓库是跨 AI 连续性的事实来源
+
+留档的核心目的之一，是让任何 AI 在没有原聊天界面的情况下继续项目。根入口、决策摘要、脱敏会话记录、Roadmap、Changelog 与 Devlog 必须共同保存项目来源、发展过程、已验证现状和下一步方向。
+
+### M0 与正式第一版分开
+
+M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态、语言筛选、公开项目历史和 Atlas 种子。40–60 节点、300/100 资源、10–15 路径与 3–4 画像仍是后续正式第一版内容扩展目标。
+
+### 早期版本设定复杂度预算
+
+复杂度必须由当前用户路径、真实失败、部署正确性或误导性关系证明。M0 只处理现有引用完整性、Atlas 证据、GitHub Pages 子路径、语言筛选和本地进度损坏回退；不提前实现 URL 高级去重、自动因果推断、进度导入导出、迁移框架、复杂搜索和极限边界穷举。对抗审查优先删除误导与多余机制，而不是扩大系统。
+
+### 动态模型数据只作为分配信号
+
+2026-08-08 核查 Codex Radar 时，其 DeepSWE 数据显示模型、effort、任务类型和成本表现差异显著，因此后续分配会记录访问时间与任务上下文，不写死单一 IQ 阈值。第三方排名不能替代任务验收；价格和“免费”必须用官方条款复核。Luna 的 ChatGPT Free 无限文本聊天不等于免费 Codex 子代理或免费 API，且当前桌面运行时只暴露 Sol 与 Terra。
+
+### Atlas 首版种子选择 Roguelike 谱系
+
+在 Jumping、Roguelike 和 Valve Playtesting 三个候选中，Roguelike 具有最完整的可核查关系证据。首版使用 Rogue、Hack、NetHack、Moria、Angband、Diablo、Spelunky、Hades，并严格区分直接影响、派生、融合和设计启发。
+
 ## 第一版范围
 
 - Game Design 为核心，包含通往 Creative Direction 的相邻能力。
@@ -74,11 +97,13 @@ Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。
+- 核查 [Codex Radar](https://deng.codexradar.com/) 的动态 DeepSWE 指标与 OpenAI 官方 Luna 可用性：[产品公告](https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt/) 和 [帮助页](https://help.openai.com/en/articles/20001354-gpt-56-in-chatgpt) 说明 Luna 对 ChatGPT Free 的文本聊天有条件免费；[API 模型页](https://developers.openai.com/api/docs/models/gpt-5.6-luna) 明确 Free 不受支持，当前也不属于免费 Codex 子代理。
 
 ## 事故与教训
 
 - 一次 Exa 搜索命令因英文撇号与 shell 引号冲突而未执行；移除撇号后成功。后续搜索参数避免把未转义撇号嵌入单引号。
 - 巨型思维导图如果混合领域、能力、方法、原则和资源，会失去可解释性。网站数据与视觉必须区分对象类型。
+- 第一份 M0 计划虽可验证，但把未来数据规模所需的全量 schema、防御性校验和进度功能过早前置，延迟了可见结果。修订后先交付真实纵向切片，再由失败证据增加复杂度。
 
 ## 未决问题
 
@@ -88,14 +113,12 @@ Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释
 - 首批 40–60 个节点的确切分类名称。
 - 首批 3–4 个职业与生产环境画像的最终名单。
 - 英文界面发布时间。
-- 第一条 Game Innovation Atlas 样例选择哪个创新主题。
+- Codex Radar 与模型价格会持续变化；每轮重要分配需要重新取样，不能把本次数据固化为永久结论。
 
 ## 下一步
 
-1. 用户审阅书面设计。
-2. 审阅通过后编写分阶段实施计划。
-3. 建立最小可运行 Astro 站点与 GitHub Pages 部署。
-4. 先完成能力学习路径与资源导航的端到端垂直切片。
-5. 第一版同时发布 Game Innovation Atlas 的分类框架与一组种子内容。
-6. 核心学习体验验证后，再实现 Atlas 的复杂交互与更多主题。
-7. 垂直切片验证后扩大资源候选库与创新主题。
+1. 选择 sub-agent-driven 或当前任务内串行执行方式并开始 M0。
+2. 建立 Astro 数据契约与 GitHub Pages 基线。
+3. 完成 Playtest 学习链路、资源导航、角色透镜和本地进度。
+4. 发布 Atlas 八类框架与 Roguelike 证据种子。
+5. 验证 M0 后再编写正式第一版内容扩展计划。
