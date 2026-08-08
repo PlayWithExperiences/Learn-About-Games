@@ -1,0 +1,265 @@
+---
+import { projectRelationEndpoints, relationSemantics } from '../lib/map-geometry';
+import { sitePath } from '../lib/site-path';
+import type { Catalog } from '../lib/catalog/validate';
+
+interface Props {
+  domains: Catalog['domains'];
+  capabilities: Catalog['capabilities'];
+  knowledgeTopics: Catalog['knowledgeTopics'];
+  capabilityRelations: Catalog['capabilityRelations'];
+}
+
+const { domains, capabilities, knowledgeTopics, capabilityRelations } = Astro.props;
+const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
+const capabilitiesById = new Map(capabilities.map((capability) => [capability.id, capability]));
+const positionsByCapabilityId = new Map(
+  capabilities.map((capability) => [capability.id, capability.position]),
+);
+
+const relationLabel = (type: 'supports' | 'complements') =>
+  type === 'supports' ? '支持' : '互补';
+
+const relationDirection = (type: 'supports' | 'complements') =>
+  relationSemantics[type].direction;
+---
+
+<section class="capability-map" aria-labelledby="capability-map-title">
+  <div class="map-key" aria-label="地图图例与关系说明">
+    <div>
+      <h2 id="capability-map-title">地图图例</h2>
+      <p>位置只表达领域归属与知识邻近，不表示价值、难度或学习顺序。</p>
+    </div>
+    <ul>
+      <li><span class="map-key__capability" aria-hidden="true"></span><strong>能力</strong>：可通过实践逐步掌握</li>
+      <li><span class="map-key__topic" aria-hidden="true"></span><strong>知识议题</strong>：值得理解的概念与语境</li>
+      <li><span class="map-key__supports" aria-hidden="true"></span><strong>支持</strong>：有向支持不表示必修或固定学习顺序</li>
+      <li><span class="map-key__complements" aria-hidden="true"></span><strong>互补</strong>：互补关系不表示先后</li>
+    </ul>
+  </div>
+
+  <div
+    class="capability-map__canvas"
+    data-capability-map-canvas
+    aria-label="能力地图桌面画布"
+  >
+    {orderedDomains.map((domain) => (
+      <section
+        class="map-territory"
+        data-map-region={domain.id}
+        aria-labelledby={`map-region-${domain.id}`}
+        style={`--region-x:${domain.bounds.x}%;--region-y:${domain.bounds.y}%;--region-width:${domain.bounds.width}%;--region-height:${domain.bounds.height}%`}
+      >
+        <h3 id={`map-region-${domain.id}`}>{domain.name['zh-CN']}</h3>
+      </section>
+    ))}
+
+    <svg
+      class="capability-map__relations"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      role="img"
+      aria-labelledby="map-relations-title map-relations-description"
+    >
+      <title id="map-relations-title">能力关系</title>
+      <desc id="map-relations-description">支持关系有方向但不是先修顺序，互补关系没有方向。</desc>
+      <defs>
+        <marker id="support-arrow" viewBox="0 0 6 6" refX="5.25" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse" markerUnits="strokeWidth">
+          <path d="M 0 0 L 6 3 L 0 6 Z"></path>
+        </marker>
+      </defs>
+      {capabilityRelations.map((relation) => {
+        const { start, end } = projectRelationEndpoints(relation, positionsByCapabilityId);
+        const midpoint = { x: (start.x + end.x) / 2, y: (start.y + end.y) / 2 };
+        const direction = relationDirection(relation.type);
+        return (
+          <path
+            class:list={['map-relation', `map-relation--${relation.type}`]}
+            d={`M ${start.x} ${start.y} L ${midpoint.x} ${midpoint.y} L ${end.x} ${end.y}`}
+            data-capability-relation={relation.id}
+            data-relation-type={relation.type}
+            data-direction={direction}
+            data-from={relation.fromId}
+            data-to={relation.toId}
+            data-start-x={start.x}
+            data-start-y={start.y}
+            data-end-x={end.x}
+            data-end-y={end.y}
+            marker-mid={relation.type === 'supports' ? 'url(#support-arrow)' : undefined}
+            vector-effect="non-scaling-stroke"
+          >
+            <title>{capabilitiesById.get(relation.fromId)?.name['zh-CN']} {relationLabel(relation.type)} {capabilitiesById.get(relation.toId)?.name['zh-CN']}：{relation.summary['zh-CN']}</title>
+          </path>
+        );
+      })}
+    </svg>
+
+    <div class="capability-map__nodes">
+      {capabilities.map((capability) => (
+        <a
+          class="map-node map-node--capability"
+          href={sitePath(`capabilities/${capability.id}/`)}
+          aria-label={capability.name['zh-CN']}
+          data-map-node
+          data-map-node-id={capability.id}
+          data-map-node-kind="capability"
+          data-entity-label="能力"
+          data-anchor-x={capability.position.x}
+          data-anchor-y={capability.position.y}
+          style={`--node-x:${capability.position.x}%;--node-y:${capability.position.y}%`}
+        >
+          <span>{capability.name['zh-CN']}</span>
+        </a>
+      ))}
+      {knowledgeTopics.map((topic) => (
+        <a
+          class="map-node map-node--topic"
+          href={sitePath(`topics/${topic.id}/`)}
+          aria-label={topic.name['zh-CN']}
+          data-map-node
+          data-map-node-id={topic.id}
+          data-map-node-kind="knowledge-topic"
+          data-entity-label="知识议题"
+          data-anchor-x={topic.position.x}
+          data-anchor-y={topic.position.y}
+          style={`--node-x:${topic.position.x}%;--node-y:${topic.position.y}%`}
+        >
+          <small>知识议题</small>
+          <span>{topic.name['zh-CN']}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="capability-map__outline" data-mobile-map-outline aria-label="能力地图关系大纲">
+    <p class="capability-map__outline-note">有向支持不表示必修或固定学习顺序；互补关系不表示先后。</p>
+    {orderedDomains.map((domain) => {
+      const domainCapabilities = capabilities.filter(({ domainId }) => domainId === domain.id);
+      const domainTopics = knowledgeTopics.filter(({ domainId }) => domainId === domain.id);
+      return (
+        <section class="map-outline-region" data-outline-region={domain.id}>
+          <div class="map-outline-region__heading">
+            <h2>{domain.name['zh-CN']}</h2>
+            <p>{domain.summary['zh-CN']}</p>
+          </div>
+
+          <div class="map-outline-region__nodes">
+            {domainCapabilities.map((capability) => {
+              const outgoing = capabilityRelations.filter(
+                ({ type, fromId }) => type === 'supports' && fromId === capability.id,
+              );
+              const incoming = capabilityRelations.filter(
+                ({ type, toId }) => type === 'supports' && toId === capability.id,
+              );
+              const complements = capabilityRelations.filter(
+                ({ type, fromId, toId }) =>
+                  type === 'complements' && (fromId === capability.id || toId === capability.id),
+              );
+              return (
+                <div class="map-outline-node" data-outline-node-kind="capability">
+                  <div class="map-outline-node__heading">
+                    <span>能力</span>
+                    <a href={sitePath(`capabilities/${capability.id}/`)}>{capability.name['zh-CN']}</a>
+                  </div>
+                  <p>{capability.summary['zh-CN']}</p>
+                  <details>
+                    <summary>查看关系</summary>
+                    <div class="map-outline-node__relations">
+                      <section>
+                        <h3>它支持</h3>
+                        {outgoing.length > 0 ? (
+                          <ul>
+                            {outgoing.map((relation) => (
+                              <li data-node-relation={relation.id}>
+                                <a href={sitePath(`capabilities/${relation.toId}/`)}>{capabilitiesById.get(relation.toId)?.name['zh-CN']}</a>
+                                <span>{relation.summary['zh-CN']}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : <p>当前没有记录直接支持的能力。</p>}
+                      </section>
+                      <section>
+                        <h3>受到支持</h3>
+                        {incoming.length > 0 ? (
+                          <ul>
+                            {incoming.map((relation) => (
+                              <li data-node-relation={relation.id}>
+                                <a href={sitePath(`capabilities/${relation.fromId}/`)}>{capabilitiesById.get(relation.fromId)?.name['zh-CN']}</a>
+                                <span>{relation.summary['zh-CN']}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : <p>当前没有记录直接支持它的能力。</p>}
+                      </section>
+                      <section>
+                        <h3>互补</h3>
+                        {complements.length > 0 ? (
+                          <ul>
+                            {complements.map((relation) => {
+                              const otherId = relation.fromId === capability.id ? relation.toId : relation.fromId;
+                              return (
+                                <li data-node-relation={relation.id}>
+                                  <a href={sitePath(`capabilities/${otherId}/`)}>{capabilitiesById.get(otherId)?.name['zh-CN']}</a>
+                                  <span>{relation.summary['zh-CN']}</span>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        ) : <p>当前没有记录互补能力。</p>}
+                      </section>
+                    </div>
+                  </details>
+                </div>
+              );
+            })}
+
+            {domainTopics.map((topic) => (
+              <div class="map-outline-node map-outline-node--topic" data-outline-node-kind="knowledge-topic">
+                <div class="map-outline-node__heading">
+                  <span>知识议题</span>
+                  <a href={sitePath(`topics/${topic.id}/`)}>{topic.name['zh-CN']}</a>
+                </div>
+                <p>{topic.summary['zh-CN']}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  const canvas = document.querySelector<HTMLElement>('[data-capability-map-canvas]');
+
+  const clearAdjacency = () => {
+    canvas?.querySelectorAll<HTMLElement>('[data-adjacent]').forEach((element) => {
+      delete element.dataset.adjacent;
+    });
+  };
+
+  const showAdjacency = (nodeId: string) => {
+    clearAdjacency();
+    const adjacentIds = new Set([nodeId]);
+    canvas?.querySelectorAll<SVGPathElement>('[data-capability-relation]').forEach((edge) => {
+      if (edge.dataset.from === nodeId || edge.dataset.to === nodeId) {
+        edge.dataset.adjacent = 'true';
+        if (edge.dataset.from) adjacentIds.add(edge.dataset.from);
+        if (edge.dataset.to) adjacentIds.add(edge.dataset.to);
+      }
+    });
+    adjacentIds.forEach((id) => {
+      const node = canvas?.querySelector<HTMLElement>(`[data-map-node-id="${id}"]`);
+      if (node) node.dataset.adjacent = 'true';
+    });
+  };
+
+  canvas?.querySelectorAll<HTMLElement>('[data-map-node]').forEach((node) => {
+    const nodeId = node.dataset.mapNodeId;
+    if (!nodeId) return;
+    node.addEventListener('pointerenter', () => showAdjacency(nodeId));
+    node.addEventListener('pointerleave', clearAdjacency);
+    node.addEventListener('focus', () => showAdjacency(nodeId));
+    node.addEventListener('blur', clearAdjacency);
+  });
+</script>

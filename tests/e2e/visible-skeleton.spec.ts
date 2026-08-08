@@ -1,4 +1,8 @@
 import { expect, test } from '@playwright/test';
+import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
+import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
+import domains from '../../src/data/domains.json' with { type: 'json' };
+import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 
 test('focuses desktop navigation on exactly five Chinese user tasks', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop navigation is intentionally replaced by the compact menu on mobile.');
@@ -39,15 +43,14 @@ test('publishes the visible map skeleton and repository-backed project pages', a
   await page.getByRole('link', { name: '看全貌' }).click();
 
   for (const heading of [
-    '体验设计',
-    '玩法与挑战',
-    '叙事',
-    '美学与表现',
-    '生产与落地',
-    '迭代与验证',
-    '领导与协作',
-    '产品与商业',
-    '创新与沿革',
+    '体验与玩家',
+    '玩法、系统与手感',
+    '关卡与空间',
+    '叙事与表达',
+    '研究、验证与数据',
+    '原型、生产与迭代',
+    '协作、领导与方向',
+    '产品、市场与批判语境',
   ]) {
     await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
   }
@@ -120,14 +123,14 @@ test('describes the shipped Playtest topic collection as available now', async (
   await page.goto('./');
   await expect(
     page.getByText(
-      '当前公开 9 个领域和 9 个能力入口，并以无顺序的主题资源集合连接具体资源与个人实践记录。',
+      `当前公开 ${domains.length} 个领域、${capabilities.length} 个能力与 ${knowledgeTopics.length} 个知识议题，并用 ${capabilityRelations.length} 条有明确含义的关系连接全图。`,
       { exact: true },
     ),
   ).toBeVisible();
 
   await page.getByRole('link', { name: '打开能力地图' }).click();
   await expect(
-    page.getByText('通过观察玩家检验设计判断。', { exact: true }),
+    page.getByText(/有向支持不表示必修或固定学习顺序/).first(),
   ).toBeVisible();
 });
 

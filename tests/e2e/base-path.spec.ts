@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
+import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 
 const projectBasePath = '/Learn-About-Games/';
 
@@ -31,6 +32,11 @@ test('serves the static site and its visible internal links from the project bas
   for (const capability of capabilities) {
     const response = await request.get(`capabilities/${capability.id}/`);
     expect(response.status(), capability.id).toBe(200);
+  }
+
+  for (const topic of knowledgeTopics) {
+    const response = await request.get(`topics/${topic.id}/`);
+    expect(response.status(), topic.id).toBe(200);
   }
 
   const retiredTrailArtifact = await request.get('trails/playtesting-foundations/');

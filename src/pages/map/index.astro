@@ -3,17 +3,22 @@ import MapExplorer from '../../components/MapExplorer.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 
-const { domains, capabilities, roleProfiles } = await loadCatalog();
+const { domains, capabilities, knowledgeTopics, capabilityRelations } = await loadCatalog();
 ---
 
-<BaseLayout title="能力地图" description="从九个领域进入 Learn About Games 的能力地图骨架。">
+<BaseLayout title="能力地图" description="从知识地域进入 Learn About Games 的能力地图。">
   <header class="map-intro page-shell" id="map-intro">
     <p class="plain-label">能力地图</p>
     <h1>用领域建立方向，用能力选择行动。</h1>
-    <p class="lede">领域是结构区域，能力是可进入的节点。当前骨架说明领域归属、具体资源与个人实践记录，不用节点大小暗示价值或资源数量。</p>
+    <p class="lede">{domains.length} 个领域构成开放地域，能力与知识议题是可进入的节点。关系说明协作与支持，不把地图改写成统一学习顺序。</p>
   </header>
 
   <div class="page-shell">
-    <MapExplorer domains={domains} capabilities={capabilities} roleProfiles={roleProfiles} />
+    <MapExplorer
+      domains={domains}
+      capabilities={capabilities}
+      knowledgeTopics={knowledgeTopics}
+      capabilityRelations={capabilityRelations}
+    />
   </div>
 </BaseLayout>

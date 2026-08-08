@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../lib/catalog/load';
+import { formatMediaType } from '../../lib/resource-display';
+import { sitePath } from '../../lib/site-path';
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalog();
+  return catalog.knowledgeTopics.map((topic) => ({
+    params: { id: topic.id },
+    props: { topic, catalog },
+  }));
+}
+
+const { topic, catalog } = Astro.props;
+const domain = catalog.domains.find(({ id }) => id === topic.domainId);
+if (!domain) throw new Error(`Missing domain for knowledge topic ${topic.id}`);
+
+const resourceTopics = catalog.resourceTopics.filter((entry) => entry.knowledgeTopicIds.includes(topic.id));
+const resources = catalog.resources.filter((resource) => resource.knowledgeTopicIds.includes(topic.id));
+---
+
+<BaseLayout title={topic.name['zh-CN']} description={topic.summary['zh-CN']}>
+  <article class="page-shell detail-page topic-detail-page">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href={sitePath('map/')}>能力地图</a>
+      <span aria-hidden="true">/</span>
+      <a href={`${sitePath('map/')}#map-region-${domain.id}`}>{domain.name['zh-CN']}</a>
+      <span aria-hidden="true">/</span>
+      <span>知识议题</span>
+    </nav>
+    <p class="plain-label">知识议题</p>
+    <h1>{topic.name['zh-CN']}</h1>
+    <p class="lede">{topic.summary['zh-CN']}</p>
+
+    <section aria-labelledby="related-resources-heading">
+      <h2 id="related-resources-heading">相关资源</h2>
+      {resourceTopics.length > 0 && (
+        <div class="detail-card-list">
+          {resourceTopics.map((resourceTopic) => (
+            <a class="detail-card" href={sitePath(`resources/topics/${resourceTopic.id}/`)}>
+              <span>主题资源集合</span>
+              <h3>{resourceTopic.title['zh-CN']}</h3>
+              <p>{resourceTopic.summary['zh-CN']}</p>
+            </a>
+          ))}
+        </div>
+      )}
+      {resources.length > 0 ? (
+        <ul class="compact-resource-list">
+          {resources.map((resource) => {
+            const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+            return (
+              <li>
+                <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
+                <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
+                <p>{resource.whyRelevant['zh-CN']}</p>
+              </li>
+            );
+          })}
+        </ul>
+      ) : <p>这个知识议题的资源仍在持续整理中；议题本身继续保留在地图中。</p>}
+    </section>
+  </article>
+</BaseLayout>

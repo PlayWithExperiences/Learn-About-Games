@@ -2,16 +2,34 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CapabilityProgress from '../../components/CapabilityProgress.astro';
 import { loadCatalog } from '../../lib/catalog/load';
+import { formatMediaType } from '../../lib/resource-display';
 import { sitePath } from '../../lib/site-path';
 
 export async function getStaticPaths() {
   const catalog = await loadCatalog();
-  return catalog.capabilities.map((capability) => ({ params: { id: capability.id }, props: { capability, catalog } }));
+  return catalog.capabilities.map((capability) => ({
+    params: { id: capability.id },
+    props: { capability, catalog },
+  }));
 }
 
 const { capability, catalog } = Astro.props;
+const domain = catalog.domains.find(({ id }) => id === capability.domainId);
+if (!domain) throw new Error(`Missing domain for capability ${capability.id}`);
+
+const capabilitiesById = new Map(catalog.capabilities.map((entry) => [entry.id, entry]));
 const resourceTopics = catalog.resourceTopics.filter((topic) => topic.capabilityIds.includes(capability.id));
 const resources = catalog.resources.filter((resource) => resource.capabilityIds.includes(capability.id));
+const outgoing = catalog.capabilityRelations.filter(
+  ({ type, fromId }) => type === 'supports' && fromId === capability.id,
+);
+const incoming = catalog.capabilityRelations.filter(
+  ({ type, toId }) => type === 'supports' && toId === capability.id,
+);
+const complements = catalog.capabilityRelations.filter(
+  ({ type, fromId, toId }) =>
+    type === 'complements' && (fromId === capability.id || toId === capability.id),
+);
 ---
 
 <BaseLayout title={capability.name['zh-CN']} description={capability.summary['zh-CN']}>
@@ -19,13 +37,64 @@ const resources = catalog.resources.filter((resource) => resource.capabilityIds.
     <nav class="breadcrumb" aria-label="面包屑">
       <a href={sitePath('map/')}>能力地图</a>
       <span aria-hidden="true">/</span>
+      <a href={`${sitePath('map/')}#map-region-${domain.id}`}>{domain.name['zh-CN']}</a>
+      <span aria-hidden="true">/</span>
       <span>能力</span>
     </nav>
     <p class="plain-label">能力</p>
     <h1>{capability.name['zh-CN']}</h1>
     <p class="lede">{capability.summary['zh-CN']}</p>
 
-    {capability.id === 'playtesting' && <CapabilityProgress capabilityId={capability.id} />}
+    <CapabilityProgress capabilityId={capability.id} />
+
+    <section aria-labelledby="relations-heading">
+      <h2 id="relations-heading">相邻关系</h2>
+      <p class="detail-section-note">支持关系说明经常有帮助的方向，不表示必修、先修或固定学习顺序。</p>
+      <div class="relation-detail-grid">
+        <section aria-labelledby="outgoing-heading">
+          <h3 id="outgoing-heading">它支持</h3>
+          {outgoing.length > 0 ? (
+            <ul>
+              {outgoing.map((relation) => (
+                <li>
+                  <a href={sitePath(`capabilities/${relation.toId}/`)}>{capabilitiesById.get(relation.toId)?.name['zh-CN']}</a>
+                  <span>{relation.summary['zh-CN']}</span>
+                </li>
+              ))}
+            </ul>
+          ) : <p>当前没有记录直接支持的能力。</p>}
+        </section>
+        <section aria-labelledby="incoming-heading">
+          <h3 id="incoming-heading">受到支持</h3>
+          {incoming.length > 0 ? (
+            <ul>
+              {incoming.map((relation) => (
+                <li>
+                  <a href={sitePath(`capabilities/${relation.fromId}/`)}>{capabilitiesById.get(relation.fromId)?.name['zh-CN']}</a>
+                  <span>{relation.summary['zh-CN']}</span>
+                </li>
+              ))}
+            </ul>
+          ) : <p>当前没有记录直接支持它的能力。</p>}
+        </section>
+        <section aria-labelledby="complements-heading">
+          <h3 id="complements-heading">互补</h3>
+          {complements.length > 0 ? (
+            <ul>
+              {complements.map((relation) => {
+                const otherId = relation.fromId === capability.id ? relation.toId : relation.fromId;
+                return (
+                  <li>
+                    <a href={sitePath(`capabilities/${otherId}/`)}>{capabilitiesById.get(otherId)?.name['zh-CN']}</a>
+                    <span>{relation.summary['zh-CN']}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : <p>当前没有记录互补能力。</p>}
+        </section>
+      </div>
+    </section>
 
     <section aria-labelledby="resource-topic-heading">
       <h2 id="resource-topic-heading">相关主题资源</h2>
@@ -43,17 +112,20 @@ const resources = catalog.resources.filter((resource) => resource.capabilityIds.
 
     <section aria-labelledby="resource-heading">
       <h2 id="resource-heading">相关具体资源</h2>
-      <ul class="compact-resource-list">
-        {resources.map((resource) => {
-          const source = catalog.sources.find(({ id }) => id === resource.sourceId);
-          return (
-            <li>
-              <strong>{resource.title['zh-CN']}</strong>
-              <span>{source?.name['zh-CN']} · {resource.mediaType === 'video' ? '视频' : '文章'}</span>
-            </li>
-          );
-        })}
-      </ul>
+      {resources.length > 0 ? (
+        <ul class="compact-resource-list">
+          {resources.map((resource) => {
+            const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+            return (
+              <li>
+                <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
+                <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
+                <p>{resource.whyRelevant['zh-CN']}</p>
+              </li>
+            );
+          })}
+        </ul>
+      ) : <p>尚无直接关联的具体资源；资源整理不会影响这个能力在地图中的可达性。</p>}
     </section>
   </article>
 </BaseLayout>
