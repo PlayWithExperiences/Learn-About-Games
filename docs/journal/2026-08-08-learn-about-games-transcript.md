@@ -185,3 +185,15 @@ Atlas 证据比较结果支持 Roguelike 谱系作为首版种子：它比 Jumpi
 地图只让已策展的 Playtest 成为链接，其余八项保持相同 Capability 节点视觉但不进入 tab 顺序，并显示“路径尚未策展”。Playtest 链接以可见的“查看已策展路径”状态和描述关系表达当前可用性，不用覆盖可见文本的 aria-label。共享导航增加 Resources，所有站内路径继续使用 GitHub Pages 子路径 helper。
 
 GREEN 验证包括：`npm run check` 0 errors，Vitest 22 项通过，静态构建成功，桌面 Chromium 的新 Playtest E2E 4 项通过，移动 Chromium 的同一流程 4 项通过，既有 visible skeleton Chromium E2E 5 项通过。实现代理人工查看了 capability、trail 和 resources 的 1440px 与 320px 截图，确认移动端保持单列、语言 select 可见、没有把 Source 与 Work Item 混作同一对象。构建仍会报告既有空 Atlas 与 role profile 文件 loader 提示，未将其误判为本任务失败或用占位数据消除。
+
+### 24. M0 Task 4：参考职业透镜与本地个人状态
+
+记录说明：以下为本实现代理可访问的脱敏摘要，是部分导出，不是完整聊天 UI 的逐字记录。缺失范围包括主任务和其他并行任务的私有消息、完整工具原始输出及未导出的上下文；没有将其标记为完整逐字会话。
+
+任务新增唯一 `AAA / Game Designer` 参考画像。数据明确写出维护者 AAA 背景和该画像只是业界语境参考，同时提醒 indie/solo 的能力多边形不同，不把任何职业路径写成标准答案。映射只使用核心、重要、建议了解，以及执行与解读、执行、协作贡献、理解判断等分类。地图不会生成 total、percentage、radar 或个人分数。
+
+实现先写 progress 单测与 profile/progress 浏览器测试。RED 记录分别是 progress 模块不存在，以及地图中没有“参考职业画像”控件。随后以原生 Astro 与浏览器脚本增加版本化 `learn-about-games:progress:v1` 状态：五种状态为尚未接触、理解概念、做过练习、在真实项目中使用过、能够指导或评审他人；null 或损坏 JSON 回退到空的 version 1 状态，没有加入迁移、导入导出、云同步或跨设备功能。
+
+浏览器测试覆盖应用画像、确认分类标签、进入 Playtest 设为做过练习、刷新仍保留、返回地图清除透镜、个人进度仍显示，并断言没有数值评分。测试还发现浏览器 bfcache 会还原 select 表单值但不重新执行地图脚本，导致清除按钮和分类标记未同步。实现因此在 `pageshow` 按当前 select 值重新应用 lens，不持久化额外职业状态。静态非链接 capability 节点的 hover、active 和点击位移反馈同时移除，互动反馈只保留给 Playtest 链接。
+
+GREEN 验证包括：`npm run check` 0 errors、Vitest 26 项、静态构建、Chromium 11 项、mobile Chromium 11 项、`git diff --check`。人工查看了 1440px 与 320px 的地图和 Playtest 截图，脚本测得四个视图均无横向溢出。构建仍会报告既有空 Atlas collection 的 loader 提示，未把这些预存警告归因于本任务。

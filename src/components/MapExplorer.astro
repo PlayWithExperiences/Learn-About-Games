@@ -5,11 +5,37 @@ import type { Catalog } from '../lib/catalog/validate';
 interface Props {
   domains: Catalog['domains'];
   capabilities: Catalog['capabilities'];
+  roleProfiles: Catalog['roleProfiles'];
 }
 
-const { domains, capabilities } = Astro.props;
+const { domains, capabilities, roleProfiles } = Astro.props;
 const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
+const roleProfileData = Object.fromEntries(
+  roleProfiles.map((profile) => [profile.id, profile.capabilities]),
+);
 ---
+
+<section class="role-lens" aria-label="职业透镜" data-role-lens data-role-profiles={JSON.stringify(roleProfileData)}>
+  <div>
+    <p class="plain-label">参考职业画像</p>
+    <p>职业标签只说明特定生产语境下的分类参考。它不评价个人，也不计算分数。</p>
+  </div>
+  <label>
+    <span>参考职业画像</span>
+    <select>
+      <option value="">未应用参考画像</option>
+      {roleProfiles.map((profile) => <option value={profile.id}>{profile.title['zh-CN']}</option>)}
+    </select>
+  </label>
+  <button type="button" hidden>清除参考画像</button>
+  {roleProfiles.map((profile) => (
+    <div class="role-lens__context" data-role-context={profile.id} hidden>
+      <strong>{profile.title['zh-CN']}</strong>
+      <p>{profile.basis['zh-CN']}</p>
+      <p>{profile.caveats['zh-CN']}</p>
+    </div>
+  ))}
+</section>
 
 <div class="map-explorer" aria-label="能力地图">
   {orderedDomains.map((domain) => {
@@ -41,12 +67,18 @@ const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
                 <strong id={labelId}>{capability.name['zh-CN']}</strong>
                 <span id={summaryId}>{capability.summary['zh-CN']}</span>
                 <small id={statusId}>查看已策展路径</small>
+                <span class="role-marker" data-role-marker={capability.id} hidden>
+                  <span data-role-label></span>
+                </span>
               </a>
             ) : (
               <div class="capability-node" id={capability.id}>
                 <strong>{capability.name['zh-CN']}</strong>
                 <span>{capability.summary['zh-CN']}</span>
                 <small>路径尚未策展</small>
+                <span class="role-marker" data-role-marker={capability.id} hidden>
+                  <span data-role-label></span>
+                </span>
               </div>
             );
           })}
@@ -55,3 +87,56 @@ const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
     );
   })}
 </div>
+
+<script>
+  type RoleCapability = {
+    capabilityId: string;
+    priority: 'core' | 'important' | 'suggested';
+    responsibility: 'execute-and-interpret' | 'execute' | 'contribute' | 'understand';
+  };
+
+  const lens = document.querySelector<HTMLElement>('[data-role-lens]');
+  const select = lens?.querySelector('select');
+  const clearButton = lens?.querySelector('button');
+  const profiles = lens?.dataset.roleProfiles ? JSON.parse(lens.dataset.roleProfiles) as Record<string, RoleCapability[]> : {};
+  const priorityLabels = { core: '核心', important: '重要', suggested: '建议了解' };
+  const responsibilityLabels = {
+    'execute-and-interpret': '执行与解读',
+    execute: '执行',
+    contribute: '协作贡献',
+    understand: '理解判断',
+  };
+
+  const applyProfile = () => {
+    const profileId = select?.value ?? '';
+    const profileCapabilities = new Map(
+      (profiles[profileId] ?? []).map((capability) => [capability.capabilityId, capability]),
+    );
+
+    document.querySelectorAll<HTMLElement>('[data-role-marker]').forEach((marker) => {
+      const capability = profileCapabilities.get(marker.dataset.roleMarker ?? '');
+      marker.hidden = !capability;
+      const label = marker.querySelector<HTMLElement>('[data-role-label]');
+      if (capability && label) {
+        label.textContent = `${priorityLabels[capability.priority]} · ${responsibilityLabels[capability.responsibility]}`;
+      }
+    });
+
+    lens?.querySelectorAll<HTMLElement>('[data-role-context]').forEach((context) => {
+      context.hidden = context.dataset.roleContext !== profileId;
+    });
+
+    if (clearButton) {
+      clearButton.hidden = profileId === '';
+    }
+  };
+
+  select?.addEventListener('change', applyProfile);
+  window.addEventListener('pageshow', applyProfile);
+  clearButton?.addEventListener('click', () => {
+    if (select) {
+      select.value = '';
+      applyProfile();
+    }
+  });
+</script>

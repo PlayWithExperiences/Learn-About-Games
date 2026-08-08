@@ -294,17 +294,20 @@ h2 {
   background: var(--surface);
   color: var(--ink);
   align-content: space-between;
+}
+
+a.capability-node {
   text-decoration: none;
   transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
 }
 
-.capability-node:hover {
+a.capability-node:hover {
   border-color: var(--accent);
   background: var(--surface-strong);
   color: var(--ink);
 }
 
-.capability-node:active {
+a.capability-node:active {
   transform: translateY(1px);
 }
 
@@ -329,6 +332,90 @@ h2 {
 .capability-node--next {
   border-color: var(--accent);
   box-shadow: inset 4px 0 0 var(--accent);
+}
+
+.role-lens {
+  display: grid;
+  margin-bottom: 3rem;
+  padding: 1.25rem 0 1.5rem;
+  border-block: 1px solid var(--line);
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 16rem) auto;
+  align-items: end;
+  gap: 1.25rem 2rem;
+}
+
+.role-lens p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.role-lens .plain-label {
+  margin-bottom: 0.45rem;
+}
+
+.role-lens label,
+.progress-panel label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.role-lens select,
+.progress-panel select {
+  min-height: 2.8rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+.role-lens button {
+  min-height: 2.8rem;
+  padding-inline: 0.9rem;
+  border: 1px solid var(--accent-dark);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--accent-dark);
+  font: inherit;
+  font-weight: 700;
+}
+
+.role-lens button:hover {
+  background: var(--surface-strong);
+}
+
+.role-lens button:active {
+  transform: translateY(1px);
+}
+
+.role-lens__context {
+  grid-column: 1 / -1;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.role-lens__context strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.role-lens__context p + p {
+  margin-top: 0.45rem;
+}
+
+.role-marker {
+  display: block;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 720;
 }
 
 .prose,
@@ -365,6 +452,35 @@ h2 {
   margin-top: 4rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--line);
+}
+
+.progress-panel {
+  display: grid;
+  margin-top: 2.4rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--surface);
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, 18rem);
+  align-items: end;
+  gap: 1rem 2rem;
+}
+
+.progress-panel .plain-label {
+  margin-bottom: 0.45rem;
+}
+
+.progress-panel p:not(.plain-label) {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.progress-panel__current {
+  grid-column: 1 / -1;
+  color: var(--ink) !important;
+  font-weight: 720;
 }
 
 .detail-page h2 {
@@ -801,6 +917,20 @@ h2 {
 
   .resource-explorer__controls {
     display: block;
+  }
+
+  .role-lens,
+  .progress-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .role-lens button {
+    width: fit-content;
+  }
+
+  .role-lens__context,
+  .progress-panel__current {
+    grid-column: auto;
   }
 
   .resource-explorer__controls label {

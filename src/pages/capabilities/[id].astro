@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CapabilityProgress from '../../components/CapabilityProgress.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 import { sitePath } from '../../lib/site-path';
 
@@ -25,6 +26,8 @@ const resources = catalog.resources.filter((resource) => resource.capabilityIds.
     <p class="plain-label">能力</p>
     <h1>{capability.name['zh-CN']}</h1>
     <p class="lede">{capability.summary['zh-CN']}</p>
+
+    {capability.id === 'playtesting' && <CapabilityProgress capabilityId={capability.id} />}
 
     <section aria-labelledby="trail-heading">
       <h2 id="trail-heading">已策展路径</h2>

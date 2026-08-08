@@ -1,0 +1,61 @@
+---
+interface Props {
+  capabilityId: string;
+}
+
+const { capabilityId } = Astro.props;
+
+const progressOptions = [
+  ['unseen', '尚未接触'],
+  ['understood', '理解概念'],
+  ['practiced', '做过练习'],
+  ['used-in-project', '在真实项目中使用过'],
+  ['can-guide', '能够指导或评审他人'],
+] as const;
+---
+
+<section class="progress-panel" aria-label="个人进度" data-capability-progress data-capability-id={capabilityId}>
+  <div>
+    <p class="plain-label">个人学习状态</p>
+    <p>仅保存在当前浏览器，用于记录你的学习实践，不参与职业参考画像。</p>
+  </div>
+  <label>
+    <span>个人学习状态</span>
+    <select>
+      {progressOptions.map(([value, label]) => <option value={value}>{label}</option>)}
+    </select>
+  </label>
+  <p class="progress-panel__current" aria-live="polite">尚未接触</p>
+</section>
+
+<script>
+  import { parseProgressStore, PROGRESS_STORAGE_KEY, type ProgressState } from '../lib/progress';
+
+  const panel = document.querySelector<HTMLElement>('[data-capability-progress]');
+  const select = panel?.querySelector('select');
+  const current = panel?.querySelector<HTMLElement>('.progress-panel__current');
+  const capabilityId = panel?.dataset.capabilityId;
+
+  const labels: Record<ProgressState, string> = {
+    unseen: '尚未接触',
+    understood: '理解概念',
+    practiced: '做过练习',
+    'used-in-project': '在真实项目中使用过',
+    'can-guide': '能够指导或评审他人',
+  };
+
+  if (select && current && capabilityId) {
+    const load = () => parseProgressStore(window.localStorage.getItem(PROGRESS_STORAGE_KEY));
+    const storedState = load().capabilities[capabilityId] ?? 'unseen';
+    select.value = storedState;
+    current.textContent = labels[storedState];
+
+    select.addEventListener('change', () => {
+      const store = load();
+      const state = select.value as ProgressState;
+      store.capabilities[capabilityId] = state;
+      window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(store));
+      current.textContent = labels[state];
+    });
+  }
+</script>

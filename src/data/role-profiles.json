@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "id": "aaa-game-designer",
+    "title": { "zh-CN": "AAA / Game Designer", "en": "AAA / Game Designer" },
+    "roleId": "game-designer",
+    "productionContextId": "aaa",
+    "basis": {
+      "zh-CN": "此画像来自维护者在 AAA 游戏设计中的工作背景，用作理解大型团队分工的业界语境参考。",
+      "en": "This profile is informed by the maintainer's AAA game-design background and is an industry-context reference for large-team collaboration."
+    },
+    "caveats": {
+      "zh-CN": "这不是标准答案。indie 与 solo 创作者的能力多边形会不同，团队结构、项目阶段和个人目标都会改变取舍。",
+      "en": "This is not a standard answer. Indie and solo creators have different capability polygons, and tradeoffs change with team structure, project phase, and personal goals."
+    },
+    "capabilities": [
+      { "capabilityId": "playtesting", "priority": "core", "responsibility": "execute-and-interpret" },
+      { "capabilityId": "core-loop", "priority": "core", "responsibility": "execute" },
+      { "capabilityId": "experience-framing", "priority": "important", "responsibility": "execute" },
+      { "capabilityId": "task-breakdown", "priority": "important", "responsibility": "contribute" },
+      { "capabilityId": "cross-discipline-communication", "priority": "important", "responsibility": "contribute" },
+      { "capabilityId": "narrative-architecture", "priority": "suggested", "responsibility": "understand" },
+      { "capabilityId": "aesthetic-direction", "priority": "suggested", "responsibility": "understand" }
+    ]
+  }
+]
