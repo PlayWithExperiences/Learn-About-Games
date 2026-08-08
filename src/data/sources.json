@@ -2,11 +2,23 @@
   {
     "id": "game-makers-toolkit",
     "name": { "zh-CN": "Game Maker's Toolkit", "en": "Game Maker's Toolkit" },
-    "homepage": "https://www.youtube.com/@GMTK"
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "Mark Brown 运营的游戏设计分析频道，按单期视频讨论具体设计实践与案例。",
+      "en": "A game-design analysis channel by Mark Brown, with individual videos on specific practices and cases."
+    },
+    "homepage": "https://www.youtube.com/@GMTK",
+    "languages": ["en"]
   },
   {
     "id": "play-with-experiences",
     "name": { "zh-CN": "PlayWithExperiences", "en": "PlayWithExperiences" },
-    "homepage": "https://medill-east.github.io/"
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "PlayWithExperiences 公开发布关于游戏设计实践与经验的文章。",
+      "en": "PlayWithExperiences publishes public writing about game-design practice and experience."
+    },
+    "homepage": "https://medill-east.github.io/",
+    "languages": ["zh-CN", "en"]
   }
 ]

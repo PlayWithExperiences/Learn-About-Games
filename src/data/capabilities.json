@@ -2,55 +2,55 @@
   {
     "id": "experience-framing",
     "name": { "zh-CN": "体验目标与拆解", "en": "Experience Framing" },
-    "summary": { "zh-CN": "把体验意图拆成可讨论的问题。学习路径尚未策展。", "en": "Break experience intent into discussable questions. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "把体验意图拆成可讨论的问题。", "en": "Break experience intent into discussable questions." },
     "domainId": "experience-design"
   },
   {
     "id": "core-loop",
     "name": { "zh-CN": "核心循环", "en": "Core Loop" },
-    "summary": { "zh-CN": "组织玩家重复行动、反馈与变化。学习路径尚未策展。", "en": "Organize repeated player actions, feedback, and change. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "组织玩家重复行动、反馈与变化。", "en": "Organize repeated player actions, feedback, and change." },
     "domainId": "gameplay-challenges"
   },
   {
     "id": "narrative-architecture",
     "name": { "zh-CN": "叙事架构", "en": "Narrative Architecture" },
-    "summary": { "zh-CN": "安排故事信息与玩家行动的结构关系。学习路径尚未策展。", "en": "Structure story information around player action. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "安排故事信息与玩家行动的结构关系。", "en": "Structure story information around player action." },
     "domainId": "narrative"
   },
   {
     "id": "aesthetic-direction",
     "name": { "zh-CN": "美学与表现方向", "en": "Aesthetic Direction" },
-    "summary": { "zh-CN": "让多种表现手段支持同一体验方向。学习路径尚未策展。", "en": "Align expressive disciplines around one experience direction. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "让多种表现手段支持同一体验方向。", "en": "Align expressive disciplines around one experience direction." },
     "domainId": "aesthetics"
   },
   {
     "id": "task-breakdown",
     "name": { "zh-CN": "任务拆解与落地", "en": "Task Breakdown and Delivery" },
-    "summary": { "zh-CN": "把设计选择转成可实现、可检查的任务。学习路径尚未策展。", "en": "Turn design choices into implementable, inspectable tasks. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "把设计选择转成可实现、可检查的任务。", "en": "Turn design choices into implementable, inspectable tasks." },
     "domainId": "production"
   },
   {
     "id": "playtesting",
     "name": { "zh-CN": "Playtest", "en": "Playtesting" },
-    "summary": { "zh-CN": "通过观察玩家检验设计判断，沿能力页进入 Playtest 基础路径。", "en": "Test design judgments by observing players, then enter the Playtest foundations trail from the capability page." },
+    "summary": { "zh-CN": "通过观察玩家检验设计判断。", "en": "Test design judgments by observing players." },
     "domainId": "iteration"
   },
   {
     "id": "cross-discipline-communication",
     "name": { "zh-CN": "跨职能沟通", "en": "Cross-discipline Communication" },
-    "summary": { "zh-CN": "在不同专业之间建立可行动的共同理解。学习路径尚未策展。", "en": "Build actionable shared understanding across disciplines. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "在不同专业之间建立可行动的共同理解。", "en": "Build actionable shared understanding across disciplines." },
     "domainId": "leadership-collaboration"
   },
   {
     "id": "audience-positioning",
     "name": { "zh-CN": "受众与定位", "en": "Audience and Positioning" },
-    "summary": { "zh-CN": "把受众需求与产品取舍联系起来。学习路径尚未策展。", "en": "Connect audience needs to product tradeoffs. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "把受众需求与产品取舍联系起来。", "en": "Connect audience needs to product tradeoffs." },
     "domainId": "product-business"
   },
   {
     "id": "innovation-literacy",
     "name": { "zh-CN": "游戏创新沿革素养", "en": "Game Innovation Literacy" },
-    "summary": { "zh-CN": "基于证据理解创新关系与历史不确定性。学习路径尚未策展。", "en": "Interpret innovation relations and historical uncertainty through evidence. The learning trail is not yet curated." },
+    "summary": { "zh-CN": "基于证据理解创新关系与历史不确定性。", "en": "Interpret innovation relations and historical uncertainty through evidence." },
     "domainId": "innovation"
   }
 ]

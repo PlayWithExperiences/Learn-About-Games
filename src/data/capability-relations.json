@@ -1,0 +1,32 @@
+[
+  {
+    "id": "experience-framing-complements-core-loop",
+    "fromId": "experience-framing",
+    "toId": "core-loop",
+    "type": "complements",
+    "summary": {
+      "zh-CN": "体验目标帮助团队判断核心循环中的行动、反馈与变化是否服务同一意图。",
+      "en": "Experience framing helps a team judge whether a core loop's actions, feedback, and change serve one intent."
+    }
+  },
+  {
+    "id": "playtesting-supports-experience-framing",
+    "fromId": "playtesting",
+    "toId": "experience-framing",
+    "type": "supports",
+    "summary": {
+      "zh-CN": "对玩家行为的观察为检验体验目标是否成立提供证据。",
+      "en": "Observing player behavior provides evidence for testing whether an intended experience is working."
+    }
+  },
+  {
+    "id": "cross-discipline-communication-complements-task-breakdown",
+    "fromId": "cross-discipline-communication",
+    "toId": "task-breakdown",
+    "type": "complements",
+    "summary": {
+      "zh-CN": "共同理解让任务拆解中的范围、依赖和验收条件能被不同专业实际使用。",
+      "en": "Shared understanding makes scope, dependencies, and acceptance criteria in task breakdown usable across disciplines."
+    }
+  }
+]

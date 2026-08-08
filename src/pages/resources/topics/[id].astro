@@ -1,0 +1,19 @@
+---
+import ResourceExplorer from '../../../components/ResourceExplorer.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../../lib/catalog/load';
+
+export async function getStaticPaths() {
+  const catalog = await loadCatalog();
+  return catalog.resourceTopics.map((topic) => ({ params: { id: topic.id }, props: { topic, catalog } }));
+}
+
+const { topic, catalog } = Astro.props;
+const resources = catalog.resources.filter((resource) => resource.resourceTopicIds.includes(topic.id));
+---
+
+<BaseLayout title={topic.title['zh-CN']} description={topic.summary['zh-CN']}>
+  <div class="page-shell resource-page">
+    <ResourceExplorer resources={resources} sources={catalog.sources} title={topic.title['zh-CN']} lede={topic.summary['zh-CN']} />
+  </div>
+</BaseLayout>

@@ -4,9 +4,16 @@ import type { Catalog } from '../lib/catalog/validate';
 interface Props {
   resources: Catalog['resources'];
   sources: Catalog['sources'];
+  title?: string;
+  lede?: string;
 }
 
-const { resources, sources } = Astro.props;
+const {
+  resources,
+  sources,
+  title = '按可消费版本浏览 Work Item',
+  lede = 'Source 是发布者或创作者；Work Item 是可直接学习的一条具体内容。',
+} = Astro.props;
 
 const mediaLabels: Record<string, string> = {
   article: '文章',
@@ -15,6 +22,8 @@ const mediaLabels: Record<string, string> = {
 
 const accessLabels: Record<string, string> = {
   free: '免费',
+  paid: '付费',
+  subscription: '订阅',
 };
 
 const translationLabels: Record<string, string> = {
@@ -41,8 +50,8 @@ function groupAccessVersions(versions: AccessVersion[]) {
   <div class="resource-explorer__controls">
     <div>
       <p class="plain-label">资源导航</p>
-      <h1 id="resource-list-title">按可消费版本浏览 Work Item</h1>
-      <p class="lede">Source 是发布者或创作者；Work Item 是可直接学习的一条具体内容。</p>
+      <h1 id="resource-list-title">{title}</h1>
+      <p class="lede">{lede}</p>
     </div>
     <label>
       <span>可消费语言</span>
@@ -68,6 +77,7 @@ function groupAccessVersions(versions: AccessVersion[]) {
           <p class="resource-card__label">Work Item</p>
           <h2>{resource.title['zh-CN']}</h2>
           <p>{resource.summary['zh-CN']}</p>
+          <p><strong>关联说明：</strong>{resource.whyRelevant['zh-CN']}</p>
           {source && (
             <p class="resource-card__source">
               <span>Source</span>
@@ -76,7 +86,7 @@ function groupAccessVersions(versions: AccessVersion[]) {
           )}
           <dl class="resource-card__meta">
             <div><dt>媒介</dt><dd>{mediaLabels[resource.mediaType] ?? resource.mediaType}</dd></div>
-            <div><dt>审核</dt><dd>{resource.reviewStatus === 'reviewed' ? '已审核' : resource.reviewStatus}</dd></div>
+            <div><dt>原始语言</dt><dd>{resource.originalLanguage}</dd></div>
           </dl>
           <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
             {accessVersionsByUrl.map((group) => (
@@ -84,7 +94,7 @@ function groupAccessVersions(versions: AccessVersion[]) {
                 <a href={group.url}>{resource.title['zh-CN']}</a>
                 <ul class="access-version-list__metadata">
                   {group.versions.map((version) => (
-                    <li>{version.language} · {accessLabels[version.access] ?? version.access} · {translationLabels[version.translationKind] ?? version.translationKind}</li>
+                    <li>{version.language} · {accessLabels[version.accessModel] ?? version.accessModel} · {translationLabels[version.translationKind] ?? version.translationKind} · 检查于 {version.checkedAt}</li>
                   ))}
                 </ul>
               </li>

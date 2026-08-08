@@ -52,35 +52,23 @@ const roleProfileData = Object.fromEntries(
         </div>
         <div class="capability-list">
           {domainCapabilities.map((capability) => {
-            const isCurated = capability.id === 'playtesting';
             const labelId = `capability-${capability.id}-label`;
             const summaryId = `capability-${capability.id}-summary`;
-            const statusId = `capability-${capability.id}-status`;
 
-            return isCurated ? (
+            return (
               <a
-                class:list={['capability-node', 'capability-node--next']}
+                class="capability-node"
                 id={capability.id}
-                href={sitePath('capabilities/playtesting/')}
+                href={sitePath(`capabilities/${capability.id}/`)}
                 aria-labelledby={labelId}
-                aria-describedby={`${summaryId} ${statusId}`}
+                aria-describedby={summaryId}
               >
                 <strong id={labelId}>{capability.name['zh-CN']}</strong>
                 <span id={summaryId}>{capability.summary['zh-CN']}</span>
-                <small id={statusId}>查看已策展路径</small>
                 <span class="role-marker" data-role-marker={capability.id} hidden>
                   <span data-role-label></span>
                 </span>
               </a>
-            ) : (
-              <div class="capability-node" id={capability.id}>
-                <strong>{capability.name['zh-CN']}</strong>
-                <span>{capability.summary['zh-CN']}</span>
-                <small>路径尚未策展</small>
-                <span class="role-marker" data-role-marker={capability.id} hidden>
-                  <span data-role-label></span>
-                </span>
-              </div>
             );
           })}
         </div>
@@ -93,7 +81,7 @@ const roleProfileData = Object.fromEntries(
   type RoleCapability = {
     capabilityId: string;
     priority: 'core' | 'important' | 'suggested';
-    responsibility: 'execute-and-interpret' | 'execute' | 'contribute' | 'understand';
+    responsibility: 'execute' | 'contribute' | 'decide' | 'direct';
   };
 
   const lens = document.querySelector<HTMLElement>('[data-role-lens]');
@@ -102,10 +90,10 @@ const roleProfileData = Object.fromEntries(
   const profiles = lens?.dataset.roleProfiles ? JSON.parse(lens.dataset.roleProfiles) as Record<string, RoleCapability[]> : {};
   const priorityLabels = { core: '核心', important: '重要', suggested: '建议了解' };
   const responsibilityLabels = {
-    'execute-and-interpret': '执行与解读',
-    execute: '执行',
+    execute: '亲自执行',
     contribute: '协作贡献',
-    understand: '理解判断',
+    decide: '判断',
+    direct: '指导',
   };
 
   const applyProfile = () => {

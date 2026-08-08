@@ -1,0 +1,12 @@
+[
+  {
+    "id": "playtesting",
+    "title": { "zh-CN": "Playtest 主题资源集合", "en": "Playtesting Topic Collection" },
+    "summary": {
+      "zh-CN": "围绕观察玩家、提出可验证问题与使用测试证据的无顺序资源集合。",
+      "en": "An unordered collection about observing players, framing testable questions, and using playtest evidence."
+    },
+    "capabilityIds": ["playtesting"],
+    "knowledgeTopicIds": ["player-behavior-observation"]
+  }
+]

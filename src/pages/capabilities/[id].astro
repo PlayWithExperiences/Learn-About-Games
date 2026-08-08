@@ -6,13 +6,11 @@ import { sitePath } from '../../lib/site-path';
 
 export async function getStaticPaths() {
   const catalog = await loadCatalog();
-  return catalog.capabilities
-    .filter((capability) => catalog.learningTrails.some((trail) => trail.capabilityId === capability.id))
-    .map((capability) => ({ params: { id: capability.id }, props: { capability, catalog } }));
+  return catalog.capabilities.map((capability) => ({ params: { id: capability.id }, props: { capability, catalog } }));
 }
 
 const { capability, catalog } = Astro.props;
-const trails = catalog.learningTrails.filter((trail) => trail.capabilityId === capability.id);
+const resourceTopics = catalog.resourceTopics.filter((topic) => topic.capabilityIds.includes(capability.id));
 const resources = catalog.resources.filter((resource) => resource.capabilityIds.includes(capability.id));
 ---
 
@@ -29,16 +27,17 @@ const resources = catalog.resources.filter((resource) => resource.capabilityIds.
 
     {capability.id === 'playtesting' && <CapabilityProgress capabilityId={capability.id} />}
 
-    <section aria-labelledby="trail-heading">
-      <h2 id="trail-heading">已策展路径</h2>
+    <section aria-labelledby="resource-topic-heading">
+      <h2 id="resource-topic-heading">相关主题资源</h2>
       <div class="detail-card-list">
-        {trails.map((trail) => (
-          <a class="detail-card" href={sitePath(`trails/${trail.id}/`)}>
-            <span>学习路径</span>
-            <h3>{trail.title['zh-CN']}</h3>
-            <p>{trail.summary['zh-CN']}</p>
+        {resourceTopics.map((topic) => (
+          <a class="detail-card" href={sitePath(`resources/topics/${topic.id}/`)}>
+            <span>主题资源集合</span>
+            <h3>{topic.title['zh-CN']}</h3>
+            <p>{topic.summary['zh-CN']}</p>
           </a>
         ))}
+        {resourceTopics.length === 0 && <p>这个能力的主题资源仍在持续整理中。</p>}
       </div>
     </section>
 

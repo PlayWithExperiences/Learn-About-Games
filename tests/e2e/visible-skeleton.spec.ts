@@ -39,7 +39,7 @@ test('publishes the visible map skeleton and repository-backed project pages', a
   }
 });
 
-test('describes the shipped Playtest slice as available now', async ({ page }) => {
+test('describes the shipped Playtest topic collection as available now', async ({ page }) => {
   await page.goto('./');
   await expect(
     page.getByText(
@@ -50,7 +50,7 @@ test('describes the shipped Playtest slice as available now', async ({ page }) =
 
   await page.getByRole('link', { name: '打开能力地图' }).click();
   await expect(
-    page.getByText('通过观察玩家检验设计判断，沿能力页进入 Playtest 基础路径。', { exact: true }),
+    page.getByText('通过观察玩家检验设计判断。', { exact: true }),
   ).toBeVisible();
 });
 
@@ -59,7 +59,7 @@ test('describes the available role lens as a reference rather than future work',
 
   await expect(
     page.getByText(
-      '用已发布的 AAA / Game Designer 参考画像理解一种生产语境；它只是参考，不作评分，更多画像后续扩展。',
+      '用 AAA · Game Designer 参考画像理解一种生产语境；它基于可复核的岗位样本和行业说明，不作个人评分。',
       { exact: true },
     ),
   ).toBeVisible();

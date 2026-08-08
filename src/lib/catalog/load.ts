@@ -12,7 +12,6 @@ const productCollections: ProductCollection[] = [
   'resourceTopics',
   'sources',
   'resources',
-  'learningTrails',
   'roleProfiles',
   'atlasCategories',
   'atlasNodes',

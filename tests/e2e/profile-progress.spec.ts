@@ -10,11 +10,11 @@ test('keeps a contextual role lens separate from local Playtest progress', async
   await profileSelect.selectOption('aaa-game-designer');
   await expect(visibleRoleMarkers).toHaveCount(7);
   await expect(page.locator('[data-role-context="aaa-game-designer"]:not([hidden]) strong')).toHaveText(
-    'AAA / Game Designer',
+    'AAA · Game Designer',
   );
-  await expect(page.getByText('核心 · 执行与解读', { exact: true })).toBeVisible();
-  await expect(page.getByText('重要 · 协作贡献', { exact: true })).toHaveCount(2);
-  await expect(page.getByText('建议了解 · 理解判断', { exact: true })).toHaveCount(2);
+  await expect(page.getByText('核心 · 亲自执行', { exact: true })).toBeVisible();
+  await expect(page.getByText('重要 · 协作贡献', { exact: true })).toHaveCount(3);
+  await expect(page.getByText('建议了解 · 协作贡献', { exact: true })).toHaveCount(3);
   await expect(page.locator('main')).not.toContainText(/\d+(?:\.\d+)?\s*(?:%|分)|\d+\s*\/\s*\d+/);
 
   await page.getByRole('link', { name: 'Playtest', exact: true }).click();
@@ -31,7 +31,7 @@ test('keeps a contextual role lens separate from local Playtest progress', async
   await page.getByRole('button', { name: '清除参考画像' }).click();
   await expect(profileSelect).toHaveValue('');
   await expect(visibleRoleMarkers).toHaveCount(0);
-  await expect(page.getByText('核心 · 执行与解读', { exact: true })).toBeHidden();
+  await expect(page.getByText('核心 · 亲自执行', { exact: true })).toBeHidden();
 
   await page.getByRole('link', { name: 'Playtest', exact: true }).click();
   await expect(page.getByLabel('个人学习状态')).toHaveValue('practiced');
@@ -52,7 +52,7 @@ test('keeps JavaScript-only controls visible but unavailable without JavaScript'
 
   await page.goto('./capabilities/playtesting/');
   await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Playtest 基础：把设计当作可验证的假设' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Playtest 主题资源集合' })).toBeVisible();
   await expect(page.getByLabel('个人学习状态')).toBeDisabled();
   await expect(page.getByText('启用 JavaScript 后可以保存个人学习状态。', { exact: true })).toBeVisible();
 

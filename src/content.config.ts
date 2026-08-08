@@ -146,19 +146,6 @@ const resources = defineCollection({
     .strict(),
 });
 
-const learningTrails = defineCollection({
-  loader: file('src/data/learning-trails.json'),
-  schema: z.object({
-    title: localizedText,
-    summary: localizedText,
-    capabilityId: z.string().trim().min(1),
-    resourceIds: z.array(z.string().trim().min(1)),
-    concepts: z.array(z.string().trim().min(1)),
-    exercises: z.array(z.string().trim().min(1)),
-    selfChecks: z.array(z.string().trim().min(1)),
-  }),
-});
-
 const roleProfiles = defineCollection({
   loader: file('src/data/role-profiles.json'),
   schema: z
@@ -259,7 +246,6 @@ export const collections = {
   resourceTopics,
   sources,
   resources,
-  learningTrails,
   roleProfiles,
   atlasCategories,
   atlasNodes,

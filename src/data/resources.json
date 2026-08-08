@@ -8,13 +8,20 @@
     },
     "sourceId": "game-makers-toolkit",
     "capabilityIds": ["playtesting"],
+    "knowledgeTopicIds": ["player-behavior-observation"],
+    "resourceTopicIds": ["playtesting"],
     "mediaType": "video",
-    "reviewStatus": "reviewed",
+    "canonicalUrl": "https://www.youtube.com/watch?v=9Yomqk0C6kE",
+    "whyRelevant": {
+      "zh-CN": "这期内容直接以 Valve 的案例说明，观察真实玩家如何帮助团队发现设计盲点。",
+      "en": "This episode uses Valve's case to show how observing real players helps teams uncover design blind spots."
+    },
+    "originalLanguage": "en",
     "accessVersions": [
       {
         "language": "en",
         "url": "https://www.youtube.com/watch?v=9Yomqk0C6kE",
-        "access": "free",
+        "accessModel": "free",
         "translationKind": "original",
         "checkedAt": "2026-08-08"
       }
@@ -29,20 +36,27 @@
     },
     "sourceId": "play-with-experiences",
     "capabilityIds": ["playtesting"],
+    "knowledgeTopicIds": ["player-behavior-observation"],
+    "resourceTopicIds": ["playtesting"],
     "mediaType": "article",
-    "reviewStatus": "reviewed",
+    "canonicalUrl": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
+    "whyRelevant": {
+      "zh-CN": "文章把测试目标、观察时机与不干预观察连接到可用于设计判断的 Playtest 证据。",
+      "en": "The article connects test goals, timing, and non-intervention to playtest evidence usable in design decisions."
+    },
+    "originalLanguage": "zh-CN",
     "accessVersions": [
       {
         "language": "zh-CN",
         "url": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
-        "access": "free",
+        "accessModel": "free",
         "translationKind": "original",
         "checkedAt": "2026-08-08"
       },
       {
         "language": "en",
         "url": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
-        "access": "free",
+        "accessModel": "free",
         "translationKind": "bilingual",
         "checkedAt": "2026-08-08"
       }

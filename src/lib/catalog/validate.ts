@@ -78,16 +78,6 @@ export type Catalog = {
       checkedAt: string;
     }>;
   }>;
-  learningTrails: Array<{
-    id: string;
-    title: LocalizedText;
-    summary: LocalizedText;
-    capabilityId: string;
-    resourceIds: string[];
-    concepts: string[];
-    exercises: string[];
-    selfChecks: string[];
-  }>;
   roleProfiles: Array<{
     id: string;
     title: LocalizedText;
@@ -173,8 +163,6 @@ export type CatalogValidationCode =
   | 'SOURCE_HOMEPAGE_INVALID'
   | 'SOURCE_LANGUAGES_REQUIRED'
   | 'SOURCE_EXTERNAL_SIGNAL_INVALID'
-  | 'TRAIL_CAPABILITY_MISSING'
-  | 'TRAIL_RESOURCE_MISSING'
   | 'PROFILE_BASIS_LINK_REQUIRED'
   | 'PROFILE_BASIS_LINK_URL_INVALID'
   | 'PROFILE_REVIEWED_AT_INVALID'
@@ -209,7 +197,6 @@ const collectionNames = [
   'resourceTopics',
   'sources',
   'resources',
-  'learningTrails',
   'roleProfiles',
   'atlasCategories',
   'atlasNodes',
@@ -238,6 +225,8 @@ function isRegionRestriction(value: unknown): boolean {
 
   const restriction = value as Record<string, unknown>;
   const note = restriction.note;
+  const localizedNote = note as Record<string, unknown>;
+  const zhNote = localizedNote['zh-CN'];
   return (
     Array.isArray(restriction.regions) &&
     restriction.regions.length > 0 &&
@@ -245,8 +234,8 @@ function isRegionRestriction(value: unknown): boolean {
     typeof note === 'object' &&
     note !== null &&
     !Array.isArray(note) &&
-    typeof (note as Record<string, unknown>)['zh-CN'] === 'string' &&
-    (note as Record<string, unknown>)['zh-CN'].trim().length > 0
+    typeof zhNote === 'string' &&
+    zhNote.trim().length > 0
   );
 }
 
@@ -305,7 +294,6 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   const knowledgeTopicIds = new Set(catalog.knowledgeTopics.map(({ id }) => id));
   const resourceTopicIds = new Set(catalog.resourceTopics.map(({ id }) => id));
   const sourceIds = new Set(catalog.sources.map(({ id }) => id));
-  const resourceIds = new Set(catalog.resources.map(({ id }) => id));
   const atlasNodeIds = new Set(catalog.atlasNodes.map(({ id }) => id));
   const atlasEvidenceIds = new Set(catalog.atlasEvidence.map(({ id }) => id));
 
@@ -582,32 +570,6 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     for (const signal of resource.externalSignals ?? []) {
       if (!isExternalSignal(signal)) {
         appendError(errors, 'RESOURCE_EXTERNAL_SIGNAL_INVALID', 'resources', resource.id, 'externalSignals', '');
-      }
-    }
-  }
-
-  for (const trail of catalog.learningTrails) {
-    if (!capabilityIds.has(trail.capabilityId)) {
-      appendError(
-        errors,
-        'TRAIL_CAPABILITY_MISSING',
-        'learningTrails',
-        trail.id,
-        'capabilityId',
-        trail.capabilityId,
-      );
-    }
-
-    for (const resourceId of trail.resourceIds) {
-      if (!resourceIds.has(resourceId)) {
-        appendError(
-          errors,
-          'TRAIL_RESOURCE_MISSING',
-          'learningTrails',
-          trail.id,
-          'resourceIds',
-          resourceId,
-        );
       }
     }
   }

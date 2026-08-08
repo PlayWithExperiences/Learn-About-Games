@@ -12,7 +12,6 @@ const emptyCatalog = (): Catalog => ({
   resourceTopics: [],
   sources: [],
   resources: [],
-  learningTrails: [],
   roleProfiles: [],
   atlasCategories: [],
   atlasNodes: [],
@@ -130,25 +129,6 @@ describe('validateCatalog', () => {
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'RESOURCE_SOURCE_MISSING',
       'RESOURCE_CAPABILITY_MISSING',
-    ]);
-  });
-
-  it('reports missing capability and resource references on learning trails', () => {
-    const catalog = emptyCatalog();
-    catalog.learningTrails.push({
-      id: 'playtest-basics',
-      title: localized('Playtest 基础'),
-      summary: localized('示例路径。'),
-      capabilityId: 'missing-capability',
-      resourceIds: ['missing-resource'],
-      concepts: [],
-      exercises: [],
-      selfChecks: [],
-    });
-
-    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
-      'TRAIL_CAPABILITY_MISSING',
-      'TRAIL_RESOURCE_MISSING',
     ]);
   });
 
@@ -285,7 +265,7 @@ describe('validateCatalog', () => {
           score: 9,
         },
       ],
-    });
+    } as unknown as Catalog['resources'][number]);
     catalog.resources.push({
       ...validV02Resource('without-access', 'https://example.com/no-access'),
       accessVersions: [],
@@ -318,7 +298,7 @@ describe('validateCatalog', () => {
           checkedAt: '2026-08-09',
         },
       ],
-    });
+    } as unknown as Catalog['resources'][number]);
 
     expect(validateCatalog(catalog)).toContainEqual({
       code: 'RESOURCE_ACCESS_MODEL_INVALID',
@@ -392,7 +372,7 @@ describe('validateCatalog', () => {
           checkedAt: '2026-02-31',
         },
       ],
-    });
+    } as unknown as Catalog['resources'][number]);
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'RESOURCE_MEDIA_TYPE_INVALID',

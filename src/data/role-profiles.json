@@ -1,25 +1,43 @@
 [
   {
     "id": "aaa-game-designer",
-    "title": { "zh-CN": "AAA / Game Designer", "en": "AAA / Game Designer" },
+    "title": { "zh-CN": "AAA · Game Designer", "en": "AAA · Game Designer" },
     "roleId": "game-designer",
     "productionContextId": "aaa",
     "basis": {
-      "zh-CN": "此画像来自维护者在 AAA 游戏设计中的工作背景，用作理解大型团队分工的业界语境参考。",
-      "en": "This profile is informed by the maintainer's AAA game-design background and is an industry-context reference for large-team collaboration."
+      "zh-CN": "此画像根据公开岗位样本与行业说明整理，用作理解 AAA 团队中游戏设计岗位关注点的可复核参考。",
+      "en": "This profile synthesizes public job samples and industry guidance as a reviewable reference for game-design focus in AAA teams."
     },
     "caveats": {
-      "zh-CN": "这不是标准答案。indie 与 solo 创作者的能力多边形会不同，团队结构、项目阶段和个人目标都会改变取舍。",
-      "en": "This is not a standard answer. Indie and solo creators have different capability polygons, and tradeoffs change with team structure, project phase, and personal goals."
+      "zh-CN": "这不是行业标准或唯一答案。岗位、团队结构、项目阶段和个人目标都会改变取舍；indie 与 solo 创作者的能力组合也会不同。",
+      "en": "This is not an industry standard or the only answer. Roles, team structures, project phases, and personal goals change the tradeoffs; indie and solo creators also combine capabilities differently."
     },
+    "basisLinks": [
+      {
+        "title": { "zh-CN": "Ubisoft Massive：Senior AI Game Designer", "en": "Ubisoft Massive: Senior AI Game Designer" },
+        "url": "https://jobs.smartrecruiters.com/Ubisoft2/744000127417779-senior-ai-game-designer-tom-clancy-s-the-division-3-",
+        "sourceNote": { "zh-CN": "公开岗位样本，涉及 AI 玩法设计、跨职能协作和实现落地。", "en": "Public job sample covering AI gameplay design, cross-discipline collaboration, and implementation." }
+      },
+      {
+        "title": { "zh-CN": "HoYoverse：Senior Combat Designer", "en": "HoYoverse: Senior Combat Designer" },
+        "url": "https://jobs.smartrecruiters.com/HoYoverse/743999886344535-senior-combat-designer-ca-",
+        "sourceNote": { "zh-CN": "公开岗位样本，涉及战斗体验、迭代和团队协作。", "en": "Public job sample covering combat experience, iteration, and team collaboration." }
+      },
+      {
+        "title": { "zh-CN": "IGDA：Liz England《The Door Problem》", "en": "IGDA: Liz England, The Door Problem" },
+        "url": "https://igda.org/resources-archive/the-door-problem-2014/",
+        "sourceNote": { "zh-CN": "行业说明，展示设计选择如何与叙事、美术、制作和跨职能沟通相互牵连。", "en": "Industry guidance showing how design choices connect with narrative, art, production, and cross-discipline communication." }
+      }
+    ],
+    "reviewedAt": "2026-08-09",
     "capabilities": [
-      { "capabilityId": "playtesting", "priority": "core", "responsibility": "execute-and-interpret" },
       { "capabilityId": "core-loop", "priority": "core", "responsibility": "execute" },
-      { "capabilityId": "experience-framing", "priority": "important", "responsibility": "execute" },
-      { "capabilityId": "task-breakdown", "priority": "important", "responsibility": "contribute" },
+      { "capabilityId": "playtesting", "priority": "important", "responsibility": "contribute" },
+      { "capabilityId": "experience-framing", "priority": "important", "responsibility": "contribute" },
       { "capabilityId": "cross-discipline-communication", "priority": "important", "responsibility": "contribute" },
-      { "capabilityId": "narrative-architecture", "priority": "suggested", "responsibility": "understand" },
-      { "capabilityId": "aesthetic-direction", "priority": "suggested", "responsibility": "understand" }
+      { "capabilityId": "task-breakdown", "priority": "suggested", "responsibility": "contribute" },
+      { "capabilityId": "narrative-architecture", "priority": "suggested", "responsibility": "contribute" },
+      { "capabilityId": "aesthetic-direction", "priority": "suggested", "responsibility": "contribute" }
     ]
   }
 ]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "player-behavior-observation",
+    "name": { "zh-CN": "玩家行为观察", "en": "Player Behavior Observation" },
+    "summary": {
+      "zh-CN": "理解玩家在测试中做了什么、说了什么，以及这些观察能够支持哪些设计判断。",
+      "en": "Understand what players do and say in a test, and which design judgments those observations can support."
+    },
+    "domainId": "iteration"
+  }
+]
