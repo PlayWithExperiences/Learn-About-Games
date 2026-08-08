@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 
 const projectBasePath = '/Learn-About-Games/';
 
@@ -16,8 +17,7 @@ test('serves the static site and its visible internal links from the project bas
 
   const routes = [
     'map/',
-    'capabilities/playtesting/',
-    'trails/playtesting-foundations/',
+    'resources/topics/playtesting/',
     'resources/',
     'atlas/',
     'project/roadmap/',
@@ -27,6 +27,19 @@ test('serves the static site and its visible internal links from the project bas
     const response = await request.get(route);
     expect(response.status(), route).toBe(200);
   }
+
+  for (const capability of capabilities) {
+    const response = await request.get(`capabilities/${capability.id}/`);
+    expect(response.status(), capability.id).toBe(200);
+  }
+
+  const retiredTrailArtifact = await request.get('trails/playtesting-foundations/');
+  expect(retiredTrailArtifact.status()).toBe(200);
+  await page.goto('./trails/playtesting-foundations/');
+  await expect(page).toHaveURL(/\/resources\/topics\/playtesting\/$/);
+
+  const unknownTrail = await request.get('trails/not-a-real-trail/');
+  expect(unknownTrail.status()).toBe(404);
 
   const stylesheetHref = await page.locator('link[rel="stylesheet"]').first().getAttribute('href');
   if (!stylesheetHref) {

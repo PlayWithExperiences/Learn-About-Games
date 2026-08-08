@@ -40,7 +40,8 @@ const validV02Resource = (id: string, canonicalUrl: string) =>
         language: 'en',
         url: canonicalUrl,
         accessModel: 'free',
-        translationKind: 'original',
+        versionRelation: 'original',
+        presentationMode: 'original',
         checkedAt: '2026-08-09',
       },
     ],
@@ -120,7 +121,8 @@ describe('validateCatalog', () => {
           language: 'zh-CN',
           url: 'https://example.com/observation-guide',
           accessModel: 'free',
-          translationKind: 'original',
+          versionRelation: 'original',
+          presentationMode: 'original',
           checkedAt: '2026-08-09',
         },
       ],
@@ -294,7 +296,8 @@ describe('validateCatalog', () => {
               note: localized('仅限中国大陆。'),
             },
           ],
-          translationKind: 'original',
+          versionRelation: 'original',
+          presentationMode: 'original',
           checkedAt: '2026-08-09',
         },
       ],
@@ -319,7 +322,8 @@ describe('validateCatalog', () => {
           language: 'en',
           url: 'javascript:alert(1)',
           accessModel: 'free',
-          translationKind: 'original',
+          versionRelation: 'original',
+          presentationMode: 'original',
           checkedAt: '2026-08-09',
         },
       ],
@@ -345,7 +349,8 @@ describe('validateCatalog', () => {
             { regions: [], note: localized('无地区。') },
             { regions: [' '], note: { 'zh-CN': '' } },
           ],
-          translationKind: 'original',
+          versionRelation: 'original',
+          presentationMode: 'original',
           checkedAt: '2026-08-09',
         },
       ],
@@ -368,7 +373,8 @@ describe('validateCatalog', () => {
           language: 'en',
           url: 'https://example.com/invalid-enums',
           accessModel: 'free',
-          translationKind: 'machine',
+          versionRelation: 'machine',
+          presentationMode: 'machine',
           checkedAt: '2026-02-31',
         },
       ],
@@ -376,9 +382,36 @@ describe('validateCatalog', () => {
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'RESOURCE_MEDIA_TYPE_INVALID',
-      'RESOURCE_TRANSLATION_KIND_INVALID',
+      'RESOURCE_VERSION_RELATION_INVALID',
+      'RESOURCE_PRESENTATION_MODE_INVALID',
       'RESOURCE_ACCESS_VERSION_CHECKED_AT_INVALID',
     ]);
+  });
+
+  it('requires a non-empty external-signal sample size when it is present', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resources.push({
+      ...validV02Resource('empty-sample-size', 'https://example.com/empty-sample-size'),
+      externalSignals: [
+        {
+          provider: 'Example',
+          label: '公开计数',
+          value: '12',
+          sampleSize: ' ',
+          observedAt: '2026-08-09',
+          url: 'https://example.com/observation',
+        },
+      ],
+    } as unknown as Catalog['resources'][number]);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_EXTERNAL_SIGNAL_INVALID',
+      collection: 'resources',
+      id: 'empty-sample-size',
+      field: 'externalSignals',
+      targetId: '',
+    });
   });
 
   it('uses explicit role basis and enum-only capability focus semantics', () => {

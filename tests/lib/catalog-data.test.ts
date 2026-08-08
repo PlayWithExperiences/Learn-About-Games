@@ -57,7 +57,9 @@ describe('raw product catalog data', () => {
   });
 
   it('keeps Work Items factual and canonically unique', () => {
-    expect(resources).toHaveLength(2);
+    expect(resources.map(({ id }) => id)).toEqual(
+      expect.arrayContaining(['valves-secret-weapon', 'how-to-run-a-good-playtest']),
+    );
     expect(new Set(resources.map(({ canonicalUrl }) => canonicalUrl)).size).toBe(resources.length);
 
     for (const resource of resources) {
@@ -68,6 +70,9 @@ describe('raw product catalog data', () => {
       for (const version of resource.accessVersions) {
         expect(version).toHaveProperty('accessModel');
         expect(version).not.toHaveProperty('access');
+        expect(version).toHaveProperty('versionRelation');
+        expect(version).toHaveProperty('presentationMode');
+        expect(version).not.toHaveProperty('translationKind');
         expect(version).toHaveProperty('checkedAt');
       }
     }

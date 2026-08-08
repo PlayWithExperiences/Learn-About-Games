@@ -20,6 +20,7 @@ const externalSignal = z
     provider: z.string().trim().min(1),
     label: z.string().trim().min(1),
     value: z.union([z.string().trim().min(1), z.number()]),
+    sampleSize: z.string().trim().min(1).optional(),
     observedAt: isoDate,
     url: httpUrl,
   })
@@ -41,7 +42,8 @@ const accessVersion = z
       )
       .min(1)
       .optional(),
-    translationKind: z.enum(['original', 'official', 'community', 'bilingual', 'subtitled']),
+    versionRelation: z.enum(['original', 'official', 'community']),
+    presentationMode: z.enum(['original', 'translated', 'bilingual', 'subtitled', 'dubbed']),
     checkedAt: isoDate,
   })
   .strict();

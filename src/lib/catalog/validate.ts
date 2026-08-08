@@ -7,6 +7,7 @@ export type ExternalSignal = {
   provider: string;
   label: string;
   value: string | number;
+  sampleSize?: string;
   observedAt: string;
   url: string;
 };
@@ -74,7 +75,8 @@ export type Catalog = {
         regions: string[];
         note: LocalizedText;
       }>;
-      translationKind: 'original' | 'official' | 'community' | 'bilingual' | 'subtitled';
+      versionRelation: 'original' | 'official' | 'community';
+      presentationMode: 'original' | 'translated' | 'bilingual' | 'subtitled' | 'dubbed';
       checkedAt: string;
     }>;
   }>;
@@ -157,7 +159,8 @@ export type CatalogValidationCode =
   | 'RESOURCE_ACCESS_VERSION_CHECKED_AT_INVALID'
   | 'RESOURCE_REGION_RESTRICTION_INVALID'
   | 'RESOURCE_MEDIA_TYPE_INVALID'
-  | 'RESOURCE_TRANSLATION_KIND_INVALID'
+  | 'RESOURCE_VERSION_RELATION_INVALID'
+  | 'RESOURCE_PRESENTATION_MODE_INVALID'
   | 'RESOURCE_EXTERNAL_SIGNAL_INVALID'
   | 'SOURCE_KIND_INVALID'
   | 'SOURCE_HOMEPAGE_INVALID'
@@ -184,7 +187,8 @@ const sourceKinds = new Set(['creator', 'channel', 'organization', 'publisher', 
 const capabilityRelationTypes = new Set(['supports', 'complements']);
 const accessModels = new Set(['free', 'paid', 'subscription']);
 const mediaTypes = new Set(['article', 'book', 'course', 'paper', 'podcast', 'talk', 'video', 'website']);
-const translationKinds = new Set(['original', 'official', 'community', 'bilingual', 'subtitled']);
+const versionRelations = new Set(['original', 'official', 'community']);
+const presentationModes = new Set(['original', 'translated', 'bilingual', 'subtitled', 'dubbed']);
 const profilePriorities = new Set(['core', 'important', 'suggested']);
 const profileResponsibilities = new Set(['execute', 'contribute', 'decide', 'direct']);
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -263,6 +267,9 @@ function isExternalSignal(value: unknown): value is ExternalSignal {
   const hasValue =
     (typeof signal.value === 'string' && signal.value.trim().length > 0) ||
     (typeof signal.value === 'number' && Number.isFinite(signal.value));
+  const hasValidSampleSize =
+    signal.sampleSize === undefined ||
+    (typeof signal.sampleSize === 'string' && signal.sampleSize.trim().length > 0);
 
   return (
     !hasForbiddenScoreField &&
@@ -271,6 +278,7 @@ function isExternalSignal(value: unknown): value is ExternalSignal {
     typeof signal.label === 'string' &&
     signal.label.trim().length > 0 &&
     hasValue &&
+    hasValidSampleSize &&
     isIsoDate(signal.observedAt) &&
     isUrl(signal.url)
   );
@@ -534,14 +542,24 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
           accessVersion.url,
         );
       }
-      if (!translationKinds.has(accessVersion.translationKind)) {
+      if (!versionRelations.has(accessVersion.versionRelation)) {
         appendError(
           errors,
-          'RESOURCE_TRANSLATION_KIND_INVALID',
+          'RESOURCE_VERSION_RELATION_INVALID',
           'resources',
           resource.id,
-          'accessVersions.translationKind',
-          accessVersion.translationKind,
+          'accessVersions.versionRelation',
+          accessVersion.versionRelation,
+        );
+      }
+      if (!presentationModes.has(accessVersion.presentationMode)) {
+        appendError(
+          errors,
+          'RESOURCE_PRESENTATION_MODE_INVALID',
+          'resources',
+          resource.id,
+          'accessVersions.presentationMode',
+          accessVersion.presentationMode,
         );
       }
       if (!isIsoDate(accessVersion.checkedAt)) {

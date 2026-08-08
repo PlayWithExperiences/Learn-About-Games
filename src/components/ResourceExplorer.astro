@@ -1,5 +1,11 @@
 ---
 import type { Catalog } from '../lib/catalog/validate';
+import {
+  formatAccessVersion,
+  formatExternalSignal,
+  formatMediaType,
+  formatRegionRestriction,
+} from '../lib/resource-display';
 
 interface Props {
   resources: Catalog['resources'];
@@ -14,22 +20,6 @@ const {
   title = '按可消费版本浏览 Work Item',
   lede = 'Source 是发布者或创作者；Work Item 是可直接学习的一条具体内容。',
 } = Astro.props;
-
-const mediaLabels: Record<string, string> = {
-  article: '文章',
-  video: '视频',
-};
-
-const accessLabels: Record<string, string> = {
-  free: '免费',
-  paid: '付费',
-  subscription: '订阅',
-};
-
-const translationLabels: Record<string, string> = {
-  bilingual: '双语',
-  original: '原作',
-};
 
 type AccessVersion = Catalog['resources'][number]['accessVersions'][number];
 
@@ -85,7 +75,7 @@ function groupAccessVersions(versions: AccessVersion[]) {
             </p>
           )}
           <dl class="resource-card__meta">
-            <div><dt>媒介</dt><dd>{mediaLabels[resource.mediaType] ?? resource.mediaType}</dd></div>
+            <div><dt>媒介</dt><dd>{formatMediaType(resource.mediaType)}</dd></div>
             <div><dt>原始语言</dt><dd>{resource.originalLanguage}</dd></div>
           </dl>
           <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
@@ -94,12 +84,31 @@ function groupAccessVersions(versions: AccessVersion[]) {
                 <a href={group.url}>{resource.title['zh-CN']}</a>
                 <ul class="access-version-list__metadata">
                   {group.versions.map((version) => (
-                    <li>{version.language} · {accessLabels[version.accessModel] ?? version.accessModel} · {translationLabels[version.translationKind] ?? version.translationKind} · 检查于 {version.checkedAt}</li>
+                    <>
+                      <li>{formatAccessVersion(version)}</li>
+                      {version.regionRestrictions?.map((restriction) => (
+                        <li>{formatRegionRestriction(restriction)}</li>
+                      ))}
+                    </>
                   ))}
                 </ul>
               </li>
             ))}
           </ul>
+          {resource.externalSignals && resource.externalSignals.length > 0 && (
+            <ul aria-label={`${resource.title['zh-CN']} 的外部观察`}>
+              {resource.externalSignals.map((signal) => (
+                <li><a href={signal.url}>{formatExternalSignal(signal)}</a></li>
+              ))}
+            </ul>
+          )}
+          {source?.externalSignals && source.externalSignals.length > 0 && (
+            <ul aria-label={`${source.name['zh-CN']} 的外部观察`}>
+              {source.externalSignals.map((signal) => (
+                <li><a href={signal.url}>{formatExternalSignal(signal)}</a></li>
+              ))}
+            </ul>
+          )}
         </article>
       );
     })}

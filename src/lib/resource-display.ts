@@ -1,0 +1,53 @@
+import type { Catalog, ExternalSignal, LocalizedText } from './catalog/validate';
+
+type AccessVersion = Catalog['resources'][number]['accessVersions'][number];
+
+const mediaLabels: Record<Catalog['resources'][number]['mediaType'], string> = {
+  article: '文章',
+  book: '书籍',
+  course: '课程',
+  paper: '论文',
+  podcast: '播客',
+  talk: '演讲',
+  video: '视频',
+  website: '网站',
+};
+
+const accessLabels: Record<AccessVersion['accessModel'], string> = {
+  free: '免费',
+  paid: '付费',
+  subscription: '订阅',
+};
+
+const versionRelationLabels: Record<AccessVersion['versionRelation'], string> = {
+  original: '原版',
+  official: '官方译制',
+  community: '社区译制',
+};
+
+const presentationModeLabels: Record<AccessVersion['presentationMode'], string> = {
+  original: '原文',
+  translated: '译文',
+  bilingual: '双语',
+  subtitled: '字幕',
+  dubbed: '配音',
+};
+
+export function formatMediaType(mediaType: Catalog['resources'][number]['mediaType']) {
+  return mediaLabels[mediaType];
+}
+
+export function formatAccessVersion(
+  version: Pick<AccessVersion, 'language' | 'accessModel' | 'versionRelation' | 'presentationMode' | 'checkedAt'>,
+) {
+  return `${version.language} · ${accessLabels[version.accessModel]} · ${versionRelationLabels[version.versionRelation]} · ${presentationModeLabels[version.presentationMode]} · 检查于 ${version.checkedAt}`;
+}
+
+export function formatRegionRestriction(restriction: { regions: string[]; note: LocalizedText }) {
+  return `地区：${restriction.regions.join('、')} · ${restriction.note['zh-CN']}`;
+}
+
+export function formatExternalSignal(signal: Omit<ExternalSignal, 'url'>) {
+  const sampleSize = signal.sampleSize ? ` · 样本：${signal.sampleSize}` : '';
+  return `${signal.provider} · ${signal.label}：${signal.value}${sampleSize} · 观察于 ${signal.observedAt}`;
+}

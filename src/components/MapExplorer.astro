@@ -34,6 +34,15 @@ const roleProfileData = Object.fromEntries(
       <strong>{profile.title['zh-CN']}</strong>
       <p>{profile.basis['zh-CN']}</p>
       <p>{profile.caveats['zh-CN']}</p>
+      <p>最近复核：{profile.reviewedAt}</p>
+      <ul aria-label={`${profile.title['zh-CN']} 的公开依据`}>
+        {profile.basisLinks.map((basisLink) => (
+          <li>
+            <a href={basisLink.url}>{basisLink.title['zh-CN']}</a>
+            <span>：{basisLink.sourceNote['zh-CN']}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   ))}
 </section>

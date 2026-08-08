@@ -22,7 +22,8 @@
         "language": "en",
         "url": "https://www.youtube.com/watch?v=9Yomqk0C6kE",
         "accessModel": "free",
-        "translationKind": "original",
+        "versionRelation": "original",
+        "presentationMode": "original",
         "checkedAt": "2026-08-08"
       }
     ]
@@ -50,14 +51,16 @@
         "language": "zh-CN",
         "url": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
         "accessModel": "free",
-        "translationKind": "original",
+        "versionRelation": "original",
+        "presentationMode": "original",
         "checkedAt": "2026-08-08"
       },
       {
         "language": "en",
         "url": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
         "accessModel": "free",
-        "translationKind": "bilingual",
+        "versionRelation": "official",
+        "presentationMode": "bilingual",
         "checkedAt": "2026-08-08"
       }
     ]

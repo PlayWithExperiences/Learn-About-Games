@@ -1,4 +1,12 @@
 import { expect, test } from '@playwright/test';
+import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
+import roleProfiles from '../../src/data/role-profiles.json' with { type: 'json' };
+
+const aaaGameDesigner = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
+if (!aaaGameDesigner) throw new Error('Expected the AAA · Game Designer seed profile.');
+
+const priorityLabels: Record<string, string> = { core: '核心', important: '重要', suggested: '建议了解' };
+const responsibilityLabels: Record<string, string> = { execute: '亲自执行', contribute: '协作贡献', decide: '判断', direct: '指导' };
 
 test('keeps a contextual role lens separate from local Playtest progress', async ({ page }) => {
   await page.goto('./map/');
@@ -8,13 +16,22 @@ test('keeps a contextual role lens separate from local Playtest progress', async
   await expect(visibleRoleMarkers).toHaveCount(0);
   await expect(profileSelect).toBeEnabled();
   await profileSelect.selectOption('aaa-game-designer');
-  await expect(visibleRoleMarkers).toHaveCount(7);
+  await expect(visibleRoleMarkers).toHaveCount(aaaGameDesigner.capabilities.length);
   await expect(page.locator('[data-role-context="aaa-game-designer"]:not([hidden]) strong')).toHaveText(
-    'AAA · Game Designer',
+    aaaGameDesigner.title['zh-CN'],
   );
-  await expect(page.getByText('核心 · 亲自执行', { exact: true })).toBeVisible();
-  await expect(page.getByText('重要 · 协作贡献', { exact: true })).toHaveCount(3);
-  await expect(page.getByText('建议了解 · 协作贡献', { exact: true })).toHaveCount(3);
+  for (const entry of aaaGameDesigner.capabilities) {
+    const capability = capabilities.find(({ id }) => id === entry.capabilityId);
+    if (!capability) throw new Error(`Missing seeded capability ${entry.capabilityId}.`);
+    const marker = page.locator(`[data-role-marker="${entry.capabilityId}"]`);
+    await expect(marker).toHaveText(`${priorityLabels[entry.priority]} · ${responsibilityLabels[entry.responsibility]}`);
+  }
+  await expect(page.getByText(`最近复核：${aaaGameDesigner.reviewedAt}`, { exact: true })).toBeVisible();
+  for (const basisLink of aaaGameDesigner.basisLinks) {
+    const link = page.getByRole('link', { name: basisLink.title['zh-CN'], exact: true });
+    await expect(link).toHaveAttribute('href', basisLink.url);
+    await expect(link.locator('..')).toContainText(basisLink.sourceNote['zh-CN']);
+  }
   await expect(page.locator('main')).not.toContainText(/\d+(?:\.\d+)?\s*(?:%|分)|\d+\s*\/\s*\d+/);
 
   await page.getByRole('link', { name: 'Playtest', exact: true }).click();
@@ -31,7 +48,7 @@ test('keeps a contextual role lens separate from local Playtest progress', async
   await page.getByRole('button', { name: '清除参考画像' }).click();
   await expect(profileSelect).toHaveValue('');
   await expect(visibleRoleMarkers).toHaveCount(0);
-  await expect(page.getByText('核心 · 亲自执行', { exact: true })).toBeHidden();
+  await expect(page.getByText(`${priorityLabels.core} · ${responsibilityLabels.execute}`, { exact: true })).toBeHidden();
 
   await page.getByRole('link', { name: 'Playtest', exact: true }).click();
   await expect(page.getByLabel('个人学习状态')).toHaveValue('practiced');

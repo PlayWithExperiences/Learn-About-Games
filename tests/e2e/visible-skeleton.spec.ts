@@ -43,7 +43,7 @@ test('describes the shipped Playtest topic collection as available now', async (
   await page.goto('./');
   await expect(
     page.getByText(
-      '当前 M0 公开 9 个领域和 9 个能力入口。Playtest 已提供可走通的学习切片；其他路径不会伪装成已经完成。',
+      '当前公开 9 个领域和 9 个能力入口，并以无顺序的主题资源集合连接具体资源与个人实践记录。',
       { exact: true },
     ),
   ).toBeVisible();
