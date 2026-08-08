@@ -9,6 +9,31 @@ const localizedText = z
   })
   .strict();
 
+const bilingualText = z
+  .object({
+    'zh-CN': z.string().trim().min(1),
+    en: z.string().trim().min(1),
+  })
+  .strict();
+
+const mapPosition = z
+  .object({
+    x: z.number().min(0).max(100),
+    y: z.number().min(0).max(100),
+  })
+  .strict();
+
+const mapBounds = z
+  .object({
+    x: z.number().min(0).max(100),
+    y: z.number().min(0).max(100),
+    width: z.number().positive().max(100),
+    height: z.number().positive().max(100),
+  })
+  .strict()
+  .refine(({ x, width }) => x + width <= 100, 'Domain bounds exceed the map width')
+  .refine(({ y, height }) => y + height <= 100, 'Domain bounds exceed the map height');
+
 const isoDate = z.iso.date();
 const httpUrl = z.url().refine((value) => {
   const protocol = new URL(value).protocol;
@@ -58,20 +83,28 @@ const basisLink = z
 
 const domains = defineCollection({
   loader: file('src/data/domains.json'),
-  schema: z.object({
-    name: localizedText,
-    summary: localizedText,
-    order: z.number().int(),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      name: localizedText,
+      summary: localizedText,
+      order: z.number().int(),
+      bounds: mapBounds,
+    })
+    .strict(),
 });
 
 const capabilities = defineCollection({
   loader: file('src/data/capabilities.json'),
-  schema: z.object({
-    name: localizedText,
-    summary: localizedText,
-    domainId: z.string().trim().min(1),
-  }),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      name: localizedText,
+      summary: localizedText,
+      domainId: z.string().trim().min(1),
+      position: mapPosition,
+    })
+    .strict(),
 });
 
 const knowledgeTopics = defineCollection({
@@ -82,6 +115,7 @@ const knowledgeTopics = defineCollection({
       name: localizedText,
       summary: localizedText,
       domainId: z.string().trim().min(1),
+      position: mapPosition,
     })
     .strict(),
 });
@@ -94,7 +128,7 @@ const capabilityRelations = defineCollection({
       fromId: z.string().trim().min(1),
       toId: z.string().trim().min(1),
       type: z.enum(['supports', 'complements']),
-      summary: localizedText,
+      summary: bilingualText,
     })
     .strict(),
 });

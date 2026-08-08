@@ -53,19 +53,22 @@ const seedV02References = (catalog: Catalog) => {
     name: localized('领域'),
     summary: localized('示例领域。'),
     order: 1,
-  });
+    bounds: { x: 0, y: 0, width: 50, height: 50 },
+  } as unknown as Catalog['domains'][number]);
   catalog.capabilities.push({
     id: 'capability',
     name: localized('能力'),
     summary: localized('示例能力。'),
     domainId: 'domain',
-  });
+    position: { x: 10, y: 10 },
+  } as unknown as Catalog['capabilities'][number]);
   catalog.knowledgeTopics.push({
     id: 'knowledge-topic',
     name: localized('知识议题'),
     summary: localized('示例议题。'),
     domainId: 'domain',
-  });
+    position: { x: 20, y: 20 },
+  } as unknown as Catalog['knowledgeTopics'][number]);
   catalog.resourceTopics.push({
     id: 'resource-topic',
     title: localized('资源主题'),
@@ -91,7 +94,8 @@ describe('validateCatalog', () => {
       name: localized('Playtest'),
       summary: localized('通过观察验证设计判断。'),
       domainId: 'missing-domain',
-    });
+      position: { x: 10, y: 10 },
+    } as Catalog['capabilities'][number]);
 
     expect(validateCatalog(catalog)).toContainEqual({
       code: 'CAPABILITY_DOMAIN_MISSING',
@@ -195,12 +199,14 @@ describe('validateCatalog', () => {
       name: localized('迭代与验证'),
       summary: localized('通过观察与反馈检验设计。'),
       order: 1,
+      bounds: { x: 0, y: 0, width: 50, height: 50 },
     });
     catalog.capabilities.push({
       id: 'playtesting',
       name: localized('Playtest'),
       summary: localized('通过观察验证设计判断。'),
       domainId: 'iteration',
+      position: { x: 10, y: 10 },
     });
 
     expect(validateCatalog(catalog)).toEqual([]);
@@ -524,6 +530,7 @@ describe('validateCatalog', () => {
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
       domainId: 'domain',
+      position: { x: 30, y: 30 },
     });
     catalog.capabilityRelations.push(
       {
@@ -531,28 +538,28 @@ describe('validateCatalog', () => {
         fromId: 'knowledge-topic',
         toId: 'capability',
         type: 'supports',
-        summary: localized('示例关系。'),
+        summary: { 'zh-CN': '示例关系。', en: 'Example relation.' },
       },
       {
         id: 'missing-capability',
         fromId: 'capability',
         toId: 'missing-capability',
         type: 'supports',
-        summary: localized('示例关系。'),
+        summary: { 'zh-CN': '示例关系。', en: 'Example relation.' },
       },
       {
         id: 'self-relation',
         fromId: 'capability',
         toId: 'capability',
         type: 'complements',
-        summary: localized('示例关系。'),
+        summary: { 'zh-CN': '示例关系。', en: 'Example relation.' },
       },
       {
         id: 'invalid-relation-type',
         fromId: 'capability',
         toId: 'second-capability',
         type: 'prerequisite',
-        summary: localized('示例关系。'),
+        summary: { 'zh-CN': '示例关系。', en: 'Example relation.' },
       } as unknown as Catalog['capabilityRelations'][number],
     );
 
@@ -561,6 +568,78 @@ describe('validateCatalog', () => {
       'CAPABILITY_RELATION_TO_CAPABILITY_MISSING',
       'CAPABILITY_RELATION_SELF_REFERENCE',
       'CAPABILITY_RELATION_TYPE_INVALID',
+    ]);
+  });
+
+  it('reports invalid map bounds and node positions outside their domains', () => {
+    const catalog = emptyV02Catalog();
+    catalog.domains.push({
+      id: 'domain',
+      name: localized('领域'),
+      summary: localized('示例领域。'),
+      order: 1,
+      bounds: { x: 90, y: 90, width: 20, height: 20 },
+    } as unknown as Catalog['domains'][number]);
+    catalog.capabilities.push({
+      id: 'capability',
+      name: localized('能力'),
+      summary: localized('示例能力。'),
+      domainId: 'domain',
+      position: { x: 40, y: 40 },
+    } as unknown as Catalog['capabilities'][number]);
+    catalog.knowledgeTopics.push({
+      id: 'knowledge-topic',
+      name: localized('知识议题'),
+      summary: localized('示例议题。'),
+      domainId: 'domain',
+      position: { x: 120, y: 10 },
+    } as unknown as Catalog['knowledgeTopics'][number]);
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'DOMAIN_BOUNDS_INVALID',
+      'CAPABILITY_POSITION_OUTSIDE_DOMAIN',
+      'KNOWLEDGE_TOPIC_POSITION_INVALID',
+      'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN',
+    ]);
+  });
+
+  it('rejects duplicate undirected complements and non-bilingual rationales', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.capabilities.push({
+      id: 'second-capability',
+      name: localized('第二项能力'),
+      summary: localized('用于关系测试。'),
+      domainId: 'domain',
+      position: { x: 30, y: 30 },
+    } as unknown as Catalog['capabilities'][number]);
+    catalog.capabilityRelations.push(
+      {
+        id: 'first-complement',
+        fromId: 'capability',
+        toId: 'second-capability',
+        type: 'complements',
+        summary: { 'zh-CN': '互补关系。', en: 'A complementary relation.' },
+      },
+      {
+        id: 'reverse-complement',
+        fromId: 'second-capability',
+        toId: 'capability',
+        type: 'complements',
+        summary: { 'zh-CN': '反向重复。', en: 'The reverse duplicate.' },
+      },
+      {
+        id: 'missing-english-rationale',
+        fromId: 'capability',
+        toId: 'second-capability',
+        type: 'supports',
+        summary: { 'zh-CN': '缺少英文说明。' },
+      },
+    );
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'CAPABILITY_RELATION_COMPLEMENT_DUPLICATE',
+      'CAPABILITY_RELATION_RATIONALE_INVALID',
     ]);
   });
 });

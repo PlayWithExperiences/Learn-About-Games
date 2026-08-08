@@ -13,6 +13,7 @@ import resourceTopics from '../../src/data/resource-topics.json';
 import resources from '../../src/data/resources.json';
 import roleProfiles from '../../src/data/role-profiles.json';
 import sources from '../../src/data/sources.json';
+import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
 
 const collections = {
   domains,
@@ -38,22 +39,41 @@ describe('raw product catalog data', () => {
     }
   });
 
-  it('provides the v0.2 topic and relation collections', () => {
-    expect(knowledgeTopics).toEqual(
+  it('keeps every raw catalog reference valid during the map migration', () => {
+    expect(validateCatalog(collections as unknown as Catalog)).toEqual([]);
+  });
+
+  it('provides the approved first v0.2 expertise map', () => {
+    expect(domains).toHaveLength(8);
+    expect(capabilities).toHaveLength(42);
+    expect(knowledgeTopics).toHaveLength(12);
+    expect(capabilityRelations).toHaveLength(64);
+    expect(domains.some(({ id }) => id === 'innovation')).toBe(false);
+    expect(capabilities).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ id: 'player-behavior-observation', domainId: 'iteration' }),
+        expect.objectContaining({ id: 'playtesting', domainId: 'research-validation-data' }),
+        expect.objectContaining({
+          id: 'player-behavior-observation',
+          domainId: 'research-validation-data',
+        }),
       ]),
     );
-    expect(capabilityRelations.length).toBeGreaterThan(0);
+    expect(knowledgeTopics.some(({ id }) => id === 'player-behavior-observation')).toBe(false);
     expect(resourceTopics).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: 'playtesting',
-          capabilityIds: expect.arrayContaining(['playtesting']),
-          knowledgeTopicIds: expect.arrayContaining(['player-behavior-observation']),
+          capabilityIds: expect.arrayContaining(['playtesting', 'player-behavior-observation']),
+          knowledgeTopicIds: [],
         }),
       ]),
     );
+    for (const resource of resources) {
+      expect(resource.capabilityIds).toEqual(
+        expect.arrayContaining(['playtesting', 'player-behavior-observation']),
+      );
+      expect(resource.knowledgeTopicIds).not.toContain('player-behavior-observation');
+    }
   });
 
   it('keeps Work Items factual and canonically unique', () => {

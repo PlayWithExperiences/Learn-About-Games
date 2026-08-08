@@ -12,24 +12,37 @@ export type ExternalSignal = {
   url: string;
 };
 
+export type MapPoint = {
+  x: number;
+  y: number;
+};
+
+export type MapBounds = MapPoint & {
+  width: number;
+  height: number;
+};
+
 export type Catalog = {
   domains: Array<{
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
     order: number;
+    bounds: MapBounds;
   }>;
   capabilities: Array<{
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
     domainId: string;
+    position: MapPoint;
   }>;
   knowledgeTopics: Array<{
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
     domainId: string;
+    position: MapPoint;
   }>;
   capabilityRelations: Array<{
     id: string;
@@ -138,12 +151,19 @@ export type Catalog = {
 
 export type CatalogValidationCode =
   | 'COLLECTION_ID_DUPLICATE'
+  | 'DOMAIN_BOUNDS_INVALID'
   | 'CAPABILITY_DOMAIN_MISSING'
+  | 'CAPABILITY_POSITION_INVALID'
+  | 'CAPABILITY_POSITION_OUTSIDE_DOMAIN'
   | 'KNOWLEDGE_TOPIC_DOMAIN_MISSING'
+  | 'KNOWLEDGE_TOPIC_POSITION_INVALID'
+  | 'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN'
   | 'CAPABILITY_RELATION_FROM_CAPABILITY_MISSING'
   | 'CAPABILITY_RELATION_TO_CAPABILITY_MISSING'
   | 'CAPABILITY_RELATION_SELF_REFERENCE'
   | 'CAPABILITY_RELATION_TYPE_INVALID'
+  | 'CAPABILITY_RELATION_COMPLEMENT_DUPLICATE'
+  | 'CAPABILITY_RELATION_RATIONALE_INVALID'
   | 'RESOURCE_TOPIC_CAPABILITY_MISSING'
   | 'RESOURCE_TOPIC_KNOWLEDGE_TOPIC_MISSING'
   | 'RESOURCE_SOURCE_MISSING'
@@ -295,9 +315,63 @@ function appendError(
   errors.push({ code, collection, id, field, targetId });
 }
 
+function isMapPoint(value: unknown): value is MapPoint {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+  const point = value as Record<string, unknown>;
+  return (
+    typeof point.x === 'number' &&
+    Number.isFinite(point.x) &&
+    point.x >= 0 &&
+    point.x <= 100 &&
+    typeof point.y === 'number' &&
+    Number.isFinite(point.y) &&
+    point.y >= 0 &&
+    point.y <= 100
+  );
+}
+
+function isMapBounds(value: unknown): value is MapBounds {
+  if (!isMapPoint(value)) return false;
+  const bounds = value as MapBounds;
+  return (
+    Number.isFinite(bounds.width) &&
+    bounds.width > 0 &&
+    Number.isFinite(bounds.height) &&
+    bounds.height > 0 &&
+    bounds.x + bounds.width <= 100 &&
+    bounds.y + bounds.height <= 100
+  );
+}
+
+function isInsideDomain(position: unknown, bounds: unknown): boolean {
+  if (!isMapPoint(position) || typeof bounds !== 'object' || bounds === null || Array.isArray(bounds)) {
+    return false;
+  }
+  const candidate = bounds as Partial<MapBounds>;
+  if (
+    typeof candidate.x !== 'number' ||
+    typeof candidate.y !== 'number' ||
+    typeof candidate.width !== 'number' ||
+    typeof candidate.height !== 'number'
+  ) {
+    return false;
+  }
+  return (
+    position.x >= candidate.x &&
+    position.x <= candidate.x + candidate.width &&
+    position.y >= candidate.y &&
+    position.y <= candidate.y + candidate.height
+  );
+}
+
+function hasBilingualRationale(summary: LocalizedText): boolean {
+  return summary['zh-CN'].trim().length > 0 && typeof summary.en === 'string' && summary.en.trim().length > 0;
+}
+
 export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   const errors: CatalogValidationError[] = [];
   const domainIds = new Set(catalog.domains.map(({ id }) => id));
+  const domainsById = new Map(catalog.domains.map((domain) => [domain.id, domain]));
   const capabilityIds = new Set(catalog.capabilities.map(({ id }) => id));
   const knowledgeTopicIds = new Set(catalog.knowledgeTopics.map(({ id }) => id));
   const resourceTopicIds = new Set(catalog.resourceTopics.map(({ id }) => id));
@@ -315,6 +389,12 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     }
   }
 
+  for (const domain of catalog.domains) {
+    if (!isMapBounds(domain.bounds)) {
+      appendError(errors, 'DOMAIN_BOUNDS_INVALID', 'domains', domain.id, 'bounds', '');
+    }
+  }
+
   for (const capability of catalog.capabilities) {
     if (!domainIds.has(capability.domainId)) {
       appendError(
@@ -323,6 +403,20 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         'capabilities',
         capability.id,
         'domainId',
+        capability.domainId,
+      );
+    }
+    if (!isMapPoint(capability.position)) {
+      appendError(errors, 'CAPABILITY_POSITION_INVALID', 'capabilities', capability.id, 'position', '');
+    }
+    const domain = domainsById.get(capability.domainId);
+    if (domain && !isInsideDomain(capability.position, domain.bounds)) {
+      appendError(
+        errors,
+        'CAPABILITY_POSITION_OUTSIDE_DOMAIN',
+        'capabilities',
+        capability.id,
+        'position',
         capability.domainId,
       );
     }
@@ -339,8 +433,23 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         topic.domainId,
       );
     }
+    if (!isMapPoint(topic.position)) {
+      appendError(errors, 'KNOWLEDGE_TOPIC_POSITION_INVALID', 'knowledgeTopics', topic.id, 'position', '');
+    }
+    const domain = domainsById.get(topic.domainId);
+    if (domain && !isInsideDomain(topic.position, domain.bounds)) {
+      appendError(
+        errors,
+        'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN',
+        'knowledgeTopics',
+        topic.id,
+        'position',
+        topic.domainId,
+      );
+    }
   }
 
+  const complementPairs = new Set<string>();
   for (const relation of catalog.capabilityRelations) {
     if (!capabilityRelationTypes.has(relation.type)) {
       appendError(
@@ -381,6 +490,30 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         'toId',
         relation.toId,
       );
+    }
+    if (!hasBilingualRationale(relation.summary)) {
+      appendError(
+        errors,
+        'CAPABILITY_RELATION_RATIONALE_INVALID',
+        'capabilityRelations',
+        relation.id,
+        'summary',
+        '',
+      );
+    }
+    if (relation.type === 'complements') {
+      const pair = [relation.fromId, relation.toId].sort().join('::');
+      if (complementPairs.has(pair)) {
+        appendError(
+          errors,
+          'CAPABILITY_RELATION_COMPLEMENT_DUPLICATE',
+          'capabilityRelations',
+          relation.id,
+          'fromId/toId',
+          pair,
+        );
+      }
+      complementPairs.add(pair);
     }
   }
 

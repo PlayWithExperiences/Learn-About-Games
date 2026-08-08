@@ -1,56 +1,58 @@
 [
   {
-    "id": "experience-design",
-    "name": { "zh-CN": "体验设计", "en": "Experience Design" },
-    "summary": { "zh-CN": "明确希望玩家获得的体验，并把目标转化为可讨论的设计问题。", "en": "Frame intended player experiences as design questions that a team can discuss." },
-    "order": 1
+    "id": "experience-player",
+    "name": { "zh-CN": "体验与玩家", "en": "Experience & Player" },
+    "summary": { "zh-CN": "界定希望玩家获得的体验，并分析玩家如何理解、感受与赋予行动意义。", "en": "Frame intended experiences and examine how players understand, feel, and give meaning to action." },
+    "order": 1,
+    "bounds": { "x": 2, "y": 3, "width": 27, "height": 24 }
   },
   {
-    "id": "gameplay-challenges",
-    "name": { "zh-CN": "玩法与挑战", "en": "Gameplay and Challenges" },
-    "summary": { "zh-CN": "组织行动、规则、反馈与挑战，形成可理解且可持续的游玩过程。", "en": "Organize actions, rules, feedback, and challenge into a legible play experience." },
-    "order": 2
+    "id": "gameplay-systems-feel",
+    "name": { "zh-CN": "玩法、系统与手感", "en": "Gameplay, Systems & Feel" },
+    "summary": { "zh-CN": "处理行动、规则、反馈、挑战、节奏与成长如何构成可持续的游玩系统。", "en": "Shape actions, rules, feedback, challenge, pacing, and progression into sustainable play systems." },
+    "order": 2,
+    "bounds": { "x": 31, "y": 2, "width": 38, "height": 29 }
   },
   {
-    "id": "narrative",
-    "name": { "zh-CN": "叙事", "en": "Narrative" },
-    "summary": { "zh-CN": "协调故事、世界、角色与玩家行动之间的关系。", "en": "Coordinate story, world, characters, and player action." },
-    "order": 3
+    "id": "level-space",
+    "name": { "zh-CN": "关卡与空间", "en": "Level & Space" },
+    "summary": { "zh-CN": "处理拓扑、路线、尺度、导航、遭遇和空间验证，关注玩家如何穿行并读取空间。", "en": "Work with topology, routes, scale, navigation, encounters, and spatial validation." },
+    "order": 3,
+    "bounds": { "x": 72, "y": 4, "width": 26, "height": 27 }
   },
   {
-    "id": "aesthetics",
-    "name": { "zh-CN": "美学与表现", "en": "Aesthetics and Expression" },
-    "summary": { "zh-CN": "让视觉、声音、文字与交互表现共同服务体验意图。", "en": "Align visual, audio, verbal, and interactive expression with the intended experience." },
-    "order": 4
+    "id": "narrative-expression",
+    "name": { "zh-CN": "叙事与表达", "en": "Narrative & Expression" },
+    "summary": { "zh-CN": "协调故事、世界、角色、信息揭示与视听表现，使表达回应玩家行动和体验意图。", "en": "Coordinate story, world, character, exposition, and audiovisual expression around player action and experience intent." },
+    "order": 4,
+    "bounds": { "x": 70, "y": 34, "width": 28, "height": 31 }
   },
   {
-    "id": "production",
-    "name": { "zh-CN": "生产与落地", "en": "Production and Delivery" },
-    "summary": { "zh-CN": "把设计意图拆解成团队能够实现、检查与调整的工作。", "en": "Turn design intent into work a team can implement, inspect, and revise." },
-    "order": 5
+    "id": "research-validation-data",
+    "name": { "zh-CN": "研究、验证与数据", "en": "Research, Validation & Data" },
+    "summary": { "zh-CN": "把设计疑问转成可观察证据，并谨慎解释行为、访谈与遥测数据。", "en": "Turn design questions into observable evidence and interpret behavioral, interview, and telemetry data carefully." },
+    "order": 5,
+    "bounds": { "x": 69, "y": 68, "width": 29, "height": 29 }
   },
   {
-    "id": "iteration",
-    "name": { "zh-CN": "迭代与验证", "en": "Iteration and Validation" },
-    "summary": { "zh-CN": "通过原型、观察与反馈检验判断，并持续修正设计。", "en": "Test design judgments through prototypes, observation, and feedback." },
-    "order": 6
+    "id": "prototyping-production-iteration",
+    "name": { "zh-CN": "原型、生产与迭代", "en": "Prototyping, Production & Iteration" },
+    "summary": { "zh-CN": "用合适的原型、范围、任务与交接方式降低不确定性，组织可执行的迭代。", "en": "Reduce uncertainty through suitable prototypes, scope, tasks, handoffs, and executable iterations." },
+    "order": 6,
+    "bounds": { "x": 36, "y": 70, "width": 30, "height": 27 }
   },
   {
-    "id": "leadership-collaboration",
-    "name": { "zh-CN": "领导与协作", "en": "Leadership and Collaboration" },
-    "summary": { "zh-CN": "在跨职能团队中建立共同理解、做出取舍并推进决策。", "en": "Build shared understanding and advance decisions across disciplines." },
-    "order": 7
+    "id": "collaboration-leadership-direction",
+    "name": { "zh-CN": "协作、领导与方向", "en": "Collaboration, Leadership & Direction" },
+    "summary": { "zh-CN": "建立跨专业共同理解，在约束中做取舍，并维护可讨论、可调整的创意方向。", "en": "Build shared understanding, make tradeoffs under constraints, and steward a discussable creative direction." },
+    "order": 7,
+    "bounds": { "x": 2, "y": 70, "width": 31, "height": 27 }
   },
   {
-    "id": "product-business",
-    "name": { "zh-CN": "产品与商业", "en": "Product and Business" },
-    "summary": { "zh-CN": "理解受众、定位与约束如何影响产品选择。", "en": "Understand how audiences, positioning, and constraints shape product choices." },
-    "order": 8
-  },
-  {
-    "id": "innovation",
-    "name": { "zh-CN": "创新与沿革", "en": "Innovation and Lineage" },
-    "summary": { "zh-CN": "带着证据理解游戏形式如何出现、传播、融合与变化。", "en": "Use evidence to understand how game forms emerge, spread, combine, and change." },
-    "order": 9
+    "id": "product-market-critical-context",
+    "name": { "zh-CN": "产品、市场与批判语境", "en": "Product, Market & Critical Context" },
+    "summary": { "zh-CN": "理解受众、市场、价值交换、商业模式及其文化伦理后果。", "en": "Understand audiences, markets, value exchange, business models, and their cultural and ethical consequences." },
+    "order": 8,
+    "bounds": { "x": 2, "y": 33, "width": 64, "height": 34 }
   }
 ]

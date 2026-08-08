@@ -31,7 +31,7 @@
     ],
     "reviewedAt": "2026-08-09",
     "capabilities": [
-      { "capabilityId": "core-loop", "priority": "core", "responsibility": "execute" },
+      { "capabilityId": "core-loop-design", "priority": "core", "responsibility": "execute" },
       { "capabilityId": "playtesting", "priority": "important", "responsibility": "contribute" },
       { "capabilityId": "experience-framing", "priority": "important", "responsibility": "contribute" },
       { "capabilityId": "cross-discipline-communication", "priority": "important", "responsibility": "contribute" },

@@ -1,32 +1,322 @@
 [
   {
-    "id": "experience-framing-complements-core-loop",
-    "fromId": "experience-framing",
-    "toId": "core-loop",
-    "type": "complements",
-    "summary": {
-      "zh-CN": "体验目标帮助团队判断核心循环中的行动、反馈与变化是否服务同一意图。",
-      "en": "Experience framing helps a team judge whether a core loop's actions, feedback, and change serve one intent."
-    }
+    "id": "experience-deconstruction-supports-experience-framing",
+    "fromId": "experience-deconstruction", "toId": "experience-framing", "type": "supports",
+    "summary": { "zh-CN": "拆解现有体验能暴露隐藏假设，帮助把模糊意图改写成可检验目标。", "en": "Deconstructing existing experiences exposes assumptions and helps turn vague intent into testable goals." }
   },
   {
-    "id": "playtesting-supports-experience-framing",
-    "fromId": "playtesting",
-    "toId": "experience-framing",
-    "type": "supports",
-    "summary": {
-      "zh-CN": "对玩家行为的观察为检验体验目标是否成立提供证据。",
-      "en": "Observing player behavior provides evidence for testing whether an intended experience is working."
-    }
+    "id": "player-perspective-taking-complements-experience-framing",
+    "fromId": "player-perspective-taking", "toId": "experience-framing", "type": "complements",
+    "summary": { "zh-CN": "体验目标说明想创造什么；玩家视角检查目标是否只代表设计者自己。", "en": "Framing states the intended experience; player perspective checks whether it represents only the designer." }
   },
   {
-    "id": "cross-discipline-communication-complements-task-breakdown",
-    "fromId": "cross-discipline-communication",
-    "toId": "task-breakdown",
-    "type": "complements",
-    "summary": {
-      "zh-CN": "共同理解让任务拆解中的范围、依赖和验收条件能被不同专业实际使用。",
-      "en": "Shared understanding makes scope, dependencies, and acceptance criteria in task breakdown usable across disciplines."
-    }
+    "id": "experience-framing-supports-emotional-arc-shaping",
+    "fromId": "experience-framing", "toId": "emotional-arc-shaping", "type": "supports",
+    "summary": { "zh-CN": "明确的体验意图为情绪变化提供选择和取舍标准。", "en": "A clear experience intent provides criteria for shaping emotional change." }
+  },
+  {
+    "id": "experience-framing-supports-choice-consequence-design",
+    "fromId": "experience-framing", "toId": "choice-consequence-design", "type": "supports",
+    "summary": { "zh-CN": "体验目标帮助判断哪些选择值得突出，以及后果应传达什么。", "en": "Experience goals help determine which choices matter and what their consequences should communicate." }
+  },
+  {
+    "id": "emotional-arc-shaping-complements-choice-consequence-design",
+    "fromId": "emotional-arc-shaping", "toId": "choice-consequence-design", "type": "complements",
+    "summary": { "zh-CN": "选择与后果制造情绪变化，情绪弧线帮助安排这些变化的时机。", "en": "Choices create emotional change, while an emotional arc helps place that change over time." }
+  },
+  {
+    "id": "rules-system-modeling-supports-core-loop-design",
+    "fromId": "rules-system-modeling", "toId": "core-loop-design", "type": "supports",
+    "summary": { "zh-CN": "明确规则和状态使循环中的行动与反馈能够被推演。", "en": "Explicit rules and states make the actions and feedback in a loop easier to reason about." }
+  },
+  {
+    "id": "core-loop-design-complements-game-feel-tuning",
+    "fromId": "core-loop-design", "toId": "game-feel-tuning", "type": "complements",
+    "summary": { "zh-CN": "循环提供重复交互的语境，手感让每次重复的因果反馈可读。", "en": "The loop gives repeated interaction context; feel makes each repetition's cause and effect legible." }
+  },
+  {
+    "id": "rules-system-modeling-supports-challenge-difficulty-design",
+    "fromId": "rules-system-modeling", "toId": "challenge-difficulty-design", "type": "supports",
+    "summary": { "zh-CN": "系统模型揭示玩家可用策略和可调节的压力参数。", "en": "A system model reveals available strategies and adjustable sources of pressure." }
+  },
+  {
+    "id": "challenge-difficulty-design-complements-pacing-control",
+    "fromId": "challenge-difficulty-design", "toId": "pacing-control", "type": "complements",
+    "summary": { "zh-CN": "挑战强度与出现时机共同决定压力、恢复和学习节奏。", "en": "Challenge intensity and timing jointly shape pressure, recovery, and learning rhythm." }
+  },
+  {
+    "id": "progression-economy-design-supports-pacing-control",
+    "fromId": "progression-economy-design", "toId": "pacing-control", "type": "supports",
+    "summary": { "zh-CN": "解锁、资源供给和长期回报为体验提供更长尺度的节奏。", "en": "Unlocks, resource supply, and long-term rewards provide pacing at a larger scale." }
+  },
+  {
+    "id": "rules-system-modeling-supports-progression-economy-design",
+    "fromId": "rules-system-modeling", "toId": "progression-economy-design", "type": "supports",
+    "summary": { "zh-CN": "清晰的系统约束让资源变化和长期效果更可追踪。", "en": "Clear system constraints make resource changes and long-term effects more traceable." }
+  },
+  {
+    "id": "experience-framing-supports-core-loop-design",
+    "fromId": "experience-framing", "toId": "core-loop-design", "type": "supports",
+    "summary": { "zh-CN": "体验目标为循环中应重复哪些行动和反馈提供判断依据。", "en": "Experience goals guide which actions and feedback are worth repeating in the core loop." }
+  },
+  {
+    "id": "choice-consequence-design-complements-rules-system-modeling",
+    "fromId": "choice-consequence-design", "toId": "rules-system-modeling", "type": "complements",
+    "summary": { "zh-CN": "规则赋予选择可预测的后果，预期选择也会暴露规则模型的缺口。", "en": "Rules give choices predictable consequences, while intended choices expose gaps in the rule model." }
+  },
+  {
+    "id": "player-perspective-taking-supports-challenge-difficulty-design",
+    "fromId": "player-perspective-taking", "toId": "challenge-difficulty-design", "type": "supports",
+    "summary": { "zh-CN": "考虑不同经验和限制能减少把设计者熟练度误当作玩家基准。", "en": "Considering varied experience and constraints reduces the risk of treating designer mastery as the player baseline." }
+  },
+  {
+    "id": "emotional-arc-shaping-supports-pacing-control",
+    "fromId": "emotional-arc-shaping", "toId": "pacing-control", "type": "supports",
+    "summary": { "zh-CN": "情绪弧线为压力、停顿和释放的时间安排提供依据。", "en": "An emotional arc informs the timing of pressure, pauses, and release." }
+  },
+  {
+    "id": "level-structure-design-supports-spatial-flow-design",
+    "fromId": "level-structure-design", "toId": "spatial-flow-design", "type": "supports",
+    "summary": { "zh-CN": "宏观拓扑限定玩家能够如何穿行、回环和改变方向。", "en": "Macro topology constrains how players traverse, loop back, and change direction." }
+  },
+  {
+    "id": "navigation-wayfinding-design-supports-spatial-flow-design",
+    "fromId": "navigation-wayfinding-design", "toId": "spatial-flow-design", "type": "supports",
+    "summary": { "zh-CN": "地标和视线让预期流线能够被玩家实际识别。", "en": "Landmarks and sightlines make intended spatial flow recognizable to players." }
+  },
+  {
+    "id": "blockout-spatial-validation-supports-level-structure-design",
+    "fromId": "blockout-spatial-validation", "toId": "level-structure-design", "type": "supports",
+    "summary": { "zh-CN": "灰盒能在高成本制作前暴露尺度、连通和路线假设。", "en": "Blockouts expose scale, connectivity, and route assumptions before expensive production." }
+  },
+  {
+    "id": "blockout-spatial-validation-supports-navigation-wayfinding-design",
+    "fromId": "blockout-spatial-validation", "toId": "navigation-wayfinding-design", "type": "supports",
+    "summary": { "zh-CN": "低成本行走测试能发现设计者以为清楚、玩家却无法读取的线索。", "en": "Low-cost traversal tests reveal cues designers find obvious but players do not." }
+  },
+  {
+    "id": "encounter-space-composition-complements-challenge-difficulty-design",
+    "fromId": "encounter-space-composition", "toId": "challenge-difficulty-design", "type": "complements",
+    "summary": { "zh-CN": "空间条件与规则压力共同塑造一次遭遇的实际难度。", "en": "Spatial conditions and systemic pressure jointly shape an encounter's actual difficulty." }
+  },
+  {
+    "id": "spatial-flow-design-complements-pacing-control",
+    "fromId": "spatial-flow-design", "toId": "pacing-control", "type": "complements",
+    "summary": { "zh-CN": "移动距离、停留点和路线选择共同改变时间节奏。", "en": "Travel distance, stopping points, and route choice all alter temporal rhythm." }
+  },
+  {
+    "id": "encounter-space-composition-supports-pacing-control",
+    "fromId": "encounter-space-composition", "toId": "pacing-control", "type": "supports",
+    "summary": { "zh-CN": "遭遇的密度、顺序和间隔直接提供压力与恢复的节拍。", "en": "Encounter density, sequence, and spacing provide a rhythm of pressure and recovery." }
+  },
+  {
+    "id": "rules-system-modeling-supports-encounter-space-composition",
+    "fromId": "rules-system-modeling", "toId": "encounter-space-composition", "type": "supports",
+    "summary": { "zh-CN": "理解行动规则能避免空间安排要求系统并不支持的策略。", "en": "Understanding action rules prevents spaces from demanding strategies the system cannot support." }
+  },
+  {
+    "id": "core-loop-design-supports-level-structure-design",
+    "fromId": "core-loop-design", "toId": "level-structure-design", "type": "supports",
+    "summary": { "zh-CN": "核心重复活动说明空间需要容纳哪些行为和状态变化。", "en": "Core repeated activities indicate which behaviors and state changes the space must support." }
+  },
+  {
+    "id": "game-feel-tuning-complements-blockout-spatial-validation",
+    "fromId": "game-feel-tuning", "toId": "blockout-spatial-validation", "type": "complements",
+    "summary": { "zh-CN": "移动参数和空间尺度必须共同调校，单独验证任何一方都会失真。", "en": "Movement parameters and spatial scale must be tuned together; testing either alone can mislead." }
+  },
+  {
+    "id": "narrative-architecture-supports-interactive-narrative-design",
+    "fromId": "narrative-architecture", "toId": "interactive-narrative-design", "type": "supports",
+    "summary": { "zh-CN": "状态、信息和分支结构为玩家行动影响叙事提供边界。", "en": "State, information, and branch structure provide boundaries for player-driven narrative change." }
+  },
+  {
+    "id": "world-character-coherence-complements-narrative-architecture",
+    "fromId": "world-character-coherence", "toId": "narrative-architecture", "type": "complements",
+    "summary": { "zh-CN": "叙事结构组织变化，世界与角色一致性约束哪些变化可信。", "en": "Narrative architecture organizes change, while world and character coherence constrain what feels credible." }
+  },
+  {
+    "id": "narrative-exposition-complements-world-character-coherence",
+    "fromId": "narrative-exposition", "toId": "world-character-coherence", "type": "complements",
+    "summary": { "zh-CN": "一致的世界需要被恰当地揭示，信息呈现也需要一致规则作为支撑。", "en": "A coherent world must be revealed appropriately, and exposition needs consistent rules to support it." }
+  },
+  {
+    "id": "choice-consequence-design-supports-interactive-narrative-design",
+    "fromId": "choice-consequence-design", "toId": "interactive-narrative-design", "type": "supports",
+    "summary": { "zh-CN": "清楚的选择和可感知后果让叙事变化能够归因于玩家行动。", "en": "Legible choices and perceptible consequences let players attribute narrative change to their actions." }
+  },
+  {
+    "id": "rules-system-modeling-complements-interactive-narrative-design",
+    "fromId": "rules-system-modeling", "toId": "interactive-narrative-design", "type": "complements",
+    "summary": { "zh-CN": "叙事状态需要系统承载，系统变化也需要获得可理解的叙事意义。", "en": "Narrative states need systemic representation, while system changes benefit from understandable narrative meaning." }
+  },
+  {
+    "id": "narrative-architecture-supports-narrative-exposition",
+    "fromId": "narrative-architecture", "toId": "narrative-exposition", "type": "supports",
+    "summary": { "zh-CN": "信息结构帮助决定内容应在何时、何地以及通过谁被揭示。", "en": "Information structure helps decide when, where, and through whom content is revealed." }
+  },
+  {
+    "id": "aesthetic-direction-supports-multimodal-presentation-integration",
+    "fromId": "aesthetic-direction", "toId": "multimodal-presentation-integration", "type": "supports",
+    "summary": { "zh-CN": "共同的表现原则为视觉、声音、文字和动画提供取舍标准。", "en": "Shared expressive principles give visuals, audio, text, and animation common decision criteria." }
+  },
+  {
+    "id": "multimodal-presentation-integration-supports-narrative-exposition",
+    "fromId": "multimodal-presentation-integration", "toId": "narrative-exposition", "type": "supports",
+    "summary": { "zh-CN": "跨媒介的时机与层级协调能减少叙事信息互相争夺注意力。", "en": "Coordinated timing and hierarchy across media reduces competition for attention among narrative signals." }
+  },
+  {
+    "id": "experience-framing-supports-aesthetic-direction",
+    "fromId": "experience-framing", "toId": "aesthetic-direction", "type": "supports",
+    "summary": { "zh-CN": "体验目标为情绪、层级和表现风格提供功能性依据。", "en": "Experience goals provide functional reasons for mood, hierarchy, and expressive style." }
+  },
+  {
+    "id": "narrative-architecture-complements-level-structure-design",
+    "fromId": "narrative-architecture", "toId": "level-structure-design", "type": "complements",
+    "summary": { "zh-CN": "信息和行动的推进常与空间门槛、回环和区域顺序互相塑造。", "en": "Progression of information and action often co-shapes spatial gates, loops, and area order." }
+  },
+  {
+    "id": "research-question-framing-supports-playtesting",
+    "fromId": "research-question-framing", "toId": "playtesting", "type": "supports",
+    "summary": { "zh-CN": "清楚的问题帮助选择合适的参与者、任务和观察方式。", "en": "A clear question helps select suitable participants, tasks, and observation methods." }
+  },
+  {
+    "id": "playtesting-supports-player-behavior-observation",
+    "fromId": "playtesting", "toId": "player-behavior-observation", "type": "supports",
+    "summary": { "zh-CN": "测试设置决定哪些行为能被观察，以及哪些解释无法由测试支持。", "en": "Test setup determines which behaviors are observable and which interpretations the test cannot support." }
+  },
+  {
+    "id": "player-behavior-observation-supports-qualitative-evidence-synthesis",
+    "fromId": "player-behavior-observation", "toId": "qualitative-evidence-synthesis", "type": "supports",
+    "summary": { "zh-CN": "区分行为、言语和解释能提高跨场次综合的可信度。", "en": "Separating behavior, speech, and interpretation improves the credibility of synthesis across sessions." }
+  },
+  {
+    "id": "telemetry-interpretation-complements-qualitative-evidence-synthesis",
+    "fromId": "telemetry-interpretation", "toId": "qualitative-evidence-synthesis", "type": "complements",
+    "summary": { "zh-CN": "遥测显示行为规模，质性证据帮助解释可能原因和遗漏语境。", "en": "Telemetry shows behavioral scale; qualitative evidence helps explain causes and missing context." }
+  },
+  {
+    "id": "research-question-framing-supports-telemetry-interpretation",
+    "fromId": "research-question-framing", "toId": "telemetry-interpretation", "type": "supports",
+    "summary": { "zh-CN": "先明确问题能减少事后挑选容易获得但无关的指标。", "en": "Framing the question first reduces post-hoc selection of convenient but irrelevant measures." }
+  },
+  {
+    "id": "player-behavior-observation-supports-experience-deconstruction",
+    "fromId": "player-behavior-observation", "toId": "experience-deconstruction", "type": "supports",
+    "summary": { "zh-CN": "可核查的玩家行为为分离体验现象与设计者假设提供材料。", "en": "Verifiable player behavior provides material for separating experience from designer assumptions." }
+  },
+  {
+    "id": "qualitative-evidence-synthesis-supports-experience-deconstruction",
+    "fromId": "qualitative-evidence-synthesis", "toId": "experience-deconstruction", "type": "supports",
+    "summary": { "zh-CN": "跨玩家的模式与反例能修正对体验成因的单一解释。", "en": "Patterns and counterexamples across players correct overly narrow explanations of experience." }
+  },
+  {
+    "id": "playtesting-supports-blockout-spatial-validation",
+    "fromId": "playtesting", "toId": "blockout-spatial-validation", "type": "supports",
+    "summary": { "zh-CN": "明确的测试任务和观察标准让灰盒验证不只依赖设计者直觉。", "en": "Explicit tasks and observation criteria keep blockout validation from relying only on designer intuition." }
+  },
+  {
+    "id": "telemetry-interpretation-supports-progression-economy-design",
+    "fromId": "telemetry-interpretation", "toId": "progression-economy-design", "type": "supports",
+    "summary": { "zh-CN": "资源获取、消耗和流失数据能检验经济运行是否符合预期。", "en": "Data about acquisition, spending, and drop-off can test whether an economy behaves as intended." }
+  },
+  {
+    "id": "qualitative-evidence-synthesis-supports-player-perspective-taking",
+    "fromId": "qualitative-evidence-synthesis", "toId": "player-perspective-taking", "type": "supports",
+    "summary": { "zh-CN": "跨玩家证据让换位思考建立在差异上，而不是虚构单一用户。", "en": "Evidence across players grounds perspective-taking in real variation rather than an imagined average user." }
+  },
+  {
+    "id": "playtesting-complements-learning-prototype-design",
+    "fromId": "playtesting", "toId": "learning-prototype-design", "type": "complements",
+    "summary": { "zh-CN": "原型暴露风险，测试设计把与原型的互动转成可解释证据。", "en": "A prototype exposes risk; test design turns interaction with it into interpretable evidence." }
+  },
+  {
+    "id": "scope-prioritization-supports-learning-prototype-design",
+    "fromId": "scope-prioritization", "toId": "learning-prototype-design", "type": "supports",
+    "summary": { "zh-CN": "明确最重要的不确定性有助于只制作回答问题所需的部分。", "en": "Identifying the most important uncertainty helps build only what is needed to answer it." }
+  },
+  {
+    "id": "learning-prototype-design-supports-iteration-planning",
+    "fromId": "learning-prototype-design", "toId": "iteration-planning", "type": "supports",
+    "summary": { "zh-CN": "原型结果揭示下一轮最值得处理的假设和风险。", "en": "Prototype results reveal which assumptions and risks deserve the next iteration." }
+  },
+  {
+    "id": "task-breakdown-supports-iteration-planning",
+    "fromId": "task-breakdown", "toId": "iteration-planning", "type": "supports",
+    "summary": { "zh-CN": "有边界的工作项让迭代目标、依赖和完成条件可以排布。", "en": "Bounded work items make iteration goals, dependencies, and completion conditions schedulable." }
+  },
+  {
+    "id": "design-specification-handoff-complements-task-breakdown",
+    "fromId": "design-specification-handoff", "toId": "task-breakdown", "type": "complements",
+    "summary": { "zh-CN": "任务说明做什么，设计交接补充为什么、边界和如何判断结果。", "en": "Tasks state what to do; design handoff adds why, boundaries, and how to judge the result." }
+  },
+  {
+    "id": "scope-prioritization-supports-task-breakdown",
+    "fromId": "scope-prioritization", "toId": "task-breakdown", "type": "supports",
+    "summary": { "zh-CN": "先决定不做什么，才能让拆出的任务保持可执行。", "en": "Deciding what not to do keeps the resulting tasks executable." }
+  },
+  {
+    "id": "iteration-planning-supports-game-feel-tuning",
+    "fromId": "iteration-planning", "toId": "game-feel-tuning", "type": "supports",
+    "summary": { "zh-CN": "手感需要短周期的调整、体验和复查，而不是一次性定值。", "en": "Game feel benefits from short cycles of adjustment, experience, and review rather than one-time values." }
+  },
+  {
+    "id": "qualitative-evidence-synthesis-supports-iteration-planning",
+    "fromId": "qualitative-evidence-synthesis", "toId": "iteration-planning", "type": "supports",
+    "summary": { "zh-CN": "综合后的模式、反例和不确定性为下一轮改动提供优先依据。", "en": "Synthesized patterns, counterexamples, and uncertainty provide priorities for the next changes." }
+  },
+  {
+    "id": "alignment-facilitation-supports-task-breakdown",
+    "fromId": "alignment-facilitation", "toId": "task-breakdown", "type": "supports",
+    "summary": { "zh-CN": "对目标、责任和依赖的共同理解能减少任务拆解后的不同解释。", "en": "Shared understanding of goals, ownership, and dependencies reduces divergent interpretations of tasks." }
+  },
+  {
+    "id": "cross-discipline-communication-complements-design-specification-handoff",
+    "fromId": "cross-discipline-communication", "toId": "design-specification-handoff", "type": "complements",
+    "summary": { "zh-CN": "文档提供稳定参照，持续沟通处理文档无法预见的专业问题。", "en": "Documentation provides a stable reference; ongoing communication handles disciplinary questions it cannot anticipate." }
+  },
+  {
+    "id": "design-critique-feedback-supports-iteration-planning",
+    "fromId": "design-critique-feedback", "toId": "iteration-planning", "type": "supports",
+    "summary": { "zh-CN": "围绕意图和证据的反馈可以被转成具体、可验证的改动。", "en": "Feedback grounded in intent and evidence can become specific, testable changes." }
+  },
+  {
+    "id": "constraint-aware-decision-making-supports-scope-prioritization",
+    "fromId": "constraint-aware-decision-making", "toId": "scope-prioritization", "type": "supports",
+    "summary": { "zh-CN": "把成本、风险和目标冲突说清楚，能让范围取舍得到解释和复查。", "en": "Making cost, risk, and goal conflicts explicit makes scope tradeoffs explainable and revisable." }
+  },
+  {
+    "id": "creative-vision-stewardship-supports-alignment-facilitation",
+    "fromId": "creative-vision-stewardship", "toId": "alignment-facilitation", "type": "supports",
+    "summary": { "zh-CN": "稳定但可修正的方向原则为跨团队分歧提供共同参照。", "en": "Stable but revisable directional principles give cross-team disagreements a shared reference." }
+  },
+  {
+    "id": "creative-vision-stewardship-supports-experience-framing",
+    "fromId": "creative-vision-stewardship", "toId": "experience-framing", "type": "supports",
+    "summary": { "zh-CN": "产品级方向限定局部体验目标需要服务的整体承诺。", "en": "Product-level direction constrains the broader promise that local experience goals should serve." }
+  },
+  {
+    "id": "market-reference-analysis-supports-audience-positioning",
+    "fromId": "market-reference-analysis", "toId": "audience-positioning", "type": "supports",
+    "summary": { "zh-CN": "相关作品和市场语境提供关于真实受众及其期待的外部证据。", "en": "Related works and market context provide external evidence about actual audiences and expectations." }
+  },
+  {
+    "id": "audience-positioning-supports-value-proposition-framing",
+    "fromId": "audience-positioning", "toId": "value-proposition-framing", "type": "supports",
+    "summary": { "zh-CN": "知道为谁服务，才能具体说明时间、注意力或金钱的价值交换。", "en": "Knowing whom the product serves makes its exchange of time, attention, or money more concrete." }
+  },
+  {
+    "id": "ethical-cultural-evaluation-supports-monetization-experience-alignment",
+    "fromId": "ethical-cultural-evaluation", "toId": "monetization-experience-alignment", "type": "supports",
+    "summary": { "zh-CN": "伦理评估能暴露商业机制对可访问性、脆弱群体和行为诱导的影响。", "en": "Ethical evaluation exposes how commercial mechanics affect access, vulnerable groups, and behavioral pressure." }
+  },
+  {
+    "id": "monetization-experience-alignment-complements-progression-economy-design",
+    "fromId": "monetization-experience-alignment", "toId": "progression-economy-design", "type": "complements",
+    "summary": { "zh-CN": "游戏内经济和商业模式会互相影响，但任何一方都不应自动支配另一方。", "en": "In-game economy and business model influence each other, but neither should automatically dominate the other." }
+  },
+  {
+    "id": "value-proposition-framing-supports-scope-prioritization",
+    "fromId": "value-proposition-framing", "toId": "scope-prioritization", "type": "supports",
+    "summary": { "zh-CN": "明确对玩家的核心承诺，有助于判断缩减范围时什么必须保留。", "en": "A clear player promise helps decide what must survive when scope is reduced." }
   }
 ]

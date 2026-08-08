@@ -7,8 +7,8 @@
       "en": "A Valve case study on how observing players exposes blind spots in design judgment."
     },
     "sourceId": "game-makers-toolkit",
-    "capabilityIds": ["playtesting"],
-    "knowledgeTopicIds": ["player-behavior-observation"],
+    "capabilityIds": ["playtesting", "player-behavior-observation"],
+    "knowledgeTopicIds": [],
     "resourceTopicIds": ["playtesting"],
     "mediaType": "video",
     "canonicalUrl": "https://www.youtube.com/watch?v=9Yomqk0C6kE",
@@ -36,8 +36,8 @@
       "en": "Use observable goals, suitable timing, and non-intervention to collect playtest data that supports decisions."
     },
     "sourceId": "play-with-experiences",
-    "capabilityIds": ["playtesting"],
-    "knowledgeTopicIds": ["player-behavior-observation"],
+    "capabilityIds": ["playtesting", "player-behavior-observation"],
+    "knowledgeTopicIds": [],
     "resourceTopicIds": ["playtesting"],
     "mediaType": "article",
     "canonicalUrl": "https://medill-east.github.io/2025/08/24/20250824-how-to-run-a-good-playtest/",
