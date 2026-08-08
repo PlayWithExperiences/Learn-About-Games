@@ -28,6 +28,10 @@ v0.2 开始前的 clean baseline 已实际运行：`npm run build` 完成 Astro 
 
 地图切片留档后的全仓复跑遇到并发资源切片正在进行的预期 TDD RED：资源测试新增 2 条、其中 4 项仍等待资源 catalog GREEN；Astro check 仍为 0/0/0，地图文件没有新增失败。本摘要不把该共享工作树瞬时状态伪装成最终全仓 GREEN；主任务会在资源提交后重新执行 fresh build、unit 与完整 E2E。
 
+独立视觉审查随后指出地图仍有三个表达问题：Domain 四边框和 54% 底场仍像便当盒，64 条关系默认 `1px / opacity .22` 近似装饰线，320px 的 54 个常驻摘要把页面拉到 11212px。review fix 先以 computed style 与 DOM 契约取得 3 项浏览器 RED，再把 Domain 改为上边+左边的开放局部边界和 20% 极淡底场，把 supports/complements 提升到 `1.3px / opacity .46-.50` 并保留实线箭头/虚线差异，把能力摘要和关系放入同一个原生 disclosure、知识议题摘要也按需展开。全部 42 个 Capability 与 12 个 Knowledge Topic 的直达链接仍常驻，无 JavaScript 仍可展开关系。
+
+review fix 的地图定向桌面/移动为 14/14；fresh build 完成 Astro check 0 errors / warnings / hints、Vitest 59/59 与 84 pages。1440px/320px、System Light/explicit Dark 四张原图确认两种主题下开放地域与默认关系可辨；320px HTML/body 均严格为 320px，总高从 11212px 降到 8273px，减少 2939px（约 26%）。当时完整 E2E 为 71 passed / 8 failed / 1 skipped；8 项都来自资源扩充后尚未同步的旧 `playtest-flow.spec.ts` URL、标题和非唯一 locator，不涉及地图，交回 Resources UI task 修复后重跑。最终留档复跑又遇到并发 Career Lens 的预期 TDD RED：未跟踪测试引用尚未实现的 `src/lib/career-lens`，产生 2 个 check error；地图 agent 没有修改或暂存该文件。
+
 ## 用户反馈与结论
 
 ### 能力地图

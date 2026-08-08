@@ -18,6 +18,18 @@ test('renders eight open territories, distinct node kinds and all functional rel
   await expect(canvas.locator('[data-map-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
   await expect(canvas.locator('[data-capability-relation]')).toHaveCount(capabilityRelations.length);
 
+  expect(
+    await canvas.locator('[data-map-region]').evaluateAll((regions) =>
+      regions.every((region) => {
+        const style = getComputedStyle(region);
+        return style.borderTopStyle !== 'none'
+          && style.borderLeftStyle !== 'none'
+          && style.borderRightStyle === 'none'
+          && style.borderBottomStyle === 'none';
+      }),
+    ),
+  ).toBe(true);
+
   const capabilityNode = canvas.locator('[data-map-node-kind="capability"]').first();
   const topicNode = canvas.locator('[data-map-node-kind="knowledge-topic"]').first();
   await expect(capabilityNode).toHaveAttribute('data-entity-label', '能力');
@@ -42,6 +54,49 @@ test('renders eight open territories, distinct node kinds and all functional rel
     'href',
     `${basePath}topics/${knowledgeTopics[0].id}/`,
   );
+});
+
+test('keeps supports and complements legible by default in both themes', async ({ browser }) => {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    const context = await browser.newContext({
+      colorScheme,
+      viewport: { width: 1440, height: 1100 },
+    });
+    const page = await context.newPage();
+    await page.goto('./map/');
+
+    const canvas = page.locator('[data-capability-map-canvas]');
+    const relationStyles = await canvas.evaluate((element) => {
+      const supports = element.querySelector<SVGPathElement>('[data-relation-type="supports"]');
+      const complements = element.querySelector<SVGPathElement>('[data-relation-type="complements"]');
+      if (!supports || !complements) throw new Error('Missing relation type');
+      const supportsStyle = getComputedStyle(supports);
+      const complementsStyle = getComputedStyle(complements);
+      return {
+        supports: {
+          markerMid: supportsStyle.markerMid,
+          opacity: Number(supportsStyle.opacity),
+          strokeWidth: Number.parseFloat(supportsStyle.strokeWidth),
+        },
+        complements: {
+          dashArray: complementsStyle.strokeDasharray,
+          markerMid: complementsStyle.markerMid,
+          opacity: Number(complementsStyle.opacity),
+          strokeWidth: Number.parseFloat(complementsStyle.strokeWidth),
+        },
+      };
+    });
+
+    expect(relationStyles.supports.opacity).toBeGreaterThanOrEqual(0.4);
+    expect(relationStyles.supports.strokeWidth).toBeGreaterThanOrEqual(1.25);
+    expect(relationStyles.supports.markerMid).not.toBe('none');
+    expect(relationStyles.complements.opacity).toBeGreaterThanOrEqual(0.4);
+    expect(relationStyles.complements.strokeWidth).toBeGreaterThanOrEqual(1.25);
+    expect(relationStyles.complements.dashArray).not.toBe('none');
+    expect(relationStyles.complements.markerMid).toBe('none');
+
+    await context.close();
+  }
 });
 
 test('connects every SVG edge to the exact global anchors from the geometry catalog', async ({ page }) => {
@@ -86,6 +141,13 @@ test('focus enhances adjacent relations and endpoints without hiding the graph',
   const canvas = page.locator('[data-capability-map-canvas]');
   const edges = canvas.locator('[data-capability-relation]');
   const total = await edges.count();
+  const defaultStyle = await edges.first().evaluate((edge) => {
+    const style = getComputedStyle(edge);
+    return {
+      opacity: Number(style.opacity),
+      strokeWidth: Number.parseFloat(style.strokeWidth),
+    };
+  });
 
   await canvas.locator(`[data-map-node-id="${focusId}"]`).focus();
   await expect(canvas.locator('[data-capability-relation][data-adjacent="true"]')).toHaveCount(
@@ -101,6 +163,18 @@ test('focus enhances adjacent relations and endpoints without hiding the graph',
       }),
     ),
   ).toBe(true);
+  const focusedStyle = await canvas
+    .locator('[data-capability-relation][data-adjacent="true"]')
+    .first()
+    .evaluate((edge) => {
+      const style = getComputedStyle(edge);
+      return {
+        opacity: Number(style.opacity),
+        strokeWidth: Number.parseFloat(style.strokeWidth),
+      };
+    });
+  expect(focusedStyle.opacity).toBeGreaterThan(defaultStyle.opacity);
+  expect(focusedStyle.strokeWidth).toBeGreaterThan(defaultStyle.strokeWidth);
 
   await canvas.locator(`[data-map-node-id="${focusId}"]`).evaluate((node) => (node as HTMLElement).blur());
   await expect(canvas.locator('[data-capability-relation][data-adjacent="true"]')).toHaveCount(0);
@@ -117,9 +191,15 @@ test('uses a relationship-equivalent outline at an explicit 320px without overfl
   await expect(outline.locator('[data-outline-region]')).toHaveCount(domains.length);
   await expect(outline.locator('[data-outline-node-kind="capability"]')).toHaveCount(capabilities.length);
   await expect(outline.locator('[data-outline-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
+  await expect(outline.locator('[data-outline-node-kind="capability"] > .map-outline-node__heading a')).toHaveCount(capabilities.length);
+  await expect(outline.locator('[data-outline-node-kind="knowledge-topic"] > .map-outline-node__heading a')).toHaveCount(knowledgeTopics.length);
+  await expect(outline.locator('[data-outline-node-kind] > p')).toHaveCount(0);
+  await expect(outline.locator('[data-outline-node-kind="capability"] > details:not([open])')).toHaveCount(capabilities.length);
+  await expect(outline.locator('[data-outline-node-kind="knowledge-topic"] > details:not([open])')).toHaveCount(knowledgeTopics.length);
   const playtestLink = outline.getByRole('link', { name: 'Playtest', exact: true });
   const playtestNode = playtestLink.locator('../..');
   await playtestNode.getByText('查看关系', { exact: true }).click();
+  await expect(playtestNode.getByText(capabilities.find(({ id }) => id === 'playtesting')?.summary['zh-CN'] ?? '', { exact: true })).toBeVisible();
   await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
   await expect(playtestNode.getByText('受到支持', { exact: true })).toBeVisible();
   await expect(playtestNode.getByText('互补', { exact: true })).toBeVisible();
@@ -144,6 +224,9 @@ test('keeps the complete map readable without JavaScript in light and dark theme
     await expect(outline).toContainText('有向支持不表示必修或固定学习顺序');
     await expect(outline).toContainText('互补关系不表示先后');
     await expect(outline).toHaveCSS('color', colorScheme === 'light' ? 'rgb(24, 33, 43)' : 'rgb(232, 238, 244)');
+    const playtestNode = outline.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');
+    await playtestNode.getByText('查看关系', { exact: true }).click();
+    await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
     await context.close();
   }
 });

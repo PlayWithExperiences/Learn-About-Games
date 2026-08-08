@@ -116,3 +116,13 @@ GREEN 实现新增 `CapabilityMap.astro`。桌面使用固定 1180×850 的 0-10
 最终门禁在完整实现与留档内容上重新运行：`npm run check` 为 0 errors / warnings / hints；Vitest 57/57；fresh build 生成 70 个静态页面；地图、base-path、个人记录桌面/移动定向为 18/18；`CI=1 npm run test:e2e` 为 77 passed / 1 desktop-only skipped。`git diff --check` 与脱敏 secret filename scan 均无输出，临时 preview 已停止。
 
 地图留档完成后再次启动全仓验证时，共享工作树已有并发资源切片的新测试 RED：Vitest 从 57 墕至 59，其中 4 项资源 catalog 断言等待该切片实现；Astro check 仍为 0 errors / warnings / hints。地图 agent 核对变更归属后没有修改或暂存资源文件，保留上一个隔离 Map GREEN 作为本切片证据，并把资源提交后的 fresh 全仓门禁交回主任务。
+
+## 13. 能力地图独立视觉审查修复（部分会话导出）
+
+独立审查认为初版语义虽完整，但视觉仍有三个 Important：Domain 的完整矩形边框和偏重底色仍像八个便当盒；默认 64 条关系只有 `1px / opacity .22`，方向与线型容易退化为装饰；显式 320px 页面高达 11212px，因为 42 个能力与 12 个知识议题的摘要都默认铺开。
+
+修复继续执行测试先行。浏览器 RED 分别读取每个地域的 computed border、两种主题下 supports/complements 的 computed opacity/stroke/marker/dash，以及移动 outline 的直接链接、常驻摘要和默认关闭 disclosure。旧实现得到 3 项预期失败：地域不是开放边界，supports opacity 实测 `.22`，移动 outline 实测 54 个常驻摘要；其余几何、focus、no-JS 与详情测试仍通过。
+
+最小实现只调整 `CapabilityMap.astro` 与地图 CSS：Domain bounds 与节点坐标不变，边界改为不封口的上边+左边，底场降到 20%；两类关系默认提高到 `1.3px / opacity .46-.50`，supports 保持实线中点箭头，complements 保持无箭头虚线，focus 进一步增强到 `2.2px / .96`；能力摘要进入原有“查看关系” disclosure，知识议题摘要进入“查看摘要” disclosure，节点类型和详情链接仍常驻。
+
+地图定向桌面/移动完成 14/14；fresh build 完成 Astro check 0 errors / warnings / hints、Vitest 59/59 与 84 pages。原图检查覆盖 1440px/320px 的 System Light 与 explicit Dark，确认默认线在两种主题可辨但不盖节点，地域不再封闭。320px HTML/body 的 clientWidth 与 scrollWidth 都为 320px，总高从 11212px 降到 8273px，减少 2939px（约 26%）。完整 E2E 当时为 71 passed / 8 failed / 1 skipped；8 项全部来自资源扩充后仍锁旧 URL、标题和非唯一文本 locator 的 `playtest-flow.spec.ts`，地图 agent 按范围没有修改资源测试。最终留档后的 `npm run check` 又遇到并发 Career Lens 的预期 RED：新测试引用尚未实现的 `src/lib/career-lens`，得到 2 个 TypeScript error；该测试不属于地图暂存范围。

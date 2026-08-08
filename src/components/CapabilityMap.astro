@@ -161,9 +161,12 @@ const relationDirection = (type: 'supports' | 'complements') =>
                     <span>能力</span>
                     <a href={sitePath(`capabilities/${capability.id}/`)}>{capability.name['zh-CN']}</a>
                   </div>
-                  <p>{capability.summary['zh-CN']}</p>
                   <details>
                     <summary>查看关系</summary>
+                    <p class="map-outline-node__summary">
+                      <strong>能力简介</strong>
+                      <span>{capability.summary['zh-CN']}</span>
+                    </p>
                     <div class="map-outline-node__relations">
                       <section>
                         <h3>它支持</h3>
@@ -219,7 +222,10 @@ const relationDirection = (type: 'supports' | 'complements') =>
                   <span>知识议题</span>
                   <a href={sitePath(`topics/${topic.id}/`)}>{topic.name['zh-CN']}</a>
                 </div>
-                <p>{topic.summary['zh-CN']}</p>
+                <details>
+                  <summary>查看摘要</summary>
+                  <p class="map-outline-node__summary">{topic.summary['zh-CN']}</p>
+                </details>
               </div>
             ))}
           </div>
