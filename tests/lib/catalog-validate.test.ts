@@ -329,6 +329,54 @@ describe('validateCatalog', () => {
     });
   });
 
+  it('rejects non-web URLs in resource identities and access versions', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resources.push({
+      ...validV02Resource('invalid-urls', 'mailto:hello@example.com'),
+      accessVersions: [
+        {
+          language: 'en',
+          url: 'javascript:alert(1)',
+          accessModel: 'free',
+          translationKind: 'original',
+          checkedAt: '2026-08-09',
+        },
+      ],
+    });
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'RESOURCE_CANONICAL_URL_INVALID',
+      'RESOURCE_ACCESS_VERSION_URL_INVALID',
+    ]);
+  });
+
+  it('rejects malformed regional restrictions with one error per item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resources.push({
+      ...validV02Resource('invalid-regions', 'https://example.com/regions'),
+      accessVersions: [
+        {
+          language: 'en',
+          url: 'https://example.com/regions',
+          accessModel: 'free',
+          regionRestrictions: [
+            { regions: [], note: localized('无地区。') },
+            { regions: [' '], note: { 'zh-CN': '' } },
+          ],
+          translationKind: 'original',
+          checkedAt: '2026-08-09',
+        },
+      ],
+    } as unknown as Catalog['resources'][number]);
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'RESOURCE_REGION_RESTRICTION_INVALID',
+      'RESOURCE_REGION_RESTRICTION_INVALID',
+    ]);
+  });
+
   it('restricts media, translation, and access-check dates to the catalog contract', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);
@@ -383,6 +431,50 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('requires web URLs for role-profile basis links and Source external signals', () => {
+    const catalog = emptyV02Catalog();
+    catalog.sources.push({
+      id: 'unsafe-source',
+      name: localized('不安全来源'),
+      kind: 'website',
+      summary: localized('示例来源。'),
+      homepage: 'mailto:hello@example.com',
+      languages: ['en'],
+      externalSignals: [
+        {
+          provider: 'Example',
+          label: 'Views',
+          value: '100',
+          observedAt: '2026-08-09',
+          url: 'data:text/plain,unsafe',
+        },
+      ],
+    } as unknown as Catalog['sources'][number]);
+    catalog.roleProfiles.push({
+      id: 'unsafe-profile',
+      title: localized('不安全画像'),
+      roleId: 'designer',
+      productionContextId: 'aaa',
+      basis: localized('示例依据。'),
+      basisLinks: [
+        {
+          title: localized('非网页依据'),
+          url: 'javascript:alert(1)',
+          sourceNote: localized('示例来源。'),
+        },
+      ],
+      reviewedAt: '2026-08-09',
+      caveats: localized('仅作参考。'),
+      capabilities: [],
+    } as unknown as Catalog['roleProfiles'][number]);
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'SOURCE_HOMEPAGE_INVALID',
+      'SOURCE_EXTERNAL_SIGNAL_INVALID',
+      'PROFILE_BASIS_LINK_URL_INVALID',
+    ]);
+  });
+
   it('requires IDs to be unique within every collection', () => {
     const catalog = emptyV02Catalog();
     catalog.resourceTopics.push(
@@ -414,7 +506,20 @@ describe('validateCatalog', () => {
   it('allows capability relations only between distinct capabilities', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);
+    catalog.capabilities.push({
+      id: 'second-capability',
+      name: localized('第二项能力'),
+      summary: localized('用于关系测试。'),
+      domainId: 'domain',
+    });
     catalog.capabilityRelations.push(
+      {
+        id: 'knowledge-topic-is-not-capability',
+        fromId: 'knowledge-topic',
+        toId: 'capability',
+        type: 'supports',
+        summary: localized('示例关系。'),
+      },
       {
         id: 'missing-capability',
         fromId: 'capability',
@@ -429,11 +534,20 @@ describe('validateCatalog', () => {
         type: 'complements',
         summary: localized('示例关系。'),
       },
+      {
+        id: 'invalid-relation-type',
+        fromId: 'capability',
+        toId: 'second-capability',
+        type: 'prerequisite',
+        summary: localized('示例关系。'),
+      } as unknown as Catalog['capabilityRelations'][number],
     );
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'CAPABILITY_RELATION_FROM_CAPABILITY_MISSING',
       'CAPABILITY_RELATION_TO_CAPABILITY_MISSING',
       'CAPABILITY_RELATION_SELF_REFERENCE',
+      'CAPABILITY_RELATION_TYPE_INVALID',
     ]);
   });
 });

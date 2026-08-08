@@ -151,6 +151,7 @@ export type CatalogValidationCode =
   | 'CAPABILITY_RELATION_FROM_CAPABILITY_MISSING'
   | 'CAPABILITY_RELATION_TO_CAPABILITY_MISSING'
   | 'CAPABILITY_RELATION_SELF_REFERENCE'
+  | 'CAPABILITY_RELATION_TYPE_INVALID'
   | 'RESOURCE_TOPIC_CAPABILITY_MISSING'
   | 'RESOURCE_TOPIC_KNOWLEDGE_TOPIC_MISSING'
   | 'RESOURCE_SOURCE_MISSING'
@@ -159,9 +160,12 @@ export type CatalogValidationCode =
   | 'RESOURCE_RESOURCE_TOPIC_MISSING'
   | 'RESOURCE_TOPIC_REFERENCE_REQUIRED'
   | 'RESOURCE_CANONICAL_URL_DUPLICATE'
+  | 'RESOURCE_CANONICAL_URL_INVALID'
   | 'RESOURCE_ACCESS_VERSION_REQUIRED'
   | 'RESOURCE_ACCESS_MODEL_INVALID'
+  | 'RESOURCE_ACCESS_VERSION_URL_INVALID'
   | 'RESOURCE_ACCESS_VERSION_CHECKED_AT_INVALID'
+  | 'RESOURCE_REGION_RESTRICTION_INVALID'
   | 'RESOURCE_MEDIA_TYPE_INVALID'
   | 'RESOURCE_TRANSLATION_KIND_INVALID'
   | 'RESOURCE_EXTERNAL_SIGNAL_INVALID'
@@ -172,6 +176,7 @@ export type CatalogValidationCode =
   | 'TRAIL_CAPABILITY_MISSING'
   | 'TRAIL_RESOURCE_MISSING'
   | 'PROFILE_BASIS_LINK_REQUIRED'
+  | 'PROFILE_BASIS_LINK_URL_INVALID'
   | 'PROFILE_REVIEWED_AT_INVALID'
   | 'PROFILE_CAPABILITY_MISSING'
   | 'PROFILE_PRIORITY_INVALID'
@@ -188,6 +193,7 @@ export type CatalogValidationError = {
 };
 
 const sourceKinds = new Set(['creator', 'channel', 'organization', 'publisher', 'website']);
+const capabilityRelationTypes = new Set(['supports', 'complements']);
 const accessModels = new Set(['free', 'paid', 'subscription']);
 const mediaTypes = new Set(['article', 'book', 'course', 'paper', 'podcast', 'talk', 'video', 'website']);
 const translationKinds = new Set(['original', 'official', 'community', 'bilingual', 'subtitled']);
@@ -218,11 +224,30 @@ function isUrl(value: unknown): value is string {
   }
 
   try {
-    new URL(value);
-    return true;
+    const protocol = new URL(value).protocol;
+    return protocol === 'http:' || protocol === 'https:';
   } catch {
     return false;
   }
+}
+
+function isRegionRestriction(value: unknown): boolean {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  const restriction = value as Record<string, unknown>;
+  const note = restriction.note;
+  return (
+    Array.isArray(restriction.regions) &&
+    restriction.regions.length > 0 &&
+    restriction.regions.every((region) => typeof region === 'string' && region.trim().length > 0) &&
+    typeof note === 'object' &&
+    note !== null &&
+    !Array.isArray(note) &&
+    typeof (note as Record<string, unknown>)['zh-CN'] === 'string' &&
+    (note as Record<string, unknown>)['zh-CN'].trim().length > 0
+  );
 }
 
 function isIsoDate(value: unknown): value is string {
@@ -321,6 +346,16 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   }
 
   for (const relation of catalog.capabilityRelations) {
+    if (!capabilityRelationTypes.has(relation.type)) {
+      appendError(
+        errors,
+        'CAPABILITY_RELATION_TYPE_INVALID',
+        'capabilityRelations',
+        relation.id,
+        'type',
+        relation.type,
+      );
+    }
     if (!capabilityIds.has(relation.fromId)) {
       appendError(
         errors,
@@ -411,6 +446,17 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     }
     canonicalUrls.add(resource.canonicalUrl);
 
+    if (!isUrl(resource.canonicalUrl)) {
+      appendError(
+        errors,
+        'RESOURCE_CANONICAL_URL_INVALID',
+        'resources',
+        resource.id,
+        'canonicalUrl',
+        resource.canonicalUrl,
+      );
+    }
+
     if (!mediaTypes.has(resource.mediaType)) {
       appendError(
         errors,
@@ -490,6 +536,16 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
           accessVersion.accessModel,
         );
       }
+      if (!isUrl(accessVersion.url)) {
+        appendError(
+          errors,
+          'RESOURCE_ACCESS_VERSION_URL_INVALID',
+          'resources',
+          resource.id,
+          'accessVersions.url',
+          accessVersion.url,
+        );
+      }
       if (!translationKinds.has(accessVersion.translationKind)) {
         appendError(
           errors,
@@ -509,6 +565,18 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
           'accessVersions.checkedAt',
           accessVersion.checkedAt,
         );
+      }
+      for (const restriction of accessVersion.regionRestrictions ?? []) {
+        if (!isRegionRestriction(restriction)) {
+          appendError(
+            errors,
+            'RESOURCE_REGION_RESTRICTION_INVALID',
+            'resources',
+            resource.id,
+            'accessVersions.regionRestrictions',
+            '',
+          );
+        }
       }
     }
     for (const signal of resource.externalSignals ?? []) {
@@ -557,6 +625,18 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         'reviewedAt',
         profile.reviewedAt,
       );
+    }
+    for (const basisLink of profile.basisLinks) {
+      if (!isUrl(basisLink.url)) {
+        appendError(
+          errors,
+          'PROFILE_BASIS_LINK_URL_INVALID',
+          'roleProfiles',
+          profile.id,
+          'basisLinks.url',
+          basisLink.url,
+        );
+      }
     }
     for (const capability of profile.capabilities) {
       if (!capabilityIds.has(capability.capabilityId)) {

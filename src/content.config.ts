@@ -10,6 +10,10 @@ const localizedText = z
   .strict();
 
 const isoDate = z.iso.date();
+const httpUrl = z.url().refine((value) => {
+  const protocol = new URL(value).protocol;
+  return protocol === 'http:' || protocol === 'https:';
+}, 'Expected an http or https URL');
 
 const externalSignal = z
   .object({
@@ -17,14 +21,14 @@ const externalSignal = z
     label: z.string().trim().min(1),
     value: z.union([z.string().trim().min(1), z.number().finite()]),
     observedAt: isoDate,
-    url: z.url(),
+    url: httpUrl,
   })
   .strict();
 
 const accessVersion = z
   .object({
     language: z.string().trim().min(1),
-    url: z.url(),
+    url: httpUrl,
     accessModel: z.enum(['free', 'paid', 'subscription']),
     regionRestrictions: z
       .array(
@@ -45,7 +49,7 @@ const accessVersion = z
 const basisLink = z
   .object({
     title: localizedText,
-    url: z.url(),
+    url: httpUrl,
     sourceNote: localizedText,
   })
   .strict();
@@ -114,7 +118,7 @@ const sources = defineCollection({
       name: localizedText,
       kind: z.enum(['creator', 'channel', 'organization', 'publisher', 'website']),
       summary: localizedText,
-      homepage: z.url(),
+      homepage: httpUrl,
       languages: z.array(z.string().trim().min(1)).min(1),
       externalSignals: z.array(externalSignal).optional(),
     })
@@ -133,7 +137,7 @@ const resources = defineCollection({
       knowledgeTopicIds: z.array(z.string().trim().min(1)),
       resourceTopicIds: z.array(z.string().trim().min(1)),
       mediaType: z.enum(['article', 'book', 'course', 'paper', 'podcast', 'talk', 'video', 'website']),
-      canonicalUrl: z.url(),
+      canonicalUrl: httpUrl,
       whyRelevant: localizedText,
       originalLanguage: z.string().trim().min(1),
       externalSignals: z.array(externalSignal).optional(),
@@ -203,7 +207,7 @@ const atlasEvidence = defineCollection({
   loader: file('src/data/atlas-evidence.json'),
   schema: z.object({
     title: localizedText,
-    url: z.url(),
+    url: httpUrl,
     summary: localizedText,
   }),
 });
