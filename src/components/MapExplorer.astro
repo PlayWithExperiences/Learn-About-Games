@@ -18,16 +18,17 @@ const roleProfileData = Object.fromEntries(
 <section class="role-lens" aria-label="职业透镜" data-role-lens data-role-profiles={JSON.stringify(roleProfileData)}>
   <div>
     <p class="plain-label">参考职业画像</p>
-    <p>职业标签只说明特定生产语境下的分类参考。它不评价个人，也不计算分数。</p>
+    <p>职业标签只说明特定生产语境下的分类参考。标签前项是参考重要性，后项是责任范围。它不评价个人，也不计算分数。</p>
   </div>
   <label>
     <span>参考职业画像</span>
-    <select>
+    <select disabled>
       <option value="">未应用参考画像</option>
       {roleProfiles.map((profile) => <option value={profile.id}>{profile.title['zh-CN']}</option>)}
     </select>
   </label>
   <button type="button" hidden>清除参考画像</button>
+  <noscript><p class="script-required-note">启用 JavaScript 后可以应用或清除参考职业画像。</p></noscript>
   {roleProfiles.map((profile) => (
     <div class="role-lens__context" data-role-context={profile.id} hidden>
       <strong>{profile.title['zh-CN']}</strong>
@@ -130,6 +131,10 @@ const roleProfileData = Object.fromEntries(
       clearButton.hidden = profileId === '';
     }
   };
+
+  if (select) {
+    select.disabled = false;
+  }
 
   select?.addEventListener('change', applyProfile);
   window.addEventListener('pageshow', applyProfile);

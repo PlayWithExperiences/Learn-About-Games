@@ -21,11 +21,12 @@ const progressOptions = [
   </div>
   <label>
     <span>个人学习状态</span>
-    <select>
+    <select disabled>
       {progressOptions.map(([value, label]) => <option value={value}>{label}</option>)}
     </select>
   </label>
   <p class="progress-panel__current" aria-live="polite">尚未接触</p>
+  <noscript><p class="script-required-note">启用 JavaScript 后可以保存个人学习状态。</p></noscript>
 </section>
 
 <script>
@@ -45,6 +46,7 @@ const progressOptions = [
   };
 
   if (select && current && capabilityId) {
+    select.disabled = false;
     const load = () => parseProgressStore(window.localStorage.getItem(PROGRESS_STORAGE_KEY));
     const storedState = load().capabilities[capabilityId] ?? 'unseen';
     select.value = storedState;

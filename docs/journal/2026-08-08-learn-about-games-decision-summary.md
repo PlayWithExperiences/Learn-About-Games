@@ -99,6 +99,7 @@ M0 先验证 Astro 数据契约、Playtest 学习链路、职业与个人状态�
 - Task 3 新增 Playtest 能力详情、基础路径、两条已审核 Work Item 与资源语言筛选；同一双语文章以一个 Work Item 和两个 access version 表达。测试先观察到目标路由和地图链接缺失而失败，随后 Chromium Playtest E2E 4 项、移动 Chromium Playtest E2E 4 项、既有 visible skeleton Chromium E2E 5 项均通过；`npm run check`、`npm test`、`npm run build` 通过。桌面与 320px 的 capability、trail、resources 截图已人工复查。
 - Task 4 新增唯一 `AAA / Game Designer` 参考画像。其依据和局限明确说明维护者 AAA 背景、业界语境，以及 indie/solo 的不同能力多边形；地图只显示核心、重要、建议了解与执行/协作/理解等分类标签。Playtest 页面新增五档个人学习状态，使用版本化 localStorage 键 `learn-about-games:progress:v1`，损坏 JSON 安全回退为空状态。职业参考与个人状态使用不同容器、文字和边框编码，不显示任何总分、百分比或雷达图。
 - Task 4 先获得两条 RED：progress 单测因模块不存在失败，profile/progress E2E 因地图控件不存在失败。实现后发现 bfcache 会恢复画像 select 的值而不恢复由脚本派生的地图标记，因此在 `pageshow` 重新应用透镜，避免增加职业状态存储。最终 `npm run check`、26 项 Vitest、静态构建、Chromium 11 项、mobile Chromium 11 项均通过；1440px 与 320px 地图和 Playtest 页截图人工复查，均无横向溢出。
+- Task 4 质量复查发现 CSS `.role-marker` 会覆盖原生 `hidden`，导致未应用画像时仍显示空分类行；同时无 JavaScript 时两个本应依赖脚本的 select 仍可操作。修复后 marker 的 `[hidden]` 强制不显示，两个 select 初始禁用且仅在脚本成功绑定时启用，并各自显示局部 no-JS 说明。E2E 覆盖初始 0、应用后 7、清除后 0 个可见 marker，以及无 JavaScript 下内容可读而控件不可操作。
 - 通过公开搜索核对 GMTK 的 `Valve's “Secret Weapon”` 示例，验证单条内容映射能力的需求。
 - 通过 Carnegie Mellon University 官方资料确认 Game Innovation Database 自 2004 年起探索游戏创新、关系可视化与公众贡献。
 - 通过 Digital Ludeme Project 官方资料确认 ludeme、游戏传播、独立产生与历史不确定性是创新沿革建模的重要参考。

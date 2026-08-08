@@ -418,6 +418,26 @@ a.capability-node:active {
   font-weight: 720;
 }
 
+.role-marker[hidden] {
+  display: none;
+}
+
+.script-required-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.role-lens noscript {
+  grid-column: 1 / -1;
+}
+
+.role-lens select:disabled,
+.progress-panel select:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
 .prose,
 .devlog-index {
   max-width: 830px;
@@ -481,6 +501,10 @@ a.capability-node:active {
   grid-column: 1 / -1;
   color: var(--ink) !important;
   font-weight: 720;
+}
+
+.progress-panel noscript {
+  grid-column: 1 / -1;
 }
 
 .detail-page h2 {

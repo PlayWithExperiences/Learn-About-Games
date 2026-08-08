@@ -197,3 +197,11 @@ GREEN 验证包括：`npm run check` 0 errors，Vitest 22 项通过，静态构�
 浏览器测试覆盖应用画像、确认分类标签、进入 Playtest 设为做过练习、刷新仍保留、返回地图清除透镜、个人进度仍显示，并断言没有数值评分。测试还发现浏览器 bfcache 会还原 select 表单值但不重新执行地图脚本，导致清除按钮和分类标记未同步。实现因此在 `pageshow` 按当前 select 值重新应用 lens，不持久化额外职业状态。静态非链接 capability 节点的 hover、active 和点击位移反馈同时移除，互动反馈只保留给 Playtest 链接。
 
 GREEN 验证包括：`npm run check` 0 errors、Vitest 26 项、静态构建、Chromium 11 项、mobile Chromium 11 项、`git diff --check`。人工查看了 1440px 与 320px 的地图和 Playtest 截图，脚本测得四个视图均无横向溢出。构建仍会报告既有空 Atlas collection 的 loader 提示，未把这些预存警告归因于本任务。
+
+### 25. M0 Task 4：质量复查修复
+
+记录说明：以下为本实现代理可访问的脱敏摘要，是部分导出，不是完整聊天 UI 的逐字记录。
+
+质量复查确认两项重要问题：`hidden` role marker 被组件的 `display: block` 样式覆盖，因此在没有应用职业画像时仍占据可见空间；职业画像和个人进度 select 在 JavaScript 关闭时仍可操作，却不会持久化或应用变化。实现先扩展 E2E，观察到初始可见 marker 为 9（目标为 0），并观察到无 JavaScript 时画像 select 处于 enabled 状态（目标为 disabled）。
+
+最小修复为给 `.role-marker[hidden]` 设定 `display: none`，并让两处 select 在服务端渲染时带 `disabled`，仅在各自客户端脚本成功绑定后解除禁用。两个控件旁增加局部 no-JS 说明；地图文字也明确分类标签前项表示参考重要性、后项表示责任范围。GREEN E2E 覆盖初始 0、画像应用后 7、清除后 0 个可见 marker，及无 JavaScript 时地图和 Playtest 内容/导航可读而控件不可操作。截图保存在运行时临时目录 `/tmp/learn-about-games-task4-fix/`，已按原始尺寸查看。
