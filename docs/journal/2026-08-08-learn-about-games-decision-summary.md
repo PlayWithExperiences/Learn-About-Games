@@ -16,8 +16,10 @@ Learn About Games 来自用户对“拥有地图、认识自己、持续学习�
 - GitHub 公开仓库是 `PlayWithExperiences/Learn-About-Games`，默认分支为 `main`。
 - 首次基础部署源 HEAD 为 `7f982bbdf074e56a99ec2ee5ca2a568fe25f5fca`，对应 GitHub Pages workflow [run 31264625728](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31264625728)。
 - Task 7 acceptance bundle 的发布 HEAD 为 `d079d83c14d2823c597d9c831c907f61fd6e62c8`，对应 [run 31265746032](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265746032)；build 与 deploy jobs 均成功。
-- Pages 使用 workflow build type。线上复核确认：首页包含新的 Playtest 当前态文案，Resources HTML 包含 disabled no-JS select 与说明，Devlog 索引包含 `Devlog 002`。
-- Task 7 bundle 之后还有发布证据 metadata 对齐与 final-review copy/docs 修正；这些后续 commit 不应被描述为上述 bundle 的发布 HEAD，也不循环宣称仓库当前 HEAD 仍是 `d079d83`。
+- 部署证据 metadata 对齐 HEAD 为 `9b756374292343f68fe0bac6b741b8a01c5108b8`，对应 [run 31265993889](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31265993889)；它只修正文档证据，不新增产品行为。
+- Final-review 修复与不兼容进度版本回退测试的发布 HEAD 为 `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2`，对应 [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396)；build 与 deploy jobs 均成功。
+- Pages 使用 workflow build type。线上复核确认：首页包含新的 Playtest 当前态文案和 `AAA / Game Designer` 画像“只是参考、不作评分、更多画像后续扩展”的说明，Resources HTML 包含 disabled no-JS select 与说明，Devlog 索引包含 `Devlog 002`。
+- Task 7 bundle 之后还有发布证据 metadata 对齐与 final-review 修正；它们拥有各自的 commit / run 证据，不被倒填为 Task 7 bundle 的发布 HEAD。
 - M0 公开 9 个领域与 9 个能力入口。只有 Playtest 已形成“地图 - 能力 - 路径 - 具体 Work Item”的完整学习切片。
 - Playtest 路径抵达 GMTK 的 `Valve's “Secret Weapon”` 视频与 PlayWithExperiences 的双语 Playtest 文章。它们是具体 Work Item，不是频道入口。
 - 双语文章只保存为一个 Work Item，通过 `zh-CN` 与 `en` 两个可消费 access version 参与筛选。语言表示用户能实际阅读或观看的版本，不只是原作语言。
@@ -92,7 +94,7 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - Atlas 测试必须锁定 relation id、fromId、toId、type 与 status 的 tuple。方向箭头桌面向右、移动向下；endpoint CSS 选择器必须收窄，避免箭头继承节点边框并变成第三种实体。
 - 远端 HTTPS 曾因 macOS Keychain 凭据路径返回 403。诊断改用命令级显式 SSH URL，确认认证与连通性；没有修改 global Git 配置或仓库 `origin`。该诊断不曾被当作部署证据。
 - `actions/configure-pages@v6` 在 build job 读取 Pages 配置，需要 `pages: read`。build job 只增加 `contents: read` 与 `pages: read`，deploy job 才拥有 `pages: write` 与 `id-token: write`。
-- 部署配置存在不等于上线。run 31264625728 证明首次基础部署，run 31265746032 与线上 HTML 抽查共同证明 Task 7 acceptance bundle 已经发布；因此 M0 才从 Roadmap Now 移到 Shipped。其后 copy/docs 修正必须单独记录，不能倒填进该 run。
+- 部署配置存在不等于上线。run 31264625728 证明首次基础部署，run 31265746032 证明 Task 7 acceptance bundle，run 31266716396 与线上 HTML 抽查证明 final-review 首页修正；不同发布必须保留各自证据，不能彼此倒填。
 
 ## 未决问题
 

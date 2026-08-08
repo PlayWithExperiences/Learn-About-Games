@@ -291,3 +291,9 @@ Handoff audit 同时指出产品设计的 localStorage 失败处理把多个阶�
 远端事实没有在本节扩写或猜测新 run ID。`d079d83c14d2823c597d9c831c907f61fd6e62c8` 与 run `31265746032` 只描述 Task 7 acceptance bundle 的已验证发布；其后仍有发布证据 metadata 对齐和本次 final-review copy/docs 修正。本次修正记录时没有 push，也不把当前本地 HEAD 循环宣称为 `d079d83`。
 
 fresh build 后首页 targeted Chromium 1/1 GREEN。写入交接记录后的第一次复核被一个父进程已退出、工作目录位于临时 review 目录的旧 Astro preview 占用 4321 端口，Playwright 因 `reuseExistingServer` 读到旧首页而出现 21/22；`src` 与 fresh `dist` 同时包含新文案，定位并停止这个精确 preview 后，targeted 再次 1/1 GREEN。Final review 还为既有安全回退增加一条明确单元测试：`version !== 1` 的 localStorage 数据必须回到 version-one 空状态，不在 M0 引入迁移框架；首页修正在实际部署前保留于 Changelog 的 `Unreleased`，不提前写成已上线行为。随后在无残留服务条件下重跑 full gate：两次 `astro check` 均为 0 errors / warnings / hints，Vitest 27/27，fresh build 生成 14 个静态页面，desktop Chromium 22/22、mobile Chromium 22/22，`git diff --check` 退出 0；这些计数记录的是当前 final-review 文件树，不改写 Task 7 当时的 21/21 历史。
+
+### 33. Final review 发布证据闭环
+
+此前的部署证据 metadata 对齐 commit `9b756374292343f68fe0bac6b741b8a01c5108b8` 已由 workflow run `31265993889` 成功发布；它没有新增产品行为。主 agent 随后将 final-review 修复及其回归测试推送到远端 `main`。GitHub Pages workflow [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 记录的 head SHA 是 `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2`，build 与 deploy jobs 均 completed / success；`git ls-remote` 同时确认远端 `main` 指向该 SHA。公开首页随后用精确文本复核，确认已出现“用已发布的 AAA / Game Designer 参考画像理解一种生产语境；它只是参考，不作评分，更多画像后续扩展。”
+
+因此首页修复从 Changelog 的 `Unreleased` 移入已发布 M0，并保留 run 与完整 SHA。当前证据写回只更新 README、Changelog、决策摘要、transcript 与部署回归断言，不新增产品行为；后续内容扩展仍以决策摘要的“精确下一步”为准。

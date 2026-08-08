@@ -134,7 +134,7 @@ test('does not claim that M0 reached the formal first-release scale', async ({ p
   ).toBeVisible();
 });
 
-test('records the deployment of the Task 7 acceptance bundle', async ({ page }) => {
+test('records the verified deployment chain through the final-review fix', async ({ page }) => {
   await page.goto('./project/changelog/');
 
   await expect(
@@ -142,4 +142,6 @@ test('records the deployment of the Task 7 acceptance bundle', async ({ page }) 
   ).toBeVisible();
   await expect(page.getByText(/31265746032/)).toBeVisible();
   await expect(page.getByText(/d079d83c14d2823c597d9c831c907f61fd6e62c8/)).toBeVisible();
+  await expect(page.getByText(/31266716396/)).toBeVisible();
+  await expect(page.getByText(/8697a6b5fa56a7f6a5e15276b86ed36060cb32a2/)).toBeVisible();
 });
