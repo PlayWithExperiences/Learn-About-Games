@@ -3,6 +3,8 @@ import capabilities from '../../src/data/capabilities.json' with { type: 'json' 
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
 import domains from '../../src/data/domains.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
+import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
+import resources from '../../src/data/resources.json' with { type: 'json' };
 
 const basePath = '/Learn-About-Games/';
 
@@ -249,4 +251,81 @@ test('opens a capability and a knowledge topic with region and related content',
   await expect(page.getByLabel('面包屑')).toContainText(domain.name['zh-CN']);
   await expect(page.getByText(topic.summary['zh-CN'], { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: '相关资源', exact: true })).toBeVisible();
+});
+
+test('connects every map node directly to catalog-ordered resources and factual filters', async ({ request }) => {
+  const idsFromHtml = (html: string, attribute: string) =>
+    [...html.matchAll(new RegExp(`${attribute}="([^"]+)"`, 'g'))].map((match) => match[1]);
+  const resourceIds = new Set(resources.map(({ id }) => id));
+  const catalogResponse = await request.get('resources/');
+  expect(catalogResponse.status()).toBe(200);
+  const catalogResourceIds = idsFromHtml(await catalogResponse.text(), 'data-result-id')
+    .filter((id) => resourceIds.has(id));
+
+  for (const capability of capabilities) {
+    const response = await request.get(`capabilities/${capability.id}/`);
+    expect(response.status(), capability.id).toBe(200);
+    const html = await response.text();
+    const expectedResourceIds = catalogResourceIds.filter((id) =>
+      resources.find((resource) => resource.id === id)?.capabilityIds.includes(capability.id),
+    );
+    const expectedTopics = resourceTopics.filter(({ capabilityIds }) => capabilityIds.includes(capability.id));
+
+    expect(idsFromHtml(html, 'data-node-resource-id'), capability.id).toEqual(
+      expectedResourceIds,
+    );
+    expect(idsFromHtml(html, 'data-node-resource-topic-id').sort(), capability.id).toEqual(
+      expectedTopics.map(({ id }) => id).sort(),
+    );
+    for (const topic of expectedTopics) {
+      expect(html, `${capability.id}:${topic.id}`).toContain(
+        `href="${basePath}resources/?resourceTopic=${topic.id}"`,
+      );
+    }
+
+    expect(html, capability.id).toContain(
+      `href="${basePath}resources/?capability=${capability.id}"`,
+    );
+    if (expectedResourceIds.length === 0) {
+      expect(html, capability.id).toContain('当前目录还没有与这个能力直接关联的 Work Item。');
+      expect(html, capability.id).toContain(`href="${basePath}project/contributing/"`);
+    }
+  }
+
+  for (const topic of knowledgeTopics) {
+    const response = await request.get(`topics/${topic.id}/`);
+    expect(response.status(), topic.id).toBe(200);
+    const html = await response.text();
+    const expectedResourceIds = catalogResourceIds.filter((id) =>
+      resources.find((resource) => resource.id === id)?.knowledgeTopicIds.includes(topic.id),
+    );
+    const expectedTopics = resourceTopics.filter(({ knowledgeTopicIds }) => knowledgeTopicIds.includes(topic.id));
+
+    expect(idsFromHtml(html, 'data-node-resource-id'), topic.id).toEqual(
+      expectedResourceIds,
+    );
+    expect(idsFromHtml(html, 'data-node-resource-topic-id').sort(), topic.id).toEqual(
+      expectedTopics.map(({ id }) => id).sort(),
+    );
+    for (const resourceTopic of expectedTopics) {
+      expect(html, `${topic.id}:${resourceTopic.id}`).toContain(
+        `href="${basePath}resources/?resourceTopic=${resourceTopic.id}"`,
+      );
+    }
+    expect(html, topic.id).toContain(
+      `href="${basePath}resources/?knowledgeTopic=${topic.id}"`,
+    );
+  }
+});
+
+test('keeps node resource sections free of required-sequence semantics', async ({ page }) => {
+  await page.goto('./capabilities/playtesting/');
+  const capabilityResources = page.locator('[data-node-resources]');
+  await expect(capabilityResources).toBeVisible();
+  await expect(capabilityResources).not.toContainText(/学习路径|必修|按顺序/);
+
+  await page.goto(`./topics/${knowledgeTopics[0].id}/`);
+  const topicResources = page.locator('[data-node-resources]');
+  await expect(topicResources).toBeVisible();
+  await expect(topicResources).not.toContainText(/学习路径|必修|按顺序/);
 });

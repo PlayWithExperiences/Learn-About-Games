@@ -33,12 +33,16 @@ const resources = catalog.resources.filter((resource) => resource.knowledgeTopic
     <h1>{topic.name['zh-CN']}</h1>
     <p class="lede">{topic.summary['zh-CN']}</p>
 
-    <section aria-labelledby="related-resources-heading">
+    <section aria-labelledby="related-resources-heading" data-node-resources>
       <h2 id="related-resources-heading">相关资源</h2>
       {resourceTopics.length > 0 && (
         <div class="detail-card-list">
           {resourceTopics.map((resourceTopic) => (
-            <a class="detail-card" href={sitePath(`resources/topics/${resourceTopic.id}/`)}>
+            <a
+              class="detail-card"
+              href={`${sitePath('resources/')}?resourceTopic=${resourceTopic.id}`}
+              data-node-resource-topic-id={resourceTopic.id}
+            >
               <span>主题资源集合</span>
               <h3>{resourceTopic.title['zh-CN']}</h3>
               <p>{resourceTopic.summary['zh-CN']}</p>
@@ -46,20 +50,31 @@ const resources = catalog.resources.filter((resource) => resource.knowledgeTopic
           ))}
         </div>
       )}
+      <a class="text-link" href={`${sitePath('resources/')}?knowledgeTopic=${topic.id}`}>
+        在全部资源中继续筛选
+      </a>
       {resources.length > 0 ? (
-        <ul class="compact-resource-list">
-          {resources.map((resource) => {
-            const source = catalog.sources.find(({ id }) => id === resource.sourceId);
-            return (
-              <li>
-                <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
-                <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
-                <p>{resource.whyRelevant['zh-CN']}</p>
-              </li>
-            );
-          })}
-        </ul>
-      ) : <p>这个知识议题的资源仍在持续整理中；议题本身继续保留在地图中。</p>}
+        <>
+          <p class="detail-section-note">这些 Work Item 与当前知识议题直接关联，按目录顺序列出。</p>
+          <ul class="compact-resource-list">
+            {resources.map((resource) => {
+              const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+              return (
+                <li data-node-resource-id={resource.id}>
+                  <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
+                  <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
+                  <p>{resource.whyRelevant['zh-CN']}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      ) : (
+        <p>
+          当前目录还没有与这个知识议题直接关联的 Work Item。
+          {' '}<a href={sitePath('project/contributing/')}>查看贡献指南</a>
+        </p>
+      )}
     </section>
   </article>
 </BaseLayout>

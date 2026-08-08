@@ -100,7 +100,11 @@ const complements = catalog.capabilityRelations.filter(
       <h2 id="resource-topic-heading">相关主题资源</h2>
       <div class="detail-card-list">
         {resourceTopics.map((topic) => (
-          <a class="detail-card" href={sitePath(`resources/topics/${topic.id}/`)}>
+          <a
+            class="detail-card"
+            href={`${sitePath('resources/')}?resourceTopic=${topic.id}`}
+            data-node-resource-topic-id={topic.id}
+          >
             <span>主题资源集合</span>
             <h3>{topic.title['zh-CN']}</h3>
             <p>{topic.summary['zh-CN']}</p>
@@ -110,22 +114,33 @@ const complements = catalog.capabilityRelations.filter(
       </div>
     </section>
 
-    <section aria-labelledby="resource-heading">
+    <section aria-labelledby="resource-heading" data-node-resources>
       <h2 id="resource-heading">相关具体资源</h2>
+      <a class="text-link" href={`${sitePath('resources/')}?capability=${capability.id}`}>
+        在全部资源中继续筛选
+      </a>
       {resources.length > 0 ? (
-        <ul class="compact-resource-list">
-          {resources.map((resource) => {
-            const source = catalog.sources.find(({ id }) => id === resource.sourceId);
-            return (
-              <li>
-                <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
-                <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
-                <p>{resource.whyRelevant['zh-CN']}</p>
-              </li>
-            );
-          })}
-        </ul>
-      ) : <p>尚无直接关联的具体资源；资源整理不会影响这个能力在地图中的可达性。</p>}
+        <>
+          <p class="detail-section-note">这些 Work Item 与当前能力直接关联，按目录顺序列出。</p>
+          <ul class="compact-resource-list">
+            {resources.map((resource) => {
+              const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+              return (
+                <li data-node-resource-id={resource.id}>
+                  <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
+                  <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
+                  <p>{resource.whyRelevant['zh-CN']}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      ) : (
+        <p>
+          当前目录还没有与这个能力直接关联的 Work Item。
+          {' '}<a href={sitePath('project/contributing/')}>查看贡献指南</a>
+        </p>
+      )}
     </section>
   </article>
 </BaseLayout>

@@ -4,6 +4,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 能力与知识议题详情现在直接按运行时 catalog 顺序显示关联 Work Item，并提供 `capability`、`knowledgeTopic`、`resourceTopic` 稳定筛选深链；没有直接资源的能力诚实显示空状态与贡献入口，不经过 Trail 或规定学习顺序。
 - 成长资源现在把 20 个 Source 与 128 个 Work Item 作为两类独立、可发现的实体：主资源页服务端输出完整目录，20 个 Source 均有静态详情页，15 个无顺序资源主题继续保留独立入口。
 - 新增资源主题、知识主题、能力、可消费语言、媒介、访问方式与 Source 七维事实筛选；筛选状态写入稳定 URL 参数并支持 reload、history back 与 pageshow，无 JavaScript 时仍可阅读全部目录。
 - Work Item 改为紧凑编辑列表，逐项展示来源、媒介、原始语言、访问版本、关联说明、地区限制与带日期的外部公开观察；外部观察不参与站内评分、排名或排序。

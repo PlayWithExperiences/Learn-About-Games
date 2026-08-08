@@ -13,11 +13,18 @@ test('guides a learner from the home page to the unordered Playtest topic collec
   await playtestLink.click();
 
   await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
-  await page.getByRole('link', { name: 'Playtest 主题资源集合' }).click();
+  const topicFilterLink = page.getByRole('link', { name: 'Playtest 主题资源集合' });
+  await expect(topicFilterLink).toHaveAttribute(
+    'href',
+    '/Learn-About-Games/resources/?resourceTopic=playtesting',
+  );
+  await topicFilterLink.click();
 
-  await expect(page.getByRole('heading', { name: 'Playtest 主题资源集合' })).toBeVisible();
+  await expect(page).toHaveURL(/\/resources\/\?resourceTopic=playtesting$/);
+  await expect(page.getByRole('heading', { name: '按主题与事实浏览游戏学习资源' })).toBeVisible();
+  await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue('playtesting');
   await expect(page.getByText('按顺序阅读或观看')).toHaveCount(0);
-  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(playtestingResources.length);
+  await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(playtestingResources.length);
   for (const resource of playtestingResources) {
     const row = page.locator(`[data-result-id="${resource.id}"]`);
     await expect(row.getByRole('heading', { name: resource.title['zh-CN'], exact: true })).toBeVisible();

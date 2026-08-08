@@ -144,3 +144,15 @@ GREEN 把事实结果抽成共享的 `ResourceResults.astro`。主资源页 serv
 阶段门禁记录为 Astro check 0 errors / warnings / hints、Vitest 70/70、fresh build 104 pages、完整桌面/移动 E2E 95 passed / 1 desktop-only skipped。临时 preview 在检查后停止；最终提交前继续执行 diff、secret、preview 与 clean-worktree 复核。
 
 提交前再次运行目标资源 unit 为 17/17，直接 Astro fresh build 保持 104 pages，资源/base-path/Playtest 桌面与移动仍为 30/30。此时共享工作树已有并发 Atlas Task 2 的新 RED tests：全量 `npm test` 显示资源及既有测试 69 passed，Atlas 12 failed；失败只涉及尚未实现的 Atlas network/schema/validator 契约。资源 agent 没有修改或暂存 `atlas-network.test.ts` 和并发修改的 `catalog-validate.test.ts`，由主任务在 Atlas GREEN 后重跑全仓 gate。
+
+## 15. 地图节点直接连接资源（部分会话导出）
+
+本小节只记录当前 agent 可访问的脱敏任务合同、实现决定与验证证据，不补造聊天 UI 中不可访问的逐字内容。任务要求让每个 Capability 与 Knowledge Topic 详情直接显示同一 catalog 中与节点关联的 Work Item，并从节点进入统一资源筛选；Resource Topic 使用独立的 `resourceTopic` 参数。该连接不能恢复学习路径、必修、精选、审核或规定顺序，也不能引入第二套资源数据。
+
+实现先在 `map-v02.spec.ts` 增加跨全部 Capability 与 Knowledge Topic 的数据驱动断言，并锁定资源区不出现学习路径、必修和按顺序语义。旧页面没有 `data-node-resources` 与直接资源条目，目标浏览器测试得到 2/2 预期 RED。最小实现让两个详情路由直接从 runtime catalog 过滤资源，保持 catalog 顺序；每个能力提供 `?capability=<id>` 链接，每个知识议题提供 `?knowledgeTopic=<id>` 链接，相关 Resource Topic 改用 `?resourceTopic=<id>`。没有资源的能力同时显示诚实空状态和 Contributing 入口。Playtest flow 的旧主题入口断言同步为资源筛选深链，而旧 Trail artifact 仍由既有 base-path 契约负责。
+
+第一次 GREEN 暴露测试错误地把 raw JSON 顺序等同于 Astro collection 的 runtime 顺序；页面本身使用 `catalog.resources.filter` 保持了运行时顺序。测试改为从主资源页 server HTML 读取 runtime catalog 顺序，再计算每个节点的期望子序列。修正后目标四项桌面/移动为 4/4，地图、资源、base-path、Playtest flow 完整定向为 48/48。
+
+Atlas Task 2 提交后执行 fresh `npm run build`，结果为 Astro check 0 errors / warnings / hints、Vitest 81/81、104 pages。视觉验收覆盖 Playtest（15 项）、无直接资源能力 `encounter-space-composition`（0 项）和知识议题 `emergence-complexity`（12 项），分别检查 1440px 与显式 320px、light/dark；所有页面 `scrollWidth` 等于 `clientWidth`，筛选深链和空状态贡献入口均正确。截图保存在临时目录 `/tmp/lag-task5-review/`，不作为仓库产物提交。
+
+随后全量 `CI=1 npm run test:e2e` 共运行 112 项，结果为 94 passed、17 failed、1 desktop-only skipped。17 项失败经定位均不在 Task 5 范围：8 项是 Atlas 新网络数据已经合并、旧 `atlas.spec.ts` 仍锁 M0 数量和标题；9 项是 Career Lens 正在实现期间新增的浏览器契约。Task 5 自有 48/48 定向结果保持 GREEN，agent 没有修改或暂存 Atlas、Career、`global.css` 或 `ResourceExplorer` 文件。临时 preview 已停止。
