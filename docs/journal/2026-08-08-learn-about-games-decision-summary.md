@@ -47,9 +47,9 @@ GMTK、GDC 等是来源；一期视频、一场演讲或一本书才直接连接
 
 使用 Astro、TypeScript、GitHub Actions 与 GitHub Pages。第一版无账号、数据库和 CMS，个人进度保存在浏览器本地。
 
-### Game Innovation Atlas 独立于能力地图
+### Game Innovation Atlas 是站内的次级知识视图
 
-能力地图回答“如何学习与前进”，Innovation Atlas 回答“游戏创新如何出现和演变”。创新、游戏作品、关系与证据是独立对象；时间轴与关系网络是独立视图。相似性不能自动证明影响关系。
+能力地图回答“如何学习与前进”，Innovation Atlas 回答“游戏创新如何出现和演变”。两者属于同一个 Learn About Games 产品，共享网站、品牌、资源和贡献流程。创新、游戏作品、关系与证据在数据语义上与能力对象分开；相似性不能自动证明影响关系。Atlas 优先级低于核心能力地图与资源导航。
 
 ### 公开项目自身的发展路径
 
@@ -64,7 +64,7 @@ Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释
 - 3–4 个职业与生产环境参考画像。
 - 中文和英文资源筛选均可用。
 - 学术资源优先覆盖与游戏设计、玩家体验和设计方法直接相关的内容。
-- 1 条有证据的 Game Innovation Atlas 垂直样例。
+- Game Innovation Atlas 在第一版列出八类框架，并提供至少 1 个含 6–10 个节点和证据状态的种子主题。
 
 ## 已完成的验证
 
@@ -95,5 +95,7 @@ Roadmap 记录 Now / Next / Later，Changelog 记录发布事实，Devlog 解释
 1. 用户审阅书面设计。
 2. 审阅通过后编写分阶段实施计划。
 3. 建立最小可运行 Astro 站点与 GitHub Pages 部署。
-4. 完成能力学习路径与 Game Innovation Atlas 各一条端到端垂直切片。
-5. 垂直切片验证后再扩大资源候选库与创新主题。
+4. 先完成能力学习路径与资源导航的端到端垂直切片。
+5. 第一版同时发布 Game Innovation Atlas 的分类框架与一组种子内容。
+6. 核心学习体验验证后，再实现 Atlas 的复杂交互与更多主题。
+7. 垂直切片验证后扩大资源候选库与创新主题。

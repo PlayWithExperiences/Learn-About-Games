@@ -132,6 +132,14 @@
 
 助手通过公开研究找到高度吻合的 Carnegie Mellon University Entertainment Technology Center `Game Innovation Database`。该项目从 2004 年起记录游戏创新，让用户查看创新之间的启发关系并参与贡献。助手同时研究了 Maastricht University `Digital Ludeme Project`，其方法说明游戏可以拆成组成单元研究传播，但相似性也可能来自独立产生。
 
-双方确认新增独立的 Game Innovation Atlas。它使用 Innovation、Game Artifact、Innovation Relation 和 Innovation Evidence，并区分已证实、较可信、推测和争议。第一版只完成一条端到端垂直样例，完整历史网络在能力地图与资源导航稳定后扩展。
+助手最初把 Game Innovation Atlas 描述成相对独立的子项目，并建议第一版完成一条端到端垂直样例。它使用 Innovation、Game Artifact、Innovation Relation 和 Innovation Evidence，并区分已证实、较可信、推测和争议。
 
 双方还确认新增公开 Roadmap、Changelog 与里程碑 Devlog。原始会话记录继续用于恢复上下文，面向公众的 Devlog 负责解释项目选择。
+
+### 19. Atlas 归属与优先级纠正
+
+用户纠正了“独立子项目”的表述：Game Innovation Atlas 始终属于 Learn About Games，只是优先级低于能力地图和资源导航，不应被拆成另一个项目。
+
+助手接受纠正并更新设计：Atlas 与能力地图共享同一网站、品牌、搜索、资源、证据与贡献流程；只有对象类型和可视化语义保持区分。实施顺序调整为优先建设核心学习体验，Atlas 的复杂交互和规模扩展随后推进。
+
+用户进一步明确，低优先级不等于第一版留空。第一版至少要列出 Atlas 的分类框架并填入一组初步内容，避免未来遗忘这个方向。助手据此把首版标准调整为“框架完整、种子内容可读、证据结构成立”。

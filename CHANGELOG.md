@@ -12,3 +12,7 @@ Learn About Games 的重要变化记录在这里。项目尚未发布正式版�
 - 建立多语言资源版本、公开贡献、人工审核和公开反馈摘要策略。
 - 确定 Astro + TypeScript + GitHub Actions + GitHub Pages 技术方向。
 - 新增公开 Roadmap、Changelog、Devlog 与项目决策日志。
+
+### Changed
+
+- 明确 Game Innovation Atlas 是 Learn About Games 站内的次级知识板块，不是独立项目；第一版提供分类框架与种子内容，复杂交互和规模扩展排在核心能力地图与资源导航之后。
