@@ -12,6 +12,9 @@ export default defineConfig({
   },
   webServer: {
     command: 'npm run preview -- --host 127.0.0.1',
+    env: {
+      ASTRO_PREVIEW_BACKGROUND: '0',
+    },
     url: baseURL,
     reuseExistingServer: !process.env.CI,
   },
