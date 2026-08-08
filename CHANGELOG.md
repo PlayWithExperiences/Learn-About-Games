@@ -4,6 +4,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 新增跟随系统、浅色、深色三态外观：显式选择在当前浏览器保存，并在样式绘制前恢复；无 JavaScript 时继续跟随系统且控件明确不可操作。
 - 一级导航收敛为能力地图、职业方向、成长资源、创新变迁与关于本项目五项用户任务；项目治理资料不再与学习动作同级。
 - 新增 About 项目资料入口，集中链接 Roadmap、Changelog、Devlog、Methodology、Contributing 与 README，同时保留既有公开 URL。
 - 新增 `AAA · Game Designer` 职业方向入口，公开其参考边界、依据链接和复核日期，并链接回同一张能力地图而不复制角色知识树。

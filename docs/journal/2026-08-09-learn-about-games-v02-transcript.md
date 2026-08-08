@@ -92,3 +92,11 @@
 随后完成最小实现：`BaseLayout` 用 `ui.ts` 的稳定术语生成五项中文导航；桌面单行，移动端使用原生 `details/summary`，无 JavaScript 也可键盘打开和关闭；`/about/` 作为 Roadmap、Changelog、Devlog、Methodology、Contributing、README 的项目资料总入口；`/careers/` 直接读取 `aaa-game-designer` catalog 画像，展示依据、边界、公开链接、复核日期与同一能力地图锚点；首页三行动改为地图、职业、资源。旧 `/project/*` 和 `/devlog/` URL 保持静态可达。
 
 调试过程中，首次移动断言错误地把收起的紧凑菜单当作桌面导航；另有 About 与首页卡片的链接可访问名称包含说明文案。修正后的测试显式区分桌面与紧凑菜单，并用 `aria-labelledby` 与 `aria-describedby` 分离标题和说明。完整门禁结果：Astro check 0 errors / warnings / hints、Vitest 44/44、fresh build 25 pages、定向 E2E 25 passed / 1 skipped、完整 E2E 53 passed / 1 skipped。Playwright 截图检查确认桌面导航单行，320px 展开原生菜单后 HTML/body 都为 320px 宽，无横向溢出；临时 preview 已停止。
+
+## 11. 三态外观实现（部分会话导出）
+
+主题切片遵循先 RED 后 GREEN。新增 parser 断言先因 `src/lib/theme.ts` 缺失而失败；新增浏览器契约先因 Appearance 控件不存在而失败。parser 随后实现为只接受 `system`、`light`、`dark`，固定 storage key 为 `learn-about-games:theme:v1`，缺失、对象字符串和未知值安全回退 `system`；定向 Vitest 为 5/5。
+
+页面 head 增加最小 boot：只在存储值为显式浅色或深色时设置 `document.documentElement.dataset.theme`，在 CSS 绘制前避免显式偏好的明显闪烁；存储不可读或损坏时保留 system。顶部 utility 区增加原生 System / Light / Dark select，server render 时禁用，脚本完成绑定后才启用；更改会立即应用并持久化，`pageshow` 会重放当前偏好。无 JavaScript 保持 disabled 控件和简洁说明。
+
+全局 CSS 改为 DESIGN.md 规定的蓝灰浅色与蓝炭深色 token，显式 `data-theme` 优先于系统媒体查询，并收敛现有组件对正文浅色硬编码的依赖。浏览器矩阵覆盖 system 的浅/深、两种显式反向覆盖、reload、损坏存储、pageshow、无 JS 与 320px。地图提交后 fresh check 为 0 errors / warnings / hints、全量 Vitest 57/57、fresh build 58 pages，主题与既有 Resources 定向桌面/移动 E2E 24/24；已查看首页、About、Resources 在 1440px/320px、系统浅色/显式深色共 12 张截图，以及两种主题的焦点截图。完整 E2E 重跑初始为 59 passed / 6 failed / 1 skipped，其中主题引入的 no-JS 通用 class locator 冲突已修复；余下 4 项失败锁定了地图扩充前的 9 个领域和旧 Playtest 文案，等待地图页面测试契约同步。这个导出不把该仍在修复中的完整 gate 写成 GREEN。

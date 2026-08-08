@@ -75,7 +75,7 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 ## 精确下一步
 
 1. 重新运行文档阶段的 build、E2E、lint 与 diff gate，并提交 v0.2 规格、`DESIGN.md` 与四份可执行计划。
-2. 导航、About 与职业入口已完成；继续 Foundation 中尚未实现的三态主题，不把它和本次导航提交混在一起。
+2. 导航、About 与职业入口已完成。三态主题切片已完成：仅接受 `system`、`light`、`dark`，未知 localStorage 回退系统；控件在脚本绑定前禁用，head boot 在样式绘制前恢复显式选择。fresh check 为 0 errors / warnings / hints、全量 Vitest 57/57、fresh build 58 pages，主题与既有 Resources 定向桌面/移动 E2E 24/24，1440px/320px 系统浅色与显式深色截图已检查。全量 E2E 已重新运行；主题修复 no-JS 说明 locator 集成回归后，仍有 4 项 Map 页面旧断言等待同步到 8-domain 地图内容，不能把完整 gate 写成 GREEN。
 3. 再依次交付能力地图与职业方向、成长资源、全局 Innovation Atlas。
 4. 每阶段执行 RED-GREEN、规格审查、代码质量审查、连续性留档与独立提交。
 5. 最后完成桌面/移动、双主题、无 JavaScript、Pages 子路径与线上部署验收。

@@ -1,0 +1,58 @@
+---
+---
+
+<div class="theme-control" data-theme-control>
+  <label for="theme-preference">
+    <span>Appearance</span>
+    <select id="theme-preference" name="theme" disabled>
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>
+  <noscript><p class="theme-control__note">启用 JavaScript 后可以保存外观偏好。</p></noscript>
+</div>
+
+<script>
+  import { parseThemePreference, THEME_STORAGE_KEY } from '../lib/theme';
+
+  const control = document.querySelector<HTMLElement>('[data-theme-control]');
+  const select = control?.querySelector<HTMLSelectElement>('select');
+
+  const loadPreference = () => {
+    try {
+      return parseThemePreference(window.localStorage.getItem(THEME_STORAGE_KEY));
+    } catch {
+      return 'system';
+    }
+  };
+
+  const applyPreference = (preference: ReturnType<typeof parseThemePreference>) => {
+    if (preference === 'system') {
+      delete document.documentElement.dataset.theme;
+    } else {
+      document.documentElement.dataset.theme = preference;
+    }
+
+    if (select) {
+      select.value = preference;
+    }
+  };
+
+  if (select) {
+    applyPreference(loadPreference());
+    select.disabled = false;
+
+    select.addEventListener('change', () => {
+      const preference = parseThemePreference(select.value);
+      try {
+        window.localStorage.setItem(THEME_STORAGE_KEY, preference);
+      } catch {
+        // The preference still applies for this page when browser storage is unavailable.
+      }
+      applyPreference(preference);
+    });
+
+    window.addEventListener('pageshow', () => applyPreference(loadPreference()));
+  }
+</script>

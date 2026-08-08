@@ -1,6 +1,7 @@
 ---
 import { sitePath } from '../lib/site-path';
 import { ui } from '../i18n/ui';
+import ThemeControl from '../components/ThemeControl.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -28,6 +29,16 @@ const navigation = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <script is:inline>
+      try {
+        const preference = window.localStorage.getItem('learn-about-games:theme:v1');
+        if (preference === 'light' || preference === 'dark') {
+          document.documentElement.dataset.theme = preference;
+        }
+      } catch {
+        // Storage is optional; CSS falls back to the system appearance.
+      }
+    </script>
     <title>{title} | Learn About Games</title>
   </head>
   <body>
@@ -45,6 +56,9 @@ const navigation = [
             ))}
           </ul>
         </nav>
+        <div class="site-header__tools">
+          <ThemeControl />
+        </div>
         <details class="site-nav__compact">
           <summary>主导航</summary>
           <nav class="site-nav" aria-label="主导航">
