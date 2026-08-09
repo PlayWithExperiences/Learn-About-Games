@@ -9,7 +9,7 @@
 - EGDS 能力地图已经在本地候选完成：28 个方法节点形成体验设计、从计划到落地、团队、产品／盈利与更广语境五条作者化分支；42 个 Capability 与 12 个 Knowledge Topic 按需展开，64 条真实关系只在直接聚焦时显示。旧 Domains / mapGroups 数据、类型、样式与当前公开方法合同已经退休。
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 已通过公开事件投影到同一张 EGDS 地图；它们与个人实践状态分离，不计算适配度、差距、完成率或总分。
 - 成长资源继续使用单列事实目录，Innovation Atlas 继续提供受约束视口和节点索引；两者没有在 EGDS 切片中被重新设计或改变数据语义。
-- 本地候选 runtime `40fd1cd` 已完成逐任务规格／质量审查；远端私有 `codex/v02` 仍停在 `d982ceb`，本轮尚未推送。仓库仍保持 Private，Pages workflow 仍保持手动停用；恢复 Public 与 Pages 需要用户另行决定并重新执行线上验收。
+- 本地候选 runtime `fce67d1` 已完成逐任务规格／质量审查和最终全局复审；远端私有 `codex/v02` 仍停在 `d982ceb`，本轮尚未推送。仓库仍保持 Private，Pages workflow 仍保持手动停用；恢复 Public 与 Pages 需要用户另行决定并重新执行线上验收。
 
 ## Shipped｜M0 纵向切片
 

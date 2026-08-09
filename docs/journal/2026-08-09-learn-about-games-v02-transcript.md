@@ -347,4 +347,6 @@ Career bridge 把三个画像投影到同一张 EGDS 地图。它只发送 apply
 
 根级文档 RED 先要求 README、Roadmap 与 Changelog 把 EGDS 写成当前 Private 候选；旧文档按预期 2 项失败，更新后 Chromium 15/15。连续性更新前的 fresh gate为 Astro check 0/0/0、Vitest 130/130、105 pages、完整 Playwright 185 passed / 15 intentional skipped。第一次完整浏览器命令只因主任务的 4342 人工预览仍运行而无法启动；精确停止该 preview 后原样重跑成功，未修改产品合同。
 
-本记录仍是脱敏部分导出，不声称补回已经压缩且当前运行时不可访问的逐字消息。仓库保持 Private、Pages workflow 保持 `disabled_manually`；远端 `codex/v02` 停在 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。本地 EGDS runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1` 与本里程碑文档尚未推送或部署。下一步由发起人私有复核，而不是自动恢复公开。
+里程碑文档提交 `7706520` 后，最终全局 reviewer 仍在 1024px / 320px 真实运行态确认三个 Important：JS 原生大纲可同时手动打开多个实体叶；1024px 的递归缩进和双列实体把正文压到约 31.5px；Career 三档事实计数只写入隐藏的桌面节点，响应式折叠叶没有可见载体。三项先各自取得 E2E RED，再由 `fce67d1` 统一修复：JS 只保留最后打开叶、no-JS 仍可多开，1024px 深层正文恢复到约 606px且实体单列，Career count 在 1024px / 320px apply 和 clear 都与桌面同步且不泄漏到 Framework / Topic。独立复审结论为 Approved；fresh build 为 0 diagnostics、130/130、105 pages，完整 E2E 为 191 passed / 15 intentional skipped。
+
+本记录仍是脱敏部分导出，不声称补回已经压缩且当前运行时不可访问的逐字消息。仓库保持 Private、Pages workflow 保持 `disabled_manually`；远端 `codex/v02` 停在 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。本地 EGDS runtime `fce67d18947020f292d9384f6164baf2ab69699f` 与本里程碑后续文档尚未推送或部署。下一步由发起人私有复核，而不是自动恢复公开。

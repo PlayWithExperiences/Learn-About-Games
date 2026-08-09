@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；EGDS 本地候选已实现并逐任务审查至 runtime `40fd1cd`，尚未推送或部署；远端私有 `codex/v02` 仍为 `d982ceb`
+- 状态：仓库保持 Private、Pages 保持禁用；EGDS 本地候选已实现并独立批准至 runtime `fce67d1`，尚未推送或部署；远端私有 `codex/v02` 仍为 `d982ceb`
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -152,7 +152,7 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 较早的五项私有完善已经在远端 `codex/v02` 留档；当前远端头为 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。其 Resources 保持 20 个 Source、128 个 Work Item、140 个 Access Version 与 12 条外部观察的单列目录；Atlas 保持 50%–200% 受约束视口、适应全图、拖拽、键盘平移，以及 27 节点索引的中英文搜索和时间／名称排序。
 
-EGDS 本地候选从 implementation base `84e36d55171cafcdf8e809e53d4e4871479732dc` 演进到 runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1`，尚未推送或部署。它完成 28/4/42/12/64 数据合同、确定性布局、公开详情路由、交互地图、三 Career Lens 事件桥和旧 ontology 退休。逐任务审查修复包括悬空关系、locale 不稳定排序、路径穿盒、outline 可访问性、响应式焦点所有权、无效 public event、Career duplicate mapping、Atlas breakpoint 耦合、当前 Methodology 旧语义和 7.7KB 无消费者 CSS。
+EGDS 本地候选从 implementation base `84e36d55171cafcdf8e809e53d4e4871479732dc` 演进到 runtime `fce67d18947020f292d9384f6164baf2ab69699f`，尚未推送或部署。它完成 28/4/42/12/64 数据合同、确定性布局、公开详情路由、交互地图、三 Career Lens 事件桥和旧 ontology 退休。逐任务审查修复包括悬空关系、locale 不稳定排序、路径穿盒、outline 可访问性、响应式焦点所有权、无效 public event、Career duplicate mapping、Atlas breakpoint 耦合、当前 Methodology 旧语义和 7.7KB 无消费者 CSS。
 
 实施中的对抗审查修复了 typed ID 冲突、桌面 no-JS 缺少关系文字等价物、Career 整节点降透明度、资源事实区错误退化为单列、Atlas 中间宽度无法诚实适应全图、普通滚轮被内部画布截获、lost pointer capture 残留、节点索引无 JavaScript 缺局部说明等问题。最终质量审查又发现搜索输入需要 NFKC 归一化且中文 `恶魔城` 标签缺失，以及搜索与主题双重弱化会把可点击节点压到 4.5:1 以下；修复提交 `08be06d` 统一使用 NFKC / locale lowercase / trim，补充中文 Tag，并用不透明 token、虚线边框与局部强调替代整节点 opacity。Light / Dark、1440px / 320px 的搜索+主题组合已由真实 computed contrast 锁定至少 4.5:1。
 
@@ -184,7 +184,7 @@ Atlas 研究不建议无条件劫持普通 wheel。推荐 cooperative 默认 + �
 
 ## EGDS 实施里程碑与根级验收
 
-EGDS implementation range 是 `84e36d55171cafcdf8e809e53d4e4871479732dc..40fd1cd913ffefc248e744c6d51e150dba24b4b1`。数据切片先新增并锁定 28 个 framework node、3 条 `process-next` 和 1 条 `links-to`；42 个 Capability 与 12 个 Knowledge Topic 各有唯一 `frameworkNodeId`，64 条 Capability relation 保持原语义。纯布局 helper 以稳定 code-unit order 生成 1180px 骨架、一个可选展开带和 obstacle-aware 关系路径；输入反转、重复 ID、无效端点、碰撞与穿盒都有失败合同。
+EGDS implementation range 是 `84e36d55171cafcdf8e809e53d4e4871479732dc..fce67d18947020f292d9384f6164baf2ab69699f`。数据切片先新增并锁定 28 个 framework node、3 条 `process-next` 和 1 条 `links-to`；42 个 Capability 与 12 个 Knowledge Topic 各有唯一 `frameworkNodeId`，64 条 Capability relation 保持原语义。纯布局 helper 以稳定 code-unit order 生成 1180px 骨架、一个可选展开带和 obstacle-aware 关系路径；输入反转、重复 ID、无效端点、碰撞与穿盒都有失败合同。
 
 交互地图由 `CapabilityMap` 独占 `expandedFrameworkNodeId` 与 `selectedEntityKey`。默认只显示 28 个 EGDS 方法节点，实体和 64 条关系都在 server HTML 中但不抢占视线；一次只展开一个叶容器，选中 Capability 后只显示直接关系。Career Explorer 不直接改地图 DOM，只发送经过验证的 apply / focus / clear 事件；Career priority、个人实践状态、展开和关系选择互不覆盖。无 JavaScript 时，原生层级大纲保留 42 个 Capability、12 个 Knowledge Topic、64 条关系说明、详情链接和三份 Career 画像摘要。
 
@@ -196,6 +196,6 @@ EGDS implementation range 是 `84e36d55171cafcdf8e809e53d4e4871479732dc..40fd1cd
 
 三份 Career Lens 在 Light / Dark 都能应用；framework node 与 Knowledge Topic 的 Career attributes 始终为 0。清除 Career 后，已展开的 `playtest-evidence-iteration`、已选择的 `capability:playtesting` 与 localStorage 个人实践记录都保持，只有画像属性消失。1024px / 320px 聚焦打开正确的原生祖先 disclosure；320px no-JS 有 3 个 disabled 画像按钮、3 份原生摘要和 62 个依据／能力／资源链接。
 
-当前文档更新前的根级 fresh gate 为：Astro check 64 files、0 errors / warnings / hints；Vitest 130/130；静态 build 105 pages；完整 Playwright 200 tests 中 185 passed / 15 intentional skipped / 0 failed。第一次 full E2E 只因人工验收 preview 占用 4342 而未启动；精确停止该 PID 后原样重跑得到上述 GREEN，没有改产品或测试。最终提交前会在连续性文件写完后再执行同一整套门禁。
+根级初次 fresh gate 为：Astro check 64 files、0 errors / warnings / hints；Vitest 130/130；静态 build 105 pages；完整 Playwright 200 tests 中 185 passed / 15 intentional skipped / 0 failed。最终全局 reviewer 随后在 1024px / 320px 真实交互中发现三个测试盲区：JS 原生大纲可同时手动打开多个叶、1024px 递归缩进把深层文字压成近似逐字竖排、折叠叶缺少 Career 三档事实计数。修复提交 `fce67d1` 让 JS 只保留当前叶而 no-JS 继续原生多开，在 `<=1227px` 使用单列紧凑大纲，并把同源 Career count 投影到响应式 summary。复审结论为 Approved，0 Critical / Important / Minor；fresh build 仍为 0 diagnostics、130/130、105 pages，完整 Playwright 更新为 191 passed / 15 intentional skipped / 0 failed。
 
-仓库 API 仍返回 `PRIVATE`，deploy workflow 仍为 `disabled_manually`；远端 `codex/v02` 是 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`，本地 runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1` 与本里程碑文档均未推送。下一步不是自动发布，而是发起人私有复核；资源媒介／密度、Atlas engaged wheel mode 与早期电子游戏史 ontology 是三个独立后续切片。
+仓库 API 仍返回 `PRIVATE`，deploy workflow 仍为 `disabled_manually`；远端 `codex/v02` 是 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`，本地 runtime `fce67d18947020f292d9384f6164baf2ab69699f` 与本里程碑后续文档均未推送。下一步不是自动发布，而是发起人私有复核；资源媒介／密度、Atlas engaged wheel mode 与早期电子游戏史 ontology 是三个独立后续切片。
