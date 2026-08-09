@@ -266,3 +266,17 @@ GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 ski
 Map / Career 计划新增一份五组阅读层级数据，构建期验证 8 个 Domain 恰好各归属一次；纯布局 helper 生成一个根、五条主干、8 个 Domain、54 个节点和 13 条结构线，64 条真实关系只在聚焦时增强。Career 单独以 Light/Dark token、填充、2px 边框、实线／虚线和标签修复暗色辨识。
 
 Resources 计划不改变七维筛选、URL、catalog 顺序或 20/128 数量，只改 Source / Work Item 的语义行布局和原生 disclosure。Atlas 计划用 50%-200% 纯 helper、固定场景缩放和原生 scroll 位置实现适应全图、缩放、拖拽与键盘平移；节点索引增加中英文搜索与时间／名称稳定排序，图实体和 Evidence 数量保持 27/25/40。
+
+## 27. 私有完善实现与审查（部分会话导出）
+
+本节是当前运行时能够保存的脱敏部分记录，不声称覆盖原始对话的每条中间消息。实施按共享 CSS 串行推进，并为每项行为先取得有效 RED。能力地图最终只使用一份 catalog 和一份布局 helper：一个根分出五条阅读主干，再进入 8 个 Domain 与 54 个 typed 节点；13 条结构线持续可见，64 条 supports / complements 关系默认退居背景并在聚焦时增强。跨 collection 同名 ID 使用类型命名空间，桌面无 JavaScript 通过原生 details 提供完整层级和 64 条中文关系文字，移动端继续使用等价五组大纲。
+
+Career Lens 的暗色修复不再对未收录节点施加整节点 opacity；核心、重要、建议了解分别使用填充、2px 边框、线型和中文标签，hover / focus 不覆盖优先级表面。Resources 把 20 个 Source 与 128 个 Work Item 收紧为单列编辑目录，事实区内部使用三列紧凑网格，版本和外部观察进入原生 disclosure；140 个 Access Version、12 条外部观察、七维筛选、URL 与 catalog 顺序没有改变。审查时曾发现事实区错误退化为单列，桌面／320px 中位行高达到 195／409px；修复后为 142／313px，128 条结果均由浏览器测试逐项覆盖。
+
+Innovation Atlas 的视口使用 50%–200% 固定缩放、中心锚点、适应全图、复位、scroll position 平移、Pointer drag、Arrow 键与 Ctrl / Command + wheel；普通滚轮继续滚动页面。中间宽度无法在 50% 下容纳 2200px 场景，因此 1150px 及以下诚实切换为完整时期大纲；fit mode 会随 resize 更新，lostpointercapture 会清除拖拽状态。节点索引 server render 27 条时间序详情，JavaScript 增加中英文名称／摘要／Tag 搜索、按时间／名称稳定排序、结果计数、空状态和清除；搜索只弱化图中非匹配项，不删除 27 个节点、25 条关系或 40 项 Evidence，也不改变主题透镜。
+
+节点索引规格复审先发现 no-JS 控件缺少局部解释；修复后 disabled 搜索、排序、清除与完整 27 条时间序索引同时可读。独立质量审查随后用真实 catalog 证明两个阻断：全角 `ＭＥＴＲＯＩＤＶＡＮＩＡ` 无法命中，中文 `恶魔城` 因 Tag 未本地化而得到 0 项；搜索和主题两层整节点 opacity 叠加后，桌面 Light / Dark 只有 2.00:1 / 2.84:1，320px 只有 2.20:1 / 3.23:1。审查同时确认原生 output 已暴露动态 status，不需要重复 ARIA；empty / clear、dialog clone、焦点恢复、URL、no-JS 与 27/25/40 不变量均正常。
+
+修复先用真实 unit / E2E 锁定 `恶魔城` 4 项、全角 `ＭＥＴＲＯＩＤＶＡＮＩＡ` 18 项与 `单局永久死亡` 6 项，再让索引与查询统一执行 NFKC、locale lowercase 和 trim；中文 Tag 改为“恶魔城（Castlevania）探索脉络”，没有在 controller 内硬编码同义词。视觉弱化删除整 anchor / header opacity，改用不透明 muted token、虚线边框和局部类型强调；四种搜索+Metroidvania 双未匹配状态的真实文字对比度均达到至少 4.5:1。修复提交 `08be06d`，四张关键原图保存在临时目录 `/tmp/learn-about-games-atlas-index-fix/`。
+
+主任务的第一轮完整浏览器门禁运行 158 项，其中 140 passed、16 skipped、2 failed。两项失败都来自同一测试合同：`visible-skeleton.spec.ts` 用全局 heading 文本寻找“体验与玩家”，新五条主干地图中主干和同名 Domain 都合法存在，因此 Playwright strict locator 命中两个元素。根因不是产品缺内容或视觉冲突；最小修复只让该测试在桌面 `data-map-region`、移动 `data-outline-region` 中核对八个 Domain。定向复跑为 25 passed / 1 desktop-only skipped；完整复跑为 142 passed / 16 intentional skipped / 0 failed。最终 `npm run check` 为 0 errors / warnings / hints，Vitest 105/105，fresh build 105 pages，`npm audit --audit-level=high` 为 0 vulnerabilities，差异与脱敏秘密扫描均通过。

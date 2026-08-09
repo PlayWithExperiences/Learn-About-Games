@@ -35,12 +35,16 @@ test('focuses desktop navigation on exactly five Chinese user tasks', async ({ p
   }
 });
 
-test('publishes the visible map skeleton and repository-backed project pages', async ({ page }) => {
+test('publishes the visible map skeleton and repository-backed project pages', async ({ page }, testInfo) => {
   await page.goto('./');
 
   await expect(page.getByRole('link', { name: '看全貌' })).toBeVisible();
 
   await page.getByRole('link', { name: '看全貌' }).click();
+
+  const visibleDomains = testInfo.project.name === 'mobile-chromium'
+    ? page.locator('[data-mobile-map-outline] [data-outline-region]')
+    : page.locator('[data-capability-map-canvas] [data-map-region]');
 
   for (const heading of [
     '体验与玩家',
@@ -52,7 +56,7 @@ test('publishes the visible map skeleton and repository-backed project pages', a
     '协作、领导与方向',
     '产品、市场与批判语境',
   ]) {
-    await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+    await expect(visibleDomains.getByRole('heading', { name: heading, exact: true })).toBeVisible();
   }
 
   await expect(page.getByRole('link', { name: 'Playtest' })).toBeVisible();
@@ -218,7 +222,7 @@ test('publishes the current v0.2 scope without retaining the M0 roadmap as curre
   await page.goto('./project/readme/');
 
   await expect(page.getByRole('heading', { name: '当前版本｜v0.2', exact: true })).toBeVisible();
-  await expect(page.getByText(/8 个开放领域、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
+  await expect(page.getByText(/8 个领域、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
   await expect(page.getByText(/20 个 Source、128 个具体 Work Item 与 15 个无顺序资源主题/)).toBeVisible();
   await expect(page.getByText(/27 节点、25 条有证据关系与 40 项文献/)).toBeVisible();
   await expect(page.locator('article.prose')).not.toContainText('v0.2 已进入实施');

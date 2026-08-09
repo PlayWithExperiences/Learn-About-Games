@@ -130,11 +130,9 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 精确下一步
 
-1. 重新设计暗色职业高亮，让核心／重要／建议了解与未收录状态在不隐藏节点的前提下清楚区分。
-2. 从原 expertise mind map 的“主干—分区—分支”层级中提取可解释布局规则，重组能力地图的视觉主次，不改变 42／12／64 数据语义。
-3. 把成长资源收敛为更紧凑的单列信息行，减少无效横向占用，同时保留七维事实筛选与 128 条内容可达性。
-4. 为 Innovation Atlas 增加受约束的缩放、平移、复位，以及节点详情的名称／时间排序和搜索。
-5. 完成独立视觉审查、桌面／移动／双主题／no-JS 门禁后，再决定恢复 Public，并显式重新启用 GitHub Pages workflow 与线上验收。
+1. 提交最终本地验收与连续性记录，完成独立总审查，并推送私有 `codex/v02` 分支；不恢复 Pages。
+2. 用户在私有状态下重新体验五条主干地图、三档职业强调、紧凑资源目录与 Atlas 探索控件。
+3. 只有用户确认当前体验达到可用门槛后，才另行把仓库恢复 Public、重新启用 Pages workflow，并以新的 runtime SHA、Actions run 与 live HTML 证据完成线上验收。
 
 ## 当前未决风险
 
@@ -142,3 +140,11 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 - 资源筛选只表达目录事实；不能把外部公开计数或观察转译成本站推荐、评分、排名或审核结论。
 - 当前中文界面与多语言资源元数据不等于完整双语产品；英文界面仍属后续范围。
 - Atlas 当前只有 Roguelike 与 Metroidvania 两个证据透镜；扩展必须先增加可核查关系，不能为视觉密度补无证据边。
+
+## 私有完善实现状态
+
+五项反馈已在私有 `codex/v02` 分支完成实现，但尚未推送或重新公开：能力地图使用一个根、五条阅读主干、8 个 Domain、42 个 Capability 与 12 个 Knowledge Topic 的分层结构，13 条结构线与 64 条真实关系使用不同视觉层级；Career Lens 在 Light / Dark 中以填充、2px 边框、线型和中文标签表达三档优先级，未收录节点保持完整不透明；Resources 把 20 个 Source 与 128 个 Work Item 收紧为单列目录，保留 140 个 Access Version 与 12 条外部观察；Atlas 增加 50%–200% 受约束视口、适应全图、拖拽、键盘平移，以及 27 节点索引的中英文搜索和时间／名称排序。
+
+实施中的对抗审查修复了 typed ID 冲突、桌面 no-JS 缺少关系文字等价物、Career 整节点降透明度、资源事实区错误退化为单列、Atlas 中间宽度无法诚实适应全图、普通滚轮被内部画布截获、lost pointer capture 残留、节点索引无 JavaScript 缺局部说明等问题。最终质量审查又发现搜索输入需要 NFKC 归一化且中文 `恶魔城` 标签缺失，以及搜索与主题双重弱化会把可点击节点压到 4.5:1 以下；修复提交 `08be06d` 统一使用 NFKC / locale lowercase / trim，补充中文 Tag，并用不透明 token、虚线边框与局部强调替代整节点 opacity。Light / Dark、1440px / 320px 的搜索+主题组合已由真实 computed contrast 锁定至少 4.5:1。
+
+主任务随后串行执行最终本地门禁：`npm run check` 为 0 errors / warnings / hints；Vitest 为 105/105；fresh build 生成 105 pages；完整 Playwright 为 142 passed / 16 intentional skipped / 0 failed；`npm audit --audit-level=high` 为 0 vulnerabilities，`git diff --check` 与脱敏 secret filename scan 均无输出。首次完整 E2E 曾有桌面／移动各 1 项失败：旧 skeleton 测试用全局 heading 文本寻找“体验与玩家”，而新地图中主干与同名 Domain 都是合法 heading；根因确认后只把断言收窄到可见的 Domain 容器，定向为 25 passed / 1 desktop-only skipped，完整 E2E 复跑得到上述 142/16。产品 DOM、命名和视觉层级没有为测试改写。

@@ -13,6 +13,8 @@ test('renders five hierarchy trunks, distinct node kinds and all functional rela
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./map/');
 
+  await expect(page.getByText('五条阅读主干组织 8 个领域；能力与知识议题是可进入的节点。真实关系说明协作与支持，不把地图改写成统一学习顺序。')).toBeVisible();
+
   const canvas = page.locator('[data-capability-map-canvas]');
   await expect(canvas).toBeVisible();
   await expect(page.locator('[data-mobile-map-outline]')).toBeHidden();
