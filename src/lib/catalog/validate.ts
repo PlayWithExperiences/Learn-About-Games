@@ -45,6 +45,13 @@ export type Catalog = {
     order: number;
     bounds: MapBounds;
   }>;
+  mapGroups: Array<{
+    id: string;
+    name: LocalizedText;
+    summary: LocalizedText;
+    order: number;
+    domainIds: string[];
+  }>;
   capabilities: Array<{
     id: string;
     name: LocalizedText;
@@ -175,6 +182,9 @@ export type Catalog = {
 export type CatalogValidationCode =
   | 'COLLECTION_ID_DUPLICATE'
   | 'DOMAIN_BOUNDS_INVALID'
+  | 'MAP_GROUP_DOMAIN_MISSING'
+  | 'MAP_GROUP_DOMAIN_DUPLICATE'
+  | 'MAP_GROUP_DOMAIN_MISSING_REFERENCE'
   | 'CAPABILITY_DOMAIN_MISSING'
   | 'CAPABILITY_POSITION_INVALID'
   | 'CAPABILITY_POSITION_OUTSIDE_DOMAIN'
@@ -284,6 +294,7 @@ const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 
 const collectionNames = [
   'domains',
+  'mapGroups',
   'capabilities',
   'knowledgeTopics',
   'capabilityRelations',
@@ -463,6 +474,34 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   for (const domain of catalog.domains) {
     if (!isMapBounds(domain.bounds)) {
       appendError(errors, 'DOMAIN_BOUNDS_INVALID', 'domains', domain.id, 'bounds', '');
+    }
+  }
+
+  const mapGroupDomainOwners = new Map<string, string>();
+  for (const mapGroup of catalog.mapGroups) {
+    for (const domainId of mapGroup.domainIds) {
+      if (!domainIds.has(domainId)) {
+        appendError(
+          errors,
+          'MAP_GROUP_DOMAIN_MISSING_REFERENCE',
+          'mapGroups',
+          mapGroup.id,
+          'domainIds',
+          domainId,
+        );
+        continue;
+      }
+      if (mapGroupDomainOwners.has(domainId)) {
+        appendError(errors, 'MAP_GROUP_DOMAIN_DUPLICATE', 'mapGroups', mapGroup.id, 'domainIds', domainId);
+        continue;
+      }
+      mapGroupDomainOwners.set(domainId, mapGroup.id);
+    }
+  }
+
+  for (const domain of catalog.domains) {
+    if (!mapGroupDomainOwners.has(domain.id)) {
+      appendError(errors, 'MAP_GROUP_DOMAIN_MISSING', 'domains', domain.id, 'mapGroups', '');
     }
   }
 

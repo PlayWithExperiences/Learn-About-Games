@@ -4,6 +4,7 @@ import capabilities from '../../src/data/capabilities.json';
 import capabilityRelations from '../../src/data/capability-relations.json';
 import domains from '../../src/data/domains.json';
 import knowledgeTopics from '../../src/data/knowledge-topics.json';
+import mapGroups from '../../src/data/map-groups.json';
 import {
   isPointInsideBounds,
   projectRelationEndpoints,
@@ -11,6 +12,15 @@ import {
 } from '../../src/lib/map-geometry';
 
 describe('v0.2 map geometry', () => {
+  it('assigns every Domain to exactly one of five reading groups', () => {
+    const ownedDomainIds = mapGroups.flatMap(({ domainIds }) => domainIds);
+
+    expect(mapGroups).toHaveLength(5);
+    expect(new Set(ownedDomainIds).size).toBe(domains.length);
+    expect([...ownedDomainIds].sort()).toEqual(domains.map(({ id }) => id).sort());
+    expect(mapGroups.map(({ order }) => order)).toEqual([1, 2, 3, 4, 5]);
+  });
+
   it('keeps every node anchor inside its global domain bounds', () => {
     const domainsById = new Map(domains.map((domain) => [domain.id, domain]));
 

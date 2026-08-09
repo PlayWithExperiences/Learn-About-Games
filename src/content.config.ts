@@ -94,6 +94,19 @@ const domains = defineCollection({
     .strict(),
 });
 
+const mapGroups = defineCollection({
+  loader: file('src/data/map-groups.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      name: localizedText,
+      summary: localizedText,
+      order: z.number().int().positive(),
+      domainIds: z.array(z.string().trim().min(1)).min(1),
+    })
+    .strict(),
+});
+
 const capabilities = defineCollection({
   loader: file('src/data/capabilities.json'),
   schema: z
@@ -323,6 +336,7 @@ const devlog = defineCollection({
 
 export const collections = {
   domains,
+  mapGroups,
   capabilities,
   knowledgeTopics,
   capabilityRelations,

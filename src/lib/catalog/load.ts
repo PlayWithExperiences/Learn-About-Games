@@ -6,6 +6,7 @@ type ProductCollection = keyof Catalog;
 
 const productCollections: ProductCollection[] = [
   'domains',
+  'mapGroups',
   'capabilities',
   'knowledgeTopics',
   'capabilityRelations',

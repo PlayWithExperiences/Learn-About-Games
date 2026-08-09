@@ -6,6 +6,7 @@ const localized = (text: string) => ({ 'zh-CN': text });
 
 const emptyCatalog = (): Catalog => ({
   domains: [],
+  mapGroups: [],
   capabilities: [],
   knowledgeTopics: [],
   capabilityRelations: [],
@@ -55,6 +56,13 @@ const seedV02References = (catalog: Catalog) => {
     order: 1,
     bounds: { x: 0, y: 0, width: 50, height: 50 },
   } as unknown as Catalog['domains'][number]);
+  catalog.mapGroups.push({
+    id: 'group',
+    name: localized('分组'),
+    summary: localized('示例分组。'),
+    order: 1,
+    domainIds: ['domain'],
+  });
   catalog.capabilities.push({
     id: 'capability',
     name: localized('能力'),
@@ -104,6 +112,50 @@ describe('validateCatalog', () => {
       field: 'domainId',
       targetId: 'missing-domain',
     });
+  });
+
+  it('reports a Domain without map group ownership', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.mapGroups = [];
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('MAP_GROUP_DOMAIN_MISSING');
+  });
+
+  it('reports duplicate map group ownership', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.mapGroups.push(
+      {
+        id: 'one',
+        name: localized('一'),
+        summary: localized('一。'),
+        order: 1,
+        domainIds: ['domain'],
+      },
+      {
+        id: 'two',
+        name: localized('二'),
+        summary: localized('二。'),
+        order: 2,
+        domainIds: ['domain'],
+      },
+    );
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('MAP_GROUP_DOMAIN_DUPLICATE');
+  });
+
+  it('reports unknown Domain references from map groups', () => {
+    const catalog = emptyV02Catalog();
+    catalog.mapGroups.push({
+      id: 'unknown',
+      name: localized('未知'),
+      summary: localized('未知领域。'),
+      order: 1,
+      domainIds: ['missing-domain'],
+    });
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('MAP_GROUP_DOMAIN_MISSING_REFERENCE');
   });
 
   it('reports missing source and capability references on resources', () => {
@@ -547,6 +599,13 @@ describe('validateCatalog', () => {
       order: 1,
       bounds: { x: 0, y: 0, width: 50, height: 50 },
     });
+    catalog.mapGroups.push({
+      id: 'group',
+      name: localized('分组'),
+      summary: localized('示例分组。'),
+      order: 1,
+      domainIds: ['iteration'],
+    });
     catalog.capabilities.push({
       id: 'playtesting',
       name: localized('Playtest'),
@@ -946,6 +1005,13 @@ describe('validateCatalog', () => {
       order: 1,
       bounds: { x: 90, y: 90, width: 20, height: 20 },
     } as unknown as Catalog['domains'][number]);
+    catalog.mapGroups.push({
+      id: 'group',
+      name: localized('分组'),
+      summary: localized('示例分组。'),
+      order: 1,
+      domainIds: ['domain'],
+    });
     catalog.capabilities.push({
       id: 'capability',
       name: localized('能力'),
