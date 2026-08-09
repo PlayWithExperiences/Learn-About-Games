@@ -1524,9 +1524,18 @@ h2 {
 
 .egds-outline-tree summary > strong {
   grid-column: 2;
+  grid-row: 1;
   color: var(--ink);
   font-size: 0.8125rem;
   line-height: 1.2;
+}
+
+.egds-outline-tree summary > [data-career-collapsed-count] {
+  grid-column: 2;
+  grid-row: 2;
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 740;
 }
 
 .egds-outline-tree [data-outline-node-kind='branch'] > summary > span,
@@ -3295,6 +3304,19 @@ h2 {
     display: block;
   }
 
+  .egds-outline-tree ol > li > details {
+    margin-left: 0;
+  }
+
+  .egds-outline-node-body {
+    padding: 0 0.8rem 0.9rem;
+  }
+
+  .egds-outline-entities,
+  .egds-outline-relations ol {
+    grid-template-columns: 1fr;
+  }
+
   .map-inspector {
     grid-template-columns: 1fr;
   }
@@ -3565,7 +3587,7 @@ h2 {
   }
 
   .egds-outline-tree ol > li > details {
-    margin-left: 0.45rem;
+    margin-left: 0;
   }
 
   .egds-outline-tree summary {

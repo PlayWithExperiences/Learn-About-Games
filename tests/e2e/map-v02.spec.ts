@@ -310,6 +310,77 @@ test('responsive focus opens only the required disclosure chain and returns to s
   }
 });
 
+test('enhanced outline keeps only the last manually opened entity leaf while no-JS disclosures stay independent', async ({ browser, page }) => {
+  for (const width of [1024, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./map/');
+    const outline = page.locator('[data-egds-map] [data-egds-outline]');
+    const branch = outline.locator('[data-outline-framework-node="from-plan-to-ship"]');
+    const prototypeLeaf = outline.locator('[data-outline-framework-node="prototype-production-breakdown"]');
+    const playtestLeaf = outline.locator('[data-outline-framework-node="playtest-evidence-iteration"]');
+
+    await branch.locator(':scope > summary').click();
+    await prototypeLeaf.locator(':scope > summary').click();
+    await expect(prototypeLeaf).toHaveAttribute('open', '');
+    await playtestLeaf.locator(':scope > summary').click();
+
+    await expect(branch).toHaveAttribute('open', '');
+    await expect(prototypeLeaf).not.toHaveAttribute('open', '');
+    await expect(playtestLeaf).toHaveAttribute('open', '');
+    await expect(page.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(1);
+    await expect(page.locator('[data-egds-framework-node="playtest-evidence-iteration"]')).toHaveAttribute('data-expanded', 'true');
+    await expect(page.locator('[data-selected-entity-key]')).toHaveCount(0);
+  }
+
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 320, height: 900 },
+  });
+  const noJsPage = await context.newPage();
+  await noJsPage.goto('./map/');
+  const outline = noJsPage.locator('[data-egds-map] [data-egds-outline]');
+  const branch = outline.locator('[data-outline-framework-node="from-plan-to-ship"]');
+  const prototypeLeaf = outline.locator('[data-outline-framework-node="prototype-production-breakdown"]');
+  const playtestLeaf = outline.locator('[data-outline-framework-node="playtest-evidence-iteration"]');
+  await branch.locator(':scope > summary').click();
+  await prototypeLeaf.locator(':scope > summary').click();
+  await playtestLeaf.locator(':scope > summary').click();
+  await expect(prototypeLeaf).toHaveAttribute('open', '');
+  await expect(playtestLeaf).toHaveAttribute('open', '');
+  await context.close();
+});
+
+test('1024 outline removes recursive indentation and gives deep content a readable single column', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('./map/');
+  await openOutlineNode(page, ['experience-design', 'reconstruction', 'narrative-lever']);
+
+  const deepLeaf = page.locator('[data-egds-outline] [data-outline-framework-node="narrative-lever"]');
+  const metrics = await deepLeaf.evaluate((element) => {
+    const body = element.querySelector<HTMLElement>(':scope > .egds-outline-node-body');
+    const paragraph = body?.querySelector<HTMLElement>(':scope > p');
+    const entities = body?.querySelector<HTMLElement>('.egds-outline-entities');
+    const entityName = entities?.querySelector<HTMLElement>('li > strong');
+    const openMargins = Array.from(
+      element.closest('[data-egds-outline]')?.querySelectorAll<HTMLDetailsElement>('details[open]') ?? [],
+    ).map((details) => Number.parseFloat(getComputedStyle(details).marginLeft));
+    return {
+      bodyPaddingLeft: body ? Number.parseFloat(getComputedStyle(body).paddingLeft) : Number.NaN,
+      paragraphWidth: paragraph?.getBoundingClientRect().width ?? 0,
+      entityGridColumns: entities ? getComputedStyle(entities).gridTemplateColumns.split(' ').length : 0,
+      entityNameWidth: entityName?.getBoundingClientRect().width ?? 0,
+      openMargins,
+    };
+  });
+
+  expect(metrics.bodyPaddingLeft).toBeLessThanOrEqual(16);
+  expect(metrics.paragraphWidth).toBeGreaterThanOrEqual(500);
+  expect(metrics.entityGridColumns).toBe(1);
+  expect(metrics.entityNameWidth).toBeGreaterThanOrEqual(320);
+  expect(metrics.openMargins.every((margin) => margin === 0)).toBe(true);
+  await assertNoPageOverflow(page);
+});
+
 test('selected capability stays visible and focused when desktop becomes outline', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./map/');

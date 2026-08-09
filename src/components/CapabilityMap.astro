@@ -313,6 +313,9 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
                         <summary>
                           <span>{frameworkTypeLabels[node.kind]}</span>
                           <strong>{node.name['zh-CN']}</strong>
+                          {directEntities.some(({ kind }) => kind === 'capability') && (
+                            <small data-career-collapsed-count hidden></small>
+                          )}
                         </summary>
                         <div class="egds-outline-node-body">
                           <p>{node.summary['zh-CN']}</p>
@@ -360,6 +363,9 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
                                       <summary>
                                         <span>{frameworkTypeLabels[grandchild.kind]}</span>
                                         <strong>{grandchild.name['zh-CN']}</strong>
+                                        {grandchildEntities.some(({ kind }) => kind === 'capability') && (
+                                          <small data-career-collapsed-count hidden></small>
+                                        )}
                                       </summary>
                                       <div class="egds-outline-node-body">
                                         <p>{grandchild.summary['zh-CN']}</p>
@@ -488,6 +494,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       ...payload.capabilities.map((item) => ({ ...item, kind: 'capability' as const })),
       ...payload.knowledgeTopics.map((item) => ({ ...item, kind: 'knowledge-topic' as const })),
     ];
+    const entityFrameworkNodeIds = new Set(allEntities.map(({ frameworkNodeId }) => frameworkNodeId));
     const returnButton = root.querySelector<HTMLButtonElement>('[data-return-map-overview]');
     const status = root.querySelector<HTMLElement>('[data-map-status]');
     const expansionTitle = root.querySelector<HTMLElement>('[data-expansion-title]');
@@ -719,7 +726,14 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     outlineDetailsById.forEach((details) => {
       details.addEventListener('toggle', () => {
         if (programmaticOutlineToggles.delete(details)) return;
-        if (details.open || !details.dataset.mapStateOwned || !state.selectedEntityKey) return;
+        const frameworkNodeId = details.dataset.outlineFrameworkNode;
+        if (details.open && frameworkNodeId && entityFrameworkNodeIds.has(frameworkNodeId)) {
+          state.expandedFrameworkNodeId = frameworkNodeId;
+          delete state.selectedEntityKey;
+          render();
+          return;
+        }
+        if (details.open || !details.dataset.mapStateOwned) return;
         const summary = details.querySelector<HTMLElement>(':scope > summary');
         root.querySelectorAll<HTMLElement>('[data-map-state-owned]').forEach((owned) => {
           delete owned.dataset.mapStateOwned;
@@ -848,12 +862,18 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
         frameworkElement.dataset.careerImportantCount = String(counts.important);
         frameworkElement.dataset.careerSuggestedCount = String(counts.suggested);
         const countLabel = frameworkElement.querySelector<HTMLElement>('[data-career-collapsed-count]');
-        if (countLabel) {
-          countLabel.textContent = assigned.length > 0
+        const outlineCountLabel = frameworkNodeId
+          ? root.querySelector<HTMLElement>(
+            `[data-outline-framework-node="${CSS.escape(frameworkNodeId)}"] > summary [data-career-collapsed-count]`,
+          )
+          : undefined;
+        [countLabel, outlineCountLabel].forEach((label) => {
+          if (!label) return;
+          label.textContent = assigned.length > 0
             ? `核心 ${counts.core}，重要 ${counts.important}，建议了解 ${counts.suggested}`
             : '';
-          countLabel.hidden = assigned.length === 0;
-        }
+          label.hidden = assigned.length === 0;
+        });
       });
     });
 
@@ -873,11 +893,10 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
         delete element.dataset.careerCoreCount;
         delete element.dataset.careerImportantCount;
         delete element.dataset.careerSuggestedCount;
-        const countLabel = element.querySelector<HTMLElement>('[data-career-collapsed-count]');
-        if (countLabel) {
-          countLabel.textContent = '';
-          countLabel.hidden = true;
-        }
+      });
+      root.querySelectorAll<HTMLElement>('[data-career-collapsed-count]').forEach((countLabel) => {
+        countLabel.textContent = '';
+        countLabel.hidden = true;
       });
     });
 

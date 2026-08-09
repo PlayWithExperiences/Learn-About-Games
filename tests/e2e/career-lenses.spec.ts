@@ -148,6 +148,49 @@ for (const profile of roleProfiles) {
   });
 }
 
+test('responsive outline summaries mirror career fact counts and clear them without role leakage', async ({ page }) => {
+  const profile = roleProfiles[0];
+  const expectedCounts = frameworkCounts(profile);
+  const capabilityFrameworkNodeIds = new Set(capabilities.map(({ frameworkNodeId }) => frameworkNodeId));
+
+  for (const width of [1024, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./careers/');
+    const explorer = page.locator('[data-career-explorer]');
+    const map = explorer.locator('[data-egds-map]');
+    const outline = map.locator('[data-egds-outline]');
+    await expect(outline.locator('[data-outline-framework-node] > summary [data-career-collapsed-count]'))
+      .toHaveCount(capabilityFrameworkNodeIds.size);
+
+    await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+    for (const [frameworkNodeId, counts] of expectedCounts) {
+      const count = outline.locator(
+        `[data-outline-framework-node="${frameworkNodeId}"] > summary [data-career-collapsed-count]`,
+      );
+      await expect(count).toHaveText(
+        `核心 ${counts.core}，重要 ${counts.important}，建议了解 ${counts.suggested}`,
+      );
+      await expect(count).not.toHaveAttribute('hidden', '');
+    }
+    await outline.locator('[data-outline-framework-node="experience-design"] > summary').click();
+    await outline.locator('[data-outline-framework-node="reconstruction"] > summary').click();
+    await outline.locator('[data-outline-framework-node="gameplay-challenges-lever"] > summary').click();
+    await expect(outline.locator(
+      '[data-outline-framework-node="gameplay-challenges-lever"] > summary [data-career-collapsed-count]',
+    )).toBeVisible();
+    await expect(outline.locator('[data-outline-entity-kind="knowledge-topic"] [data-role-priority], [data-outline-entity-kind="knowledge-topic"] [data-role-responsibility]'))
+      .toHaveCount(0);
+    await expect(outline.locator('[data-outline-framework-node][data-role-priority], [data-outline-framework-node][data-role-responsibility]'))
+      .toHaveCount(0);
+
+    await explorer.locator('[data-career-clear]').click();
+    await expect(outline.locator('[data-career-collapsed-count]:not([hidden])')).toHaveCount(0);
+    expect(await outline.locator('[data-career-collapsed-count]').evaluateAll((labels) =>
+      labels.every((label) => label.textContent === ''),
+    )).toBe(true);
+  }
+});
+
 test('career and map bootstraps remain single owners when compiled modules run again on the same DOM', async ({ page }) => {
   await page.goto('./careers/');
   const explorer = page.locator('[data-career-explorer]');
