@@ -32,6 +32,18 @@ const assertNoPageOverflow = async (page: Page) => {
   }))).toEqual({ body: 0, html: 0 });
 };
 
+const openOutlineNode = async (page: Page, nodeIds: string[]) => {
+  const outline = page.locator('[data-egds-map] [data-egds-outline]');
+  for (const nodeId of nodeIds) {
+    const node = outline.locator(`[data-outline-framework-node="${nodeId}"]`);
+    const summary = node.locator(':scope > summary');
+    if (await summary.count()) {
+      const open = await node.evaluate((element) => element instanceof HTMLDetailsElement && element.open);
+      if (!open) await summary.click();
+    }
+  }
+};
+
 test('server renders the complete EGDS skeleton, hidden entities and stable detail links', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./map/');
@@ -126,8 +138,8 @@ test('selecting Playtest opens the inspector and projects only direct relationsh
 
   const inspector = map.locator('[data-map-inspector]');
   await expect(inspector).toBeVisible();
-  await expect(inspector.locator('[data-inspector-kind]')).toHaveText('能力');
-  await expect(inspector.locator('[data-inspector-name]')).toHaveText('Playtest');
+  await expect(inspector.locator('[data-map-inspector-kind]')).toHaveText('能力');
+  await expect(inspector.locator('[data-map-inspector-name]')).toHaveText('Playtest');
   await expect(inspector.getByRole('link', { name: '查看相关资源', exact: true })).toHaveAttribute(
     'href',
     `${basePath}resources/?capability=playtesting`,
@@ -270,8 +282,330 @@ test('responsive and no-JS modes expose the complete relationship-equivalent nat
     await expect(outline.locator('[data-select-map-entity]:disabled')).toHaveCount(54);
     await expect(outline).toContainText('关系查看需要 JavaScript，详情链接仍可使用。');
     await expect(outline.locator('[data-map-entity-detail]')).toHaveCount(54);
+    await outline.locator('[data-outline-framework-node="from-plan-to-ship"] > summary').click();
+    await outline.locator('[data-outline-framework-node="playtest-evidence-iteration"] > summary').click();
+    await expect(outline.locator(
+      '[data-outline-framework-node="playtest-evidence-iteration"] [data-map-entity-detail][aria-label="打开 Playtest 详情"]',
+    )).toBeVisible();
     await assertNoPageOverflow(noJsPage);
     await context.close();
+  }
+});
+
+test('responsive selected state keeps a keyboard-operable return action', async ({ page }) => {
+  for (const width of [1024, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./map/');
+    const map = page.locator('[data-egds-map]');
+    await openOutlineNode(page, ['from-plan-to-ship', 'playtest-evidence-iteration']);
+    await map.locator('[data-egds-outline] [data-map-entity-key="capability:playtesting"]')
+      .getByRole('button', { name: /Playtest.*关系/ }).click();
+
+    await expect(map.locator('[data-map-inspector]')).toBeVisible();
+    const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
+    await expect(returnButton).toBeVisible();
+    await returnButton.focus();
+    await expect(returnButton).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    await expect(map.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(0);
+    await expect(map.locator('[data-map-entity][data-selected="true"]')).toHaveCount(0);
+    await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
+    await expect(map.locator('[data-map-inspector]')).toBeHidden();
+
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const before = await page.evaluate(() => window.scrollY);
+    const box = await map.locator('[data-egds-outline]').boundingBox();
+    if (!box) throw new Error('Missing responsive outline box');
+    await page.mouse.move(box.x + 8, box.y + 8);
+    await page.mouse.wheel(0, 240);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(before);
+    await assertNoPageOverflow(page);
+  }
+});
+
+test('outline is a collapsed parentNodeId hierarchy with independent relationships', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('./map/');
+  const outline = page.locator('[data-egds-map] [data-egds-outline]');
+  const root = outline.locator('[data-outline-framework-node="egds-root"]');
+  await expect(root).toHaveCount(1);
+  const branches = outline.locator(
+    '[data-outline-children="egds-root"] > li > [data-outline-framework-node][data-outline-node-kind="branch"]',
+  );
+  await expect(branches).toHaveCount(5);
+  for (let index = 0; index < 5; index += 1) await expect(branches.nth(index).locator(':scope > summary')).toBeVisible();
+  await expect(outline.locator('[data-outline-framework-node]')).toHaveCount(28);
+  await expect(outline.locator('[data-outline-entity-kind="capability"]')).toHaveCount(42);
+  await expect(outline.locator('[data-outline-entity-kind="knowledge-topic"]')).toHaveCount(12);
+  await expect(outline.locator('[data-outline-relation]')).toHaveCount(64);
+
+  const relationships = outline.locator('[data-outline-relations-disclosure]');
+  await expect(relationships).toHaveCount(1);
+  await expect(relationships).not.toHaveAttribute('open', '');
+  await expect(outline.locator('[data-outline-entity-kind]:visible')).toHaveCount(0);
+  const collapsedHeight = await outline.evaluate((element) => element.getBoundingClientRect().height);
+  await outline.locator('details').evaluateAll((items) => items.forEach((item) => {
+    (item as HTMLDetailsElement).open = true;
+  }));
+  const expandedHeight = await outline.evaluate((element) => element.getBoundingClientRect().height);
+  expect(expandedHeight).toBeGreaterThan(collapsedHeight * 2);
+
+  await outline.locator('details').evaluateAll((items) => items.forEach((item) => {
+    (item as HTMLDetailsElement).open = false;
+  }));
+  await openOutlineNode(page, ['from-plan-to-ship', 'playtest-evidence-iteration']);
+  await expect(outline.locator(
+    '[data-outline-framework-node="playtest-evidence-iteration"] [data-outline-entity-kind]:visible',
+  )).toHaveCount(7);
+});
+
+test('visible node type, name and action text respects category font floors', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+  const violations = await map.locator(
+    '[data-capability-map-canvas] [data-egds-framework-node], [data-capability-map-canvas] [data-map-entity]:not([hidden])',
+  ).evaluateAll((nodes) => {
+    const floors: Record<string, number> = {
+      root: 16,
+      branch: 16,
+      entry: 14,
+      stage: 14,
+      lever: 14,
+      cluster: 13,
+      'external-entry': 13,
+      capability: 12,
+      'knowledge-topic': 12,
+    };
+    return nodes.flatMap((node) => {
+      const element = node as HTMLElement;
+      const kind = element.dataset.egdsKind
+        ?? element.dataset.egdsNodeKind
+        ?? element.dataset.mapEntityKind
+        ?? '';
+      const floor = floors[kind];
+      const labels = element.matches('[data-map-entity]')
+        ? element.querySelectorAll<HTMLElement>(':scope > .map-entity__type, :scope > strong, :scope > [data-map-entity-controls] > button, :scope > [data-map-entity-controls] > a')
+        : element.querySelectorAll<HTMLElement>(':scope > .egds-framework-node__type, :scope > h3, :scope > button, :scope > a');
+      return Array.from(labels)
+        .filter((label) => label.getClientRects().length > 0)
+        .map((label) => ({
+          kind,
+          text: label.textContent?.trim(),
+          size: Number.parseFloat(getComputedStyle(label).fontSize),
+          floor,
+        }))
+        .filter(({ size }) => !floor || size + 0.01 < floor);
+    });
+  });
+  expect(violations).toEqual([]);
+});
+
+test('fixed framework labels stay inside their geometry without colliding', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const failures = await page.locator(
+    '[data-egds-map] [data-capability-map-canvas] [data-egds-framework-node]',
+  ).evaluateAll((nodes) => nodes.flatMap((node) => {
+    const bounds = node.getBoundingClientRect();
+    const labels = Array.from(node.querySelectorAll<HTMLElement>(
+      ':scope > .egds-framework-node__type, :scope > h3, :scope > button, :scope > a, :scope > [data-framework-empty]',
+    )).filter((label) => label.getClientRects().length > 0);
+    const issues = labels.flatMap((label) => {
+      const rect = label.getBoundingClientRect();
+      return rect.left < bounds.left - 0.5
+        || rect.right > bounds.right + 0.5
+        || rect.top < bounds.top - 0.5
+        || rect.bottom > bounds.bottom + 0.5
+        ? [`${(node as HTMLElement).dataset.egdsFrameworkNode}:${label.textContent?.trim()}:outside`]
+        : [];
+    });
+    labels.forEach((left, leftIndex) => {
+      const leftRect = left.getBoundingClientRect();
+      labels.slice(leftIndex + 1).forEach((right) => {
+        const rightRect = right.getBoundingClientRect();
+        const verticalOverlap = leftRect.top < rightRect.bottom - 0.5
+          && leftRect.bottom > rightRect.top + 0.5;
+        if (verticalOverlap && leftRect.left < rightRect.right - 0.5 && leftRect.right > rightRect.left + 0.5) {
+          issues.push(`${(node as HTMLElement).dataset.egdsFrameworkNode}:${left.textContent?.trim()}->${right.textContent?.trim()}`);
+        } else if (verticalOverlap) {
+          const gap = Math.max(rightRect.left - leftRect.right, leftRect.left - rightRect.right);
+          if (gap < 3.5) {
+            issues.push(`${(node as HTMLElement).dataset.egdsFrameworkNode}:${left.textContent?.trim()}~${right.textContent?.trim()}:cramped`);
+          }
+        }
+      });
+    });
+    return issues;
+  }));
+  expect(failures).toEqual([]);
+});
+
+test('publishes the exact inspector and framework DOM contract', async ({ page }) => {
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await expect(map.locator('[data-egds-framework-node][data-egds-kind]')).toHaveCount(28);
+  await expect(map.locator('[data-egds-node-kind]')).toHaveCount(0);
+  const inspector = map.locator('[data-map-inspector]');
+  for (const target of ['kind', 'name', 'summary', 'relations', 'resources', 'detail']) {
+    await expect(inspector.locator(`[data-map-inspector-${target}]`)).toHaveCount(1);
+    await expect(inspector.locator(`[data-inspector-${target}]`)).toHaveCount(0);
+  }
+});
+
+test('entity actions expose entity-specific accessible names without nesting', async ({ page }) => {
+  await page.goto('./map/');
+  const rows = page.locator('[data-egds-map] [data-map-entity], [data-egds-map] [data-outline-entity-kind]');
+  expect(await rows.count()).toBe(108);
+  const failures = await rows.evaluateAll((items) => items.flatMap((item) => {
+    const name = item.querySelector(':scope > strong')?.textContent?.trim() ?? '';
+    const controls = item.querySelector<HTMLElement>(':scope > [data-map-entity-controls]');
+    const button = controls?.querySelector(':scope > button');
+    const link = controls?.querySelector(':scope > a');
+    const order = controls ? Array.from(controls.children).map(({ tagName }) => tagName) : [];
+    const issues = [];
+    if (!button?.getAttribute('aria-label')?.includes(name)) issues.push('relation-name');
+    if (link?.getAttribute('aria-label') !== `打开 ${name} 详情`) issues.push('detail-name');
+    if (JSON.stringify(order) !== JSON.stringify(['BUTTON', 'A'])) issues.push('order');
+    if (controls?.querySelector('button a, a button')) issues.push('nested');
+    return issues.map((issue) => ({ name, issue }));
+  }));
+  expect(failures).toEqual([]);
+});
+
+test('shape and line treatments redundantly distinguish map entity kinds', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const methodFrames = await map.locator(
+    '[data-egds-framework-node]:is([data-egds-kind="entry"], [data-egds-node-kind="entry"]), [data-egds-framework-node]:is([data-egds-kind="stage"], [data-egds-node-kind="stage"]), [data-egds-framework-node]:is([data-egds-kind="lever"], [data-egds-node-kind="lever"]), [data-egds-framework-node]:is([data-egds-kind="cluster"], [data-egds-node-kind="cluster"])',
+  ).evaluateAll((items) => items.map((item) => {
+    const style = getComputedStyle(item);
+    return { right: style.borderRightWidth, bottom: style.borderBottomWidth };
+  }));
+  expect(methodFrames.every(({ right, bottom }) => right === '0px' && bottom === '0px')).toBe(true);
+
+  await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+  const capability = map.locator('[data-map-entity-kind="capability"]:not([hidden])').first();
+  const topic = map.locator('[data-map-entity-kind="knowledge-topic"]:not([hidden])').first();
+  const shape = async (locator: typeof capability) => locator.evaluate((item) => {
+    const style = getComputedStyle(item);
+    return {
+      widths: [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth],
+      styles: [style.borderTopStyle, style.borderRightStyle, style.borderBottomStyle, style.borderLeftStyle],
+      radius: Number.parseFloat(style.borderTopLeftRadius),
+    };
+  });
+  const capabilityShape = await shape(capability);
+  expect(capabilityShape.widths.every((width) => width !== '0px')).toBe(true);
+  expect(capabilityShape.styles.every((style) => style === 'solid')).toBe(true);
+  expect(capabilityShape.radius).toBeGreaterThan(0);
+  const topicShape = await shape(topic);
+  expect(topicShape.widths.every((width) => width !== '0px')).toBe(true);
+  expect(topicShape.styles.every((style) => style === 'dashed')).toBe(true);
+  expect(topicShape.radius).toBe(0);
+
+  const externalLink = map.locator('[data-egds-framework-node]:is([data-egds-kind="external-entry"], [data-egds-node-kind="external-entry"]) a');
+  const externalTreatment = await externalLink.evaluate((item) => ({
+    display: getComputedStyle(item).display,
+    decoration: getComputedStyle(item).textDecorationLine,
+  }));
+  expect(['flex', 'inline-flex']).toContain(externalTreatment.display);
+  expect(externalTreatment.decoration).toBe('underline');
+});
+
+test('empty framework containers disclose that capability content is pending', async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const desktopNode = map.locator('#egds-mindset-problem-solving-tools');
+  await expect(desktopNode.locator('[data-expand-framework-node]')).toHaveCount(0);
+  await expect(desktopNode.locator('[data-framework-empty]')).toHaveText('能力内容待补充');
+  await openOutlineNode(page, ['from-plan-to-ship', 'mindset-problem-solving-tools']);
+  const outlineNode = map.locator('[data-egds-outline] [data-outline-framework-node="mindset-problem-solving-tools"]');
+  await expect(outlineNode.locator('[data-outline-empty]')).toBeVisible();
+  await expect(outlineNode.locator('[data-outline-empty]')).toHaveText('能力内容待补充');
+  await expect(outlineNode.locator('[data-expand-framework-node]')).toHaveCount(0);
+});
+
+test('all 19 projected expansions avoid box overlaps and unrelated path intersections', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const expandButtons = map.locator('[data-capability-map-canvas] [data-expand-framework-node]');
+  await expect(expandButtons).toHaveCount(19);
+
+  for (let index = 0; index < 19; index += 1) {
+    await expandButtons.nth(index).click();
+    const overlapPairs = await map.locator(
+      '[data-capability-map-canvas] [data-egds-framework-node], [data-capability-map-canvas] [data-map-entity]:not([hidden]), [data-capability-map-canvas] [data-relation-endpoint]:not([hidden])',
+    ).evaluateAll((items) => {
+      const boxes = items.map((item) => {
+        const rect = item.getBoundingClientRect();
+        const element = item as HTMLElement;
+        return {
+          key: element.dataset.mapEntityKey ?? element.dataset.egdsFrameworkNode ?? element.dataset.relationEndpoint,
+          left: rect.left,
+          right: rect.right,
+          top: rect.top,
+          bottom: rect.bottom,
+        };
+      });
+      return boxes.flatMap((left, leftIndex) => boxes.slice(leftIndex + 1).flatMap((right) => (
+        left.left < right.right - 0.5
+        && left.right > right.left + 0.5
+        && left.top < right.bottom - 0.5
+        && left.bottom > right.top + 0.5
+          ? [`${left.key}->${right.key}`]
+          : []
+      )));
+    });
+    expect(overlapPairs).toEqual([]);
+
+    const capabilityButton = map.locator(
+      '[data-capability-map-canvas] [data-map-entity-kind="capability"]:not([hidden]) [data-select-map-entity]',
+    ).first();
+    if (await capabilityButton.count()) {
+      await capabilityButton.click();
+      const intersections = await map.locator('[data-egds-scene]').evaluate((scene) => {
+        const sceneRect = scene.getBoundingClientRect();
+        const boxes = Array.from(scene.querySelectorAll<HTMLElement>(
+          '[data-egds-framework-node], [data-map-entity]:not([hidden]), [data-relation-endpoint]:not([hidden])',
+        )).map((item) => {
+          const rect = item.getBoundingClientRect();
+          return {
+            key: item.dataset.capabilityId ?? item.dataset.relationEndpoint ?? item.dataset.egdsFrameworkNode ?? '',
+            left: rect.left - sceneRect.left,
+            right: rect.right - sceneRect.left,
+            top: rect.top - sceneRect.top,
+            bottom: rect.bottom - sceneRect.top,
+          };
+        });
+        return Array.from(scene.querySelectorAll<SVGPathElement>('[data-capability-relation]:not([hidden])'))
+          .flatMap((path) => {
+            const from = path.dataset.from;
+            const to = path.dataset.to;
+            const length = path.getTotalLength();
+            for (let distance = 2; distance < length - 2; distance += 2) {
+              const point = path.getPointAtLength(distance);
+              const hit = boxes.find((box) => (
+                box.key !== from
+                && box.key !== to
+                && point.x > box.left + 1
+                && point.x < box.right - 1
+                && point.y > box.top + 1
+                && point.y < box.bottom - 1
+              ));
+              if (hit) return [`${path.dataset.capabilityRelation}->${hit.key}`];
+            }
+            return [];
+          });
+      });
+      expect(intersections).toEqual([]);
+    }
+    await map.getByRole('button', { name: '返回全图', exact: true }).click();
   }
 });
 

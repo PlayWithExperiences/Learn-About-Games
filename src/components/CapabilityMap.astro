@@ -51,6 +51,22 @@ const entitiesByFrameworkNodeId = new Map(egdsFrameworkNodes.map((node) => [
     .filter((entity) => entity.frameworkNodeId === node.id)
     .sort((left, right) => left.key.localeCompare(right.key)),
 ]));
+const frameworkChildrenById = new Map(egdsFrameworkNodes.map((node) => [
+  node.id,
+  egdsFrameworkNodes
+    .filter(({ parentNodeId }) => parentNodeId === node.id)
+    .sort((left, right) => left.order - right.order || left.id.localeCompare(right.id)),
+]));
+const outlineRoot = egdsFrameworkNodes.find(({ parentNodeId }) => !parentNodeId);
+const outlineBranches = outlineRoot
+  ? (frameworkChildrenById.get(outlineRoot.id) ?? []).map((node) => ({
+    node,
+    children: (frameworkChildrenById.get(node.id) ?? []).map((child) => ({
+      node: child,
+      children: frameworkChildrenById.get(child.id) ?? [],
+    })),
+  }))
+  : [];
 const expandableKinds = new Set<EgdsFrameworkNodeKind>(['entry', 'stage', 'lever', 'cluster']);
 const frameworkTypeLabels: Record<EgdsFrameworkNodeKind, string> = {
   root: 'EGDS 根节点',
@@ -179,9 +195,10 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
               id={`egds-${node.id}`}
               class:list={['egds-framework-node', `egds-framework-node--${node.kind}`, 'map-layout-box']}
               data-egds-framework-node={node.id}
-              data-egds-node-kind={node.kind}
+              data-egds-kind={node.kind}
               data-egds-branch={node.kind === 'branch' ? node.id : undefined}
               data-egds-lever={node.kind === 'lever' ? node.id : undefined}
+              data-empty={directEntities.length === 0 && (frameworkChildrenById.get(node.id)?.length ?? 0) === 0 && expandableKinds.has(node.kind) ? '' : undefined}
               style={boxStyle(box)}
             >
               <span class="egds-framework-node__type" data-framework-type-label>{frameworkTypeLabels[node.kind]}</span>
@@ -194,10 +211,13 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
                   aria-expanded="false"
                   aria-label={`${node.name['zh-CN']}，展开 ${directEntities.length} 个条目`}
                   disabled
-                >展开 {directEntities.length} 个条目</button>
+                >{directEntities.length} 项</button>
               )}
               {externalEntry && (
-                <a href={sitePath(externalEntry.targetPath)} aria-label="前往 Innovation Atlas">前往 Innovation Atlas</a>
+                <a data-external-entry-link href={sitePath(externalEntry.targetPath)} aria-label="前往 Innovation Atlas">前往 Innovation Atlas</a>
+              )}
+              {directEntities.length === 0 && (frameworkChildrenById.get(node.id)?.length ?? 0) === 0 && expandableKinds.has(node.kind) && (
+                <span data-framework-empty>能力内容待补充</span>
               )}
               <small data-career-collapsed-count hidden></small>
             </article>
@@ -232,7 +252,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
                   aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
                   disabled
                 >关系</button>
-                <a data-map-entity-detail href={entity.href}>详情</a>
+                <a data-map-entity-detail href={entity.href} aria-label={`打开 ${entity.name['zh-CN']} 详情`}>详情</a>
               </div>
             </article>
           ))}
@@ -253,59 +273,144 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     </div>
   </div>
 
-  <details class="capability-map__outline" data-egds-outline open>
-    <summary>EGDS 完整结构与 Capability 关系文字版</summary>
-    <div class="capability-map__outline-body">
-      <p class="capability-map__outline-note">关系查看需要 JavaScript，详情链接仍可使用。</p>
-      <ol class="egds-outline-framework">
-        {egdsFrameworkNodes.map((node) => {
-          const directEntities = entitiesByFrameworkNodeId.get(node.id) ?? [];
-          return (
-            <li
-              data-outline-framework-node={node.id}
-              data-outline-node-kind={node.kind}
-              data-parent-node-id={node.parentNodeId}
-            >
-              <header>
-                <span>{frameworkTypeLabels[node.kind]}</span>
-                <h3>{node.name['zh-CN']}</h3>
-                <p>{node.summary['zh-CN']}</p>
-              </header>
-              {node.kind === 'external-entry' && (
-                <a href={sitePath('atlas/')} aria-label="前往 Innovation Atlas">前往 Innovation Atlas</a>
-              )}
-              {directEntities.length > 0 && (
-                <ul class="egds-outline-entities">
-                  {directEntities.map((entity) => (
-                    <li
-                      data-outline-entity-kind={entity.kind}
-                      data-map-entity-key={entity.key}
-                      data-capability-id={entity.kind === 'capability' ? entity.id : undefined}
-                      data-career-node={entity.kind === 'capability' ? '' : undefined}
-                    >
-                      <span>{entity.kindLabel}</span>
-                      <strong>{entity.name['zh-CN']}</strong>
-                      <small class="career-node-role-label" data-role-label hidden></small>
-                      <div data-map-entity-controls>
-                        <button
-                          type="button"
-                          data-select-map-entity={entity.key}
-                          aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
-                          disabled
-                        >关系</button>
-                        <a data-map-entity-detail href={entity.href}>详情</a>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-      </ol>
+  <section class="capability-map__outline" data-egds-outline aria-labelledby="egds-outline-title">
+    <header
+      class="egds-outline-root"
+      data-outline-framework-node={outlineRoot?.id}
+      data-outline-node-kind={outlineRoot?.kind}
+    >
+      <span>{outlineRoot ? frameworkTypeLabels[outlineRoot.kind] : 'EGDS 根节点'}</span>
+      <h2 id="egds-outline-title">{outlineRoot?.name['zh-CN'] ?? 'Expertise / EGDS'}</h2>
+      <p>{outlineRoot?.summary['zh-CN']}</p>
+    </header>
+    <p class="capability-map__outline-note">关系查看需要 JavaScript，详情链接仍可使用。</p>
 
-      <section class="egds-outline-relations" aria-labelledby="outline-relations-title">
-        <h3 id="outline-relations-title">Capability 直接关系</h3>
+    <ol class="egds-outline-tree" data-outline-children={outlineRoot?.id}>
+      {outlineBranches.map(({ node: branch, children }) => (
+        <li>
+          <details
+            data-outline-framework-node={branch.id}
+            data-outline-node-kind={branch.kind}
+            data-parent-node-id={branch.parentNodeId}
+          >
+            <summary>
+              <span>{frameworkTypeLabels[branch.kind]}</span>
+              <strong>{branch.name['zh-CN']}</strong>
+            </summary>
+            <div class="egds-outline-node-body">
+              <p>{branch.summary['zh-CN']}</p>
+              <ol data-outline-children={branch.id}>
+                {children.map(({ node, children: grandchildren }) => {
+                  const directEntities = entitiesByFrameworkNodeId.get(node.id) ?? [];
+                  const empty = directEntities.length === 0 && grandchildren.length === 0 && expandableKinds.has(node.kind);
+                  return (
+                    <li>
+                      <details
+                        data-outline-framework-node={node.id}
+                        data-outline-node-kind={node.kind}
+                        data-parent-node-id={node.parentNodeId}
+                      >
+                        <summary>
+                          <span>{frameworkTypeLabels[node.kind]}</span>
+                          <strong>{node.name['zh-CN']}</strong>
+                        </summary>
+                        <div class="egds-outline-node-body">
+                          <p>{node.summary['zh-CN']}</p>
+                          {node.kind === 'external-entry' && (
+                            <a data-external-entry-link href={sitePath('atlas/')} aria-label="前往 Innovation Atlas">前往 Innovation Atlas</a>
+                          )}
+                          {empty && <p data-outline-empty>能力内容待补充</p>}
+                          {directEntities.length > 0 && (
+                            <ul class="egds-outline-entities">
+                              {directEntities.map((entity) => (
+                                <li
+                                  data-outline-entity-kind={entity.kind}
+                                  data-map-entity-key={entity.key}
+                                  data-capability-id={entity.kind === 'capability' ? entity.id : undefined}
+                                  data-career-node={entity.kind === 'capability' ? '' : undefined}
+                                >
+                                  <span>{entity.kindLabel}</span>
+                                  <strong>{entity.name['zh-CN']}</strong>
+                                  <small class="career-node-role-label" data-role-label hidden></small>
+                                  <div data-map-entity-controls>
+                                    <button
+                                      type="button"
+                                      data-select-map-entity={entity.key}
+                                      aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
+                                      disabled
+                                    >关系</button>
+                                    <a data-map-entity-detail href={entity.href} aria-label={`打开 ${entity.name['zh-CN']} 详情`}>详情</a>
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {grandchildren.length > 0 && (
+                            <ol data-outline-children={node.id}>
+                              {grandchildren.map((grandchild) => {
+                                const grandchildEntities = entitiesByFrameworkNodeId.get(grandchild.id) ?? [];
+                                const grandchildEmpty = grandchildEntities.length === 0 && expandableKinds.has(grandchild.kind);
+                                return (
+                                  <li>
+                                    <details
+                                      data-outline-framework-node={grandchild.id}
+                                      data-outline-node-kind={grandchild.kind}
+                                      data-parent-node-id={grandchild.parentNodeId}
+                                    >
+                                      <summary>
+                                        <span>{frameworkTypeLabels[grandchild.kind]}</span>
+                                        <strong>{grandchild.name['zh-CN']}</strong>
+                                      </summary>
+                                      <div class="egds-outline-node-body">
+                                        <p>{grandchild.summary['zh-CN']}</p>
+                                        {grandchildEmpty && <p data-outline-empty>能力内容待补充</p>}
+                                        {grandchildEntities.length > 0 && (
+                                          <ul class="egds-outline-entities">
+                                            {grandchildEntities.map((entity) => (
+                                              <li
+                                                data-outline-entity-kind={entity.kind}
+                                                data-map-entity-key={entity.key}
+                                                data-capability-id={entity.kind === 'capability' ? entity.id : undefined}
+                                                data-career-node={entity.kind === 'capability' ? '' : undefined}
+                                              >
+                                                <span>{entity.kindLabel}</span>
+                                                <strong>{entity.name['zh-CN']}</strong>
+                                                <small class="career-node-role-label" data-role-label hidden></small>
+                                                <div data-map-entity-controls>
+                                                  <button
+                                                    type="button"
+                                                    data-select-map-entity={entity.key}
+                                                    aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
+                                                    disabled
+                                                  >关系</button>
+                                                  <a data-map-entity-detail href={entity.href} aria-label={`打开 ${entity.name['zh-CN']} 详情`}>详情</a>
+                                                </div>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        )}
+                                      </div>
+                                    </details>
+                                  </li>
+                                );
+                              })}
+                            </ol>
+                          )}
+                        </div>
+                      </details>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ol>
+
+    <details class="egds-outline-relations" data-outline-relations-disclosure>
+      <summary>Capability 直接关系，共 {capabilityRelations.length} 条</summary>
+      <div>
         <p>支持为有向作用，互补为无向关系。二者都不规定学习顺序。</p>
         <ol>
           {capabilityRelations.map((relation) => (
@@ -317,13 +422,13 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
             </li>
           ))}
         </ol>
-      </section>
-    </div>
-  </details>
+      </div>
+    </details>
+  </section>
 
   <MapInspector
     capabilities={capabilities}
-    topics={knowledgeTopics}
+    knowledgeTopics={knowledgeTopics}
     capabilityRelations={capabilityRelations}
   />
 
@@ -413,13 +518,13 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
           .filter(({ fromId, toId }) => fromId === id || toId === id)
           .sort((left, right) => left.id.localeCompare(right.id))
         : [];
-      const kindElement = inspector.querySelector<HTMLElement>('[data-inspector-kind]');
-      const nameElement = inspector.querySelector<HTMLElement>('[data-inspector-name]');
-      const summaryElement = inspector.querySelector<HTMLElement>('[data-inspector-summary]');
-      const relationsElement = inspector.querySelector<HTMLUListElement>('[data-inspector-relations]');
-      const emptyElement = inspector.querySelector<HTMLElement>('[data-inspector-empty]');
-      const resourcesLink = inspector.querySelector<HTMLAnchorElement>('[data-inspector-resources]');
-      const detailLink = inspector.querySelector<HTMLAnchorElement>('[data-inspector-detail]');
+      const kindElement = inspector.querySelector<HTMLElement>('[data-map-inspector-kind]');
+      const nameElement = inspector.querySelector<HTMLElement>('[data-map-inspector-name]');
+      const summaryElement = inspector.querySelector<HTMLElement>('[data-map-inspector-summary]');
+      const relationsElement = inspector.querySelector<HTMLUListElement>('[data-map-inspector-relations]');
+      const emptyElement = inspector.querySelector<HTMLElement>('[data-map-inspector-empty]');
+      const resourcesLink = inspector.querySelector<HTMLAnchorElement>('[data-map-inspector-resources]');
+      const detailLink = inspector.querySelector<HTMLAnchorElement>('[data-map-inspector-detail]');
       const base = root.dataset.siteBase ?? '/';
       if (kindElement) kindElement.textContent = kindLabel;
       if (nameElement) nameElement.textContent = entity.name['zh-CN'];
