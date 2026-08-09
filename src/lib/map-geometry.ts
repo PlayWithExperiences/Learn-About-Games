@@ -1,3 +1,5 @@
+import type { Catalog } from './catalog/validate';
+
 export type MapPoint = Readonly<{
   x: number;
   y: number;
@@ -35,8 +37,15 @@ export type EgdsMapBox = Readonly<{
 
 export type EgdsMapPath = Readonly<{
   id: string;
-  fromKey: string;
-  toKey: string;
+  fromKey: EgdsMapBox['key'];
+  toKey: EgdsMapBox['key'];
+  path: string;
+}>;
+
+export type EgdsExpansionLeaderPath = Readonly<{
+  id: string;
+  fromKey: EgdsMapBox['key'];
+  toKey: `expansion-heading:${string}`;
   path: string;
 }>;
 
@@ -53,42 +62,20 @@ export type EgdsMapLayout = Readonly<{
     relationId: string;
     relationType: 'supports' | 'complements';
   }>>;
-  expansionLeaderPath?: EgdsMapPath;
-  externalEntries: Array<Readonly<{ id: string; targetPath: string }>>;
+  expansionLeaderPath?: EgdsExpansionLeaderPath;
+  externalEntries: Array<Readonly<{ id: string; targetPath: 'atlas/' }>>;
 }>;
 
-type EgdsFrameworkNodeInput = Readonly<{
-  id: string;
-  kind: string;
-  parentNodeId?: string;
-}>;
-
-type EgdsFrameworkRelationInput = Readonly<{
-  id: string;
-  type: string;
-  fromId: string;
-  toId?: string;
-  targetPath?: string;
-}>;
-
-type EgdsEntityInput = Readonly<{
-  id: string;
-  frameworkNodeId: string;
-}>;
-
-type EgdsCapabilityRelationInput = Readonly<{
-  id: string;
-  fromId: string;
-  toId: string;
-  type: string;
-}>;
+type EgdsFrameworkNodeInput = Catalog['egdsFrameworkNodes'][number];
+type EgdsFrameworkRelationInput = Catalog['egdsFrameworkRelations'][number];
+type EgdsEntityInput = Catalog['capabilities'][number] | Catalog['knowledgeTopics'][number];
 
 export type BuildEgdsMapLayoutInput = Readonly<{
-  frameworkNodes: readonly EgdsFrameworkNodeInput[];
-  frameworkRelations: readonly EgdsFrameworkRelationInput[];
-  capabilities: readonly EgdsEntityInput[];
-  knowledgeTopics: readonly EgdsEntityInput[];
-  capabilityRelations: readonly EgdsCapabilityRelationInput[];
+  frameworkNodes: Catalog['egdsFrameworkNodes'];
+  frameworkRelations: Catalog['egdsFrameworkRelations'];
+  capabilities: Catalog['capabilities'];
+  knowledgeTopics: Catalog['knowledgeTopics'];
+  capabilityRelations: Catalog['capabilityRelations'];
   expandedFrameworkNodeId?: string;
   selectedCapabilityId?: string;
 }>;
@@ -128,6 +115,8 @@ const egdsAnchors: Readonly<Record<string, EgdsAnchor>> = {
 
 const egdsOverviewHeight = 720;
 const egdsExpansionTop = 724;
+const egdsExpansionLeaderGutterX = 1172;
+const egdsExpansionLeaderRailY = 700;
 const egdsExpansionMetrics = {
   headingHeight: 72,
   bottomPadding: 24,
@@ -163,12 +152,6 @@ const isExternalEntryRelation = (
   relation: EgdsFrameworkRelationInput,
 ): relation is EgdsFrameworkRelationInput & Readonly<{ type: 'links-to'; targetPath: string }> => (
   relation.type === 'links-to' && typeof relation.targetPath === 'string'
-);
-
-const isCapabilityRelationType = (
-  relation: EgdsCapabilityRelationInput,
-): relation is EgdsCapabilityRelationInput & Readonly<{ type: 'supports' | 'complements' }> => (
-  relation.type === 'supports' || relation.type === 'complements'
 );
 
 const compareId = (left: Readonly<{ id: string }>, right: Readonly<{ id: string }>) => left.id.localeCompare(right.id);
@@ -264,10 +247,13 @@ export function buildEgdsMapLayout({
     }
     capabilityById.set(capability.id, capability);
   }
+  const knowledgeTopicById = new Map<string, EgdsEntityInput>();
   for (const topic of knowledgeTopics) {
+    if (knowledgeTopicById.has(topic.id)) throw new Error(`Duplicate knowledge topic: ${topic.id}`);
     if (!frameworkNodesById.has(topic.frameworkNodeId)) {
       throw new Error(`Unknown framework node for knowledge topic ${topic.id}: ${topic.frameworkNodeId}`);
     }
+    knowledgeTopicById.set(topic.id, topic);
   }
   if (selectedCapabilityId && !capabilityById.has(selectedCapabilityId)) {
     throw new Error(`Unknown capability: ${selectedCapabilityId}`);
@@ -279,7 +265,6 @@ export function buildEgdsMapLayout({
     throw new Error(`Selected capability ${selectedCapabilityId} belongs to expanded framework node ${capabilityById.get(selectedCapabilityId)!.frameworkNodeId}`);
   }
   for (const relation of capabilityRelations) {
-    if (!isCapabilityRelationType(relation)) throw new Error(`Unknown capability relation type: ${relation.type}`);
     if (!capabilityById.has(relation.fromId) || !capabilityById.has(relation.toId)) {
       throw new Error(`Unknown capability in relation: ${relation.id}`);
     }
@@ -356,7 +341,7 @@ export function buildEgdsMapLayout({
     entityBoxes.filter((box) => box.kind === 'capability').map((box) => [box.id, box]),
   );
   const selectedRelations = selectedCapabilityId
-    ? capabilityRelations.filter(isCapabilityRelationType)
+    ? capabilityRelations
       .filter((relation) => relation.fromId === selectedCapabilityId || relation.toId === selectedCapabilityId)
       .sort(compareId)
     : [];
@@ -411,8 +396,8 @@ export function buildEgdsMapLayout({
     expansionLeaderPath: {
       id: `expansion-leader:${expandedFrameworkNodeId}`,
       fromKey: expandedFrameworkBox.key,
-      toKey: `expansion-heading:${expandedFrameworkNodeId}`,
-      path: `M ${egdsCenterX(expandedFrameworkBox)} ${expandedFrameworkBox.y + expandedFrameworkBox.height} V ${egdsExpansionTop}`,
+      toKey: `expansion-heading:${expandedFrameworkNodeId}` as const,
+      path: `M ${egdsCenterX(expandedFrameworkBox)} ${expandedFrameworkBox.y} H ${egdsExpansionLeaderGutterX} V ${egdsExpansionLeaderRailY} H ${egdsExpansionMetrics.x} V ${egdsExpansionTop}`,
     },
     externalEntries,
   };

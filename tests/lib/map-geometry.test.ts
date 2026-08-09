@@ -14,15 +14,18 @@ import {
   projectRelationEndpoints,
   rectanglesOverlap,
   relationSemantics,
+  type BuildEgdsMapLayoutInput,
   type CapabilityMindMapLayout,
 } from '../../src/lib/map-geometry';
+import type { Catalog } from '../../src/lib/catalog/validate';
 
-const egdsInput = () => ({
-  frameworkNodes,
-  frameworkRelations,
-  capabilities,
-  knowledgeTopics,
-  capabilityRelations,
+const egdsInput = (overrides: Partial<BuildEgdsMapLayoutInput> = {}): BuildEgdsMapLayoutInput => ({
+  frameworkNodes: frameworkNodes as unknown as Catalog['egdsFrameworkNodes'],
+  frameworkRelations: frameworkRelations as unknown as Catalog['egdsFrameworkRelations'],
+  capabilities: capabilities as unknown as Catalog['capabilities'],
+  knowledgeTopics: knowledgeTopics as unknown as Catalog['knowledgeTopics'],
+  capabilityRelations: capabilityRelations as unknown as Catalog['capabilityRelations'],
+  ...overrides,
 });
 
 const isOverlapping = (
@@ -70,6 +73,50 @@ const pathStartsAndEndsOnBoundaries = (
   return onBoundary({ x: first.x1, y: first.y1 }, from)
     && onBoundary({ x: last.x2, y: last.y2 }, to);
 };
+
+const pathCrossesBoxInterior = (
+  path: string,
+  box: { x: number; y: number; width: number; height: number },
+) => allSegments(path).some((segment) => {
+  const horizontalThroughInterior = segment.y1 === segment.y2
+    && segment.y1 > box.y && segment.y1 < box.y + box.height
+    && Math.max(Math.min(segment.x1, segment.x2), box.x) < Math.min(Math.max(segment.x1, segment.x2), box.x + box.width);
+  const verticalThroughInterior = segment.x1 === segment.x2
+    && segment.x1 > box.x && segment.x1 < box.x + box.width
+    && Math.max(Math.min(segment.y1, segment.y2), box.y) < Math.min(Math.max(segment.y1, segment.y2), box.y + box.height);
+  return horizontalThroughInterior || verticalThroughInterior;
+});
+
+const expectedEgdsAnchors = {
+  'egds-root': [20, 320, 130, 60],
+  'experience-design': [180, 80, 180, 54],
+  'from-plan-to-ship': [180, 220, 180, 54],
+  'with-team': [180, 360, 180, 54],
+  'product-profit': [180, 500, 180, 54],
+  'beyond-games': [180, 630, 180, 54],
+  'experience-journey': [390, 15, 190, 44],
+  perception: [390, 80, 125, 44],
+  rationalization: [535, 80, 125, 44],
+  deconstruction: [680, 80, 125, 44],
+  reconstruction: [825, 80, 125, 44],
+  'narrative-lever': [990, 25, 170, 42],
+  'aesthetics-lever': [990, 80, 170, 42],
+  'gameplay-challenges-lever': [990, 135, 170, 42],
+  'mindset-problem-solving-tools': [410, 225, 170, 44],
+  'prototype-production-breakdown': [600, 225, 170, 44],
+  'playtest-evidence-iteration': [790, 225, 170, 44],
+  'tradeoff-specification-delivery': [980, 225, 170, 44],
+  'vision-direction-decisions': [410, 365, 170, 44],
+  'alignment-communication': [600, 365, 170, 44],
+  'leadership-management': [790, 365, 170, 44],
+  'feedback-collaboration': [980, 365, 170, 44],
+  'audience-positioning-cluster': [410, 505, 170, 44],
+  'market-opportunity': [600, 505, 170, 44],
+  'value-exchange': [790, 505, 170, 44],
+  'monetization-alignment': [980, 505, 170, 44],
+  'values-culture': [440, 635, 220, 44],
+  'innovation-possibility-space': [720, 635, 240, 44],
+} as const;
 
 describe('v0.2 map geometry', () => {
   it('assigns every Domain to exactly one of five reading groups', () => {
@@ -255,6 +302,9 @@ describe('EGDS expertise map geometry', () => {
     expect(layout.externalEntries).toEqual([
       { id: 'innovation-possibility-space', targetPath: 'atlas/' },
     ]);
+    expect(Object.fromEntries(layout.frameworkBoxes.map(({ id, x, y, width, height }) => [id, [x, y, width, height]]))).toEqual(
+      expectedEgdsAnchors,
+    );
 
     expect(layout.frameworkBoxes.find(({ id }) => id === 'egds-root')).toEqual(expect.objectContaining({
       key: 'root:egds-root', kind: 'root', x: 20, y: 320, width: 130, height: 60,
@@ -292,11 +342,11 @@ describe('EGDS expertise map geometry', () => {
     };
     const layout = buildEgdsMapLayout(input);
     const reversed = buildEgdsMapLayout({
-      frameworkNodes: [...frameworkNodes].reverse(),
-      frameworkRelations: [...frameworkRelations].reverse(),
+      frameworkNodes: [...frameworkNodes].reverse() as unknown as Catalog['egdsFrameworkNodes'],
+      frameworkRelations: [...frameworkRelations].reverse() as unknown as Catalog['egdsFrameworkRelations'],
       capabilities: [...capabilities].reverse(),
       knowledgeTopics: [...knowledgeTopics].reverse(),
-      capabilityRelations: [...capabilityRelations].reverse(),
+      capabilityRelations: [...capabilityRelations].reverse() as unknown as Catalog['capabilityRelations'],
       expandedFrameworkNodeId: input.expandedFrameworkNodeId,
       selectedCapabilityId: input.selectedCapabilityId,
     });
@@ -336,9 +386,64 @@ describe('EGDS expertise map geometry', () => {
     }
   });
 
+  it('routes every expansion leader through a clear elbow instead of crossing the overview column', () => {
+    const perceptionLayout = buildEgdsMapLayout(egdsInput({ expandedFrameworkNodeId: 'perception' }));
+    const perceptionCrossings = perceptionLayout.frameworkBoxes
+      .filter(({ id }) => id !== 'perception')
+      .filter((box) => pathCrossesBoxInterior(perceptionLayout.expansionLeaderPath!.path, box))
+      .map(({ id }) => id);
+
+    expect(perceptionCrossings).toEqual([]);
+    expect(perceptionLayout.expansionLeaderPath?.path).toMatch(/^M .+ H .+ V .+ H .+ V 724$/);
+
+    for (const { id: expandedFrameworkNodeId } of frameworkNodes) {
+      const selectedCapabilityId = capabilities.find(
+        (capability) => capability.frameworkNodeId === expandedFrameworkNodeId,
+      )?.id;
+      const layout = buildEgdsMapLayout(egdsInput({
+        expandedFrameworkNodeId,
+        ...(selectedCapabilityId ? { selectedCapabilityId } : {}),
+      }));
+      const leader = layout.expansionLeaderPath!;
+      const boxes = [
+        ...layout.frameworkBoxes,
+        ...layout.entityBoxes,
+        ...layout.relationEndpointBoxes,
+      ].filter((box) => box.key !== leader.fromKey);
+
+      expect(pathCrossesBoxInterior(leader.path, layout.frameworkBoxes.find(({ key }) => key === leader.fromKey)!), expandedFrameworkNodeId).toBe(false);
+      for (const box of boxes) {
+        expect(pathCrossesBoxInterior(leader.path, box), `${expandedFrameworkNodeId} leader crosses ${box.key}`).toBe(false);
+      }
+    }
+  });
+
+  it('rejects duplicate topic identities while preserving distinct typed keys for matching raw entity IDs', () => {
+    const duplicateTopics = [...knowledgeTopics, knowledgeTopics[0]!];
+    expect(() => buildEgdsMapLayout(egdsInput({
+      knowledgeTopics: duplicateTopics as unknown as Catalog['knowledgeTopics'],
+    }))).toThrow(/duplicate knowledge topic/i);
+
+    const sharedCapability = { ...capabilities[0]!, id: 'shared-egds-entity', frameworkNodeId: 'perception' };
+    const sharedTopic = { ...knowledgeTopics[0]!, id: 'shared-egds-entity', frameworkNodeId: 'perception' };
+    const layout = buildEgdsMapLayout(egdsInput({
+      capabilities: [sharedCapability] as unknown as Catalog['capabilities'],
+      knowledgeTopics: [sharedTopic] as unknown as Catalog['knowledgeTopics'],
+      capabilityRelations: [],
+      expandedFrameworkNodeId: 'perception',
+    }));
+
+    expect(layout.entityBoxes.map(({ key }) => key)).toEqual([
+      'capability:shared-egds-entity',
+      'knowledge-topic:shared-egds-entity',
+    ]);
+  });
+
   it('derives containment only from parentNodeId and routes structural and process paths through clear boundaries', () => {
     const unrelatedRelations = frameworkRelations.filter(({ type }) => type !== 'process-next');
-    const layout = buildEgdsMapLayout({ ...egdsInput(), frameworkRelations: unrelatedRelations });
+    const layout = buildEgdsMapLayout(egdsInput({
+      frameworkRelations: unrelatedRelations as unknown as Catalog['egdsFrameworkRelations'],
+    }));
     const boxesByKey = new Map<string, (typeof layout.frameworkBoxes)[number]>(
       layout.frameworkBoxes.map((box) => [box.key, box]),
     );
@@ -418,7 +523,23 @@ describe('EGDS expertise map geometry', () => {
       expect(path.fromKey).toBe(keyForCapability(relation.fromId));
       expect(path.toKey).toBe(keyForCapability(relation.toId));
     }
-    expect(layout.expansionLeaderPath?.path).toMatch(/^M \d+(?:\.5)? \d+ V 724$/);
+    expect(layout.expansionLeaderPath?.path).toMatch(/^M .+ H .+ V .+ H .+ V 724$/);
+  });
+
+  it('reuses a same-container neighbor box for each direct relation', () => {
+    const selectedCapabilityId = 'rules-system-modeling';
+    const relationId = 'rules-system-modeling-supports-core-loop-design';
+    const layout = buildEgdsMapLayout(egdsInput({
+      expandedFrameworkNodeId: 'gameplay-challenges-lever',
+      selectedCapabilityId,
+    }));
+    const relation = layout.relationPaths.find((candidate) => candidate.relationId === relationId)!;
+
+    expect(layout.entityBoxes.map(({ key }) => key)).toContain('capability:core-loop-design');
+    expect(layout.relationEndpointBoxes.map(({ key }) => key)).not.toContain('relation-endpoint:core-loop-design');
+    expect(relation.fromKey).toBe('capability:rules-system-modeling');
+    expect(relation.toKey).toBe('capability:core-loop-design');
+    expect(layout.relationPaths.filter(({ relationId: id }) => id === relationId)).toHaveLength(1);
   });
 
   it('rejects unknown IDs and incompatible selected expansion combinations', () => {
