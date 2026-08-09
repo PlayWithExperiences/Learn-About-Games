@@ -24,6 +24,11 @@ function matchingResources(target: (typeof resources)[number]) {
   );
 }
 
+function median(values: number[]) {
+  const sorted = [...values].sort((left, right) => left - right);
+  return sorted[Math.floor(sorted.length / 2)];
+}
+
 test('server renders distinct Source and Work Item result kinds without host merging', async ({ page, request }) => {
   const response = await request.get('resources/');
   expect(response.status()).toBe(200);
@@ -154,6 +159,43 @@ test('uses one compact editorial row per Source and Work Item', async ({ page })
   await expect(workRow.locator('[data-work-row-main]')).toHaveCount(1);
   await expect(workRow.locator('[data-work-row-facts]')).toHaveCount(1);
   await expect(workRow.locator('[data-work-row-access]')).toHaveCount(1);
+});
+
+test('keeps all collapsed Work Item facts compact at desktop and mobile widths', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./resources/');
+
+  const rows = page.locator('.work-item-result');
+  await expect(rows).toHaveCount(resources.length);
+  const desktopRows = await rows.evaluateAll((elements) => elements.map((row) => {
+    const facts = row.querySelector<HTMLElement>('[data-work-row-facts]');
+    return {
+      zoneCounts: [
+        row.querySelectorAll('[data-work-row-main]').length,
+        row.querySelectorAll('[data-work-row-facts]').length,
+        row.querySelectorAll('[data-work-row-access]').length,
+      ],
+      factColumns: facts ? getComputedStyle(facts).gridTemplateColumns.split(' ').length : 0,
+      height: row.getBoundingClientRect().height,
+    };
+  }));
+
+  expect(desktopRows.every(({ zoneCounts }) => zoneCounts.every((count) => count === 1))).toBe(true);
+  expect(desktopRows.every(({ factColumns }) => factColumns >= 2)).toBe(true);
+  expect(median(desktopRows.map(({ height }) => height))).toBeLessThanOrEqual(180);
+
+  await page.setViewportSize({ width: 320, height: 900 });
+  const mobileRows = await rows.evaluateAll((elements) => elements.map((row) => {
+    const facts = row.querySelector<HTMLElement>('[data-work-row-facts]');
+    return {
+      factColumns: facts ? getComputedStyle(facts).gridTemplateColumns.split(' ').length : 0,
+      height: row.getBoundingClientRect().height,
+    };
+  }));
+
+  expect(mobileRows).toHaveLength(resources.length);
+  expect(mobileRows.every(({ factColumns }) => factColumns >= 2)).toBe(true);
+  expect(median(mobileRows.map(({ height }) => height))).toBeLessThanOrEqual(340);
 });
 
 test('keeps access versions and external observations in catalog order inside the disclosure', async ({ page }) => {
