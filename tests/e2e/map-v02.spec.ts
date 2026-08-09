@@ -403,6 +403,33 @@ test('visible node type, name and action text respects category font floors', as
   expect(violations).toEqual([]);
 });
 
+test('desktop framework names remain complete within at most two natural lines', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const failures = await page.locator(
+    '[data-egds-map] [data-capability-map-canvas] [data-egds-framework-node]',
+  ).evaluateAll((nodes) => nodes.flatMap((node) => {
+    const name = node.querySelector<HTMLElement>(':scope > h3');
+    if (!name || name.getClientRects().length === 0) return [];
+    const style = getComputedStyle(name);
+    const lineHeight = Number.parseFloat(style.lineHeight);
+    const lineCount = Math.round(name.getBoundingClientRect().height / lineHeight);
+    const issues = [];
+    if (style.textOverflow === 'ellipsis') issues.push('ellipsis');
+    if (style.whiteSpace === 'nowrap') issues.push('nowrap');
+    if (style.webkitLineClamp !== 'none') issues.push(`line-clamp:${style.webkitLineClamp}`);
+    if (name.scrollWidth > name.clientWidth) issues.push(`${name.scrollWidth}>${name.clientWidth}:width`);
+    if (name.scrollHeight > name.clientHeight + 1) issues.push(`${name.scrollHeight}>${name.clientHeight}:height`);
+    if (lineCount > 2) issues.push(`${lineCount}:lines`);
+    return issues.map((issue) => ({
+      id: (node as HTMLElement).dataset.egdsFrameworkNode,
+      name: name.textContent?.trim(),
+      issue,
+    }));
+  }));
+  expect(failures).toEqual([]);
+});
+
 test('fixed framework labels stay inside their geometry without colliding', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./map/');
