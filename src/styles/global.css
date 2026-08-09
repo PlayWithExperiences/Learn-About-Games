@@ -3721,7 +3721,9 @@ h2 {
   .map-inspector__actions {
     grid-column: 1;
   }
+}
 
+@media (max-width: 1150px) {
   .atlas-network__viewport,
   .atlas-view-controls,
   .atlas-network__scroll-note {
@@ -3859,21 +3861,6 @@ h2 {
     margin: 0.35rem 0 0;
     color: var(--muted);
     font-size: 0.8rem;
-  }
-}
-
-@media (min-width: 1151px) and (max-width: 1227px) {
-  .atlas-network__viewport,
-  .atlas-network__scroll-note {
-    display: block;
-  }
-
-  .atlas-view-controls {
-    display: flex;
-  }
-
-  .atlas-outline {
-    display: none;
   }
 }
 
