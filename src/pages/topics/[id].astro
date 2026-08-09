@@ -13,8 +13,8 @@ export async function getStaticPaths() {
 }
 
 const { topic, catalog } = Astro.props;
-const domain = catalog.domains.find(({ id }) => id === topic.domainId);
-if (!domain) throw new Error(`Missing domain for knowledge topic ${topic.id}`);
+const frameworkNode = catalog.egdsFrameworkNodes.find(({ id }) => id === topic.frameworkNodeId);
+if (!frameworkNode) throw new Error(`Missing EGDS framework node for topic ${topic.id}`);
 
 const resourceTopics = catalog.resourceTopics.filter((entry) => entry.knowledgeTopicIds.includes(topic.id));
 const resources = catalog.resources.filter((resource) => resource.knowledgeTopicIds.includes(topic.id));
@@ -25,7 +25,7 @@ const resources = catalog.resources.filter((resource) => resource.knowledgeTopic
     <nav class="breadcrumb" aria-label="面包屑">
       <a href={sitePath('map/')}>能力地图</a>
       <span aria-hidden="true">/</span>
-      <a href={`${sitePath('map/')}#map-region-${domain.id}`}>{domain.name['zh-CN']}</a>
+      <a href={`${sitePath('map/')}#egds-${frameworkNode.id}`}>{frameworkNode.name['zh-CN']}</a>
       <span aria-hidden="true">/</span>
       <span>知识议题</span>
     </nav>

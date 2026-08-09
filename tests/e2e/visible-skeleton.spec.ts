@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
-import domains from '../../src/data/domains.json' with { type: 'json' };
+import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 
 test('focuses desktop navigation on exactly five Chinese user tasks', async ({ page }, testInfo) => {
@@ -125,11 +125,11 @@ test('sends the three home actions to map, careers, and resources', async ({ pag
   }
 });
 
-test('describes the shipped Playtest topic collection as available now', async ({ page }) => {
+test('describes the public map through its EGDS framework nodes', async ({ page }) => {
   await page.goto('./');
   await expect(
     page.getByText(
-      `当前公开 ${domains.length} 个领域、${capabilities.length} 个能力与 ${knowledgeTopics.length} 个知识议题，并用 ${capabilityRelations.length} 条有明确含义的关系连接全图。`,
+      `当前公开 ${egdsFrameworkNodes.length} 个 EGDS 方法节点、${capabilities.length} 个能力与 ${knowledgeTopics.length} 个知识议题，并用 ${capabilityRelations.length} 条有明确含义的关系连接全图。`,
       { exact: true },
     ),
   ).toBeVisible();
