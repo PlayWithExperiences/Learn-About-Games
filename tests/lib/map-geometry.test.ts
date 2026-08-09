@@ -87,6 +87,19 @@ const pathCrossesBoxInterior = (
   return horizontalThroughInterior || verticalThroughInterior;
 });
 
+const pathOverlapsBoxBoundary = (
+  path: string,
+  box: { x: number; y: number; width: number; height: number },
+) => allSegments(path).some((segment) => {
+  const horizontalBoundaryOverlap = segment.y1 === segment.y2
+    && (segment.y1 === box.y || segment.y1 === box.y + box.height)
+    && Math.max(Math.min(segment.x1, segment.x2), box.x) < Math.min(Math.max(segment.x1, segment.x2), box.x + box.width);
+  const verticalBoundaryOverlap = segment.x1 === segment.x2
+    && (segment.x1 === box.x || segment.x1 === box.x + box.width)
+    && Math.max(Math.min(segment.y1, segment.y2), box.y) < Math.min(Math.max(segment.y1, segment.y2), box.y + box.height);
+  return horizontalBoundaryOverlap || verticalBoundaryOverlap;
+});
+
 const expectedEgdsAnchors = {
   'egds-root': [20, 320, 130, 60],
   'experience-design': [180, 80, 180, 54],
@@ -361,6 +374,45 @@ describe('EGDS expertise map geometry', () => {
     }
   });
 
+  it('uses a raw code-unit total order for collation-equivalent IDs', () => {
+    const decomposedId = 'e\u0301';
+    const composedId = 'é';
+    const selected = { ...capabilities[0]!, id: 'selected', frameworkNodeId: 'perception' };
+    const decomposed = { ...capabilities[1]!, id: decomposedId, frameworkNodeId: 'rationalization' };
+    const composed = { ...capabilities[2]!, id: composedId, frameworkNodeId: 'rationalization' };
+    const decomposedRelation = {
+      ...capabilityRelations[0]!, id: decomposedId, fromId: 'selected', toId: decomposedId,
+    };
+    const composedRelation = {
+      ...capabilityRelations[1]!, id: composedId, fromId: 'selected', toId: composedId,
+    };
+    const fixture = egdsInput({
+      capabilities: [selected, composed, decomposed] as unknown as Catalog['capabilities'],
+      knowledgeTopics: [],
+      capabilityRelations: [composedRelation, decomposedRelation] as unknown as Catalog['capabilityRelations'],
+      expandedFrameworkNodeId: 'perception',
+      selectedCapabilityId: 'selected',
+    });
+    const forward = buildEgdsMapLayout(fixture);
+    const reversed = buildEgdsMapLayout({
+      ...fixture,
+      frameworkNodes: [...fixture.frameworkNodes].reverse(),
+      frameworkRelations: [...fixture.frameworkRelations].reverse(),
+      capabilities: [...fixture.capabilities].reverse(),
+      capabilityRelations: [...fixture.capabilityRelations].reverse(),
+    });
+
+    expect(forward.relationEndpointBoxes.map(({ key }) => key)).toEqual([
+      `relation-endpoint:${decomposedId}`,
+      `relation-endpoint:${composedId}`,
+    ]);
+    expect(forward.relationPaths.map(({ relationId }) => relationId)).toEqual([
+      decomposedId,
+      composedId,
+    ]);
+    expect(reversed).toEqual(forward);
+  });
+
   it('projects every populated container as exactly its typed, non-overlapping entity set', () => {
     const entityKey = (entity: (typeof capabilities)[number] | (typeof knowledgeTopics)[number]) => (
       `${capabilities.includes(entity as (typeof capabilities)[number]) ? 'capability' : 'knowledge-topic'}:${entity.id}`
@@ -392,17 +444,28 @@ describe('EGDS expertise map geometry', () => {
       .filter(({ id }) => id !== 'perception')
       .filter((box) => pathCrossesBoxInterior(perceptionLayout.expansionLeaderPath!.path, box))
       .map(({ id }) => id);
+    const perceptionBoundaryOverlaps = perceptionLayout.frameworkBoxes
+      .filter(({ id }) => id !== 'perception')
+      .filter((box) => pathOverlapsBoxBoundary(perceptionLayout.expansionLeaderPath!.path, box))
+      .map(({ id }) => id);
 
     expect(perceptionCrossings).toEqual([]);
-    expect(perceptionLayout.expansionLeaderPath?.path).toMatch(/^M .+ H .+ V .+ H .+ V 724$/);
+    expect(perceptionBoundaryOverlaps).toEqual([]);
+    expect(perceptionLayout.expansionLeaderPath?.path).toMatch(/ H /);
+    expect(perceptionLayout.expansionLeaderPath?.path).toMatch(/ V /);
+    expect(perceptionLayout.expansionLeaderPath?.path).toMatch(/ V 724$/);
 
     for (const { id: expandedFrameworkNodeId } of frameworkNodes) {
-      const selectedCapabilityId = capabilities.find(
-        (capability) => capability.frameworkNodeId === expandedFrameworkNodeId,
-      )?.id;
+      const probeTopic = {
+        ...knowledgeTopics[0]!,
+        id: `leader-probe:${expandedFrameworkNodeId}`,
+        frameworkNodeId: expandedFrameworkNodeId,
+      };
       const layout = buildEgdsMapLayout(egdsInput({
         expandedFrameworkNodeId,
-        ...(selectedCapabilityId ? { selectedCapabilityId } : {}),
+        capabilities: [],
+        knowledgeTopics: [probeTopic] as unknown as Catalog['knowledgeTopics'],
+        capabilityRelations: [],
       }));
       const leader = layout.expansionLeaderPath!;
       const boxes = [
@@ -414,8 +477,18 @@ describe('EGDS expertise map geometry', () => {
       expect(pathCrossesBoxInterior(leader.path, layout.frameworkBoxes.find(({ key }) => key === leader.fromKey)!), expandedFrameworkNodeId).toBe(false);
       for (const box of boxes) {
         expect(pathCrossesBoxInterior(leader.path, box), `${expandedFrameworkNodeId} leader crosses ${box.key}`).toBe(false);
+        expect(pathOverlapsBoxBoundary(leader.path, box), `${expandedFrameworkNodeId} leader overlaps ${box.key}`).toBe(false);
       }
     }
+  });
+
+  it('rejects expansion of a known framework node that owns no entities', () => {
+    expect(() => buildEgdsMapLayout(egdsInput({ expandedFrameworkNodeId: 'egds-root' }))).toThrow(
+      /does not contain capabilities or knowledge topics/i,
+    );
+    expect(() => buildEgdsMapLayout(egdsInput({
+      expandedFrameworkNodeId: 'innovation-possibility-space',
+    }))).toThrow(/does not contain capabilities or knowledge topics/i);
   });
 
   it('rejects duplicate topic identities while preserving distinct typed keys for matching raw entity IDs', () => {
@@ -523,7 +596,65 @@ describe('EGDS expertise map geometry', () => {
       expect(path.fromKey).toBe(keyForCapability(relation.fromId));
       expect(path.toKey).toBe(keyForCapability(relation.toId));
     }
-    expect(layout.expansionLeaderPath?.path).toMatch(/^M .+ H .+ V .+ H .+ V 724$/);
+    expect(layout.expansionLeaderPath?.path).toMatch(/ H /);
+    expect(layout.expansionLeaderPath?.path).toMatch(/ V 724$/);
+  });
+
+  it('routes every selected capability relation from boundary to boundary without crossing chips', () => {
+    const knownLayout = buildEgdsMapLayout(egdsInput({
+      expandedFrameworkNodeId: 'rationalization',
+      selectedCapabilityId: 'experience-framing',
+    }));
+    const knownPath = knownLayout.relationPaths.find(
+      ({ relationId }) => relationId === 'experience-deconstruction-supports-experience-framing',
+    )!;
+    const knownCrossings = [
+      ...knownLayout.frameworkBoxes,
+      ...knownLayout.entityBoxes,
+      ...knownLayout.relationEndpointBoxes,
+    ]
+      .filter(({ key }) => key !== knownPath.fromKey && key !== knownPath.toKey)
+      .filter((box) => pathCrossesBoxInterior(knownPath.path, box))
+      .map(({ key }) => key);
+
+    expect(knownCrossings).toEqual([]);
+
+    let selectedCapabilityProbeCount = 0;
+    let relationPathProbeCount = 0;
+    for (const capability of capabilities) {
+      const layout = buildEgdsMapLayout(egdsInput({
+        expandedFrameworkNodeId: capability.frameworkNodeId,
+        selectedCapabilityId: capability.id,
+      }));
+      const boxes = [
+        ...layout.frameworkBoxes,
+        ...layout.entityBoxes,
+        ...layout.relationEndpointBoxes,
+      ];
+      const boxesByKey = new Map<string, (typeof boxes)[number]>(
+        boxes.map((box) => [box.key, box]),
+      );
+      const directRelations = capabilityRelations.filter(
+        (relation) => relation.fromId === capability.id || relation.toId === capability.id,
+      );
+
+      selectedCapabilityProbeCount += 1;
+      expect(layout.relationPaths, capability.id).toHaveLength(directRelations.length);
+      for (const path of layout.relationPaths) {
+        const from = boxesByKey.get(path.fromKey)!;
+        const to = boxesByKey.get(path.toKey)!;
+        relationPathProbeCount += 1;
+        expect(pathStartsAndEndsOnBoundaries(path.path, from, to), path.id).toBe(true);
+        expect(pathCrossesBoxInterior(path.path, from), `${path.id} re-enters ${from.key}`).toBe(false);
+        expect(pathCrossesBoxInterior(path.path, to), `${path.id} enters ${to.key}`).toBe(false);
+        for (const box of boxes.filter(({ key }) => key !== path.fromKey && key !== path.toKey)) {
+          expect(pathCrossesBoxInterior(path.path, box), `${path.id} crosses ${box.key}`).toBe(false);
+        }
+      }
+    }
+
+    expect(selectedCapabilityProbeCount).toBe(42);
+    expect(relationPathProbeCount).toBe(capabilityRelations.length * 2);
   });
 
   it('reuses a same-container neighbor box for each direct relation', () => {

@@ -115,8 +115,6 @@ const egdsAnchors: Readonly<Record<string, EgdsAnchor>> = {
 
 const egdsOverviewHeight = 720;
 const egdsExpansionTop = 724;
-const egdsExpansionLeaderGutterX = 1172;
-const egdsExpansionLeaderRailY = 700;
 const egdsExpansionMetrics = {
   headingHeight: 72,
   bottomPadding: 24,
@@ -154,7 +152,9 @@ const isExternalEntryRelation = (
   relation.type === 'links-to' && typeof relation.targetPath === 'string'
 );
 
-const compareId = (left: Readonly<{ id: string }>, right: Readonly<{ id: string }>) => left.id.localeCompare(right.id);
+const compareCodeUnits = (left: string, right: string) => left < right ? -1 : left > right ? 1 : 0;
+
+const compareId = (left: Readonly<{ id: string }>, right: Readonly<{ id: string }>) => compareCodeUnits(left.id, right.id);
 
 const egdsCenterX = (box: EgdsMapBox) => box.x + box.width / 2;
 const egdsCenterY = (box: EgdsMapBox) => box.y + box.height / 2;
@@ -175,14 +175,147 @@ const egdsBox = (
   height: anchor[3],
 });
 
-const buildExpansionPath = (from: EgdsMapBox, to: EgdsMapBox) => {
-  const fromX = egdsCenterX(from);
-  const toX = egdsCenterX(to);
-  const fromBelow = egdsCenterY(from) < egdsCenterY(to);
-  const startY = fromBelow ? from.y + from.height : from.y;
-  const endY = fromBelow ? to.y : to.y + to.height;
-  const railY = (startY + endY) / 2;
-  return `M ${fromX} ${startY} V ${railY} H ${toX} V ${endY}`;
+type OrthogonalPoint = Readonly<{ x: number; y: number }>;
+type OrthogonalPort = Readonly<{ boundary: OrthogonalPoint; escape: OrthogonalPoint }>;
+type OrthogonalSegment = Readonly<{ start: OrthogonalPoint; end: OrthogonalPoint }>;
+
+const routeClearance = 8;
+
+const boxPorts = (box: EgdsMapBox): OrthogonalPort[] => [
+  {
+    boundary: { x: egdsCenterX(box), y: box.y },
+    escape: { x: egdsCenterX(box), y: box.y - routeClearance },
+  },
+  {
+    boundary: { x: box.x + box.width, y: egdsCenterY(box) },
+    escape: { x: box.x + box.width + routeClearance, y: egdsCenterY(box) },
+  },
+  {
+    boundary: { x: egdsCenterX(box), y: box.y + box.height },
+    escape: { x: egdsCenterX(box), y: box.y + box.height + routeClearance },
+  },
+  {
+    boundary: { x: box.x, y: egdsCenterY(box) },
+    escape: { x: box.x - routeClearance, y: egdsCenterY(box) },
+  },
+];
+
+const positiveOverlap = (firstStart: number, firstEnd: number, secondStart: number, secondEnd: number) => (
+  Math.max(Math.min(firstStart, firstEnd), secondStart) < Math.min(Math.max(firstStart, firstEnd), secondEnd)
+);
+
+const segmentHitsBox = (segment: OrthogonalSegment, box: EgdsMapBox) => {
+  const horizontal = segment.start.y === segment.end.y;
+  const vertical = segment.start.x === segment.end.x;
+  const crossesInterior = (
+    horizontal
+    && segment.start.y > box.y
+    && segment.start.y < box.y + box.height
+    && positiveOverlap(segment.start.x, segment.end.x, box.x, box.x + box.width)
+  ) || (
+    vertical
+    && segment.start.x > box.x
+    && segment.start.x < box.x + box.width
+    && positiveOverlap(segment.start.y, segment.end.y, box.y, box.y + box.height)
+  );
+  const overlapsBoundary = (
+    horizontal
+    && (segment.start.y === box.y || segment.start.y === box.y + box.height)
+    && positiveOverlap(segment.start.x, segment.end.x, box.x, box.x + box.width)
+  ) || (
+    vertical
+    && (segment.start.x === box.x || segment.start.x === box.x + box.width)
+    && positiveOverlap(segment.start.y, segment.end.y, box.y, box.y + box.height)
+  );
+  return crossesInterior || overlapsBoundary;
+};
+
+const normalizeRoutePoints = (points: readonly OrthogonalPoint[]) => points.filter((point, index) => (
+  index === 0 || point.x !== points[index - 1]!.x || point.y !== points[index - 1]!.y
+));
+
+const routeLength = (points: readonly OrthogonalPoint[]) => points.slice(1).reduce(
+  (length, point, index) => length
+    + Math.abs(point.x - points[index]!.x)
+    + Math.abs(point.y - points[index]!.y),
+  0,
+);
+
+const routeIsClear = (
+  points: readonly OrthogonalPoint[],
+  obstacles: readonly EgdsMapBox[],
+  width: number,
+  height: number,
+) => points.every((point) => point.x >= 0 && point.x <= width && point.y >= 0 && point.y <= height)
+  && points.slice(1).every((point, index) => {
+    const segment = { start: points[index]!, end: point };
+    return (segment.start.x === segment.end.x || segment.start.y === segment.end.y)
+      && obstacles.every((box) => !segmentHitsBox(segment, box));
+  });
+
+const routeToPath = (points: readonly OrthogonalPoint[]) => points.slice(1).reduce(
+  (path, point, index) => `${path} ${point.x === points[index]!.x ? 'V' : 'H'} ${point.x === points[index]!.x ? point.y : point.x}`,
+  `M ${points[0]!.x} ${points[0]!.y}`,
+);
+
+const buildObstacleAvoidingPath = ({
+  starts,
+  ends,
+  obstacles,
+  width,
+  height,
+}: Readonly<{
+  starts: readonly OrthogonalPort[];
+  ends: readonly OrthogonalPort[];
+  obstacles: readonly EgdsMapBox[];
+  width: number;
+  height: number;
+}>) => {
+  const verticalLanes = [...new Set([
+    routeClearance,
+    width - routeClearance,
+    ...obstacles.flatMap((box) => [box.x - routeClearance, box.x + box.width + routeClearance]),
+  ])].filter((x) => x >= 0 && x <= width).sort((left, right) => left - right);
+  const horizontalLanes = [...new Set([
+    routeClearance,
+    height - routeClearance,
+    ...obstacles.flatMap((box) => [box.y - routeClearance, box.y + box.height + routeClearance]),
+  ])].filter((y) => y >= 0 && y <= height).sort((left, right) => left - right);
+  let bestRoute: OrthogonalPoint[] | undefined;
+  let bestLength = Number.POSITIVE_INFINITY;
+
+  for (const start of starts) {
+    for (const end of ends) {
+      const middles: OrthogonalPoint[][] = [
+        [{ x: end.escape.x, y: start.escape.y }],
+        [{ x: start.escape.x, y: end.escape.y }],
+        ...verticalLanes.map((x) => [
+          { x, y: start.escape.y },
+          { x, y: end.escape.y },
+        ]),
+        ...horizontalLanes.map((y) => [
+          { x: start.escape.x, y },
+          { x: end.escape.x, y },
+        ]),
+      ];
+      for (const middle of middles) {
+        const points = normalizeRoutePoints([
+          start.boundary,
+          start.escape,
+          ...middle,
+          end.escape,
+          end.boundary,
+        ]);
+        const length = routeLength(points);
+        if (length >= bestLength || !routeIsClear(points, obstacles, width, height)) continue;
+        bestRoute = points;
+        bestLength = length;
+      }
+    }
+  }
+
+  if (!bestRoute) throw new Error('Cannot project an obstacle-free orthogonal path');
+  return routeToPath(bestRoute);
 };
 
 const buildEgdsStructuralPath = (from: EgdsMapBox, to: EgdsMapBox): string => {
@@ -255,6 +388,13 @@ export function buildEgdsMapLayout({
     }
     knowledgeTopicById.set(topic.id, topic);
   }
+  if (
+    expandedFrameworkNodeId
+    && !capabilities.some(({ frameworkNodeId }) => frameworkNodeId === expandedFrameworkNodeId)
+    && !knowledgeTopics.some(({ frameworkNodeId }) => frameworkNodeId === expandedFrameworkNodeId)
+  ) {
+    throw new Error(`Expanded framework node ${expandedFrameworkNodeId} does not contain capabilities or knowledge topics`);
+  }
   if (selectedCapabilityId && !capabilityById.has(selectedCapabilityId)) {
     throw new Error(`Unknown capability: ${selectedCapabilityId}`);
   }
@@ -325,7 +465,7 @@ export function buildEgdsMapLayout({
     ...knowledgeTopics.map((entity) => ({ ...entity, kind: 'knowledge-topic' as const })),
   ]
     .filter((entity) => entity.frameworkNodeId === expandedFrameworkNodeId)
-    .sort((left, right) => egdsKey(left.kind, left.id).localeCompare(egdsKey(right.kind, right.id)));
+    .sort((left, right) => compareCodeUnits(egdsKey(left.kind, left.id), egdsKey(right.kind, right.id)));
   const entityBoxes = expandedEntities.map((entity, index) => egdsBox(
     entity.id,
     entity.kind,
@@ -348,7 +488,7 @@ export function buildEgdsMapLayout({
   const externalNeighborIds = [...new Set(selectedRelations
     .map((relation) => relation.fromId === selectedCapabilityId ? relation.toId : relation.fromId)
     .filter((id) => !entityBoxesByCapabilityId.has(id)))]
-    .sort((left, right) => left.localeCompare(right));
+    .sort(compareCodeUnits);
   const entityRows = Math.ceil(entityBoxes.length / egdsExpansionMetrics.columns);
   const relationEndpointBoxes = externalNeighborIds.map((id, index) => egdsBox(
     id,
@@ -363,6 +503,17 @@ export function buildEgdsMapLayout({
   ));
   const relationEndpointBoxesByCapabilityId = new Map(relationEndpointBoxes.map((box) => [box.id, box]));
   const relationPathBox = (id: string) => entityBoxesByCapabilityId.get(id) ?? relationEndpointBoxesByCapabilityId.get(id);
+  const relationEndpointRows = Math.ceil(relationEndpointBoxes.length / egdsExpansionMetrics.columns);
+  const expansionHeight = egdsExpansionMetrics.headingHeight
+    + entityRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
+    + relationEndpointRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
+    + egdsExpansionMetrics.bottomPadding;
+  const layoutHeight = egdsExpansionTop + expansionHeight;
+  const expansionObstacles = [
+    ...frameworkBoxes,
+    ...entityBoxes,
+    ...relationEndpointBoxes,
+  ];
   const relationPaths = selectedRelations.map((relation) => {
     const from = relationPathBox(relation.fromId);
     const to = relationPathBox(relation.toId);
@@ -373,19 +524,20 @@ export function buildEgdsMapLayout({
       relationType: relation.type,
       fromKey: from.key,
       toKey: to.key,
-      path: buildExpansionPath(from, to),
+      path: buildObstacleAvoidingPath({
+        starts: boxPorts(from),
+        ends: boxPorts(to),
+        obstacles: expansionObstacles,
+        width: 1180,
+        height: layoutHeight,
+      }),
     };
   });
-  const relationEndpointRows = Math.ceil(relationEndpointBoxes.length / egdsExpansionMetrics.columns);
-  const expansionHeight = egdsExpansionMetrics.headingHeight
-    + entityRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
-    + relationEndpointRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
-    + egdsExpansionMetrics.bottomPadding;
   const expandedFrameworkBox = frameworkBoxesById.get(expandedFrameworkNodeId)!;
 
   return {
     width: 1180,
-    height: egdsExpansionTop + expansionHeight,
+    height: layoutHeight,
     expandedFrameworkNodeId,
     frameworkBoxes,
     entityBoxes,
@@ -397,7 +549,16 @@ export function buildEgdsMapLayout({
       id: `expansion-leader:${expandedFrameworkNodeId}`,
       fromKey: expandedFrameworkBox.key,
       toKey: `expansion-heading:${expandedFrameworkNodeId}` as const,
-      path: `M ${egdsCenterX(expandedFrameworkBox)} ${expandedFrameworkBox.y} H ${egdsExpansionLeaderGutterX} V ${egdsExpansionLeaderRailY} H ${egdsExpansionMetrics.x} V ${egdsExpansionTop}`,
+      path: buildObstacleAvoidingPath({
+        starts: boxPorts(expandedFrameworkBox),
+        ends: [{
+          boundary: { x: egdsExpansionMetrics.x, y: egdsExpansionTop },
+          escape: { x: egdsExpansionMetrics.x, y: egdsExpansionTop - routeClearance },
+        }],
+        obstacles: expansionObstacles,
+        width: 1180,
+        height: layoutHeight,
+      }),
     },
     externalEntries,
   };
