@@ -121,24 +121,43 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
   </section>
 
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
+    <div class="atlas-view-controls" data-atlas-view-controls>
+      <button type="button" data-atlas-fit disabled>适应全图</button>
+      <button type="button" data-atlas-zoom-out aria-label="缩小" disabled>−</button>
+      <output data-atlas-scale-status aria-live="polite">100%</output>
+      <button type="button" data-atlas-zoom-in aria-label="放大" disabled>＋</button>
+      <button type="button" data-atlas-reset disabled>重置 100%</button>
+    </div>
+    <noscript>
+      <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
+    </noscript>
     <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1980–2020</p>
-    <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可横向浏览的全局时间网络">
+    <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
       <div
-        class="atlas-network__canvas"
-        style={`--atlas-canvas-width:${layout.width}px;--atlas-canvas-height:${layout.height}px`}
+        class="atlas-network__stage"
+        data-atlas-stage
+        data-scale="1"
+        style={`width:${layout.width}px;height:${layout.height}px`}
       >
-        <div class="atlas-network__years" aria-hidden="true">
-          {layout.yearTicks.map(({ year, x }) => (
-            <span style={`--atlas-year-x:${x}px`}><b>{year}</b></span>
-          ))}
-        </div>
-
-        <svg
-          class="atlas-network__relations"
-          viewBox={`0 0 ${layout.width} ${layout.height}`}
-          role="img"
-          aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
+        <div
+          class="atlas-network__canvas"
+          data-atlas-scene
+          data-scene-width={layout.width}
+          data-scene-height={layout.height}
+          style={`width:${layout.width}px;height:${layout.height}px;transform:scale(1)`}
         >
+          <div class="atlas-network__years" aria-hidden="true">
+            {layout.yearTicks.map(({ year, x }) => (
+              <span style={`--atlas-year-x:${x}px`}><b>{year}</b></span>
+            ))}
+          </div>
+
+          <svg
+            class="atlas-network__relations"
+            viewBox={`0 0 ${layout.width} ${layout.height}`}
+            role="img"
+            aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
+          >
           <title id="atlas-relation-map-title">有证据关系网络</title>
           <desc id="atlas-relation-map-description">有向关系使用箭头，无向关系使用对称实线。选择任一关系可进入详情与证据。</desc>
           <defs>
@@ -192,39 +211,40 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
               </g>
             );
           })}
-        </svg>
+          </svg>
 
-        <div class="atlas-network__nodes">
-          {nodes.map((node) => {
-            const placed = placedNodeById.get(node.id);
-            if (!placed) return null;
-            return (
-              <article
-                class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
-                data-atlas-node
-                data-atlas-node-id={node.id}
-                data-atlas-node-kind={node.kind}
-                data-start-year={node.startYear}
-                data-end-year={node.endYear}
-                data-year-x={placed.yearX}
-                data-center-x={placed.centerX}
-                data-center-y={placed.centerY}
-                data-node-left={placed.left}
-                data-node-top={placed.top}
-                data-node-width={placed.width}
-                data-node-height={placed.height}
-                data-theme-tags={node.tags.join(' ')}
-                data-theme-match="true"
-                style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
-              >
-                <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-link>
-                  <span class="atlas-network-node__type">{kindLabels[node.kind]}</span>
-                  <strong>{node.name['zh-CN']}</strong>
-                  <time datetime={String(node.startYear)}>{nodeTime(node)}</time>
-                </a>
-              </article>
-            );
-          })}
+          <div class="atlas-network__nodes">
+            {nodes.map((node) => {
+              const placed = placedNodeById.get(node.id);
+              if (!placed) return null;
+              return (
+                <article
+                  class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
+                  data-atlas-node
+                  data-atlas-node-id={node.id}
+                  data-atlas-node-kind={node.kind}
+                  data-start-year={node.startYear}
+                  data-end-year={node.endYear}
+                  data-year-x={placed.yearX}
+                  data-center-x={placed.centerX}
+                  data-center-y={placed.centerY}
+                  data-node-left={placed.left}
+                  data-node-top={placed.top}
+                  data-node-width={placed.width}
+                  data-node-height={placed.height}
+                  data-theme-tags={node.tags.join(' ')}
+                  data-theme-match="true"
+                  style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
+                >
+                  <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-link>
+                    <span class="atlas-network-node__type">{kindLabels[node.kind]}</span>
+                    <strong>{node.name['zh-CN']}</strong>
+                    <time datetime={String(node.startYear)}>{nodeTime(node)}</time>
+                  </a>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
@@ -425,6 +445,13 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
 </section>
 
 <script>
+  import {
+    clampAtlasScale,
+    fitAtlasScale,
+    projectAtlasScrollAnchor,
+    stepAtlasScale,
+  } from '../lib/atlas-network';
+
   type ThemeMatch = { nodeIds: string[]; relationIds: string[] };
 
   const explorer = document.querySelector<HTMLElement>('[data-atlas-explorer]');
@@ -474,13 +501,129 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       button.addEventListener('click', () => applyTheme(button.dataset.atlasThemeButton ?? 'all'));
     });
 
+    const canvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
+    const stage = explorer.querySelector<HTMLElement>('[data-atlas-stage]');
+    const scene = explorer.querySelector<HTMLElement>('[data-atlas-scene]');
+    const viewControls = explorer.querySelector<HTMLElement>('[data-atlas-view-controls]');
+    const fitButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-fit]');
+    const zoomOutButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-out]');
+    const zoomInButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-in]');
+    const resetButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-reset]');
+    const scaleStatus = viewControls?.querySelector<HTMLOutputElement>('[data-atlas-scale-status]');
+
+    if (canvas && stage && scene && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
+      const sceneWidth = Number(scene.dataset.sceneWidth);
+      const sceneHeight = Number(scene.dataset.sceneHeight);
+      let scale = 1;
+
+      const updateViewControls = () => {
+        scaleStatus.textContent = `${Math.round(scale * 100)}%`;
+        zoomOutButton.disabled = scale <= 0.5;
+        zoomInButton.disabled = scale >= 2;
+      };
+
+      const applyScale = (nextScale: number, resetOrigin = false) => {
+        const boundedScale = clampAtlasScale(nextScale);
+        const nextScroll = resetOrigin
+          ? { scrollLeft: 0, scrollTop: 0 }
+          : projectAtlasScrollAnchor({
+              oldScale: scale,
+              newScale: boundedScale,
+              scrollLeft: canvas.scrollLeft,
+              scrollTop: canvas.scrollTop,
+              viewportWidth: canvas.clientWidth,
+              viewportHeight: canvas.clientHeight,
+            });
+        scale = boundedScale;
+        scene.style.transform = `scale(${scale})`;
+        stage.style.width = `${sceneWidth * scale}px`;
+        stage.style.height = `${sceneHeight * scale}px`;
+        stage.dataset.scale = String(scale);
+        canvas.scrollLeft = nextScroll.scrollLeft;
+        canvas.scrollTop = nextScroll.scrollTop;
+        updateViewControls();
+      };
+
+      fitButton.disabled = false;
+      resetButton.disabled = false;
+      updateViewControls();
+      fitButton.addEventListener('click', () => applyScale(fitAtlasScale({
+        viewportWidth: canvas.clientWidth,
+        viewportHeight: canvas.clientHeight,
+        sceneWidth,
+        sceneHeight,
+      })));
+      zoomOutButton.addEventListener('click', () => applyScale(stepAtlasScale(scale, -1)));
+      zoomInButton.addEventListener('click', () => applyScale(stepAtlasScale(scale, 1)));
+      resetButton.addEventListener('click', () => applyScale(1, true));
+
+      canvas.addEventListener('keydown', (event) => {
+        const offsets: Partial<Record<typeof event.key, [number, number]>> = {
+          ArrowLeft: [-80, 0],
+          ArrowRight: [80, 0],
+          ArrowUp: [0, -80],
+          ArrowDown: [0, 80],
+        };
+        const offset = offsets[event.key];
+        if (!offset) return;
+        event.preventDefault();
+        canvas.scrollLeft += offset[0];
+        canvas.scrollTop += offset[1];
+      });
+
+      canvas.addEventListener('wheel', (event) => {
+        if (!event.ctrlKey && !event.metaKey) return;
+        event.preventDefault();
+        if (event.deltaY === 0) return;
+        applyScale(stepAtlasScale(scale, event.deltaY < 0 ? 1 : -1));
+      }, { passive: false });
+
+      let drag: {
+        pointerId: number;
+        clientX: number;
+        clientY: number;
+        scrollLeft: number;
+        scrollTop: number;
+      } | null = null;
+      const interactiveSelector = 'a, button, input, select, summary, details';
+
+      canvas.addEventListener('pointerdown', (event) => {
+        if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
+        drag = {
+          pointerId: event.pointerId,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          scrollLeft: canvas.scrollLeft,
+          scrollTop: canvas.scrollTop,
+        };
+        canvas.setPointerCapture(event.pointerId);
+        canvas.dataset.dragging = 'true';
+      });
+
+      canvas.addEventListener('pointermove', (event) => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+        event.preventDefault();
+        canvas.scrollLeft = drag.scrollLeft + drag.clientX - event.clientX;
+        canvas.scrollTop = drag.scrollTop + drag.clientY - event.clientY;
+      });
+
+      const finishDrag = (event: PointerEvent) => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+        if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+        drag = null;
+        delete canvas.dataset.dragging;
+      };
+      canvas.addEventListener('pointerup', finishDrag);
+      canvas.addEventListener('pointercancel', finishDrag);
+    }
+
     const dialog = explorer.querySelector<HTMLDialogElement>('[data-atlas-selected-detail]');
     const dialogTitle = dialog?.querySelector<HTMLElement>('[data-atlas-dialog-title]');
     const dialogContent = dialog?.querySelector<HTMLElement>('[data-atlas-dialog-content]');
     const dialogClose = dialog?.querySelector<HTMLButtonElement>('[data-atlas-dialog-close]');
-    const canvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
     let detailOrigin: Element | null = null;
-    let savedPosition: { pageX: number; pageY: number; canvasX: number; url: string } | null = null;
+    let savedPosition: { pageX: number; pageY: number; canvasX: number; canvasY: number; url: string } | null = null;
     let evidenceDestination: HTMLElement | null = null;
 
     const restoreNetworkPosition = () => {
@@ -489,7 +632,10 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       document.documentElement.style.scrollBehavior = 'auto';
       window.history.replaceState(null, '', savedPosition.url);
       (detailOrigin as HTMLElement | null)?.focus({ preventScroll: true });
-      if (canvas) canvas.scrollLeft = savedPosition.canvasX;
+      if (canvas) {
+        canvas.scrollLeft = savedPosition.canvasX;
+        canvas.scrollTop = savedPosition.canvasY;
+      }
       window.scrollTo(savedPosition.pageX, savedPosition.pageY);
       document.documentElement.style.scrollBehavior = previousScrollBehavior;
       detailOrigin = null;
@@ -504,6 +650,7 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
           pageX: window.scrollX,
           pageY: window.scrollY,
           canvasX: canvas?.scrollLeft ?? 0,
+          canvasY: canvas?.scrollTop ?? 0,
           url: window.location.href,
         };
       }

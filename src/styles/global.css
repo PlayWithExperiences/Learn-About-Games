@@ -2141,6 +2141,42 @@ h2 {
   font-size: 0.9rem;
 }
 
+.atlas-view-controls {
+  display: flex;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.atlas-view-controls button {
+  min-height: 2.6rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 720;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.atlas-view-controls button:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.atlas-view-controls output {
+  min-width: 3.8rem;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 760;
+  text-align: center;
+}
+
 .atlas-legend {
   display: grid;
   padding-block: 2.75rem;
@@ -2233,13 +2269,20 @@ h2 {
 
 .atlas-network__viewport {
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
+  height: min(70vh, 44rem);
+  overflow: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  overscroll-behavior-inline: contain;
+  cursor: grab;
+  overscroll-behavior: contain;
   scrollbar-color: var(--accent) var(--surface-strong);
+  touch-action: pan-x pan-y;
+}
+
+.atlas-network__viewport[data-dragging='true'] {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .atlas-network__scroll-note {
@@ -2249,11 +2292,15 @@ h2 {
   font-weight: 680;
 }
 
-.atlas-network__canvas {
+.atlas-network__stage {
   position: relative;
-  width: var(--atlas-canvas-width);
-  height: var(--atlas-canvas-height);
+}
+
+.atlas-network__canvas {
+  position: absolute;
+  inset: 0 auto auto 0;
   isolation: isolate;
+  transform-origin: 0 0;
 }
 
 .atlas-network__years {
@@ -2940,6 +2987,10 @@ h2 {
   }
 
   .atlas-network__viewport {
+    display: none;
+  }
+
+  .atlas-view-controls {
     display: none;
   }
 

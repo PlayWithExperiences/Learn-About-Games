@@ -9,6 +9,23 @@ const entityIds = async (locator: Locator) =>
     ),
   );
 
+const atlasGraphSnapshot = async (page: Page) => page.evaluate(() => ({
+  nodes: Array.from(document.querySelectorAll<HTMLElement>('[data-atlas-node]')).map((node) => ({
+    id: node.dataset.atlasNodeId,
+    style: node.getAttribute('style'),
+    themeMatch: node.dataset.themeMatch,
+    searchMatch: node.getAttribute('data-search-match'),
+  })),
+  relations: Array.from(document.querySelectorAll<SVGGElement>('[data-atlas-relation]')).map((relation) => ({
+    id: relation.dataset.atlasRelation,
+    path: relation.querySelector('[data-atlas-relation-path]')?.getAttribute('d'),
+    themeMatch: relation.dataset.themeMatch,
+    searchMatch: relation.getAttribute('data-search-match'),
+  })),
+  evidenceIds: Array.from(document.querySelectorAll<HTMLElement>('[data-atlas-evidence-row]'))
+    .map((row) => row.dataset.atlasEvidenceRow),
+}));
+
 function parseRgb(color: string): [number, number, number] {
   const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
   if (!channels || channels.length !== 3) throw new Error(`Expected an RGB color, received ${color}`);
@@ -150,6 +167,170 @@ test('server renders one fixed 27-node and 25-relation time network', async ({ p
       }
     }
   }
+});
+
+test('view controls provide bounded zoom, fit, center anchoring, reset and modified-wheel zoom', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop viewport controls are tested once.');
+  await page.goto('./atlas/');
+
+  const controls = page.locator('[data-atlas-view-controls]');
+  const fit = controls.getByRole('button', { name: '适应全图' });
+  const zoomOut = controls.getByRole('button', { name: '缩小' });
+  const zoomIn = controls.getByRole('button', { name: '放大' });
+  const reset = controls.getByRole('button', { name: '重置 100%' });
+  const status = controls.locator('[data-atlas-scale-status]');
+  const viewport = page.locator('[data-atlas-canvas]');
+  const stage = page.locator('[data-atlas-stage]');
+  const scene = page.locator('[data-atlas-scene]');
+
+  await expect(controls).toBeVisible();
+  for (const button of [fit, zoomOut, zoomIn, reset]) await expect(button).toBeEnabled();
+  await expect(status).toHaveText('100%');
+  await expect(stage).toHaveAttribute('data-scale', '1');
+  await expect(stage).toHaveCSS('width', '2200px');
+  await expect(stage).toHaveCSS('height', '900px');
+  await expect(scene).toHaveCSS('width', '2200px');
+  await expect(scene).toHaveCSS('height', '900px');
+  expect(await scene.evaluate((element) => element.style.transform)).toBe('scale(1)');
+
+  await zoomIn.click();
+  await expect(status).toHaveText('125%');
+  await expect(stage).toHaveAttribute('data-scale', '1.25');
+
+  await reset.click();
+  await viewport.evaluate((element) => {
+    element.scrollLeft = 320;
+    element.scrollTop = 140;
+  });
+  const centerBefore = await viewport.evaluate((element) => ({
+    x: (element.scrollLeft + element.clientWidth / 2),
+    y: (element.scrollTop + element.clientHeight / 2),
+  }));
+  await zoomIn.click();
+  const centerAfter = await viewport.evaluate((element) => ({
+    x: (element.scrollLeft + element.clientWidth / 2) / 1.25,
+    y: (element.scrollTop + element.clientHeight / 2) / 1.25,
+  }));
+  expect(Math.abs(centerAfter.x - centerBefore.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(centerAfter.y - centerBefore.y)).toBeLessThanOrEqual(1);
+
+  await fit.click();
+  const fitScale = Number(await stage.getAttribute('data-scale'));
+  expect(fitScale).toBeGreaterThanOrEqual(0.5);
+  expect(fitScale).toBeLessThanOrEqual(2);
+  const fitBounds = await viewport.evaluate((element) => {
+    const scene = element.querySelector<HTMLElement>('[data-atlas-scene]')!;
+    const viewportRect = element.getBoundingClientRect();
+    const sceneRect = scene.getBoundingClientRect();
+    return {
+      viewport: {
+        left: viewportRect.left + element.clientLeft,
+        top: viewportRect.top + element.clientTop,
+        right: viewportRect.left + element.clientLeft + element.clientWidth,
+        bottom: viewportRect.top + element.clientTop + element.clientHeight,
+      },
+      scene: { left: sceneRect.left, top: sceneRect.top, right: sceneRect.right, bottom: sceneRect.bottom },
+    };
+  });
+  expect(fitBounds.scene.left).toBeGreaterThanOrEqual(fitBounds.viewport.left - 1);
+  expect(fitBounds.scene.top).toBeGreaterThanOrEqual(fitBounds.viewport.top - 1);
+  expect(fitBounds.scene.right).toBeLessThanOrEqual(fitBounds.viewport.right + 1);
+  expect(fitBounds.scene.bottom).toBeLessThanOrEqual(fitBounds.viewport.bottom + 1);
+
+  for (let index = 0; index < 6; index += 1) await zoomIn.click();
+  await expect(stage).toHaveAttribute('data-scale', '2');
+  await expect(status).toHaveText('200%');
+  await expect(zoomIn).toBeDisabled();
+  for (let index = 0; index < 6; index += 1) await zoomOut.click();
+  await expect(stage).toHaveAttribute('data-scale', '0.5');
+  await expect(status).toHaveText('50%');
+  await expect(zoomOut).toBeDisabled();
+
+  await reset.click();
+  await expect(stage).toHaveAttribute('data-scale', '1');
+  await expect(status).toHaveText('100%');
+  await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
+    .toEqual({ left: 0, top: 0 });
+
+  const ordinaryWheel = await viewport.evaluate((element) => {
+    const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 100 });
+    const dispatched = element.dispatchEvent(event);
+    return { defaultPrevented: event.defaultPrevented, dispatched };
+  });
+  expect(ordinaryWheel).toEqual({ defaultPrevented: false, dispatched: true });
+  await expect(stage).toHaveAttribute('data-scale', '1');
+
+  const controlWheel = await viewport.evaluate((element) => {
+    const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, ctrlKey: true, deltaY: -100 });
+    const dispatched = element.dispatchEvent(event);
+    return { defaultPrevented: event.defaultPrevented, dispatched };
+  });
+  expect(controlWheel).toEqual({ defaultPrevented: true, dispatched: false });
+  await expect(stage).toHaveAttribute('data-scale', '1.25');
+
+  await viewport.evaluate((element) => {
+    const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, metaKey: true, deltaY: 100 });
+    element.dispatchEvent(event);
+  });
+  await expect(stage).toHaveAttribute('data-scale', '1');
+});
+
+test('pan inputs preserve graph identity, interactive targets and dialog return positions', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop pan and detail flow are tested once.');
+  await page.goto('./atlas/');
+  await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+
+  const controls = page.locator('[data-atlas-view-controls]');
+  const viewport = page.locator('[data-atlas-canvas]');
+  await controls.getByRole('button', { name: '放大' }).click();
+  await controls.getByRole('button', { name: '放大' }).click();
+  await viewport.evaluate((element) => {
+    element.scrollLeft = 180;
+    element.scrollTop = 120;
+  });
+  const graphBefore = await atlasGraphSnapshot(page);
+  expect(graphBefore.nodes).toHaveLength(27);
+  expect(graphBefore.relations).toHaveLength(25);
+  expect(graphBefore.evidenceIds).toHaveLength(40);
+  expect(graphBefore.nodes.every(({ searchMatch }) => searchMatch === null)).toBe(true);
+
+  await viewport.focus();
+  const keyboardStart = await viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop }));
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.press('ArrowDown');
+  await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
+    .toEqual({ left: keyboardStart.left + 80, top: keyboardStart.top + 80 });
+
+  await viewport.scrollIntoViewIfNeeded();
+  const viewportBox = await viewport.boundingBox();
+  expect(viewportBox).not.toBeNull();
+  const dragStart = await viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop }));
+  await page.mouse.move(viewportBox!.x + 32, viewportBox!.y + 42);
+  await page.mouse.down();
+  await page.mouse.move(viewportBox!.x - 28, viewportBox!.y + 2, { steps: 4 });
+  await page.mouse.up();
+  await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
+    .toEqual({ left: dragStart.left + 60, top: dragStart.top + 40 });
+
+  const nodeLink = page.locator('[data-atlas-node-id="dead-cells"] [data-atlas-node-link]');
+  await nodeLink.scrollIntoViewIfNeeded();
+  const beforeInteractiveDrag = await viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop }));
+  await nodeLink.dispatchEvent('pointerdown', { bubbles: true, button: 0, clientX: 400, clientY: 300, pointerId: 1 });
+  await nodeLink.dispatchEvent('pointermove', { bubbles: true, buttons: 1, clientX: 330, clientY: 230, pointerId: 1 });
+  await nodeLink.dispatchEvent('pointerup', { bubbles: true, button: 0, clientX: 330, clientY: 230, pointerId: 1 });
+  expect(await viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop }))).toEqual(beforeInteractiveDrag);
+
+  await nodeLink.click();
+  const dialog = page.locator('dialog[data-atlas-selected-detail]');
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator('[data-atlas-dialog-title]')).toContainText('Dead Cells');
+  await dialog.getByRole('button', { name: '返回网络' }).click();
+  await expect(dialog).not.toBeVisible();
+  await expect(nodeLink).toBeFocused();
+  await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
+    .toEqual(beforeInteractiveDrag);
+
+  expect(await atlasGraphSnapshot(page)).toEqual(graphBefore);
 });
 
 test('theme controls only change emphasis without changing graph identity or geometry', async ({ page }) => {
@@ -388,6 +569,8 @@ test('mobile uses a relation-equivalent era outline without horizontal overflow'
   await page.goto('./atlas/');
 
   await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
+  await expect(page.locator('[data-atlas-view-controls]')).toHaveCount(1);
+  await expect(page.locator('[data-atlas-view-controls]')).toBeHidden();
   const outline = page.locator('[data-atlas-mobile-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-atlas-era]')).toHaveCount(5);
@@ -423,7 +606,16 @@ test('without JavaScript the complete graph, native details and evidence remain 
   for (const button of await page.locator('[data-atlas-theme-button]').all()) {
     await expect(button).toBeDisabled();
   }
+  const viewControls = page.locator('[data-atlas-view-controls]');
+  await expect(viewControls).toBeVisible();
+  for (const button of await viewControls.getByRole('button').all()) {
+    await expect(button).toBeDisabled();
+  }
+  await expect(viewControls.locator('[data-atlas-scale-status]')).toHaveText('100%');
+  await expect(page.locator('[data-atlas-view-no-js-note]')).toBeVisible();
   await expect(page.locator('[data-atlas-no-js-note]')).toBeVisible();
+  await expect(page.locator('[data-atlas-stage]')).toHaveAttribute('data-scale', '1');
+  await expect(page.locator('[data-atlas-scene]')).toBeVisible();
   await expect(page.locator('[data-atlas-global-network] [data-atlas-node]')).toHaveCount(27);
   await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(25);
   const detail = page.locator('#atlas-relation-detail-super-metroid-and-sotn');
@@ -434,6 +626,32 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await evidenceRef.click();
   await expect(page.locator(evidenceTarget!)).toBeVisible();
   await expect(page.locator(`${evidenceTarget} a[data-atlas-evidence-link]`)).toBeVisible();
+
+  await context.close();
+});
+
+test('320px no-JavaScript hides view controls and keeps the complete period outline readable', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-chromium', 'The mobile no-JavaScript viewport fallback is tested once.');
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 320, height: 760 },
+  });
+  const page = await context.newPage();
+  await page.goto(atlasUrl);
+
+  const controls = page.locator('[data-atlas-view-controls]');
+  await expect(controls).toHaveCount(1);
+  await expect(controls).toBeHidden();
+  for (const button of await controls.getByRole('button').all()) await expect(button).toBeDisabled();
+  await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
+  const outline = page.locator('[data-atlas-mobile-outline]');
+  await expect(outline).toBeVisible();
+  await expect(outline.locator('[data-atlas-era]')).toHaveCount(5);
+  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(27);
+  expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
+    elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
+  )).size).toBe(25);
+  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
 
   await context.close();
 });
