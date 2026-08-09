@@ -2,9 +2,11 @@
 import type { Catalog } from '../lib/catalog/validate';
 import {
   buildAtlasLayout,
+  buildAtlasNodeIndex,
   groupAtlasNodesByEra,
   indexAtlasRelations,
   matchAtlasTheme,
+  sortAtlasNodeIndex,
 } from '../lib/atlas-network';
 
 type AtlasEvidence = Catalog['atlasEvidence'][number];
@@ -30,6 +32,7 @@ const placedNodeById = new Map(layout.nodes.map((node) => [node.id, node]));
 const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 const tagById = new Map(tags.map((tag) => [tag.id, tag]));
 const relationById = new Map(relations.map((relation) => [relation.id, relation]));
+const nodeIndex = sortAtlasNodeIndex(buildAtlasNodeIndex(nodes, tags), 'time');
 
 const kindLabels: Record<AtlasNode['kind'], string> = {
   game: 'Game',
@@ -76,6 +79,7 @@ const themeMatches = Object.fromEntries(
   themes.map((theme) => [theme.id, matchAtlasTheme(nodes, relations, theme)]),
 );
 const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u003c');
+const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c');
 ---
 
 <section
@@ -313,13 +317,41 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       <p>节点与关系只保存文献引用；完整原题、原始语言、中文说明与外部链接集中在页面底部的 Evidence 索引。</p>
     </header>
 
-    <section class="atlas-details__group" aria-labelledby="atlas-node-details-title">
+    <section class="atlas-details__group atlas-node-index" data-atlas-node-index aria-labelledby="atlas-node-details-title">
       <h3 id="atlas-node-details-title">节点详情</h3>
-      {nodes.map((node) => {
+      <div class="atlas-node-index__controls">
+        <label for="atlas-node-search">
+          <span>搜索节点</span>
+          <input id="atlas-node-search" type="search" data-atlas-node-search disabled />
+        </label>
+        <label for="atlas-node-sort">
+          <span>节点排序</span>
+          <select id="atlas-node-sort" data-atlas-node-sort disabled>
+            <option value="time">按时间</option>
+            <option value="name">按名称</option>
+          </select>
+        </label>
+        <output data-atlas-node-count>{nodeIndex.length} 个节点</output>
+        <button type="button" data-atlas-search-clear disabled>清除搜索</button>
+      </div>
+      <p class="atlas-node-index__empty" data-atlas-node-empty hidden>
+        没有匹配节点。请清除搜索后查看全部节点。
+      </p>
+      {nodeIndex.map((indexItem) => {
+        const node = nodeById.get(indexItem.id);
+        if (!node) return null;
         const nodeAdjacency = adjacency.get(node.id) ?? { incoming: [], outgoing: [], undirected: [] };
         const relatedRelations = [...nodeAdjacency.incoming, ...nodeAdjacency.outgoing, ...nodeAdjacency.undirected];
         return (
-          <details id={`atlas-node-detail-${node.id}`} data-atlas-node-detail={node.id}>
+          <details
+            id={`atlas-node-detail-${node.id}`}
+            data-atlas-node-detail={node.id}
+            data-atlas-index-item={node.id}
+            data-index-id={node.id}
+            data-index-name={indexItem.name}
+            data-index-year={indexItem.startYear}
+            data-search-text={indexItem.searchText}
+          >
             <summary><span>{kindLabels[node.kind]}</span><strong>{node.name['zh-CN']}</strong><time>{nodeTime(node)}</time></summary>
             <div class="atlas-detail__body">
               <p>{node.summary['zh-CN']}</p>
@@ -442,14 +474,18 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
   </dialog>
 
   <script is:inline type="application/json" data-atlas-theme-data set:html={serializedThemeMatches}></script>
+  <script is:inline type="application/json" data-atlas-node-index-data set:html={serializedNodeIndex}></script>
 </section>
 
 <script>
   import {
     clampAtlasScale,
+    filterAtlasNodeIndex,
     fitAtlasScale,
     projectAtlasScrollAnchor,
+    sortAtlasNodeIndex,
     stepAtlasScale,
+    type AtlasIndexNode,
   } from '../lib/atlas-network';
 
   type ThemeMatch = { nodeIds: string[]; relationIds: string[] };
@@ -500,6 +536,57 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       button.disabled = false;
       button.addEventListener('click', () => applyTheme(button.dataset.atlasThemeButton ?? 'all'));
     });
+
+    const nodeIndexElement = explorer.querySelector<HTMLElement>('[data-atlas-node-index]');
+    const nodeIndexPayload = explorer.querySelector<HTMLScriptElement>('[data-atlas-node-index-data]');
+    const nodeSearch = nodeIndexElement?.querySelector<HTMLInputElement>('[data-atlas-node-search]');
+    const nodeSort = nodeIndexElement?.querySelector<HTMLSelectElement>('[data-atlas-node-sort]');
+    const nodeCountStatus = nodeIndexElement?.querySelector<HTMLOutputElement>('[data-atlas-node-count]');
+    const nodeEmpty = nodeIndexElement?.querySelector<HTMLElement>('[data-atlas-node-empty]');
+    const searchClear = nodeIndexElement?.querySelector<HTMLButtonElement>('[data-atlas-search-clear]');
+
+    if (nodeIndexElement && nodeIndexPayload && nodeSearch && nodeSort && nodeCountStatus && nodeEmpty && searchClear) {
+      const indexedNodes = JSON.parse(nodeIndexPayload.textContent ?? '[]') as AtlasIndexNode[];
+      const indexItems = new Map(
+        Array.from(nodeIndexElement.querySelectorAll<HTMLElement>('[data-atlas-index-item]'))
+          .map((item) => [item.dataset.atlasIndexItem ?? '', item]),
+      );
+
+      const applyNodeIndex = () => {
+        const query = nodeSearch.value.trim();
+        const matchingIds = new Set(filterAtlasNodeIndex(indexedNodes, query).map(({ id }) => id));
+        const hasQuery = query.length > 0;
+        indexItems.forEach((item, id) => {
+          item.hidden = hasQuery && !matchingIds.has(id);
+        });
+        networkNodes.forEach((node) => {
+          if (hasQuery) node.dataset.searchMatch = String(matchingIds.has(node.dataset.atlasNodeId ?? ''));
+          else delete node.dataset.searchMatch;
+        });
+        outlineNodes.forEach((node) => {
+          if (hasQuery) node.dataset.searchMatch = String(matchingIds.has(node.dataset.atlasOutlineNode ?? ''));
+          else delete node.dataset.searchMatch;
+        });
+        sortAtlasNodeIndex(indexedNodes, nodeSort.value === 'name' ? 'name' : 'time').forEach(({ id }) => {
+          const item = indexItems.get(id);
+          if (item) nodeIndexElement.append(item);
+        });
+        const matchCount = hasQuery ? matchingIds.size : indexedNodes.length;
+        nodeCountStatus.textContent = `${matchCount} 个节点`;
+        nodeEmpty.hidden = matchCount !== 0;
+        searchClear.disabled = !hasQuery;
+      };
+
+      nodeSearch.disabled = false;
+      nodeSort.disabled = false;
+      nodeSearch.addEventListener('input', applyNodeIndex);
+      nodeSort.addEventListener('change', applyNodeIndex);
+      searchClear.addEventListener('click', () => {
+        nodeSearch.value = '';
+        applyNodeIndex();
+        nodeSearch.focus();
+      });
+    }
 
     const canvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
     const stage = explorer.querySelector<HTMLElement>('[data-atlas-stage]');

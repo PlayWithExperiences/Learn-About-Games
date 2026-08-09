@@ -26,6 +26,10 @@ const atlasGraphSnapshot = async (page: Page) => page.evaluate(() => ({
     .map((row) => row.dataset.atlasEvidenceRow),
 }));
 
+const visibleAtlasIndexItemCount = (items: Locator) => items.evaluateAll((elements) =>
+  elements.filter((element) => !element.hasAttribute('hidden')).length,
+);
+
 function parseRgb(color: string): [number, number, number] {
   const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
   if (!channels || channels.length !== 3) throw new Error(`Expected an RGB color, received ${color}`);
@@ -677,6 +681,85 @@ test('renders one 40-item Evidence index and keeps node and relation references 
   }
 });
 
+test('node index searches bilingual metadata, sorts locally and preserves the fixed graph', async ({ page }) => {
+  await page.goto('./atlas/');
+
+  const index = page.locator('[data-atlas-node-index]');
+  const search = index.getByRole('searchbox', { name: '搜索节点' });
+  const sort = index.getByLabel('节点排序');
+  const clear = index.getByRole('button', { name: '清除搜索' });
+  const items = index.locator('[data-atlas-index-item]');
+  const graphBefore = await atlasGraphSnapshot(page);
+
+  await expect(search).toBeEnabled();
+  await expect(sort).toHaveValue('time');
+  await expect(items).toHaveCount(27);
+  await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
+  await expect(clear).toBeDisabled();
+
+  const serverYears = await items.evaluateAll((elements) =>
+    elements.map((element) => Number(element.getAttribute('data-index-year'))),
+  );
+  expect(serverYears).toEqual([...serverYears].sort((left, right) => left - right));
+
+  await search.fill('法定系列续作');
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(1);
+  await expect(page.locator('[data-atlas-node][data-search-match="true"]')).toHaveCount(1);
+  await expect(page.locator('[data-atlas-outline-node="bloodstained-ritual-of-the-night"]')).toHaveAttribute('data-search-match', 'true');
+  await expect(clear).toBeEnabled();
+  const graphAfterSearch = await atlasGraphSnapshot(page);
+  expect({
+    nodes: graphAfterSearch.nodes.map(({ id, style }) => ({ id, style })),
+    relations: graphAfterSearch.relations,
+    evidenceIds: graphAfterSearch.evidenceIds,
+  }).toEqual({
+    nodes: graphBefore.nodes.map(({ id, style }) => ({ id, style })),
+    relations: graphBefore.relations,
+    evidenceIds: graphBefore.evidenceIds,
+  });
+
+  await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+  await expect(page.locator('[data-atlas-node][data-atlas-node-id="bloodstained-ritual-of-the-night"]'))
+    .toHaveAttribute('data-theme-match', 'true');
+  await expect(page.locator('[data-atlas-node][data-atlas-node-id="bloodstained-ritual-of-the-night"]'))
+    .toHaveAttribute('data-search-match', 'true');
+
+  await search.fill('单局永久死亡');
+  await expect(page.locator('[data-atlas-node][data-atlas-node-id="rogue"]')).toHaveAttribute('data-search-match', 'true');
+  await search.fill('METROIDVANIA');
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBeGreaterThan(0);
+  await search.fill('no matching atlas node');
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(0);
+  await expect(index.locator('[data-atlas-node-empty]')).toBeVisible();
+
+  await clear.click();
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(27);
+  await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
+  await expect(clear).toBeDisabled();
+  await expect(page.locator('[data-atlas-node][data-search-match]')).toHaveCount(0);
+  await expect(page.locator('[data-atlas-theme-button="metroidvania"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-atlas-node][data-atlas-node-id="rogue"]')).toHaveAttribute('data-theme-match', 'false');
+
+  await sort.selectOption('name');
+  const nameOrder = await items.evaluateAll((elements) =>
+    elements.map((element) => element.getAttribute('data-index-name') ?? ''),
+  );
+  expect(nameOrder).toEqual([...nameOrder].sort(new Intl.Collator(['zh-CN', 'en'], {
+    numeric: true,
+    sensitivity: 'base',
+  }).compare));
+  const graphAfterSort = await atlasGraphSnapshot(page);
+  expect({
+    nodes: graphAfterSort.nodes.map(({ id, style }) => ({ id, style })),
+    relations: graphAfterSort.relations.map(({ id, path }) => ({ id, path })),
+    evidenceIds: graphAfterSort.evidenceIds,
+  }).toEqual({
+    nodes: graphBefore.nodes.map(({ id, style }) => ({ id, style })),
+    relations: graphBefore.relations.map(({ id, path }) => ({ id, path })),
+    evidenceIds: graphBefore.evidenceIds,
+  });
+});
+
 test('mobile uses a relation-equivalent era outline without horizontal overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium', 'Mobile outline is tested once.');
   await page.setViewportSize({ width: 320, height: 760 });
@@ -732,6 +815,11 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(page.locator('[data-atlas-scene]')).toBeVisible();
   await expect(page.locator('[data-atlas-global-network] [data-atlas-node]')).toHaveCount(27);
   await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(25);
+  const nodeIndex = page.locator('[data-atlas-node-index]');
+  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(27);
+  await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
+  await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
+  await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
   const detail = page.locator('#atlas-relation-detail-super-metroid-and-sotn');
   await detail.locator('summary').click();
   const evidenceRef = detail.locator('[data-atlas-evidence-ref]').first();
