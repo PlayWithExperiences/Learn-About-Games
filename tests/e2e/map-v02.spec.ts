@@ -1,440 +1,287 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
-import domains from '../../src/data/domains.json' with { type: 'json' };
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
-import mapGroups from '../../src/data/map-groups.json' with { type: 'json' };
-import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
-import resources from '../../src/data/resources.json' with { type: 'json' };
 
 const basePath = '/Learn-About-Games/';
+const expandableKinds = new Set(['entry', 'stage', 'lever', 'cluster']);
+const frameworkTypeLabels = {
+  root: 'EGDS 根节点',
+  branch: '主分支',
+  entry: '体验入口',
+  stage: '过程阶段',
+  lever: '设计杠杆',
+  cluster: '能力群',
+  'external-entry': '外部入口',
+} as const;
 
-test('renders five hierarchy trunks, distinct node kinds and all functional relations', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1100 });
+const directEntityCount = (frameworkNodeId: string) =>
+  capabilities.filter((item) => item.frameworkNodeId === frameworkNodeId).length
+  + knowledgeTopics.filter((item) => item.frameworkNodeId === frameworkNodeId).length;
+
+const directRelationIds = (capabilityId: string) => capabilityRelations
+  .filter(({ fromId, toId }) => fromId === capabilityId || toId === capabilityId)
+  .map(({ id }) => id)
+  .sort();
+
+const assertNoPageOverflow = async (page: Page) => {
+  expect(await page.evaluate(() => ({
+    body: document.body.scrollWidth - document.body.clientWidth,
+    html: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  }))).toEqual({ body: 0, html: 0 });
+};
+
+test('server renders the complete EGDS skeleton, hidden entities and stable detail links', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./map/');
 
-  await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
-
-  const canvas = page.locator('[data-capability-map-canvas]');
+  const map = page.locator('[data-egds-map]');
+  const canvas = map.locator('[data-capability-map-canvas]');
+  await expect(map).toHaveCount(1);
+  await expect(canvas).toHaveCount(1);
   await expect(canvas).toBeVisible();
-  await expect(page.locator('[data-mobile-map-outline]')).toBeHidden();
-  await expect(canvas.locator('[data-map-root]')).toHaveCount(1);
-  await expect(canvas.locator('[data-map-group]')).toHaveCount(mapGroups.length);
-  await expect(canvas.locator('[data-map-region]')).toHaveCount(domains.length);
-  await expect(canvas.locator('[data-map-structural-path]')).toHaveCount(mapGroups.length + domains.length);
-  await expect(canvas.locator('[data-map-node-kind="capability"]')).toHaveCount(capabilities.length);
-  await expect(canvas.locator('[data-map-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
-  await expect(canvas.locator('[data-capability-relation]')).toHaveCount(capabilityRelations.length);
-  expect(
-    await canvas.evaluate((element) => {
-      const canvasRect = element.getBoundingClientRect();
-      return [...element.querySelectorAll<HTMLElement>('[data-map-group]')].every((group) => {
-        const groupRect = group.getBoundingClientRect();
-        return groupRect.top >= canvasRect.top && groupRect.bottom <= canvasRect.bottom;
-      });
-    }),
-  ).toBe(true);
+  await expect(map.locator('[data-egds-framework-node]')).toHaveCount(28);
+  await expect(map.locator('[data-egds-branch]')).toHaveCount(5);
+  await expect(map.locator('[data-egds-process-path]')).toHaveCount(3);
+  await expect(map.locator('[data-egds-lever]')).toHaveCount(3);
+  await expect(map.locator('[data-map-group], [data-map-region]')).toHaveCount(0);
+  await expect(map.locator('[data-map-entity]')).toHaveCount(54);
+  await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(0);
+  await expect(map.locator('[data-capability-relation]')).toHaveCount(capabilityRelations.length);
+  await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
+  await expect(map.locator('[data-map-entity] [data-map-entity-detail]')).toHaveCount(54);
 
-  const hierarchyKeys = await canvas.locator('[data-map-root], [data-map-group], [data-map-region]')
-    .evaluateAll((items) => items.map((item) => (item as HTMLElement).dataset.mapKey));
-  expect(new Set(hierarchyKeys).size).toBe(1 + mapGroups.length + domains.length);
-  await expect(canvas.locator('[data-map-group="experience-player"]')).toHaveAttribute(
-    'data-map-key',
-    'group:experience-player',
-  );
-  await expect(canvas.locator('[data-map-region="experience-player"]')).toHaveAttribute(
-    'data-map-key',
-    'domain:experience-player',
-  );
-  await expect(canvas.locator('[data-map-structural-path][data-from-key="group:experience-player"]'))
-    .toHaveAttribute('data-to-key', 'domain:experience-player');
-
-  const capabilityNode = canvas.locator('[data-map-node-kind="capability"]').first();
-  const topicNode = canvas.locator('[data-map-node-kind="knowledge-topic"]').first();
-  await expect(capabilityNode).toHaveAttribute('data-entity-label', '能力');
-  await expect(topicNode).toHaveAttribute('data-entity-label', '知识议题');
-  expect(await capabilityNode.evaluate((node) => getComputedStyle(node).borderStyle)).not.toBe(
-    await topicNode.evaluate((node) => getComputedStyle(node).borderStyle),
-  );
-
-  await expect(canvas.locator('[data-relation-type="supports"]').first()).toHaveAttribute(
-    'data-direction',
-    'forward',
-  );
-  await expect(canvas.locator('[data-relation-type="complements"]').first()).toHaveAttribute(
-    'data-direction',
-    'mutual',
-  );
-  await expect(canvas.getByRole('link', { name: 'Playtest', exact: true })).toHaveAttribute(
+  await expect(map.getByRole('link', { name: '前往 Innovation Atlas', exact: true })).toHaveAttribute(
     'href',
-    `${basePath}capabilities/playtesting/`,
-  );
-  await expect(canvas.getByRole('link', { name: knowledgeTopics[0].name['zh-CN'], exact: true })).toHaveAttribute(
-    'href',
-    `${basePath}topics/${knowledgeTopics[0].id}/`,
+    `${basePath}atlas/`,
   );
 
-  const nodeContracts = await canvas.locator('[data-map-node]').evaluateAll((nodes) =>
-    nodes.map((node) => ({
-      domId: node.id,
-      href: (node as HTMLAnchorElement).getAttribute('href'),
-      key: (node as HTMLElement).dataset.mapKey,
-      kind: (node as HTMLElement).dataset.mapNodeKind,
-      rawId: (node as HTMLElement).dataset.mapNodeId,
-    })),
-  );
-  expect(new Set(nodeContracts.map(({ domId }) => domId)).size).toBe(nodeContracts.length);
-  expect(new Set(nodeContracts.map(({ key }) => key)).size).toBe(nodeContracts.length);
-  for (const node of nodeContracts) {
-    expect(node.key).toBe(`${node.kind}:${node.rawId}`);
-    expect(node.domId).toBe(`map-node-${node.kind}-${node.rawId}`);
-    expect(node.href).toBe(
-      node.kind === 'capability'
-        ? `${basePath}capabilities/${node.rawId}/`
-        : `${basePath}topics/${node.rawId}/`,
+  for (const node of egdsFrameworkNodes) {
+    const frameworkNode = map.locator(`#egds-${node.id}`);
+    await expect(frameworkNode).toHaveCount(1);
+    await expect(frameworkNode.locator('[data-framework-type-label]')).toHaveText(
+      frameworkTypeLabels[node.kind as keyof typeof frameworkTypeLabels],
     );
+    await expect(frameworkNode).not.toHaveAttribute('data-career-node', /.+/);
+    await expect(frameworkNode).not.toHaveAttribute('data-career-focus-target', /.+/);
+    await expect(frameworkNode).not.toHaveAttribute('data-progress-state', /.+/);
+
+    const count = directEntityCount(node.id);
+    const expandButton = frameworkNode.locator('[data-expand-framework-node]');
+    const shouldExpand = count > 0 && expandableKinds.has(node.kind);
+    await expect(expandButton).toHaveCount(shouldExpand ? 1 : 0);
+    if (shouldExpand) {
+      await expect(expandButton).toHaveAttribute('data-entity-count', String(count));
+      await expect(expandButton).toContainText(String(count));
+    }
   }
-});
-
-test('keeps factual relations subordinate by default in both themes', async ({ browser }) => {
-  for (const colorScheme of ['light', 'dark'] as const) {
-    const context = await browser.newContext({
-      colorScheme,
-      viewport: { width: 1440, height: 1100 },
-    });
-    const page = await context.newPage();
-    await page.goto('./map/');
-
-    const canvas = page.locator('[data-capability-map-canvas]');
-    const relationStyles = await canvas.evaluate((element) => {
-      const supports = element.querySelector<SVGPathElement>('[data-relation-type="supports"]');
-      const complements = element.querySelector<SVGPathElement>('[data-relation-type="complements"]');
-      if (!supports || !complements) throw new Error('Missing relation type');
-      const supportsStyle = getComputedStyle(supports);
-      const complementsStyle = getComputedStyle(complements);
-      return {
-        supports: {
-          markerMid: supportsStyle.markerMid,
-          opacity: Number(supportsStyle.opacity),
-          strokeWidth: Number.parseFloat(supportsStyle.strokeWidth),
-        },
-        complements: {
-          dashArray: complementsStyle.strokeDasharray,
-          markerMid: complementsStyle.markerMid,
-          opacity: Number(complementsStyle.opacity),
-          strokeWidth: Number.parseFloat(complementsStyle.strokeWidth),
-        },
-      };
-    });
-
-    expect(relationStyles.supports.opacity).toBeGreaterThan(0);
-    expect(relationStyles.supports.opacity).toBeLessThanOrEqual(0.18);
-    expect(relationStyles.supports.strokeWidth).toBeGreaterThanOrEqual(1.25);
-    expect(relationStyles.supports.markerMid).not.toBe('none');
-    expect(relationStyles.complements.opacity).toBeGreaterThan(0);
-    expect(relationStyles.complements.opacity).toBeLessThanOrEqual(0.18);
-    expect(relationStyles.complements.strokeWidth).toBeGreaterThanOrEqual(1.25);
-    expect(relationStyles.complements.dashArray).not.toBe('none');
-    expect(relationStyles.complements.markerMid).toBe('none');
-    expect(
-      await canvas.locator('#support-arrow path').evaluate((path) => getComputedStyle(path).fill),
-    ).toBe('context-stroke');
-
-    await context.close();
-  }
-});
-
-test('connects every SVG edge to the exact projected node centers', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.goto('./map/');
-
-  const canvas = page.locator('[data-capability-map-canvas]');
-  for (const relation of capabilityRelations) {
-    const from = capabilities.find(({ id }) => id === relation.fromId);
-    const to = capabilities.find(({ id }) => id === relation.toId);
-    if (!from || !to) throw new Error(`Missing endpoint for ${relation.id}`);
-
-    const edge = canvas.locator(`[data-capability-relation="${relation.id}"]`);
-    await expect(edge).toHaveAttribute('data-from', relation.fromId);
-    await expect(edge).toHaveAttribute('data-to', relation.toId);
-    const fromNode = canvas.locator(`[data-map-node-id="${relation.fromId}"]`);
-    const toNode = canvas.locator(`[data-map-node-id="${relation.toId}"]`);
-    await expect(fromNode).toHaveAttribute('data-anchor-x', String(from.position.x));
-    await expect(fromNode).toHaveAttribute('data-anchor-y', String(from.position.y));
-    await expect(toNode).toHaveAttribute('data-anchor-x', String(to.position.x));
-    await expect(toNode).toHaveAttribute('data-anchor-y', String(to.position.y));
-    const startX = await fromNode.getAttribute('data-layout-center-x');
-    const startY = await fromNode.getAttribute('data-layout-center-y');
-    const endX = await toNode.getAttribute('data-layout-center-x');
-    const endY = await toNode.getAttribute('data-layout-center-y');
-    expect(startX).not.toBeNull();
-    expect(startY).not.toBeNull();
-    expect(endX).not.toBeNull();
-    expect(endY).not.toBeNull();
-    await expect(edge).toHaveAttribute('data-start-x', startX!);
-    await expect(edge).toHaveAttribute('data-start-y', startY!);
-    await expect(edge).toHaveAttribute('data-end-x', endX!);
-    await expect(edge).toHaveAttribute('data-end-y', endY!);
-  }
-});
-
-test('focus enhances adjacent relations and endpoints without hiding the graph', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.goto('./map/');
-
-  const focusId = 'playtesting';
-  const adjacentRelationIds = capabilityRelations
-    .filter(({ fromId, toId }) => fromId === focusId || toId === focusId)
-    .map(({ id }) => id);
-  const canvas = page.locator('[data-capability-map-canvas]');
-  const edges = canvas.locator('[data-capability-relation]');
-  const total = await edges.count();
-  const defaultStyle = await edges.first().evaluate((edge) => {
-    const style = getComputedStyle(edge);
-    return {
-      opacity: Number(style.opacity),
-      stroke: style.stroke,
-      strokeWidth: Number.parseFloat(style.strokeWidth),
-    };
-  });
-  expect(defaultStyle.opacity).toBeLessThanOrEqual(0.18);
-
-  await canvas.locator(`[data-map-node-id="${focusId}"]`).focus();
-  await expect(canvas.locator('[data-capability-relation][data-adjacent="true"]')).toHaveCount(
-    adjacentRelationIds.length,
-  );
-  await expect(canvas.locator('[data-map-node][data-adjacent="true"]')).not.toHaveCount(0);
-  await expect(edges).toHaveCount(total);
-  expect(
-    await edges.evaluateAll((paths) =>
-      paths.every((path) => {
-        const style = getComputedStyle(path);
-        return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0;
-      }),
-    ),
-  ).toBe(true);
-  const focusedRelation = canvas.locator('[data-capability-relation][data-adjacent="true"]').first();
-  const accentColor = await canvas.evaluate((element) => {
-    const probe = document.createElement('span');
-    probe.style.color = 'var(--accent-strong)';
-    element.append(probe);
-    const color = getComputedStyle(probe).color;
-    probe.remove();
-    return color;
-  });
-  await expect.poll(
-    () => focusedRelation.evaluate((edge) => getComputedStyle(edge).stroke),
-  ).toBe(accentColor);
-  const focusedStyle = await focusedRelation.evaluate((edge) => {
-      const style = getComputedStyle(edge);
-      return {
-        opacity: Number(style.opacity),
-        stroke: style.stroke,
-        strokeWidth: Number.parseFloat(style.strokeWidth),
-      };
-  });
-  expect(focusedStyle.opacity).toBeGreaterThan(defaultStyle.opacity);
-  expect(focusedStyle.opacity).toBeGreaterThanOrEqual(0.85);
-  expect(focusedStyle.stroke).not.toBe(defaultStyle.stroke);
-  expect(focusedStyle.stroke).toBe(accentColor);
-  expect(focusedStyle.strokeWidth).toBeGreaterThan(defaultStyle.strokeWidth);
-  expect(
-    await canvas.locator('[data-capability-relation]:not([data-adjacent="true"])').first()
-      .evaluate((edge) => Number(getComputedStyle(edge).opacity)),
-  ).toBeLessThanOrEqual(0.18);
-
-  await canvas.locator(`[data-map-node-id="${focusId}"]`).evaluate((node) => (node as HTMLElement).blur());
-  await expect(canvas.locator('[data-capability-relation][data-adjacent="true"]')).toHaveCount(0);
-  await expect(edges).toHaveCount(total);
-});
-
-test('uses a relationship-equivalent outline at an explicit 320px without overflow', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 900 });
-  await page.goto('./map/');
-
-  await expect(page.locator('[data-capability-map-canvas]')).toBeHidden();
-  await expect(page.locator('[data-map-text-equivalent]')).toBeHidden();
-  const outline = page.locator('[data-mobile-map-outline]');
-  await expect(outline).toBeVisible();
-  await expect(outline.locator('[data-outline-group]')).toHaveCount(mapGroups.length);
-  await expect(outline.locator('[data-outline-region]')).toHaveCount(domains.length);
-  await expect(outline.locator('[data-outline-node-kind="capability"]')).toHaveCount(capabilities.length);
-  await expect(outline.locator('[data-outline-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
-  await expect(outline.locator('[data-outline-node-kind="capability"] > .map-outline-node__heading a')).toHaveCount(capabilities.length);
-  await expect(outline.locator('[data-outline-node-kind="knowledge-topic"] > .map-outline-node__heading a')).toHaveCount(knowledgeTopics.length);
-  await expect(outline.locator('[data-outline-node-kind] > p')).toHaveCount(0);
-  await expect(outline.locator('[data-outline-node-kind="capability"] > details:not([open])')).toHaveCount(capabilities.length);
-  await expect(outline.locator('[data-outline-node-kind="knowledge-topic"] > details:not([open])')).toHaveCount(knowledgeTopics.length);
-  const playtestLink = outline.getByRole('link', { name: 'Playtest', exact: true });
-  const playtestNode = playtestLink.locator('../..');
-  await playtestNode.getByText('查看关系', { exact: true }).click();
-  await expect(playtestNode.getByText(capabilities.find(({ id }) => id === 'playtesting')?.summary['zh-CN'] ?? '', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('受到支持', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('互补', { exact: true })).toBeVisible();
-  await expect(playtestLink).toHaveAttribute(
-    'href',
-    `${basePath}capabilities/playtesting/`,
-  );
-  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-  await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-});
-
-test('keeps the complete map readable without JavaScript in light and dark themes', async ({ browser }) => {
-  for (const colorScheme of ['light', 'dark'] as const) {
-    const context = await browser.newContext({ javaScriptEnabled: false, colorScheme, viewport: { width: 320, height: 900 } });
-    const page = await context.newPage();
-    await page.goto('./map/');
-
-    const outline = page.locator('[data-mobile-map-outline]');
-    await expect(outline.locator('[data-outline-node-kind="capability"]')).toHaveCount(capabilities.length);
-    await expect(outline.locator('[data-outline-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
-    await expect(outline.locator('[data-node-relation]')).toHaveCount(capabilityRelations.length * 2);
-    await expect(outline).toContainText('有向支持不表示必修或固定学习顺序');
-    await expect(outline).toContainText('互补关系不表示先后');
-    await expect(outline).toHaveCSS('color', colorScheme === 'light' ? 'rgb(24, 33, 43)' : 'rgb(232, 238, 244)');
-    const playtestNode = outline.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');
-    await playtestNode.getByText('查看关系', { exact: true }).click();
-    await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
-    await context.close();
-  }
-});
-
-test('provides a complete native desktop text equivalent without JavaScript', async ({ browser }) => {
-  const context = await browser.newContext({
-    javaScriptEnabled: false,
-    colorScheme: 'light',
-    viewport: { width: 1440, height: 1100 },
-  });
-  const page = await context.newPage();
-  await page.goto('./map/');
-
-  const textMap = page.locator('[data-map-text-equivalent]');
-  await expect(textMap).toBeVisible();
-  await expect(textMap).not.toHaveAttribute('open', '');
-  await expect(textMap.getByText('地图结构与关系文字版', { exact: true })).toBeVisible();
-  await textMap.getByText('地图结构与关系文字版', { exact: true }).click();
-  await expect(textMap).toHaveAttribute('open', '');
-  await expect(textMap.locator('[data-text-map-group]')).toHaveCount(mapGroups.length);
-  await expect(textMap.locator('[data-text-map-domain]')).toHaveCount(domains.length);
-  await expect(textMap.locator('[data-text-map-node-kind="capability"]')).toHaveCount(capabilities.length);
-  await expect(textMap.locator('[data-text-map-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
-  await expect(
-    textMap.locator('[data-text-map-group="experience-player"] [data-text-map-domain="experience-player"]'),
-  ).toHaveCount(1);
-  await expect(textMap.locator('[data-text-map-relation]')).toHaveCount(capabilityRelations.length);
-  for (const relation of capabilityRelations) {
-    const item = textMap.locator(`[data-text-map-relation="${relation.id}"]`);
-    await expect(item).toContainText(relation.summary['zh-CN']);
-    await expect(item.locator('a')).toHaveCount(2);
-  }
-  const ids = await page.locator('[id]').evaluateAll((items) => items.map(({ id }) => id));
-  expect(new Set(ids).size).toBe(ids.length);
-
-  await context.close();
-});
-
-test('opens a capability and a knowledge topic with EGDS breadcrumbs and related content', async ({ page }) => {
-  const playtestCapability = capabilities.find(({ id }) => id === 'playtesting');
-  if (!playtestCapability) throw new Error('Missing Playtest capability');
-  const playtestFrameworkNode = egdsFrameworkNodes.find(({ id }) => id === playtestCapability.frameworkNodeId);
-  if (!playtestFrameworkNode) throw new Error(`Missing EGDS framework node for ${playtestCapability.id}`);
-
-  await page.goto('./capabilities/playtesting/');
-  await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
-  await expect(page.getByLabel('面包屑').getByRole('link', { name: playtestFrameworkNode.name['zh-CN'], exact: true }))
-    .toHaveAttribute('href', `${basePath}map/#egds-${playtestFrameworkNode.id}`);
-  await expect(page.getByRole('heading', { name: '它支持', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: '受到支持', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: '互补', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: '相关具体资源', exact: true })).toBeVisible();
-  await expect(page.getByLabel('个人学习状态')).toBeVisible();
-
-  const topic = knowledgeTopics[0];
-  const topicFrameworkNode = egdsFrameworkNodes.find(({ id }) => id === topic.frameworkNodeId);
-  if (!topicFrameworkNode) throw new Error(`Missing EGDS framework node for ${topic.id}`);
-  await page.goto(`./topics/${topic.id}/`);
-  await expect(page.getByRole('heading', { name: topic.name['zh-CN'], exact: true })).toBeVisible();
-  await expect(page.getByLabel('面包屑').getByRole('link', { name: topicFrameworkNode.name['zh-CN'], exact: true }))
-    .toHaveAttribute('href', `${basePath}map/#egds-${topicFrameworkNode.id}`);
-  await expect(page.getByText(topic.summary['zh-CN'], { exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: '相关资源', exact: true })).toBeVisible();
-});
-
-test('connects every map node directly to catalog-ordered resources and factual filters', async ({ request }) => {
-  const idsFromHtml = (html: string, attribute: string) =>
-    [...html.matchAll(new RegExp(`${attribute}="([^"]+)"`, 'g'))].map((match) => match[1]);
-  const resourceIds = new Set(resources.map(({ id }) => id));
-  const catalogResponse = await request.get('resources/');
-  expect(catalogResponse.status()).toBe(200);
-  const catalogResourceIds = idsFromHtml(await catalogResponse.text(), 'data-result-id')
-    .filter((id) => resourceIds.has(id));
 
   for (const capability of capabilities) {
-    const response = await request.get(`capabilities/${capability.id}/`);
-    expect(response.status(), capability.id).toBe(200);
-    const html = await response.text();
-    const expectedResourceIds = catalogResourceIds.filter((id) =>
-      resources.find((resource) => resource.id === id)?.capabilityIds.includes(capability.id),
-    );
-    const expectedTopics = resourceTopics.filter(({ capabilityIds }) => capabilityIds.includes(capability.id));
-
-    expect(idsFromHtml(html, 'data-node-resource-id'), capability.id).toEqual(
-      expectedResourceIds,
-    );
-    expect(idsFromHtml(html, 'data-node-resource-topic-id').sort(), capability.id).toEqual(
-      expectedTopics.map(({ id }) => id).sort(),
-    );
-    for (const topic of expectedTopics) {
-      expect(html, `${capability.id}:${topic.id}`).toContain(
-        `href="${basePath}resources/?resourceTopic=${topic.id}"`,
-      );
-    }
-
-    expect(html, capability.id).toContain(
-      `href="${basePath}resources/?capability=${capability.id}"`,
-    );
-    if (expectedResourceIds.length === 0) {
-      expect(html, capability.id).toContain('当前目录还没有与这个能力直接关联的 Work Item。');
-      expect(html, capability.id).toContain(`href="${basePath}project/contributing/"`);
-    }
+    await expect(map.locator(`[data-map-entity][data-map-entity-key="capability:${capability.id}"] [data-map-entity-detail]`))
+      .toHaveAttribute('href', `${basePath}capabilities/${capability.id}/`);
   }
-
   for (const topic of knowledgeTopics) {
-    const response = await request.get(`topics/${topic.id}/`);
-    expect(response.status(), topic.id).toBe(200);
-    const html = await response.text();
-    const expectedResourceIds = catalogResourceIds.filter((id) =>
-      resources.find((resource) => resource.id === id)?.knowledgeTopicIds.includes(topic.id),
-    );
-    const expectedTopics = resourceTopics.filter(({ knowledgeTopicIds }) => knowledgeTopicIds.includes(topic.id));
-
-    expect(idsFromHtml(html, 'data-node-resource-id'), topic.id).toEqual(
-      expectedResourceIds,
-    );
-    expect(idsFromHtml(html, 'data-node-resource-topic-id').sort(), topic.id).toEqual(
-      expectedTopics.map(({ id }) => id).sort(),
-    );
-    for (const resourceTopic of expectedTopics) {
-      expect(html, `${topic.id}:${resourceTopic.id}`).toContain(
-        `href="${basePath}resources/?resourceTopic=${resourceTopic.id}"`,
-      );
-    }
-    expect(html, topic.id).toContain(
-      `href="${basePath}resources/?knowledgeTopic=${topic.id}"`,
-    );
+    await expect(map.locator(`[data-map-entity][data-map-entity-key="knowledge-topic:${topic.id}"] [data-map-entity-detail]`))
+      .toHaveAttribute('href', `${basePath}topics/${topic.id}/`);
   }
 });
 
-test('keeps node resource sections free of required-sequence semantics', async ({ page }) => {
-  await page.goto('./capabilities/playtesting/');
-  const capabilityResources = page.locator('[data-node-resources]');
-  await expect(capabilityResources).toBeVisible();
-  await expect(capabilityResources).not.toContainText(/学习路径|必修|按顺序/);
+test('expands exactly one framework container and preserves entity control semantics', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
 
-  await page.goto(`./topics/${knowledgeTopics[0].id}/`);
-  const topicResources = page.locator('[data-node-resources]');
-  await expect(topicResources).toBeVisible();
-  await expect(topicResources).not.toContainText(/学习路径|必修|按顺序/);
+  await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+  await expect(map.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(1);
+  await expect(map.locator('#egds-playtest-evidence-iteration')).toHaveAttribute('data-expanded', 'true');
+  await expect(map.locator('[data-map-entity-kind="capability"]:not([hidden])')).toHaveCount(6);
+  await expect(map.locator('[data-map-entity-kind="knowledge-topic"]:not([hidden])')).toHaveCount(1);
+
+  const visibleRows = map.locator('[data-map-entity]:not([hidden])');
+  for (let index = 0; index < await visibleRows.count(); index += 1) {
+    const controls = visibleRows.nth(index).locator('[data-map-entity-controls]');
+    await expect(controls.locator(':scope > button')).toHaveCount(1);
+    await expect(controls.locator(':scope > a')).toHaveCount(1);
+    expect(await controls.locator(':scope > *').evaluateAll((items) => items.map(({ tagName }) => tagName)))
+      .toEqual(['BUTTON', 'A']);
+    await expect(controls.locator('button a, a button')).toHaveCount(0);
+  }
+
+  await map.getByRole('button', { name: /叙事，展开/ }).click();
+  await expect(map.locator('#egds-playtest-evidence-iteration')).not.toHaveAttribute('data-expanded', 'true');
+  await expect(map.locator('#egds-narrative-lever')).toHaveAttribute('data-expanded', 'true');
+  await expect(map.locator('[data-map-entity-kind="capability"]:not([hidden])')).toHaveCount(5);
+  await expect(map.locator('[data-map-entity-kind="knowledge-topic"]:not([hidden])')).toHaveCount(1);
+});
+
+test('selecting Playtest opens the inspector and projects only direct relationships', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+
+  const playtest = map.locator('[data-map-entity-key="capability:playtesting"]');
+  await playtest.getByRole('button', { name: /Playtest.*关系/ }).click();
+
+  const inspector = map.locator('[data-map-inspector]');
+  await expect(inspector).toBeVisible();
+  await expect(inspector.locator('[data-inspector-kind]')).toHaveText('能力');
+  await expect(inspector.locator('[data-inspector-name]')).toHaveText('Playtest');
+  await expect(inspector.getByRole('link', { name: '查看相关资源', exact: true })).toHaveAttribute(
+    'href',
+    `${basePath}resources/?capability=playtesting`,
+  );
+  await expect(inspector.getByRole('link', { name: '打开详情页', exact: true })).toHaveAttribute(
+    'href',
+    `${basePath}capabilities/playtesting/`,
+  );
+
+  const expectedIds = directRelationIds('playtesting');
+  expect(await inspector.locator('[data-inspector-relation-id]').evaluateAll((items) =>
+    items.map((item) => (item as HTMLElement).dataset.inspectorRelationId).sort(),
+  )).toEqual(expectedIds);
+  expect(await map.locator('[data-capability-relation]:not([hidden])').evaluateAll((items) =>
+    items.map((item) => (item as HTMLElement).dataset.capabilityRelation).sort(),
+  )).toEqual(expectedIds);
+  await expect(map.locator('[data-relation-endpoint]:not([hidden])')).not.toHaveCount(0);
+  await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(expectedIds.length);
+  await expect(map).not.toContainText(/先修|prerequisite/i);
+
+  const supports = map.locator('[data-capability-relation][data-relation-type="supports"]:not([hidden])').first();
+  await expect(supports).toHaveAttribute('data-direction', 'forward');
+  expect(await supports.evaluate((item) => getComputedStyle(item).strokeDasharray)).toBe('none');
+  expect(await supports.evaluate((item) => getComputedStyle(item).markerEnd)).not.toBe('none');
+
+  const complements = map.locator('[data-capability-relation][data-relation-type="complements"]:not([hidden])').first();
+  await expect(complements).toHaveAttribute('data-direction', 'mutual');
+  expect(await complements.evaluate((item) => getComputedStyle(item).strokeDasharray)).not.toBe('none');
+  expect(await complements.evaluate((item) => getComputedStyle(item).markerEnd)).toBe('none');
+});
+
+test('returning to the overview clears expansion, selection, inspector and projected relations', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+  await map.locator('[data-map-entity-key="capability:playtesting"]')
+    .getByRole('button', { name: /Playtest.*关系/ }).click();
+  await map.getByRole('button', { name: '返回全图', exact: true }).click();
+
+  await expect(map.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(0);
+  await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(0);
+  await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
+  await expect(map.locator('[data-relation-endpoint]:not([hidden])')).toHaveCount(0);
+  await expect(map.locator('[data-map-inspector]')).toBeHidden();
+  await expect(map).not.toHaveAttribute('data-selected-entity-key', /.+/);
+});
+
+test('public map events apply capability-only career roles and focus through the root owner', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+
+  await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:apply-career-lens', {
+    bubbles: true,
+    detail: {
+      profileId: 'fixture-profile',
+      nodes: [
+        { capabilityId: 'playtesting', priority: 'core', responsibility: 'execute' },
+        { capabilityId: 'narrative-architecture', priority: 'important', responsibility: 'contribute' },
+      ],
+    },
+  })));
+  await expect(map.locator('[data-map-entity][data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-role-priority', 'core');
+  await expect(map.locator('[data-map-entity][data-map-entity-key="capability:narrative-architecture"]')).toHaveAttribute('data-role-priority', 'important');
+  await expect(map.locator('[data-map-entity-kind="knowledge-topic"][data-role-priority]')).toHaveCount(0);
+  await expect(map.locator('[data-egds-framework-node][data-role-priority]')).toHaveCount(0);
+
+  await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+    bubbles: true,
+    detail: { capabilityId: 'playtesting' },
+  })));
+  await expect(map.locator('#egds-playtest-evidence-iteration')).toHaveAttribute('data-expanded', 'true');
+  await expect(map.locator('[data-map-entity][data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
+  await expect(map.locator('[data-map-inspector]')).toBeVisible();
+  await expect(map.locator('[data-map-entity][data-map-entity-key="capability:playtesting"] [data-select-map-entity]')).toBeFocused();
+
+  await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:clear-career-lens', { bubbles: true })));
+  await expect(map.locator('[data-map-entity][data-role-priority]')).toHaveCount(0);
+  await expect(map.locator('[data-map-entity][data-role-state]')).toHaveCount(0);
+});
+
+test('ordinary wheel scrolls the page over blank map, framework nodes and expanded entities', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 560 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const canvas = map.locator('[data-capability-map-canvas]');
+
+  const wheelOver = async (locator: ReturnType<Page['locator']>) => {
+    await locator.scrollIntoViewIfNeeded();
+    const box = await locator.boundingBox();
+    if (!box) throw new Error('Missing wheel target box');
+    const before = await page.evaluate(() => window.scrollY);
+    await page.mouse.move(box.x + Math.min(box.width / 2, 12), box.y + Math.min(box.height / 2, 12));
+    await page.mouse.wheel(0, 240);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(before);
+    await expect(canvas).toHaveJSProperty('scrollTop', 0);
+  };
+
+  await wheelOver(canvas);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await wheelOver(map.locator('#egds-experience-design'));
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+  await wheelOver(map.locator('[data-map-entity][data-map-entity-key="capability:playtesting"]'));
+  expect(await canvas.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return [style.overflow, style.overflowY];
+  })).not.toContain('auto');
+});
+
+test('responsive and no-JS modes expose the complete relationship-equivalent native outline', async ({ browser, page }) => {
+  for (const width of [1024, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./map/');
+    const map = page.locator('[data-egds-map]');
+    await expect(map.locator('[data-capability-map-canvas]')).toBeHidden();
+    const outline = map.locator('[data-egds-outline]');
+    await expect(outline).toBeVisible();
+    await expect(outline.locator('[data-outline-framework-node]')).toHaveCount(28);
+    await expect(outline.locator('[data-outline-entity-kind="capability"]')).toHaveCount(42);
+    await expect(outline.locator('[data-outline-entity-kind="knowledge-topic"]')).toHaveCount(12);
+    await expect(outline.locator('[data-outline-relation]')).toHaveCount(64);
+    await assertNoPageOverflow(page);
+  }
+
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 320, height: 900 }]) {
+    const context = await browser.newContext({ javaScriptEnabled: false, colorScheme: 'dark', viewport });
+    const noJsPage = await context.newPage();
+    await noJsPage.goto('./map/');
+    const map = noJsPage.locator('[data-egds-map]');
+    const outline = map.locator('[data-egds-outline]');
+    await expect(outline).toBeVisible();
+    await expect(map.locator('[data-capability-map-canvas]')).toBeHidden();
+    await expect(outline.locator('[data-outline-framework-node]')).toHaveCount(28);
+    await expect(outline.locator('[data-outline-entity-kind="capability"]')).toHaveCount(42);
+    await expect(outline.locator('[data-outline-entity-kind="knowledge-topic"]')).toHaveCount(12);
+    await expect(outline.locator('[data-outline-relation]')).toHaveCount(64);
+    await expect(outline.locator('[data-select-map-entity]')).toHaveCount(54);
+    await expect(outline.locator('[data-select-map-entity]:disabled')).toHaveCount(54);
+    await expect(outline).toContainText('关系查看需要 JavaScript，详情链接仍可使用。');
+    await expect(outline.locator('[data-map-entity-detail]')).toHaveCount(54);
+    await assertNoPageOverflow(noJsPage);
+    await context.close();
+  }
+});
+
+test('desktop overview stays within the approved one-screen scene height', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await expect(map.locator('[data-capability-map-canvas]')).toBeVisible();
+  await expect(map.locator('[data-egds-outline]')).toBeHidden();
+  expect(await map.locator('[data-egds-scene]').evaluate((element) => element.getBoundingClientRect().height))
+    .toBeLessThanOrEqual(720);
+  await assertNoPageOverflow(page);
 });

@@ -7,6 +7,8 @@ import type { Catalog } from '../lib/catalog/validate';
 interface Props {
   mapGroups: Catalog['mapGroups'];
   domains: Catalog['domains'];
+  egdsFrameworkNodes: Catalog['egdsFrameworkNodes'];
+  egdsFrameworkRelations: Catalog['egdsFrameworkRelations'];
   capabilities: Catalog['capabilities'];
   knowledgeTopics: Catalog['knowledgeTopics'];
   capabilityRelations: Catalog['capabilityRelations'];
@@ -15,8 +17,8 @@ interface Props {
 }
 
 const {
-  mapGroups,
-  domains,
+  egdsFrameworkNodes,
+  egdsFrameworkRelations,
   capabilities,
   knowledgeTopics,
   capabilityRelations,
@@ -134,8 +136,8 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
 
   <div class="career-map" aria-label="职业画像覆盖的能力地图">
     <CapabilityMap
-      mapGroups={mapGroups}
-      domains={domains}
+      egdsFrameworkNodes={egdsFrameworkNodes}
+      egdsFrameworkRelations={egdsFrameworkRelations}
       capabilities={capabilities}
       knowledgeTopics={knowledgeTopics}
       capabilityRelations={capabilityRelations}

@@ -3,7 +3,13 @@ import MapExplorer from '../../components/MapExplorer.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 
-const { mapGroups, domains, capabilities, knowledgeTopics, capabilityRelations } = await loadCatalog();
+const {
+  egdsFrameworkNodes,
+  egdsFrameworkRelations,
+  capabilities,
+  knowledgeTopics,
+  capabilityRelations,
+} = await loadCatalog();
 ---
 
 <BaseLayout title="能力地图" description="以 PlayWithExperiences 的 EGDS 作为可讨论、可修订的设计视角，理解设计如何成为结果。">
@@ -15,8 +21,8 @@ const { mapGroups, domains, capabilities, knowledgeTopics, capabilityRelations }
 
   <div class="page-shell">
     <MapExplorer
-      mapGroups={mapGroups}
-      domains={domains}
+      egdsFrameworkNodes={egdsFrameworkNodes}
+      egdsFrameworkRelations={egdsFrameworkRelations}
       capabilities={capabilities}
       knowledgeTopics={knowledgeTopics}
       capabilityRelations={capabilityRelations}
