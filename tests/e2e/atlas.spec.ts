@@ -275,6 +275,120 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and modif
   await expect(stage).toHaveAttribute('data-scale', '1');
 });
 
+test('uses the complete outline until the viewport can honor the 50% minimum scale', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Responsive Atlas viewport ownership is tested once.');
+
+  for (const width of [800, 1024, 1150]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('./atlas/');
+    await expect(page.locator('[data-atlas-view-controls]'), `${width}px controls`).toBeHidden();
+    await expect(page.locator('[data-atlas-canvas]'), `${width}px canvas`).toBeHidden();
+    const outline = page.locator('[data-atlas-mobile-outline]');
+    await expect(outline, `${width}px outline`).toBeVisible();
+    await expect(outline.locator('[data-atlas-era]')).toHaveCount(5);
+    await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(27);
+    expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
+    )).size).toBe(25);
+    await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+  }
+
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+  await expect(page.locator('[data-atlas-view-controls]')).toBeVisible();
+  await expect(page.locator('[data-atlas-canvas]')).toBeVisible();
+  await expect(page.locator('[data-atlas-mobile-outline]')).toBeHidden();
+  await page.getByRole('button', { name: '适应全图' }).click();
+  const fit = await page.locator('[data-atlas-canvas]').evaluate((element) => {
+    const scene = element.querySelector<HTMLElement>('[data-atlas-scene]')!;
+    const viewportRect = element.getBoundingClientRect();
+    const sceneRect = scene.getBoundingClientRect();
+    return {
+      scale: Number(element.querySelector<HTMLElement>('[data-atlas-stage]')?.dataset.scale),
+      viewport: {
+        left: viewportRect.left + element.clientLeft,
+        top: viewportRect.top + element.clientTop,
+        right: viewportRect.left + element.clientLeft + element.clientWidth,
+        bottom: viewportRect.top + element.clientTop + element.clientHeight,
+      },
+      scene: { left: sceneRect.left, top: sceneRect.top, right: sceneRect.right, bottom: sceneRect.bottom },
+    };
+  });
+  expect(fit.scale).toBeGreaterThanOrEqual(0.5);
+  expect(fit.scene.left).toBeGreaterThanOrEqual(fit.viewport.left - 1);
+  expect(fit.scene.top).toBeGreaterThanOrEqual(fit.viewport.top - 1);
+  expect(fit.scene.right).toBeLessThanOrEqual(fit.viewport.right + 1);
+  expect(fit.scene.bottom).toBeLessThanOrEqual(fit.viewport.bottom + 1);
+});
+
+test('ordinary wheel chains vertically to the page while modified wheel only zooms the Atlas', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop wheel ownership is tested once.');
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+  await page.getByRole('button', { name: '适应全图' }).click();
+
+  const viewport = page.locator('[data-atlas-canvas]');
+  await viewport.scrollIntoViewIfNeeded();
+  const box = await viewport.boundingBox();
+  expect(box).not.toBeNull();
+  expect(await viewport.evaluate((element) => element.scrollHeight <= element.clientHeight + 1)).toBe(true);
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  const pageYBeforeWheel = await page.evaluate(() => window.scrollY);
+  await page.mouse.wheel(0, 320);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(pageYBeforeWheel);
+  expect(await viewport.evaluate((element) => element.scrollTop)).toBe(0);
+
+  await viewport.scrollIntoViewIfNeeded();
+  const zoomBox = await viewport.boundingBox();
+  expect(zoomBox).not.toBeNull();
+  await page.mouse.move(zoomBox!.x + zoomBox!.width / 2, zoomBox!.y + zoomBox!.height / 2);
+  const pageYBeforeZoom = await page.evaluate(() => window.scrollY);
+  const scaleBeforeZoom = Number(await page.locator('[data-atlas-stage]').getAttribute('data-scale'));
+  await page.keyboard.down('Control');
+  await page.mouse.wheel(0, -120);
+  await page.keyboard.up('Control');
+  await expect.poll(async () => Number(await page.locator('[data-atlas-stage]').getAttribute('data-scale')))
+    .toBeGreaterThan(scaleBeforeZoom);
+  expect(await page.evaluate(() => window.scrollY)).toBe(pageYBeforeZoom);
+});
+
+test('fit follows viewport resizing until manual zoom or reset takes ownership', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Fit resize ownership is tested once.');
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+  const stage = page.locator('[data-atlas-stage]');
+  await page.getByRole('button', { name: '适应全图' }).click();
+  const initialFit = Number(await stage.getAttribute('data-scale'));
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect.poll(async () => Number(await stage.getAttribute('data-scale'))).toBeGreaterThan(initialFit);
+
+  await page.getByRole('button', { name: '放大' }).click();
+  const manualScale = Number(await stage.getAttribute('data-scale'));
+  await page.setViewportSize({ width: 1300, height: 820 });
+  await expect.poll(async () => Number(await stage.getAttribute('data-scale'))).toBe(manualScale);
+
+  await page.getByRole('button', { name: '重置 100%' }).click();
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await expect.poll(async () => Number(await stage.getAttribute('data-scale'))).toBe(1);
+});
+
+test('lost pointer capture clears drag state without waiting for pointerup', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Pointer capture cleanup is tested once.');
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+  const viewport = page.locator('[data-atlas-canvas]');
+  await viewport.scrollIntoViewIfNeeded();
+  const box = await viewport.boundingBox();
+  expect(box).not.toBeNull();
+  await page.mouse.move(box!.x + 28, box!.y + 38);
+  await page.mouse.down();
+  await expect(viewport).toHaveAttribute('data-dragging', 'true');
+  await viewport.dispatchEvent('lostpointercapture', { pointerId: 1 });
+  await expect(viewport).not.toHaveAttribute('data-dragging', 'true');
+  await page.mouse.up();
+});
+
 test('pan inputs preserve graph identity, interactive targets and dialog return positions', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop pan and detail flow are tested once.');
   await page.goto('./atlas/');
