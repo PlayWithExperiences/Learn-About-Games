@@ -5,6 +5,9 @@
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
+- 私有完善 Map / Career 计划：[2026-08-09-private-refinement-map-career-plan.md](../superpowers/plans/2026-08-09-private-refinement-map-career-plan.md)
+- 私有完善 Resources 计划：[2026-08-09-private-refinement-resources-plan.md](../superpowers/plans/2026-08-09-private-refinement-resources-plan.md)
+- 私有完善 Atlas 计划：[2026-08-09-private-refinement-atlas-plan.md](../superpowers/plans/2026-08-09-private-refinement-atlas-plan.md)
 - 视觉系统：[DESIGN.md](../../DESIGN.md)
 - Foundation 计划：[2026-08-09-v02-foundation-implementation-plan.md](../superpowers/plans/2026-08-09-v02-foundation-implementation-plan.md)
 - Map / Career 计划：[2026-08-09-v02-map-careers-implementation-plan.md](../superpowers/plans/2026-08-09-v02-map-careers-implementation-plan.md)
@@ -17,7 +20,9 @@
 
 用户在查看 v0.2 后认为核心体验仍不足以公开：暗色主题下职业高亮不够明显；能力地图虽然有关系，但结构过散、缺少原思维导图那样清晰的主次和分区；成长资源的双列形态占用过宽；Innovation Atlas 缺少缩放和平移；节点详情需要按名称／时间排序和搜索。仓库因此已暂时设为 Private，未经身份验证访问仓库与原 Pages URL 均返回 404；Pages workflow 同时手动停用，避免私有完善期间的 main push 触发无效部署。
 
-发起人已确认本轮设计方向。能力地图不采用会伪造唯一父子关系的严格树，而使用“分层思维导图 + 按需关系网”：一个根节点、五条主干、8 个 Domain 与原有节点；主干与归属持续可见，`supports` / `complements` 在节点聚焦时增强。深色 Career Lens 用填充、边框、线型和中文标签共同编码；Work Item 改为单列紧凑编辑行；Atlas 增加适应全图、50%-200% 缩放、拖拽／键盘平移；节点索引增加中英文搜索和名称／时间排序。所有调整都保持 no-JS 内容、资源事实顺序、职业无评分与 Atlas 全局网络不变量。
+发起人已确认本轮设计方向。能力地图不采用会伪造唯一父子关系的严格树，而使用“分层思维导图 + 按需关系网”：一个根节点、五条主干、8 个 Domain 与原有节点；主干与归属持续可见，`supports` / `complements` 在节点聚焦时增强。深色 Career Lens 用填充、边框、线型和中文标签共同编码；Source 双列卡片改为单列目录，已有 Work Item 单列进一步收紧信息区；Atlas 增加适应全图、50%-200% 缩放、拖拽／键盘平移；节点索引增加中英文搜索和名称／时间排序。所有调整都保持 no-JS 内容、资源事实顺序、职业无评分与 Atlas 全局网络不变量。
+
+实施按三个可独立验证的子系统拆分：Map / Career、Resources、Atlas。三份计划都从行为 RED 开始，每个切片独立提交；`global.css` 是三者唯一共享写入点，因此默认串行执行而不是并行修改。每个子系统先通过定向 unit/E2E 和视觉矩阵，再由主任务串行运行完整 build/E2E 门禁。规划时核对真实 DOM 后修正规格中的一处事实：当前双列的是 Source 目录，Work Item 已是单列但横向信息过长；实施目标因此是 Source 单列化与 Work Item 进一步收紧，而不是把不存在的双列 Work Item 当作缺陷。
 
 v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`、GitHub Pages run `31282275108` 与 evidence commit `ff7bb3b954f52e65ede79e73103da70a1d6accab` 作为最后一次公开构建的历史证据保留。重新公开前必须完成核心体验修正并重新运行线上验收，不能把历史成功 run 描述成当前公开状态。
 
