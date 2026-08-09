@@ -9,7 +9,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 - 深色 Career Lens 以不透明填充、2px 边框、实线／虚线／点线和中文标签共同表达核心／重要／建议了解；未收录节点仍完整可读，不隐藏、不评分。
 - 成长资源收紧为单列目录：20 个 Source 与 128 个 Work Item 保持原 catalog 顺序、七维筛选、140 个 Access Version 与 12 条外部观察；版本和观察进入原生 disclosure，320px 与无 JavaScript 仍可完整访问。
 - Innovation Atlas 增加受约束的 50%–200% 缩放、适应全图、复位、拖拽和键盘平移；中间宽度使用完整时期大纲。节点索引新增中英文搜索、按时间／名称稳定排序、结果计数、空状态与无 JavaScript 说明，图的 27 个节点、25 条关系、40 项 Evidence 与主题透镜语义不变。
-- 以上改动当前只存在于私有 `codex/v02` 分支；它们不是已部署行为，Pages workflow 仍保持手动停用。
+- 以上改动以 runtime commit `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` 推送到远端私有 `codex/v02` 分支；它们不是已部署行为，Pages workflow 仍保持手动停用。
 
 ## [v0.2] - 2026-08-09
 

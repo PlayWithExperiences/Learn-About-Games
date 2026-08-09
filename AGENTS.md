@@ -1,6 +1,6 @@
 # Project entrypoint
 
-Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build. The user wants the repository and site to remain private until the core map, resource density, dark-theme emphasis, and Atlas exploration issues are resolved.
+Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. Private refinement runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` is pushed to remote `codex/v02` and passed the local acceptance suite; it is waiting for the user's private review before any decision to restore Public or Pages. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build.
 
 Before making substantive changes, read these files in order:
 

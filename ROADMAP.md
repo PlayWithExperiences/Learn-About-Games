@@ -7,7 +7,7 @@
 - 仓库已暂时设为 Private，公开 GitHub Pages 已下线；历史发布证据继续保留，但不代表当前可访问状态。
 - Pages workflow 已手动停用，避免私有完善期间每次推送触发无效部署；恢复公开前需要显式重新启用。
 - 私有完善已经在 `codex/v02` 实现五条主干的分层思维导图、深色 Career Lens 冗余编码、单列紧凑资源行、Atlas 可控视口，以及节点搜索／排序；实施边界见 [设计规格](docs/superpowers/specs/2026-08-09-private-refinement-design.md)。
-- 本地串行整站验收已经完成；当前只提交并推送私有分支供用户复核。恢复 Public 与 Pages 仍需用户后续明确决定，并重新执行线上契约验收。
+- 本地串行整站验收已经完成，runtime `1a1e2d1` 已推送到远端私有 `codex/v02` 供用户复核。恢复 Public 与 Pages 仍需用户后续明确决定，并重新执行线上契约验收。
 
 ## Shipped｜M0 纵向切片
 

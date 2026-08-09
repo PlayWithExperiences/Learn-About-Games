@@ -280,3 +280,9 @@ Innovation Atlas 的视口使用 50%–200% 固定缩放、中心锚点、适应
 修复先用真实 unit / E2E 锁定 `恶魔城` 4 项、全角 `ＭＥＴＲＯＩＤＶＡＮＩＡ` 18 项与 `单局永久死亡` 6 项，再让索引与查询统一执行 NFKC、locale lowercase 和 trim；中文 Tag 改为“恶魔城（Castlevania）探索脉络”，没有在 controller 内硬编码同义词。视觉弱化删除整 anchor / header opacity，改用不透明 muted token、虚线边框和局部类型强调；四种搜索+Metroidvania 双未匹配状态的真实文字对比度均达到至少 4.5:1。修复提交 `08be06d`，四张关键原图保存在临时目录 `/tmp/learn-about-games-atlas-index-fix/`。
 
 主任务的第一轮完整浏览器门禁运行 158 项，其中 140 passed、16 skipped、2 failed。两项失败都来自同一测试合同：`visible-skeleton.spec.ts` 用全局 heading 文本寻找“体验与玩家”，新五条主干地图中主干和同名 Domain 都合法存在，因此 Playwright strict locator 命中两个元素。根因不是产品缺内容或视觉冲突；最小修复只让该测试在桌面 `data-map-region`、移动 `data-outline-region` 中核对八个 Domain。定向复跑为 25 passed / 1 desktop-only skipped；完整复跑为 142 passed / 16 intentional skipped / 0 failed。最终 `npm run check` 为 0 errors / warnings / hints，Vitest 105/105，fresh build 105 pages，`npm audit --audit-level=high` 为 0 vulnerabilities，差异与脱敏秘密扫描均通过。
+
+## 28. 私有完善远端交接（部分会话导出）
+
+本节只记录脱敏的最终交接事实。独立 reviewer 以 `05beed7..1a1e2d1` 为范围逐项核对五条主干地图、Dark Career 三档、20/128 单列资源目录、Atlas 50%–200% 视口和中英文节点索引，结论为 Ready，0 Critical / Important / Minor。reviewer 自行运行 fresh build：Astro 0 errors / warnings / hints、Vitest 105/105、105 pages；完整 Playwright 为 142 passed / 16 intentional skipped / 0 failed；repo API 为 PRIVATE，deploy workflow 为 `disabled_manually`。
+
+主任务确认远端 `main` 与 `codex/v02` 都停在私有化提交 `d758bd5`，且它是本地 HEAD 的祖先，再用 SSH 将远端 `codex/v02` 非强制快进到 runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a`。GitHub API 随后返回该精确 SHA；`main` 未更新，Pages workflow 未启用，仓库仍为 Private。本元数据提交只修正入口与交接事实，不改变已经审查的产品 runtime；下一步是用户在私有状态下复核，而不是自动恢复公开。
