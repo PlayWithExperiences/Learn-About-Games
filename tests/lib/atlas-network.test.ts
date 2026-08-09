@@ -3,13 +3,22 @@ import { describe, expect, it } from 'vitest';
 import atlasEvidence from '../../src/data/atlas-evidence.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
 import atlasRelations from '../../src/data/atlas-relations.json';
+import atlasTags from '../../src/data/atlas-tags.json';
 import atlasThemes from '../../src/data/atlas-themes.json';
 import type { Catalog } from '../../src/lib/catalog/validate';
 import {
+  atlasScaleBounds,
+  buildAtlasNodeIndex,
   buildAtlasLayout,
+  clampAtlasScale,
+  filterAtlasNodeIndex,
+  fitAtlasScale,
   groupAtlasNodesByEra,
   indexAtlasRelations,
   matchAtlasTheme,
+  projectAtlasScrollAnchor,
+  sortAtlasNodeIndex,
+  stepAtlasScale,
 } from '../../src/lib/atlas-network';
 
 const typedAtlasNodes = atlasNodes as Catalog['atlasNodes'];
@@ -285,5 +294,102 @@ describe('global Atlas presentation geometry', () => {
     );
     expect(adjacency.get('rogue')?.outgoing.map(({ id }) => id)).toContain('rogue-to-hack');
     expect(adjacency.get('hack')?.incoming.map(({ id }) => id)).toContain('rogue-to-hack');
+  });
+});
+
+describe('Atlas viewport helpers', () => {
+  it('bounds scale changes to 50% through 200% in 25% steps', () => {
+    expect(atlasScaleBounds).toEqual({ min: 0.5, max: 2, step: 0.25 });
+    expect(clampAtlasScale(0.1)).toBe(0.5);
+    expect(clampAtlasScale(2.8)).toBe(2);
+    expect(stepAtlasScale(1, -1)).toBe(0.75);
+    expect(stepAtlasScale(1, 1)).toBe(1.25);
+    expect(stepAtlasScale(0.5, -1)).toBe(0.5);
+    expect(stepAtlasScale(2, 1)).toBe(2);
+  });
+
+  it('fits legal viewport dimensions inside the scale bounds', () => {
+    expect(fitAtlasScale({
+      viewportWidth: 1100,
+      viewportHeight: 600,
+      sceneWidth: 2200,
+      sceneHeight: 900,
+    })).toBe(0.5);
+    expect(fitAtlasScale({
+      viewportWidth: 1650,
+      viewportHeight: 1000,
+      sceneWidth: 2200,
+      sceneHeight: 900,
+    })).toBe(0.75);
+    expect(fitAtlasScale({
+      viewportWidth: 4400,
+      viewportHeight: 1800,
+      sceneWidth: 2200,
+      sceneHeight: 900,
+    })).toBe(2);
+  });
+
+  it('preserves the viewport center when projecting a new scale', () => {
+    expect(projectAtlasScrollAnchor({
+      oldScale: 1,
+      newScale: 1.5,
+      scrollLeft: 400,
+      scrollTop: 100,
+      viewportWidth: 1000,
+      viewportHeight: 600,
+    })).toEqual({ scrollLeft: 850, scrollTop: 300 });
+  });
+});
+
+describe('Atlas node index helpers', () => {
+  it('indexes localized names and bilingual searchable node and tag text', () => {
+    const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
+    const runStructure = indexed.find(({ id }) => id === 'roguelike-run-structure');
+
+    expect(indexed).toHaveLength(27);
+    expect(runStructure).toMatchObject({
+      id: 'roguelike-run-structure',
+      startYear: 1980,
+      name: 'Roguelike run-based 单局结构',
+    });
+    expect(runStructure?.searchText).toContain('roguelike evidence lens');
+    expect(filterAtlasNodeIndex(indexed, '单局永久死亡').map(({ id }) => id)).toContain('rogue');
+    expect(filterAtlasNodeIndex(indexed, 'METROIDVANIA-LENS').map(({ id }) => id)).toContain('metroid');
+  });
+
+  it('includes optional English summaries in normalized substring search', () => {
+    const indexed = buildAtlasNodeIndex([
+      {
+        id: 'synthetic-node',
+        startYear: 2000,
+        name: { 'zh-CN': '中文名称', en: 'English name' },
+        summary: { 'zh-CN': '中文摘要', en: 'English summary' },
+        tags: ['synthetic-tag'],
+      },
+    ], [
+      {
+        id: 'synthetic-tag',
+        name: { 'zh-CN': '中文标签', en: 'English tag' },
+      },
+    ]);
+
+    expect(filterAtlasNodeIndex(indexed, 'english summary').map(({ id }) => id)).toEqual([
+      'synthetic-node',
+    ]);
+    expect(filterAtlasNodeIndex(indexed, 'english tag').map(({ id }) => id)).toEqual([
+      'synthetic-node',
+    ]);
+  });
+
+  it('sorts time and names deterministically regardless of input order', () => {
+    const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
+    const reversed = [...indexed].reverse();
+
+    const timeSorted = sortAtlasNodeIndex(indexed, 'time');
+    expect(timeSorted.map(({ startYear }) => startYear)).toEqual(
+      [...timeSorted.map(({ startYear }) => startYear)].sort((left, right) => left - right),
+    );
+    expect(sortAtlasNodeIndex(reversed, 'time')).toEqual(timeSorted);
+    expect(sortAtlasNodeIndex(reversed, 'name')).toEqual(sortAtlasNodeIndex(indexed, 'name'));
   });
 });

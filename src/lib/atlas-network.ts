@@ -77,6 +77,129 @@ export function matchAtlasTheme(
   };
 }
 
+export const atlasScaleBounds = { min: 0.5, max: 2, step: 0.25 } as const;
+
+export function clampAtlasScale(value: number): number {
+  return Math.min(atlasScaleBounds.max, Math.max(atlasScaleBounds.min, value));
+}
+
+export function stepAtlasScale(current: number, direction: -1 | 1): number {
+  return clampAtlasScale(current + atlasScaleBounds.step * direction);
+}
+
+export function fitAtlasScale(input: {
+  viewportWidth: number;
+  viewportHeight: number;
+  sceneWidth: number;
+  sceneHeight: number;
+}): number {
+  return clampAtlasScale(Math.min(
+    input.viewportWidth / input.sceneWidth,
+    input.viewportHeight / input.sceneHeight,
+  ));
+}
+
+export function projectAtlasScrollAnchor(input: {
+  oldScale: number;
+  newScale: number;
+  scrollLeft: number;
+  scrollTop: number;
+  viewportWidth: number;
+  viewportHeight: number;
+}) {
+  const centerX = (input.scrollLeft + input.viewportWidth / 2) / input.oldScale;
+  const centerY = (input.scrollTop + input.viewportHeight / 2) / input.oldScale;
+  return {
+    scrollLeft: Math.max(0, centerX * input.newScale - input.viewportWidth / 2),
+    scrollTop: Math.max(0, centerY * input.newScale - input.viewportHeight / 2),
+  };
+}
+
+type AtlasLocalizedText = {
+  'zh-CN': string;
+  en?: string;
+};
+
+type AtlasNodeForIndex = {
+  id: string;
+  startYear: number;
+  name: AtlasLocalizedText;
+  summary: AtlasLocalizedText;
+  tags: readonly string[];
+};
+
+type AtlasTagForIndex = {
+  id: string;
+  name: AtlasLocalizedText;
+};
+
+export type AtlasIndexNode = {
+  id: string;
+  startYear: number;
+  name: string;
+  searchText: string;
+};
+
+function normalizeAtlasSearchText(parts: Array<string | undefined>): string {
+  return parts
+    .filter((part): part is string => typeof part === 'string')
+    .join(' ')
+    .toLocaleLowerCase();
+}
+
+export function buildAtlasNodeIndex(
+  nodes: readonly AtlasNodeForIndex[],
+  tags: readonly AtlasTagForIndex[],
+): AtlasIndexNode[] {
+  const tagById = new Map(tags.map((tag) => [tag.id, tag]));
+
+  return nodes.map((node) => ({
+    id: node.id,
+    startYear: node.startYear,
+    name: node.name['zh-CN'],
+    searchText: normalizeAtlasSearchText([
+      node.name['zh-CN'],
+      node.name.en,
+      node.summary['zh-CN'],
+      node.summary.en,
+      ...node.tags.flatMap((tagId) => {
+        const tag = tagById.get(tagId);
+        return [tagId, tag?.name['zh-CN'], tag?.name.en];
+      }),
+    ]),
+  }));
+}
+
+export function filterAtlasNodeIndex(
+  nodes: readonly AtlasIndexNode[],
+  query: string,
+): AtlasIndexNode[] {
+  const normalizedQuery = query.toLocaleLowerCase();
+  return nodes.filter(({ searchText }) => searchText.includes(normalizedQuery));
+}
+
+const atlasNameCollator = new Intl.Collator(['zh-CN', 'en'], {
+  numeric: true,
+  sensitivity: 'base',
+});
+
+export function sortAtlasNodeIndex(
+  nodes: readonly AtlasIndexNode[],
+  order: 'time' | 'name',
+): AtlasIndexNode[] {
+  return [...nodes].sort((left, right) => {
+    if (order === 'time') {
+      return left.startYear - right.startYear
+        || atlasNameCollator.compare(left.name, right.name)
+        || left.id.localeCompare(right.id);
+    }
+
+    return atlasNameCollator.compare(left.name, right.name)
+      || left.startYear - right.startYear
+      || left.id.localeCompare(right.id);
+  });
+}
+
 const atlasLayoutDefaults = {
   width: 2200,
   height: 900,
