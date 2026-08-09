@@ -460,10 +460,17 @@ test('responsive selected state keeps a keyboard-operable return action', async 
     await page.setViewportSize({ width, height: 900 });
     await page.goto('./map/');
     const map = page.locator('[data-egds-map]');
+    const unrelated = map.locator('[data-egds-outline] [data-outline-framework-node="with-team"]');
+    await unrelated.locator(':scope > summary').click();
     await openOutlineNode(page, ['from-plan-to-ship', 'playtest-evidence-iteration']);
     await map.locator('[data-egds-outline] [data-map-entity-key="capability:playtesting"]')
       .getByRole('button', { name: /Playtest.*关系/ }).click();
 
+    const branch = map.locator('[data-egds-outline] [data-outline-framework-node="from-plan-to-ship"]');
+    const leaf = map.locator('[data-egds-outline] [data-outline-framework-node="playtest-evidence-iteration"]');
+    await expect(branch).toHaveAttribute('data-map-state-owned', 'true');
+    await expect(leaf).toHaveAttribute('data-map-state-owned', 'true');
+    await expect(unrelated).not.toHaveAttribute('data-map-state-owned', /.+/);
     await expect(map.locator('[data-map-inspector]')).toBeVisible();
     const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
     await expect(returnButton).toBeVisible();
@@ -475,6 +482,11 @@ test('responsive selected state keeps a keyboard-operable return action', async 
     await expect(map.locator('[data-map-entity][data-selected="true"]')).toHaveCount(0);
     await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
     await expect(map.locator('[data-map-inspector]')).toBeHidden();
+    await expect(branch).not.toHaveAttribute('open', '');
+    await expect(leaf).not.toHaveAttribute('open', '');
+    await expect(map.locator('[data-map-state-owned]')).toHaveCount(0);
+    await expect(unrelated).toHaveAttribute('open', '');
+    await expect(branch.locator(':scope > summary')).toBeFocused();
 
     await page.evaluate(() => window.scrollTo(0, 0));
     const before = await page.evaluate(() => window.scrollY);
@@ -484,6 +496,45 @@ test('responsive selected state keeps a keyboard-operable return action', async 
     await page.mouse.wheel(0, 240);
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(before);
     await assertNoPageOverflow(page);
+  }
+});
+
+test('closing a selected outline disclosure clears hidden map state without affecting unrelated toggles', async ({ page }) => {
+  for (const width of [1024, 320]) {
+    for (const targetNodeId of ['playtest-evidence-iteration', 'from-plan-to-ship']) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('./map/');
+      const errors: string[] = [];
+      page.on('pageerror', (error) => errors.push(error.message));
+      const map = page.locator('[data-egds-map]');
+      await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+        bubbles: true,
+        detail: { capabilityId: 'playtesting' },
+      })));
+
+      const unrelated = map.locator('[data-egds-outline] [data-outline-framework-node="with-team"]');
+      await unrelated.locator(':scope > summary').click();
+      await expect(unrelated).toHaveAttribute('open', '');
+      await expect(map).toHaveAttribute('data-selected-entity-key', 'capability:playtesting');
+      await expect(map.locator('[data-map-inspector]')).toBeVisible();
+
+      const target = map.locator(`[data-egds-outline] [data-outline-framework-node="${targetNodeId}"]`);
+      const summary = target.locator(':scope > summary');
+      await summary.click();
+
+      await expect(target).not.toHaveAttribute('open', '');
+      await expect(map).not.toHaveAttribute('data-selected-entity-key', /.+/);
+      await expect(map.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(0);
+      await expect(map.locator('[data-selected="true"]')).toHaveCount(0);
+      await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
+      await expect(map.locator('[data-map-inspector]')).toBeHidden();
+      await expect(map.getByRole('button', { name: '返回全图', exact: true })).toBeHidden();
+      await expect(map.locator('[data-map-state-owned]')).toHaveCount(0);
+      await expect(unrelated).toHaveAttribute('open', '');
+      await expect(summary).toBeVisible();
+      await expect(summary).toBeFocused();
+      expect(errors).toEqual([]);
+    }
   }
 });
 

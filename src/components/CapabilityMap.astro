@@ -497,6 +497,8 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
         '[data-egds-outline] details[data-outline-framework-node]',
       )).map((details) => [details.dataset.outlineFrameworkNode ?? '', details]),
     );
+    // Native toggle events arrive after the synchronous render that changed `open`.
+    const programmaticOutlineToggles = new WeakSet<HTMLDetailsElement>();
 
     const setBox = (element: HTMLElement, box: { x: number; y: number; width: number; height: number }) => {
       element.style.setProperty('--box-x', `${box.x}px`);
@@ -518,15 +520,20 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
 
     const syncOutlineDisclosures = () => {
       const required = new Set(outlineDisclosureChain(state.expandedFrameworkNodeId));
-      root.querySelectorAll<HTMLDetailsElement>('[data-map-auto-open]').forEach((details) => {
+      root.querySelectorAll<HTMLDetailsElement>('[data-map-state-owned]').forEach((details) => {
         if (required.has(details)) return;
-        details.open = false;
-        delete details.dataset.mapAutoOpen;
+        if (details.open) {
+          programmaticOutlineToggles.add(details);
+          details.open = false;
+        }
+        delete details.dataset.mapStateOwned;
       });
       required.forEach((details) => {
-        if (details.open) return;
-        details.open = true;
-        details.dataset.mapAutoOpen = 'true';
+        details.dataset.mapStateOwned = 'true';
+        if (!details.open) {
+          programmaticOutlineToggles.add(details);
+          details.open = true;
+        }
       });
     };
 
@@ -706,6 +713,21 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       }
       renderInspector();
     };
+
+    outlineDetailsById.forEach((details) => {
+      details.addEventListener('toggle', () => {
+        if (programmaticOutlineToggles.delete(details)) return;
+        if (details.open || !details.dataset.mapStateOwned || !state.selectedEntityKey) return;
+        const summary = details.querySelector<HTMLElement>(':scope > summary');
+        root.querySelectorAll<HTMLElement>('[data-map-state-owned]').forEach((owned) => {
+          delete owned.dataset.mapStateOwned;
+        });
+        delete state.expandedFrameworkNodeId;
+        delete state.selectedEntityKey;
+        render();
+        summary?.focus({ preventScroll: true });
+      });
+    });
 
     root.querySelectorAll<HTMLButtonElement>('[data-expand-framework-node]').forEach((button) => {
       button.disabled = false;
