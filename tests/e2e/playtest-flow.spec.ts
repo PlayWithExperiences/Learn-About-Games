@@ -8,7 +8,15 @@ test('guides a learner from the home page to the unordered Playtest topic collec
   await page.goto('./');
   await page.getByRole('link', { name: '看全貌' }).click();
 
-  const playtestLink = page.getByRole('link', { name: 'Playtest', exact: true });
+  const map = page.locator('[data-egds-map]');
+  await expect(map.locator('[data-expand-framework-node]').first()).toBeEnabled();
+  await map.evaluate((root) => root.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+    bubbles: true,
+    detail: { capabilityId: 'playtesting' },
+  })));
+  const playtestLink = map
+    .locator('[data-map-entity-key="capability:playtesting"] [data-map-entity-detail]')
+    .filter({ visible: true });
   await expect(playtestLink).toHaveAttribute('href', '/Learn-About-Games/capabilities/playtesting/');
   await playtestLink.click();
 
@@ -113,14 +121,20 @@ test('keeps all work items available without JavaScript', async ({ browser }) =>
 });
 
 test('keeps every capability directly reachable without trail or review semantics', async ({ page }) => {
-  await page.goto('./map/');
-
   for (const capability of capabilities) {
-    const link = page.getByRole('link', { name: capability.name['zh-CN'], exact: true });
-    await expect(link).toBeVisible();
+    await page.goto('./map/');
+    const map = page.locator('[data-egds-map]');
+    await expect(map.locator('[data-expand-framework-node]').first()).toBeEnabled();
+    await map.evaluate((root, capabilityId) => root.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+      bubbles: true,
+      detail: { capabilityId },
+    })), capability.id);
+    const link = map
+      .locator(`[data-map-entity-key="capability:${capability.id}"] [data-map-entity-detail]`)
+      .filter({ visible: true });
+    await expect(link).toHaveAttribute('href', `/Learn-About-Games/capabilities/${capability.id}/`);
     await link.click();
     await expect(page.getByRole('heading', { name: capability.name['zh-CN'], exact: true })).toBeVisible();
-    await page.goBack();
   }
 
   await expect(page.locator('main')).not.toContainText(/已策展|候选|审核|学习路径|按顺序/);

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import resources from '../../src/data/resources.json' with { type: 'json' };
 
 const homeMapDescription = '从 PlayWithExperiences 的 EGDS 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
-const careerDescription = '用公开依据理解职业与生产语境如何参考 PlayWithExperiences 的 EGDS；它是一种可讨论的视角，不是唯一答案或评分。';
+const careerDescription = '用公开依据理解职业与生产语境如何参考 PlayWithExperiences 的 EGDS；它是一种可讨论的视角，不是唯一答案。';
 const misleadingEgdsClaimPatterns = [
   /EGDS\s*(?:是|作为)\s*(?:一种|一个)?\s*行业标准/i,
   /EGDS\s*(?:是|规定|要求|提供|定义)\s*(?:一个|一种)?\s*必修顺序/i,

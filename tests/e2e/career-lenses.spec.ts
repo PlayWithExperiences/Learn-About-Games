@@ -68,7 +68,9 @@ for (const profile of roleProfiles) {
     await expect(map.locator('[data-career-node][data-role-state="unlisted"]')).toHaveCount(
       (capabilities.length - profile.capabilities.length) * 2,
     );
-    await expect(map.locator('[data-map-entity-kind="topic"][data-role-priority], [data-map-entity-kind="topic"][data-role-responsibility]')).toHaveCount(0);
+    const topics = map.locator('[data-map-entity-kind="knowledge-topic"]');
+    await expect(topics).toHaveCount(12);
+    await expect(topics.locator('[data-role-priority], [data-role-responsibility], [data-role-label]:not([hidden])')).toHaveCount(0);
     await expect(map.locator('[data-egds-framework-node][data-role-priority], [data-egds-framework-node][data-role-responsibility]')).toHaveCount(0);
 
     for (const mapping of profile.capabilities) {
@@ -120,6 +122,18 @@ test('career summary focus delegates selection to the map and replacing a profil
     await expect(map.locator('[data-map-inspector]')).toBeVisible();
     await expect(selectedControl).toBeFocused();
     await expect(selectedControl).toBeInViewport();
+
+    const secondCapabilityId = 'playtesting';
+    const firstFrameworkNodeId = capabilities.find(({ id }) => id === firstCapabilityId)?.frameworkNodeId;
+    const secondFrameworkNodeId = capabilities.find(({ id }) => id === secondCapabilityId)?.frameworkNodeId;
+    await explorer.locator(`[data-career-summary-item="${secondCapabilityId}"]`).getByRole('button', { name: '在地图中聚焦', exact: true }).click();
+    const secondControl = map.locator(`[data-select-map-entity="capability:${secondCapabilityId}"]`).filter({ visible: true });
+    await expect(map).toHaveAttribute('data-selected-entity-key', `capability:${secondCapabilityId}`);
+    await expect(map.locator('[data-map-inspector]')).toBeVisible();
+    await expect(secondControl).toBeFocused();
+    await expect(secondControl).toBeInViewport();
+    if (firstFrameworkNodeId) await expect(map.locator(`[data-egds-framework-node="${firstFrameworkNodeId}"]`)).not.toHaveAttribute('data-expanded');
+    if (secondFrameworkNodeId) await expect(map.locator(`[data-egds-framework-node="${secondFrameworkNodeId}"]`)).toHaveAttribute('data-expanded', 'true');
 
     await explorer.getByRole('button', { name: secondProfile.title['zh-CN'], exact: true }).click();
     await expect(map).toHaveAttribute('data-career-profile-id', secondProfile.id);
@@ -178,6 +192,18 @@ test('no-JS keeps the full outline, details, resources, and evidence readable wh
     await expect(explorer.locator('[data-egds-outline] [data-outline-entity-kind="knowledge-topic"]')).toHaveCount(12);
     await expect(explorer.locator('[data-egds-outline] [data-map-entity-detail]')).not.toHaveCount(0);
     await expect(explorer.locator('[data-career-evidence] a')).not.toHaveCount(0);
+    const summaries = explorer.locator('[data-career-summary]');
+    await expect(summaries).toHaveCount(3);
+    for (const profile of roleProfiles) {
+      const summary = explorer.locator(`[data-career-summary="${profile.id}"]`);
+      await expect(summary.locator(':scope > summary')).toBeVisible();
+      await summary.locator(':scope > summary').click();
+      await expect(summary.locator('[data-career-summary-item]')).toHaveCount(profile.capabilities.length);
+      await expect(summary.getByRole('link', { name: '能力详情', exact: true }).first()).toBeVisible();
+      await expect(summary.getByRole('link', { name: '相关资源', exact: true }).first()).toBeVisible();
+      await expect(summary.getByRole('button', { name: '在地图中聚焦', exact: true }).first()).toBeDisabled();
+      await expect(summary.getByText('地图聚焦需要 JavaScript。', { exact: true })).toBeVisible();
+    }
     await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
     await context.close();
   }

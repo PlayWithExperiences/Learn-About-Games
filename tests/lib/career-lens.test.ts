@@ -6,7 +6,7 @@ import { projectCareerLens } from '../../src/lib/career-lens';
 
 const priorityValues = ['core', 'important', 'suggested'];
 const responsibilityValues = ['execute', 'contribute', 'decide', 'direct'];
-const scoreLikeTerms = /评分|分数|匹配度|完成率|score|percentage|fit|completion/i;
+const scoreLikeTerms = /评分|分数|匹配度|完成率|适配度|score|percentage|fit|gap|completion/i;
 
 describe('career-lens data', () => {
   it('keeps exactly three evidence-bounded profiles with the approved titles', () => {

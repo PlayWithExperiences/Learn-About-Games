@@ -95,12 +95,14 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     </div>
 
     {profileViews.map(({ profile, projection }) => (
-      <section class="career-summary" data-career-summary={profile.id} hidden>
-        <header>
-          <h3>{profile.title['zh-CN']}</h3>
-          <p>{profile.basis['zh-CN']}</p>
-        </header>
-        <div class="career-summary__groups">
+      <details class="career-summary" data-career-summary={profile.id}>
+        <summary>{profile.title['zh-CN']}</summary>
+        <div class="career-summary__body">
+          <header>
+            <h3>{profile.title['zh-CN']}</h3>
+            <p>{profile.basis['zh-CN']}</p>
+          </header>
+          <div class="career-summary__groups">
           {careerLensPriorities.map((priority) => (
             <section data-career-summary-group={priority}>
               <h4>{priorityLabels[priority]}</h4>
@@ -127,8 +129,12 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
               </ul>
             </section>
           ))}
+          </div>
+          <noscript>
+            <p class="script-required-note">地图聚焦需要 JavaScript。</p>
+          </noscript>
         </div>
-      </section>
+      </details>
     ))}
   </section>
 
@@ -202,7 +208,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     const lensButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-career-lens-button]'));
     const clearButton = explorer.querySelector<HTMLButtonElement>('[data-career-clear]');
     const status = explorer.querySelector<HTMLElement>('[data-career-status]');
-    const summaries = Array.from(explorer.querySelectorAll<HTMLElement>('[data-career-summary]'));
+    const summaries = Array.from(explorer.querySelectorAll<HTMLDetailsElement>('[data-career-summary]'));
     const evidenceItems = Array.from(explorer.querySelectorAll<HTMLDetailsElement>('[data-career-evidence]'));
     const focusButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-focus-capability]'));
 
@@ -223,7 +229,9 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
         button.setAttribute('aria-pressed', String(button === selectedButton));
       });
       summaries.forEach((summary) => {
-        summary.hidden = summary.dataset.careerSummary !== profileId;
+        const isActive = summary.dataset.careerSummary === profileId;
+        summary.hidden = !isActive;
+        summary.open = isActive;
       });
       evidenceItems.forEach((item) => {
         item.open = item.dataset.careerEvidence === profileId;
@@ -235,7 +243,10 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     const clearProjection = () => {
       mapRoot.dispatchEvent(new CustomEvent('egds-map:clear-career-lens', { bubbles: true }));
       lensButtons.forEach((button) => button.setAttribute('aria-pressed', 'false'));
-      summaries.forEach((summary) => { summary.hidden = true; });
+      summaries.forEach((summary) => {
+        summary.hidden = true;
+        summary.open = false;
+      });
       evidenceItems.forEach((item) => { item.open = false; });
       if (status) status.textContent = '当前显示完整能力地图，尚未应用职业画像。';
       if (clearButton) clearButton.disabled = true;
@@ -261,6 +272,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
       });
     });
 
+    summaries.forEach((summary) => { summary.hidden = true; });
     clearButton?.addEventListener('click', clearProjection);
     explorer.dataset.enhanced = 'true';
   }

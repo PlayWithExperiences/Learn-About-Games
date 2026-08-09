@@ -37,17 +37,12 @@ test('keeps the complete map and personal record contract usable without JavaScr
   await page.goto('./map/');
   await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
   await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
-  const outline = page.locator('[data-egds-map] [data-egds-outline]');
-  for (const nodeId of ['from-plan-to-ship', 'playtest-evidence-iteration']) {
-    await outline.locator(`[data-outline-framework-node="${nodeId}"] > summary`).click();
-  }
-  const playtestNode = outline.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');
-  await playtestNode.getByText('查看关系', { exact: true }).click();
-  await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('受到支持', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('互补', { exact: true })).toBeVisible();
+  const relationships = page.locator('[data-egds-map] [data-outline-relations-disclosure]');
+  await relationships.locator(':scope > summary').click();
+  await expect(relationships).toContainText('Playtest');
+  await expect(relationships.getByRole('link', { name: '玩家行为观察', exact: true }).first()).toBeVisible();
 
-  await page.getByRole('link', { name: 'Playtest', exact: true }).click();
+  await relationships.getByRole('link', { name: 'Playtest', exact: true }).first().click();
   await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Playtest 主题资源集合' })).toBeVisible();
   await expect(page.getByLabel('个人学习状态')).toBeDisabled();
