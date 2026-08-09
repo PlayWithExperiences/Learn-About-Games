@@ -3,34 +3,49 @@ import capabilities from '../../src/data/capabilities.json' with { type: 'json' 
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
 import domains from '../../src/data/domains.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
+import mapGroups from '../../src/data/map-groups.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
 import resources from '../../src/data/resources.json' with { type: 'json' };
 
 const basePath = '/Learn-About-Games/';
 
-test('renders eight open territories, distinct node kinds and all functional relations', async ({ page }) => {
+test('renders five hierarchy trunks, distinct node kinds and all functional relations', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./map/');
 
   const canvas = page.locator('[data-capability-map-canvas]');
   await expect(canvas).toBeVisible();
   await expect(page.locator('[data-mobile-map-outline]')).toBeHidden();
+  await expect(canvas.locator('[data-map-root]')).toHaveCount(1);
+  await expect(canvas.locator('[data-map-group]')).toHaveCount(mapGroups.length);
   await expect(canvas.locator('[data-map-region]')).toHaveCount(domains.length);
+  await expect(canvas.locator('[data-map-structural-path]')).toHaveCount(mapGroups.length + domains.length);
   await expect(canvas.locator('[data-map-node-kind="capability"]')).toHaveCount(capabilities.length);
   await expect(canvas.locator('[data-map-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
   await expect(canvas.locator('[data-capability-relation]')).toHaveCount(capabilityRelations.length);
-
   expect(
-    await canvas.locator('[data-map-region]').evaluateAll((regions) =>
-      regions.every((region) => {
-        const style = getComputedStyle(region);
-        return style.borderTopStyle !== 'none'
-          && style.borderLeftStyle !== 'none'
-          && style.borderRightStyle === 'none'
-          && style.borderBottomStyle === 'none';
-      }),
-    ),
+    await canvas.evaluate((element) => {
+      const canvasRect = element.getBoundingClientRect();
+      return [...element.querySelectorAll<HTMLElement>('[data-map-group]')].every((group) => {
+        const groupRect = group.getBoundingClientRect();
+        return groupRect.top >= canvasRect.top && groupRect.bottom <= canvasRect.bottom;
+      });
+    }),
   ).toBe(true);
+
+  const hierarchyKeys = await canvas.locator('[data-map-root], [data-map-group], [data-map-region]')
+    .evaluateAll((items) => items.map((item) => (item as HTMLElement).dataset.mapKey));
+  expect(new Set(hierarchyKeys).size).toBe(1 + mapGroups.length + domains.length);
+  await expect(canvas.locator('[data-map-group="experience-player"]')).toHaveAttribute(
+    'data-map-key',
+    'group:experience-player',
+  );
+  await expect(canvas.locator('[data-map-region="experience-player"]')).toHaveAttribute(
+    'data-map-key',
+    'domain:experience-player',
+  );
+  await expect(canvas.locator('[data-map-structural-path][data-from-key="group:experience-player"]'))
+    .toHaveAttribute('data-to-key', 'domain:experience-player');
 
   const capabilityNode = canvas.locator('[data-map-node-kind="capability"]').first();
   const topicNode = canvas.locator('[data-map-node-kind="knowledge-topic"]').first();
@@ -58,7 +73,7 @@ test('renders eight open territories, distinct node kinds and all functional rel
   );
 });
 
-test('keeps supports and complements legible by default in both themes', async ({ browser }) => {
+test('keeps factual relations subordinate by default in both themes', async ({ browser }) => {
   for (const colorScheme of ['light', 'dark'] as const) {
     const context = await browser.newContext({
       colorScheme,
@@ -89,10 +104,12 @@ test('keeps supports and complements legible by default in both themes', async (
       };
     });
 
-    expect(relationStyles.supports.opacity).toBeGreaterThanOrEqual(0.4);
+    expect(relationStyles.supports.opacity).toBeGreaterThan(0);
+    expect(relationStyles.supports.opacity).toBeLessThanOrEqual(0.18);
     expect(relationStyles.supports.strokeWidth).toBeGreaterThanOrEqual(1.25);
     expect(relationStyles.supports.markerMid).not.toBe('none');
-    expect(relationStyles.complements.opacity).toBeGreaterThanOrEqual(0.4);
+    expect(relationStyles.complements.opacity).toBeGreaterThan(0);
+    expect(relationStyles.complements.opacity).toBeLessThanOrEqual(0.18);
     expect(relationStyles.complements.strokeWidth).toBeGreaterThanOrEqual(1.25);
     expect(relationStyles.complements.dashArray).not.toBe('none');
     expect(relationStyles.complements.markerMid).toBe('none');
@@ -101,7 +118,7 @@ test('keeps supports and complements legible by default in both themes', async (
   }
 });
 
-test('connects every SVG edge to the exact global anchors from the geometry catalog', async ({ page }) => {
+test('connects every SVG edge to the exact projected node centers', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./map/');
 
@@ -114,21 +131,24 @@ test('connects every SVG edge to the exact global anchors from the geometry cata
     const edge = canvas.locator(`[data-capability-relation="${relation.id}"]`);
     await expect(edge).toHaveAttribute('data-from', relation.fromId);
     await expect(edge).toHaveAttribute('data-to', relation.toId);
-    await expect(edge).toHaveAttribute('data-start-x', String(from.position.x));
-    await expect(edge).toHaveAttribute('data-start-y', String(from.position.y));
-    await expect(edge).toHaveAttribute('data-end-x', String(to.position.x));
-    await expect(edge).toHaveAttribute('data-end-y', String(to.position.y));
-    await expect(edge).toHaveAttribute(
-      'd',
-      `M ${from.position.x} ${from.position.y} L ${(from.position.x + to.position.x) / 2} ${(from.position.y + to.position.y) / 2} L ${to.position.x} ${to.position.y}`,
-    );
-
     const fromNode = canvas.locator(`[data-map-node-id="${relation.fromId}"]`);
     const toNode = canvas.locator(`[data-map-node-id="${relation.toId}"]`);
     await expect(fromNode).toHaveAttribute('data-anchor-x', String(from.position.x));
     await expect(fromNode).toHaveAttribute('data-anchor-y', String(from.position.y));
     await expect(toNode).toHaveAttribute('data-anchor-x', String(to.position.x));
     await expect(toNode).toHaveAttribute('data-anchor-y', String(to.position.y));
+    const startX = await fromNode.getAttribute('data-layout-center-x');
+    const startY = await fromNode.getAttribute('data-layout-center-y');
+    const endX = await toNode.getAttribute('data-layout-center-x');
+    const endY = await toNode.getAttribute('data-layout-center-y');
+    expect(startX).not.toBeNull();
+    expect(startY).not.toBeNull();
+    expect(endX).not.toBeNull();
+    expect(endY).not.toBeNull();
+    await expect(edge).toHaveAttribute('data-start-x', startX!);
+    await expect(edge).toHaveAttribute('data-start-y', startY!);
+    await expect(edge).toHaveAttribute('data-end-x', endX!);
+    await expect(edge).toHaveAttribute('data-end-y', endY!);
   }
 });
 
@@ -150,6 +170,7 @@ test('focus enhances adjacent relations and endpoints without hiding the graph',
       strokeWidth: Number.parseFloat(style.strokeWidth),
     };
   });
+  expect(defaultStyle.opacity).toBeLessThanOrEqual(0.18);
 
   await canvas.locator(`[data-map-node-id="${focusId}"]`).focus();
   await expect(canvas.locator('[data-capability-relation][data-adjacent="true"]')).toHaveCount(
@@ -176,7 +197,12 @@ test('focus enhances adjacent relations and endpoints without hiding the graph',
       };
     });
   expect(focusedStyle.opacity).toBeGreaterThan(defaultStyle.opacity);
+  expect(focusedStyle.opacity).toBeGreaterThanOrEqual(0.85);
   expect(focusedStyle.strokeWidth).toBeGreaterThan(defaultStyle.strokeWidth);
+  expect(
+    await canvas.locator('[data-capability-relation]:not([data-adjacent="true"])').first()
+      .evaluate((edge) => Number(getComputedStyle(edge).opacity)),
+  ).toBeLessThanOrEqual(0.18);
 
   await canvas.locator(`[data-map-node-id="${focusId}"]`).evaluate((node) => (node as HTMLElement).blur());
   await expect(canvas.locator('[data-capability-relation][data-adjacent="true"]')).toHaveCount(0);
@@ -190,6 +216,7 @@ test('uses a relationship-equivalent outline at an explicit 320px without overfl
   await expect(page.locator('[data-capability-map-canvas]')).toBeHidden();
   const outline = page.locator('[data-mobile-map-outline]');
   await expect(outline).toBeVisible();
+  await expect(outline.locator('[data-outline-group]')).toHaveCount(mapGroups.length);
   await expect(outline.locator('[data-outline-region]')).toHaveCount(domains.length);
   await expect(outline.locator('[data-outline-node-kind="capability"]')).toHaveCount(capabilities.length);
   await expect(outline.locator('[data-outline-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);

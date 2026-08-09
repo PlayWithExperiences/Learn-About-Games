@@ -1,20 +1,31 @@
 ---
-import { projectRelationEndpoints, relationSemantics } from '../lib/map-geometry';
+import { buildCapabilityMindMapLayout, relationSemantics } from '../lib/map-geometry';
 import { sitePath } from '../lib/site-path';
 import type { Catalog } from '../lib/catalog/validate';
 
 interface Props {
+  mapGroups: Catalog['mapGroups'];
   domains: Catalog['domains'];
   capabilities: Catalog['capabilities'];
   knowledgeTopics: Catalog['knowledgeTopics'];
   capabilityRelations: Catalog['capabilityRelations'];
 }
 
-const { domains, capabilities, knowledgeTopics, capabilityRelations } = Astro.props;
-const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
+const { mapGroups, domains, capabilities, knowledgeTopics, capabilityRelations } = Astro.props;
+const layout = buildCapabilityMindMapLayout(mapGroups, domains, capabilities, knowledgeTopics);
+const orderedGroups = [...mapGroups].sort(
+  (left, right) => left.order - right.order || left.id.localeCompare(right.id),
+);
+const domainsById = new Map(domains.map((domain) => [domain.id, domain]));
 const capabilitiesById = new Map(capabilities.map((capability) => [capability.id, capability]));
-const positionsByCapabilityId = new Map(
-  capabilities.map((capability) => [capability.id, capability.position]),
+const topicsById = new Map(knowledgeTopics.map((topic) => [topic.id, topic]));
+const boxesByKey = new Map(
+  [layout.root, ...layout.groups, ...layout.domains, ...layout.nodes].map((box) => [box.key, box]),
+);
+const capabilityCentersById = new Map(
+  layout.nodes
+    .filter(({ kind }) => kind === 'capability')
+    .map((box) => [box.id, { x: box.x + box.width / 2, y: box.y + box.height / 2 }]),
 );
 
 const relationLabel = (type: 'supports' | 'complements') =>
@@ -22,6 +33,12 @@ const relationLabel = (type: 'supports' | 'complements') =>
 
 const relationDirection = (type: 'supports' | 'complements') =>
   relationSemantics[type].direction;
+
+const boxStyle = (key: string) => {
+  const box = boxesByKey.get(key as (typeof layout.root)['key']);
+  if (!box) throw new Error(`Missing mind-map box: ${key}`);
+  return `--box-x:${box.x}px;--box-y:${box.y}px;--box-width:${box.width}px;--box-height:${box.height}px`;
+};
 ---
 
 <section class="capability-map" aria-labelledby="capability-map-title">
@@ -42,112 +59,200 @@ const relationDirection = (type: 'supports' | 'complements') =>
     class="capability-map__canvas"
     data-capability-map-canvas
     aria-label="能力地图桌面画布"
+    style={`--map-height:${layout.height}px`}
   >
-    {orderedDomains.map((domain) => (
-      <section
-        class="map-territory"
-        data-map-region={domain.id}
-        aria-labelledby={`map-region-${domain.id}`}
-        style={`--region-x:${domain.bounds.x}%;--region-y:${domain.bounds.y}%;--region-width:${domain.bounds.width}%;--region-height:${domain.bounds.height}%`}
-      >
-        <h3 id={`map-region-${domain.id}`}>{domain.name['zh-CN']}</h3>
-      </section>
-    ))}
-
-    <svg
-      class="capability-map__relations"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      role="img"
-      aria-labelledby="map-relations-title map-relations-description"
+    <div
+      class="capability-map__scene"
+      style={`width:${layout.width}px;height:${layout.height}px`}
     >
-      <title id="map-relations-title">能力关系</title>
-      <desc id="map-relations-description">支持关系有方向但不是先修顺序，互补关系没有方向。</desc>
-      <defs>
-        <marker id="support-arrow" viewBox="0 0 6 6" refX="5.25" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse" markerUnits="strokeWidth">
-          <path d="M 0 0 L 6 3 L 0 6 Z"></path>
-        </marker>
-      </defs>
-      {capabilityRelations.map((relation) => {
-        const { start, end } = projectRelationEndpoints(relation, positionsByCapabilityId);
-        const midpoint = { x: (start.x + end.x) / 2, y: (start.y + end.y) / 2 };
-        const direction = relationDirection(relation.type);
+      <div
+        id="map-root-expertise-map-root"
+        class="map-root-label map-layout-box"
+        data-map-root
+        data-map-key={layout.root.key}
+        style={boxStyle(layout.root.key)}
+      >
+        <strong>Expertise Map</strong>
+        <span>能力地图</span>
+      </div>
+
+      {orderedGroups.map((group) => (
+        <section
+          id={`map-group-${group.id}`}
+          class="map-group-label map-layout-box"
+          data-map-group={group.id}
+          data-map-key={`group:${group.id}`}
+          aria-label={group.name['zh-CN']}
+          style={boxStyle(`group:${group.id}`)}
+        >
+          <h3>{group.name['zh-CN']}</h3>
+        </section>
+      ))}
+
+      {layout.domains.map((domainBox) => {
+        const domain = domainsById.get(domainBox.id);
+        if (!domain) return null;
         return (
-          <path
-            class:list={['map-relation', `map-relation--${relation.type}`]}
-            d={`M ${start.x} ${start.y} L ${midpoint.x} ${midpoint.y} L ${end.x} ${end.y}`}
-            data-capability-relation={relation.id}
-            data-relation-type={relation.type}
-            data-direction={direction}
-            data-from={relation.fromId}
-            data-to={relation.toId}
-            data-start-x={start.x}
-            data-start-y={start.y}
-            data-end-x={end.x}
-            data-end-y={end.y}
-            marker-mid={relation.type === 'supports' ? 'url(#support-arrow)' : undefined}
-            vector-effect="non-scaling-stroke"
+          <section
+            id={`map-domain-${domain.id}`}
+            class="map-domain-label map-layout-box"
+            data-map-region={domain.id}
+            data-map-key={domainBox.key}
+            aria-labelledby={`map-domain-title-${domain.id}`}
+            style={boxStyle(domainBox.key)}
           >
-            <title>{capabilitiesById.get(relation.fromId)?.name['zh-CN']} {relationLabel(relation.type)} {capabilitiesById.get(relation.toId)?.name['zh-CN']}：{relation.summary['zh-CN']}</title>
-          </path>
+            <h3 id={`map-domain-title-${domain.id}`}>{domain.name['zh-CN']}</h3>
+          </section>
         );
       })}
-    </svg>
 
-    <div class="capability-map__nodes">
-      {capabilities.map((capability) => (
-        <a
-          class="map-node map-node--capability"
-          href={sitePath(`capabilities/${capability.id}/`)}
-          aria-label={capability.name['zh-CN']}
-          data-map-node
-          data-map-node-id={capability.id}
-          data-map-node-kind="capability"
-          data-career-node
-          data-career-focus-target
-          data-capability-id={capability.id}
-          data-entity-label="能力"
-          data-anchor-x={capability.position.x}
-          data-anchor-y={capability.position.y}
-          style={`--node-x:${capability.position.x}%;--node-y:${capability.position.y}%`}
-        >
-          <span>{capability.name['zh-CN']}</span>
-          <small class="career-node-role-label" data-role-label hidden></small>
-        </a>
-      ))}
-      {knowledgeTopics.map((topic) => (
-        <a
-          class="map-node map-node--topic"
-          href={sitePath(`topics/${topic.id}/`)}
-          aria-label={topic.name['zh-CN']}
-          data-map-node
-          data-map-node-id={topic.id}
-          data-map-node-kind="knowledge-topic"
-          data-entity-label="知识议题"
-          data-anchor-x={topic.position.x}
-          data-anchor-y={topic.position.y}
-          style={`--node-x:${topic.position.x}%;--node-y:${topic.position.y}%`}
-        >
-          <small>知识议题</small>
-          <span>{topic.name['zh-CN']}</span>
-        </a>
-      ))}
+      <svg
+        class="capability-map__structure"
+        viewBox={`0 0 ${layout.width} ${layout.height}`}
+        aria-hidden="true"
+      >
+        {layout.structuralPaths.map((structuralPath) => (
+          <path
+            d={structuralPath.path}
+            data-map-structural-path={structuralPath.id}
+            data-from-key={structuralPath.fromKey}
+            data-to-key={structuralPath.toKey}
+            vector-effect="non-scaling-stroke"
+          ></path>
+        ))}
+      </svg>
+
+      <svg
+        class="capability-map__relations"
+        viewBox={`0 0 ${layout.width} ${layout.height}`}
+        role="img"
+        aria-labelledby="map-relations-title map-relations-description"
+      >
+        <title id="map-relations-title">能力关系</title>
+        <desc id="map-relations-description">支持关系有方向但不是先修顺序，互补关系没有方向。</desc>
+        <defs>
+          <marker id="support-arrow" viewBox="0 0 6 6" refX="5.25" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse" markerUnits="strokeWidth">
+            <path d="M 0 0 L 6 3 L 0 6 Z"></path>
+          </marker>
+        </defs>
+        {capabilityRelations.map((relation) => {
+          const start = capabilityCentersById.get(relation.fromId);
+          const end = capabilityCentersById.get(relation.toId);
+          if (!start || !end) throw new Error(`Missing relation endpoint: ${relation.id}`);
+          const midpoint = { x: (start.x + end.x) / 2, y: (start.y + end.y) / 2 };
+          const direction = relationDirection(relation.type);
+          return (
+            <path
+              class:list={['map-relation', `map-relation--${relation.type}`]}
+              d={`M ${start.x} ${start.y} L ${midpoint.x} ${midpoint.y} L ${end.x} ${end.y}`}
+              data-capability-relation={relation.id}
+              data-relation-type={relation.type}
+              data-direction={direction}
+              data-from={relation.fromId}
+              data-to={relation.toId}
+              data-start-x={start.x}
+              data-start-y={start.y}
+              data-end-x={end.x}
+              data-end-y={end.y}
+              marker-mid={relation.type === 'supports' ? 'url(#support-arrow)' : undefined}
+              vector-effect="non-scaling-stroke"
+            >
+              <title>{capabilitiesById.get(relation.fromId)?.name['zh-CN']} {relationLabel(relation.type)} {capabilitiesById.get(relation.toId)?.name['zh-CN']}：{relation.summary['zh-CN']}</title>
+            </path>
+          );
+        })}
+      </svg>
+
+      <div class="capability-map__nodes">
+        {layout.nodes.map((nodeBox) => {
+          if (nodeBox.kind === 'capability') {
+            const capability = capabilitiesById.get(nodeBox.id);
+            if (!capability) return null;
+            return (
+              <a
+                id={`map-node-capability-${capability.id}`}
+                class="map-node map-node--capability map-layout-box"
+                href={sitePath(`capabilities/${capability.id}/`)}
+                aria-label={capability.name['zh-CN']}
+                data-map-node
+                data-map-node-id={capability.id}
+                data-map-node-kind="capability"
+                data-map-key={nodeBox.key}
+                data-career-node
+                data-career-focus-target
+                data-capability-id={capability.id}
+                data-entity-label="能力"
+                data-anchor-x={capability.position.x}
+                data-anchor-y={capability.position.y}
+                data-layout-center-x={nodeBox.x + nodeBox.width / 2}
+                data-layout-center-y={nodeBox.y + nodeBox.height / 2}
+                style={boxStyle(nodeBox.key)}
+              >
+                <span>{capability.name['zh-CN']}</span>
+                <small class="career-node-role-label" data-role-label hidden></small>
+              </a>
+            );
+          }
+          const topic = topicsById.get(nodeBox.id);
+          if (!topic) return null;
+          return (
+            <a
+              id={`map-node-knowledge-topic-${topic.id}`}
+              class="map-node map-node--topic map-layout-box"
+              href={sitePath(`topics/${topic.id}/`)}
+              aria-label={topic.name['zh-CN']}
+              data-map-node
+              data-map-node-id={topic.id}
+              data-map-node-kind="knowledge-topic"
+              data-map-key={nodeBox.key}
+              data-entity-label="知识议题"
+              data-anchor-x={topic.position.x}
+              data-anchor-y={topic.position.y}
+              data-layout-center-x={nodeBox.x + nodeBox.width / 2}
+              data-layout-center-y={nodeBox.y + nodeBox.height / 2}
+              style={boxStyle(nodeBox.key)}
+            >
+              <small>知识议题</small>
+              <span>{topic.name['zh-CN']}</span>
+            </a>
+          );
+        })}
+      </div>
     </div>
   </div>
 
   <div class="capability-map__outline" data-mobile-map-outline aria-label="能力地图关系大纲">
     <p class="capability-map__outline-note">有向支持不表示必修或固定学习顺序；互补关系不表示先后。</p>
-    {orderedDomains.map((domain) => {
-      const domainCapabilities = capabilities.filter(({ domainId }) => domainId === domain.id);
-      const domainTopics = knowledgeTopics.filter(({ domainId }) => domainId === domain.id);
+    {orderedGroups.map((group) => {
+      const orderedDomains = group.domainIds
+        .map((domainId) => domainsById.get(domainId))
+        .filter((domain): domain is Catalog['domains'][number] => Boolean(domain))
+        .sort((left, right) => left.order - right.order || left.id.localeCompare(right.id));
       return (
-        <section class="map-outline-region" data-outline-region={domain.id}>
-          <div class="map-outline-region__heading">
-            <h2>{domain.name['zh-CN']}</h2>
-            <p>{domain.summary['zh-CN']}</p>
-          </div>
+        <section class="map-outline-group" data-outline-group={group.id}>
+          <header class="map-outline-group__heading">
+            <h2>{group.name['zh-CN']}</h2>
+            <p>{group.summary['zh-CN']}</p>
+          </header>
+          {orderedDomains.map((domain) => {
+            const domainCapabilities = capabilities
+              .filter(({ domainId }) => domainId === domain.id)
+              .sort((left, right) => left.position.y - right.position.y
+                || left.position.x - right.position.x
+                || left.id.localeCompare(right.id));
+            const domainTopics = knowledgeTopics
+              .filter(({ domainId }) => domainId === domain.id)
+              .sort((left, right) => left.position.y - right.position.y
+                || left.position.x - right.position.x
+                || left.id.localeCompare(right.id));
+            return (
+              <section class="map-outline-region" data-outline-region={domain.id}>
+                <div class="map-outline-region__heading">
+                  <h3>{domain.name['zh-CN']}</h3>
+                  <p>{domain.summary['zh-CN']}</p>
+                </div>
 
-          <div class="map-outline-region__nodes">
+                <div class="map-outline-region__nodes">
             {domainCapabilities.map((capability) => {
               const outgoing = capabilityRelations.filter(
                 ({ type, fromId }) => type === 'supports' && fromId === capability.id,
@@ -242,7 +347,10 @@ const relationDirection = (type: 'supports' | 'complements') =>
                 </details>
               </div>
             ))}
-          </div>
+                </div>
+              </section>
+            );
+          })}
         </section>
       );
     })}

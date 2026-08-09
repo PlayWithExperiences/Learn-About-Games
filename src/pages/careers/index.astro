@@ -8,6 +8,7 @@ const catalog = await loadCatalog();
 
 <BaseLayout title="职业方向" description="用公开依据理解职业与生产语境如何参考同一张能力地图。">
   <CareerExplorer
+    mapGroups={catalog.mapGroups}
     domains={catalog.domains}
     capabilities={catalog.capabilities}
     knowledgeTopics={catalog.knowledgeTopics}

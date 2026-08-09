@@ -3,6 +3,7 @@ import CapabilityMap from './CapabilityMap.astro';
 import type { Catalog } from '../lib/catalog/validate';
 
 interface Props {
+  mapGroups: Catalog['mapGroups'];
   domains: Catalog['domains'];
   capabilities: Catalog['capabilities'];
   knowledgeTopics: Catalog['knowledgeTopics'];

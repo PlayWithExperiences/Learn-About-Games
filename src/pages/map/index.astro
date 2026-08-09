@@ -3,7 +3,7 @@ import MapExplorer from '../../components/MapExplorer.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 
-const { domains, capabilities, knowledgeTopics, capabilityRelations } = await loadCatalog();
+const { mapGroups, domains, capabilities, knowledgeTopics, capabilityRelations } = await loadCatalog();
 ---
 
 <BaseLayout title="能力地图" description="从知识地域进入 Learn About Games 的能力地图。">
@@ -15,6 +15,7 @@ const { domains, capabilities, knowledgeTopics, capabilityRelations } = await lo
 
   <div class="page-shell">
     <MapExplorer
+      mapGroups={mapGroups}
       domains={domains}
       capabilities={capabilities}
       knowledgeTopics={knowledgeTopics}

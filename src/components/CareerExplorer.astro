@@ -5,6 +5,7 @@ import { sitePath } from '../lib/site-path';
 import type { Catalog } from '../lib/catalog/validate';
 
 interface Props {
+  mapGroups: Catalog['mapGroups'];
   domains: Catalog['domains'];
   capabilities: Catalog['capabilities'];
   knowledgeTopics: Catalog['knowledgeTopics'];
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const {
+  mapGroups,
   domains,
   capabilities,
   knowledgeTopics,
@@ -132,6 +134,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
 
   <div class="career-map" aria-label="职业画像覆盖的能力地图">
     <CapabilityMap
+      mapGroups={mapGroups}
       domains={domains}
       capabilities={capabilities}
       knowledgeTopics={knowledgeTopics}
