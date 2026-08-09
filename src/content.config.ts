@@ -16,24 +16,6 @@ const bilingualText = z
   })
   .strict();
 
-const mapPosition = z
-  .object({
-    x: z.number().min(0).max(100),
-    y: z.number().min(0).max(100),
-  })
-  .strict();
-
-const mapBounds = z
-  .object({
-    x: z.number().min(0).max(100),
-    y: z.number().min(0).max(100),
-    width: z.number().positive().max(100),
-    height: z.number().positive().max(100),
-  })
-  .strict()
-  .refine(({ x, width }) => x + width <= 100, 'Domain bounds exceed the map width')
-  .refine(({ y, height }) => y + height <= 100, 'Domain bounds exceed the map height');
-
 const isoDate = z.iso.date();
 const httpUrl = z.url().refine((value) => {
   const protocol = new URL(value).protocol;
@@ -81,32 +63,6 @@ const basisLink = z
   })
   .strict();
 
-const domains = defineCollection({
-  loader: file('src/data/domains.json'),
-  schema: z
-    .object({
-      id: z.string().trim().min(1),
-      name: localizedText,
-      summary: localizedText,
-      order: z.number().int(),
-      bounds: mapBounds,
-    })
-    .strict(),
-});
-
-const mapGroups = defineCollection({
-  loader: file('src/data/map-groups.json'),
-  schema: z
-    .object({
-      id: z.string().trim().min(1),
-      name: localizedText,
-      summary: localizedText,
-      order: z.number().int().positive(),
-      domainIds: z.array(z.string().trim().min(1)).min(1),
-    })
-    .strict(),
-});
-
 const egdsFrameworkNodes = defineCollection({
   loader: file('src/data/egds-framework-nodes.json'),
   schema: z
@@ -151,8 +107,6 @@ const capabilities = defineCollection({
       name: localizedText,
       summary: localizedText,
       frameworkNodeId: z.string().trim().min(1),
-      domainId: z.string().trim().min(1),
-      position: mapPosition,
     })
     .strict(),
 });
@@ -165,8 +119,6 @@ const knowledgeTopics = defineCollection({
       name: localizedText,
       summary: localizedText,
       frameworkNodeId: z.string().trim().min(1),
-      domainId: z.string().trim().min(1),
-      position: mapPosition,
     })
     .strict(),
 });
@@ -373,8 +325,6 @@ const devlog = defineCollection({
 });
 
 export const collections = {
-  domains,
-  mapGroups,
   egdsFrameworkNodes,
   egdsFrameworkRelations,
   capabilities,

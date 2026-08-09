@@ -3,16 +3,12 @@ import { describe, expect, it } from 'vitest';
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
 import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
 import capabilities from '../../src/data/capabilities.json';
-import domains from '../../src/data/domains.json';
-import mapGroups from '../../src/data/map-groups.json';
 import roleProfiles from '../../src/data/role-profiles.json';
 import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
 
 const localized = (text: string) => ({ 'zh-CN': text });
 
 const emptyCatalog = (): Catalog => ({
-  domains: [],
-  mapGroups: [],
   egdsFrameworkNodes: structuredClone(egdsFrameworkNodes) as unknown as Catalog['egdsFrameworkNodes'],
   egdsFrameworkRelations: structuredClone(
     egdsFrameworkRelations,
@@ -36,8 +32,6 @@ const emptyV02Catalog = (): Catalog => emptyCatalog();
 const rawCareerCatalog = (): Catalog => ({
   ...emptyCatalog(),
   capabilities: structuredClone(capabilities) as Catalog['capabilities'],
-  domains: structuredClone(domains) as Catalog['domains'],
-  mapGroups: structuredClone(mapGroups) as Catalog['mapGroups'],
   roleProfiles: structuredClone(roleProfiles) as Catalog['roleProfiles'],
 });
 
@@ -67,35 +61,17 @@ const validV02Resource = (id: string, canonicalUrl: string) =>
   }) as unknown as Catalog['resources'][number];
 
 const seedV02References = (catalog: Catalog) => {
-  catalog.domains.push({
-    id: 'domain',
-    name: localized('领域'),
-    summary: localized('示例领域。'),
-    order: 1,
-    bounds: { x: 0, y: 0, width: 50, height: 50 },
-  } as unknown as Catalog['domains'][number]);
-  catalog.mapGroups.push({
-    id: 'group',
-    name: localized('分组'),
-    summary: localized('示例分组。'),
-    order: 1,
-    domainIds: ['domain'],
-  });
   catalog.capabilities.push({
     id: 'capability',
     name: localized('能力'),
     summary: localized('示例能力。'),
     frameworkNodeId: 'perception',
-    domainId: 'domain',
-    position: { x: 10, y: 10 },
   } as unknown as Catalog['capabilities'][number]);
   catalog.knowledgeTopics.push({
     id: 'knowledge-topic',
     name: localized('知识议题'),
     summary: localized('示例议题。'),
     frameworkNodeId: 'perception',
-    domainId: 'domain',
-    position: { x: 20, y: 20 },
   } as unknown as Catalog['knowledgeTopics'][number]);
   catalog.resourceTopics.push({
     id: 'resource-topic',
@@ -282,70 +258,6 @@ describe('validateCatalog', () => {
       field: 'frameworkNodeId',
       targetId: 'missing-framework-node',
     });
-  });
-
-  it('reports a capability with a missing domain', () => {
-    const catalog = emptyCatalog();
-    catalog.capabilities.push({
-      id: 'playtesting',
-      name: localized('Playtest'),
-      summary: localized('通过观察验证设计判断。'),
-      frameworkNodeId: 'perception',
-      domainId: 'missing-domain',
-      position: { x: 10, y: 10 },
-    } as Catalog['capabilities'][number]);
-
-    expect(validateCatalog(catalog)).toContainEqual({
-      code: 'CAPABILITY_DOMAIN_MISSING',
-      collection: 'capabilities',
-      id: 'playtesting',
-      field: 'domainId',
-      targetId: 'missing-domain',
-    });
-  });
-
-  it('reports a Domain without map group ownership', () => {
-    const catalog = emptyV02Catalog();
-    seedV02References(catalog);
-    catalog.mapGroups = [];
-
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('MAP_GROUP_DOMAIN_MISSING');
-  });
-
-  it('reports duplicate map group ownership', () => {
-    const catalog = emptyV02Catalog();
-    seedV02References(catalog);
-    catalog.mapGroups.push(
-      {
-        id: 'one',
-        name: localized('一'),
-        summary: localized('一。'),
-        order: 1,
-        domainIds: ['domain'],
-      },
-      {
-        id: 'two',
-        name: localized('二'),
-        summary: localized('二。'),
-        order: 2,
-        domainIds: ['domain'],
-      },
-    );
-
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('MAP_GROUP_DOMAIN_DUPLICATE');
-  });
-
-  it('reports unknown Domain references from map groups', () => {
-    const catalog = emptyV02Catalog();
-    catalog.mapGroups.push({
-      id: 'unknown',
-      name: localized('未知'),
-      summary: localized('未知领域。'),
-      order: 1,
-      domainIds: ['missing-domain'],
-    });
-
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('MAP_GROUP_DOMAIN_MISSING_REFERENCE');
   });
 
   it('reports missing source and capability references on resources', () => {
@@ -804,29 +716,13 @@ describe('validateCatalog', () => {
     });
   });
 
-  it('accepts empty non-map collections', () => {
+  it('accepts empty optional collections', () => {
     const catalog = emptyCatalog();
-    catalog.domains.push({
-      id: 'iteration',
-      name: localized('迭代与验证'),
-      summary: localized('通过观察与反馈检验设计。'),
-      order: 1,
-      bounds: { x: 0, y: 0, width: 50, height: 50 },
-    });
-    catalog.mapGroups.push({
-      id: 'group',
-      name: localized('分组'),
-      summary: localized('示例分组。'),
-      order: 1,
-      domainIds: ['iteration'],
-    });
     catalog.capabilities.push({
       id: 'playtesting',
       name: localized('Playtest'),
       summary: localized('通过观察验证设计判断。'),
       frameworkNodeId: 'perception',
-      domainId: 'iteration',
-      position: { x: 10, y: 10 },
     });
 
     expect(validateCatalog(catalog)).toEqual([]);
@@ -1170,8 +1066,6 @@ describe('validateCatalog', () => {
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
       frameworkNodeId: 'perception',
-      domainId: 'domain',
-      position: { x: 30, y: 30 },
     });
     catalog.capabilityRelations.push(
       {
@@ -1212,47 +1106,6 @@ describe('validateCatalog', () => {
     ]);
   });
 
-  it('reports invalid map bounds and node positions outside their domains', () => {
-    const catalog = emptyV02Catalog();
-    catalog.domains.push({
-      id: 'domain',
-      name: localized('领域'),
-      summary: localized('示例领域。'),
-      order: 1,
-      bounds: { x: 90, y: 90, width: 20, height: 20 },
-    } as unknown as Catalog['domains'][number]);
-    catalog.mapGroups.push({
-      id: 'group',
-      name: localized('分组'),
-      summary: localized('示例分组。'),
-      order: 1,
-      domainIds: ['domain'],
-    });
-    catalog.capabilities.push({
-      id: 'capability',
-      name: localized('能力'),
-      summary: localized('示例能力。'),
-      frameworkNodeId: 'perception',
-      domainId: 'domain',
-      position: { x: 40, y: 40 },
-    } as unknown as Catalog['capabilities'][number]);
-    catalog.knowledgeTopics.push({
-      id: 'knowledge-topic',
-      name: localized('知识议题'),
-      summary: localized('示例议题。'),
-      frameworkNodeId: 'perception',
-      domainId: 'domain',
-      position: { x: 120, y: 10 },
-    } as unknown as Catalog['knowledgeTopics'][number]);
-
-    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
-      'DOMAIN_BOUNDS_INVALID',
-      'CAPABILITY_POSITION_OUTSIDE_DOMAIN',
-      'KNOWLEDGE_TOPIC_POSITION_INVALID',
-      'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN',
-    ]);
-  });
-
   it('rejects duplicate undirected complements and non-bilingual rationales', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);
@@ -1261,8 +1114,6 @@ describe('validateCatalog', () => {
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
       frameworkNodeId: 'perception',
-      domainId: 'domain',
-      position: { x: 30, y: 30 },
     } as unknown as Catalog['capabilities'][number]);
     catalog.capabilityRelations.push(
       {

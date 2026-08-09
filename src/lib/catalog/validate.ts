@@ -12,16 +12,6 @@ export type ExternalSignal = {
   url: string;
 };
 
-export type MapPoint = {
-  x: number;
-  y: number;
-};
-
-export type MapBounds = MapPoint & {
-  width: number;
-  height: number;
-};
-
 export type AtlasRelationType =
   | 'direct-influence'
   | 'derived-variant'
@@ -47,20 +37,6 @@ export type EgdsFrameworkNodeKind =
   | 'external-entry';
 
 export type Catalog = {
-  domains: Array<{
-    id: string;
-    name: LocalizedText;
-    summary: LocalizedText;
-    order: number;
-    bounds: MapBounds;
-  }>;
-  mapGroups: Array<{
-    id: string;
-    name: LocalizedText;
-    summary: LocalizedText;
-    order: number;
-    domainIds: string[];
-  }>;
   egdsFrameworkNodes: Array<{
     id: string;
     kind: EgdsFrameworkNodeKind;
@@ -88,16 +64,12 @@ export type Catalog = {
     name: LocalizedText;
     summary: LocalizedText;
     frameworkNodeId: string;
-    domainId: string;
-    position: MapPoint;
   }>;
   knowledgeTopics: Array<{
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
     frameworkNodeId: string;
-    domainId: string;
-    position: MapPoint;
   }>;
   capabilityRelations: Array<{
     id: string;
@@ -214,10 +186,6 @@ export type Catalog = {
 
 export type CatalogValidationCode =
   | 'COLLECTION_ID_DUPLICATE'
-  | 'DOMAIN_BOUNDS_INVALID'
-  | 'MAP_GROUP_DOMAIN_MISSING'
-  | 'MAP_GROUP_DOMAIN_DUPLICATE'
-  | 'MAP_GROUP_DOMAIN_MISSING_REFERENCE'
   | 'EGDS_PARENT_NODE_MISSING'
   | 'EGDS_FRAMEWORK_CYCLE'
   | 'EGDS_ROOT_COUNT_INVALID'
@@ -226,14 +194,8 @@ export type CatalogValidationCode =
   | 'EGDS_LINK_RELATION_SET_INVALID'
   | 'EGDS_RELATION_ENDPOINT_MISSING'
   | 'EGDS_ENTITY_CONTAINER_INVALID'
-  | 'CAPABILITY_DOMAIN_MISSING'
   | 'CAPABILITY_FRAMEWORK_NODE_MISSING'
-  | 'CAPABILITY_POSITION_INVALID'
-  | 'CAPABILITY_POSITION_OUTSIDE_DOMAIN'
-  | 'KNOWLEDGE_TOPIC_DOMAIN_MISSING'
   | 'KNOWLEDGE_TOPIC_FRAMEWORK_NODE_MISSING'
-  | 'KNOWLEDGE_TOPIC_POSITION_INVALID'
-  | 'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN'
   | 'CAPABILITY_RELATION_FROM_CAPABILITY_MISSING'
   | 'CAPABILITY_RELATION_TO_CAPABILITY_MISSING'
   | 'CAPABILITY_RELATION_SELF_REFERENCE'
@@ -356,8 +318,6 @@ const approvedEgdsProcessRelations = [
 const approvedEgdsLinkRelations = ['innovation-possibility-space:atlas/'];
 
 const collectionNames = [
-  'domains',
-  'mapGroups',
   'egdsFrameworkNodes',
   'egdsFrameworkRelations',
   'capabilities',
@@ -460,55 +420,6 @@ function appendError(
   errors.push({ code, collection, id, field, targetId });
 }
 
-function isMapPoint(value: unknown): value is MapPoint {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
-  const point = value as Record<string, unknown>;
-  return (
-    typeof point.x === 'number' &&
-    Number.isFinite(point.x) &&
-    point.x >= 0 &&
-    point.x <= 100 &&
-    typeof point.y === 'number' &&
-    Number.isFinite(point.y) &&
-    point.y >= 0 &&
-    point.y <= 100
-  );
-}
-
-function isMapBounds(value: unknown): value is MapBounds {
-  if (!isMapPoint(value)) return false;
-  const bounds = value as MapBounds;
-  return (
-    Number.isFinite(bounds.width) &&
-    bounds.width > 0 &&
-    Number.isFinite(bounds.height) &&
-    bounds.height > 0 &&
-    bounds.x + bounds.width <= 100 &&
-    bounds.y + bounds.height <= 100
-  );
-}
-
-function isInsideDomain(position: unknown, bounds: unknown): boolean {
-  if (!isMapPoint(position) || typeof bounds !== 'object' || bounds === null || Array.isArray(bounds)) {
-    return false;
-  }
-  const candidate = bounds as Partial<MapBounds>;
-  if (
-    typeof candidate.x !== 'number' ||
-    typeof candidate.y !== 'number' ||
-    typeof candidate.width !== 'number' ||
-    typeof candidate.height !== 'number'
-  ) {
-    return false;
-  }
-  return (
-    position.x >= candidate.x &&
-    position.x <= candidate.x + candidate.width &&
-    position.y >= candidate.y &&
-    position.y <= candidate.y + candidate.height
-  );
-}
-
 function hasBilingualRationale(summary: LocalizedText): boolean {
   return summary['zh-CN'].trim().length > 0 && typeof summary.en === 'string' && summary.en.trim().length > 0;
 }
@@ -519,8 +430,6 @@ function hasExactStringSet(actual: string[], expected: string[]): boolean {
 
 export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   const errors: CatalogValidationError[] = [];
-  const domainIds = new Set(catalog.domains.map(({ id }) => id));
-  const domainsById = new Map(catalog.domains.map((domain) => [domain.id, domain]));
   const egdsFrameworkNodeIds = new Set(catalog.egdsFrameworkNodes.map(({ id }) => id));
   const egdsFrameworkNodesById = new Map(catalog.egdsFrameworkNodes.map((node) => [node.id, node]));
   const capabilityIds = new Set(catalog.capabilities.map(({ id }) => id));
@@ -704,94 +613,6 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         topic.id,
         'frameworkNodeId',
         topic.frameworkNodeId,
-      );
-    }
-  }
-
-  for (const domain of catalog.domains) {
-    if (!isMapBounds(domain.bounds)) {
-      appendError(errors, 'DOMAIN_BOUNDS_INVALID', 'domains', domain.id, 'bounds', '');
-    }
-  }
-
-  const mapGroupDomainOwners = new Map<string, string>();
-  for (const mapGroup of catalog.mapGroups) {
-    for (const domainId of mapGroup.domainIds) {
-      if (!domainIds.has(domainId)) {
-        appendError(
-          errors,
-          'MAP_GROUP_DOMAIN_MISSING_REFERENCE',
-          'mapGroups',
-          mapGroup.id,
-          'domainIds',
-          domainId,
-        );
-        continue;
-      }
-      if (mapGroupDomainOwners.has(domainId)) {
-        appendError(errors, 'MAP_GROUP_DOMAIN_DUPLICATE', 'mapGroups', mapGroup.id, 'domainIds', domainId);
-        continue;
-      }
-      mapGroupDomainOwners.set(domainId, mapGroup.id);
-    }
-  }
-
-  for (const domain of catalog.domains) {
-    if (!mapGroupDomainOwners.has(domain.id)) {
-      appendError(errors, 'MAP_GROUP_DOMAIN_MISSING', 'domains', domain.id, 'mapGroups', '');
-    }
-  }
-
-  for (const capability of catalog.capabilities) {
-    if (!domainIds.has(capability.domainId)) {
-      appendError(
-        errors,
-        'CAPABILITY_DOMAIN_MISSING',
-        'capabilities',
-        capability.id,
-        'domainId',
-        capability.domainId,
-      );
-    }
-    if (!isMapPoint(capability.position)) {
-      appendError(errors, 'CAPABILITY_POSITION_INVALID', 'capabilities', capability.id, 'position', '');
-    }
-    const domain = domainsById.get(capability.domainId);
-    if (domain && !isInsideDomain(capability.position, domain.bounds)) {
-      appendError(
-        errors,
-        'CAPABILITY_POSITION_OUTSIDE_DOMAIN',
-        'capabilities',
-        capability.id,
-        'position',
-        capability.domainId,
-      );
-    }
-  }
-
-  for (const topic of catalog.knowledgeTopics) {
-    if (!domainIds.has(topic.domainId)) {
-      appendError(
-        errors,
-        'KNOWLEDGE_TOPIC_DOMAIN_MISSING',
-        'knowledgeTopics',
-        topic.id,
-        'domainId',
-        topic.domainId,
-      );
-    }
-    if (!isMapPoint(topic.position)) {
-      appendError(errors, 'KNOWLEDGE_TOPIC_POSITION_INVALID', 'knowledgeTopics', topic.id, 'position', '');
-    }
-    const domain = domainsById.get(topic.domainId);
-    if (domain && !isInsideDomain(topic.position, domain.bounds)) {
-      appendError(
-        errors,
-        'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN',
-        'knowledgeTopics',
-        topic.id,
-        'position',
-        topic.domainId,
       );
     }
   }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import resourceIntake from '../../docs/research/2026-08-09-resource-intake.md?raw';
+import contentConfigSource from '../../src/content.config.ts?raw';
 
 import atlasEvidence from '../../src/data/atlas-evidence.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
@@ -9,20 +10,18 @@ import atlasTags from '../../src/data/atlas-tags.json';
 import atlasThemes from '../../src/data/atlas-themes.json';
 import capabilities from '../../src/data/capabilities.json';
 import capabilityRelations from '../../src/data/capability-relations.json';
-import domains from '../../src/data/domains.json';
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
 import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
 import knowledgeTopics from '../../src/data/knowledge-topics.json';
-import mapGroups from '../../src/data/map-groups.json';
 import resourceTopics from '../../src/data/resource-topics.json';
 import resources from '../../src/data/resources.json';
 import roleProfiles from '../../src/data/role-profiles.json';
 import sources from '../../src/data/sources.json';
+import catalogLoadSource from '../../src/lib/catalog/load.ts?raw';
+import catalogValidateSource from '../../src/lib/catalog/validate.ts?raw';
 import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
 
 const collections = {
-  domains,
-  mapGroups,
   egdsFrameworkNodes,
   egdsFrameworkRelations,
   capabilities,
@@ -38,8 +37,43 @@ const collections = {
   atlasRelations,
   atlasThemes,
 };
+const rawDataFiles = Object.keys(import.meta.glob('../../src/data/*.json'));
 
 describe('raw product catalog data', () => {
+  it('fully retires the generic map catalog and entity placement fields', () => {
+    const retiredCollectionKeys = [
+      ['domain', 's'].join(''),
+      ['map', 'Groups'].join(''),
+    ];
+    const retiredEntityKeys = [
+      ['domain', 'Id'].join(''),
+      ['pos', 'ition'].join(''),
+    ];
+    const retiredDataFiles = [
+      ['domain', 's.json'].join(''),
+      ['map', '-groups.json'].join(''),
+    ];
+    const retiredCatalogTypeTokens = [
+      ['Map', 'Point'].join(''),
+      ['Map', 'Bounds'].join(''),
+    ];
+
+    expect.soft(Object.keys(collections)).not.toEqual(expect.arrayContaining(retiredCollectionKeys));
+    for (const entries of [capabilities, knowledgeTopics]) {
+      for (const entry of entries) {
+        expect.soft(Object.keys(entry)).not.toEqual(expect.arrayContaining(retiredEntityKeys));
+      }
+    }
+    for (const filename of retiredDataFiles) {
+      expect.soft(rawDataFiles.some((path) => path.endsWith(`/${filename}`)), filename).toBe(false);
+    }
+
+    const catalogSources = [contentConfigSource, catalogLoadSource, catalogValidateSource].join('\n');
+    for (const token of [...retiredCollectionKeys, ...retiredEntityKeys, ...retiredCatalogTypeTokens]) {
+      expect.soft(catalogSources, token).not.toContain(token);
+    }
+  });
+
   it('keeps raw IDs unique before Astro content loading', () => {
     for (const [name, entries] of Object.entries(collections)) {
       const ids = entries.map(({ id }) => id);
@@ -51,18 +85,16 @@ describe('raw product catalog data', () => {
     expect(validateCatalog(collections as unknown as Catalog)).toEqual([]);
   });
 
-  it('provides the approved first v0.2 expertise map', () => {
-    expect(domains).toHaveLength(8);
+  it('provides the approved EGDS expertise map entities', () => {
     expect(capabilities).toHaveLength(42);
     expect(knowledgeTopics).toHaveLength(12);
     expect(capabilityRelations).toHaveLength(64);
-    expect(domains.some(({ id }) => id === 'innovation')).toBe(false);
     expect(capabilities).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ id: 'playtesting', domainId: 'research-validation-data' }),
+        expect.objectContaining({ id: 'playtesting', frameworkNodeId: 'playtest-evidence-iteration' }),
         expect.objectContaining({
           id: 'player-behavior-observation',
-          domainId: 'research-validation-data',
+          frameworkNodeId: 'playtest-evidence-iteration',
         }),
       ]),
     );

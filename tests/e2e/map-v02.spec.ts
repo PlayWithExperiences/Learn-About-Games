@@ -57,7 +57,7 @@ test('server renders the complete EGDS skeleton, hidden entities and stable deta
   await expect(map.locator('[data-egds-branch]')).toHaveCount(5);
   await expect(map.locator('[data-egds-process-path]')).toHaveCount(3);
   await expect(map.locator('[data-egds-lever]')).toHaveCount(3);
-  await expect(map.locator('[data-map-group], [data-map-region]')).toHaveCount(0);
+  await expect(map.locator('[data-egds-framework-node="egds-root"]')).toHaveCount(1);
   await expect(map.locator('[data-map-entity]')).toHaveCount(54);
   await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(0);
   await expect(map.locator('[data-capability-relation]')).toHaveCount(capabilityRelations.length);

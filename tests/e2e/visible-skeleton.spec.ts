@@ -42,24 +42,35 @@ test('publishes the visible map skeleton and repository-backed project pages', a
 
   await page.getByRole('link', { name: '看全貌' }).click();
 
-  const visibleDomains = testInfo.project.name === 'mobile-chromium'
-    ? page.locator('[data-mobile-map-outline] [data-outline-region]')
-    : page.locator('[data-capability-map-canvas] [data-map-region]');
+  const map = page.locator('[data-egds-map]');
+  await expect(map.locator('[data-egds-framework-node]')).toHaveCount(egdsFrameworkNodes.length);
+  const visibleBranches = testInfo.project.name === 'mobile-chromium'
+    ? map.locator('[data-egds-outline] [data-outline-node-kind="branch"] > summary')
+    : map.locator('[data-capability-map-canvas] [data-egds-branch]');
+  await expect(visibleBranches).toHaveCount(5);
 
-  for (const heading of [
-    '体验与玩家',
-    '玩法、系统与手感',
-    '关卡与空间',
-    '叙事与表达',
-    '研究、验证与数据',
-    '原型、生产与迭代',
-    '协作、领导与方向',
-    '产品、市场与批判语境',
+  for (const branchName of [
+    '体验设计',
+    '从计划到落地',
+    '如果有团队',
+    '如果希望形成产品与盈利',
+    '如果讨论的不只是游戏',
   ]) {
-    await expect(visibleDomains.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+    await expect(visibleBranches.filter({ hasText: branchName })).toBeVisible();
   }
 
-  await expect(page.getByRole('link', { name: 'Playtest' })).toBeVisible();
+  if (testInfo.project.name === 'mobile-chromium') {
+    await map.locator('[data-outline-framework-node="from-plan-to-ship"] > summary').click();
+    await map.locator('[data-outline-framework-node="playtest-evidence-iteration"] > summary').click();
+    await expect(map.locator(
+      '[data-outline-framework-node="playtest-evidence-iteration"] [data-map-entity-detail][aria-label="打开 Playtest 详情"]',
+    )).toBeVisible();
+  } else {
+    await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+    await expect(map.locator(
+      '[data-capability-map-canvas] [data-map-entity-key="capability:playtesting"] [data-map-entity-detail]',
+    )).toBeVisible();
+  }
 
   const repositoryPages = [
     ['Roadmap', 'Learn About Games Roadmap'],
@@ -136,7 +147,7 @@ test('describes the public map through its EGDS framework nodes', async ({ page 
 
   await page.getByRole('link', { name: '打开能力地图' }).click();
   await expect(
-    page.getByText(/有向支持不表示必修或固定学习顺序/).first(),
+    page.getByText(/框架节点表达作者方法，能力与知识议题按需展开/).first(),
   ).toBeVisible();
 });
 

@@ -3,96 +3,72 @@
     "id": "player-motivation-difference",
     "name": { "zh-CN": "玩家动机与差异", "en": "Player Motivation & Difference" },
     "summary": { "zh-CN": "关于动机、经验、能力、身份与游玩语境差异的理论和证据。", "en": "Theory and evidence about differences in motivation, experience, ability, identity, and play context." },
-    "frameworkNodeId": "perception",
-    "domainId": "experience-player",
-    "position": { "x": 5, "y": 15 }
+    "frameworkNodeId": "perception"
   },
   {
     "id": "perception-attention-emotion",
     "name": { "zh-CN": "知觉、注意与情绪", "en": "Perception, Attention & Emotion" },
     "summary": { "zh-CN": "人如何感知反馈、分配注意并形成情绪反应。", "en": "How people perceive feedback, allocate attention, and form emotional responses." },
-    "frameworkNodeId": "perception",
-    "domainId": "experience-player",
-    "position": { "x": 16, "y": 15 }
+    "frameworkNodeId": "perception"
   },
   {
     "id": "emergence-complexity",
     "name": { "zh-CN": "涌现与复杂系统", "en": "Emergence & Complex Systems" },
     "summary": { "zh-CN": "局部规则互动如何产生难以由单条规则直接预测的整体行为。", "en": "How interacting local rules produce behavior not directly predictable from one rule." },
-    "frameworkNodeId": "gameplay-challenges-lever",
-    "domainId": "gameplay-systems-feel",
-    "position": { "x": 44, "y": 27 }
+    "frameworkNodeId": "gameplay-challenges-lever"
   },
   {
     "id": "probability-randomness-fairness",
     "name": { "zh-CN": "概率、随机性与公平感", "en": "Probability, Randomness & Perceived Fairness" },
     "summary": { "zh-CN": "概率分布、随机过程和玩家公平感之间的关系。", "en": "Relationships among probability distributions, random processes, and perceived fairness." },
-    "frameworkNodeId": "gameplay-challenges-lever",
-    "domainId": "gameplay-systems-feel",
-    "position": { "x": 57, "y": 27 }
+    "frameworkNodeId": "gameplay-challenges-lever"
   },
   {
     "id": "spatial-cognition-wayfinding",
     "name": { "zh-CN": "空间认知与寻路", "en": "Spatial Cognition & Wayfinding" },
     "summary": { "zh-CN": "人如何形成认知地图、读取地标并在空间中定位。", "en": "How people form cognitive maps, read landmarks, and orient in space." },
-    "frameworkNodeId": "gameplay-challenges-lever",
-    "domainId": "level-space",
-    "position": { "x": 82, "y": 27 }
+    "frameworkNodeId": "gameplay-challenges-lever"
   },
   {
     "id": "narratology-agency-authorship",
     "name": { "zh-CN": "叙事学、能动性与作者性", "en": "Narratology, Agency & Authorship" },
     "summary": { "zh-CN": "叙事结构、玩家能动性与作者控制之间的理论关系。", "en": "Theoretical relationships among narrative structure, player agency, and authorial control." },
-    "frameworkNodeId": "narrative-lever",
-    "domainId": "narrative-expression",
-    "position": { "x": 80, "y": 45 }
+    "frameworkNodeId": "narrative-lever"
   },
   {
     "id": "audiovisual-semiotics",
     "name": { "zh-CN": "视听符号学", "en": "Audiovisual Semiotics" },
     "summary": { "zh-CN": "图像、声音、文字、节奏和形式如何共同产生意义。", "en": "How image, sound, text, rhythm, and form jointly produce meaning." },
-    "frameworkNodeId": "aesthetics-lever",
-    "domainId": "narrative-expression",
-    "position": { "x": 93, "y": 45 }
+    "frameworkNodeId": "aesthetics-lever"
   },
   {
     "id": "research-ethics-bias",
     "name": { "zh-CN": "研究伦理与偏差", "en": "Research Ethics & Bias" },
     "summary": { "zh-CN": "招募、观察、测量和解释中的伦理责任与系统性偏差。", "en": "Ethical responsibilities and systematic biases in recruitment, observation, measurement, and interpretation." },
-    "frameworkNodeId": "playtest-evidence-iteration",
-    "domainId": "research-validation-data",
-    "position": { "x": 95, "y": 94 }
+    "frameworkNodeId": "playtest-evidence-iteration"
   },
   {
     "id": "production-pipelines-constraints",
     "name": { "zh-CN": "生产管线与技术约束", "en": "Production Pipelines & Technical Constraints" },
     "summary": { "zh-CN": "引擎、工具链、资产管线和专业依赖如何限制或改变设计工作。", "en": "How engines, toolchains, asset pipelines, and discipline dependencies constrain design work." },
-    "frameworkNodeId": "prototype-production-breakdown",
-    "domainId": "prototyping-production-iteration",
-    "position": { "x": 64, "y": 94 }
+    "frameworkNodeId": "prototype-production-breakdown"
   },
   {
     "id": "organizational-dynamics-power",
     "name": { "zh-CN": "组织动力与权力", "en": "Organizational Dynamics & Power" },
     "summary": { "zh-CN": "团队结构、激励、权限、心理安全和非正式权力如何影响决策。", "en": "How structure, incentives, authority, psychological safety, and informal power affect decisions." },
-    "frameworkNodeId": "leadership-management",
-    "domainId": "collaboration-leadership-direction",
-    "position": { "x": 31, "y": 95 }
+    "frameworkNodeId": "leadership-management"
   },
   {
     "id": "game-industry-platform-economics",
     "name": { "zh-CN": "游戏产业与平台经济", "en": "Game Industry & Platform Economics" },
     "summary": { "zh-CN": "发行、平台、商业模式、劳动结构和市场周期的经济背景。", "en": "The economic context of publishing, platforms, business models, labor structures, and market cycles." },
-    "frameworkNodeId": "market-opportunity",
-    "domainId": "product-market-critical-context",
-    "position": { "x": 32, "y": 57 }
+    "frameworkNodeId": "market-opportunity"
   },
   {
     "id": "games-values-culture",
     "name": { "zh-CN": "游戏、价值观与文化", "en": "Games, Values & Culture" },
     "summary": { "zh-CN": "游戏如何表达价值观，并参与身份、规范和文化意义的形成。", "en": "How games express values and participate in forming identity, norms, and cultural meaning." },
-    "frameworkNodeId": "values-culture",
-    "domainId": "product-market-critical-context",
-    "position": { "x": 54, "y": 58 }
+    "frameworkNodeId": "values-culture"
   }
 ]
