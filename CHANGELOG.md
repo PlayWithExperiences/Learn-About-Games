@@ -5,11 +5,14 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 ## [Unreleased]
 
 - 将 `PlayWithExperiences/Learn-About-Games` 暂时从 Public 改为 Private；未经身份验证的仓库 URL 与原 GitHub Pages URL 均返回 404，并手动停用 Pages workflow，避免私有完善期间触发无效部署。历史发布证据继续保留，重新公开前需完成当前核心体验修正、重新启用 workflow 与线上验收。
-- 能力地图改为一个根、五条阅读主干、八个 Domain 与 54 个既有节点构成的分层思维导图；13 条结构关系持续显示，64 条真实 `supports` / `complements` 关系默认退居背景并在聚焦时增强。移动端保留同源五组大纲，桌面另有完整关系文字版。
+- EGDS 取代通用分组成为能力地图的唯一知识骨架：28 个方法节点表达体验设计、从计划到落地、团队、产品／盈利与更广语境；体验设计内部固定显示体验旅程以及感受 → 理解 → 解构 → 重构，并由重构进入叙事、美学与表现、玩法与挑战三类设计杠杆。
+- 42 个 Capability 与 12 个 Knowledge Topic 只在一个叶容器中按需展开；64 条 `supports` / `complements` 关系默认不显示，只在选中 Capability 时显示其直接关系。桌面取消纵向嵌套滚动，1024px、320px 与无 JavaScript 使用同源原生层级和关系大纲。
+- `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 通过地图公开事件叠加到 EGDS；Career priority、个人实践状态、展开／关系选择各自独立，不生成职业适配、差距、完成率或总分。无 JavaScript 时三份画像摘要、依据、详情与资源链接仍可访问。
+- 删除旧 Domains / mapGroups JSON、placement 字段、catalog 类型、validator、generic geometry helper、无消费者样式与公开方法论残留；EGDS Framework Node、Capability、Knowledge Topic 成为当前三类地图实体。
 - 深色 Career Lens 以不透明填充、2px 边框、实线／虚线／点线和中文标签共同表达核心／重要／建议了解；未收录节点仍完整可读，不隐藏、不评分。
 - 成长资源收紧为单列目录：20 个 Source 与 128 个 Work Item 保持原 catalog 顺序、七维筛选、140 个 Access Version 与 12 条外部观察；版本和观察进入原生 disclosure，320px 与无 JavaScript 仍可完整访问。
 - Innovation Atlas 增加受约束的 50%–200% 缩放、适应全图、复位、拖拽和键盘平移；中间宽度使用完整时期大纲。节点索引新增中英文搜索、按时间／名称稳定排序、结果计数、空状态与无 JavaScript 说明，图的 27 个节点、25 条关系、40 项 Evidence 与主题透镜语义不变。
-- 以上改动以 runtime commit `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` 推送到远端私有 `codex/v02` 分支；它们不是已部署行为，Pages workflow 仍保持手动停用。
+- 较早的私有完善 runtime 已推送到远端 `codex/v02`；本轮 EGDS 本地候选截至 runtime commit `40fd1cd913ffefc248e744c6d51e150dba24b4b1`，本地候选尚未推送或部署。Pages workflow 仍保持手动停用。
 
 ## [v0.2] - 2026-08-09
 

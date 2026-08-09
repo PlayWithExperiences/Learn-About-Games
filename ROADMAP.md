@@ -6,9 +6,10 @@
 
 - 仓库已暂时设为 Private，公开 GitHub Pages 已下线；历史发布证据继续保留，但不代表当前可访问状态。
 - Pages workflow 已手动停用，避免私有完善期间每次推送触发无效部署；恢复公开前需要显式重新启用。
-- 私有完善已经在 `codex/v02` 实现五条主干的分层思维导图、深色 Career Lens 冗余编码、单列紧凑资源行、Atlas 可控视口，以及节点搜索／排序；实施边界见 [设计规格](docs/superpowers/specs/2026-08-09-private-refinement-design.md)。
-- 本地串行整站验收已经完成，runtime `1a1e2d1` 已推送到远端私有 `codex/v02` 供用户复核。恢复 Public 与 Pages 仍需用户后续明确决定，并重新执行线上契约验收。
-- 私有复核后，发起人否决把五条通用阅读分组继续当作能力地图主骨架；下一切片改为以 PlayWithExperiences / EGDS 的体验设计方法、从计划到落地、团队、产品／盈利与更广游戏语境组织地图。[书面设计](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md) 已获确认，[实施计划](docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md) 已拆分为可审查的依赖波次，尚未改变 runtime。
+- EGDS 能力地图已经在本地候选完成：28 个方法节点形成体验设计、从计划到落地、团队、产品／盈利与更广语境五条作者化分支；42 个 Capability 与 12 个 Knowledge Topic 按需展开，64 条真实关系只在直接聚焦时显示。旧 Domains / mapGroups 数据、类型、样式与当前公开方法合同已经退休。
+- `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 已通过公开事件投影到同一张 EGDS 地图；它们与个人实践状态分离，不计算适配度、差距、完成率或总分。
+- 成长资源继续使用单列事实目录，Innovation Atlas 继续提供受约束视口和节点索引；两者没有在 EGDS 切片中被重新设计或改变数据语义。
+- 本地候选 runtime `40fd1cd` 已完成逐任务规格／质量审查；远端私有 `codex/v02` 仍停在 `d982ceb`，本轮尚未推送。仓库仍保持 Private，Pages workflow 仍保持手动停用；恢复 Public 与 Pages 需要用户另行决定并重新执行线上验收。
 
 ## Shipped｜M0 纵向切片
 
@@ -22,7 +23,7 @@
 
 ## Shipped｜v0.2 知识网络
 
-- 8 个领域、42 个能力、12 个知识议题和 64 条关系已经形成相连的能力地图；移动端保留关系等价大纲。
+- 当时的公开 v0.2 以八个知识区域组织 42 个能力、12 个知识议题和 64 条关系；这一历史结构已由上方的 Private EGDS 候选取代，但部署证据继续保留。
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 三个参考透镜已经叠加在同一张地图上，不生成职业评分。
 - 20 个 Source、128 个 Work Item 与 15 个无顺序主题已经进入统一资源目录；七维筛选只表达可核查事实。
 - Innovation Atlas 已成为 27 节点、25 条证据关系与 40 项文献构成的全局时间网络，Roguelike 与 Metroidvania 仅改变强调。
@@ -31,8 +32,10 @@
 
 ## Next｜完善核心体验与扩大内容覆盖
 
-- 按 [EGDS 实施计划](docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md) 在 Private 分支实施并复核能力地图：一屏显示作者化主骨架与第二层能力群，具体能力按需展开，并取消地图纵向嵌套滚动。
-- 地图通过后，再分别处理资源媒介类型编码／进一步压缩，以及 Innovation Atlas 的滚轮缩放和历史内容扩充。
+- 让发起人在 Private 状态下真实使用 EGDS 地图，收集对作者结构、命名、内容缺口与一屏密度的反馈；不因一次实现把 EGDS 固化成不可修订的标准。
+- 为成长资源单独形成下一份规格：强化媒介／Source 类型的文字与非颜色标识，并在不损失 140 个 Access Version、12 条外部观察和七维筛选的前提下进一步压缩条目密度。
+- 为 Innovation Atlas 单独评估“明确进入地图模式”后的普通滚轮缩放；默认状态继续让滚轮滚动页面，不能无条件劫持用户输入。
+- 扩展 Innovation Atlas 的早期历史 ontology 与证据，从文档化设计、实验程序／装置、系统原型、量产产品和商业突破等不同实体类型出发；Pong 不能被未经限定地写成“第一个电子游戏”。
 - 继续收集、去重和归类资源，不把收录数量或外部平台数据当作质量分。
 - 完善中文与英文资源版本、字幕和译本关联。
 - 增加学术论文、研究著作和第一手行业资料。

@@ -1,6 +1,6 @@
 # Project entrypoint
 
-Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. Private refinement runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` is pushed to remote `codex/v02` and passed the local acceptance suite. The user reviewed it, approved the authorial EGDS redesign, and the next decision is how to execute its implementation plan; do not restore Public or Pages automatically. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build.
+Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. The authorial EGDS redesign has been implemented and reviewed locally through runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1`; this local candidate is not pushed or deployed. Remote private branch `codex/v02` remains at `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`. Do not restore Public, enable Pages or push the candidate automatically. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build.
 
 Before making substantive changes, read these files in order:
 
@@ -9,7 +9,7 @@ Before making substantive changes, read these files in order:
 3. [Public roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)
 4. [Current conversation record](docs/journal/2026-08-09-learn-about-games-v02-transcript.md) only when exact v0.2 wording is needed; follow its link to the M0 record for older history
 
-Keep the decision summary and sanitized conversation record current at project milestones. Update the Roadmap when direction changes, the Changelog for every release, and `docs/devlog/` for material public decisions. Preserve the distinction between domains, knowledge topics, capabilities, practices, roles, production contexts, resource items, language versions, innovations, game artifacts, innovation relations and evidence.
+Keep the decision summary and sanitized conversation record current at project milestones. Update the Roadmap when direction changes, the Changelog for every release, and `docs/devlog/` for material public decisions. Preserve the distinction between EGDS framework nodes, knowledge topics, capabilities, practices, roles, production contexts, resource items, language versions, innovations, game artifacts, innovation relations and evidence. Do not restore the retired Domains / mapGroups ontology as a second map truth.
 
 Innovation Atlas remains a section inside Learn About Games, not a separate project, repository or product. v0.2 renders one global horizontal time network; Roguelike, Metroidvania and later topics are highlight lenses over the same network, not isolated subgraphs.
 

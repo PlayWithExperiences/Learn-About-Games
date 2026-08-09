@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；私有完善 runtime `1a1e2d1` 已推送到远端 `codex/v02`；发起人已确认 EGDS 书面规格，实施计划已完成，等待选择执行方式
+- 状态：仓库保持 Private、Pages 保持禁用；EGDS 本地候选已实现并逐任务审查至 runtime `40fd1cd`，尚未推送或部署；远端私有 `codex/v02` 仍为 `d982ceb`
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -22,9 +22,11 @@
 
 用户在查看 v0.2 后认为核心体验仍不足以公开：暗色主题下职业高亮不够明显；能力地图虽然有关系，但结构过散、缺少原思维导图那样清晰的主次和分区；成长资源的双列形态占用过宽；Innovation Atlas 缺少缩放和平移；节点详情需要按名称／时间排序和搜索。仓库因此已暂时设为 Private，未经身份验证访问仓库与原 Pages URL 均返回 404；Pages workflow 同时手动停用，避免私有完善期间的 main push 触发无效部署。
 
-发起人已确认本轮设计方向。能力地图不采用会伪造唯一父子关系的严格树，而使用“分层思维导图 + 按需关系网”：一个根节点、五条主干、8 个 Domain 与原有节点；主干与归属持续可见，`supports` / `complements` 在节点聚焦时增强。深色 Career Lens 用填充、边框、线型和中文标签共同编码；Source 双列卡片改为单列目录，已有 Work Item 单列进一步收紧信息区；Atlas 增加适应全图、50%-200% 缩放、拖拽／键盘平移；节点索引增加中英文搜索和名称／时间排序。所有调整都保持 no-JS 内容、资源事实顺序、职业无评分与 Atlas 全局网络不变量。
+发起人随后否决了通用五分组继续作为地图主骨架，并确认能力地图必须以 PlayWithExperiences / EGDS 为作者化蓝本。当前本地候选使用 28 个 EGDS Framework Node 表达五条条件分支、体验旅程、感受 → 理解 → 解构 → 重构过程与三类设计杠杆；42 个 Capability 和 12 个 Knowledge Topic 只在一个叶容器中按需展开，64 条 `supports` / `complements` 关系只在直接聚焦时出现。EGDS 是一种可讨论的设计视角，不是唯一行业标准。
 
-实施按三个可独立验证的子系统拆分：Map / Career、Resources、Atlas。三份计划都从行为 RED 开始，每个切片独立提交；`global.css` 是三者唯一共享写入点，因此默认串行执行而不是并行修改。每个子系统先通过定向 unit/E2E 和视觉矩阵，再由主任务串行运行完整 build/E2E 门禁。规划时核对真实 DOM 后修正规格中的一处事实：当前双列的是 Source 目录，Work Item 已是单列但横向信息过长；实施目标因此是 Source 单列化与 Work Item 进一步收紧，而不是把不存在的双列 Work Item 当作缺陷。
+Career Lens 现在只通过公开地图事件叠加到同一张 EGDS 地图，和个人实践状态、展开状态、关系选择保持分离，不生成评分、差距或完成率。旧 Domains / mapGroups JSON、placement 字段、catalog 类型、validator、generic geometry helper、无消费者 CSS 和当前 Methodology 语义已经一起退休。普通滚轮属于页面；1024px、320px 与无 JavaScript 使用同源原生大纲，避免内部纵向滚动与页面竞争。
+
+更早的私有完善按 Map / Career、Resources、Atlas 三个可独立验证的子系统实施；EGDS 切片则按 catalog → 纯布局／路由 → 交互地图 → Career bridge → 旧 ontology 退休的依赖顺序执行。每项行为先取得 RED，再完成最小 GREEN、规格审查、质量审查和原实现者修复闭环。资源与 Atlas 没有在 EGDS 切片中被顺手重构。
 
 v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`、GitHub Pages run `31282275108` 与 evidence commit `ff7bb3b954f52e65ede79e73103da70a1d6accab` 作为最后一次公开构建的历史证据保留。重新公开前必须完成核心体验修正并重新运行线上验收，不能把历史成功 run 描述成当前公开状态。
 
@@ -84,7 +86,7 @@ Atlas UI 独立审查最初判定 Not Ready，并给出 5 个 Important：非匹
 
 ### 能力地图
 
-现有两列卡片没有地图感。v0.2 使用稳定知识地域、可进入节点和有明确含义的关系。桌面是地域图，移动端是关系等价大纲；不使用无约束力导图。
+通用地域图和后续五条阅读分组都没有充分表达 PlayWithExperiences 的方法来源。当前地图以 EGDS 为唯一知识骨架：体验旅程和情绪曲线进入感受、理解、解构、重构，再由重构进入叙事、美学与表现、玩法与挑战；其余分支分别说明从计划到落地、团队、产品／盈利与更广语境。一屏先看完整方法骨架，具体 Capability / Knowledge Topic 按需展开。
 
 ### 职业方向
 
@@ -104,7 +106,7 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 已实现内容范围
 
-- 8 个 Domain、42 个 Capability、12 个 Knowledge Topic、64 条能力关系。
+- 28 个 EGDS Framework Node、4 条显式方法关系、42 个 Capability、12 个 Knowledge Topic、64 条能力关系。
 - `AAA · Game Designer`、`AAA · Creative Director`、`Indie · Solo Developer` 三个参考画像。
 - 20 个 Source、128 个真实 Work Item、15 个无顺序资源主题，保留 Source 与 Work Item 粒度。
 - 全局 Atlas 27 个节点、25 条有证据关系、40 项 Evidence，首批透镜为 Roguelike 与 Metroidvania。
@@ -121,7 +123,7 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 规格对抗审查后的修正
 
-- 地图统一使用一张全局 0-100 坐标系；Domain 保存全局 bounds，节点保存全局锚点，测试同时验证地域包含和关系端点对齐，不能只靠 DOM 数量冒充地图。
+- 地图使用确定性的 1180px EGDS 骨架布局；框架节点、实体扩展和关系路径有独立几何合同，测试同时验证输入反转稳定、零盒碰撞、结构／过程线不穿无关节点和一屏高度预算，不能只靠 DOM 数量冒充地图。
 - Source 与 Work Item 都是可发现实体；Work Item 保存来自研究 intake 的唯一 canonical identity，Source 有独立详情页。
 - 访问模式与地区限制拆分；100-150 是内容发布目标，不是驱动填充的构建硬门槛。硬门槛是真实 Source、唯一 canonical identity、至少一个核查过的 Access Version 与可解释主题关联。
 - Capability Relation 只连接 Capability；跨 collection 引用由实体类型确定，ID 在各 collection 内唯一。
@@ -132,14 +134,15 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 精确下一步
 
-1. 按发起人选择，用 subagent-driven 或 inline execution 执行 [EGDS 能力地图实施计划](../superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md)；推荐前者。
-2. 数据合同先串行落地；随后纯布局 helper 与详情路由可并行，交互地图、Career bridge 和旧 ontology 退休按依赖顺序推进。
-3. 根任务逐提交复核并独立完成最终对抗验收；本切片不修改 Resources 或 Innovation Atlas runtime。
-4. EGDS 地图在 Private 分支通过真实使用复核后，再分别形成资源媒介编码／密度与 Atlas 交互／历史扩充规格。
-5. 只有用户确认核心体验达到可用门槛后，才另行恢复 Public、重新启用 Pages workflow 并执行线上验收。
+1. 先由发起人在 Private 状态下真实使用当前 EGDS 本地候选，判断作者结构、命名、一屏密度与内容缺口是否符合预期；本地候选不自动推送。
+2. 独立形成成长资源的下一份规格：强化媒介／Source 类型文字与非颜色标识，在保持七维筛选、140 个 Access Version 和 12 条外部观察的前提下继续压缩行密度。
+3. 独立形成 Innovation Atlas 的 engaged wheel mode 规格：默认普通滚轮继续滚页面，只有明确进入地图模式后才接管连续缩放。
+4. 建立早期电子游戏史 ontology 和证据批次，区分文档化设计、实验程序／装置、系统原型、量产产品与商业突破；Pong 只作为 1972 年商业突破节点，不能写成未经限定的“第一个电子游戏”。
+5. 只有用户确认核心体验达到可用门槛后，才另行决定是否推送候选、恢复 Public、重新启用 Pages workflow 并执行线上验收。
 
 ## 当前未决风险
 
+- `mindset-problem-solving-tools` 与 `leadership-management` 仍是作者地图中的有效 landmark，但当前分别没有或很少直接 Capability；界面如实显示内容缺口，不能用不相关能力填满。
 - 当前已收录 128 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
 - 资源筛选只表达目录事实；不能把外部公开计数或观察转译成本站推荐、评分、排名或审核结论。
 - 当前中文界面与多语言资源元数据不等于完整双语产品；英文界面仍属后续范围。
@@ -147,7 +150,9 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 私有完善实现状态
 
-五项反馈已在私有 `codex/v02` 分支完成实现，并以 runtime commit `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` 推送到远端，但没有重新公开或部署：能力地图使用一个根、五条阅读主干、8 个 Domain、42 个 Capability 与 12 个 Knowledge Topic 的分层结构，13 条结构线与 64 条真实关系使用不同视觉层级；Career Lens 在 Light / Dark 中以填充、2px 边框、线型和中文标签表达三档优先级，未收录节点保持完整不透明；Resources 把 20 个 Source 与 128 个 Work Item 收紧为单列目录，保留 140 个 Access Version 与 12 条外部观察；Atlas 增加 50%–200% 受约束视口、适应全图、拖拽、键盘平移，以及 27 节点索引的中英文搜索和时间／名称排序。
+较早的五项私有完善已经在远端 `codex/v02` 留档；当前远端头为 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。其 Resources 保持 20 个 Source、128 个 Work Item、140 个 Access Version 与 12 条外部观察的单列目录；Atlas 保持 50%–200% 受约束视口、适应全图、拖拽、键盘平移，以及 27 节点索引的中英文搜索和时间／名称排序。
+
+EGDS 本地候选从 implementation base `84e36d55171cafcdf8e809e53d4e4871479732dc` 演进到 runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1`，尚未推送或部署。它完成 28/4/42/12/64 数据合同、确定性布局、公开详情路由、交互地图、三 Career Lens 事件桥和旧 ontology 退休。逐任务审查修复包括悬空关系、locale 不稳定排序、路径穿盒、outline 可访问性、响应式焦点所有权、无效 public event、Career duplicate mapping、Atlas breakpoint 耦合、当前 Methodology 旧语义和 7.7KB 无消费者 CSS。
 
 实施中的对抗审查修复了 typed ID 冲突、桌面 no-JS 缺少关系文字等价物、Career 整节点降透明度、资源事实区错误退化为单列、Atlas 中间宽度无法诚实适应全图、普通滚轮被内部画布截获、lost pointer capture 残留、节点索引无 JavaScript 缺局部说明等问题。最终质量审查又发现搜索输入需要 NFKC 归一化且中文 `恶魔城` 标签缺失，以及搜索与主题双重弱化会把可点击节点压到 4.5:1 以下；修复提交 `08be06d` 统一使用 NFKC / locale lowercase / trim，补充中文 Tag，并用不透明 token、虚线边框与局部强调替代整节点 opacity。Light / Dark、1440px / 320px 的搜索+主题组合已由真实 computed contrast 锁定至少 4.5:1。
 
@@ -176,3 +181,21 @@ EGDS reviewer 首轮指出三项核心缺口：没有 54 个实体的主要归�
 Resources 只读研究确认真实 catalog 为 128 Work Item、20 Source、140 Access Version、12 外部观察；媒介分布为演讲 68、书籍 27、论文 8、网站 8、播客 5、视频 5、文章 4、课程 3。推荐后续使用“单主列 + 行首类型轨道 + 事实短带”：媒介与 Source 类型同时使用明确文字 tag、边框／低饱和色冗余，默认保留标题、Source、关联原因、语言和访问摘要，完整版本与外部观察进入原生 disclosure。建议把 desktop P50 行高从当前约 142px 进一步压到不高于 112px、320px P50 不高于 190px；不改变筛选、顺序、实体边界或站内无评分原则。
 
 Atlas 研究不建议无条件劫持普通 wheel。推荐 cooperative 默认 + 明确“进入地图模式”：默认普通滚轮滚页面，进入模式后普通 wheel 围绕指针连续缩放、拖动平移，Esc／离开区域退出；未进入时 Ctrl/Command + wheel 继续可用，达到缩放边界后把滚动还给页面。早期历史研究明确 PONG 不能写成“第一个电子游戏”，而应区分文档化设计、实验装置／程序、系统原型、量产商业产品和商业突破。首批候选包括 CRT Amusement Device、Nimrod、OXO、Tennis for Two、Spacewar!、TV Game Unit #1、Brown Box、Galaxy Game、Computer Space、Magnavox Odyssey、Pong 与 Home Pong；只有得到直接证据的影响／派生／原型谱系才进入关系图。Agent Reach `v1.5.0` 已核为最新版。
+
+## EGDS 实施里程碑与根级验收
+
+EGDS implementation range 是 `84e36d55171cafcdf8e809e53d4e4871479732dc..40fd1cd913ffefc248e744c6d51e150dba24b4b1`。数据切片先新增并锁定 28 个 framework node、3 条 `process-next` 和 1 条 `links-to`；42 个 Capability 与 12 个 Knowledge Topic 各有唯一 `frameworkNodeId`，64 条 Capability relation 保持原语义。纯布局 helper 以稳定 code-unit order 生成 1180px 骨架、一个可选展开带和 obstacle-aware 关系路径；输入反转、重复 ID、无效端点、碰撞与穿盒都有失败合同。
+
+交互地图由 `CapabilityMap` 独占 `expandedFrameworkNodeId` 与 `selectedEntityKey`。默认只显示 28 个 EGDS 方法节点，实体和 64 条关系都在 server HTML 中但不抢占视线；一次只展开一个叶容器，选中 Capability 后只显示直接关系。Career Explorer 不直接改地图 DOM，只发送经过验证的 apply / focus / clear 事件；Career priority、个人实践状态、展开和关系选择互不覆盖。无 JavaScript 时，原生层级大纲保留 42 个 Capability、12 个 Knowledge Topic、64 条关系说明、详情链接和三份 Career 画像摘要。
+
+旧 generic ontology 已原子退休：删除 `domains.json`、`map-groups.json`、`domainId`、手工 position、旧 catalog/validator/type、generic geometry helper、422 行无消费者样式和当前 Methodology 里的旧实体定义。精确 source gate 对旧字段、helper 与 selector 为 exit 1、零输出；42/12 数据与迁移前比较只删除退休字段，ID、顺序、内容和 EGDS placement 不变。
+
+逐任务采用实现 → 规格审查 → 质量审查 → 原实现者修复 → 原 reviewer 复审的闭环。实际发现并关闭的错误包括：EGDS relation 端点可悬空、locale-sensitive 排序、关系路径穿节点、展开 leader 覆盖节点边、响应式状态与焦点失去所有权、invalid public event 部分写入、Career duplicate mapping 造成计数漂移、double bootstrap、Atlas breakpoint 被 EGDS media query 耦合、公开 Methodology 仍定义旧实体，以及生产 bundle 保留 7.7KB 无消费者 CSS。最后一轮 Task6 review 结论为 Approved，0 Critical / Important / Minor。
+
+根级浏览器验收截图位于 `/tmp/learn-about-games-egds-final/`，已按 original resolution 逐张查看。1440px Light / Dark 默认画布完整显示五条分支，scene height 为 720，28 个 framework node 零重叠；默认可见实体 0、可见 Capability relation 0。展开 Playtest 容器后只出现 6 个 Capability + 1 个 Knowledge Topic，仍为零重叠；选择 Playtest 后只出现其 4 条直接关系。普通滚轮分别落在空白画布、framework node 和实体上时，页面 Y 都增加 220px。1024px 与 320px 使用大纲、canvas 隐藏且无页面横向溢出；1440px / 320px 无 JavaScript 均保留 42 个 Capability 链接、12 个 Topic 链接和 54 个 disabled 关系控件。
+
+三份 Career Lens 在 Light / Dark 都能应用；framework node 与 Knowledge Topic 的 Career attributes 始终为 0。清除 Career 后，已展开的 `playtest-evidence-iteration`、已选择的 `capability:playtesting` 与 localStorage 个人实践记录都保持，只有画像属性消失。1024px / 320px 聚焦打开正确的原生祖先 disclosure；320px no-JS 有 3 个 disabled 画像按钮、3 份原生摘要和 62 个依据／能力／资源链接。
+
+当前文档更新前的根级 fresh gate 为：Astro check 64 files、0 errors / warnings / hints；Vitest 130/130；静态 build 105 pages；完整 Playwright 200 tests 中 185 passed / 15 intentional skipped / 0 failed。第一次 full E2E 只因人工验收 preview 占用 4342 而未启动；精确停止该 PID 后原样重跑得到上述 GREEN，没有改产品或测试。最终提交前会在连续性文件写完后再执行同一整套门禁。
+
+仓库 API 仍返回 `PRIVATE`，deploy workflow 仍为 `disabled_manually`；远端 `codex/v02` 是 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`，本地 runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1` 与本里程碑文档均未推送。下一步不是自动发布，而是发起人私有复核；资源媒介／密度、Atlas engaged wheel mode 与早期电子游戏史 ontology 是三个独立后续切片。

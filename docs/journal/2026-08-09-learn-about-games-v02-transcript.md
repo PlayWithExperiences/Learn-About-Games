@@ -328,3 +328,23 @@ Atlas agent 对比了普通 wheel、focus-to-engage 和仅修饰键三种方案�
 任务分配按难度使用当前真实可调用模型：catalog／交互／最终清理由高推理 Sol 负责，纯布局与 Career bridge 由高推理 Terra 负责，路由文案由中等推理 Terra 负责，根任务逐提交复核并独立做最终对抗验收。当前桌面 subagent runtime 未暴露 Luna，因此没有把 ChatGPT Free 的 Luna 可用性误写成 Codex 子代理能力。资源密度与 Atlas 早期历史研究结果继续留在后续独立规格，本计划不修改对应 runtime。
 
 实施计划保存在 `docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md`。本阶段只新增计划与连续性留档，没有推送、部署、改变仓库 Private 状态或启用 Pages。
+
+## 32. EGDS 实施、审查与最终验收（部分会话导出）
+
+发起人选择 subagent-driven 执行，并再次要求根据任务难度分配模型与推理等级。主任务保留架构、跨切片判断和最终验收；catalog、交互地图、旧 ontology 退休使用高推理 Sol，纯布局和 Career bridge 使用高推理或中高推理 bounded agent，路由文案使用中等推理 bounded agent。当前桌面 runtime 仍未暴露 Luna，因此没有虚构 Luna 子代理路径。每个任务先有独立 RED，再由规格 reviewer 和质量 reviewer 逐轮检查；发现问题后交回原实现者修复，reviewer 复审到 Approved。
+
+数据合同先把原始 EGDS 变成 28 个正式 Framework Node、三条 process relation 和唯一 Atlas link；42 Capability 与 12 Knowledge Topic 各有主要展示位置，64 条真实关系不被改造成结构边。审查先后发现 relation endpoint 可悬空、集合错误 payload 不完整；修复后 schema、loader、validator 和 raw data 共同拒绝坏引用。
+
+纯布局 helper 生成一屏 1180px 作者骨架与一个展开带。初版审查发现 relation 路径穿盒、locale-dependent sort、leader 沿节点顶边重合和非容器可被展开；修复改为 code-unit total order、typed unique key、obstacle-aware orthogonal routing 和只允许真实叶容器展开。反转输入、重复 ID、未知端点、28 个展开状态与零碰撞都由 unit / browser contract 覆盖。
+
+公开路由与 Map UI 随后迁移到 EGDS。默认 28 个方法节点持续显示，Capability / Knowledge Topic 只在一个叶容器中出现；实体“关系”按钮和详情链接是同级控件，Inspector 不复制详情页。1024px、320px 和 no-JS 使用 server-rendered nested details。审查修复了 exact DOM contract、最小字体、文字省略、outline 焦点／返回所有权、无效 public event、bootstrap double-run、responsive 断点裁切和 Atlas breakpoint 被共享 media query 误伤等问题。普通滚轮始终推动页面，不再进入双向内部滚动上下文。
+
+Career bridge 把三个画像投影到同一张 EGDS 地图。它只发送 apply / focus / clear public events，不直接写地图节点；priority、responsibility、公开依据与 framework count 都来自纯 projection。no-JS 的三份摘要改为原生 details，能力详情和资源链接可达。独立质量审查又发现 duplicate / unknown capability 会让 count 与 node 集合漂移，以及同 DOM double bootstrap 会重复 focus；helper、validator 和两个 controller guard 随后一起修复。Career、个人进度、地图展开和关系选择最终保持独立，所有中英文文案都没有 score、gap、fit 或 completion 语义。
+
+最后删除 `domains.json`、`map-groups.json`、`domainId`、手工 position、旧 collection/type/validator 和 generic geometry helper。质量审查仍找到公开 Methodology 的旧实体定义和 production CSS 中 422 行／7,744 bytes 无消费者旧选择器；两项各自取得 RED 后删除，当前三类地图实体固定为 EGDS Framework Node、Capability、Knowledge Topic。退休 source gate 对旧字段、helper 和 selector 为零输出。
+
+主任务亲自执行最终视觉矩阵，截图保存在 `/tmp/learn-about-games-egds-final/`。1440px Light / Dark 默认 canvas 完整显示五分支且 scene=720；默认 28/42/12/64 server entities 中，visible entity=0、visible relation=0、可见盒重叠=0。展开 Playtest 后只显示 6 Capability + 1 Topic；选中 Playtest 后只显示 4 条直接关系。普通滚轮在空白、framework 和实体上都使 pageY 增加 220px。1024px 与 320px 使用完整 outline；1440px / 320px no-JS 都有 42 Capability links、12 Topic links 和 54 disabled relation controls。三份 Career Lens 在 Light / Dark 均有截图；清除画像保留展开、选择和 localStorage progress。
+
+根级文档 RED 先要求 README、Roadmap 与 Changelog 把 EGDS 写成当前 Private 候选；旧文档按预期 2 项失败，更新后 Chromium 15/15。连续性更新前的 fresh gate为 Astro check 0/0/0、Vitest 130/130、105 pages、完整 Playwright 185 passed / 15 intentional skipped。第一次完整浏览器命令只因主任务的 4342 人工预览仍运行而无法启动；精确停止该 preview 后原样重跑成功，未修改产品合同。
+
+本记录仍是脱敏部分导出，不声称补回已经压缩且当前运行时不可访问的逐字消息。仓库保持 Private、Pages workflow 保持 `disabled_manually`；远端 `codex/v02` 停在 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。本地 EGDS runtime `40fd1cd913ffefc248e744c6d51e150dba24b4b1` 与本里程碑文档尚未推送或部署。下一步由发起人私有复核，而不是自动恢复公开。
