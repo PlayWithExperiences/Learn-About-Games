@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
+import resources from '../../src/data/resources.json' with { type: 'json' };
 import roleProfiles from '../../src/data/role-profiles.json' with { type: 'json' };
 
 const progressStorageKey = 'learn-about-games:progress:v1';
@@ -14,6 +15,27 @@ const priorityLabels = {
 };
 type CareerPriority = keyof typeof priorityLabels;
 const forbiddenTerms = /\b(?:score|fit|gap|completion|percentage)\b|完成率|适配度|评分/i;
+const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, ': ');
+
+function parseRgb(color: string): [number, number, number] {
+  const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+  if (!channels || channels.length !== 3) throw new Error(`Expected an RGB color, received ${color}`);
+  return channels as [number, number, number];
+}
+
+function relativeLuminance(color: string): number {
+  const channels = parseRgb(color).map((channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+  });
+  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+}
+
+function contrastRatio(foreground: string, background: string): number {
+  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (lighter + 0.05) / (darker + 0.05);
+}
 
 function frameworkCounts(profile: typeof roleProfiles[number]) {
   const counts = new Map<string, { core: number; important: number; suggested: number }>();
@@ -100,9 +122,124 @@ for (const profile of roleProfiles) {
       await expect(framework.locator('[data-career-collapsed-count]')).toBeVisible();
     }
     await expect(map.locator('[data-egds-framework-node] [data-career-collapsed-count]:not([hidden])')).toHaveCount(expectedCounts.size);
-    await expect(explorer.locator(`[data-career-summary="${profile.id}"]`)).toBeVisible();
+    const summary = explorer.locator(`[data-career-summary="${profile.id}"]`);
+    await expect(summary).toBeVisible();
+    await expect(summary).toContainText(profile.basis['zh-CN']);
+    for (const mapping of profile.capabilities) {
+      const count = resources.filter(({ capabilityIds }) => capabilityIds.includes(mapping.capabilityId)).length;
+      await expect(summary.locator(`[data-career-summary-item="${mapping.capabilityId}"]`))
+        .toContainText(`直接相关 Work Item ${count} 条`);
+    }
+
+    const evidence = explorer.locator(`[data-career-evidence="${profile.id}"]`);
+    await expect(evidence).toHaveAttribute('open', '');
+    await expect(evidence).toContainText(profile.basis['zh-CN']);
+    await expect(evidence).toContainText(profile.caveats['zh-CN']);
+    await expect(evidence).toContainText(`最近复核：${profile.reviewedAt}`);
+    for (const basisLink of profile.basisLinks) {
+      const link = evidence.getByRole('link', {
+        name: displaySourceTitle(basisLink.title['zh-CN']),
+        exact: true,
+      });
+      await expect(link).toBeVisible();
+      await expect(link).toHaveAttribute('href', basisLink.url);
+      await expect(link.locator('..')).toContainText(basisLink.sourceNote['zh-CN']);
+    }
   });
 }
+
+test('career and map bootstraps remain single owners when compiled modules run again on the same DOM', async ({ page }) => {
+  await page.goto('./careers/');
+  const explorer = page.locator('[data-career-explorer]');
+  const map = explorer.locator('[data-egds-map]');
+  await map.evaluate((root) => {
+    root.dataset.testApplyEvents = '0';
+    root.dataset.testFocusEvents = '0';
+    root.addEventListener('egds-map:apply-career-lens', () => {
+      root.dataset.testApplyEvents = String(Number(root.dataset.testApplyEvents) + 1);
+    });
+    root.addEventListener('egds-map:focus-capability', () => {
+      root.dataset.testFocusEvents = String(Number(root.dataset.testFocusEvents) + 1);
+    });
+  });
+  await page.evaluate(async () => {
+    const script = Array.from(document.querySelectorAll<HTMLScriptElement>('script[type="module"]'))
+      .find((candidate) => !candidate.src && candidate.textContent?.includes('data-career-explorer'));
+    if (!script?.textContent) throw new Error('Missing compiled CareerExplorer module');
+    await import(`data:text/javascript;charset=utf-8,${encodeURIComponent(script.textContent)}#${crypto.randomUUID()}`);
+  });
+
+  const profile = roleProfiles[0];
+  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+  await explorer.locator(`[data-career-summary-item="${profile.capabilities[0].capabilityId}"]`)
+    .getByRole('button', { name: '在地图中聚焦', exact: true }).click();
+  await expect(map).toHaveAttribute('data-test-apply-events', '1');
+  await expect(map).toHaveAttribute('data-test-focus-events', '1');
+  await expect(explorer).toHaveAttribute('data-career-initialized', 'true');
+
+  await page.reload();
+  const reloadedExplorer = page.locator('[data-career-explorer]');
+  await expect(reloadedExplorer).toHaveAttribute('data-career-initialized', 'true');
+  await reloadedExplorer.getByRole('button', { name: roleProfiles[1].title['zh-CN'], exact: true }).click();
+  await expect(reloadedExplorer.locator('[data-egds-map]')).toHaveAttribute('data-career-profile-id', roleProfiles[1].id);
+});
+
+test('visible career labels and unlisted names keep AA contrast and redundant priority shapes', async ({ page }) => {
+  const seenPriorities = new Set<string>();
+  for (const colorScheme of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme });
+    for (const width of [1440, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const profile of roleProfiles) {
+        await page.goto('./careers/');
+        const explorer = page.locator('[data-career-explorer]');
+        const map = explorer.locator('[data-egds-map]');
+        await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+        const capabilityIds = [...new Map(profile.capabilities.map((mapping) => [
+          capabilities.find(({ id }) => id === mapping.capabilityId)?.frameworkNodeId,
+          mapping.capabilityId,
+        ])).values()];
+
+        for (const capabilityId of capabilityIds) {
+          await explorer.locator(`[data-career-summary-item="${capabilityId}"]`)
+            .getByRole('button', { name: '在地图中聚焦', exact: true }).click();
+          const samples = await map.locator('[data-career-node]').evaluateAll((nodes) => nodes
+            .filter((node) => (node as HTMLElement).checkVisibility())
+            .flatMap((node) => {
+              const element = node as HTMLElement;
+              const target = element.dataset.roleState === 'unlisted'
+                ? element.querySelector<HTMLElement>(':scope > strong')
+                : element.querySelector<HTMLElement>('[data-role-label]:not([hidden])');
+              if (!target?.checkVisibility()) return [];
+              const targetStyle = getComputedStyle(target);
+              const nodeStyle = getComputedStyle(element);
+              return [{
+                label: target.textContent?.trim() ?? '',
+                color: targetStyle.color,
+                background: nodeStyle.backgroundColor,
+                priority: element.dataset.rolePriority,
+                borderStyle: nodeStyle.borderTopStyle,
+              }];
+            }));
+          expect(samples.length, `${colorScheme}/${width}/${profile.id}/${capabilityId}`).toBeGreaterThan(0);
+          for (const sample of samples) {
+            expect.soft(
+              contrastRatio(sample.color, sample.background),
+              `${colorScheme}/${width}/${profile.id}/${sample.label}`,
+            ).toBeGreaterThanOrEqual(4.5);
+            if (sample.priority) {
+              seenPriorities.add(sample.priority);
+              expect(sample.borderStyle).toBe({ core: 'solid', important: 'dashed', suggested: 'dotted' }[
+                sample.priority as 'core' | 'important' | 'suggested'
+              ]);
+            }
+          }
+        }
+      }
+    }
+  }
+  expect([...seenPriorities].sort()).toEqual(['core', 'important', 'suggested']);
+});
 
 test('career summary focus delegates selection to the map and replacing a profile does not accumulate state', async ({ page }) => {
   const firstProfile = roleProfiles[0];

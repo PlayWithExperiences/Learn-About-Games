@@ -39,6 +39,59 @@ describe('career-lens data', () => {
 });
 
 describe('projectCareerLens', () => {
+  it('fails before projection when a profile maps the same capability twice', () => {
+    const profile = structuredClone(roleProfiles[0]) as Parameters<typeof projectCareerLens>[1];
+    const duplicate = structuredClone(profile.capabilities[0]);
+    profile.capabilities.push(duplicate);
+
+    expect(() => projectCareerLens(capabilities, profile)).toThrow(
+      new RegExp(`^Career profile "${profile.id}" has duplicate capability mapping "${duplicate.capabilityId}"\\.$`),
+    );
+  });
+
+  it('fails before projection when a profile maps an unknown capability', () => {
+    const profile = structuredClone(roleProfiles[0]) as Parameters<typeof projectCareerLens>[1];
+    profile.capabilities.push({
+      capabilityId: 'unknown-capability',
+      priority: 'core',
+      responsibility: 'execute',
+    });
+
+    expect(() => projectCareerLens(capabilities, profile)).toThrow(
+      new RegExp(`^Career profile "${profile.id}" references unknown capability "unknown-capability"\\.$`),
+    );
+  });
+
+  it('uses raw ID ordering without mutating capability or profile inputs', () => {
+    const profile = structuredClone(roleProfiles[2]) as Parameters<typeof projectCareerLens>[1];
+    const reversedProfile = structuredClone(profile);
+    reversedProfile.capabilities.reverse();
+    const reversedCapabilities = structuredClone(capabilities).reverse();
+    const originalProfile = structuredClone(profile);
+    const originalReversedProfile = structuredClone(reversedProfile);
+    const originalCapabilities = structuredClone(capabilities);
+    const originalReversedCapabilities = structuredClone(reversedCapabilities);
+
+    const projection = projectCareerLens(capabilities, profile);
+    const reversedProjection = projectCareerLens(reversedCapabilities, reversedProfile);
+
+    expect(reversedProjection).toEqual(projection);
+    expect(projection.nodes.map(({ capabilityId }) => capabilityId)).toEqual(
+      capabilities.map(({ id }) => id).sort(),
+    );
+    expect(Object.keys(projection.frameworkCounts)).toEqual(Object.keys(projection.frameworkCounts).sort());
+    for (const priority of priorityValues) {
+      expect(projection.groups[priority as keyof typeof projection.groups].map(({ capabilityId }) => capabilityId))
+        .toEqual([...projection.groups[priority as keyof typeof projection.groups]]
+          .map(({ capabilityId }) => capabilityId)
+          .sort());
+    }
+    expect(profile).toEqual(originalProfile);
+    expect(reversedProfile).toEqual(originalReversedProfile);
+    expect(capabilities).toEqual(originalCapabilities);
+    expect(reversedCapabilities).toEqual(originalReversedCapabilities);
+  });
+
   it('counts each mapped capability once inside its framework container for every profile', () => {
     for (const profile of roleProfiles) {
       const result = projectCareerLens(capabilities, profile as Parameters<typeof projectCareerLens>[1]);
@@ -62,6 +115,11 @@ describe('projectCareerLens', () => {
         (sum, counts) => sum + counts.core + counts.important + counts.suggested,
         0,
       )).toBe(total);
+      expect(priorityValues.reduce(
+        (sum, priority) => sum + result.groups[priority as keyof typeof result.groups].length,
+        0,
+      )).toBe(total);
+      expect(result.nodes.filter(({ priority }) => priority !== 'unlisted')).toHaveLength(total);
       expect(result.nodes.every(({ capabilityId }) => capabilities.some(({ id }) => id === capabilityId))).toBe(true);
     }
   });

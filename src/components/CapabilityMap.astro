@@ -470,12 +470,14 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
   };
 
   document.querySelectorAll<HTMLElement>('[data-egds-map]').forEach((root) => {
+    if (root.dataset.egdsMapInitialized === 'true') return;
     const payloadElement = root.querySelector<HTMLScriptElement>('[data-egds-map-data]');
     const canvas = root.querySelector<HTMLElement>('[data-capability-map-canvas]');
     const scene = root.querySelector<HTMLElement>('[data-egds-scene]');
     const expansion = root.querySelector<HTMLElement>('[data-map-expansion]');
     const inspector = root.querySelector<HTMLElement>('[data-map-inspector]');
     if (!payloadElement || !canvas || !scene || !expansion || !inspector) return;
+    root.dataset.egdsMapInitialized = 'true';
 
     const payload = JSON.parse(payloadElement.textContent ?? '{}') as MapPayload;
     const state: MapState = {};

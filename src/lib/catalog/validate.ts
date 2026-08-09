@@ -268,6 +268,7 @@ export type CatalogValidationCode =
   | 'PROFILE_BASIS_LINK_URL_INVALID'
   | 'PROFILE_REVIEWED_AT_INVALID'
   | 'PROFILE_CAPABILITY_MISSING'
+  | 'PROFILE_CAPABILITY_DUPLICATE'
   | 'PROFILE_PRIORITY_INVALID'
   | 'PROFILE_RESPONSIBILITY_INVALID'
   | 'ATLAS_TAG_REFERENCE_MISSING'
@@ -1128,7 +1129,19 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         );
       }
     }
+    const mappedCapabilityIds = new Set<string>();
     for (const capability of profile.capabilities) {
+      if (mappedCapabilityIds.has(capability.capabilityId)) {
+        appendError(
+          errors,
+          'PROFILE_CAPABILITY_DUPLICATE',
+          'roleProfiles',
+          profile.id,
+          'capabilities',
+          capability.capabilityId,
+        );
+      }
+      mappedCapabilityIds.add(capability.capabilityId);
       if (!capabilityIds.has(capability.capabilityId)) {
         appendError(
           errors,

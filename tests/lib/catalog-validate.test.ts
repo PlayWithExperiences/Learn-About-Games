@@ -2,6 +2,10 @@ import { describe, expect, it } from 'vitest';
 
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
 import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
+import capabilities from '../../src/data/capabilities.json';
+import domains from '../../src/data/domains.json';
+import mapGroups from '../../src/data/map-groups.json';
+import roleProfiles from '../../src/data/role-profiles.json';
 import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
 
 const localized = (text: string) => ({ 'zh-CN': text });
@@ -28,6 +32,14 @@ const emptyCatalog = (): Catalog => ({
 });
 
 const emptyV02Catalog = (): Catalog => emptyCatalog();
+
+const rawCareerCatalog = (): Catalog => ({
+  ...emptyCatalog(),
+  capabilities: structuredClone(capabilities) as Catalog['capabilities'],
+  domains: structuredClone(domains) as Catalog['domains'],
+  mapGroups: structuredClone(mapGroups) as Catalog['mapGroups'],
+  roleProfiles: structuredClone(roleProfiles) as Catalog['roleProfiles'],
+});
 
 const validV02Resource = (id: string, canonicalUrl: string) =>
   ({
@@ -401,6 +413,30 @@ describe('validateCatalog', () => {
       field: 'capabilities.capabilityId',
       targetId: 'missing-capability',
     });
+  });
+
+  it('reports a duplicate capability mapping with the full nested target', () => {
+    const catalog = rawCareerCatalog();
+    const profile = catalog.roleProfiles[0];
+    const duplicate = structuredClone(profile.capabilities[0]);
+    profile.capabilities.push(duplicate);
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'PROFILE_CAPABILITY_DUPLICATE',
+        collection: 'roleProfiles',
+        id: profile.id,
+        field: 'capabilities',
+        targetId: duplicate.capabilityId,
+      },
+    ]);
+  });
+
+  it('accepts the three raw role profiles', () => {
+    const catalog = rawCareerCatalog();
+
+    expect(catalog.roleProfiles).toHaveLength(3);
+    expect(validateCatalog(catalog)).toEqual([]);
   });
 
   it('reports missing endpoints and evidence on Atlas relations', () => {

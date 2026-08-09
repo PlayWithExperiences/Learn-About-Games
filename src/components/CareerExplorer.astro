@@ -203,7 +203,8 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
   const payloadElement = explorer?.querySelector<HTMLScriptElement>('[data-career-lens-data]');
   const mapRoot = explorer?.querySelector<HTMLElement>('[data-egds-map]');
 
-  if (explorer && payloadElement && mapRoot) {
+  if (explorer && payloadElement && mapRoot && explorer.dataset.careerInitialized !== 'true') {
+    explorer.dataset.careerInitialized = 'true';
     const projections = JSON.parse(payloadElement.textContent ?? '[]') as CareerProjection[];
     const lensButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-career-lens-button]'));
     const clearButton = explorer.querySelector<HTMLButtonElement>('[data-career-clear]');

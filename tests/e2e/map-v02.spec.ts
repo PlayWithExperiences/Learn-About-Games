@@ -226,6 +226,41 @@ test('public map events apply capability-only career roles and focus through the
   await expect(map.locator('[data-map-entity][data-role-state]')).toHaveCount(0);
 });
 
+test('map bootstrap keeps one state owner when its compiled module is cache-bust imported again', async ({ page }) => {
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await map.evaluate((root) => {
+    root.dataset.testScrollCalls = '0';
+    const original = HTMLElement.prototype.scrollIntoView;
+    HTMLElement.prototype.scrollIntoView = function scrollIntoView(...args) {
+      root.dataset.testScrollCalls = String(Number(root.dataset.testScrollCalls) + 1);
+      return original.apply(this, args as [ScrollIntoViewOptions]);
+    };
+  });
+  await page.evaluate(async () => {
+    const script = Array.from(document.querySelectorAll<HTMLScriptElement>('script[type="module"][src]'))
+      .find((candidate) => candidate.src.includes('CapabilityMap.astro'));
+    if (!script) throw new Error('Missing compiled CapabilityMap module');
+    await import(`${script.src}?cache-bust=${crypto.randomUUID()}`);
+  });
+
+  await map.evaluate((root) => root.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+    bubbles: true,
+    detail: { capabilityId: 'playtesting' },
+  })));
+  await expect(map).toHaveAttribute('data-test-scroll-calls', '1');
+  await expect(map).toHaveAttribute('data-egds-map-initialized', 'true');
+
+  await page.reload();
+  const reloadedMap = page.locator('[data-egds-map]');
+  await expect(reloadedMap).toHaveAttribute('data-egds-map-initialized', 'true');
+  await reloadedMap.evaluate((root) => root.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+    bubbles: true,
+    detail: { capabilityId: 'playtesting' },
+  })));
+  await expect(reloadedMap).toHaveAttribute('data-selected-entity-key', 'capability:playtesting');
+});
+
 test('responsive focus opens only the required disclosure chain and returns to stable context', async ({ page }) => {
   for (const width of [1024, 320]) {
     await page.setViewportSize({ width, height: 900 });
