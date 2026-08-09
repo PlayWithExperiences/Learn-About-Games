@@ -37,7 +37,7 @@ test('keeps the complete map and personal record contract usable without JavaScr
   const page = await context.newPage();
 
   await page.goto('./map/');
-  await expect(page.getByRole('heading', { name: '用领域建立方向，用能力选择行动。' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Playtest', exact: true })).toBeVisible();
   await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
   const playtestNode = page.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');

@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test';
 import resources from '../../src/data/resources.json' with { type: 'json' };
 
+const homeMapDescription = '从 PlayWithExperiences 的 EGDS 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
+const careerDescription = '用公开依据理解职业与生产语境如何参考 PlayWithExperiences 的 EGDS；它是一种可讨论的视角，不是唯一答案或评分。';
+
 test('explains the map through the PlayWithExperiences EGDS framework', async ({ page }) => {
   const response = await page.goto('./map/');
 
@@ -12,6 +15,14 @@ test('explains the map through the PlayWithExperiences EGDS framework', async ({
       { exact: true },
     ),
   ).toBeVisible();
+});
+
+test('names the authorial EGDS view in the home preview and career metadata', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#home-map-description')).toHaveText(homeMapDescription);
+
+  await page.goto('./careers/');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', careerDescription);
 });
 
 test('keeps capability and topic detail routes while linking breadcrumbs to their EGDS nodes', async ({ page }) => {
@@ -45,10 +56,29 @@ test('keeps capability and topic detail routes while linking breadcrumbs to thei
   );
 });
 
-test('does not portray EGDS as an industry standard, prescribed sequence, or sole answer', async ({ page }) => {
+test('does not portray EGDS as a standard, prescribed sequence, sole path, or score', async ({ page }) => {
+  const misleadingClaims = [
+    'EGDS 是行业标准',
+    'EGDS 规定必修顺序',
+    'EGDS 是唯一学习路径',
+    'EGDS 提供评分',
+    'EGDS 生成评分',
+    'EGDS is an industry standard',
+    'EGDS defines a required sequence',
+    'EGDS is the only learning path',
+    'EGDS provides a score',
+    'EGDS provides scoring',
+  ];
+
   for (const route of ['./', './map/', './careers/']) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
-    await expect(page.locator('body')).not.toContainText(/industry standard|这是唯一标准|作为唯一标准|唯一学习路径|提供必修顺序/i);
+    const bodyCopy = await page.locator('body').innerText();
+    const metaDescription = await page.locator('meta[name="description"]').getAttribute('content') ?? '';
+    const publicCopy = `${bodyCopy}\n${metaDescription}`.toLocaleLowerCase();
+
+    for (const claim of misleadingClaims) {
+      expect(publicCopy).not.toContain(claim.toLocaleLowerCase());
+    }
   }
 });

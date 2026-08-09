@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
 import domains from '../../src/data/domains.json' with { type: 'json' };
+import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 import mapGroups from '../../src/data/map-groups.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
@@ -13,7 +14,7 @@ test('renders five hierarchy trunks, distinct node kinds and all functional rela
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./map/');
 
-  await expect(page.getByText('五条阅读主干组织 8 个领域；能力与知识议题是可进入的节点。真实关系说明协作与支持，不把地图改写成统一学习顺序。')).toBeVisible();
+  await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
 
   const canvas = page.locator('[data-capability-map-canvas]');
   await expect(canvas).toBeVisible();
@@ -334,10 +335,16 @@ test('provides a complete native desktop text equivalent without JavaScript', as
   await context.close();
 });
 
-test('opens a capability and a knowledge topic with region and related content', async ({ page }) => {
+test('opens a capability and a knowledge topic with EGDS breadcrumbs and related content', async ({ page }) => {
+  const playtestCapability = capabilities.find(({ id }) => id === 'playtesting');
+  if (!playtestCapability) throw new Error('Missing Playtest capability');
+  const playtestFrameworkNode = egdsFrameworkNodes.find(({ id }) => id === playtestCapability.frameworkNodeId);
+  if (!playtestFrameworkNode) throw new Error(`Missing EGDS framework node for ${playtestCapability.id}`);
+
   await page.goto('./capabilities/playtesting/');
   await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
-  await expect(page.getByLabel('面包屑')).toContainText('研究、验证与数据');
+  await expect(page.getByLabel('面包屑').getByRole('link', { name: playtestFrameworkNode.name['zh-CN'], exact: true }))
+    .toHaveAttribute('href', `${basePath}map/#egds-${playtestFrameworkNode.id}`);
   await expect(page.getByRole('heading', { name: '它支持', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: '受到支持', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: '互补', exact: true })).toBeVisible();
@@ -345,11 +352,12 @@ test('opens a capability and a knowledge topic with region and related content',
   await expect(page.getByLabel('个人学习状态')).toBeVisible();
 
   const topic = knowledgeTopics[0];
-  const domain = domains.find(({ id }) => id === topic.domainId);
-  if (!domain) throw new Error(`Missing domain for ${topic.id}`);
+  const topicFrameworkNode = egdsFrameworkNodes.find(({ id }) => id === topic.frameworkNodeId);
+  if (!topicFrameworkNode) throw new Error(`Missing EGDS framework node for ${topic.id}`);
   await page.goto(`./topics/${topic.id}/`);
   await expect(page.getByRole('heading', { name: topic.name['zh-CN'], exact: true })).toBeVisible();
-  await expect(page.getByLabel('面包屑')).toContainText(domain.name['zh-CN']);
+  await expect(page.getByLabel('面包屑').getByRole('link', { name: topicFrameworkNode.name['zh-CN'], exact: true }))
+    .toHaveAttribute('href', `${basePath}map/#egds-${topicFrameworkNode.id}`);
   await expect(page.getByText(topic.summary['zh-CN'], { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: '相关资源', exact: true })).toBeVisible();
 });
