@@ -243,6 +243,6 @@ GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 ski
 
 用户在查看公开 v0.2 后提出五项核心问题：暗色主题职业高亮不明显；能力地图关系过散且缺少原 expertise mind map 的主干、分区与主次；成长资源双列排布过宽；Innovation Atlas 不能缩放和平移；节点详情只有字母顺序，缺少时间排序和搜索。用户随后要求“先把仓库转为 private 直到可用”。
 
-主任务使用 GitHub CLI 先确认 `PlayWithExperiences/Learn-About-Games` 为 PUBLIC，再以显式 visibility consequence 参数改为 PRIVATE。写入后 GitHub API 返回 `visibility=PRIVATE`、`isPrivate=true`；未经身份验证访问仓库 URL 返回 404，原 GitHub Pages URL 也返回 404，Pages API 不再提供公开站点。此次操作没有删除仓库、分支、commit、Actions 历史或本地工作树；恢复公开需要未来显式把仓库改回 Public 并重新启用／验证 Pages。
+主任务使用 GitHub CLI 先确认 `PlayWithExperiences/Learn-About-Games` 为 PUBLIC，再以显式 visibility consequence 参数改为 PRIVATE。写入后 GitHub API 返回 `visibility=PRIVATE`、`isPrivate=true`；未经身份验证访问仓库 URL 返回 404，原 GitHub Pages URL 也返回 404，Pages API 不再提供公开站点。Pages workflow 随后手动停用，API 返回 `state=disabled_manually`，避免私有阶段每次 main push 触发无法部署的 run。此次操作没有删除仓库、分支、commit、Actions 历史或本地工作树；恢复公开需要未来显式把仓库改回 Public、重新启用 workflow 并重新验证 Pages。
 
 项目连续性入口、README、Roadmap 与 Changelog 同步区分“最后一次成功公开发布的历史证据”和“当前私有开发状态”。下一阶段先通过文字设计确认地图层级、暗色高亮、资源密度和 Atlas 浏览工具，再实现并完成全套验收；在此之前不恢复公开。
