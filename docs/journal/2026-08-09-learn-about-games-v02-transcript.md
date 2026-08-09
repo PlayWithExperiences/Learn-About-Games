@@ -286,3 +286,33 @@ Innovation Atlas 的视口使用 50%–200% 固定缩放、中心锚点、适应
 本节只记录脱敏的最终交接事实。独立 reviewer 以 `05beed7..1a1e2d1` 为范围逐项核对五条主干地图、Dark Career 三档、20/128 单列资源目录、Atlas 50%–200% 视口和中英文节点索引，结论为 Ready，0 Critical / Important / Minor。reviewer 自行运行 fresh build：Astro 0 errors / warnings / hints、Vitest 105/105、105 pages；完整 Playwright 为 142 passed / 16 intentional skipped / 0 failed；repo API 为 PRIVATE，deploy workflow 为 `disabled_manually`。
 
 主任务确认远端 `main` 与 `codex/v02` 都停在私有化提交 `d758bd5`，且它是本地 HEAD 的祖先，再用 SSH 将远端 `codex/v02` 非强制快进到 runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a`。GitHub API 随后返回该精确 SHA；`main` 未更新，Pages workflow 未启用，仓库仍为 Private。本元数据提交只修正入口与交接事实，不改变已经审查的产品 runtime；下一步是用户在私有状态下复核，而不是自动恢复公开。
+
+## 29. EGDS 能力地图方向（部分会话导出）
+
+本节是当前运行时能够保存的脱敏部分记录，不声称覆盖原始对话的每条中间消息。
+
+发起人复核私有版本后指出，能力地图偶尔会出现滚动发卡，节点仍然偏大，无法在一个视口内理解全貌。更重要的问题不是节点尺寸，而是分类来源：当前“体验与玩家 / 玩法、空间与表达 / 研究、原型与交付 / 协作、领导与方向 / 产品、市场与更广语境”把设计对象、生产阶段、组织条件和商业语境放到同一层，“体验与玩家”与“玩法、空间与表达”仍会重叠。它像任何项目都可能产生的通用分类，没有体现 PlayWithExperiences 的作者输入。
+
+发起人要求能力地图以原始 EGDS Expertise Map 为蓝本：从体验与情绪曲线出发，经过感受、理解、解构和重构，再由重构进入叙事、美学、玩法与挑战等设计杠杆；从计划到落地是另一条能力线；存在团队时加入协作、领导与管理；希望盈利时加入受众、市场与商业化；讨论的不只是游戏时保留创新议题。Innovation 可以在能力地图留下入口并连接 Innovation Atlas，但不把历史网络复制进能力地图。
+
+主任务从第一性原理指出，现有五组并非完全错误，而是一套中性目录；它不能作为作者化知识地图的主骨架。讨论比较了三种方案：全量静态思维导图会在微小文字和巨大画布之间失衡；总览／完整图双模式会增加第二套真相；最终选择“一屏骨架 + 按需展开”。默认持续显示根、五主分支、EGDS 核心链、三类设计杠杆和第二层能力群，同一时间只展开一个能力群的 Capability / Knowledge Topic。发起人回复“好，先试试”。
+
+双方同时确认三种实体边界：感受、理解、解构、重构是 EGDS 方法阶段，不参与个人进度与职业画像；Capability 才是可实践、可记录状态、可被画像投影和连接资源的实体；Knowledge Topic 只提供理解背景。Career Lens 在折叠能力群上只显示核心／重要等事实计数，不生成匹配度、完成率或差距。
+
+代码只读审计发现 `.capability-map__canvas` 使用双向 `overflow: auto`，外层页面也可滚动，全站还存在 smooth scroll；这为触控板斜向手势在内外滚动上下文之间竞争提供了具体解释。书面设计因此要求地图取消纵向内部滚动，总览适应可用宽度，展开只增加页面高度；中间宽度与移动端切换为 EGDS 等价大纲。普通滚轮始终滚动页面，不把能力地图做成另一个 Atlas 视口。
+
+发起人明确偏好文字说明，只有文字确实无法表达时才考虑视觉方式；本轮讨论和书面设计均遵循这一偏好，没有用视觉草图替代作者判断。成长资源的媒介类型标识与进一步压缩、Innovation Atlas 的普通滚轮缩放和早期历史扩充，作为后续独立切片保留。本轮只写设计规格与连续性留档，不改变运行时、仓库可见性或 Pages 状态。
+
+## 30. 并行 sub-agent 研究与 EGDS 规格收敛（部分会话导出）
+
+发起人指出 EGDS 地图、资源密度和 Atlas 交互／内容的重合度不高，主任务可以让 sub-agents 分别推进并在最后统一审核。主任务承认此前把共享 CSS 的实施冲突错误扩大成了整个设计流程的串行约束，随即改为只读并行：高推理 Terra 审查 EGDS 规格，中等推理 Terra 盘点资源真实数据并设计密度合同，高推理 Sol 使用 Agent Reach 研究 Atlas 滚轮交互和早期电子游戏史。运行时一次只提供两个子任务槽，因此 Atlas 在资源任务返回后立即接续；主任务同时负责规格自审和连续性留档，没有重复 agent 的调查。
+
+EGDS reviewer 首轮判定 Not Ready：规格没有 42 Capability / 12 Knowledge Topic 到 EGDS 的逐项主要归属；树状 parent 无法表达感受 → 理解 → 解构 → 重构的过程关系；Career 的“地图中聚焦”无法打开尚未渲染的折叠能力；旧 Domain 还会从详情 breadcrumb 等路径继续作为第二套地图真相。主任务补写了正式 `egds-root`、28 个稳定 framework node、`contains`／`process-next`／`links-to`、原图 landmark 去向、54 项映射、Domain/mapGroups 同切片退休、Career 原子 focus 请求、>1150 桌面断点、720px 骨架预算和碰撞门禁。
+
+第二轮审查继续发现 stage／lever／entry 也直接承载实体，不能只称“能力群”；叶节点同时选择 Inspector 和进入详情也不能嵌套 button/anchor；framework 的 parent、contains 和实体列表存在多份真源风险。规格最终统一“可展开叶子容器”，规定关系 button 与详情 anchor 是同级控件；framework `parentNodeId` 派生 contains，实体 `frameworkNodeId` 反向派生叶列表，不在 JSON 重复保存。第三轮结论 Ready；唯一 Minor 是固定过程边仍应成为精确集合断言，随后也已补为三条 process-next 与唯一 Atlas link。
+
+Resources agent 以真实 catalog 统计出 68 演讲、27 书籍、8 论文、8 网站、5 播客、5 视频、4 文章和 3 课程；97 字符长标题、12 个双版本条目、5 个带外部观察条目是必须覆盖的真实极端。推荐“单主列 + 类型轨道”，不用颜色独自表达媒介／Source 类型，也不把外部观察数量升级为质量信号。它建议后续把 desktop P50 收紧到 112px、320px P50 收紧到 190px，并保留全部 server HTML、筛选 URL、原生 disclosure 与实体粒度。
+
+Atlas agent 对比了普通 wheel、focus-to-engage 和仅修饰键三种方案。推荐默认 cooperative：普通滚轮属于页面；用户明确进入“地图模式”后，普通 wheel 才围绕指针连续缩放，Esc／离开区域退出，达到上下限时不再阻止页面滚动；Ctrl/Command + wheel 和按钮继续保留。早期历史研究依据博物馆、大学、专利与计算机史机构来源，明确 PONG 是 1972 年商业突破节点，不是未经限定的“第一个电子游戏”。首批内容应先扩 taxonomy 与时间布局，再分别录入早期文档化设计、实验程序／装置、系统原型、量产产品和商业突破；时间相邻但缺少直接证据的节点不能为了视觉密度补关系。
+
+本阶段没有实施运行时，没有恢复公开或 Pages，也没有把 sub-agent 报告直接当成最终产品决定。主任务只把 EGDS 已确认方向写成审查通过的书面规格；Resources 与 Atlas 结论仍需要发起人确认后分别形成独立规格和计划。

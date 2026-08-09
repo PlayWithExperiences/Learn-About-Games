@@ -1,10 +1,11 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；私有完善 runtime `1a1e2d1` 已推送到远端 `codex/v02`，等待用户复核
+- 状态：仓库保持 Private、Pages 保持禁用；私有完善 runtime `1a1e2d1` 已推送到远端 `codex/v02`；EGDS 书面规格已通过只读对抗审查，等待发起人复核
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
+- EGDS 能力地图重构设计：[2026-08-09-egds-expertise-map-design.md](../superpowers/specs/2026-08-09-egds-expertise-map-design.md)
 - 私有完善 Map / Career 计划：[2026-08-09-private-refinement-map-career-plan.md](../superpowers/plans/2026-08-09-private-refinement-map-career-plan.md)
 - 私有完善 Resources 计划：[2026-08-09-private-refinement-resources-plan.md](../superpowers/plans/2026-08-09-private-refinement-resources-plan.md)
 - 私有完善 Atlas 计划：[2026-08-09-private-refinement-atlas-plan.md](../superpowers/plans/2026-08-09-private-refinement-atlas-plan.md)
@@ -130,8 +131,10 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 精确下一步
 
-1. 用户在私有状态下重新体验五条主干地图、三档职业强调、紧凑资源目录与 Atlas 探索控件。
-2. 只有用户确认当前体验达到可用门槛后，才另行把仓库恢复 Public、重新启用 Pages workflow，并以新的 runtime SHA、Actions run 与 live HTML 证据完成线上验收。
+1. 发起人复核书面 [EGDS 能力地图重构设计](../superpowers/specs/2026-08-09-egds-expertise-map-design.md)。
+2. 书面规格获确认后，只为 EGDS 地图编写实施计划；不同时修改成长资源和 Innovation Atlas。
+3. EGDS 地图在 Private 分支通过真实使用复核后，再分别规划资源媒介编码／密度与 Atlas 历史扩充。
+4. 只有用户确认核心体验达到可用门槛后，才另行恢复 Public、重新启用 Pages workflow并执行线上验收。
 
 ## 当前未决风险
 
@@ -149,3 +152,25 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 主任务随后串行执行最终本地门禁：`npm run check` 为 0 errors / warnings / hints；Vitest 为 105/105；fresh build 生成 105 pages；完整 Playwright 为 142 passed / 16 intentional skipped / 0 failed；`npm audit --audit-level=high` 为 0 vulnerabilities，`git diff --check` 与脱敏 secret filename scan 均无输出。首次完整 E2E 曾有桌面／移动各 1 项失败：旧 skeleton 测试用全局 heading 文本寻找“体验与玩家”，而新地图中主干与同名 Domain 都是合法 heading；根因确认后只把断言收窄到可见的 Domain 容器，定向为 25 passed / 1 desktop-only skipped，完整 E2E 复跑得到上述 142/16。产品 DOM、命名和视觉层级没有为测试改写。
 
 独立总审查对 `05beed7..1a1e2d1` 给出 Ready，0 Critical / Important / Minor；reviewer 自行复跑 fresh build、105/105 unit、142 passed / 16 intentional skipped E2E，并核验 Light / Dark、1440px / 320px、无 JavaScript、typed identity、27/25/40、repo PRIVATE 与 workflow `disabled_manually`。主任务随后以 SSH 非强制快进远端 `codex/v02` 从 `d758bd5` 到 `1a1e2d1`；GitHub API 复核分支 SHA 精确匹配，没有更新 `main`、没有触发 Pages、没有改变仓库可见性。
+
+## EGDS 能力地图重构方向
+
+发起人在私有复核后进一步指出，五条通用阅读主干虽然比地域便当盒清楚，但仍把一组行业概念平铺在一起，缺少 PlayWithExperiences 自身的方法论来源。“体验与玩家”与“玩法、空间与表达”也存在语义重叠。能力地图应直接以发起人原有 EGDS Expertise Map 为蓝本，而不是继续修饰任何人都可能得到的通用分类。
+
+已确认的新主骨架沿用原图的条件与过程：体验设计、从计划到落地、如果有团队、如果希望形成产品与盈利、如果讨论的不只是游戏。体验设计内部固定为体验旅程／情绪曲线以及感受 → 理解 → 解构 → 重构；重构再进入叙事、美学与表现、玩法与挑战三类设计杠杆。创新在第五分支保留简短入口并连接 Innovation Atlas，历史网络不复制回能力地图。
+
+地图现在明确区分 EGDS 方法节点、Capability 与 Knowledge Topic。方法节点承载作者框架，不参与个人进度或 Career Lens；Capability 才能记录实践状态、接受画像投影并连接资源；Knowledge Topic 只提供理解背景。默认采用“一屏骨架 + 按需展开”：根、五主分支、EGDS 核心链、三类杠杆和所有第二层能力群持续可见，同一时间只展开一个能力群的具体节点。折叠能力群可以显示职业画像的事实计数，但不生成匹配度、完成率或差距。
+
+代码审计确认当前滚动发卡有具体结构诱因：`.capability-map__canvas` 同时使用页面内双向 `overflow: auto`，页面本身又可滚动，触控板斜向手势会在两层滚动上下文间竞争。新设计取消地图纵向内部滚动；默认总览按可用宽度稳定布局，展开只增加页面高度，中间宽度与 320px 使用关系等价大纲。普通滚轮始终属于页面，地图不复制 Atlas 的滚轮缩放。
+
+本次只形成书面设计，不改运行时。成长资源的媒介类型标签／进一步压缩、Atlas 的普通滚轮缩放方式与从早期游戏史继续扩充，均拆为后续独立切片。
+
+## 并行设计研究结论
+
+发起人提醒三个子系统在设计阶段没有高重合度，可以由 sub-agents 并行研究、主任务最终审核。主任务据此保留 EGDS 架构与整合判断，把 EGDS 规格对抗审查交给高推理 Terra，把资源真实数据／密度合同交给中等推理 Terra，把 Atlas 交互与早期历史证据交给高推理 Sol；三个任务均只读，不争抢共享 CSS 或修改工作树。
+
+EGDS reviewer 首轮指出三项核心缺口：没有 54 个实体的主要归属表；`parentNodeId` 无法表达感受 → 理解 → 解构 → 重构的过程边；Career 从折叠状态聚焦能力时缺少地图状态协议。规格修正后新增正式 root、固定框架 ID、`contains`／`process-next`／`links-to` 语义、42 Capability + 12 Knowledge Topic 精确映射、原图 landmark 去向、旧 Domain/mapGroups 原子退休、Career 原子聚焦、叶节点双动作、滚动与几何门禁。第三轮 reviewer 结论为 Ready；唯一 Minor 也已转成三条固定 process edge 和唯一 Atlas link 的精确构建断言。
+
+Resources 只读研究确认真实 catalog 为 128 Work Item、20 Source、140 Access Version、12 外部观察；媒介分布为演讲 68、书籍 27、论文 8、网站 8、播客 5、视频 5、文章 4、课程 3。推荐后续使用“单主列 + 行首类型轨道 + 事实短带”：媒介与 Source 类型同时使用明确文字 tag、边框／低饱和色冗余，默认保留标题、Source、关联原因、语言和访问摘要，完整版本与外部观察进入原生 disclosure。建议把 desktop P50 行高从当前约 142px 进一步压到不高于 112px、320px P50 不高于 190px；不改变筛选、顺序、实体边界或站内无评分原则。
+
+Atlas 研究不建议无条件劫持普通 wheel。推荐 cooperative 默认 + 明确“进入地图模式”：默认普通滚轮滚页面，进入模式后普通 wheel 围绕指针连续缩放、拖动平移，Esc／离开区域退出；未进入时 Ctrl/Command + wheel 继续可用，达到缩放边界后把滚动还给页面。早期历史研究明确 PONG 不能写成“第一个电子游戏”，而应区分文档化设计、实验装置／程序、系统原型、量产商业产品和商业突破。首批候选包括 CRT Amusement Device、Nimrod、OXO、Tennis for Two、Spacewar!、TV Game Unit #1、Brown Box、Galaxy Game、Computer Space、Magnavox Odyssey、Pong 与 Home Pong；只有得到直接证据的影响／派生／原型谱系才进入关系图。Agent Reach `v1.5.0` 已核为最新版。

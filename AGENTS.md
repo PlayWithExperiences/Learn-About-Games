@@ -5,7 +5,7 @@ Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVAT
 Before making substantive changes, read these files in order:
 
 1. [Latest decision summary](docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md)
-2. [Private refinement design](docs/superpowers/specs/2026-08-09-private-refinement-design.md), [current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
+2. [EGDS Expertise Map redesign](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md), [Private refinement design](docs/superpowers/specs/2026-08-09-private-refinement-design.md), [current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
 3. [Public roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)
 4. [Current conversation record](docs/journal/2026-08-09-learn-about-games-v02-transcript.md) only when exact v0.2 wording is needed; follow its link to the M0 record for older history
 
