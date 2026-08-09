@@ -42,12 +42,13 @@ const workCountBySource = new Map(
           data-source-id={source.id}
         >
           <div class="source-result__identity">
-            <span>Source</span>
-            <span>{formatSourceKind(source.kind)}</span>
+            Source · {formatSourceKind(source.kind)}
           </div>
-          <h3><a href={sitePath(`sources/${source.id}/`)}>{source.name['zh-CN']}</a></h3>
-          <p>{source.summary['zh-CN']}</p>
-          <dl class="source-result__facts">
+          <div class="source-result__main" data-source-row-main>
+            <h3><a href={sitePath(`sources/${source.id}/`)}>{source.name['zh-CN']}</a></h3>
+            <p>{source.summary['zh-CN']}</p>
+          </div>
+          <dl class="source-result__facts" data-source-row-facts>
             <div><dt>语言</dt><dd>{source.languages.map(formatLanguage).join('、')}</dd></div>
             <div><dt>Work Item</dt><dd>{workCountBySource.get(source.id) ?? 0}</dd></div>
           </dl>
@@ -87,22 +88,22 @@ const workCountBySource = new Map(
           data-access-models={accessModels.join(' ')}
         >
           <div class="work-item-result__index" aria-hidden="true">Work Item</div>
-          <div class="work-item-result__body">
-            <div class="work-item-result__heading">
-              <h3>{resource.title['zh-CN']}</h3>
-              <a class="work-item-result__canonical" href={resource.canonicalUrl}>打开资源原页</a>
-            </div>
-
-            <div class="work-item-result__byline">
-              {source && (
-                <span>Source：<a href={sitePath(`sources/${source.id}/`)}>{source.name['zh-CN']}</a></span>
-              )}
-              <span>{formatMediaType(resource.mediaType)}</span>
-              <span>原始语言 {formatLanguage(resource.originalLanguage)}</span>
-            </div>
-
+          <div class="work-item-result__main" data-work-row-main>
+            <h3>{resource.title['zh-CN']}</h3>
+            {source && <p>Source：<a href={sitePath(`sources/${source.id}/`)}>{source.name['zh-CN']}</a></p>}
             <p class="work-item-result__relevance">{resource.whyRelevant['zh-CN']}</p>
-
+          </div>
+          <dl class="work-item-result__facts" data-work-row-facts>
+            <div><dt>媒介</dt><dd>{formatMediaType(resource.mediaType)}</dd></div>
+            <div><dt>原始语言</dt><dd>{formatLanguage(resource.originalLanguage)}</dd></div>
+            <div><dt>可消费语言</dt><dd>{languages.map(formatLanguage).join('、')}</dd></div>
+          </dl>
+          <div class="work-item-result__access" data-work-row-access>
+            <a class="work-item-result__canonical" href={resource.canonicalUrl}>打开资源原页</a>
+            <span>{accessModels.map(formatAccessModel).join('、')}</span>
+          </div>
+          <details class="work-item-result__more">
+            <summary>{resource.externalSignals?.length ? '查看访问版本与外部事实' : '查看访问版本'}</summary>
             <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
               {resource.accessVersions.map((version) => (
                 <li>
@@ -116,11 +117,10 @@ const workCountBySource = new Map(
                   <a href={version.url}>访问此版本</a>
                   {version.regionRestrictions?.map((restriction) => (
                     <p class="access-version-list__restriction">{formatRegionRestriction(restriction)}</p>
-                  ))}
-                </li>
-              ))}
+                ))}
+              </li>
+            ))}
             </ul>
-
             {resource.externalSignals && resource.externalSignals.length > 0 && (
               <section class="external-observations" aria-label={`${resource.title['zh-CN']} 的外部观察`}>
                 <h4>外部公开观察</h4>
@@ -138,7 +138,7 @@ const workCountBySource = new Map(
                 </ul>
               </section>
             )}
-          </div>
+          </details>
         </article>
       );
     })}

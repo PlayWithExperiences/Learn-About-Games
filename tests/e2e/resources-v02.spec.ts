@@ -139,6 +139,50 @@ test('renders raw external observations in catalog order without quality badges'
   await expect(page.locator('main')).not.toContainText(/本站评分|排名|精选|已审核/);
 });
 
+test('uses one compact editorial row per Source and Work Item', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./resources/');
+
+  const sourceList = page.locator('.source-result-list');
+  const sourceColumns = await sourceList.evaluate((element) => getComputedStyle(element).gridTemplateColumns);
+  expect(sourceColumns.split(' ')).toHaveLength(1);
+
+  const sourceRow = page.locator('.source-result').first();
+  const workRow = page.locator('.work-item-result').first();
+  await expect(sourceRow.locator('[data-source-row-main]')).toHaveCount(1);
+  await expect(sourceRow.locator('[data-source-row-facts]')).toHaveCount(1);
+  await expect(workRow.locator('[data-work-row-main]')).toHaveCount(1);
+  await expect(workRow.locator('[data-work-row-facts]')).toHaveCount(1);
+  await expect(workRow.locator('[data-work-row-access]')).toHaveCount(1);
+});
+
+test('keeps access versions and external observations in catalog order inside the disclosure', async ({ page }) => {
+  const resource = resources.find(({ externalSignals }) => (externalSignals?.length ?? 0) > 1);
+  expect(resource).toBeTruthy();
+
+  await page.goto('./resources/');
+  const row = page.locator(`[data-result-id="${resource?.id}"]`);
+  const disclosure = row.locator('.work-item-result__more');
+  await expect(disclosure).toHaveCount(1);
+  await disclosure.locator('summary').click();
+  await expect(disclosure).toHaveAttribute('open', '');
+
+  const versions = disclosure.locator('.access-version-list > li');
+  await expect(versions).toHaveCount(resource?.accessVersions.length ?? 0);
+  for (const [index, version] of (resource?.accessVersions ?? []).entries()) {
+    await expect(versions.nth(index)).toContainText(formatLanguage(version.language));
+    await expect(versions.nth(index).getByRole('link', { name: '访问此版本' })).toHaveAttribute('href', version.url);
+  }
+
+  const observations = disclosure.locator('[data-external-observation]');
+  await expect(observations).toHaveCount(resource?.externalSignals?.length ?? 0);
+  for (const [index, signal] of (resource?.externalSignals ?? []).entries()) {
+    await expect(observations.nth(index)).toContainText(signal.provider);
+    await expect(observations.nth(index)).toContainText(String(signal.value));
+    await expect(observations.nth(index)).toContainText(signal.observedAt);
+  }
+});
+
 test('keeps all Sources and Work Items readable without JavaScript while controls explain their state', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

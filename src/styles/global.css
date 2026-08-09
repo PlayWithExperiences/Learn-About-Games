@@ -1744,21 +1744,26 @@ h2 {
   font-size: 0.88rem;
 }
 
-.source-result-list {
+.source-result-list,
+.work-item-result-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.source-result-list {
   margin-top: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
 }
 
 .source-result {
-  padding: 0.9rem 1rem 0.85rem;
-  border-left: 4px solid var(--accent);
-  background: var(--surface);
+  display: grid;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--line);
+  grid-template-columns: 7rem minmax(16rem, 0.7fr) minmax(12rem, 0.3fr);
+  gap: 1rem;
 }
 
 .source-result__identity,
-.work-item-result__byline,
 .access-version-list__facts,
 .external-observations a,
 .source-detail-page__observations a {
@@ -1776,8 +1781,6 @@ h2 {
   text-transform: uppercase;
 }
 
-.source-result__identity span + span,
-.work-item-result__byline span + span,
 .access-version-list__facts span + span,
 .external-observations a span + span,
 .source-detail-page__observations a span + span {
@@ -1786,52 +1789,54 @@ h2 {
 }
 
 .source-result h3 {
-  margin-top: 0.3rem;
   font-size: 1.05rem;
 }
 
-.source-result > p {
+.source-result__main > p {
   margin: 0.35rem 0 0;
   color: var(--ink-soft);
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }
 
 .source-result__facts,
+.work-item-result__facts,
 .source-detail-page__facts {
   display: flex;
-  margin: 0.65rem 0 0;
+  margin: 0;
   gap: 1.4rem;
 }
 
 .source-result__facts div,
+.work-item-result__facts div,
 .source-detail-page__facts div {
   display: grid;
   gap: 0.05rem;
 }
 
 .source-result__facts dt,
+.work-item-result__facts dt,
 .source-detail-page__facts dt {
   color: var(--muted);
   font-size: 0.7rem;
 }
 
 .source-result__facts dd,
+.work-item-result__facts dd,
 .source-detail-page__facts dd {
   margin: 0;
   font-size: 0.82rem;
   font-weight: 720;
 }
 
-.work-item-result-list {
-  margin-top: 0.45rem;
-}
+.work-item-result-list { margin-top: 0.45rem; }
 
 .work-item-result {
   display: grid;
-  padding-block: 1rem;
+  padding-block: 0.85rem;
   border-bottom: 1px solid var(--line);
-  grid-template-columns: 5.2rem minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: 5.5rem minmax(18rem, 1fr) minmax(11rem, 0.38fr) 9rem;
+  gap: 0.75rem 1rem;
 }
 
 .work-item-result__index {
@@ -1843,30 +1848,27 @@ h2 {
   text-transform: uppercase;
 }
 
-.work-item-result__body {
+.work-item-result__main,
+.work-item-result__facts,
+.work-item-result__access,
+.work-item-result__more {
   min-width: 0;
 }
 
-.work-item-result__heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
 .work-item-result h3 {
-  max-width: 62ch;
   font-size: 1.05rem;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .work-item-result__canonical {
-  flex: 0 0 auto;
+  display: inline-block;
   font-size: 0.78rem;
   font-weight: 720;
+  overflow-wrap: anywhere;
 }
 
-.work-item-result__byline {
+.work-item-result__main > p:not(.work-item-result__relevance) {
   margin-top: 0.3rem;
   color: var(--muted);
   font-size: 0.78rem;
@@ -1878,6 +1880,33 @@ h2 {
   color: var(--ink-soft);
   font-size: 0.88rem;
   overflow-wrap: anywhere;
+}
+
+.work-item-result__facts {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+.work-item-result__access {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.work-item-result__more {
+  grid-column: 2 / -1;
+  margin-top: -0.2rem;
+}
+
+.work-item-result__more > summary {
+  width: fit-content;
+  color: var(--accent-strong);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 720;
 }
 
 .access-version-list,
@@ -3164,13 +3193,14 @@ h2 {
     gap: 0.35rem;
   }
 
-  .work-item-result__heading {
-    display: block;
+  .source-result {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
   }
 
-  .work-item-result__canonical {
-    display: inline-block;
-    margin-top: 0.35rem;
+  .work-item-result__more {
+    grid-column: auto;
+    margin-top: 0.15rem;
   }
 
   .access-version-list > li {
