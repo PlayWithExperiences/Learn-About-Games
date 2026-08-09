@@ -140,7 +140,13 @@ describe('validateCatalog', () => {
       id: 'second-root',
     });
 
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('EGDS_ROOT_COUNT_INVALID');
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_ROOT_COUNT_INVALID',
+      collection: 'egdsFrameworkNodes',
+      id: 'egds-root',
+      field: 'kind/parentNodeId',
+      targetId: 'egds-root,second-root',
+    });
   });
 
   it('requires the exact five ordered root branches', () => {
@@ -149,7 +155,14 @@ describe('validateCatalog', () => {
     expect(branch).toBeDefined();
     branch!.order = 6;
 
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('EGDS_BRANCH_SET_INVALID');
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_BRANCH_SET_INVALID',
+      collection: 'egdsFrameworkNodes',
+      id: 'egds-root',
+      field: 'parentNodeId/order',
+      targetId:
+        'from-plan-to-ship:2:branch,with-team:3:branch,product-profit:4:branch,beyond-games:5:branch,experience-design:6:branch',
+    });
   });
 
   it('requires the exact EGDS process relation tuple set', () => {
@@ -160,9 +173,14 @@ describe('validateCatalog', () => {
     expect(relation?.type).toBe('process-next');
     if (relation?.type === 'process-next') relation.toId = 'deconstruction';
 
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain(
-      'EGDS_PROCESS_RELATION_SET_INVALID',
-    );
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_PROCESS_RELATION_SET_INVALID',
+      collection: 'egdsFrameworkRelations',
+      id: 'process-next',
+      field: 'fromId/toId',
+      targetId:
+        'deconstruction:reconstruction,perception:deconstruction,rationalization:deconstruction',
+    });
   });
 
   it('requires the exact EGDS Atlas link relation tuple set', () => {
@@ -171,7 +189,45 @@ describe('validateCatalog', () => {
     expect(relation?.type).toBe('links-to');
     if (relation?.type === 'links-to') Object.assign(relation, { targetPath: 'map/' });
 
-    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('EGDS_LINK_RELATION_SET_INVALID');
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_LINK_RELATION_SET_INVALID',
+      collection: 'egdsFrameworkRelations',
+      id: 'links-to',
+      field: 'fromId/targetPath',
+      targetId: 'innovation-possibility-space:map/',
+    });
+  });
+
+  it('reports a missing process relation endpoint without changing the approved tuple set', () => {
+    const catalog = emptyCatalog();
+    catalog.egdsFrameworkNodes = catalog.egdsFrameworkNodes.filter(({ id }) => id !== 'perception');
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'EGDS_RELATION_ENDPOINT_MISSING',
+        collection: 'egdsFrameworkRelations',
+        id: 'process-perception-rationalization',
+        field: 'fromId',
+        targetId: 'perception',
+      },
+    ]);
+  });
+
+  it('reports a missing links-to source without treating targetPath as a framework endpoint', () => {
+    const catalog = emptyCatalog();
+    catalog.egdsFrameworkNodes = catalog.egdsFrameworkNodes.filter(
+      ({ id }) => id !== 'innovation-possibility-space',
+    );
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'EGDS_RELATION_ENDPOINT_MISSING',
+        collection: 'egdsFrameworkRelations',
+        id: 'link-innovation-atlas',
+        field: 'fromId',
+        targetId: 'innovation-possibility-space',
+      },
+    ]);
   });
 
   it('rejects entity placement on a non-container EGDS node', () => {

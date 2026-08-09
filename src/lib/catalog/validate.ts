@@ -224,6 +224,7 @@ export type CatalogValidationCode =
   | 'EGDS_BRANCH_SET_INVALID'
   | 'EGDS_PROCESS_RELATION_SET_INVALID'
   | 'EGDS_LINK_RELATION_SET_INVALID'
+  | 'EGDS_RELATION_ENDPOINT_MISSING'
   | 'EGDS_ENTITY_CONTAINER_INVALID'
   | 'CAPABILITY_DOMAIN_MISSING'
   | 'CAPABILITY_FRAMEWORK_NODE_MISSING'
@@ -636,6 +637,28 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
       'fromId/targetPath',
       actualEgdsLinkRelations.join(','),
     );
+  }
+
+  for (const relation of catalog.egdsFrameworkRelations) {
+    const endpoints =
+      relation.type === 'process-next'
+        ? ([
+            ['fromId', relation.fromId],
+            ['toId', relation.toId],
+          ] as const)
+        : ([['fromId', relation.fromId]] as const);
+    for (const [field, targetId] of endpoints) {
+      if (!egdsFrameworkNodeIds.has(targetId)) {
+        appendError(
+          errors,
+          'EGDS_RELATION_ENDPOINT_MISSING',
+          'egdsFrameworkRelations',
+          relation.id,
+          field,
+          targetId,
+        );
+      }
+    }
   }
 
   for (const capability of catalog.capabilities) {
