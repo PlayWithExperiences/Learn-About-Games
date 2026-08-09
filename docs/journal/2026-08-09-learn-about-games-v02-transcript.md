@@ -238,3 +238,11 @@ GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 ski
 部署后首先使用无缓存 HTTP 请求确认首页、Map、Career、Resources、Atlas、About、Devlog 索引和 Devlog 003 八条路由均返回 200。随后以 fresh Chromium 直接访问公开 URL，实测 Map 为 54 个可进入节点与 64 条关系；Career 为 3 个按钮，应用 `AAA · Creative Director` 后状态明确且全图保留；Resources 为 20 个 Source、128 个 Work Item、7 个事实筛选，选择 Playtesting 能力后显示 8 个 Source／15 条 Work Item；Atlas 为 27 个节点、25 条关系、40 项 Evidence，Metroidvania 透镜状态明确且“当前选择”dialog 可打开。About 与两个 Devlog 入口标题正确。
 
 公开站另以 320px Dark 逐页访问首页、Map、Career、Resources、Atlas、About 与 Devlog；所有页面的 documentElement/body scrollWidth 均为 320，与 clientWidth 相等。公开验收截图位于 `/tmp/learn-about-games-v02-live/`。这些 runtime 事实随后写入 README、Roadmap、Changelog、AGENTS、CLAUDE、Devlog 与本连续性记录；该 evidence commit 只更新发布事实，不改变已验证产品运行时。
+
+## 24. 仓库转为 Private（部分会话导出）
+
+用户在查看公开 v0.2 后提出五项核心问题：暗色主题职业高亮不明显；能力地图关系过散且缺少原 expertise mind map 的主干、分区与主次；成长资源双列排布过宽；Innovation Atlas 不能缩放和平移；节点详情只有字母顺序，缺少时间排序和搜索。用户随后要求“先把仓库转为 private 直到可用”。
+
+主任务使用 GitHub CLI 先确认 `PlayWithExperiences/Learn-About-Games` 为 PUBLIC，再以显式 visibility consequence 参数改为 PRIVATE。写入后 GitHub API 返回 `visibility=PRIVATE`、`isPrivate=true`；未经身份验证访问仓库 URL 返回 404，原 GitHub Pages URL 也返回 404，Pages API 不再提供公开站点。此次操作没有删除仓库、分支、commit、Actions 历史或本地工作树；恢复公开需要未来显式把仓库改回 Public 并重新启用／验证 Pages。
+
+项目连续性入口、README、Roadmap 与 Changelog 同步区分“最后一次成功公开发布的历史证据”和“当前私有开发状态”。下一阶段先通过文字设计确认地图层级、暗色高亮、资源密度和 Atlas 浏览工具，再实现并完成全套验收；在此之前不恢复公开。

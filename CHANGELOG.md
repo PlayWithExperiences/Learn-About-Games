@@ -4,7 +4,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
-- 暂无未发布的产品行为。
+- 将 `PlayWithExperiences/Learn-About-Games` 暂时从 Public 改为 Private；未经身份验证的仓库 URL 与原 GitHub Pages URL 均返回 404。历史发布证据继续保留，重新公开前需完成当前核心体验修正与线上验收。
 
 ## [v0.2] - 2026-08-09
 

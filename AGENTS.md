@@ -1,6 +1,6 @@
 # Project entrypoint
 
-Verified state: v0.2 is deployed at <https://playwithexperiences.github.io/Learn-About-Games/> from runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` via GitHub Pages run `31282275108`. It passed independent product/Atlas review and live route/interaction checks. The user explicitly authorized direct implementation and deployment without another design-review pause.
+Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404; do not describe it as currently deployed or public. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build. The user wants the repository and site to remain private until the core map, resource density, dark-theme emphasis, and Atlas exploration issues are resolved.
 
 Before making substantive changes, read these files in order:
 

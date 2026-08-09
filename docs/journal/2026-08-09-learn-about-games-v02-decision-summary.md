@@ -1,8 +1,8 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：v0.2 已部署并完成线上契约验收
-- 线上 v0.2：https://playwithexperiences.github.io/Learn-About-Games/
+- 状态：仓库已转为 Private；公开 Pages 已下线，进入核心体验完善阶段
+- 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 视觉系统：[DESIGN.md](../../DESIGN.md)
 - Foundation 计划：[2026-08-09-v02-foundation-implementation-plan.md](../superpowers/plans/2026-08-09-v02-foundation-implementation-plan.md)
@@ -14,7 +14,9 @@
 
 ## 当前状态
 
-v0.2 runtime HEAD 为 `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`，对应成功 GitHub Pages run `31282275108`。远端 `main` 与 `codex/v02` 均指向该 runtime commit；公开站已完成八条关键路由、核心交互、数据计数与 320px 页面宽度验收。M0 的最后发布 HEAD `373ef17bbcc7646e8b5183d300a7a394fe15e0ae` 与 run `31267011204` 作为历史证据保留。
+用户在查看 v0.2 后认为核心体验仍不足以公开：暗色主题下职业高亮不够明显；能力地图虽然有关系，但结构过散、缺少原思维导图那样清晰的主次和分区；成长资源的双列形态占用过宽；Innovation Atlas 缺少缩放和平移；节点详情需要按名称／时间排序和搜索。仓库因此已暂时设为 Private，未经身份验证访问仓库与原 Pages URL 均返回 404。
+
+v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`、GitHub Pages run `31282275108` 与 evidence commit `ff7bb3b954f52e65ede79e73103da70a1d6accab` 作为最后一次公开构建的历史证据保留。重新公开前必须完成核心体验修正并重新运行线上验收，不能把历史成功 run 描述成当前公开状态。
 
 v0.2 开始前的 clean baseline 已实际运行：`npm run build` 完成 Astro check 0 errors / warnings / hints、Vitest 27/27 和 14 个静态页面；`CI=1 npm run test:e2e` 为 44/44。
 
@@ -120,10 +122,11 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 精确下一步
 
-1. 继续按 canonical Work Item 扩大资源覆盖和语言版本，不把数量或外部观察变成质量评分。
-2. 为当前资源稀疏的能力补具体内容，同时保持 Capability、Knowledge Topic 与 Resource Topic 的语义边界。
-3. 扩展 Atlas 主题前先补节点、关系与 Evidence，不为视觉密度添加无证据连线。
-4. 根据真实使用反馈决定完整英文界面与更多专业方向的优先级；账号、后台与同步仍不预先引入。
+1. 重新设计暗色职业高亮，让核心／重要／建议了解与未收录状态在不隐藏节点的前提下清楚区分。
+2. 从原 expertise mind map 的“主干—分区—分支”层级中提取可解释布局规则，重组能力地图的视觉主次，不改变 42／12／64 数据语义。
+3. 把成长资源收敛为更紧凑的单列信息行，减少无效横向占用，同时保留七维事实筛选与 128 条内容可达性。
+4. 为 Innovation Atlas 增加受约束的缩放、平移、复位，以及节点详情的名称／时间排序和搜索。
+5. 完成独立视觉审查、桌面／移动／双主题／no-JS 门禁后，再决定恢复 Public 与 GitHub Pages。
 
 ## 当前未决风险
 
