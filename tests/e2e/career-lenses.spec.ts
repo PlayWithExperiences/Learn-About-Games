@@ -20,8 +20,8 @@ const priorityLabels = {
 };
 const priorityBorderStyles = {
   core: 'solid',
-  important: 'dashed',
-  suggested: 'dotted',
+  important: 'solid',
+  suggested: 'dashed',
 };
 
 function parseRgb(color: string): [number, number, number] {
@@ -211,6 +211,155 @@ test('keeps the same lens semantics in the 320px relationship outline', async ({
   await expect(mobileFocusTarget).toBeInViewport();
   await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
   await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+});
+
+test('keeps priority encoding distinct in Light, explicit Dark, and System Dark', async ({ page }) => {
+  const profile = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
+  if (!profile) throw new Error('Missing AAA Game Designer profile');
+
+  const themes = [
+    { name: 'Light', colorScheme: 'light' as const, explicitTheme: 'light' },
+    { name: 'explicit Dark', colorScheme: 'light' as const, explicitTheme: 'dark' },
+    { name: 'System Dark', colorScheme: 'dark' as const, explicitTheme: undefined },
+    { name: 'System Dark + explicit Light', colorScheme: 'dark' as const, explicitTheme: 'light' },
+  ];
+
+  for (const { name, colorScheme, explicitTheme } of themes) {
+    await page.emulateMedia({ colorScheme });
+
+    for (const { width, height, kind } of [
+      { width: 1440, height: 1100, kind: 'desktop' },
+      { width: 320, height: 900, kind: 'mobile' },
+    ] as const) {
+      await page.setViewportSize({ width, height });
+      await page.goto('./careers/');
+      await page.locator('html').evaluate((element, theme) => {
+        if (theme) element.dataset.theme = theme;
+        else delete element.dataset.theme;
+      }, explicitTheme);
+
+      const explorer = page.locator('[data-career-explorer]');
+      await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+      const container = kind === 'desktop'
+        ? explorer.locator('[data-capability-map-canvas]')
+        : explorer.locator('[data-mobile-map-outline]');
+      const priorityBackgrounds: string[] = [];
+
+      for (const priority of ['core', 'important', 'suggested'] as const) {
+        const node = container.locator(`[data-role-priority="${priority}"]`).first();
+        const label = node.locator('[data-role-label]');
+        await expect(label, `${name} ${kind} ${priority} label`).toBeVisible();
+        await expect(label, `${name} ${kind} ${priority} label`).toHaveText(priorityLabels[priority]);
+        await expect.poll(
+          () => node.evaluate((element) => element.getAnimations().every((animation) => animation.playState === 'finished')),
+          { message: `${name} ${kind} ${priority} priority transition settles` },
+        ).toBe(true);
+
+        const styles = await node.evaluate((element) => {
+          const nodeStyle = getComputedStyle(element);
+          const textElement = element.classList.contains('map-node')
+            ? element.querySelector<HTMLElement>(':scope > span')
+            : element.querySelector<HTMLElement>('.map-outline-node__heading a');
+          const surroundings = element.classList.contains('map-node')
+            ? element.closest<HTMLElement>('[data-capability-map-canvas]')
+            : document.documentElement;
+
+          if (!textElement || !surroundings) throw new Error('Career priority node is missing readable text or surroundings');
+          return {
+            background: nodeStyle.backgroundColor,
+            border: nodeStyle.borderTopColor,
+            borderStyle: nodeStyle.borderTopStyle,
+            borderWidth: Number.parseFloat(nodeStyle.borderTopWidth),
+            surroundings: getComputedStyle(surroundings).backgroundColor,
+            text: getComputedStyle(textElement).color,
+          };
+        });
+
+        expect(styles.borderWidth, `${name} ${kind} ${priority} border width`).toBeGreaterThanOrEqual(2);
+        expect(styles.borderStyle, `${name} ${kind} ${priority} border style`).toBe(priorityBorderStyles[priority]);
+        expect(styles.background, `${name} ${kind} ${priority} surface`).not.toBe(styles.surroundings);
+        priorityBackgrounds.push(styles.background);
+        expect(contrastRatio(styles.text, styles.background), `${name} ${kind} ${priority} text contrast`)
+          .toBeGreaterThanOrEqual(4.5);
+        expect(contrastRatio(styles.border, styles.surroundings), `${name} ${kind} ${priority} boundary contrast`)
+          .toBeGreaterThanOrEqual(3);
+      }
+
+      expect(new Set(priorityBackgrounds).size, `${name} ${kind} priority surfaces`).toBe(3);
+    }
+  }
+});
+
+test('preserves career priority surfaces while nodes are hovered, focused, or relation-adjacent', async ({ page }) => {
+  const profile = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
+  if (!profile) throw new Error('Missing AAA Game Designer profile');
+
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./careers/');
+  await page.locator('html').evaluate((element) => {
+    element.dataset.theme = 'dark';
+  });
+
+  const explorer = page.locator('[data-career-explorer]');
+  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+  const canvas = explorer.locator('[data-capability-map-canvas]');
+  const nodes = canvas.locator('[data-career-node]');
+  const idleStyles = new Map<string, { background: string; border: string; borderStyle: string }>();
+
+  await expect.poll(
+    () => nodes.evaluateAll((elements) => elements.every((element) =>
+      element.getAnimations().every((animation) => animation.playState === 'finished'),
+    )),
+    { message: 'career priority transitions settle before interaction checks' },
+  ).toBe(true);
+
+  for (const node of await nodes.all()) {
+    const id = await node.getAttribute('data-capability-id');
+    if (!id) throw new Error('Career node is missing its capability id');
+    idleStyles.set(id, await node.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        background: style.backgroundColor,
+        border: style.borderTopColor,
+        borderStyle: style.borderTopStyle,
+      };
+    }));
+  }
+
+  const expectStableStyle = async (node: ReturnType<typeof canvas.locator>, state: string) => {
+    const id = await node.getAttribute('data-capability-id');
+    const idle = id ? idleStyles.get(id) : undefined;
+    if (!idle) throw new Error(`Missing idle style for ${id ?? 'unknown node'}`);
+    const active = await node.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return {
+        background: style.backgroundColor,
+        border: style.borderTopColor,
+        borderStyle: style.borderTopStyle,
+      };
+    });
+    expect(active, `${id} ${state}`).toEqual(idle);
+  };
+
+  for (const priority of ['core', 'important', 'suggested'] as const) {
+    const node = canvas.locator(`[data-role-priority="${priority}"]`).first();
+    await node.hover();
+    await expectStableStyle(node, 'hover');
+    await node.focus();
+    await expectStableStyle(node, 'focus');
+  }
+
+  const unlisted = canvas.locator('[data-role-state="unlisted"]').first();
+  await unlisted.hover();
+  await expectStableStyle(unlisted, 'unlisted hover');
+
+  const focusNode = canvas.locator('[data-role-priority="core"]').first();
+  await focusNode.focus();
+  const adjacentNodes = canvas.locator('[data-career-node][data-adjacent="true"]');
+  await expect(adjacentNodes).not.toHaveCount(0);
+  for (const adjacent of await adjacentNodes.all()) {
+    await expectStableStyle(adjacent, 'relation adjacent');
+  }
 });
 
 test('keeps unlisted capabilities readable in light and dark desktop and mobile views', async ({ page }) => {
