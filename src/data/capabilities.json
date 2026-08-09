@@ -3,6 +3,7 @@
     "id": "experience-framing",
     "name": { "zh-CN": "体验目标建构", "en": "Experience Framing" },
     "summary": { "zh-CN": "把模糊的体验意图转成可讨论、可观察、可修正的目标。", "en": "Turn a broad experience intent into discussable, observable, revisable goals." },
+    "frameworkNodeId": "rationalization",
     "domainId": "experience-player",
     "position": { "x": 7, "y": 8 }
   },
@@ -10,6 +11,7 @@
     "id": "experience-deconstruction",
     "name": { "zh-CN": "体验解构", "en": "Experience Deconstruction" },
     "summary": { "zh-CN": "从实际体验中分离现象、设计选择与可能原因。", "en": "Separate observed experience, design choices, and plausible causes." },
+    "frameworkNodeId": "deconstruction",
     "domainId": "experience-player",
     "position": { "x": 18, "y": 7 }
   },
@@ -17,6 +19,7 @@
     "id": "player-perspective-taking",
     "name": { "zh-CN": "玩家视角转换", "en": "Player Perspective Taking" },
     "summary": { "zh-CN": "从不同玩家的目标、经验和限制重新审视设计假设。", "en": "Re-examine design assumptions from players with different goals, experience, and constraints." },
+    "frameworkNodeId": "perception",
     "domainId": "experience-player",
     "position": { "x": 27, "y": 13 }
   },
@@ -24,6 +27,7 @@
     "id": "emotional-arc-shaping",
     "name": { "zh-CN": "情绪弧线塑造", "en": "Emotional Arc Shaping" },
     "summary": { "zh-CN": "安排体验中的期待、压力、释放与余韵。", "en": "Shape expectation, tension, release, and reflection across an experience." },
+    "frameworkNodeId": "experience-journey",
     "domainId": "experience-player",
     "position": { "x": 8, "y": 22 }
   },
@@ -31,6 +35,7 @@
     "id": "choice-consequence-design",
     "name": { "zh-CN": "选择与后果设计", "en": "Choice & Consequence Design" },
     "summary": { "zh-CN": "让玩家理解可选行动，并感知其后果与意义。", "en": "Make available actions legible and their consequences perceptible and meaningful." },
+    "frameworkNodeId": "narrative-lever",
     "domainId": "experience-player",
     "position": { "x": 21, "y": 23 }
   },
@@ -38,6 +43,7 @@
     "id": "core-loop-design",
     "name": { "zh-CN": "核心循环设计", "en": "Core Loop Design" },
     "summary": { "zh-CN": "组织可重复的行动、反馈、回报和状态变化。", "en": "Organize repeatable actions, feedback, rewards, and state change." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "gameplay-systems-feel",
     "position": { "x": 36, "y": 7 }
   },
@@ -45,6 +51,7 @@
     "id": "rules-system-modeling",
     "name": { "zh-CN": "规则与系统建模", "en": "Rules & System Modeling" },
     "summary": { "zh-CN": "明确实体、状态、规则和相互作用，以推演系统行为。", "en": "Define entities, states, rules, and interactions so system behavior can be reasoned about." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "gameplay-systems-feel",
     "position": { "x": 49, "y": 6 }
   },
@@ -52,6 +59,7 @@
     "id": "game-feel-tuning",
     "name": { "zh-CN": "操作手感调校", "en": "Game Feel Tuning" },
     "summary": { "zh-CN": "调整输入、运动、反馈和时间参数，使行动清晰且可控。", "en": "Tune input, motion, feedback, and timing so actions feel legible and controllable." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "gameplay-systems-feel",
     "position": { "x": 63, "y": 8 }
   },
@@ -59,6 +67,7 @@
     "id": "challenge-difficulty-design",
     "name": { "zh-CN": "挑战与难度设计", "en": "Challenge & Difficulty Design" },
     "summary": { "zh-CN": "安排学习、压力、失败成本与可恢复空间。", "en": "Shape learning, pressure, failure cost, and opportunities for recovery." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "gameplay-systems-feel",
     "position": { "x": 37, "y": 18 }
   },
@@ -66,6 +75,7 @@
     "id": "pacing-control",
     "name": { "zh-CN": "节奏控制", "en": "Pacing Control" },
     "summary": { "zh-CN": "调整行动、信息、压力和休息在时间中的密度。", "en": "Control the temporal density of action, information, pressure, and rest." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "gameplay-systems-feel",
     "position": { "x": 50, "y": 17 }
   },
@@ -73,6 +83,7 @@
     "id": "progression-economy-design",
     "name": { "zh-CN": "成长与经济设计", "en": "Progression & Economy Design" },
     "summary": { "zh-CN": "组织资源流动、解锁、积累和长期反馈。", "en": "Structure resource flows, unlocks, accumulation, and long-term feedback." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "gameplay-systems-feel",
     "position": { "x": 67, "y": 27 }
   },
@@ -80,6 +91,7 @@
     "id": "level-structure-design",
     "name": { "zh-CN": "关卡结构设计", "en": "Level Structure Design" },
     "summary": { "zh-CN": "组织区域、路径、门槛、回环和目标之间的拓扑关系。", "en": "Organize topology among areas, routes, gates, loops, and goals." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "level-space",
     "position": { "x": 77, "y": 9 }
   },
@@ -87,6 +99,7 @@
     "id": "spatial-flow-design",
     "name": { "zh-CN": "空间流线设计", "en": "Spatial Flow Design" },
     "summary": { "zh-CN": "安排玩家穿行、停留、回望和转向的空间节奏。", "en": "Shape how players move, pause, look back, and change direction through space." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "level-space",
     "position": { "x": 90, "y": 8 }
   },
@@ -94,6 +107,7 @@
     "id": "navigation-wayfinding-design",
     "name": { "zh-CN": "导航与寻路引导", "en": "Navigation & Wayfinding Design" },
     "summary": { "zh-CN": "使用地标、视线、层级和反馈帮助玩家建立空间判断。", "en": "Use landmarks, sightlines, hierarchy, and feedback to support spatial decisions." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "level-space",
     "position": { "x": 76, "y": 19 }
   },
@@ -101,6 +115,7 @@
     "id": "encounter-space-composition",
     "name": { "zh-CN": "遭遇空间编排", "en": "Encounter Space Composition" },
     "summary": { "zh-CN": "让地形、敌人、目标和行动空间共同形成遭遇。", "en": "Compose terrain, actors, objectives, and room for action into encounters." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "level-space",
     "position": { "x": 89, "y": 18 }
   },
@@ -108,6 +123,7 @@
     "id": "blockout-spatial-validation",
     "name": { "zh-CN": "灰盒与空间验证", "en": "Blockout & Spatial Validation" },
     "summary": { "zh-CN": "用低成本空间原型检验尺度、路线、视线和遭遇假设。", "en": "Use low-cost spatial prototypes to test scale, routes, sightlines, and encounter assumptions." },
+    "frameworkNodeId": "gameplay-challenges-lever",
     "domainId": "level-space",
     "position": { "x": 94, "y": 27 }
   },
@@ -115,6 +131,7 @@
     "id": "narrative-architecture",
     "name": { "zh-CN": "叙事架构", "en": "Narrative Architecture" },
     "summary": { "zh-CN": "组织故事状态、信息层级、分支与玩家行动的结构关系。", "en": "Structure story states, information hierarchy, branches, and player action." },
+    "frameworkNodeId": "narrative-lever",
     "domainId": "narrative-expression",
     "position": { "x": 75, "y": 39 }
   },
@@ -122,6 +139,7 @@
     "id": "interactive-narrative-design",
     "name": { "zh-CN": "互动叙事设计", "en": "Interactive Narrative Design" },
     "summary": { "zh-CN": "让系统状态和玩家选择能够改变叙事体验。", "en": "Make system state and player choice meaningfully affect narrative experience." },
+    "frameworkNodeId": "narrative-lever",
     "domainId": "narrative-expression",
     "position": { "x": 88, "y": 39 }
   },
@@ -129,6 +147,7 @@
     "id": "narrative-exposition",
     "name": { "zh-CN": "叙事信息呈现", "en": "Narrative Exposition" },
     "summary": { "zh-CN": "控制故事信息在何时、何地、以何种形式被玩家理解。", "en": "Control when, where, and how story information becomes understandable." },
+    "frameworkNodeId": "narrative-lever",
     "domainId": "narrative-expression",
     "position": { "x": 75, "y": 51 }
   },
@@ -136,6 +155,7 @@
     "id": "world-character-coherence",
     "name": { "zh-CN": "世界与角色一致性", "en": "World & Character Coherence" },
     "summary": { "zh-CN": "维护世界规则、角色动机和行为结果之间的一致性。", "en": "Maintain coherence among world rules, character motives, and behavioral consequences." },
+    "frameworkNodeId": "narrative-lever",
     "domainId": "narrative-expression",
     "position": { "x": 88, "y": 51 }
   },
@@ -143,6 +163,7 @@
     "id": "aesthetic-direction",
     "name": { "zh-CN": "美学方向", "en": "Aesthetic Direction" },
     "summary": { "zh-CN": "定义并维护跨媒介的情绪、层级与表现原则。", "en": "Define and maintain cross-media principles for mood, hierarchy, and expression." },
+    "frameworkNodeId": "aesthetics-lever",
     "domainId": "narrative-expression",
     "position": { "x": 75, "y": 61 }
   },
@@ -150,6 +171,7 @@
     "id": "multimodal-presentation-integration",
     "name": { "zh-CN": "多模态表现整合", "en": "Multimodal Presentation Integration" },
     "summary": { "zh-CN": "协调视觉、声音、文字、动画和交互反馈的时机与重点。", "en": "Coordinate the timing and emphasis of visuals, audio, text, animation, and interaction feedback." },
+    "frameworkNodeId": "aesthetics-lever",
     "domainId": "narrative-expression",
     "position": { "x": 88, "y": 61 }
   },
@@ -157,6 +179,7 @@
     "id": "research-question-framing",
     "name": { "zh-CN": "研究问题界定", "en": "Research Question Framing" },
     "summary": { "zh-CN": "把设计不确定性改写成可由证据回答的问题。", "en": "Turn design uncertainty into questions that evidence can address." },
+    "frameworkNodeId": "playtest-evidence-iteration",
     "domainId": "research-validation-data",
     "position": { "x": 74, "y": 73 }
   },
@@ -164,6 +187,7 @@
     "id": "playtesting",
     "name": { "zh-CN": "Playtest", "en": "Playtesting" },
     "summary": { "zh-CN": "选择测试对象、任务、时机和观察方式以检验具体判断。", "en": "Choose participants, tasks, timing, and observation methods for a specific design judgment." },
+    "frameworkNodeId": "playtest-evidence-iteration",
     "domainId": "research-validation-data",
     "position": { "x": 85, "y": 72 }
   },
@@ -171,6 +195,7 @@
     "id": "player-behavior-observation",
     "name": { "zh-CN": "玩家行为观察", "en": "Player Behavior Observation" },
     "summary": { "zh-CN": "区分玩家做了什么、说了什么以及观察者作出的解释。", "en": "Distinguish what players did, what they said, and what the observer inferred." },
+    "frameworkNodeId": "playtest-evidence-iteration",
     "domainId": "research-validation-data",
     "position": { "x": 94, "y": 78 }
   },
@@ -178,6 +203,7 @@
     "id": "qualitative-evidence-synthesis",
     "name": { "zh-CN": "质性证据综合", "en": "Qualitative Evidence Synthesis" },
     "summary": { "zh-CN": "从访谈和观察中寻找模式、反例与不确定性。", "en": "Identify patterns, counterexamples, and uncertainty across interviews and observations." },
+    "frameworkNodeId": "playtest-evidence-iteration",
     "domainId": "research-validation-data",
     "position": { "x": 76, "y": 87 }
   },
@@ -185,6 +211,7 @@
     "id": "telemetry-interpretation",
     "name": { "zh-CN": "遥测数据解读", "en": "Telemetry Interpretation" },
     "summary": { "zh-CN": "选择和解释行为指标，并避免把相关性直接当作原因。", "en": "Select and interpret behavioral measures without treating correlation as causation." },
+    "frameworkNodeId": "playtest-evidence-iteration",
     "domainId": "research-validation-data",
     "position": { "x": 89, "y": 88 }
   },
@@ -192,6 +219,7 @@
     "id": "learning-prototype-design",
     "name": { "zh-CN": "学习型原型设计", "en": "Learning Prototype Design" },
     "summary": { "zh-CN": "选择最小且合适的原型形式，以暴露当前最重要的风险。", "en": "Choose the smallest suitable prototype that exposes the most important current risk." },
+    "frameworkNodeId": "prototype-production-breakdown",
     "domainId": "prototyping-production-iteration",
     "position": { "x": 41, "y": 75 }
   },
@@ -199,6 +227,7 @@
     "id": "task-breakdown",
     "name": { "zh-CN": "任务拆解", "en": "Task Breakdown" },
     "summary": { "zh-CN": "把设计意图拆成有边界、依赖与验收条件的工作。", "en": "Break design intent into work with scope, dependencies, and acceptance conditions." },
+    "frameworkNodeId": "prototype-production-breakdown",
     "domainId": "prototyping-production-iteration",
     "position": { "x": 53, "y": 74 }
   },
@@ -206,6 +235,7 @@
     "id": "scope-prioritization",
     "name": { "zh-CN": "范围取舍", "en": "Scope Prioritization" },
     "summary": { "zh-CN": "根据目标、风险和成本决定保留、推迟或移除什么。", "en": "Decide what to keep, defer, or remove based on goals, risk, and cost." },
+    "frameworkNodeId": "tradeoff-specification-delivery",
     "domainId": "prototyping-production-iteration",
     "position": { "x": 63, "y": 79 }
   },
@@ -213,6 +243,7 @@
     "id": "iteration-planning",
     "name": { "zh-CN": "迭代规划", "en": "Iteration Planning" },
     "summary": { "zh-CN": "把证据转成下一轮假设、改动和验证安排。", "en": "Turn evidence into the next hypothesis, change, and validation cycle." },
+    "frameworkNodeId": "playtest-evidence-iteration",
     "domainId": "prototyping-production-iteration",
     "position": { "x": 43, "y": 89 }
   },
@@ -220,6 +251,7 @@
     "id": "design-specification-handoff",
     "name": { "zh-CN": "设计规格与交接", "en": "Design Specification & Handoff" },
     "summary": { "zh-CN": "用适合协作者的形式表达行为、理由、边界和验收方式。", "en": "Communicate behavior, rationale, boundaries, and acceptance in a form collaborators can use." },
+    "frameworkNodeId": "tradeoff-specification-delivery",
     "domainId": "prototyping-production-iteration",
     "position": { "x": 54, "y": 91 }
   },
@@ -227,6 +259,7 @@
     "id": "cross-discipline-communication",
     "name": { "zh-CN": "跨职能沟通", "en": "Cross-discipline Communication" },
     "summary": { "zh-CN": "在不同专业语言之间建立可行动的共同理解。", "en": "Build actionable shared understanding across disciplinary languages." },
+    "frameworkNodeId": "alignment-communication",
     "domainId": "collaboration-leadership-direction",
     "position": { "x": 7, "y": 75 }
   },
@@ -234,6 +267,7 @@
     "id": "design-critique-feedback",
     "name": { "zh-CN": "设计批评与反馈", "en": "Design Critique & Feedback" },
     "summary": { "zh-CN": "围绕意图和证据提出、接收并转化设计反馈。", "en": "Give, receive, and translate feedback around intent and evidence." },
+    "frameworkNodeId": "feedback-collaboration",
     "domainId": "collaboration-leadership-direction",
     "position": { "x": 19, "y": 74 }
   },
@@ -241,6 +275,7 @@
     "id": "alignment-facilitation",
     "name": { "zh-CN": "共识促成", "en": "Alignment Facilitation" },
     "summary": { "zh-CN": "让目标、责任、分歧和决定对相关人员可见。", "en": "Make goals, ownership, disagreements, and decisions visible to relevant people." },
+    "frameworkNodeId": "alignment-communication",
     "domainId": "collaboration-leadership-direction",
     "position": { "x": 29, "y": 80 }
   },
@@ -248,6 +283,7 @@
     "id": "constraint-aware-decision-making",
     "name": { "zh-CN": "约束下决策", "en": "Constraint-aware Decision Making" },
     "summary": { "zh-CN": "在信息不完整和目标冲突时作出可解释、可复查的取舍。", "en": "Make explainable, revisable tradeoffs under incomplete information and conflicting goals." },
+    "frameworkNodeId": "vision-direction-decisions",
     "domainId": "collaboration-leadership-direction",
     "position": { "x": 9, "y": 89 }
   },
@@ -255,6 +291,7 @@
     "id": "creative-vision-stewardship",
     "name": { "zh-CN": "创意愿景维护", "en": "Creative Vision Stewardship" },
     "summary": { "zh-CN": "建立方向原则，并在新证据出现时维护或修正它们。", "en": "Establish directional principles and maintain or revise them as evidence changes." },
+    "frameworkNodeId": "vision-direction-decisions",
     "domainId": "collaboration-leadership-direction",
     "position": { "x": 19, "y": 92 }
   },
@@ -262,6 +299,7 @@
     "id": "audience-positioning",
     "name": { "zh-CN": "受众与定位", "en": "Audience & Positioning" },
     "summary": { "zh-CN": "描述希望服务的人、他们所处的语境以及产品不服务什么。", "en": "Describe whom the product serves, their context, and whom or what it does not serve." },
+    "frameworkNodeId": "audience-positioning-cluster",
     "domainId": "product-market-critical-context",
     "position": { "x": 7, "y": 39 }
   },
@@ -269,6 +307,7 @@
     "id": "market-reference-analysis",
     "name": { "zh-CN": "市场与参照分析", "en": "Market & Reference Analysis" },
     "summary": { "zh-CN": "比较相关作品、品类惯例和市场语境，同时区分证据与模仿。", "en": "Compare related works, genre conventions, and market context while separating evidence from imitation." },
+    "frameworkNodeId": "market-opportunity",
     "domainId": "product-market-critical-context",
     "position": { "x": 21, "y": 39 }
   },
@@ -276,6 +315,7 @@
     "id": "value-proposition-framing",
     "name": { "zh-CN": "价值主张界定", "en": "Value Proposition Framing" },
     "summary": { "zh-CN": "说明玩家投入时间、注意力或金钱后获得什么价值交换。", "en": "State the value exchange offered for a player's time, attention, or money." },
+    "frameworkNodeId": "value-exchange",
     "domainId": "product-market-critical-context",
     "position": { "x": 37, "y": 40 }
   },
@@ -283,6 +323,7 @@
     "id": "monetization-experience-alignment",
     "name": { "zh-CN": "商业化与体验对齐", "en": "Monetization & Experience Alignment" },
     "summary": { "zh-CN": "评估商业机制如何改变访问、动机、节奏和公平感。", "en": "Evaluate how commercial mechanics alter access, motivation, pacing, and perceived fairness." },
+    "frameworkNodeId": "monetization-alignment",
     "domainId": "product-market-critical-context",
     "position": { "x": 55, "y": 42 }
   },
@@ -290,6 +331,7 @@
     "id": "ethical-cultural-evaluation",
     "name": { "zh-CN": "伦理与文化评估", "en": "Ethical & Cultural Evaluation" },
     "summary": { "zh-CN": "识别设计中的价值判断、受影响群体、潜在伤害和文化假设。", "en": "Identify embedded values, affected groups, potential harms, and cultural assumptions." },
+    "frameworkNodeId": "values-culture",
     "domainId": "product-market-critical-context",
     "position": { "x": 11, "y": 57 }
   }

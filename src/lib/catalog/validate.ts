@@ -37,6 +37,15 @@ export type AtlasDirectionality = 'directed' | 'undirected';
 
 export type AtlasEvidenceOriginalLanguage = 'en' | 'ja' | 'fr' | 'es';
 
+export type EgdsFrameworkNodeKind =
+  | 'root'
+  | 'branch'
+  | 'entry'
+  | 'stage'
+  | 'lever'
+  | 'cluster'
+  | 'external-entry';
+
 export type Catalog = {
   domains: Array<{
     id: string;
@@ -52,10 +61,33 @@ export type Catalog = {
     order: number;
     domainIds: string[];
   }>;
+  egdsFrameworkNodes: Array<{
+    id: string;
+    kind: EgdsFrameworkNodeKind;
+    name: LocalizedText & { en: string };
+    summary: LocalizedText;
+    order: number;
+    parentNodeId?: string;
+  }>;
+  egdsFrameworkRelations: Array<
+    | {
+        id: string;
+        type: 'process-next';
+        fromId: string;
+        toId: string;
+      }
+    | {
+        id: string;
+        type: 'links-to';
+        fromId: string;
+        targetPath: 'atlas/';
+      }
+  >;
   capabilities: Array<{
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
+    frameworkNodeId: string;
     domainId: string;
     position: MapPoint;
   }>;
@@ -63,6 +95,7 @@ export type Catalog = {
     id: string;
     name: LocalizedText;
     summary: LocalizedText;
+    frameworkNodeId: string;
     domainId: string;
     position: MapPoint;
   }>;
@@ -185,10 +218,19 @@ export type CatalogValidationCode =
   | 'MAP_GROUP_DOMAIN_MISSING'
   | 'MAP_GROUP_DOMAIN_DUPLICATE'
   | 'MAP_GROUP_DOMAIN_MISSING_REFERENCE'
+  | 'EGDS_PARENT_NODE_MISSING'
+  | 'EGDS_FRAMEWORK_CYCLE'
+  | 'EGDS_ROOT_COUNT_INVALID'
+  | 'EGDS_BRANCH_SET_INVALID'
+  | 'EGDS_PROCESS_RELATION_SET_INVALID'
+  | 'EGDS_LINK_RELATION_SET_INVALID'
+  | 'EGDS_ENTITY_CONTAINER_INVALID'
   | 'CAPABILITY_DOMAIN_MISSING'
+  | 'CAPABILITY_FRAMEWORK_NODE_MISSING'
   | 'CAPABILITY_POSITION_INVALID'
   | 'CAPABILITY_POSITION_OUTSIDE_DOMAIN'
   | 'KNOWLEDGE_TOPIC_DOMAIN_MISSING'
+  | 'KNOWLEDGE_TOPIC_FRAMEWORK_NODE_MISSING'
   | 'KNOWLEDGE_TOPIC_POSITION_INVALID'
   | 'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN'
   | 'CAPABILITY_RELATION_FROM_CAPABILITY_MISSING'
@@ -291,10 +333,31 @@ const undirectedAtlasRelationTypes = new Set<AtlasRelationType>([
   'structural-similarity',
 ]);
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+const egdsEntityContainerKinds = new Set<EgdsFrameworkNodeKind>([
+  'entry',
+  'stage',
+  'lever',
+  'cluster',
+]);
+const approvedEgdsRootBranches = [
+  'experience-design:1:branch',
+  'from-plan-to-ship:2:branch',
+  'with-team:3:branch',
+  'product-profit:4:branch',
+  'beyond-games:5:branch',
+];
+const approvedEgdsProcessRelations = [
+  'perception:rationalization',
+  'rationalization:deconstruction',
+  'deconstruction:reconstruction',
+].sort();
+const approvedEgdsLinkRelations = ['innovation-possibility-space:atlas/'];
 
 const collectionNames = [
   'domains',
   'mapGroups',
+  'egdsFrameworkNodes',
+  'egdsFrameworkRelations',
   'capabilities',
   'knowledgeTopics',
   'capabilityRelations',
@@ -448,10 +511,16 @@ function hasBilingualRationale(summary: LocalizedText): boolean {
   return summary['zh-CN'].trim().length > 0 && typeof summary.en === 'string' && summary.en.trim().length > 0;
 }
 
+function hasExactStringSet(actual: string[], expected: string[]): boolean {
+  return actual.length === expected.length && actual.every((value, index) => value === expected[index]);
+}
+
 export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   const errors: CatalogValidationError[] = [];
   const domainIds = new Set(catalog.domains.map(({ id }) => id));
   const domainsById = new Map(catalog.domains.map((domain) => [domain.id, domain]));
+  const egdsFrameworkNodeIds = new Set(catalog.egdsFrameworkNodes.map(({ id }) => id));
+  const egdsFrameworkNodesById = new Map(catalog.egdsFrameworkNodes.map((node) => [node.id, node]));
   const capabilityIds = new Set(catalog.capabilities.map(({ id }) => id));
   const knowledgeTopicIds = new Set(catalog.knowledgeTopics.map(({ id }) => id));
   const resourceTopicIds = new Set(catalog.resourceTopics.map(({ id }) => id));
@@ -468,6 +537,150 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         appendError(errors, 'COLLECTION_ID_DUPLICATE', collection, entry.id, 'id', entry.id);
       }
       seen.add(entry.id);
+    }
+  }
+
+  const egdsRoots = catalog.egdsFrameworkNodes.filter(({ kind }) => kind === 'root');
+  if (
+    egdsRoots.length !== 1 ||
+    egdsRoots[0]?.id !== 'egds-root' ||
+    egdsRoots[0]?.parentNodeId !== undefined
+  ) {
+    appendError(
+      errors,
+      'EGDS_ROOT_COUNT_INVALID',
+      'egdsFrameworkNodes',
+      'egds-root',
+      'kind/parentNodeId',
+      egdsRoots.map(({ id }) => id).join(','),
+    );
+  }
+
+  for (const node of catalog.egdsFrameworkNodes) {
+    if (node.kind === 'root') continue;
+    if (!node.parentNodeId || !egdsFrameworkNodeIds.has(node.parentNodeId)) {
+      appendError(
+        errors,
+        'EGDS_PARENT_NODE_MISSING',
+        'egdsFrameworkNodes',
+        node.id,
+        'parentNodeId',
+        node.parentNodeId ?? '',
+      );
+    }
+  }
+
+  for (const node of catalog.egdsFrameworkNodes) {
+    const visited = new Set<string>();
+    let current = node;
+    while (current.id !== 'egds-root') {
+      if (visited.has(current.id)) {
+        appendError(
+          errors,
+          'EGDS_FRAMEWORK_CYCLE',
+          'egdsFrameworkNodes',
+          node.id,
+          'parentNodeId',
+          current.id,
+        );
+        break;
+      }
+      visited.add(current.id);
+      if (!current.parentNodeId) break;
+      const parent = egdsFrameworkNodesById.get(current.parentNodeId);
+      if (!parent) break;
+      current = parent;
+    }
+  }
+
+  const actualEgdsRootBranches = catalog.egdsFrameworkNodes
+    .filter(({ parentNodeId }) => parentNodeId === 'egds-root')
+    .sort((left, right) => left.order - right.order || left.id.localeCompare(right.id))
+    .map(({ id, order, kind }) => `${id}:${order}:${kind}`);
+  if (!hasExactStringSet(actualEgdsRootBranches, approvedEgdsRootBranches)) {
+    appendError(
+      errors,
+      'EGDS_BRANCH_SET_INVALID',
+      'egdsFrameworkNodes',
+      'egds-root',
+      'parentNodeId/order',
+      actualEgdsRootBranches.join(','),
+    );
+  }
+
+  const actualEgdsProcessRelations = catalog.egdsFrameworkRelations
+    .filter((relation) => relation.type === 'process-next')
+    .map(({ fromId, toId }) => `${fromId}:${toId}`)
+    .sort();
+  if (!hasExactStringSet(actualEgdsProcessRelations, approvedEgdsProcessRelations)) {
+    appendError(
+      errors,
+      'EGDS_PROCESS_RELATION_SET_INVALID',
+      'egdsFrameworkRelations',
+      'process-next',
+      'fromId/toId',
+      actualEgdsProcessRelations.join(','),
+    );
+  }
+
+  const actualEgdsLinkRelations = catalog.egdsFrameworkRelations
+    .filter((relation) => relation.type === 'links-to')
+    .map(({ fromId, targetPath }) => `${fromId}:${targetPath}`)
+    .sort();
+  if (!hasExactStringSet(actualEgdsLinkRelations, approvedEgdsLinkRelations)) {
+    appendError(
+      errors,
+      'EGDS_LINK_RELATION_SET_INVALID',
+      'egdsFrameworkRelations',
+      'links-to',
+      'fromId/targetPath',
+      actualEgdsLinkRelations.join(','),
+    );
+  }
+
+  for (const capability of catalog.capabilities) {
+    const frameworkNode = egdsFrameworkNodesById.get(capability.frameworkNodeId);
+    if (!frameworkNode) {
+      appendError(
+        errors,
+        'CAPABILITY_FRAMEWORK_NODE_MISSING',
+        'capabilities',
+        capability.id,
+        'frameworkNodeId',
+        capability.frameworkNodeId ?? '',
+      );
+    } else if (!egdsEntityContainerKinds.has(frameworkNode.kind)) {
+      appendError(
+        errors,
+        'EGDS_ENTITY_CONTAINER_INVALID',
+        'capabilities',
+        capability.id,
+        'frameworkNodeId',
+        capability.frameworkNodeId,
+      );
+    }
+  }
+
+  for (const topic of catalog.knowledgeTopics) {
+    const frameworkNode = egdsFrameworkNodesById.get(topic.frameworkNodeId);
+    if (!frameworkNode) {
+      appendError(
+        errors,
+        'KNOWLEDGE_TOPIC_FRAMEWORK_NODE_MISSING',
+        'knowledgeTopics',
+        topic.id,
+        'frameworkNodeId',
+        topic.frameworkNodeId ?? '',
+      );
+    } else if (!egdsEntityContainerKinds.has(frameworkNode.kind)) {
+      appendError(
+        errors,
+        'EGDS_ENTITY_CONTAINER_INVALID',
+        'knowledgeTopics',
+        topic.id,
+        'frameworkNodeId',
+        topic.frameworkNodeId,
+      );
     }
   }
 

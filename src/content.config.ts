@@ -107,6 +107,42 @@ const mapGroups = defineCollection({
     .strict(),
 });
 
+const egdsFrameworkNodes = defineCollection({
+  loader: file('src/data/egds-framework-nodes.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      kind: z.enum(['root', 'branch', 'entry', 'stage', 'lever', 'cluster', 'external-entry']),
+      name: bilingualText,
+      summary: localizedText,
+      order: z.number().int().positive(),
+      parentNodeId: z.string().trim().min(1).optional(),
+    })
+    .strict(),
+});
+
+const egdsFrameworkRelations = defineCollection({
+  loader: file('src/data/egds-framework-relations.json'),
+  schema: z.discriminatedUnion('type', [
+    z
+      .object({
+        id: z.string().trim().min(1),
+        type: z.literal('process-next'),
+        fromId: z.string().trim().min(1),
+        toId: z.string().trim().min(1),
+      })
+      .strict(),
+    z
+      .object({
+        id: z.string().trim().min(1),
+        type: z.literal('links-to'),
+        fromId: z.string().trim().min(1),
+        targetPath: z.literal('atlas/'),
+      })
+      .strict(),
+  ]),
+});
+
 const capabilities = defineCollection({
   loader: file('src/data/capabilities.json'),
   schema: z
@@ -114,6 +150,7 @@ const capabilities = defineCollection({
       id: z.string().trim().min(1),
       name: localizedText,
       summary: localizedText,
+      frameworkNodeId: z.string().trim().min(1),
       domainId: z.string().trim().min(1),
       position: mapPosition,
     })
@@ -127,6 +164,7 @@ const knowledgeTopics = defineCollection({
       id: z.string().trim().min(1),
       name: localizedText,
       summary: localizedText,
+      frameworkNodeId: z.string().trim().min(1),
       domainId: z.string().trim().min(1),
       position: mapPosition,
     })
@@ -337,6 +375,8 @@ const devlog = defineCollection({
 export const collections = {
   domains,
   mapGroups,
+  egdsFrameworkNodes,
+  egdsFrameworkRelations,
   capabilities,
   knowledgeTopics,
   capabilityRelations,

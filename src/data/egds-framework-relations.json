@@ -1,0 +1,26 @@
+[
+  {
+    "id": "process-perception-rationalization",
+    "type": "process-next",
+    "fromId": "perception",
+    "toId": "rationalization"
+  },
+  {
+    "id": "process-rationalization-deconstruction",
+    "type": "process-next",
+    "fromId": "rationalization",
+    "toId": "deconstruction"
+  },
+  {
+    "id": "process-deconstruction-reconstruction",
+    "type": "process-next",
+    "fromId": "deconstruction",
+    "toId": "reconstruction"
+  },
+  {
+    "id": "link-innovation-atlas",
+    "type": "links-to",
+    "fromId": "innovation-possibility-space",
+    "targetPath": "atlas/"
+  }
+]

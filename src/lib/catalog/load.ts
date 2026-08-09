@@ -7,6 +7,8 @@ type ProductCollection = keyof Catalog;
 const productCollections: ProductCollection[] = [
   'domains',
   'mapGroups',
+  'egdsFrameworkNodes',
+  'egdsFrameworkRelations',
   'capabilities',
   'knowledgeTopics',
   'capabilityRelations',

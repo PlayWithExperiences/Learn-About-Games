@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
+import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
+import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
 import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
 
 const localized = (text: string) => ({ 'zh-CN': text });
@@ -7,6 +9,10 @@ const localized = (text: string) => ({ 'zh-CN': text });
 const emptyCatalog = (): Catalog => ({
   domains: [],
   mapGroups: [],
+  egdsFrameworkNodes: structuredClone(egdsFrameworkNodes) as unknown as Catalog['egdsFrameworkNodes'],
+  egdsFrameworkRelations: structuredClone(
+    egdsFrameworkRelations,
+  ) as unknown as Catalog['egdsFrameworkRelations'],
   capabilities: [],
   knowledgeTopics: [],
   capabilityRelations: [],
@@ -67,6 +73,7 @@ const seedV02References = (catalog: Catalog) => {
     id: 'capability',
     name: localized('能力'),
     summary: localized('示例能力。'),
+    frameworkNodeId: 'perception',
     domainId: 'domain',
     position: { x: 10, y: 10 },
   } as unknown as Catalog['capabilities'][number]);
@@ -74,6 +81,7 @@ const seedV02References = (catalog: Catalog) => {
     id: 'knowledge-topic',
     name: localized('知识议题'),
     summary: localized('示例议题。'),
+    frameworkNodeId: 'perception',
     domainId: 'domain',
     position: { x: 20, y: 20 },
   } as unknown as Catalog['knowledgeTopics'][number]);
@@ -95,12 +103,126 @@ const seedV02References = (catalog: Catalog) => {
 };
 
 describe('validateCatalog', () => {
+  it('reports a framework node with a missing parent', () => {
+    const catalog = emptyCatalog();
+    const node = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-journey');
+    expect(node).toBeDefined();
+    node!.parentNodeId = 'missing-parent';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_PARENT_NODE_MISSING',
+      collection: 'egdsFrameworkNodes',
+      id: 'experience-journey',
+      field: 'parentNodeId',
+      targetId: 'missing-parent',
+    });
+  });
+
+  it('reports a cycle in the EGDS framework parent chain', () => {
+    const catalog = emptyCatalog();
+    const node = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-journey');
+    expect(node).toBeDefined();
+    node!.parentNodeId = 'experience-journey';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_FRAMEWORK_CYCLE',
+      collection: 'egdsFrameworkNodes',
+      id: 'experience-journey',
+      field: 'parentNodeId',
+      targetId: 'experience-journey',
+    });
+  });
+
+  it('requires exactly one egds-root framework root', () => {
+    const catalog = emptyCatalog();
+    catalog.egdsFrameworkNodes.push({
+      ...structuredClone(catalog.egdsFrameworkNodes[0]),
+      id: 'second-root',
+    });
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('EGDS_ROOT_COUNT_INVALID');
+  });
+
+  it('requires the exact five ordered root branches', () => {
+    const catalog = emptyCatalog();
+    const branch = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-design');
+    expect(branch).toBeDefined();
+    branch!.order = 6;
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('EGDS_BRANCH_SET_INVALID');
+  });
+
+  it('requires the exact EGDS process relation tuple set', () => {
+    const catalog = emptyCatalog();
+    const relation = catalog.egdsFrameworkRelations.find(
+      ({ id }) => id === 'process-perception-rationalization',
+    );
+    expect(relation?.type).toBe('process-next');
+    if (relation?.type === 'process-next') relation.toId = 'deconstruction';
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain(
+      'EGDS_PROCESS_RELATION_SET_INVALID',
+    );
+  });
+
+  it('requires the exact EGDS Atlas link relation tuple set', () => {
+    const catalog = emptyCatalog();
+    const relation = catalog.egdsFrameworkRelations.find(({ id }) => id === 'link-innovation-atlas');
+    expect(relation?.type).toBe('links-to');
+    if (relation?.type === 'links-to') Object.assign(relation, { targetPath: 'map/' });
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toContain('EGDS_LINK_RELATION_SET_INVALID');
+  });
+
+  it('rejects entity placement on a non-container EGDS node', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.capabilities[0].frameworkNodeId = 'innovation-possibility-space';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_ENTITY_CONTAINER_INVALID',
+      collection: 'capabilities',
+      id: 'capability',
+      field: 'frameworkNodeId',
+      targetId: 'innovation-possibility-space',
+    });
+  });
+
+  it('reports a Capability placement that references a missing framework node', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.capabilities[0].frameworkNodeId = 'missing-framework-node';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'CAPABILITY_FRAMEWORK_NODE_MISSING',
+      collection: 'capabilities',
+      id: 'capability',
+      field: 'frameworkNodeId',
+      targetId: 'missing-framework-node',
+    });
+  });
+
+  it('reports a Knowledge Topic placement that references a missing framework node', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.knowledgeTopics[0].frameworkNodeId = 'missing-framework-node';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'KNOWLEDGE_TOPIC_FRAMEWORK_NODE_MISSING',
+      collection: 'knowledgeTopics',
+      id: 'knowledge-topic',
+      field: 'frameworkNodeId',
+      targetId: 'missing-framework-node',
+    });
+  });
+
   it('reports a capability with a missing domain', () => {
     const catalog = emptyCatalog();
     catalog.capabilities.push({
       id: 'playtesting',
       name: localized('Playtest'),
       summary: localized('通过观察验证设计判断。'),
+      frameworkNodeId: 'perception',
       domainId: 'missing-domain',
       position: { x: 10, y: 10 },
     } as Catalog['capabilities'][number]);
@@ -610,6 +732,7 @@ describe('validateCatalog', () => {
       id: 'playtesting',
       name: localized('Playtest'),
       summary: localized('通过观察验证设计判断。'),
+      frameworkNodeId: 'perception',
       domainId: 'iteration',
       position: { x: 10, y: 10 },
     });
@@ -954,6 +1077,7 @@ describe('validateCatalog', () => {
       id: 'second-capability',
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
+      frameworkNodeId: 'perception',
       domainId: 'domain',
       position: { x: 30, y: 30 },
     });
@@ -1016,6 +1140,7 @@ describe('validateCatalog', () => {
       id: 'capability',
       name: localized('能力'),
       summary: localized('示例能力。'),
+      frameworkNodeId: 'perception',
       domainId: 'domain',
       position: { x: 40, y: 40 },
     } as unknown as Catalog['capabilities'][number]);
@@ -1023,6 +1148,7 @@ describe('validateCatalog', () => {
       id: 'knowledge-topic',
       name: localized('知识议题'),
       summary: localized('示例议题。'),
+      frameworkNodeId: 'perception',
       domainId: 'domain',
       position: { x: 120, y: 10 },
     } as unknown as Catalog['knowledgeTopics'][number]);
@@ -1042,6 +1168,7 @@ describe('validateCatalog', () => {
       id: 'second-capability',
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
+      frameworkNodeId: 'perception',
       domainId: 'domain',
       position: { x: 30, y: 30 },
     } as unknown as Catalog['capabilities'][number]);
