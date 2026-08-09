@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+// @ts-expect-error The application tsconfig intentionally omits Node builtin declarations.
+import { readFileSync } from 'node:fs';
 
 import capabilities from '../../src/data/capabilities.json';
 import capabilityRelations from '../../src/data/capability-relations.json';
@@ -12,6 +14,8 @@ import {
   type BuildEgdsMapLayoutInput,
 } from '../../src/lib/map-geometry';
 import type { Catalog } from '../../src/lib/catalog/validate';
+
+const globalCssSource = readFileSync(new URL('../../src/styles/global.css', import.meta.url), 'utf8');
 
 const egdsInput = (overrides: Partial<BuildEgdsMapLayoutInput> = {}): BuildEgdsMapLayoutInput => ({
   frameworkNodes: frameworkNodes as unknown as Catalog['egdsFrameworkNodes'],
@@ -139,6 +143,27 @@ it('exports only EGDS geometry after the generic layout retirement', () => {
 
   for (const symbol of retiredSymbols) {
     expect.soft(mapGeometrySource, symbol).not.toContain(symbol);
+  }
+});
+
+it('does not ship retired generic map presentation selectors', () => {
+  const retiredSelectors = [
+    '.map-root-label',
+    '.map-group-label',
+    '.map-domain-label',
+    '#support-arrow',
+    ".map-relation[data-adjacent='true']",
+    '.capability-map__nodes',
+    '.map-node',
+    '.capability-map__text',
+    '.map-text-',
+    '.map-outline-group',
+    '.map-outline-region',
+    '.map-outline-node',
+  ];
+
+  for (const selector of retiredSelectors) {
+    expect.soft(globalCssSource.includes(selector), selector).toBe(false);
   }
 });
 

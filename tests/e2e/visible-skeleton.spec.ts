@@ -107,6 +107,26 @@ test('uses About as the project-materials entry point while preserving legacy do
   }
 });
 
+test('publishes the current EGDS entity semantics in the methodology', async ({ page }) => {
+  await page.goto('./project/methodology/');
+  const methodology = page.locator('article.prose');
+
+  await expect(methodology.getByText(
+    'EGDS Framework Node 承载 PlayWithExperiences 的作者方法结构；它不参与个人进度或 Career Lens。',
+    { exact: true },
+  )).toBeVisible();
+  await expect(methodology.getByText(
+    'Capability 描述可以通过实践逐步掌握的能力。',
+    { exact: true },
+  )).toBeVisible();
+  await expect(methodology.getByText(
+    'Knowledge Topic 描述用于理解背景、但不直接作为可实践能力的议题。',
+    { exact: true },
+  )).toBeVisible();
+  await expect(methodology).not.toContainText('Domain 组织');
+  await expect(methodology).toContainText('不是行业标准或资格认证');
+});
+
 test('makes three career lenses useful without creating a separate map', async ({ page }) => {
   await page.goto('./careers/');
 

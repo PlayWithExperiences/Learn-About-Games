@@ -4,9 +4,9 @@ Learn About Games 是一个可讨论、可修订的参考模型，不是行业�
 
 ## 区分实体
 
-- Domain 组织较大的知识区域。
-- Knowledge Topic 描述值得理解但不必直接表述为生产能力的议题。
+- EGDS Framework Node 承载 PlayWithExperiences 的作者方法结构；它不参与个人进度或 Career Lens。
 - Capability 描述可以通过实践逐步掌握的能力。
+- Knowledge Topic 描述用于理解背景、但不直接作为可实践能力的议题。
 - Practice 描述培养或应用能力的行动。
 - Role 与 Production Context 共同形成职业参考画像。
 - Source 是创作者、组织、频道或出版社；Resource 是一期视频、一场演讲、一篇文章、一本书或其他单项内容。
