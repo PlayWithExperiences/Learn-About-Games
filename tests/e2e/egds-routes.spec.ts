@@ -3,6 +3,35 @@ import resources from '../../src/data/resources.json' with { type: 'json' };
 
 const homeMapDescription = '从 PlayWithExperiences 的 EGDS 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
 const careerDescription = '用公开依据理解职业与生产语境如何参考 PlayWithExperiences 的 EGDS；它是一种可讨论的视角，不是唯一答案或评分。';
+const misleadingEgdsClaimPatterns = [
+  /EGDS\s*(?:是|作为)\s*(?:一种|一个)?\s*行业标准/i,
+  /EGDS\s*(?:是|规定|要求|提供|定义)\s*(?:一个|一种)?\s*必修顺序/i,
+  /EGDS\s*(?:是|提供|规定)\s*唯一(?:的)?\s*学习路径/i,
+  /EGDS\s*(?:提供|生成|用于)\s*(?:个人)?\s*评分/i,
+  /\bEGDS\s+is\s+(?:(?:an?|the)\s+)?industry\s+standard\b/i,
+  /\bEGDS\s+(?:is|defines|requires|provides)\s+(?:(?:an?|the)\s+)?required\s+(?:learning\s+)?sequence\b/i,
+  /\bEGDS\s+(?:is|defines|requires|provides)\s+(?:the\s+)?(?:only|sole)\s+learning\s+path\b/i,
+  /\bEGDS\s+(?:provides|generates|uses|is\s+used\s+for)\s+(?:a\s+)?(?:personal\s+)?(?:score|scoring)\b/i,
+];
+const containsMisleadingEgdsClaim = (copy: string) =>
+  misleadingEgdsClaimPatterns.some((pattern) => pattern.test(copy));
+
+test('detects bounded misleading EGDS claim variants without rejecting the approved disclaimer', () => {
+  for (const claim of [
+    'EGDS 是一种行业标准',
+    'EGDS 是唯一的学习路径',
+    'EGDS 提供个人评分',
+    'EGDS 要求必修顺序',
+    'EGDS is the industry standard',
+    'EGDS is the sole learning path',
+    'EGDS defines the required sequence',
+    'EGDS provides personal scoring',
+  ]) {
+    expect(containsMisleadingEgdsClaim(claim)).toBe(true);
+  }
+
+  expect(containsMisleadingEgdsClaim('它是一种可讨论的设计视角，不是唯一标准答案。')).toBe(false);
+});
 
 test('explains the map through the PlayWithExperiences EGDS framework', async ({ page }) => {
   const response = await page.goto('./map/');
@@ -57,28 +86,11 @@ test('keeps capability and topic detail routes while linking breadcrumbs to thei
 });
 
 test('does not portray EGDS as a standard, prescribed sequence, sole path, or score', async ({ page }) => {
-  const misleadingClaims = [
-    'EGDS 是行业标准',
-    'EGDS 规定必修顺序',
-    'EGDS 是唯一学习路径',
-    'EGDS 提供评分',
-    'EGDS 生成评分',
-    'EGDS is an industry standard',
-    'EGDS defines a required sequence',
-    'EGDS is the only learning path',
-    'EGDS provides a score',
-    'EGDS provides scoring',
-  ];
-
   for (const route of ['./', './map/', './careers/']) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
     const bodyCopy = await page.locator('body').innerText();
     const metaDescription = await page.locator('meta[name="description"]').getAttribute('content') ?? '';
-    const publicCopy = `${bodyCopy}\n${metaDescription}`.toLocaleLowerCase();
-
-    for (const claim of misleadingClaims) {
-      expect(publicCopy).not.toContain(claim.toLocaleLowerCase());
-    }
+    expect(containsMisleadingEgdsClaim(`${bodyCopy}\n${metaDescription}`)).toBe(false);
   }
 });
