@@ -334,6 +334,9 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         <output data-atlas-node-count>{nodeIndex.length} 个节点</output>
         <button type="button" data-atlas-search-clear disabled>清除搜索</button>
       </div>
+      <noscript>
+        <p class="script-required-note" data-atlas-node-index-no-js-note>启用 JavaScript 后可以搜索、排序和清除搜索；完整节点索引仍按时间列出。</p>
+      </noscript>
       <p class="atlas-node-index__empty" data-atlas-node-empty hidden>
         没有匹配节点。请清除搜索后查看全部节点。
       </p>

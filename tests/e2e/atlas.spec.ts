@@ -820,6 +820,9 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
   await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
   await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
+  await expect(nodeIndex.locator('[data-atlas-node-index-no-js-note]'))
+    .toHaveText('启用 JavaScript 后可以搜索、排序和清除搜索；完整节点索引仍按时间列出。');
+  await expect(nodeIndex.locator('[data-atlas-node-index-no-js-note]')).toBeVisible();
   const detail = page.locator('#atlas-relation-detail-super-metroid-and-sotn');
   await detail.locator('summary').click();
   const evidenceRef = detail.locator('[data-atlas-evidence-ref]').first();
@@ -846,6 +849,12 @@ test('320px no-JavaScript hides view controls and keeps the complete period outl
   await expect(controls).toBeHidden();
   for (const button of await controls.getByRole('button').all()) await expect(button).toBeDisabled();
   await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
+  const nodeIndex = page.locator('[data-atlas-node-index]');
+  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(27);
+  await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
+  await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
+  await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
+  await expect(nodeIndex.locator('[data-atlas-node-index-no-js-note]')).toBeVisible();
   const outline = page.locator('[data-atlas-mobile-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-atlas-era]')).toHaveCount(5);
