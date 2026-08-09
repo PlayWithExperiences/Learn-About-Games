@@ -12,22 +12,20 @@ test('renders independent local progress for every capability without an embedde
   await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
   await expect(page.locator('[data-role-marker]')).toHaveCount(0);
 
-  await page.getByRole('link', { name: '核心循环设计', exact: true }).click();
+  await page.goto('./capabilities/core-loop-design/');
   const firstProgress = page.getByLabel('个人学习状态');
   await expect(firstProgress).toBeEnabled();
   await firstProgress.selectOption('can-guide');
   await expect(page.locator('.progress-panel__current')).toHaveText('能够指导或评审他人');
 
-  await page.getByLabel('面包屑').getByRole('link', { name: '能力地图', exact: true }).click();
-  await page.getByRole('link', { name: '体验目标建构', exact: true }).click();
+  await page.goto('./capabilities/experience-framing/');
   const secondProgress = page.getByLabel('个人学习状态');
   await expect(secondProgress).toHaveValue('unseen');
   await secondProgress.selectOption('understood');
   await page.reload();
   await expect(secondProgress).toHaveValue('understood');
 
-  await page.getByLabel('面包屑').getByRole('link', { name: '能力地图', exact: true }).click();
-  await page.getByRole('link', { name: '核心循环设计', exact: true }).click();
+  await page.goto('./capabilities/core-loop-design/');
   await expect(page.getByLabel('个人学习状态')).toHaveValue('can-guide');
   await expect(page.locator('main')).not.toContainText(/\d+(?:\.\d+)?\s*(?:%|分)|\d+\s*\/\s*\d+/);
 });
@@ -38,9 +36,12 @@ test('keeps the complete map and personal record contract usable without JavaScr
 
   await page.goto('./map/');
   await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Playtest', exact: true })).toBeVisible();
   await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
-  const playtestNode = page.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');
+  const outline = page.locator('[data-egds-map] [data-egds-outline]');
+  for (const nodeId of ['from-plan-to-ship', 'playtest-evidence-iteration']) {
+    await outline.locator(`[data-outline-framework-node="${nodeId}"] > summary`).click();
+  }
+  const playtestNode = outline.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');
   await playtestNode.getByText('查看关系', { exact: true }).click();
   await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
   await expect(playtestNode.getByText('受到支持', { exact: true })).toBeVisible();

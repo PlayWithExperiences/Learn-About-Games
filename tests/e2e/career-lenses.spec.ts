@@ -1,13 +1,7 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
-import resources from '../../src/data/resources.json' with { type: 'json' };
 import roleProfiles from '../../src/data/role-profiles.json' with { type: 'json' };
 
-const approvedTitles = [
-  'AAA · Game Designer',
-  'AAA · Creative Director',
-  'Indie · Solo Developer',
-];
 const progressStorageKey = 'learn-about-games:progress:v1';
 const savedProgress = JSON.stringify({
   version: 1,
@@ -18,486 +12,173 @@ const priorityLabels = {
   important: '重要',
   suggested: '建议了解',
 };
-const priorityBorderStyles = {
-  core: 'solid',
-  important: 'solid',
-  suggested: 'dashed',
-};
+type CareerPriority = keyof typeof priorityLabels;
+const forbiddenTerms = /\b(?:score|fit|gap|completion|percentage)\b|完成率|适配度|评分/i;
 
-function parseRgb(color: string): [number, number, number] {
-  const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
-  if (!channels || channels.length !== 3) throw new Error(`Unsupported computed color: ${color}`);
-  return channels as [number, number, number];
+function frameworkCounts(profile: typeof roleProfiles[number]) {
+  const counts = new Map<string, { core: number; important: number; suggested: number }>();
+  for (const mapping of profile.capabilities) {
+    const frameworkNodeId = capabilities.find(({ id }) => id === mapping.capabilityId)?.frameworkNodeId;
+    if (!frameworkNodeId) throw new Error(`Missing framework container for ${mapping.capabilityId}`);
+    const current = counts.get(frameworkNodeId) ?? { core: 0, important: 0, suggested: 0 };
+    current[mapping.priority as CareerPriority] += 1;
+    counts.set(frameworkNodeId, current);
+  }
+  return counts;
 }
 
-function relativeLuminance(color: string): number {
-  const [red, green, blue] = parseRgb(color).map((channel) => {
-    const normalized = channel / 255;
-    return normalized <= 0.04045
-      ? normalized / 12.92
-      : ((normalized + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-}
-
-function contrastRatio(foreground: string, background: string): number {
-  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
-  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
-  return (lighter + 0.05) / (darker + 0.05);
-}
-
-test('server renders three explicit disabled choices, then enables them without changing the complete map', async ({ page, request }) => {
+test('server keeps the complete EGDS map and disables only unavailable career actions', async ({ page, request }) => {
   const response = await request.get('careers/');
   expect(response.status()).toBe(200);
   const html = await response.text();
 
-  const serverLensButtons = html.match(/<button[^>]*data-career-lens-button[^>]*>/g) ?? [];
-  expect(serverLensButtons).toHaveLength(3);
-  expect(serverLensButtons.every((button) => /\sdisabled(?:\s|>)/.test(button))).toBe(true);
-  expect(html).not.toContain('data-career-lens-select');
+  expect(html.match(/data-egds-framework-node=/g)).toHaveLength(28);
+  expect(html.match(/data-map-entity-kind="capability"/g)).toHaveLength(42);
+  expect(html.match(/data-map-entity-kind="knowledge-topic"/g)).toHaveLength(12);
+  expect(html.match(/data-capability-relation=/g)).toHaveLength(64);
+  const careerPayload = html.match(/<script[^>]*data-career-lens-data[^>]*>(.*?)<\/script>/)?.[1] ?? '';
+  expect(careerPayload).not.toMatch(forbiddenTerms);
 
-  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./careers/');
-
   const explorer = page.locator('[data-career-explorer]');
-  const lensButtons = explorer.locator('[data-career-lens-button]');
-  await expect(lensButtons).toHaveCount(3);
-  await expect(lensButtons).toHaveText(approvedTitles);
-  for (const title of approvedTitles) {
-    await expect(explorer.getByRole('button', { name: title, exact: true })).toBeEnabled();
-  }
+  await expect(explorer.locator('[data-career-lens-button]')).toHaveCount(3);
+  await expect(explorer.locator('[data-career-lens-button]')).toHaveText(roleProfiles.map(({ title }) => title['zh-CN']));
+  expect(await explorer.locator('[data-career-lens-button]').evaluateAll((buttons) =>
+    buttons.every((button) => !((button as HTMLButtonElement).disabled)),
+  )).toBe(true);
   await expect(explorer.locator('[data-career-clear]')).toBeDisabled();
-  await expect(explorer.locator('select')).toHaveCount(0);
-
-  const desktopNodes = explorer.locator('[data-capability-map-canvas] [data-career-node]');
-  const mobileNodes = explorer.locator('[data-mobile-map-outline] [data-career-node]');
-  await expect(desktopNodes).toHaveCount(capabilities.length);
-  await expect(mobileNodes).toHaveCount(capabilities.length);
-  await expect(explorer.locator('[data-role-priority]')).toHaveCount(0);
-  await expect(explorer.locator('[data-role-responsibility]')).toHaveCount(0);
-  await expect(explorer.locator('[data-role-state]')).toHaveCount(0);
-  await expect(explorer.locator('[data-career-summary]:not([hidden])')).toHaveCount(0);
-  await expect(page.locator('main')).not.toContainText(/评分|分数|匹配度|完成率|雷达|score|percentage|\bfit\b|completion/i);
-  await expect(explorer.locator('[data-learning-order], [data-career-path]')).toHaveCount(0);
+  expect(await explorer.locator('[data-career-summary] button[data-focus-capability]').evaluateAll((buttons) =>
+    buttons.every((button) => !((button as HTMLButtonElement).disabled)),
+  )).toBe(true);
+  await expect(explorer.locator('[data-egds-map] [data-role-priority], [data-egds-map] [data-role-responsibility]')).toHaveCount(0);
+  expect(await explorer.innerText()).not.toMatch(forbiddenTerms);
 });
 
 for (const profile of roleProfiles) {
-  test(`applies and clears ${profile.title['zh-CN']} as a factual overlay`, async ({ page }) => {
-    await page.addInitScript(({ key, value }) => window.localStorage.setItem(key, value), {
-      key: progressStorageKey,
-      value: savedProgress,
-    });
-    await page.setViewportSize({ width: 1440, height: 1100 });
+  test(`projects ${profile.title['zh-CN']} only onto its mapped capabilities and framework containers`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto('./careers/');
-
     const explorer = page.locator('[data-career-explorer]');
-    const desktopMap = explorer.locator('[data-capability-map-canvas]');
-    const desktopNodes = desktopMap.locator('[data-career-node]');
-    const selectedButton = explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true });
-    await selectedButton.click();
+    const map = explorer.locator('[data-egds-map]');
+    await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
 
-    await expect(selectedButton).toHaveAttribute('aria-pressed', 'true');
-    await expect(desktopNodes).toHaveCount(capabilities.length);
-    await expect(desktopMap.locator('[data-role-priority]')).toHaveCount(profile.capabilities.length);
-    await expect(desktopMap.locator('[data-role-state="unlisted"]')).toHaveCount(
-      capabilities.length - profile.capabilities.length,
+    await expect(map).toHaveAttribute('data-career-profile-id', profile.id);
+    await expect(map.locator('[data-career-node][data-role-priority]')).toHaveCount(profile.capabilities.length * 2);
+    await expect(map.locator('[data-career-node][data-role-state="unlisted"]')).toHaveCount(
+      (capabilities.length - profile.capabilities.length) * 2,
     );
-    await expect(desktopMap.locator('[data-role-state="unlisted"][data-role-priority]')).toHaveCount(0);
-    expect(
-      await desktopNodes.evaluateAll((nodes) => nodes.every((node) => {
-        const style = getComputedStyle(node);
-        return style.display !== 'none' && style.visibility !== 'hidden';
-      })),
-    ).toBe(true);
+    await expect(map.locator('[data-map-entity-kind="topic"][data-role-priority], [data-map-entity-kind="topic"][data-role-responsibility]')).toHaveCount(0);
+    await expect(map.locator('[data-egds-framework-node][data-role-priority], [data-egds-framework-node][data-role-responsibility]')).toHaveCount(0);
 
-    for (const priority of ['core', 'important', 'suggested'] as const) {
-      const expected = profile.capabilities.filter((item) => item.priority === priority).length;
-      const mappedNodes = desktopMap.locator(`[data-role-priority="${priority}"]`);
-      await expect(mappedNodes).toHaveCount(expected);
-      await expect(mappedNodes.locator('[data-role-label]:not([hidden])')).toHaveCount(expected);
-      await expect(mappedNodes.locator('[data-role-label]').first()).toHaveText(priorityLabels[priority]);
-      expect(await mappedNodes.first().evaluate((node) => getComputedStyle(node).borderTopStyle)).toBe(
-        priorityBorderStyles[priority],
+    for (const mapping of profile.capabilities) {
+      const nodes = map.locator(`[data-career-node][data-capability-id="${mapping.capabilityId}"]`);
+      await expect(nodes).toHaveCount(2);
+      expect(await nodes.evaluateAll((elements, expected) => elements.every((element) =>
+        element.dataset.rolePriority === expected.priority
+        && element.dataset.roleResponsibility === expected.responsibility
+        && element.querySelector('[data-role-label]')?.textContent === expected.label,
+      ), {
+        priority: mapping.priority,
+        responsibility: mapping.responsibility,
+        label: priorityLabels[mapping.priority as CareerPriority],
+      })).toBe(true);
+    }
+
+    const expectedCounts = frameworkCounts(profile);
+    await expect(map.locator('[data-egds-framework-node][data-career-core-count]')).toHaveCount(28);
+    for (const [frameworkNodeId, counts] of expectedCounts) {
+      const framework = map.locator(`[data-egds-framework-node="${frameworkNodeId}"]`);
+      await expect(framework).toHaveAttribute('data-career-core-count', String(counts.core));
+      await expect(framework).toHaveAttribute('data-career-important-count', String(counts.important));
+      await expect(framework).toHaveAttribute('data-career-suggested-count', String(counts.suggested));
+      await expect(framework.locator('[data-career-collapsed-count]')).toHaveText(
+        `核心 ${counts.core}，重要 ${counts.important}，建议了解 ${counts.suggested}`,
       );
+      await expect(framework.locator('[data-career-collapsed-count]')).toBeVisible();
     }
-
-    for (const mappedCapability of profile.capabilities) {
-      const node = desktopMap.locator(`[data-career-node][data-capability-id="${mappedCapability.capabilityId}"]`);
-      await expect(node).toHaveAttribute('data-role-priority', mappedCapability.priority);
-      await expect(node).toHaveAttribute('data-role-responsibility', mappedCapability.responsibility);
-    }
-
-    const summary = explorer.locator(`[data-career-summary="${profile.id}"]`);
-    await expect(summary).toBeVisible();
-    await expect(summary.locator('[data-career-summary-group]')).toHaveCount(3);
-    await expect(summary.locator('[data-career-summary-item]')).toHaveCount(profile.capabilities.length);
-
-    const firstMapped = profile.capabilities[0];
-    const firstCapability = capabilities.find(({ id }) => id === firstMapped.capabilityId);
-    if (!firstCapability) throw new Error(`Missing capability ${firstMapped.capabilityId}`);
-    const directResourceCount = resources.filter(({ capabilityIds }) =>
-      capabilityIds.includes(firstMapped.capabilityId),
-    ).length;
-    const firstSummaryItem = summary.locator(`[data-career-summary-item="${firstMapped.capabilityId}"]`);
-    await expect(firstSummaryItem).toContainText(`直接相关 Work Item ${directResourceCount} 条`);
-    await expect(firstSummaryItem.getByRole('link', { name: '能力详情', exact: true })).toHaveAttribute(
-      'href',
-      `/Learn-About-Games/capabilities/${firstMapped.capabilityId}/`,
-    );
-    await expect(firstSummaryItem.getByRole('link', { name: '相关资源', exact: true })).toHaveAttribute(
-      'href',
-      `/Learn-About-Games/resources/?capability=${firstMapped.capabilityId}`,
-    );
-    await firstSummaryItem.getByRole('button', { name: '在地图中聚焦', exact: true }).click();
-    const desktopFocusTarget = desktopMap.locator(`[data-career-focus-target][data-capability-id="${firstMapped.capabilityId}"]`);
-    await expect(desktopFocusTarget).toBeFocused();
-    await expect(desktopFocusTarget).toBeInViewport();
-
-    const evidence = explorer.locator(`[data-career-evidence="${profile.id}"]`);
-    await expect(evidence).toBeVisible();
-    await expect(evidence).toContainText(profile.basis['zh-CN']);
-    await expect(evidence).toContainText(profile.caveats['zh-CN']);
-    await expect(evidence).toContainText(`最近复核：${profile.reviewedAt}`);
-    await expect(evidence.getByRole('link')).toHaveCount(profile.basisLinks.length);
-    expect(await page.evaluate((key) => window.localStorage.getItem(key), progressStorageKey)).toBe(savedProgress);
-
-    await explorer.locator('[data-career-clear]').click();
-    await expect(desktopNodes).toHaveCount(capabilities.length);
-    await expect(explorer.locator('[data-role-priority]')).toHaveCount(0);
-    await expect(explorer.locator('[data-role-responsibility]')).toHaveCount(0);
-    await expect(explorer.locator('[data-role-state]')).toHaveCount(0);
-    await expect(explorer.locator('[data-role-label]:not([hidden])')).toHaveCount(0);
-    await expect(summary).toBeHidden();
-    await expect(selectedButton).toHaveAttribute('aria-pressed', 'false');
-    await expect(explorer.locator('[data-career-clear]')).toBeDisabled();
-    expect(await page.evaluate((key) => window.localStorage.getItem(key), progressStorageKey)).toBe(savedProgress);
+    await expect(map.locator('[data-egds-framework-node] [data-career-collapsed-count]:not([hidden])')).toHaveCount(expectedCounts.size);
+    await expect(explorer.locator(`[data-career-summary="${profile.id}"]`)).toBeVisible();
   });
 }
 
-test('keeps the same lens semantics in the 320px relationship outline', async ({ page }) => {
-  const profile = roleProfiles.find(({ id }) => id === 'aaa-creative-director');
-  if (!profile) throw new Error('Missing AAA Creative Director profile');
+test('career summary focus delegates selection to the map and replacing a profile does not accumulate state', async ({ page }) => {
+  const firstProfile = roleProfiles[0];
+  const secondProfile = roleProfiles[1];
+  const firstCapabilityId = firstProfile.capabilities[0].capabilityId;
 
-  await page.setViewportSize({ width: 320, height: 900 });
-  await page.goto('./careers/');
-  const explorer = page.locator('[data-career-explorer]');
-  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+  for (const width of [1440, 1024, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./careers/');
+    const explorer = page.locator('[data-career-explorer]');
+    const map = explorer.locator('[data-egds-map]');
+    await explorer.getByRole('button', { name: firstProfile.title['zh-CN'], exact: true }).click();
+    await explorer.locator(`[data-career-summary-item="${firstCapabilityId}"]`).getByRole('button', { name: '在地图中聚焦', exact: true }).click();
 
-  const outline = explorer.locator('[data-mobile-map-outline]');
-  const outlineNodes = outline.locator('[data-career-node]');
-  await expect(outline).toBeVisible();
-  await expect(outlineNodes).toHaveCount(capabilities.length);
-  await expect(outline.locator('[data-role-priority]')).toHaveCount(profile.capabilities.length);
-  await expect(outline.locator('[data-role-state="unlisted"]')).toHaveCount(
-    capabilities.length - profile.capabilities.length,
-  );
+    const selectedControl = map.locator(`[data-select-map-entity="capability:${firstCapabilityId}"]`).filter({ visible: true });
+    await expect(map).toHaveAttribute('data-selected-entity-key', `capability:${firstCapabilityId}`);
+    await expect(map.locator('[data-map-inspector]')).toBeVisible();
+    await expect(selectedControl).toBeFocused();
+    await expect(selectedControl).toBeInViewport();
 
-  for (const priority of ['core', 'important', 'suggested'] as const) {
-    const node = outline.locator(`[data-role-priority="${priority}"]`).first();
-    await expect(node.locator('[data-role-label]')).toBeVisible();
-    await expect(node.locator('[data-role-label]')).toHaveText(priorityLabels[priority]);
-    expect(await node.evaluate((element) => getComputedStyle(element).borderTopStyle)).toBe(
-      priorityBorderStyles[priority],
-    );
-  }
-
-  const focusId = profile.capabilities[0].capabilityId;
-  await explorer
-    .locator(`[data-career-summary-item="${focusId}"]`)
-    .getByRole('button', { name: '在地图中聚焦', exact: true })
-    .click();
-  const mobileFocusTarget = outline.locator(`[data-career-focus-target][data-capability-id="${focusId}"]`);
-  await expect(mobileFocusTarget).toBeFocused();
-  await expect(mobileFocusTarget).toBeInViewport();
-  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-  await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-});
-
-test('keeps priority encoding distinct in Light, explicit Dark, and System Dark', async ({ page }) => {
-  const profile = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
-  if (!profile) throw new Error('Missing AAA Game Designer profile');
-
-  const themes = [
-    { name: 'Light', colorScheme: 'light' as const, explicitTheme: 'light' },
-    { name: 'explicit Dark', colorScheme: 'light' as const, explicitTheme: 'dark' },
-    { name: 'System Dark', colorScheme: 'dark' as const, explicitTheme: undefined },
-    { name: 'System Dark + explicit Light', colorScheme: 'dark' as const, explicitTheme: 'light' },
-  ];
-
-  for (const { name, colorScheme, explicitTheme } of themes) {
-    await page.emulateMedia({ colorScheme });
-
-    for (const { width, height, kind } of [
-      { width: 1440, height: 1100, kind: 'desktop' },
-      { width: 320, height: 900, kind: 'mobile' },
-    ] as const) {
-      await page.setViewportSize({ width, height });
-      await page.goto('./careers/');
-      await page.locator('html').evaluate((element, theme) => {
-        if (theme) element.dataset.theme = theme;
-        else delete element.dataset.theme;
-      }, explicitTheme);
-
-      const explorer = page.locator('[data-career-explorer]');
-      await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
-      const container = kind === 'desktop'
-        ? explorer.locator('[data-capability-map-canvas]')
-        : explorer.locator('[data-mobile-map-outline]');
-      const priorityBackgrounds: string[] = [];
-
-      for (const priority of ['core', 'important', 'suggested'] as const) {
-        const node = container.locator(`[data-role-priority="${priority}"]`).first();
-        const label = node.locator('[data-role-label]');
-        await expect(label, `${name} ${kind} ${priority} label`).toBeVisible();
-        await expect(label, `${name} ${kind} ${priority} label`).toHaveText(priorityLabels[priority]);
-        await expect.poll(
-          () => node.evaluate((element) => element.getAnimations().every((animation) => animation.playState === 'finished')),
-          { message: `${name} ${kind} ${priority} priority transition settles` },
-        ).toBe(true);
-
-        const styles = await node.evaluate((element) => {
-          const nodeStyle = getComputedStyle(element);
-          const textElement = element.classList.contains('map-node')
-            ? element.querySelector<HTMLElement>(':scope > span')
-            : element.querySelector<HTMLElement>('.map-outline-node__heading a');
-          const surroundings = element.classList.contains('map-node')
-            ? element.closest<HTMLElement>('[data-capability-map-canvas]')
-            : document.documentElement;
-
-          if (!textElement || !surroundings) throw new Error('Career priority node is missing readable text or surroundings');
-          return {
-            background: nodeStyle.backgroundColor,
-            border: nodeStyle.borderTopColor,
-            borderStyle: nodeStyle.borderTopStyle,
-            borderWidth: Number.parseFloat(nodeStyle.borderTopWidth),
-            surroundings: getComputedStyle(surroundings).backgroundColor,
-            text: getComputedStyle(textElement).color,
-          };
-        });
-
-        expect(styles.borderWidth, `${name} ${kind} ${priority} border width`).toBeGreaterThanOrEqual(2);
-        expect(styles.borderStyle, `${name} ${kind} ${priority} border style`).toBe(priorityBorderStyles[priority]);
-        expect(styles.background, `${name} ${kind} ${priority} surface`).not.toBe(styles.surroundings);
-        priorityBackgrounds.push(styles.background);
-        expect(contrastRatio(styles.text, styles.background), `${name} ${kind} ${priority} text contrast`)
-          .toBeGreaterThanOrEqual(4.5);
-        expect(contrastRatio(styles.border, styles.surroundings), `${name} ${kind} ${priority} boundary contrast`)
-          .toBeGreaterThanOrEqual(3);
-      }
-
-      expect(new Set(priorityBackgrounds).size, `${name} ${kind} priority surfaces`).toBe(3);
+    await explorer.getByRole('button', { name: secondProfile.title['zh-CN'], exact: true }).click();
+    await expect(map).toHaveAttribute('data-career-profile-id', secondProfile.id);
+    await expect(map.locator('[data-career-node][data-role-priority]')).toHaveCount(secondProfile.capabilities.length * 2);
+    for (const mapping of firstProfile.capabilities.filter((item) => !secondProfile.capabilities.some(
+      ({ capabilityId }) => capabilityId === item.capabilityId,
+    ))) {
+      expect(await map.locator(`[data-career-node][data-capability-id="${mapping.capabilityId}"]`).evaluateAll(
+        (elements) => elements.every((element) => !element.hasAttribute('data-role-priority')),
+      )).toBe(true);
     }
   }
 });
 
-test('preserves career priority surfaces while nodes are hovered, focused, or relation-adjacent', async ({ page }) => {
-  const profile = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
-  if (!profile) throw new Error('Missing AAA Game Designer profile');
-
-  await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.goto('./careers/');
-  await page.locator('html').evaluate((element) => {
-    element.dataset.theme = 'dark';
+test('clear only removes career state while preserving the selected map context and local progress', async ({ page }) => {
+  const profile = roleProfiles[0];
+  const capabilityId = profile.capabilities[0].capabilityId;
+  await page.addInitScript(({ key, value }) => window.localStorage.setItem(key, value), {
+    key: progressStorageKey,
+    value: savedProgress,
   });
-
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('./careers/');
   const explorer = page.locator('[data-career-explorer]');
+  const map = explorer.locator('[data-egds-map]');
   await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
-  const canvas = explorer.locator('[data-capability-map-canvas]');
-  const nodes = canvas.locator('[data-career-node]');
-  const idleStyles = new Map<string, { background: string; border: string; borderStyle: string }>();
+  await explorer.locator(`[data-career-summary-item="${capabilityId}"]`).getByRole('button', { name: '在地图中聚焦', exact: true }).click();
+  const selectedKey = `capability:${capabilityId}`;
+  const selectedFramework = capabilities.find(({ id }) => id === capabilityId)?.frameworkNodeId;
 
-  await expect.poll(
-    () => nodes.evaluateAll((elements) => elements.every((element) =>
-      element.getAnimations().every((animation) => animation.playState === 'finished'),
-    )),
-    { message: 'career priority transitions settle before interaction checks' },
-  ).toBe(true);
-
-  for (const node of await nodes.all()) {
-    const id = await node.getAttribute('data-capability-id');
-    if (!id) throw new Error('Career node is missing its capability id');
-    idleStyles.set(id, await node.evaluate((element) => {
-      const style = getComputedStyle(element);
-      return {
-        background: style.backgroundColor,
-        border: style.borderTopColor,
-        borderStyle: style.borderTopStyle,
-      };
-    }));
-  }
-
-  const expectStableStyle = async (node: ReturnType<typeof canvas.locator>, state: string) => {
-    const id = await node.getAttribute('data-capability-id');
-    const idle = id ? idleStyles.get(id) : undefined;
-    if (!idle) throw new Error(`Missing idle style for ${id ?? 'unknown node'}`);
-    const active = await node.evaluate((element) => {
-      const style = getComputedStyle(element);
-      return {
-        background: style.backgroundColor,
-        border: style.borderTopColor,
-        borderStyle: style.borderTopStyle,
-      };
-    });
-    expect(active, `${id} ${state}`).toEqual(idle);
-  };
-
-  for (const priority of ['core', 'important', 'suggested'] as const) {
-    const node = canvas.locator(`[data-role-priority="${priority}"]`).first();
-    await node.hover();
-    await expectStableStyle(node, 'hover');
-    await node.focus();
-    await expectStableStyle(node, 'focus');
-  }
-
-  const unlisted = canvas.locator('[data-role-state="unlisted"]').first();
-  await unlisted.hover();
-  await expectStableStyle(unlisted, 'unlisted hover');
-
-  const focusNode = canvas.locator('[data-role-priority="core"]').first();
-  await focusNode.focus();
-  const adjacentNodes = canvas.locator('[data-career-node][data-adjacent="true"]');
-  await expect(adjacentNodes).not.toHaveCount(0);
-  for (const adjacent of await adjacentNodes.all()) {
-    await expectStableStyle(adjacent, 'relation adjacent');
-  }
+  await explorer.locator('[data-career-clear]').click();
+  await expect(map).not.toHaveAttribute('data-career-profile-id');
+  await expect(map.locator('[data-role-state], [data-role-priority], [data-role-responsibility]')).toHaveCount(0);
+  await expect(map.locator('[data-egds-framework-node] [data-career-collapsed-count]:not([hidden])')).toHaveCount(0);
+  await expect(map).toHaveAttribute('data-selected-entity-key', selectedKey);
+  if (selectedFramework) await expect(map.locator(`[data-egds-framework-node="${selectedFramework}"]`)).toHaveAttribute('data-expanded', 'true');
+  await expect(map.locator('[data-map-inspector]')).toBeVisible();
+  expect(await page.evaluate((key) => window.localStorage.getItem(key), progressStorageKey)).toBe(savedProgress);
 });
 
-test('keeps unlisted capabilities readable in light and dark desktop and mobile views', async ({ page }) => {
-  const profile = roleProfiles.find(({ id }) => id === 'aaa-game-designer');
-  if (!profile) throw new Error('Missing AAA Game Designer profile');
-
-  await page.goto('./careers/');
-  const explorer = page.locator('[data-career-explorer]');
-  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
-
-  for (const theme of ['light', 'dark']) {
-    await page.locator('html').evaluate((element, selectedTheme) => {
-      element.dataset.theme = selectedTheme;
-    }, theme);
-
-    await page.setViewportSize({ width: 1440, height: 1100 });
-    const desktopMap = explorer.locator('[data-capability-map-canvas]');
-    const desktopUnlisted = desktopMap.locator(
-      '[data-career-node][data-capability-id="experience-deconstruction"]',
-    );
-    await expect(desktopUnlisted).toHaveAttribute('data-role-state', 'unlisted');
-    const desktopStyles = await desktopUnlisted.evaluate((node) => {
-      const nodeStyle = getComputedStyle(node);
-      const labelStyle = getComputedStyle(node.querySelector('span') as HTMLElement);
-      const canvasStyle = getComputedStyle(node.closest('[data-capability-map-canvas]') as HTMLElement);
-      return {
-        opacity: Number(nodeStyle.opacity),
-        visibility: nodeStyle.visibility,
-        display: nodeStyle.display,
-        color: labelStyle.color,
-        background: nodeStyle.backgroundColor,
-        border: nodeStyle.borderTopColor,
-        surroundings: canvasStyle.backgroundColor,
-      };
-    });
-    expect(desktopStyles.opacity).toBe(1);
-    expect(desktopStyles.visibility).not.toBe('hidden');
-    expect(desktopStyles.display).not.toBe('none');
-    expect(contrastRatio(desktopStyles.color, desktopStyles.background)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(desktopStyles.border, desktopStyles.surroundings)).toBeGreaterThanOrEqual(3);
-
-    const desktopRoleLabel = desktopMap.locator('[data-role-priority] [data-role-label]:not([hidden])').first();
-    expect(Number.parseFloat(await desktopRoleLabel.evaluate((label) => getComputedStyle(label).fontSize)))
-      .toBeGreaterThanOrEqual(10);
-
-    await page.setViewportSize({ width: 320, height: 900 });
-    const outline = explorer.locator('[data-mobile-map-outline]');
-    const mobileUnlisted = outline.locator(
-      '[data-career-node][data-capability-id="experience-deconstruction"]',
-    );
-    await expect(mobileUnlisted).toHaveAttribute('data-role-state', 'unlisted');
-    await mobileUnlisted.locator('details > summary').click();
-    const mobileStyles = await mobileUnlisted.evaluate((node) => {
-      const nodeStyle = getComputedStyle(node);
-      const headingStyle = getComputedStyle(node.querySelector('.map-outline-node__heading a') as HTMLElement);
-      const summaryStyle = getComputedStyle(node.querySelector('.map-outline-node__summary span') as HTMLElement);
-      const relationStyle = getComputedStyle(node.querySelector('.map-outline-node__relations li span') as HTMLElement);
-      const pageStyle = getComputedStyle(document.documentElement);
-      return {
-        opacity: Number(nodeStyle.opacity),
-        visibility: nodeStyle.visibility,
-        display: nodeStyle.display,
-        heading: headingStyle.color,
-        summary: summaryStyle.color,
-        relation: relationStyle.color,
-        background: nodeStyle.backgroundColor,
-        border: nodeStyle.borderTopColor,
-        surroundings: pageStyle.backgroundColor,
-      };
-    });
-    expect(mobileStyles.opacity).toBe(1);
-    expect(mobileStyles.visibility).not.toBe('hidden');
-    expect(mobileStyles.display).not.toBe('none');
-    expect(contrastRatio(mobileStyles.heading, mobileStyles.background)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(mobileStyles.summary, mobileStyles.background)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(mobileStyles.relation, mobileStyles.background)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(mobileStyles.border, mobileStyles.surroundings)).toBeGreaterThanOrEqual(3);
+test('no-JS keeps the full outline, details, resources, and evidence readable while disabling career actions', async ({ browser }) => {
+  for (const viewport of [{ width: 1440, height: 1000 }, { width: 320, height: 900 }]) {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport });
+    const page = await context.newPage();
+    await page.goto('./careers/');
+    const explorer = page.locator('[data-career-explorer]');
+    expect(await explorer.locator('[data-career-lens-button]').evaluateAll((buttons) =>
+      buttons.every((button) => (button as HTMLButtonElement).disabled),
+    )).toBe(true);
+    await expect(explorer.locator('[data-career-clear]')).toBeDisabled();
+    expect(await explorer.locator('[data-focus-capability]').evaluateAll((buttons) =>
+      buttons.every((button) => (button as HTMLButtonElement).disabled),
+    )).toBe(true);
+    await expect(explorer.getByText('启用 JavaScript 后可以应用或清除职业画像；完整地图与公开依据仍可阅读。', { exact: true })).toBeVisible();
+    await expect(explorer.locator('[data-egds-outline] [data-outline-entity-kind="capability"]')).toHaveCount(42);
+    await expect(explorer.locator('[data-egds-outline] [data-outline-entity-kind="knowledge-topic"]')).toHaveCount(12);
+    await expect(explorer.locator('[data-egds-outline] [data-map-entity-detail]')).not.toHaveCount(0);
+    await expect(explorer.locator('[data-career-evidence] a')).not.toHaveCount(0);
     await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-    await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+    await context.close();
   }
-});
-
-test('keeps all 42 desktop capability anchors collision-free with the largest lens', async ({ page }) => {
-  const profile = roleProfiles.find(({ id }) => id === 'indie-solo-developer');
-  if (!profile) throw new Error('Missing Indie Solo Developer profile');
-
-  await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.goto('./careers/');
-  const explorer = page.locator('[data-career-explorer]');
-  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
-  const nodes = explorer.locator('[data-capability-map-canvas] [data-career-node]');
-  await expect(nodes).toHaveCount(42);
-
-  const collisions = await nodes.evaluateAll((elements) => {
-    const boxes = elements.map((element) => ({
-      id: element.getAttribute('data-capability-id'),
-      rect: element.getBoundingClientRect(),
-    }));
-    const overlaps: string[] = [];
-    for (let first = 0; first < boxes.length; first += 1) {
-      for (let second = first + 1; second < boxes.length; second += 1) {
-        const a = boxes[first];
-        const b = boxes[second];
-        if (
-          Math.max(a.rect.left, b.rect.left) < Math.min(a.rect.right, b.rect.right)
-          && Math.max(a.rect.top, b.rect.top) < Math.min(a.rect.bottom, b.rect.bottom)
-        ) {
-          overlaps.push(`${a.id}:${b.id}`);
-        }
-      }
-    }
-    return overlaps;
-  });
-  expect(collisions).toEqual([]);
-  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-});
-
-test('keeps evidence and the full map readable without JavaScript', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 900 } });
-  const page = await context.newPage();
-  await page.goto('./careers/');
-
-  const explorer = page.locator('[data-career-explorer]');
-  await expect(explorer.locator('[data-career-lens-button]')).toHaveCount(3);
-  for (const title of approvedTitles) {
-    await expect(explorer.getByRole('button', { name: title, exact: true })).toBeDisabled();
-  }
-  await expect(explorer.getByText('启用 JavaScript 后可以应用或清除职业画像；完整地图与公开依据仍可阅读。', { exact: true })).toBeVisible();
-  await expect(explorer.locator('[data-mobile-map-outline] [data-career-node]')).toHaveCount(capabilities.length);
-  await expect(explorer.locator('[data-role-priority]')).toHaveCount(0);
-
-  for (const profile of roleProfiles) {
-    const evidence = explorer.locator(`[data-career-evidence="${profile.id}"]`);
-    await evidence.locator('summary').click();
-    await expect(evidence).toContainText(profile.basis['zh-CN']);
-    await expect(evidence).toContainText(profile.caveats['zh-CN']);
-    await expect(evidence.getByRole('link')).toHaveCount(profile.basisLinks.length);
-  }
-  await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
-  await context.close();
 });

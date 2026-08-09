@@ -39,13 +39,40 @@ describe('career-lens data', () => {
 });
 
 describe('projectCareerLens', () => {
-  it('projects every map capability without scores, paths, or personal progress', () => {
+  it('counts each mapped capability once inside its framework container for every profile', () => {
+    for (const profile of roleProfiles) {
+      const result = projectCareerLens(capabilities, profile as Parameters<typeof projectCareerLens>[1]);
+      const expectedFrameworkNodeIds = new Set<string>();
+      let total = 0;
+
+      for (const mapping of profile.capabilities) {
+        const capability = capabilities.find(({ id }) => id === mapping.capabilityId);
+        if (!capability) throw new Error(`Missing capability ${mapping.capabilityId}`);
+        expectedFrameworkNodeIds.add(capability.frameworkNodeId);
+        total += 1;
+        expect(result.nodes).toContainEqual({
+          capabilityId: capability.id,
+          priority: mapping.priority,
+          responsibility: mapping.responsibility,
+        });
+      }
+
+      expect(Object.keys(result.frameworkCounts).sort()).toEqual([...expectedFrameworkNodeIds].sort());
+      expect(Object.values(result.frameworkCounts).reduce(
+        (sum, counts) => sum + counts.core + counts.important + counts.suggested,
+        0,
+      )).toBe(total);
+      expect(result.nodes.every(({ capabilityId }) => capabilities.some(({ id }) => id === capabilityId))).toBe(true);
+    }
+  });
+
+  it('projects every map capability and mapped framework containers without scores, paths, or personal progress', () => {
     const profile = roleProfiles.find(({ id }) => id === 'aaa-creative-director');
     expect(profile).toBeDefined();
 
     const result = projectCareerLens(capabilities, profile! as Parameters<typeof projectCareerLens>[1]);
 
-    expect(Object.keys(result).sort()).toEqual(['groups', 'nodes', 'profile']);
+    expect(Object.keys(result).sort()).toEqual(['frameworkCounts', 'groups', 'nodes', 'profile']);
     expect(result.nodes).toHaveLength(capabilities.length);
     expect(result.nodes.map(({ capabilityId }) => capabilityId).sort()).toEqual(
       capabilities.map(({ id }) => id).sort(),
@@ -60,6 +87,24 @@ describe('projectCareerLens', () => {
       priority: 'core',
       responsibility: 'direct',
     });
+    const mappedCapabilities = capabilities.filter((capability) =>
+      profile!.capabilities.some(({ capabilityId }) => capabilityId === capability.id),
+    );
+    expect(Object.keys(result.frameworkCounts).sort()).toEqual(
+      [...new Set(mappedCapabilities.map(({ frameworkNodeId }) => frameworkNodeId))].sort(),
+    );
+    expect(
+      Object.values(result.frameworkCounts).reduce(
+        (total, counts) => total + counts.core + counts.important + counts.suggested,
+        0,
+      ),
+    ).toBe(profile!.capabilities.length);
+    for (const capability of profile!.capabilities) {
+      const frameworkNodeId = capabilities.find(({ id }) => id === capability.capabilityId)?.frameworkNodeId;
+      if (!frameworkNodeId) throw new Error(`Missing framework container for ${capability.capabilityId}`);
+      expect(result.frameworkCounts[frameworkNodeId][capability.priority as keyof typeof result.frameworkCounts[string]])
+        .toBeGreaterThan(0);
+    }
     expect(Object.keys(result.profile).sort()).toEqual([
       'basisLinks',
       'id',

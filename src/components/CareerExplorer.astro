@@ -5,8 +5,6 @@ import { sitePath } from '../lib/site-path';
 import type { Catalog } from '../lib/catalog/validate';
 
 interface Props {
-  mapGroups: Catalog['mapGroups'];
-  domains: Catalog['domains'];
   egdsFrameworkNodes: Catalog['egdsFrameworkNodes'];
   egdsFrameworkRelations: Catalog['egdsFrameworkRelations'];
   capabilities: Catalog['capabilities'];
@@ -197,61 +195,29 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
 
   const explorer = document.querySelector<HTMLElement>('[data-career-explorer]');
   const payloadElement = explorer?.querySelector<HTMLScriptElement>('[data-career-lens-data]');
+  const mapRoot = explorer?.querySelector<HTMLElement>('[data-egds-map]');
 
-  if (explorer && payloadElement) {
+  if (explorer && payloadElement && mapRoot) {
     const projections = JSON.parse(payloadElement.textContent ?? '[]') as CareerProjection[];
     const lensButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-career-lens-button]'));
     const clearButton = explorer.querySelector<HTMLButtonElement>('[data-career-clear]');
     const status = explorer.querySelector<HTMLElement>('[data-career-status]');
-    const careerNodes = Array.from(explorer.querySelectorAll<HTMLElement>('[data-career-node]'));
     const summaries = Array.from(explorer.querySelectorAll<HTMLElement>('[data-career-summary]'));
     const evidenceItems = Array.from(explorer.querySelectorAll<HTMLDetailsElement>('[data-career-evidence]'));
     const focusButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-focus-capability]'));
-    const roleLabels = {
-      core: '核心',
-      important: '重要',
-      suggested: '建议了解',
-    } as const;
-
-    const clearNodeState = () => {
-      careerNodes.forEach((node) => {
-        delete node.dataset.rolePriority;
-        delete node.dataset.roleResponsibility;
-        delete node.dataset.roleState;
-        const label = node.querySelector<HTMLElement>('[data-role-label]');
-        if (label) {
-          label.hidden = true;
-          label.textContent = '';
-        }
-      });
-    };
 
     const applyProjection = (profileId: string) => {
       const projection = projections.find((item) => item.profileId === profileId);
       const selectedButton = lensButtons.find((button) => button.dataset.profileId === profileId);
       if (!projection || !selectedButton) return;
 
-      const projectedNodeById = new Map(projection.nodes.map((node) => [node.capabilityId, node]));
-      clearNodeState();
-      careerNodes.forEach((node) => {
-        const capabilityId = node.dataset.capabilityId;
-        const projectedNode = capabilityId ? projectedNodeById.get(capabilityId) : undefined;
-        if (!projectedNode || projectedNode.priority === 'unlisted') {
-          node.dataset.roleState = 'unlisted';
-          return;
-        }
-
-        node.dataset.roleState = 'mapped';
-        node.dataset.rolePriority = projectedNode.priority;
-        if (projectedNode.responsibility) {
-          node.dataset.roleResponsibility = projectedNode.responsibility;
-        }
-        const label = node.querySelector<HTMLElement>('[data-role-label]');
-        if (label) {
-          label.textContent = roleLabels[projectedNode.priority];
-          label.hidden = false;
-        }
-      });
+      mapRoot.dispatchEvent(new CustomEvent('egds-map:apply-career-lens', {
+        bubbles: true,
+        detail: {
+          profileId,
+          nodes: projection.nodes,
+        },
+      }));
 
       lensButtons.forEach((button) => {
         button.setAttribute('aria-pressed', String(button === selectedButton));
@@ -267,7 +233,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     };
 
     const clearProjection = () => {
-      clearNodeState();
+      mapRoot.dispatchEvent(new CustomEvent('egds-map:clear-career-lens', { bubbles: true }));
       lensButtons.forEach((button) => button.setAttribute('aria-pressed', 'false'));
       summaries.forEach((summary) => { summary.hidden = true; });
       evidenceItems.forEach((item) => { item.open = false; });
@@ -288,15 +254,10 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
       button.addEventListener('click', () => {
         const capabilityId = button.dataset.focusCapability;
         if (!capabilityId) return;
-        const targets = Array.from(
-          explorer.querySelectorAll<HTMLElement>(`[data-career-focus-target][data-capability-id="${capabilityId}"]`),
-        );
-        const target = targets.find((candidate) => candidate.getClientRects().length > 0);
-        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
-        document.documentElement.style.scrollBehavior = 'auto';
-        target?.focus();
-        target?.scrollIntoView({ block: 'center', inline: 'nearest' });
-        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+        mapRoot.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+          bubbles: true,
+          detail: { capabilityId },
+        }));
       });
     });
 
