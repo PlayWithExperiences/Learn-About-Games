@@ -6,7 +6,7 @@
 
 - 仓库已暂时设为 Private，公开 GitHub Pages 已下线；历史发布证据继续保留，但不代表当前可访问状态。
 - Pages workflow 已手动停用，避免私有完善期间每次推送触发无效部署；恢复公开前需要显式重新启用。
-- 重新公开前优先解决暗色主题职业高亮不清、能力地图主次与分区层级不足、资源列表过宽、Atlas 缺少缩放／平移，以及节点详情缺少搜索和排序的问题。
+- 私有完善设计已收敛为五条主干的分层思维导图、深色 Career Lens 非颜色编码、单列紧凑资源行、Atlas 可控视口，以及节点搜索／排序；实施边界见 [设计规格](docs/superpowers/specs/2026-08-09-private-refinement-design.md)。
 - 恢复 Public 与 Pages 前重新执行桌面／移动、Light／Dark、无 JavaScript、交互与线上契约验收。
 
 ## Shipped｜M0 纵向切片

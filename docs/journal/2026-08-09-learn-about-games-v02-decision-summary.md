@@ -4,6 +4,7 @@
 - 状态：仓库已转为 Private；公开 Pages 已下线，进入核心体验完善阶段
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
+- 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
 - 视觉系统：[DESIGN.md](../../DESIGN.md)
 - Foundation 计划：[2026-08-09-v02-foundation-implementation-plan.md](../superpowers/plans/2026-08-09-v02-foundation-implementation-plan.md)
 - Map / Career 计划：[2026-08-09-v02-map-careers-implementation-plan.md](../superpowers/plans/2026-08-09-v02-map-careers-implementation-plan.md)
@@ -15,6 +16,8 @@
 ## 当前状态
 
 用户在查看 v0.2 后认为核心体验仍不足以公开：暗色主题下职业高亮不够明显；能力地图虽然有关系，但结构过散、缺少原思维导图那样清晰的主次和分区；成长资源的双列形态占用过宽；Innovation Atlas 缺少缩放和平移；节点详情需要按名称／时间排序和搜索。仓库因此已暂时设为 Private，未经身份验证访问仓库与原 Pages URL 均返回 404；Pages workflow 同时手动停用，避免私有完善期间的 main push 触发无效部署。
+
+发起人已确认本轮设计方向。能力地图不采用会伪造唯一父子关系的严格树，而使用“分层思维导图 + 按需关系网”：一个根节点、五条主干、8 个 Domain 与原有节点；主干与归属持续可见，`supports` / `complements` 在节点聚焦时增强。深色 Career Lens 用填充、边框、线型和中文标签共同编码；Work Item 改为单列紧凑编辑行；Atlas 增加适应全图、50%-200% 缩放、拖拽／键盘平移；节点索引增加中英文搜索和名称／时间排序。所有调整都保持 no-JS 内容、资源事实顺序、职业无评分与 Atlas 全局网络不变量。
 
 v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a`、GitHub Pages run `31282275108` 与 evidence commit `ff7bb3b954f52e65ede79e73103da70a1d6accab` 作为最后一次公开构建的历史证据保留。重新公开前必须完成核心体验修正并重新运行线上验收，不能把历史成功 run 描述成当前公开状态。
 

@@ -246,3 +246,13 @@ GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 ski
 主任务使用 GitHub CLI 先确认 `PlayWithExperiences/Learn-About-Games` 为 PUBLIC，再以显式 visibility consequence 参数改为 PRIVATE。写入后 GitHub API 返回 `visibility=PRIVATE`、`isPrivate=true`；未经身份验证访问仓库 URL 返回 404，原 GitHub Pages URL 也返回 404，Pages API 不再提供公开站点。Pages workflow 随后手动停用，API 返回 `state=disabled_manually`，避免私有阶段每次 main push 触发无法部署的 run。此次操作没有删除仓库、分支、commit、Actions 历史或本地工作树；恢复公开需要未来显式把仓库改回 Public、重新启用 workflow 并重新验证 Pages。
 
 项目连续性入口、README、Roadmap 与 Changelog 同步区分“最后一次成功公开发布的历史证据”和“当前私有开发状态”。下一阶段先通过文字设计确认地图层级、暗色高亮、资源密度和 Atlas 浏览工具，再实现并完成全套验收；在此之前不恢复公开。
+
+## 25. 私有完善设计确认（部分会话导出）
+
+用户要求继续处理五项已指出的问题，并明确接受文字方案。主任务先核对当前实现：能力图将 8 个 Domain 与 64 条关系同时展示；Career Lens 节点状态主要依赖边框；Work Item 使用双列结果网格；Atlas 桌面画布只有横向滚动；节点详情没有搜索和显式排序控件。问题都能由现有 DOM、CSS 与数据合同直接解释，不是单纯更换颜色即可修复。
+
+主任务提出三种地图方向：继续保留地域网格并加强标题、改成严格树状图、或采用“分层思维导图 + 按需关系网”。前者无法消除等权信息竞争；严格树会错误暗示唯一父节点或固定成长顺序。用户确认尝试第三种方向。
+
+书面设计把地图定义为从左向右的一个根、五条主干、8 个 Domain 与既有 Capability / Knowledge Topic；主干和归属关系持续显示，真实 `supports` / `complements` 关系在节点聚焦时增强。五条主干为体验与玩家、玩法／空间与表达、研究／原型与交付、协作／领导与方向、产品／市场与更广语境；它们只是地图阅读分组，不是新知识实体或学习顺序。
+
+同一规格固定其余四项：深色 Career Lens 使用填充、2px 边框、实线／虚线和中文标签共同表达三档关注；资源改为单列紧凑编辑行，外部观察与长版本说明进入原生 disclosure；Atlas 增加适应全图、50%-200% 缩放、原生滚动位置平移与中心锚点；节点索引增加中英文搜索、按时间／名称稳定排序，并只增强图中匹配项而不删除实体。无 JavaScript、职业无评分、资源无站内质量等级与 Atlas 主题只改变强调的合同继续保留。
