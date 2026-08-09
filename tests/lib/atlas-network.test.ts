@@ -381,6 +381,28 @@ describe('Atlas node index helpers', () => {
     ]);
   });
 
+  it('finds localized Chinese terms', () => {
+    const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
+
+    expect(filterAtlasNodeIndex(indexed, '恶魔城').map(({ id }) => id)).toContain(
+      'castlevania-symphony-of-the-night',
+    );
+  });
+
+  it('normalizes Unicode compatibility forms', () => {
+    const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
+
+    expect(filterAtlasNodeIndex(indexed, '  ＭＥＴＲＯＩＤＶＡＮＩＡ  ').map(({ id }) => id)).toEqual(
+      filterAtlasNodeIndex(indexed, 'metroidvania').map(({ id }) => id),
+    );
+  });
+
+  it('preserves the complete multi-match result set', () => {
+    const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
+
+    expect(filterAtlasNodeIndex(indexed, '单局永久死亡')).toHaveLength(6);
+  });
+
   it('sorts time and names deterministically regardless of input order', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const reversed = [...indexed].reverse();

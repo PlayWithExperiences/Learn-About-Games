@@ -2460,11 +2460,19 @@ h2 {
 }
 
 .atlas-network-node[data-search-match='false'] a {
-  opacity: 0.48;
+  border-color: var(--line);
+  border-style: dashed;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.atlas-network-node[data-search-match='false'] .atlas-network-node__type {
+  color: var(--muted);
 }
 
 .atlas-network-node[data-search-match='true'] a {
   border-color: var(--focus);
+  border-style: solid;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 42%, transparent);
 }
 
@@ -2987,7 +2995,7 @@ h2 {
   }
 
   .atlas-outline-node[data-search-match='false'] > header {
-    opacity: 0.52;
+    color: var(--muted);
   }
 
   .atlas-outline-node[data-search-match='true'] > header {

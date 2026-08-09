@@ -50,6 +50,38 @@ function contrastRatio(foreground: string, background: string): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+function compositeRgb(foreground: string, background: string, opacity: number): string {
+  const foregroundChannels = parseRgb(foreground);
+  const backgroundChannels = parseRgb(background);
+  const channels = foregroundChannels.map((channel, index) =>
+    channel * opacity + backgroundChannels[index] * (1 - opacity));
+  return `rgb(${channels.join(' ')})`;
+}
+
+async function effectiveOpacityContrast(
+  element: Locator,
+  backdropSelector: string,
+  compositeOwnBackground: boolean,
+): Promise<number> {
+  const styles = await element.evaluate((target, input) => {
+    const computed = getComputedStyle(target);
+    const backdrop = document.querySelector<HTMLElement>(input.backdropSelector);
+    if (!backdrop) throw new Error(`Missing contrast backdrop ${input.backdropSelector}`);
+    return {
+      color: computed.color,
+      background: computed.backgroundColor,
+      backdrop: getComputedStyle(backdrop).backgroundColor,
+      opacity: Number(computed.opacity),
+      compositeOwnBackground: input.compositeOwnBackground,
+    };
+  }, { backdropSelector, compositeOwnBackground });
+  const foreground = compositeRgb(styles.color, styles.backdrop, styles.opacity);
+  const background = styles.compositeOwnBackground
+    ? compositeRgb(styles.background, styles.backdrop, styles.opacity)
+    : styles.backdrop;
+  return contrastRatio(foreground, background);
+}
+
 async function clickVisibleRelationSegment(page: Page, relationId: string) {
   const relation = page.locator(`[data-atlas-relation="${relationId}"]`);
   await relation.locator('[data-atlas-relation-path]').scrollIntoViewIfNeeded();
@@ -702,6 +734,20 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
   );
   expect(serverYears).toEqual([...serverYears].sort((left, right) => left - right));
 
+  await search.fill('恶魔城');
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(4);
+  await expect(index.locator('output[data-atlas-node-count]')).toHaveText('4 个节点');
+  await expect(page.locator('[data-atlas-node][data-search-match="true"]')).toHaveCount(4);
+
+  await search.fill('ＭＥＴＲＯＩＤＶＡＮＩＡ');
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(18);
+  await expect(index.locator('output[data-atlas-node-count]')).toHaveText('18 个节点');
+  await expect(page.locator('[data-atlas-outline-node][data-search-match="true"]')).toHaveCount(18);
+
+  await search.fill('单局永久死亡');
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(6);
+  await expect(index.locator('output[data-atlas-node-count]')).toHaveText('6 个节点');
+
   await search.fill('法定系列续作');
   await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(1);
   await expect(page.locator('[data-atlas-node][data-search-match="true"]')).toHaveCount(1);
@@ -758,6 +804,39 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
     relations: graphBefore.relations.map(({ id, path }) => ({ id, path })),
     evidenceIds: graphBefore.evidenceIds,
   });
+});
+
+test('search and theme emphasis keep context text readable in both themes and representations', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'The desktop project checks both responsive representations.');
+
+  for (const colorScheme of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme });
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('./atlas/');
+    await page.locator('[data-atlas-node-search]').fill('法定系列续作');
+    await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+
+    const desktopContext = page.locator('[data-atlas-node-id="rogue"]');
+    await expect(desktopContext).toHaveAttribute('data-theme-match', 'false');
+    await expect(desktopContext).toHaveAttribute('data-search-match', 'false');
+    const desktopContrast = await effectiveOpacityContrast(
+      desktopContext.locator('a'),
+      '[data-atlas-canvas]',
+      true,
+    );
+    expect.soft(desktopContrast, `${colorScheme} desktop context contrast`).toBeGreaterThanOrEqual(4.5);
+
+    await page.setViewportSize({ width: 320, height: 760 });
+    const outlineContext = page.locator('[data-atlas-outline-node="rogue"]');
+    await expect(outlineContext).toHaveAttribute('data-theme-match', 'false');
+    await expect(outlineContext).toHaveAttribute('data-search-match', 'false');
+    const outlineContrast = await effectiveOpacityContrast(
+      outlineContext.locator('> header'),
+      'body',
+      false,
+    );
+    expect.soft(outlineContrast, `${colorScheme} mobile context contrast`).toBeGreaterThanOrEqual(4.5);
+  }
 });
 
 test('mobile uses a relation-equivalent era outline without horizontal overflow', async ({ page }, testInfo) => {

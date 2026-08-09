@@ -144,7 +144,9 @@ function normalizeAtlasSearchText(parts: Array<string | undefined>): string {
   return parts
     .filter((part): part is string => typeof part === 'string')
     .join(' ')
-    .toLocaleLowerCase();
+    .normalize('NFKC')
+    .toLocaleLowerCase()
+    .trim();
 }
 
 export function buildAtlasNodeIndex(
@@ -174,7 +176,7 @@ export function filterAtlasNodeIndex(
   nodes: readonly AtlasIndexNode[],
   query: string,
 ): AtlasIndexNode[] {
-  const normalizedQuery = query.toLocaleLowerCase();
+  const normalizedQuery = normalizeAtlasSearchText([query]);
   return nodes.filter(({ searchText }) => searchText.includes(normalizedQuery));
 }
 
