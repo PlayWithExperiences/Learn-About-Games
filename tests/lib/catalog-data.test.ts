@@ -11,6 +11,7 @@ import capabilities from '../../src/data/capabilities.json';
 import capabilityRelations from '../../src/data/capability-relations.json';
 import domains from '../../src/data/domains.json';
 import knowledgeTopics from '../../src/data/knowledge-topics.json';
+import mapGroups from '../../src/data/map-groups.json';
 import resourceTopics from '../../src/data/resource-topics.json';
 import resources from '../../src/data/resources.json';
 import roleProfiles from '../../src/data/role-profiles.json';
@@ -19,6 +20,7 @@ import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
 
 const collections = {
   domains,
+  mapGroups,
   capabilities,
   knowledgeTopics,
   capabilityRelations,
