@@ -311,14 +311,13 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and modif
   await expect(stage).toHaveAttribute('data-scale', '1');
 });
 
-test('uses the complete outline until the viewport can honor the 50% minimum scale', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium', 'Responsive Atlas viewport ownership is tested once.');
-
-  for (const width of [800, 1024, 1150]) {
+test('keeps Atlas desktop controls independent from the wider EGDS map breakpoint', async ({ page }) => {
+  for (const width of [320, 1150]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto('./atlas/');
     await expect(page.locator('[data-atlas-view-controls]'), `${width}px controls`).toBeHidden();
     await expect(page.locator('[data-atlas-canvas]'), `${width}px canvas`).toBeHidden();
+    await expect(page.locator('[data-atlas-scroll-note]'), `${width}px scroll note`).toBeHidden();
     const outline = page.locator('[data-atlas-mobile-outline]');
     await expect(outline, `${width}px outline`).toBeVisible();
     await expect(outline.locator('[data-atlas-era]')).toHaveCount(5);
@@ -326,35 +325,59 @@ test('uses the complete outline until the viewport can honor the 50% minimum sca
     expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
       elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
     )).size).toBe(25);
+    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(40);
     await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
   }
 
-  await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
-  await expect(page.locator('[data-atlas-view-controls]')).toBeVisible();
-  await expect(page.locator('[data-atlas-canvas]')).toBeVisible();
-  await expect(page.locator('[data-atlas-mobile-outline]')).toBeHidden();
-  await page.getByRole('button', { name: '适应全图' }).click();
-  const fit = await page.locator('[data-atlas-canvas]').evaluate((element) => {
-    const scene = element.querySelector<HTMLElement>('[data-atlas-scene]')!;
-    const viewportRect = element.getBoundingClientRect();
-    const sceneRect = scene.getBoundingClientRect();
-    return {
-      scale: Number(element.querySelector<HTMLElement>('[data-atlas-stage]')?.dataset.scale),
-      viewport: {
-        left: viewportRect.left + element.clientLeft,
-        top: viewportRect.top + element.clientTop,
-        right: viewportRect.left + element.clientLeft + element.clientWidth,
-        bottom: viewportRect.top + element.clientTop + element.clientHeight,
-      },
-      scene: { left: sceneRect.left, top: sceneRect.top, right: sceneRect.right, bottom: sceneRect.bottom },
-    };
-  });
-  expect(fit.scale).toBeGreaterThanOrEqual(0.5);
-  expect(fit.scene.left).toBeGreaterThanOrEqual(fit.viewport.left - 1);
-  expect(fit.scene.top).toBeGreaterThanOrEqual(fit.viewport.top - 1);
-  expect(fit.scene.right).toBeLessThanOrEqual(fit.viewport.right + 1);
-  expect(fit.scene.bottom).toBeLessThanOrEqual(fit.viewport.bottom + 1);
+  for (const width of [1200, 1151, 1227, 1228]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('./atlas/');
+    const controls = page.locator('[data-atlas-view-controls]');
+    const viewport = page.locator('[data-atlas-canvas]');
+    await expect(controls, `${width}px controls`).toBeVisible();
+    await expect(viewport, `${width}px canvas`).toBeVisible();
+    await expect(page.locator('[data-atlas-scroll-note]'), `${width}px scroll note`).toBeVisible();
+    await expect(page.locator('[data-atlas-mobile-outline]'), `${width}px outline`).toBeHidden();
+    await expect(viewport.locator('[data-atlas-node]')).toHaveCount(27);
+    await expect(viewport.locator('[data-atlas-relation]')).toHaveCount(25);
+    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(40);
+
+    await controls.getByRole('button', { name: '适应全图' }).click();
+    const fit = await viewport.evaluate((element) => {
+      const scene = element.querySelector<HTMLElement>('[data-atlas-scene]')!;
+      const viewportRect = element.getBoundingClientRect();
+      const sceneRect = scene.getBoundingClientRect();
+      return {
+        scale: Number(element.querySelector<HTMLElement>('[data-atlas-stage]')?.dataset.scale),
+        viewport: {
+          left: viewportRect.left + element.clientLeft,
+          top: viewportRect.top + element.clientTop,
+          right: viewportRect.left + element.clientLeft + element.clientWidth,
+          bottom: viewportRect.top + element.clientTop + element.clientHeight,
+        },
+        scene: { left: sceneRect.left, top: sceneRect.top, right: sceneRect.right, bottom: sceneRect.bottom },
+      };
+    });
+    expect(fit.scale).toBeGreaterThanOrEqual(0.5);
+    expect(fit.scene.left).toBeGreaterThanOrEqual(fit.viewport.left - 1);
+    expect(fit.scene.top).toBeGreaterThanOrEqual(fit.viewport.top - 1);
+    expect(fit.scene.right).toBeLessThanOrEqual(fit.viewport.right + 1);
+    expect(fit.scene.bottom).toBeLessThanOrEqual(fit.viewport.bottom + 1);
+
+    await controls.getByRole('button', { name: '重置 100%' }).click();
+    await viewport.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect.poll(() => viewport.evaluate((element) => element.scrollLeft)).toBe(80);
+    await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+  }
+
+  for (const width of [1151, 1200, 1227]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('./map/');
+    await expect(page.locator('[data-capability-map-canvas]'), `${width}px EGDS canvas`).toBeHidden();
+    await expect(page.locator('[data-egds-outline]'), `${width}px EGDS outline`).toBeVisible();
+    await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
+  }
 });
 
 test('ordinary wheel chains vertically to the page while modified wheel only zooms the Atlas', async ({ page }, testInfo) => {

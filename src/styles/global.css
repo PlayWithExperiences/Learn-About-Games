@@ -3862,6 +3862,21 @@ h2 {
   }
 }
 
+@media (min-width: 1151px) and (max-width: 1227px) {
+  .atlas-network__viewport,
+  .atlas-network__scroll-note {
+    display: block;
+  }
+
+  .atlas-view-controls {
+    display: flex;
+  }
+
+  .atlas-outline {
+    display: none;
+  }
+}
+
 @media (max-width: 760px) {
   .page-shell,
   .site-header__inner {
