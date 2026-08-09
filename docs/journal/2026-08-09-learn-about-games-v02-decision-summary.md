@@ -1,11 +1,12 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；私有完善 runtime `1a1e2d1` 已推送到远端 `codex/v02`；EGDS 书面规格已通过只读对抗审查，等待发起人复核
+- 状态：仓库保持 Private、Pages 保持禁用；私有完善 runtime `1a1e2d1` 已推送到远端 `codex/v02`；发起人已确认 EGDS 书面规格，实施计划已完成，等待选择执行方式
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
 - EGDS 能力地图重构设计：[2026-08-09-egds-expertise-map-design.md](../superpowers/specs/2026-08-09-egds-expertise-map-design.md)
+- EGDS 能力地图实施计划：[2026-08-09-egds-expertise-map-implementation-plan.md](../superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md)
 - 私有完善 Map / Career 计划：[2026-08-09-private-refinement-map-career-plan.md](../superpowers/plans/2026-08-09-private-refinement-map-career-plan.md)
 - 私有完善 Resources 计划：[2026-08-09-private-refinement-resources-plan.md](../superpowers/plans/2026-08-09-private-refinement-resources-plan.md)
 - 私有完善 Atlas 计划：[2026-08-09-private-refinement-atlas-plan.md](../superpowers/plans/2026-08-09-private-refinement-atlas-plan.md)
@@ -131,10 +132,11 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 
 ## 精确下一步
 
-1. 发起人复核书面 [EGDS 能力地图重构设计](../superpowers/specs/2026-08-09-egds-expertise-map-design.md)。
-2. 书面规格获确认后，只为 EGDS 地图编写实施计划；不同时修改成长资源和 Innovation Atlas。
-3. EGDS 地图在 Private 分支通过真实使用复核后，再分别规划资源媒介编码／密度与 Atlas 历史扩充。
-4. 只有用户确认核心体验达到可用门槛后，才另行恢复 Public、重新启用 Pages workflow并执行线上验收。
+1. 按发起人选择，用 subagent-driven 或 inline execution 执行 [EGDS 能力地图实施计划](../superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md)；推荐前者。
+2. 数据合同先串行落地；随后纯布局 helper 与详情路由可并行，交互地图、Career bridge 和旧 ontology 退休按依赖顺序推进。
+3. 根任务逐提交复核并独立完成最终对抗验收；本切片不修改 Resources 或 Innovation Atlas runtime。
+4. EGDS 地图在 Private 分支通过真实使用复核后，再分别形成资源媒介编码／密度与 Atlas 交互／历史扩充规格。
+5. 只有用户确认核心体验达到可用门槛后，才另行恢复 Public、重新启用 Pages workflow 并执行线上验收。
 
 ## 当前未决风险
 

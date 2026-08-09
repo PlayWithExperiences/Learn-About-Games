@@ -1,6 +1,6 @@
 # EGDS Expertise Map 重构设计
 
-- 状态：核心方向已由发起人确认，待书面规格复核
+- 状态：书面规格已获发起人认可；实施边界见对应 implementation plan
 - 日期：2026-08-09
 - 基线：private branch `codex/v02` at `d982ceb`
 - 前置规格：[私有完善阶段设计](2026-08-09-private-refinement-design.md)

@@ -316,3 +316,15 @@ Resources agent 以真实 catalog 统计出 68 演讲、27 书籍、8 论文、8
 Atlas agent 对比了普通 wheel、focus-to-engage 和仅修饰键三种方案。推荐默认 cooperative：普通滚轮属于页面；用户明确进入“地图模式”后，普通 wheel 才围绕指针连续缩放，Esc／离开区域退出，达到上下限时不再阻止页面滚动；Ctrl/Command + wheel 和按钮继续保留。早期历史研究依据博物馆、大学、专利与计算机史机构来源，明确 PONG 是 1972 年商业突破节点，不是未经限定的“第一个电子游戏”。首批内容应先扩 taxonomy 与时间布局，再分别录入早期文档化设计、实验程序／装置、系统原型、量产产品和商业突破；时间相邻但缺少直接证据的节点不能为了视觉密度补关系。
 
 本阶段没有实施运行时，没有恢复公开或 Pages，也没有把 sub-agent 报告直接当成最终产品决定。主任务只把 EGDS 已确认方向写成审查通过的书面规格；Resources 与 Atlas 结论仍需要发起人确认后分别形成独立规格和计划。
+
+## 31. EGDS 书面规格确认与实施计划（部分会话导出）
+
+发起人复核 EGDS 书面设计后回复“认可”。主任务因此进入 writing-plans 阶段，没有直接修改运行时。文件级审计确认当前迁移涉及两份旧地图 collection、42 Capability、12 Knowledge Topic、catalog validator、纯布局 helper、Map／Career 组件、Capability／Topic breadcrumb、共享 CSS 和四组现有 E2E；如果一次性删除旧 Domain／mapGroups，现有页面会立刻失去类型与构建闭包。
+
+实施计划采用可构建的过渡顺序：先新增 28 个 EGDS framework node、三条固定 process relation、唯一 Atlas link 和 54 项 `frameworkNodeId`，暂时保留旧字段；随后让纯布局 helper 与详情路由在文件所有权不重叠的前提下并行。交互地图完成后，Career 只通过公开 map event 请求画像投影和 capability focus；最后在同一私有分支删除 Domains、mapGroups、`domainId`、手工 position 和所有兼容引用，避免长期保留第二套地图真相。
+
+计划把 `global.css` 的实现所有权集中在交互地图任务，其他并行 agent 不修改共享样式。默认桌面骨架固定为 1180 × 700 的作者化布局，完整显示根、五主分支、体验阶段、三类杠杆和第二层能力群；一次只在骨架下方增加一个由原分支连接的展开带。普通滚轮始终推动页面，1024／320 使用关系等价大纲。直接关系只在选中 Capability 后显示；跨能力群的端点作为关系端点 chip 出现，不伪装成第二个展开能力群。
+
+任务分配按难度使用当前真实可调用模型：catalog／交互／最终清理由高推理 Sol 负责，纯布局与 Career bridge 由高推理 Terra 负责，路由文案由中等推理 Terra 负责，根任务逐提交复核并独立做最终对抗验收。当前桌面 subagent runtime 未暴露 Luna，因此没有把 ChatGPT Free 的 Luna 可用性误写成 Codex 子代理能力。资源密度与 Atlas 早期历史研究结果继续留在后续独立规格，本计划不修改对应 runtime。
+
+实施计划保存在 `docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md`。本阶段只新增计划与连续性留档，没有推送、部署、改变仓库 Private 状态或启用 Pages。

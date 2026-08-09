@@ -8,7 +8,7 @@
 - Pages workflow 已手动停用，避免私有完善期间每次推送触发无效部署；恢复公开前需要显式重新启用。
 - 私有完善已经在 `codex/v02` 实现五条主干的分层思维导图、深色 Career Lens 冗余编码、单列紧凑资源行、Atlas 可控视口，以及节点搜索／排序；实施边界见 [设计规格](docs/superpowers/specs/2026-08-09-private-refinement-design.md)。
 - 本地串行整站验收已经完成，runtime `1a1e2d1` 已推送到远端私有 `codex/v02` 供用户复核。恢复 Public 与 Pages 仍需用户后续明确决定，并重新执行线上契约验收。
-- 私有复核后，发起人否决把五条通用阅读分组继续当作能力地图主骨架；下一切片改为以 PlayWithExperiences / EGDS 的体验设计方法、从计划到落地、团队、产品／盈利与更广游戏语境组织地图。当前批准的是 [书面设计](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md)，尚未改变 runtime。
+- 私有复核后，发起人否决把五条通用阅读分组继续当作能力地图主骨架；下一切片改为以 PlayWithExperiences / EGDS 的体验设计方法、从计划到落地、团队、产品／盈利与更广游戏语境组织地图。[书面设计](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md) 已获确认，[实施计划](docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md) 已拆分为可审查的依赖波次，尚未改变 runtime。
 
 ## Shipped｜M0 纵向切片
 
@@ -31,7 +31,7 @@
 
 ## Next｜完善核心体验与扩大内容覆盖
 
-- 先在 Private 分支实施并复核 EGDS 能力地图：一屏显示作者化主骨架与第二层能力群，具体能力按需展开，并取消地图纵向嵌套滚动。
+- 按 [EGDS 实施计划](docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md) 在 Private 分支实施并复核能力地图：一屏显示作者化主骨架与第二层能力群，具体能力按需展开，并取消地图纵向嵌套滚动。
 - 地图通过后，再分别处理资源媒介类型编码／进一步压缩，以及 Innovation Atlas 的滚轮缩放和历史内容扩充。
 - 继续收集、去重和归类资源，不把收录数量或外部平台数据当作质量分。
 - 完善中文与英文资源版本、字幕和译本关联。

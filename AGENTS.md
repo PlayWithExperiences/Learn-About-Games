@@ -1,11 +1,11 @@
 # Project entrypoint
 
-Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. Private refinement runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` is pushed to remote `codex/v02` and passed the local acceptance suite; it is waiting for the user's private review before any decision to restore Public or Pages. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build.
+Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. Private refinement runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a` is pushed to remote `codex/v02` and passed the local acceptance suite. The user reviewed it, approved the authorial EGDS redesign, and the next decision is how to execute its implementation plan; do not restore Public or Pages automatically. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build.
 
 Before making substantive changes, read these files in order:
 
 1. [Latest decision summary](docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md)
-2. [EGDS Expertise Map redesign](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md), [Private refinement design](docs/superpowers/specs/2026-08-09-private-refinement-design.md), [current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
+2. [EGDS Expertise Map redesign](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md), its [implementation plan](docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md), [Private refinement design](docs/superpowers/specs/2026-08-09-private-refinement-design.md), [current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
 3. [Public roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)
 4. [Current conversation record](docs/journal/2026-08-09-learn-about-games-v02-transcript.md) only when exact v0.2 wording is needed; follow its link to the M0 record for older history
 
