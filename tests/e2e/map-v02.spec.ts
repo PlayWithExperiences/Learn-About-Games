@@ -176,9 +176,12 @@ test('returning to the overview clears expansion, selection, inspector and proje
   await page.goto('./map/');
   const map = page.locator('[data-egds-map]');
   await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+  const expandButton = map.getByRole('button', { name: /Playtest、证据与迭代/ });
   await map.locator('[data-map-entity-key="capability:playtesting"]')
     .getByRole('button', { name: /Playtest.*关系/ }).click();
-  await map.getByRole('button', { name: '返回全图', exact: true }).click();
+  const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
+  await returnButton.focus();
+  await page.keyboard.press('Enter');
 
   await expect(map.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(0);
   await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(0);
@@ -186,6 +189,7 @@ test('returning to the overview clears expansion, selection, inspector and proje
   await expect(map.locator('[data-relation-endpoint]:not([hidden])')).toHaveCount(0);
   await expect(map.locator('[data-map-inspector]')).toBeHidden();
   await expect(map).not.toHaveAttribute('data-selected-entity-key', /.+/);
+  await expect(expandButton).toBeFocused();
 });
 
 test('public map events apply capability-only career roles and focus through the root owner', async ({ page }) => {
@@ -222,6 +226,135 @@ test('public map events apply capability-only career roles and focus through the
   await expect(map.locator('[data-map-entity][data-role-state]')).toHaveCount(0);
 });
 
+test('responsive focus opens only the required disclosure chain and returns to stable context', async ({ page }) => {
+  for (const width of [1024, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./map/');
+    const map = page.locator('[data-egds-map]');
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    const unrelated = map.locator('[data-egds-outline] [data-outline-framework-node="with-team"]');
+    await unrelated.locator(':scope > summary').click();
+
+    for (let dispatch = 0; dispatch < 2; dispatch += 1) {
+      await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+        bubbles: true,
+        detail: { capabilityId: 'playtesting' },
+      })));
+    }
+
+    const branch = map.locator('[data-egds-outline] [data-outline-framework-node="from-plan-to-ship"]');
+    const leaf = map.locator('[data-egds-outline] [data-outline-framework-node="playtest-evidence-iteration"]');
+    await expect(branch).toHaveAttribute('open', '');
+    await expect(leaf).toHaveAttribute('open', '');
+    await expect(unrelated).toHaveAttribute('open', '');
+    const relationButton = leaf.locator('[data-select-map-entity="capability:playtesting"]');
+    await expect(relationButton).toBeVisible();
+    await expect(relationButton).toBeFocused();
+    expect(await relationButton.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.top >= 0 && rect.bottom <= window.innerHeight;
+    })).toBe(true);
+    await expect(leaf.locator('[data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
+    await expect(map.locator('[data-map-inspector]')).toBeVisible();
+
+    const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
+    await expect(returnButton).toBeVisible();
+    await returnButton.focus();
+    await page.keyboard.press('Enter');
+
+    await expect(branch).not.toHaveAttribute('open', '');
+    await expect(leaf).not.toHaveAttribute('open', '');
+    await expect(unrelated).toHaveAttribute('open', '');
+    await expect(map.locator('[data-egds-framework-node][data-expanded="true"]')).toHaveCount(0);
+    await expect(map.locator('[data-selected="true"]')).toHaveCount(0);
+    await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
+    await expect(map.locator('[data-map-inspector]')).toBeHidden();
+    await expect(branch.locator(':scope > summary')).toBeFocused();
+    expect(errors).toEqual([]);
+  }
+});
+
+test('selected capability stays visible and focused when desktop becomes outline', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+    bubbles: true,
+    detail: { capabilityId: 'playtesting' },
+  })));
+  await expect(map.locator('[data-capability-map-canvas] [data-select-map-entity="capability:playtesting"]')).toBeFocused();
+
+  await page.setViewportSize({ width: 1024, height: 900 });
+  const outlineButton = map.locator('[data-egds-outline] [data-select-map-entity="capability:playtesting"]');
+  await expect(outlineButton).toBeVisible();
+  await expect(outlineButton).toBeFocused();
+  await expect(map.locator('[data-capability-map-canvas] [data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
+  await expect(map.locator('[data-egds-outline] [data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
+  await expect(map.locator('[data-map-inspector]')).toBeVisible();
+  await expect(map.getByRole('button', { name: '返回全图', exact: true })).toBeVisible();
+
+  await map.getByRole('button', { name: '返回全图', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await expect(map.locator('[data-outline-framework-node][open]')).toHaveCount(0);
+  await expect(map.locator('[data-selected="true"]')).toHaveCount(0);
+  await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
+  await expect(map.locator('[data-map-inspector]')).toBeHidden();
+  await expect(map.locator('[data-outline-framework-node="from-plan-to-ship"] > summary')).toBeFocused();
+});
+
+test('focus restores inline scroll behavior when scrolling fails', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.setViewportSize({ width: 1024, height: 900 });
+  await page.goto('./map/');
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'smooth';
+    HTMLElement.prototype.scrollIntoView = () => {
+      throw new Error('scroll unavailable');
+    };
+  });
+  const map = page.locator('[data-egds-map]');
+  await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+    bubbles: true,
+    detail: { capabilityId: 'playtesting' },
+  })));
+  await expect(map.locator('[data-map-inspector]')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.style.scrollBehavior)).toBe('smooth');
+  expect(errors).toEqual([]);
+});
+
+test('invalid career lens payloads are rejected atomically without page errors', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const invalidDetails: unknown[] = [
+    null,
+    { profileId: 'fixture', nodes: 'playtesting' },
+    { profileId: 'fixture', nodes: [{ capabilityId: 'playtesting', priority: 'required' }] },
+    { profileId: 'fixture', nodes: [{ capabilityId: 'playtesting', priority: 'core', responsibility: 'own' }] },
+    { profileId: 'fixture', nodes: [{ capabilityId: 'unknown-capability', priority: 'core' }] },
+    { profileId: 'fixture', nodes: [
+      { capabilityId: 'playtesting', priority: 'core' },
+      { capabilityId: 'playtesting', priority: 'important' },
+    ] },
+    { profileId: '', nodes: [] },
+  ];
+
+  for (const detail of invalidDetails) {
+    await map.evaluate((element, eventDetail) => element.dispatchEvent(
+      eventDetail === null
+        ? new CustomEvent('egds-map:apply-career-lens', { bubbles: true })
+        : new CustomEvent('egds-map:apply-career-lens', { bubbles: true, detail: eventDetail }),
+    ), detail);
+    await expect(map).not.toHaveAttribute('data-career-profile-id', /.+/);
+    await expect(map.locator('[data-role-state], [data-role-priority], [data-role-responsibility]')).toHaveCount(0);
+    await expect(map.locator('[data-egds-framework-node][data-career-core-count]')).toHaveCount(0);
+  }
+  expect(errors).toEqual([]);
+});
+
 test('ordinary wheel scrolls the page over blank map, framework nodes and expanded entities', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 560 });
   await page.goto('./map/');
@@ -249,6 +382,36 @@ test('ordinary wheel scrolls the page over blank map, framework nodes and expand
     const style = getComputedStyle(element);
     return [style.overflow, style.overflowY];
   })).not.toContain('auto');
+});
+
+test('page shell uses outline until the fixed desktop scene fully fits', async ({ page }) => {
+  for (const width of [1151, 1200]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('./map/');
+    const map = page.locator('[data-egds-map]');
+    await expect(map.locator('[data-capability-map-canvas]')).toBeHidden();
+    const outline = map.locator('[data-egds-outline]');
+    await expect(outline).toBeVisible();
+    await expect(outline.locator('[data-outline-framework-node]')).toHaveCount(28);
+    await expect(outline.locator('[data-outline-entity-kind="capability"]')).toHaveCount(42);
+    await expect(outline.locator('[data-outline-entity-kind="knowledge-topic"]')).toHaveCount(12);
+    await expect(outline.locator('[data-outline-relation]')).toHaveCount(64);
+    await expect(outline.locator('[data-map-entity-detail]')).toHaveCount(54);
+    await assertNoPageOverflow(page);
+  }
+
+  await page.setViewportSize({ width: 1228, height: 900 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const canvas = map.locator('[data-capability-map-canvas]');
+  await expect(canvas).toBeVisible();
+  await expect(map.locator('[data-egds-outline]')).toBeHidden();
+  expect(await canvas.evaluate((element) => element.clientWidth)).toBeGreaterThanOrEqual(1180);
+  await expect(map.locator('[data-capability-map-canvas] [data-egds-framework-node]')).toHaveCount(28);
+  expect(await map.locator('[data-capability-map-canvas] [data-egds-framework-node]').evaluateAll((items) =>
+    items.filter((item) => item.getBoundingClientRect().width > 0).length,
+  )).toBe(28);
+  await assertNoPageOverflow(page);
 });
 
 test('responsive and no-JS modes expose the complete relationship-equivalent native outline', async ({ browser, page }) => {
@@ -480,6 +643,7 @@ test('publishes the exact inspector and framework DOM contract', async ({ page }
     await expect(inspector.locator(`[data-map-inspector-${target}]`)).toHaveCount(1);
     await expect(inspector.locator(`[data-inspector-${target}]`)).toHaveCount(0);
   }
+  await expect(inspector.locator('[data-map-inspector-data]')).toHaveCount(0);
 });
 
 test('entity actions expose entity-specific accessible names without nesting', async ({ page }) => {
@@ -533,6 +697,16 @@ test('shape and line treatments redundantly distinguish map entity kinds', async
   expect(topicShape.widths.every((width) => width !== '0px')).toBe(true);
   expect(topicShape.styles.every((style) => style === 'dashed')).toBe(true);
   expect(topicShape.radius).toBe(0);
+
+  const topicLegend = await map.locator('.map-key__topic').evaluate((item) => {
+    const style = getComputedStyle(item);
+    return {
+      transform: style.transform,
+      borderStyle: style.borderStyle,
+      radius: Number.parseFloat(style.borderRadius),
+    };
+  });
+  expect(topicLegend).toEqual({ transform: 'none', borderStyle: 'dashed', radius: 0 });
 
   const externalLink = map.locator('[data-egds-framework-node]:is([data-egds-kind="external-entry"], [data-egds-node-kind="external-entry"]) a');
   const externalTreatment = await externalLink.evaluate((item) => ({

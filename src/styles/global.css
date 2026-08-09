@@ -801,7 +801,6 @@ h2 {
   border-style: dashed;
   border-radius: 0;
   background: var(--page);
-  transform: rotate(45deg) scale(0.72);
 }
 
 .map-key__supports,
@@ -3692,7 +3691,7 @@ h2 {
 
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1227px) {
   .capability-map__canvas {
     display: none;
   }

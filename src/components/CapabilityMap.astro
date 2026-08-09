@@ -471,12 +471,11 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
 
   document.querySelectorAll<HTMLElement>('[data-egds-map]').forEach((root) => {
     const payloadElement = root.querySelector<HTMLScriptElement>('[data-egds-map-data]');
-    const inspectorDataElement = root.querySelector<HTMLScriptElement>('[data-map-inspector-data]');
     const canvas = root.querySelector<HTMLElement>('[data-capability-map-canvas]');
     const scene = root.querySelector<HTMLElement>('[data-egds-scene]');
     const expansion = root.querySelector<HTMLElement>('[data-map-expansion]');
     const inspector = root.querySelector<HTMLElement>('[data-map-inspector]');
-    if (!payloadElement || !inspectorDataElement || !canvas || !scene || !expansion || !inspector) return;
+    if (!payloadElement || !canvas || !scene || !expansion || !inspector) return;
 
     const payload = JSON.parse(payloadElement.textContent ?? '{}') as MapPayload;
     const state: MapState = {};
@@ -492,12 +491,83 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     const expansionTitle = root.querySelector<HTMLElement>('[data-expansion-title]');
     const expansionPath = root.querySelector<SVGPathElement>('[data-egds-expansion-path]');
     const selectButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-select-map-entity]'));
+    const responsiveMedia = window.matchMedia('(max-width: 1227px)');
+    const outlineDetailsById = new Map(
+      Array.from(root.querySelectorAll<HTMLDetailsElement>(
+        '[data-egds-outline] details[data-outline-framework-node]',
+      )).map((details) => [details.dataset.outlineFrameworkNode ?? '', details]),
+    );
 
     const setBox = (element: HTMLElement, box: { x: number; y: number; width: number; height: number }) => {
       element.style.setProperty('--box-x', `${box.x}px`);
       element.style.setProperty('--box-y', `${box.y}px`);
       element.style.setProperty('--box-width', `${box.width}px`);
       element.style.setProperty('--box-height', `${box.height}px`);
+    };
+
+    const outlineDisclosureChain = (frameworkNodeId?: string) => {
+      const chain: HTMLDetailsElement[] = [];
+      let current = frameworkNodeId ? frameworkById.get(frameworkNodeId) : undefined;
+      while (current) {
+        const details = outlineDetailsById.get(current.id);
+        if (details) chain.unshift(details);
+        current = current.parentNodeId ? frameworkById.get(current.parentNodeId) : undefined;
+      }
+      return chain;
+    };
+
+    const syncOutlineDisclosures = () => {
+      const required = new Set(outlineDisclosureChain(state.expandedFrameworkNodeId));
+      root.querySelectorAll<HTMLDetailsElement>('[data-map-auto-open]').forEach((details) => {
+        if (required.has(details)) return;
+        details.open = false;
+        delete details.dataset.mapAutoOpen;
+      });
+      required.forEach((details) => {
+        if (details.open) return;
+        details.open = true;
+        details.dataset.mapAutoOpen = 'true';
+      });
+    };
+
+    const visibleEntityControl = (key: EntityKey) => Array.from(root.querySelectorAll<HTMLButtonElement>(
+      `[data-select-map-entity="${CSS.escape(key)}"]`,
+    )).find((button) => button.checkVisibility());
+
+    const focusEntityControl = (key: EntityKey) => {
+      const target = visibleEntityControl(key);
+      if (!target) return;
+      const documentElement = document.documentElement;
+      const previousScrollBehavior = documentElement.style.scrollBehavior;
+      documentElement.style.scrollBehavior = 'auto';
+      try {
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
+      } catch {
+        // The state change remains valid when a host cannot perform programmatic scrolling.
+      } finally {
+        documentElement.style.scrollBehavior = previousScrollBehavior;
+      }
+    };
+
+    const focusFrameworkContext = (frameworkNodeId?: string) => {
+      if (!frameworkNodeId) return;
+      if (!responsiveMedia.matches) {
+        const expandButton = root.querySelector<HTMLButtonElement>(
+          `[data-expand-framework-node="${CSS.escape(frameworkNodeId)}"]`,
+        );
+        if (expandButton?.checkVisibility()) expandButton.focus({ preventScroll: true });
+        return;
+      }
+      let current = frameworkById.get(frameworkNodeId);
+      while (current) {
+        const summary = outlineDetailsById.get(current.id)?.querySelector<HTMLElement>(':scope > summary');
+        if (summary?.checkVisibility()) {
+          summary.focus({ preventScroll: true });
+          return;
+        }
+        current = current.parentNodeId ? frameworkById.get(current.parentNodeId) : undefined;
+      }
     };
 
     const renderInspector = () => {
@@ -567,6 +637,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       if (returnButton) returnButton.hidden = !state.expandedFrameworkNodeId;
       if (state.selectedEntityKey) root.dataset.selectedEntityKey = state.selectedEntityKey;
       else delete root.dataset.selectedEntityKey;
+      syncOutlineDisclosures();
 
       root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((element) => {
         const expanded = element.dataset.egdsFrameworkNode === state.expandedFrameworkNodeId;
@@ -657,9 +728,11 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       });
     });
     returnButton?.addEventListener('click', () => {
+      const previousFrameworkNodeId = state.expandedFrameworkNodeId;
       delete state.expandedFrameworkNodeId;
       delete state.selectedEntityKey;
       render();
+      focusFrameworkContext(previousFrameworkNodeId);
     });
 
     root.addEventListener('egds-map:focus-capability', (event) => {
@@ -669,23 +742,51 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       state.expandedFrameworkNodeId = capability.frameworkNodeId;
       state.selectedEntityKey = `capability:${capability.id}`;
       render();
-      const candidates = Array.from(root.querySelectorAll<HTMLButtonElement>(
-        `[data-select-map-entity="capability:${capability.id}"]`,
-      ));
-      const target = candidates.find((button) => button.offsetParent !== null) ?? candidates[0];
-      if (!target) return;
-      const documentElement = document.documentElement;
-      const previousScrollBehavior = documentElement.style.scrollBehavior;
-      documentElement.style.scrollBehavior = 'auto';
-      target.focus({ preventScroll: true });
-      target.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
-      documentElement.style.scrollBehavior = previousScrollBehavior;
+      focusEntityControl(`capability:${capability.id}`);
     });
 
+    responsiveMedia.addEventListener('change', () => {
+      if (state.selectedEntityKey) focusEntityControl(state.selectedEntityKey);
+    });
+
+    const careerPriorities = new Set<CareerNode['priority']>(['core', 'important', 'suggested', 'unlisted']);
+    const careerResponsibilities = new Set<NonNullable<CareerNode['responsibility']>>([
+      'execute',
+      'contribute',
+      'decide',
+      'direct',
+    ]);
+    const isRecord = (value: unknown): value is Record<string, unknown> =>
+      typeof value === 'object' && value !== null && !Array.isArray(value);
+    const parseCareerLensDetail = (value: unknown): { profileId: string; nodes: CareerNode[] } | undefined => {
+      if (!isRecord(value) || typeof value.profileId !== 'string' || value.profileId.trim().length === 0) return;
+      if (!Array.isArray(value.nodes)) return;
+      const capabilityIds = new Set<string>();
+      const nodes: CareerNode[] = [];
+      for (const item of value.nodes) {
+        if (!isRecord(item)) return;
+        const { capabilityId, priority, responsibility } = item;
+        if (typeof capabilityId !== 'string' || !capabilityById.has(capabilityId) || capabilityIds.has(capabilityId)) return;
+        if (typeof priority !== 'string' || !careerPriorities.has(priority as CareerNode['priority'])) return;
+        if (responsibility !== undefined && (
+          typeof responsibility !== 'string'
+          || !careerResponsibilities.has(responsibility as NonNullable<CareerNode['responsibility']>)
+        )) return;
+        capabilityIds.add(capabilityId);
+        nodes.push({
+          capabilityId,
+          priority: priority as CareerNode['priority'],
+          responsibility: responsibility as CareerNode['responsibility'],
+        });
+      }
+      return { profileId: value.profileId, nodes };
+    };
+
     root.addEventListener('egds-map:apply-career-lens', (event) => {
-      const detail = (event as CustomEvent<{ profileId?: string; nodes?: CareerNode[] }>).detail;
-      const projectedNodes = new Map((detail?.nodes ?? []).map((node) => [node.capabilityId, node]));
-      root.dataset.careerProfileId = detail?.profileId ?? '';
+      const detail = parseCareerLensDetail((event as CustomEvent<unknown>).detail);
+      if (!detail) return;
+      const projectedNodes = new Map(detail.nodes.map((node) => [node.capabilityId, node]));
+      root.dataset.careerProfileId = detail.profileId;
       root.querySelectorAll<HTMLElement>('[data-career-node][data-capability-id]').forEach((element) => {
         const capabilityId = element.dataset.capabilityId;
         const projected = capabilityId ? projectedNodes.get(capabilityId) : undefined;

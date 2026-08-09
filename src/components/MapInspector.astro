@@ -7,9 +7,6 @@ interface Props {
   knowledgeTopics: Catalog['knowledgeTopics'];
   capabilityRelations: Catalog['capabilityRelations'];
 }
-
-const { capabilities, knowledgeTopics, capabilityRelations } = Astro.props;
-const inspectorData = JSON.stringify({ capabilities, knowledgeTopics, capabilityRelations }).replaceAll('<', '\\u003c');
 ---
 
 <aside class="map-inspector" data-map-inspector hidden aria-live="polite" aria-labelledby="map-inspector-name">
@@ -27,5 +24,4 @@ const inspectorData = JSON.stringify({ capabilities, knowledgeTopics, capability
     <a data-map-inspector-resources href={sitePath('resources/')}>查看相关资源</a>
     <a data-map-inspector-detail href={sitePath('map/')}>打开详情页</a>
   </nav>
-  <script is:inline type="application/json" data-map-inspector-data set:html={inspectorData}></script>
 </aside>
