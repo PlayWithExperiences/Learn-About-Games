@@ -18,7 +18,34 @@ const orderedGroups = [...mapGroups].sort(
 );
 const domainsById = new Map(domains.map((domain) => [domain.id, domain]));
 const capabilitiesById = new Map(capabilities.map((capability) => [capability.id, capability]));
-const topicsById = new Map(knowledgeTopics.map((topic) => [topic.id, topic]));
+const capabilitiesByKey = new Map(
+  capabilities.map((capability) => [`capability:${capability.id}` as const, capability]),
+);
+const topicsByKey = new Map(
+  knowledgeTopics.map((topic) => [`knowledge-topic:${topic.id}` as const, topic]),
+);
+const textMapEntities = [
+  ...capabilities.map((capability) => ({
+    id: capability.id,
+    domainId: capability.domainId,
+    href: sitePath(`capabilities/${capability.id}/`),
+    key: `capability:${capability.id}` as const,
+    kind: 'capability' as const,
+    kindLabel: '能力',
+    name: capability.name['zh-CN'],
+    position: capability.position,
+  })),
+  ...knowledgeTopics.map((topic) => ({
+    id: topic.id,
+    domainId: topic.domainId,
+    href: sitePath(`topics/${topic.id}/`),
+    key: `knowledge-topic:${topic.id}` as const,
+    kind: 'knowledge-topic' as const,
+    kindLabel: '知识议题',
+    name: topic.name['zh-CN'],
+    position: topic.position,
+  })),
+];
 const boxesByKey = new Map(
   [layout.root, ...layout.groups, ...layout.domains, ...layout.nodes].map((box) => [box.key, box]),
 );
@@ -166,7 +193,7 @@ const boxStyle = (key: string) => {
       <div class="capability-map__nodes">
         {layout.nodes.map((nodeBox) => {
           if (nodeBox.kind === 'capability') {
-            const capability = capabilitiesById.get(nodeBox.id);
+            const capability = capabilitiesByKey.get(nodeBox.key as `capability:${string}`);
             if (!capability) return null;
             return (
               <a
@@ -193,7 +220,7 @@ const boxStyle = (key: string) => {
               </a>
             );
           }
-          const topic = topicsById.get(nodeBox.id);
+          const topic = topicsByKey.get(nodeBox.key as `knowledge-topic:${string}`);
           if (!topic) return null;
           return (
             <a
@@ -220,6 +247,85 @@ const boxStyle = (key: string) => {
       </div>
     </div>
   </div>
+
+  <details class="capability-map__text" data-map-text-equivalent>
+    <summary>地图结构与关系文字版</summary>
+    <div class="capability-map__text-body">
+      <section aria-labelledby="map-text-structure-title">
+        <h2 id="map-text-structure-title">Expertise Map 结构</h2>
+        <ol class="map-text-groups">
+          {orderedGroups.map((group) => {
+            const orderedDomains = group.domainIds
+              .map((domainId) => domainsById.get(domainId))
+              .filter((domain): domain is Catalog['domains'][number] => Boolean(domain))
+              .sort((left, right) => left.order - right.order || left.id.localeCompare(right.id));
+            return (
+              <li
+                id={`map-text-group-${group.id}`}
+                data-text-map-group={group.id}
+                data-map-key={`group:${group.id}`}
+              >
+                <h3>{group.name['zh-CN']}</h3>
+                <p>{group.summary['zh-CN']}</p>
+                <ol>
+                  {orderedDomains.map((domain) => {
+                    const entities = textMapEntities
+                      .filter(({ domainId }) => domainId === domain.id)
+                      .sort((left, right) => left.position.y - right.position.y
+                        || left.position.x - right.position.x
+                        || left.id.localeCompare(right.id));
+                    return (
+                      <li
+                        id={`map-text-domain-${domain.id}`}
+                        data-text-map-domain={domain.id}
+                        data-map-key={`domain:${domain.id}`}
+                      >
+                        <h4><span>Domain</span>{domain.name['zh-CN']}</h4>
+                        <ul>
+                          {entities.map((entity) => (
+                            <li
+                              id={`map-text-node-${entity.kind}-${entity.id}`}
+                              data-text-map-node-kind={entity.kind}
+                              data-map-key={entity.key}
+                            >
+                              <span>{entity.kindLabel}</span>
+                              <a href={entity.href}>{entity.name}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+
+      <section aria-labelledby="map-text-relations-title">
+        <h2 id="map-text-relations-title">能力关系</h2>
+        <p>支持关系有方向但不是先修顺序，互补关系没有方向。</p>
+        <ol class="map-text-relations">
+          {capabilityRelations.map((relation) => (
+            <li
+              id={`map-text-relation-${relation.id}`}
+              data-text-map-relation={relation.id}
+              data-from-key={`capability:${relation.fromId}`}
+              data-to-key={`capability:${relation.toId}`}
+            >
+              <p>
+                <a href={sitePath(`capabilities/${relation.fromId}/`)}>{capabilitiesById.get(relation.fromId)?.name['zh-CN']}</a>
+                <strong>{relationLabel(relation.type)}</strong>
+                <a href={sitePath(`capabilities/${relation.toId}/`)}>{capabilitiesById.get(relation.toId)?.name['zh-CN']}</a>
+              </p>
+              <p>{relation.summary['zh-CN']}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+  </details>
 
   <div class="capability-map__outline" data-mobile-map-outline aria-label="能力地图关系大纲">
     <p class="capability-map__outline-note">有向支持不表示必修或固定学习顺序；互补关系不表示先后。</p>

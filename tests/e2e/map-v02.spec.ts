@@ -71,6 +71,27 @@ test('renders five hierarchy trunks, distinct node kinds and all functional rela
     'href',
     `${basePath}topics/${knowledgeTopics[0].id}/`,
   );
+
+  const nodeContracts = await canvas.locator('[data-map-node]').evaluateAll((nodes) =>
+    nodes.map((node) => ({
+      domId: node.id,
+      href: (node as HTMLAnchorElement).getAttribute('href'),
+      key: (node as HTMLElement).dataset.mapKey,
+      kind: (node as HTMLElement).dataset.mapNodeKind,
+      rawId: (node as HTMLElement).dataset.mapNodeId,
+    })),
+  );
+  expect(new Set(nodeContracts.map(({ domId }) => domId)).size).toBe(nodeContracts.length);
+  expect(new Set(nodeContracts.map(({ key }) => key)).size).toBe(nodeContracts.length);
+  for (const node of nodeContracts) {
+    expect(node.key).toBe(`${node.kind}:${node.rawId}`);
+    expect(node.domId).toBe(`map-node-${node.kind}-${node.rawId}`);
+    expect(node.href).toBe(
+      node.kind === 'capability'
+        ? `${basePath}capabilities/${node.rawId}/`
+        : `${basePath}topics/${node.rawId}/`,
+    );
+  }
 });
 
 test('keeps factual relations subordinate by default in both themes', async ({ browser }) => {
@@ -113,6 +134,9 @@ test('keeps factual relations subordinate by default in both themes', async ({ b
     expect(relationStyles.complements.strokeWidth).toBeGreaterThanOrEqual(1.25);
     expect(relationStyles.complements.dashArray).not.toBe('none');
     expect(relationStyles.complements.markerMid).toBe('none');
+    expect(
+      await canvas.locator('#support-arrow path').evaluate((path) => getComputedStyle(path).fill),
+    ).toBe('context-stroke');
 
     await context.close();
   }
@@ -167,6 +191,7 @@ test('focus enhances adjacent relations and endpoints without hiding the graph',
     const style = getComputedStyle(edge);
     return {
       opacity: Number(style.opacity),
+      stroke: style.stroke,
       strokeWidth: Number.parseFloat(style.strokeWidth),
     };
   });
@@ -186,18 +211,30 @@ test('focus enhances adjacent relations and endpoints without hiding the graph',
       }),
     ),
   ).toBe(true);
-  const focusedStyle = await canvas
-    .locator('[data-capability-relation][data-adjacent="true"]')
-    .first()
-    .evaluate((edge) => {
+  const focusedRelation = canvas.locator('[data-capability-relation][data-adjacent="true"]').first();
+  const accentColor = await canvas.evaluate((element) => {
+    const probe = document.createElement('span');
+    probe.style.color = 'var(--accent-strong)';
+    element.append(probe);
+    const color = getComputedStyle(probe).color;
+    probe.remove();
+    return color;
+  });
+  await expect.poll(
+    () => focusedRelation.evaluate((edge) => getComputedStyle(edge).stroke),
+  ).toBe(accentColor);
+  const focusedStyle = await focusedRelation.evaluate((edge) => {
       const style = getComputedStyle(edge);
       return {
         opacity: Number(style.opacity),
+        stroke: style.stroke,
         strokeWidth: Number.parseFloat(style.strokeWidth),
       };
-    });
+  });
   expect(focusedStyle.opacity).toBeGreaterThan(defaultStyle.opacity);
   expect(focusedStyle.opacity).toBeGreaterThanOrEqual(0.85);
+  expect(focusedStyle.stroke).not.toBe(defaultStyle.stroke);
+  expect(focusedStyle.stroke).toBe(accentColor);
   expect(focusedStyle.strokeWidth).toBeGreaterThan(defaultStyle.strokeWidth);
   expect(
     await canvas.locator('[data-capability-relation]:not([data-adjacent="true"])').first()
@@ -214,6 +251,7 @@ test('uses a relationship-equivalent outline at an explicit 320px without overfl
   await page.goto('./map/');
 
   await expect(page.locator('[data-capability-map-canvas]')).toBeHidden();
+  await expect(page.locator('[data-map-text-equivalent]')).toBeHidden();
   const outline = page.locator('[data-mobile-map-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-outline-group]')).toHaveCount(mapGroups.length);
@@ -258,6 +296,40 @@ test('keeps the complete map readable without JavaScript in light and dark theme
     await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
     await context.close();
   }
+});
+
+test('provides a complete native desktop text equivalent without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    colorScheme: 'light',
+    viewport: { width: 1440, height: 1100 },
+  });
+  const page = await context.newPage();
+  await page.goto('./map/');
+
+  const textMap = page.locator('[data-map-text-equivalent]');
+  await expect(textMap).toBeVisible();
+  await expect(textMap).not.toHaveAttribute('open', '');
+  await expect(textMap.getByText('地图结构与关系文字版', { exact: true })).toBeVisible();
+  await textMap.getByText('地图结构与关系文字版', { exact: true }).click();
+  await expect(textMap).toHaveAttribute('open', '');
+  await expect(textMap.locator('[data-text-map-group]')).toHaveCount(mapGroups.length);
+  await expect(textMap.locator('[data-text-map-domain]')).toHaveCount(domains.length);
+  await expect(textMap.locator('[data-text-map-node-kind="capability"]')).toHaveCount(capabilities.length);
+  await expect(textMap.locator('[data-text-map-node-kind="knowledge-topic"]')).toHaveCount(knowledgeTopics.length);
+  await expect(
+    textMap.locator('[data-text-map-group="experience-player"] [data-text-map-domain="experience-player"]'),
+  ).toHaveCount(1);
+  await expect(textMap.locator('[data-text-map-relation]')).toHaveCount(capabilityRelations.length);
+  for (const relation of capabilityRelations) {
+    const item = textMap.locator(`[data-text-map-relation="${relation.id}"]`);
+    await expect(item).toContainText(relation.summary['zh-CN']);
+    await expect(item.locator('a')).toHaveCount(2);
+  }
+  const ids = await page.locator('[id]').evaluateAll((items) => items.map(({ id }) => id));
+  expect(new Set(ids).size).toBe(ids.length);
+
+  await context.close();
 });
 
 test('opens a capability and a knowledge topic with region and related content', async ({ page }) => {

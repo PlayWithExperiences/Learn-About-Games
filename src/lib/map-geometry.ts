@@ -59,6 +59,10 @@ type MindMapEntityInput = Readonly<{
   position: MapPoint;
 }>;
 
+type TypedMindMapEntityInput = MindMapEntityInput & Readonly<{
+  kind: Extract<MindMapBoxKind, 'capability' | 'knowledge-topic'>;
+}>;
+
 const mindMapMetrics = {
   width: 1180,
   topPadding: 32,
@@ -111,8 +115,10 @@ export function buildCapabilityMindMapLayout(
 ): CapabilityMindMapLayout {
   const orderedGroups = [...mapGroups].sort(compareOrderAndId);
   const domainsById = new Map(domains.map((domain) => [domain.id, domain]));
-  const capabilitiesById = new Set(capabilities.map(({ id }) => id));
-  const entities = [...capabilities, ...knowledgeTopics];
+  const entities: TypedMindMapEntityInput[] = [
+    ...capabilities.map((entity) => ({ ...entity, kind: 'capability' as const })),
+    ...knowledgeTopics.map((entity) => ({ ...entity, kind: 'knowledge-topic' as const })),
+  ];
   const groupBoxes: MindMapBox[] = [];
   const domainBoxes: MindMapBox[] = [];
   const nodeBoxes: MindMapBox[] = [];
@@ -151,11 +157,10 @@ export function buildCapabilityMindMapLayout(
       });
 
       orderedEntities.forEach((entity, index) => {
-        const kind = capabilitiesById.has(entity.id) ? 'capability' : 'knowledge-topic';
         nodeBoxes.push({
           id: entity.id,
-          key: `${kind}:${entity.id}`,
-          kind,
+          key: `${entity.kind}:${entity.id}`,
+          kind: entity.kind,
           x: mindMapMetrics.nodeStartX
             + (index % mindMapMetrics.nodeColumns)
               * (mindMapMetrics.nodeWidth + mindMapMetrics.columnGap),

@@ -96,6 +96,25 @@ describe('v0.2 map geometry', () => {
     expect(reversed.structuralPaths).toEqual(layout.structuralPaths);
   });
 
+  it('keeps capability and knowledge-topic identities distinct when their raw IDs match', () => {
+    const layout = buildCapabilityMindMapLayout(
+      [{ id: 'group', order: 1, domainIds: ['domain'] }],
+      [{ id: 'domain', order: 1 }],
+      [{ id: 'shared', domainId: 'domain', position: { x: 10, y: 10 } }],
+      [{ id: 'shared', domainId: 'domain', position: { x: 20, y: 20 } }],
+    );
+
+    expect(layout.nodes.map(({ key }) => key)).toEqual([
+      'capability:shared',
+      'knowledge-topic:shared',
+    ]);
+    expect(new Set(layout.nodes.map(({ key }) => key)).size).toBe(2);
+    expect(layout.nodes[0]).not.toEqual(expect.objectContaining({
+      x: layout.nodes[1].x,
+      y: layout.nodes[1].y,
+    }));
+  });
+
   it('keeps every node anchor inside its global domain bounds', () => {
     const domainsById = new Map(domains.map((domain) => [domain.id, domain]));
 

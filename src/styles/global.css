@@ -951,7 +951,7 @@ h2 {
 }
 
 #support-arrow path {
-  fill: var(--muted);
+  fill: context-stroke;
   opacity: 0.92;
 }
 
@@ -1065,6 +1065,84 @@ h2 {
 
 .capability-map__outline {
   display: none;
+}
+
+.capability-map__text {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.capability-map__text > summary {
+  padding-block: 1rem;
+  cursor: pointer;
+  color: var(--accent-strong);
+  font-weight: 740;
+}
+
+.capability-map__text-body {
+  display: grid;
+  padding: 0.5rem 0 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+}
+
+.capability-map__text-body h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.capability-map__text-body > section > p,
+.map-text-groups p,
+.map-text-relations > li > p:last-child {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.map-text-groups,
+.map-text-groups ol,
+.map-text-groups ul,
+.map-text-relations {
+  padding-left: 1.2rem;
+}
+
+.map-text-groups > li,
+.map-text-relations > li {
+  margin-top: 1rem;
+}
+
+.map-text-groups h3,
+.map-text-groups h4,
+.map-text-groups p,
+.map-text-relations p {
+  margin-block: 0.35rem;
+}
+
+.map-text-groups h4 {
+  font-size: 0.92rem;
+}
+
+.map-text-groups h4 span,
+.map-text-groups ul span {
+  margin-right: 0.45rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 720;
+}
+
+.map-text-groups ul li,
+.map-text-relations li {
+  margin-top: 0.45rem;
+}
+
+.map-text-groups a,
+.map-text-relations a {
+  color: var(--accent-strong);
+}
+
+.map-text-relations strong {
+  margin-inline: 0.4rem;
+  font-size: 0.76rem;
 }
 
 .capability-map__outline-note {
@@ -2772,6 +2850,10 @@ h2 {
 
   .capability-map__outline {
     display: block;
+  }
+
+  .capability-map__text {
+    display: none;
   }
 
   .atlas-intro {
