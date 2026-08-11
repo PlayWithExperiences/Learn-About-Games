@@ -1,14 +1,14 @@
 # Learn About Games v0.2 — 首批成长资源证据 Intake
 
 - 研究日期：2026-08-09
-- 状态：研究证据 notebook；Batch A–E 已正规化为 164 个 catalog Work Item
-- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项
-- 确定性 canonical URL 去重后：**168 项研究记录**；正规化后为 **164 个 Work Item**
+- 状态：研究证据 notebook；Batch A–F 已正规化为 174 个 catalog Work Item
+- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项
+- 确定性 canonical URL 去重后：**178 项研究记录**；正规化后为 **174 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
 
-这份 notebook 是后续内容正规化的证据层，不是对全部 168 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–E 在 2026-08-11 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
+这份 notebook 是后续内容正规化的证据层，不是对全部 178 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–F 在 2026-08-11 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
 
 Source 与 Work Item 必须继续是不同实体。以下 sourceUrl 是研究批次捕获的来源证据 URL；它常与具体 Work Item 的 canonicalUrl 相同，因而不能直接当作 Source homepage。正规化时必须另建真实创作者、频道、组织、出版社或网站 Source，再由 Work Item 引用。
 
@@ -19,17 +19,17 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 ## 去重结论与待核 identity
 
 - 规则：host 小写并移除 www.、移除 fragment 与非根路径末尾 /、稳定排序 query；不跨 DOI、出版社页或不同平台猜测同一作品。
-- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–E 另增 36 条且没有命中既有 canonical URL。
+- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–F 另增 46 条且没有命中既有 canonical URL。
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
 ## 当前正规化 catalog coverage
 
-- Work Item：164；Source：31；Access Version：177；Resource Topic：15。
-- 原始语言：en 137、ja 9、zh-Hans 18。
-- 可消费语言（Work Item 计，可重叠）：en 138、ja 9、zh-Hans 20。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 148、ja 9、zh-Hans 20。
-- 媒介：article 8、book 29、course 13、paper 16、podcast 11、talk 69、video 5、website 13。
+- Work Item：174；Source：38；Access Version：188；Resource Topic：15。
+- 原始语言：en 147、ja 9、zh-Hans 18。
+- 可消费语言（Work Item 计，可重叠）：en 148、ja 9、zh-Hans 20。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 159、ja 9、zh-Hans 20。
+- 媒介：article 12、book 29、course 16、paper 17、podcast 11、talk 69、video 5、website 15。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
@@ -37,20 +37,20 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 |---|---:|
 | 设计基础与概念 | 9 |
 | 系统与机制 | 10 |
-| 平衡与经济 | 9 |
+| 平衡与经济 | 10 |
 | 手感与反馈 | 8 |
 | 关卡与空间 | 21 |
 | Playtest 与游戏用户研究 | 13 |
-| 叙事与表达 | 16 |
-| 原型与实验 | 7 |
-| 生产与迭代 | 8 |
-| 协作与团队 | 8 |
-| 领导与创意方向 | 7 |
+| 叙事与表达 | 18 |
+| 原型与实验 | 8 |
+| 生产与迭代 | 11 |
+| 协作与团队 | 9 |
+| 领导与创意方向 | 8 |
 | 批判、价值观与历史语境 | 15 |
-| 研究方法与玩家体验 | 17 |
+| 研究方法与玩家体验 | 18 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 9 |
-| 合计 | 164 |
+| 合计 | 174 |
 
 ## 接受候选
 
@@ -316,6 +316,26 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | E-015<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/4/2/4_1/_article/-char/ja<br>title=ビデオゲームプレイヤーの操作行動が脈波のカオス解析による心理状態と主観的感情に及ぼす影響 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=playtesting<br>whyRelevant=把操作行为、生理指标与主观报告并置，展示多类测试证据的交叉解释。 | 官方期刊页与 PDF 可访问。 |
 | E-016<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/17/1/17_1/_article/-char/ja<br>title=死と喪失をテーマにしたゲームが学生の自己成長感に及ぼす影響の検討 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=criticism-values-history<br>whyRelevant=以死亡与失落主题和玩家成长感为对象，连接互动选择、价值影响与研究伦理。 | 官方期刊页与 PDF 可访问。 |
 
+### Batch F：英文课程、文章、论文与持久网站补充（10）
+
+- 优先级按用户修正为中文优先、英文其次；Batch E 的六篇日文原始论文保留，本批只补英文。
+- `agent-reach doctor --json` 仍报告发现后端为 **Exa via mcporter**、网页后端为 **Jina Reader**；实际 Exa 查询立即返回免费 MCP 配额 HTTP 429，因此未继续尝试，也未要求或使用 API key。候选发现与核验改由 Jina Reader、WordPress 官方 API、Crossref 元数据和机构／作者官方页面完成。
+- 本批锁定 10 个新 canonical identity：course 3、article 4、website 2、paper 1；originalLanguage 均为 en；talk 0、book 0。论文另附 Microsoft Research 授权作者版，因此共增加 11 个 Access Version。
+- canonical URL 使用相同确定性规则与既有 164 项比较，无规范化重复；Source homepage 与 Work canonical 分离，每项只归属一个主 `resourceTopicId`。
+
+| Ref / canonical identity | Source evidence | Medium / original language | accessVersions | 主主题 / whyRelevant | notes |
+|---|---|---|---|---|---|
+| F-001<br>canonicalUrl=https://ocw.mit.edu/courses/cms-611j-creating-video-games-fall-2014/<br>title=Creating Video Games | sourceName=MIT OpenCourseWare<br>sourceUrl=https://ocw.mit.edu/ | mediaType=course<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=production-iteration<br>whyRelevant=本科团队课程以完整项目连接计划、跨职能制作、测试与交付。 | 官方页提供 syllabus、讲义、视频、教师反思与学生项目。 |
+| F-002<br>canonicalUrl=https://gamedesignconcepts.wordpress.com/2009/03/31/what-is-game-design-concepts/<br>title=Game Design Concepts | sourceName=Game Design Concepts<br>sourceUrl=https://gamedesignconcepts.wordpress.com/ | mediaType=course<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=prototyping-experimentation<br>whyRelevant=二十课和实际项目覆盖快速原型、迭代、形式分析与多阶段 playtest。 | Ian Schreiber 原始课程；CC BY；使用课程说明页而非 Source 首页作为 canonical。 |
+| F-003<br>canonicalUrl=https://gamebalanceconcepts.wordpress.com/2010/06/17/hello-world/<br>title=Game Balance Concepts | sourceName=Game Balance Concepts<br>sourceUrl=https://gamebalanceconcepts.wordpress.com/ | mediaType=course<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=balance-economy<br>whyRelevant=十课连续覆盖数值关系、概率、成长、经济、统计指标和多人平衡。 | Ian Schreiber 原始课程；CC BY；目录由官方 WordPress API 与页面交叉核验。 |
+| F-004<br>canonicalUrl=https://lostgarden.home.blog/2022/11/12/the-workshopping-skill/<br>title=The Workshopping Skill | sourceName=Lost Garden<br>sourceUrl=https://lostgarden.home.blog/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=collaboration-teams<br>whyRelevant=把设计工作坊拆为约束、多个解法、跨职能反馈、再设计和共同收敛。 | Daniel Cook 作者原文。 |
+| F-005<br>canonicalUrl=https://lostgarden.home.blog/2011/05/03/game-design-logs/<br>title=Game Design Logs | sourceName=Lost Garden<br>sourceUrl=https://lostgarden.home.blog/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=production-iteration<br>whyRelevant=用随可玩构建演进的日志保存决策、play notes、优先事项、实验与完成任务。 | Daniel Cook 作者原文；直接补规格交接与迭代记录。 |
+| F-006<br>canonicalUrl=https://heterogenoustasks.wordpress.com/2015/01/26/standard-patterns-in-choice-based-games/<br>title=Standard Patterns in Choice-Based Games | sourceName=Heterogeneous Tasks<br>sourceUrl=https://heterogenoustasks.wordpress.com/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=narrative-expression<br>whyRelevant=以图示比较 Time Cave、Gauntlet、Branch and Bottleneck 等选择拓扑的效果和代价。 | Sam Kabo Ashwell 作者原文；不把模式当互斥分类。 |
+| F-007<br>canonicalUrl=https://partner.steamgames.com/doc/marketing/visibility<br>title=Visibility on Steam | sourceName=Steamworks Documentation<br>sourceUrl=https://partner.steamgames.com/doc/home | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=Valve 一手说明发行、愿望单、标签、玩家响应、推荐与各类可见性的关系。 | 平台规则会更新；记录检查日期，不将规则转成本站排名信号。 |
+| F-008<br>canonicalUrl=https://howtomarketagame.com/2021/07/12/how-to-market-your-indie-game-a-10-step-plan/<br>title=How To Market Your Indie Game in 2024: A 10 Step Plan | sourceName=How To Market A Game<br>sourceUrl=https://howtomarketagame.com/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=leadership-creative-direction<br>whyRelevant=把受众与品类、产品描述、漏斗、愿望单、发行和更新组织为有先后关系的实践步骤。 | 作者持续更新正文；方法主要面向 Steam 独立游戏，不外推到所有平台。 |
+| F-009<br>canonicalUrl=https://doi.org/10.1145/2889160.2889253<br>title=What Went Right and What Went Wrong: An Analysis of 155 Postmortems from Game Development | sourceName=ACM<br>sourceUrl=https://dl.acm.org/ | mediaType=paper<br>originalLanguage=en | language=en; url=https://doi.org/10.1145/2889160.2889253; accessModel=subscription; versionRelation=original; presentationMode=original; checkedAt=2026-08-11<br>language=en; url=https://www.microsoft.com/en-us/research/publication/what-went-right-and-what-went-wrong-an-analysis-of-155-postmortems-from-game-development/; accessModel=free; versionRelation=official; presentationMode=original; checkedAt=2026-08-11 | topic=production-iteration<br>whyRelevant=系统分析 155 篇开发复盘并连接项目特征、正负经验、最佳实践和常见陷阱。 | DOI 由 Crossref 核验；Microsoft Research 官方页提供经 ACM 许可的作者版与 PDF。 |
+| F-010<br>canonicalUrl=https://www.choiceofgames.com/make-your-own-games/choicescript-intro/<br>title=Introduction to ChoiceScript | sourceName=Choice of Games<br>sourceUrl=https://www.choiceofgames.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=narrative-expression<br>whyRelevant=用可运行示例逐步讲解嵌套选择、后果、变量、条件文本和场景文件。 | ChoiceScript 开发与发布方的官方入门文档。 |
+
 ## 拒绝与待核证据
 
 以下保留五批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
@@ -364,6 +384,15 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - J-STAGE 的整卷、会议录与检索集合页：拒绝。它们是聚合身份，不应替代题名、作者、摘要和 PDF 均可核验的单篇论文。
 - Exa 配额耗尽后的搜索摘要候选：不纳入。HTTP 429 之后只接受能由 Jina Reader 或官方页面独立复核的候选。
 
+### Batch F
+
+- 猜测的 Stanford CS247G GitHub Pages：拒绝。Jina Reader 核验为 GitHub Pages 404，不能把课程名称或旧索引摘要当作仍可访问的课程。
+- `gamedesignconcepts.wordpress.com/2009/06/29/game-design-concepts-an-experiment-in-game-design-and-teaching/`：拒绝。该猜测路径为 404；通过 WordPress 官方 API 找到并改用课程说明页 `2009/03/31/what-is-game-design-concepts/`。
+- `https://doi.org/10.1145/1516546.1516590`：拒绝。DOI 系统明确返回 Not Found；Crossref 和 Microsoft Research 共同确认 155 篇复盘论文的正确 DOI 为 `10.1145/2889160.2889253`。
+- 猜测的 Game Developer *The Cabal* slug：拒绝。Jina Reader 只返回 Design 聚合页而非文章正文；Valve Developer Community 又触发 Anubis 安全校验，本批无法完成一致核验。
+- Emily Short *Beyond Branching*：本批暂不纳入。作者页与正文可核验，但已选择一个结构模式资源和一个可运行实现文档，继续增加会让高覆盖 narrative topic 挤占更低覆盖的生产、协作和定位资源。
+- Game Design Concepts 与 Game Balance Concepts 的站点根页：只作为 Source homepage，不作为 Work canonical；具体课程说明页承担 Work identity，避免 Source/Work 混同。
+
 ## 访问、地区与版权疑点
 
 ### Batch A
@@ -399,6 +428,15 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - 六篇 J-STAGE 页面均在 2026-08-11 标记 `ジャーナル フリー` 并提供原文 PDF；本批只记录日文原始版本，未因页面存在英文导航或英文摘要而声称有英文全文版本。
 - Exa via mcporter 在第 12 次查询触发免费 MCP 配额 HTTP 429；后续核验使用 Jina Reader 和官方页面。该限制缩小了候选发现面，但不降低已收录 16 项的页面证据要求。
 - 本批不转载课程、演讲或论文正文，只记录 identity、公开元数据、访问入口和与能力图谱的关联理由。
+
+### Batch F
+
+- MIT OpenCourseWare、两门 WordPress 公开课程、Lost Garden、Heterogeneous Tasks、Steamworks、How To Market A Game 与 Choice of Games 在 2026-08-11 均可由 Jina Reader 或官方 API 读取；第三方链接、互动练习和未来页面状态仍可能变化。
+- Steamworks 是持续更新的平台规则文档；`checkedAt` 只表示本次核验，不把曝光机制、销量、愿望单或玩家响应写成本站评分与排序信号。
+- How To Market A Game 的正文标题当前仍标作 2024 版且作者会持续更新；其建议主要针对 Steam 独立游戏，不推断为移动、主机或所有品类的普遍规律。
+- ACM DOI 入口保守标记为 `subscription`；Microsoft Research 页面明确说明免费 PDF 是经 ACM 许可发布的作者版本，因此作为同一 Work 的 `official` Access Version，不创建第二个 identity。
+- Exa via mcporter 实际查询仍返回 HTTP 429。本批的发现面受免费配额限制，但每个纳入项都另外通过 Jina Reader、WordPress 官方 API、Crossref 或官方机构页面核验。
+- 本批没有 talk、book、外部评分或站内排序字段，也不转载课程、文章或论文正文。
 
 ## 尚待核 canonical links
 

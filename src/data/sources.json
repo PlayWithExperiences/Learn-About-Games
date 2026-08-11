@@ -467,5 +467,110 @@
     "languages": [
       "zh-Hans"
     ]
+  },
+  {
+    "id": "game-design-concepts",
+    "name": {
+      "zh-CN": "Game Design Concepts",
+      "en": "Game Design Concepts"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Ian Schreiber 发布并以 Creative Commons 许可长期保留的游戏设计公开课程网站。"
+    },
+    "homepage": "https://gamedesignconcepts.wordpress.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-balance-concepts",
+    "name": {
+      "zh-CN": "Game Balance Concepts",
+      "en": "Game Balance Concepts"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Ian Schreiber 发布的游戏平衡公开课程网站，按十个层级组织学习内容。"
+    },
+    "homepage": "https://gamebalanceconcepts.wordpress.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "lost-garden",
+    "name": {
+      "zh-CN": "Lost Garden",
+      "en": "Lost Garden"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "游戏设计师 Daniel Cook 发布设计方法、团队实践与制作案例的作者网站。"
+    },
+    "homepage": "https://lostgarden.home.blog/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "heterogeneous-tasks",
+    "name": {
+      "zh-CN": "Heterogeneous Tasks",
+      "en": "Heterogeneous Tasks"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Sam Kabo Ashwell 发布互动小说分析与选择结构设计文章的作者网站。"
+    },
+    "homepage": "https://heterogenoustasks.wordpress.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "steamworks-documentation",
+    "name": {
+      "zh-CN": "Steamworks Documentation",
+      "en": "Steamworks Documentation"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Valve 面向 Steam 开发者发布平台、商店、发行与营销规则的一手文档。"
+    },
+    "homepage": "https://partner.steamgames.com/doc/home",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "how-to-market-a-game",
+    "name": {
+      "zh-CN": "How To Market A Game",
+      "en": "How To Market A Game"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Chris Zukowski 面向独立游戏开发者发布受众、定位、商店页与发行营销方法的网站。"
+    },
+    "homepage": "https://howtomarketagame.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "choice-of-games",
+    "name": {
+      "zh-CN": "Choice of Games",
+      "en": "Choice of Games"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "ChoiceScript 的开发与发布方，公开维护互动小说创作语言和作者文档。"
+    },
+    "homepage": "https://www.choiceofgames.com/",
+    "languages": [
+      "en"
+    ]
   }
 ]

@@ -453,7 +453,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(164);
+    expect(resources).toHaveLength(174);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -616,9 +616,9 @@ describe('raw product catalog data', () => {
       resources.flatMap(({ accessVersions }) => accessVersions)
         .filter((version) => version.language === language).length;
 
-    expect(resources).toHaveLength(164);
-    expect(sources).toHaveLength(31);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(177);
+    expect(resources.length).toBeGreaterThanOrEqual(164);
+    expect(sources.length).toBeGreaterThanOrEqual(31);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions).length).toBeGreaterThanOrEqual(177);
     expect(expansion).toHaveLength(16);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -631,28 +631,99 @@ describe('raw product catalog data', () => {
     expect(expansion.filter(({ originalLanguage }) => originalLanguage === 'zh-Hans')).toHaveLength(10);
     expect(expansion.filter(({ originalLanguage }) => originalLanguage === 'ja')).toHaveLength(6);
 
-    expect(countBy('mediaType', 'course')).toBe(13);
-    expect(countBy('mediaType', 'paper')).toBe(16);
+    expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(13);
+    expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(16);
     expect(countBy('mediaType', 'talk')).toBe(69);
-    expect(countBy('originalLanguage', 'en')).toBe(137);
+    expect(countBy('originalLanguage', 'en')).toBeGreaterThanOrEqual(137);
     expect(countBy('originalLanguage', 'zh-Hans')).toBe(18);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
-    expect(consumableLanguageCount('en')).toBe(138);
+    expect(consumableLanguageCount('en')).toBeGreaterThanOrEqual(138);
     expect(consumableLanguageCount('zh-Hans')).toBe(20);
     expect(consumableLanguageCount('ja')).toBe(9);
-    expect(accessVersionLanguageCount('en')).toBe(148);
+    expect(accessVersionLanguageCount('en')).toBeGreaterThanOrEqual(148);
     expect(accessVersionLanguageCount('zh-Hans')).toBe(20);
     expect(accessVersionLanguageCount('ja')).toBe(9);
 
-    expect(capabilityCount('choice-consequence-design')).toBe(3);
-    expect(capabilityCount('player-behavior-observation')).toBe(5);
-    expect(capabilityCount('market-reference-analysis')).toBe(3);
-    expect(capabilityCount('narrative-exposition')).toBe(5);
+    expect(capabilityCount('choice-consequence-design')).toBeGreaterThanOrEqual(3);
+    expect(capabilityCount('player-behavior-observation')).toBeGreaterThanOrEqual(5);
+    expect(capabilityCount('market-reference-analysis')).toBeGreaterThanOrEqual(3);
+    expect(capabilityCount('narrative-exposition')).toBeGreaterThanOrEqual(5);
     expect(capabilityCount('navigation-wayfinding-design')).toBe(3);
     expect(capabilityCount('emotional-arc-shaping')).toBe(5);
-    expect(capabilityCount('interactive-narrative-design')).toBe(5);
-    expect(capabilityCount('qualitative-evidence-synthesis')).toBe(6);
-    expect(capabilityCount('value-proposition-framing')).toBe(4);
+    expect(capabilityCount('interactive-narrative-design')).toBeGreaterThanOrEqual(5);
+    expect(capabilityCount('qualitative-evidence-synthesis')).toBeGreaterThanOrEqual(6);
+    expect(capabilityCount('value-proposition-framing')).toBeGreaterThanOrEqual(4);
+  });
+
+  it('adds a compact English expansion from durable learning formats', () => {
+    const expansionCanonicalUrls = [
+      'https://ocw.mit.edu/courses/cms-611j-creating-video-games-fall-2014/',
+      'https://gamedesignconcepts.wordpress.com/2009/03/31/what-is-game-design-concepts/',
+      'https://gamebalanceconcepts.wordpress.com/2010/06/17/hello-world/',
+      'https://lostgarden.home.blog/2022/11/12/the-workshopping-skill/',
+      'https://lostgarden.home.blog/2011/05/03/game-design-logs/',
+      'https://heterogenoustasks.wordpress.com/2015/01/26/standard-patterns-in-choice-based-games/',
+      'https://partner.steamgames.com/doc/marketing/visibility',
+      'https://howtomarketagame.com/2021/07/12/how-to-market-your-indie-game-a-10-step-plan/',
+      'https://doi.org/10.1145/2889160.2889253',
+      'https://www.choiceofgames.com/make-your-own-games/choicescript-intro/',
+    ];
+    const expansion = resources.filter(({ canonicalUrl }) =>
+      expansionCanonicalUrls.includes(canonicalUrl),
+    );
+    const countBy = (field: 'mediaType' | 'originalLanguage', value: string) =>
+      resources.filter((resource) => resource[field] === value).length;
+    const capabilityCount = (capabilityId: string) =>
+      resources.filter(({ capabilityIds }) => capabilityIds.includes(capabilityId)).length;
+    const consumableLanguageCount = (language: string) =>
+      resources.filter(({ accessVersions }) =>
+        accessVersions.some((version) => version.language === language),
+      ).length;
+    const accessVersionLanguageCount = (language: string) =>
+      resources.flatMap(({ accessVersions }) => accessVersions)
+        .filter((version) => version.language === language).length;
+
+    expect(resources).toHaveLength(174);
+    expect(sources).toHaveLength(38);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(188);
+    expect(expansion).toHaveLength(10);
+    expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
+      new Set(expansionCanonicalUrls),
+    );
+    expect(expansion.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
+    expect(expansion.every(({ originalLanguage }) => originalLanguage === 'en')).toBe(true);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'course')).toHaveLength(3);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'article')).toHaveLength(4);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'website')).toHaveLength(2);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'paper')).toHaveLength(1);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(0);
+    expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(11);
+
+    expect(countBy('mediaType', 'article')).toBe(12);
+    expect(countBy('mediaType', 'course')).toBe(16);
+    expect(countBy('mediaType', 'paper')).toBe(17);
+    expect(countBy('mediaType', 'website')).toBe(15);
+    expect(countBy('mediaType', 'talk')).toBe(69);
+    expect(countBy('originalLanguage', 'en')).toBe(147);
+    expect(countBy('originalLanguage', 'zh-Hans')).toBe(18);
+    expect(countBy('originalLanguage', 'ja')).toBe(9);
+    expect(consumableLanguageCount('en')).toBe(148);
+    expect(consumableLanguageCount('zh-Hans')).toBe(20);
+    expect(consumableLanguageCount('ja')).toBe(9);
+    expect(accessVersionLanguageCount('en')).toBe(159);
+    expect(accessVersionLanguageCount('zh-Hans')).toBe(20);
+    expect(accessVersionLanguageCount('ja')).toBe(9);
+
+    expect(capabilityCount('choice-consequence-design')).toBe(5);
+    expect(capabilityCount('market-reference-analysis')).toBe(5);
+    expect(capabilityCount('value-proposition-framing')).toBe(5);
+    expect(capabilityCount('alignment-facilitation')).toBe(7);
+    expect(capabilityCount('design-specification-handoff')).toBe(8);
+    expect(capabilityCount('qualitative-evidence-synthesis')).toBe(7);
+    expect(capabilityCount('narrative-exposition')).toBe(7);
+    expect(capabilityCount('interactive-narrative-design')).toBe(7);
+    expect(capabilityCount('player-behavior-observation')).toBe(6);
+    expect(capabilityCount('monetization-experience-alignment')).toBe(4);
   });
 
   it('merges known language versions and applies conservative access facts', () => {

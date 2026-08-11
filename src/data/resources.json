@@ -6463,5 +6463,412 @@
         "checkedAt": "2026-08-11"
       }
     ]
+  },
+  {
+    "id": "f-001-creating-video-games",
+    "title": {
+      "zh-CN": "Creating Video Games",
+      "en": "Creating Video Games"
+    },
+    "summary": {
+      "zh-CN": "MIT 本科团队课程，以完整游戏项目串联概念、计划、跨职能制作、测试与交付。"
+    },
+    "sourceId": "mit-opencourseware",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "task-breakdown",
+      "iteration-planning",
+      "cross-discipline-communication",
+      "design-specification-handoff"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://ocw.mit.edu/courses/cms-611j-creating-video-games-fall-2014/",
+    "whyRelevant": {
+      "zh-CN": "MIT OpenCourseWare 提供 syllabus、讲义、视频与学生项目，课程明确覆盖项目管理、团队制作和可玩的最终交付。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://ocw.mit.edu/courses/cms-611j-creating-video-games-fall-2014/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-002-game-design-concepts-course",
+    "title": {
+      "zh-CN": "Game Design Concepts",
+      "en": "Game Design Concepts"
+    },
+    "summary": {
+      "zh-CN": "Ian Schreiber 的二十课公开课程，以动手项目连接游戏分析、快速原型、迭代与 playtest。"
+    },
+    "sourceId": "game-design-concepts",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "experience-deconstruction",
+      "playtesting",
+      "iteration-planning"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gamedesignconcepts.wordpress.com/2009/03/31/what-is-game-design-concepts/",
+    "whyRelevant": {
+      "zh-CN": "课程入口与总结页明确列出二十课、实际制作、快速原型、迭代、形式分析和多阶段 playtest，并以 CC BY 长期开放。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gamedesignconcepts.wordpress.com/2009/03/31/what-is-game-design-concepts/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-003-game-balance-concepts-course",
+    "title": {
+      "zh-CN": "Game Balance Concepts",
+      "en": "Game Balance Concepts"
+    },
+    "summary": {
+      "zh-CN": "按十课组织的游戏平衡公开课程，覆盖数值关系、概率、成长、经济、指标与多人平衡。"
+    },
+    "sourceId": "game-balance-concepts",
+    "capabilityIds": [
+      "progression-economy-design",
+      "challenge-difficulty-design",
+      "telemetry-interpretation",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gamebalanceconcepts.wordpress.com/2010/06/17/hello-world/",
+    "whyRelevant": {
+      "zh-CN": "作者课程入口和十级目录把概率、成本曲线、成长节奏、经济、统计指标与可调设计旋钮组织成连续路径。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gamebalanceconcepts.wordpress.com/2010/06/17/hello-world/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-004-workshopping-skill",
+    "title": {
+      "zh-CN": "The Workshopping Skill",
+      "en": "The Workshopping Skill"
+    },
+    "summary": {
+      "zh-CN": "Daniel Cook 将设计工作坊拆成约束澄清、多解生成、反馈、再设计与收敛的循环。"
+    },
+    "sourceId": "lost-garden",
+    "capabilityIds": [
+      "alignment-facilitation",
+      "design-critique-feedback",
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://lostgarden.home.blog/2022/11/12/the-workshopping-skill/",
+    "whyRelevant": {
+      "zh-CN": "作者给出可执行的多轮工作坊步骤，并明确处理跨艺术、工程、QA 和制作反馈、心理安全与共同收敛。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://lostgarden.home.blog/2022/11/12/the-workshopping-skill/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-005-game-design-logs",
+    "title": {
+      "zh-CN": "Game Design Logs",
+      "en": "Game Design Logs"
+    },
+    "summary": {
+      "zh-CN": "用随原型迭代的设计日志替代固定长文档，保存决策、play notes、优先级与下一步。"
+    },
+    "sourceId": "lost-garden",
+    "capabilityIds": [
+      "design-specification-handoff",
+      "iteration-planning",
+      "scope-prioritization",
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://lostgarden.home.blog/2011/05/03/game-design-logs/",
+    "whyRelevant": {
+      "zh-CN": "作者逐项说明日志如何围绕可玩构建记录观察、优先事项、实验与完成任务，直接支持异步交接和持续迭代。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://lostgarden.home.blog/2011/05/03/game-design-logs/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-006-standard-patterns-choice-games",
+    "title": {
+      "zh-CN": "Standard Patterns in Choice-Based Games",
+      "en": "Standard Patterns in Choice-Based Games"
+    },
+    "summary": {
+      "zh-CN": "用 Time Cave、Gauntlet、Branch and Bottleneck 等模式比较选择结构、合流、状态与玩家感知。"
+    },
+    "sourceId": "heterogeneous-tasks",
+    "capabilityIds": [
+      "choice-consequence-design",
+      "interactive-narrative-design",
+      "narrative-architecture",
+      "narrative-exposition"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://heterogenoustasks.wordpress.com/2015/01/26/standard-patterns-in-choice-based-games/",
+    "whyRelevant": {
+      "zh-CN": "作者用图示和具体作品解释多种选择拓扑的效果与代价，为分支、后果和状态设计提供清晰词汇。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://heterogenoustasks.wordpress.com/2015/01/26/standard-patterns-in-choice-based-games/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-007-steam-visibility",
+    "title": {
+      "zh-CN": "Visibility on Steam",
+      "en": "Visibility on Steam"
+    },
+    "summary": {
+      "zh-CN": "Valve 官方说明 Steam 从发行、愿望单、标签、玩家反应到推荐与可见性的机制。"
+    },
+    "sourceId": "steamworks-documentation",
+    "capabilityIds": [
+      "market-reference-analysis",
+      "audience-positioning",
+      "player-behavior-observation",
+      "telemetry-interpretation"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://partner.steamgames.com/doc/marketing/visibility",
+    "whyRelevant": {
+      "zh-CN": "平台一手文档区分基准、自然、更新与定向可见性，并说明标签、偏好和实际玩家响应如何影响发现。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://partner.steamgames.com/doc/marketing/visibility",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-008-market-indie-game-ten-step-plan",
+    "title": {
+      "zh-CN": "How To Market Your Indie Game in 2024: A 10 Step Plan",
+      "en": "How To Market Your Indie Game in 2024: A 10 Step Plan"
+    },
+    "summary": {
+      "zh-CN": "按品类选择、产品描述、漏斗、愿望单、发行与更新组织独立游戏的市场工作。"
+    },
+    "sourceId": "how-to-market-a-game",
+    "capabilityIds": [
+      "market-reference-analysis",
+      "value-proposition-framing",
+      "audience-positioning",
+      "scope-prioritization"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://howtomarketagame.com/2021/07/12/how-to-market-your-indie-game-a-10-step-plan/",
+    "whyRelevant": {
+      "zh-CN": "作者明确把识别 Steam 受众、说明产品、构建和优化漏斗置于宣传动作之前，适合训练定位与价值表达。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://howtomarketagame.com/2021/07/12/how-to-market-your-indie-game-a-10-step-plan/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-009-game-development-postmortems",
+    "title": {
+      "zh-CN": "What Went Right and What Went Wrong: An Analysis of 155 Postmortems from Game Development",
+      "en": "What Went Right and What Went Wrong: An Analysis of 155 Postmortems from Game Development"
+    },
+    "summary": {
+      "zh-CN": "对 155 篇游戏开发复盘进行系统分析，提炼反复出现的成功实践、问题与制作风险。"
+    },
+    "sourceId": "acm-digital-library",
+    "capabilityIds": [
+      "qualitative-evidence-synthesis",
+      "constraint-aware-decision-making",
+      "iteration-planning",
+      "task-breakdown"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://doi.org/10.1145/2889160.2889253",
+    "whyRelevant": {
+      "zh-CN": "Microsoft Research 官方作者版说明论文把 155 篇复盘中的特征连接到正负经验，并归纳游戏开发的最佳实践与常见陷阱。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://doi.org/10.1145/2889160.2889253",
+        "accessModel": "subscription",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      },
+      {
+        "language": "en",
+        "url": "https://www.microsoft.com/en-us/research/publication/what-went-right-and-what-went-wrong-an-analysis-of-155-postmortems-from-game-development/",
+        "accessModel": "free",
+        "versionRelation": "official",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "f-010-choicescript-introduction",
+    "title": {
+      "zh-CN": "Introduction to ChoiceScript",
+      "en": "Introduction to ChoiceScript"
+    },
+    "summary": {
+      "zh-CN": "Choice of Games 的官方入门文档，用可运行示例讲解选择、条件、状态和互动小说场景组织。"
+    },
+    "sourceId": "choice-of-games",
+    "capabilityIds": [
+      "choice-consequence-design",
+      "interactive-narrative-design",
+      "narrative-exposition",
+      "world-character-coherence"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://www.choiceofgames.com/make-your-own-games/choicescript-intro/",
+    "whyRelevant": {
+      "zh-CN": "官方文档从第一个 choice 场景开始，逐步展示嵌套后果、变量、条件文本和场景文件，连接叙事设计与实现。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.choiceofgames.com/make-your-own-games/choicescript-intro/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
   }
 ]
