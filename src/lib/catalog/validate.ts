@@ -231,6 +231,7 @@ export type CatalogValidationCode =
   | 'RESOURCE_TOPIC_REFERENCE_REQUIRED'
   | 'RESOURCE_CANONICAL_URL_DUPLICATE'
   | 'RESOURCE_CANONICAL_URL_INVALID'
+  | 'RESOURCE_URL_OWNERSHIP_CONFLICT'
   | 'RESOURCE_ACCESS_VERSION_REQUIRED'
   | 'RESOURCE_ACCESS_MODEL_INVALID'
   | 'RESOURCE_ACCESS_VERSION_URL_INVALID'
@@ -376,6 +377,19 @@ function isUrl(value: unknown): value is string {
   } catch {
     return false;
   }
+}
+
+export function normalizeCatalogUrl(value: string): string {
+  const url = new URL(value);
+  url.hostname = url.hostname.toLowerCase().replace(/^www\./, '');
+  url.hash = '';
+  if (url.pathname !== '/') {
+    url.pathname = url.pathname.replace(/\/+$/, '');
+  }
+
+  url.searchParams.sort();
+
+  return url.toString();
 }
 
 function isRegionRestriction(value: unknown): boolean {
@@ -746,7 +760,11 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
 
   const sourceHomepages = new Set<string>();
   for (const source of catalog.sources) {
-    if (sourceHomepages.has(source.homepage)) {
+    if (!isUrl(source.homepage)) {
+      continue;
+    }
+    const normalizedHomepage = normalizeCatalogUrl(source.homepage);
+    if (sourceHomepages.has(normalizedHomepage)) {
       appendError(
         errors,
         'SOURCE_HOMEPAGE_DUPLICATE',
@@ -756,15 +774,36 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         source.homepage,
       );
     }
-    sourceHomepages.add(source.homepage);
+    sourceHomepages.add(normalizedHomepage);
   }
 
-  const resourceUrls = new Set(
-    catalog.resources.flatMap((resource) => [
-      resource.canonicalUrl,
-      ...resource.accessVersions.map(({ url }) => url),
-    ]),
-  );
+  const resourceUrlOwners = new Map<string, Set<string>>();
+  for (const resource of catalog.resources) {
+    for (const url of [resource.canonicalUrl, ...resource.accessVersions.map(({ url }) => url)]) {
+      if (!isUrl(url)) {
+        continue;
+      }
+      const normalizedUrl = normalizeCatalogUrl(url);
+      const owners = resourceUrlOwners.get(normalizedUrl) ?? new Set<string>();
+      owners.add(resource.id);
+      resourceUrlOwners.set(normalizedUrl, owners);
+    }
+  }
+
+  for (const [normalizedUrl, ownerIds] of resourceUrlOwners) {
+    const [, ...conflictingOwnerIds] = ownerIds;
+    for (const resourceId of conflictingOwnerIds) {
+      appendError(
+        errors,
+        'RESOURCE_URL_OWNERSHIP_CONFLICT',
+        'resources',
+        resourceId,
+        'canonicalUrl/accessVersions.url',
+        normalizedUrl,
+      );
+    }
+  }
+
   for (const source of catalog.sources) {
     if (!sourceKinds.has(source.kind)) {
       appendError(errors, 'SOURCE_KIND_INVALID', 'sources', source.id, 'kind', source.kind);
@@ -772,7 +811,10 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     if (!isUrl(source.homepage)) {
       appendError(errors, 'SOURCE_HOMEPAGE_INVALID', 'sources', source.id, 'homepage', source.homepage);
     }
-    if (resourceUrls.has(source.homepage)) {
+    if (
+      isUrl(source.homepage) &&
+      resourceUrlOwners.has(normalizeCatalogUrl(source.homepage))
+    ) {
       appendError(
         errors,
         'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT',
@@ -794,18 +836,6 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
 
   const canonicalUrls = new Set<string>();
   for (const resource of catalog.resources) {
-    if (canonicalUrls.has(resource.canonicalUrl)) {
-      appendError(
-        errors,
-        'RESOURCE_CANONICAL_URL_DUPLICATE',
-        'resources',
-        resource.id,
-        'canonicalUrl',
-        resource.canonicalUrl,
-      );
-    }
-    canonicalUrls.add(resource.canonicalUrl);
-
     if (!isUrl(resource.canonicalUrl)) {
       appendError(
         errors,
@@ -815,6 +845,19 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         'canonicalUrl',
         resource.canonicalUrl,
       );
+    } else {
+      const normalizedCanonicalUrl = normalizeCatalogUrl(resource.canonicalUrl);
+      if (canonicalUrls.has(normalizedCanonicalUrl)) {
+        appendError(
+          errors,
+          'RESOURCE_CANONICAL_URL_DUPLICATE',
+          'resources',
+          resource.id,
+          'canonicalUrl',
+          resource.canonicalUrl,
+        );
+      }
+      canonicalUrls.add(normalizedCanonicalUrl);
     }
 
     if (!mediaTypes.has(resource.mediaType)) {

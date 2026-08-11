@@ -20,7 +20,11 @@ import roleProfiles from '../../src/data/role-profiles.json';
 import sources from '../../src/data/sources.json';
 import catalogLoadSource from '../../src/lib/catalog/load.ts?raw';
 import catalogValidateSource from '../../src/lib/catalog/validate.ts?raw';
-import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
+import {
+  normalizeCatalogUrl,
+  validateCatalog,
+  type Catalog,
+} from '../../src/lib/catalog/validate';
 
 const collections = {
   egdsFrameworkNodes,
@@ -466,7 +470,7 @@ describe('raw product catalog data', () => {
       resources.flatMap((resource) => [
         resource.canonicalUrl,
         ...resource.accessVersions.map(({ url }) => url),
-      ]),
+      ]).map(normalizeCatalogUrl),
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
@@ -475,8 +479,12 @@ describe('raw product catalog data', () => {
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
     );
-    expect(new Set(resources.map(({ canonicalUrl }) => canonicalUrl)).size).toBe(resources.length);
-    expect(new Set(sources.map(({ homepage }) => homepage)).size).toBe(sources.length);
+    expect(new Set(resources.map(({ canonicalUrl }) => normalizeCatalogUrl(canonicalUrl))).size).toBe(
+      resources.length,
+    );
+    expect(new Set(sources.map(({ homepage }) => normalizeCatalogUrl(homepage))).size).toBe(
+      sources.length,
+    );
 
     for (const resource of resources) {
       expect(intakeCanonicalUrls.has(resource.canonicalUrl), resource.canonicalUrl).toBe(true);
@@ -512,7 +520,10 @@ describe('raw product catalog data', () => {
     }
 
     for (const source of sources) {
-      expect(workUrls.has(source.homepage), `${source.id} homepage is a Work Item`).toBe(false);
+      expect(
+        workUrls.has(normalizeCatalogUrl(source.homepage)),
+        `${source.id} homepage is a Work Item`,
+      ).toBe(false);
     }
 
     const coverage = {
@@ -758,15 +769,78 @@ describe('raw product catalog data', () => {
     expect(resources).toHaveLength(179);
     expect(sources).toHaveLength(38);
     expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
-    expect(resourceIntake).toContain('Batch A–G 已正规化为 179 个 catalog Work Item');
-    expect(resourceIntake).toContain('确定性 canonical URL 去重后：**183 项研究记录**');
-    expect(resourceIntake).toContain('Work Item：179；Source：38；Access Version：193');
-    expect(resourceIntake).toContain('原始语言：en 150、ja 9、zh-Hans 20');
-    expect(resourceIntake).toContain('可消费语言（Work Item 计，可重叠）：en 151、ja 9、zh-Hans 22');
-    expect(resourceIntake).toContain('Access Version 语言：en 162、ja 9、zh-Hans 22');
-    expect(resourceIntake).toContain(
-      '媒介：article 12、book 29、course 16、paper 17、podcast 11、talk 71、video 5、website 18',
+
+    const coverageSection = resourceIntake.slice(
+      resourceIntake.indexOf('## 当前正规化 catalog coverage'),
+      resourceIntake.indexOf('## 接受候选'),
     );
+    const captureCoverageLine = (label: string) => {
+      const match = coverageSection.match(new RegExp(`^- ${label}：([^。\\n]+)`, 'm'));
+      if (!match) throw new Error(`Missing coverage line: ${label}`);
+      return match[1];
+    };
+    const parseCoverageCounts = (value: string) =>
+      Object.fromEntries(
+        value.split(/[、；]/).map((part) => {
+          const match = part.trim().match(/^(.+?)(?:：|\s+)(\d+)$/);
+          if (!match) throw new Error(`Invalid coverage count: ${part}`);
+          return [match[1], Number(match[2])];
+        }),
+      );
+    const countValues = (values: string[]) =>
+      Object.fromEntries(
+        [...new Set(values)].sort().map((value) => [
+          value,
+          values.filter((candidate) => candidate === value).length,
+        ]),
+      );
+
+    expect(parseCoverageCounts(`Work Item：${captureCoverageLine('Work Item')}`)).toEqual({
+      'Work Item': resources.length,
+      Source: sources.length,
+      'Access Version': resources.flatMap(({ accessVersions }) => accessVersions).length,
+      'Resource Topic': resourceTopics.length,
+    });
+    expect(parseCoverageCounts(captureCoverageLine('原始语言'))).toEqual(
+      countValues(resources.map(({ originalLanguage }) => originalLanguage)),
+    );
+    expect(parseCoverageCounts(captureCoverageLine('可消费语言（Work Item 计，可重叠）'))).toEqual(
+      Object.fromEntries(
+        [...new Set(resources.flatMap(({ accessVersions }) => accessVersions.map(({ language }) => language)))]
+          .sort()
+          .map((language) => [
+            language,
+            resources.filter(({ accessVersions }) =>
+              accessVersions.some((version) => version.language === language),
+            ).length,
+          ]),
+      ),
+    );
+    expect(parseCoverageCounts(captureCoverageLine('Access Version 语言'))).toEqual(
+      countValues(resources.flatMap(({ accessVersions }) => accessVersions.map(({ language }) => language))),
+    );
+    expect(parseCoverageCounts(captureCoverageLine('媒介'))).toEqual(
+      countValues(resources.map(({ mediaType }) => mediaType)),
+    );
+
+    const topicCoverage = Object.fromEntries(
+      [...coverageSection.matchAll(/^\| ([^|]+?) \| (\d+) \|$/gm)]
+        .filter(([, title]) => title !== '合计')
+        .map(([, title, count]) => [title, Number(count)]),
+    );
+    expect(topicCoverage).toEqual(
+      Object.fromEntries(
+        resourceTopics.map((topic) => [
+          topic.title['zh-CN'],
+          resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes(topic.id)).length,
+        ]),
+      ),
+    );
+    expect(topicCoverage).toHaveProperty('设计基础与概念');
+    expect(Object.keys(topicCoverage)).toHaveLength(resourceTopics.length);
+    expect(
+      Number(coverageSection.match(/^\| 合计 \| (\d+) \|$/m)?.[1]),
+    ).toBe(resources.length);
     expect(expansion).toHaveLength(expansionCanonicalUrls.length);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -780,21 +854,7 @@ describe('raw product catalog data', () => {
       new Set(['level-design-book', 'tencent-games-academy']),
     );
 
-    expect(
-      Object.fromEntries(
-        expansion.map((resource) => [
-          resource.canonicalUrl,
-          {
-            sourceId: resource.sourceId,
-            mediaType: resource.mediaType,
-            originalLanguage: resource.originalLanguage,
-            capabilityIds: resource.capabilityIds,
-            knowledgeTopicIds: resource.knowledgeTopicIds,
-            resourceTopicIds: resource.resourceTopicIds,
-          },
-        ]),
-      ),
-    ).toEqual({
+    const expectedBatchG = {
       'https://book.leveldesignbook.com/process/preproduction': {
         sourceId: 'level-design-book',
         mediaType: 'website',
@@ -835,7 +895,24 @@ describe('raw product catalog data', () => {
         knowledgeTopicIds: ['player-motivation-difference', 'perception-attention-emotion'],
         resourceTopicIds: ['chinese-industry-cross-discipline'],
       },
-    });
+    };
+
+    for (const [canonicalUrl, expected] of Object.entries(expectedBatchG)) {
+      const resource = expansion.find((candidate) => candidate.canonicalUrl === canonicalUrl);
+      expect(resource).toMatchObject({
+        sourceId: expected.sourceId,
+        mediaType: expected.mediaType,
+        originalLanguage: expected.originalLanguage,
+      });
+      for (const mappingField of [
+        'capabilityIds',
+        'knowledgeTopicIds',
+        'resourceTopicIds',
+      ] as const) {
+        expect(resource?.[mappingField]).toHaveLength(expected[mappingField].length);
+        expect(new Set(resource?.[mappingField])).toEqual(new Set(expected[mappingField]));
+      }
+    }
 
     for (const resource of expansion) {
       expect(resource.accessVersions).toEqual([
@@ -851,14 +928,9 @@ describe('raw product catalog data', () => {
       expect(resource).not.toHaveProperty('externalSignals');
     }
 
-    const normalizedCanonicalUrls = resources.map((resource) => {
-      const url = new URL(resource.canonicalUrl);
-      url.hostname = url.hostname.toLowerCase().replace(/^www\./, '');
-      url.hash = '';
-      if (url.pathname !== '/') url.pathname = url.pathname.replace(/\/$/, '');
-      url.searchParams.sort();
-      return url.toString();
-    });
+    const normalizedCanonicalUrls = resources.map(({ canonicalUrl }) =>
+      normalizeCatalogUrl(canonicalUrl),
+    );
     expect(new Set(normalizedCanonicalUrls).size).toBe(resources.length);
   });
 

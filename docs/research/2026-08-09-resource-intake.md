@@ -40,7 +40,7 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | 平衡与经济 | 10 |
 | 手感与反馈 | 8 |
 | 关卡与空间 | 21 |
-| Playtest 与游戏用户研究 | 13 |
+| Playtest 主题资源集合 | 13 |
 | 叙事与表达 | 18 |
 | 原型与实验 | 9 |
 | 生产与迭代 | 12 |

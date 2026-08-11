@@ -4,7 +4,11 @@ import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
 import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
 import capabilities from '../../src/data/capabilities.json';
 import roleProfiles from '../../src/data/role-profiles.json';
-import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
+import {
+  normalizeCatalogUrl,
+  validateCatalog,
+  type Catalog,
+} from '../../src/lib/catalog/validate';
 
 const localized = (text: string) => ({ 'zh-CN': text });
 
@@ -907,6 +911,63 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('normalizes catalog URLs before comparing Source and Work ownership', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.sources[0].homepage = 'https://www.EXAMPLE.com/work/?b=2&a=1#source';
+    catalog.resources.push(validV02Resource('work', 'https://example.com/work?a=1&b=2'));
+
+    expect(normalizeCatalogUrl(catalog.sources[0].homepage)).toBe(
+      'https://example.com/work?a=1&b=2',
+    );
+    expect(normalizeCatalogUrl('https://example.com/?tag=z&b=2&tag=a&a=1')).toBe(
+      'https://example.com/?a=1&b=2&tag=z&tag=a',
+    );
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT',
+      collection: 'sources',
+      id: 'source',
+      field: 'homepage',
+      targetId: 'https://www.EXAMPLE.com/work/?b=2&a=1#source',
+    });
+  });
+
+  it('rejects normalized duplicate Source homepages', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.sources.push({
+      ...structuredClone(catalog.sources[0]),
+      id: 'normalized-duplicate-source',
+      homepage: 'https://www.EXAMPLE.com/source/#duplicate',
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'SOURCE_HOMEPAGE_DUPLICATE',
+      collection: 'sources',
+      id: 'normalized-duplicate-source',
+      field: 'homepage',
+      targetId: 'https://www.EXAMPLE.com/source/#duplicate',
+    });
+  });
+
+  it('rejects one normalized Access URL owned by two Work Items', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const first = validV02Resource('first-work', 'https://example.com/first');
+    first.accessVersions[0].url = 'https://www.EXAMPLE.com/shared/?b=2&a=1#first';
+    const second = validV02Resource('second-work', 'https://example.com/second');
+    second.accessVersions[0].url = 'https://example.com/shared?a=1&b=2';
+    catalog.resources.push(first, second);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_URL_OWNERSHIP_CONFLICT',
+      collection: 'resources',
+      id: 'second-work',
+      field: 'canonicalUrl/accessVersions.url',
+      targetId: 'https://example.com/shared?a=1&b=2',
+    });
+  });
+
   it('validates typed resource topic references and requires one topical connection', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);
@@ -984,6 +1045,7 @@ describe('validateCatalog', () => {
     });
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'RESOURCE_URL_OWNERSHIP_CONFLICT',
       'RESOURCE_CANONICAL_URL_DUPLICATE',
       'RESOURCE_EXTERNAL_SIGNAL_INVALID',
       'RESOURCE_ACCESS_VERSION_REQUIRED',
