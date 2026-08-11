@@ -968,6 +968,51 @@ describe('validateCatalog', () => {
     });
   });
 
+  it('rejects normalized duplicate canonical URLs when Access URLs are distinct', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const first = validV02Resource(
+      'first-canonical-work',
+      'https://www.EXAMPLE.com/shared-canonical/?b=2&a=1#first',
+    );
+    first.accessVersions[0].url = 'https://example.com/first-access';
+    const second = validV02Resource(
+      'second-canonical-work',
+      'https://example.com/shared-canonical?a=1&b=2',
+    );
+    second.accessVersions[0].url = 'https://example.com/second-access';
+    catalog.resources.push(first, second);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_CANONICAL_URL_DUPLICATE',
+      collection: 'resources',
+      id: 'second-canonical-work',
+      field: 'canonicalUrl',
+      targetId: 'https://example.com/shared-canonical?a=1&b=2',
+    });
+  });
+
+  it('rejects one Work canonical URL reused by another Work Access URL after normalization', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const canonicalOwner = validV02Resource(
+      'canonical-owner',
+      'https://www.EXAMPLE.com/shared-identity/?b=2&a=1#canonical',
+    );
+    canonicalOwner.accessVersions[0].url = 'https://example.com/canonical-owner-access';
+    const accessOwner = validV02Resource('access-owner', 'https://example.com/access-owner');
+    accessOwner.accessVersions[0].url = 'https://example.com/shared-identity?a=1&b=2';
+    catalog.resources.push(canonicalOwner, accessOwner);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_URL_OWNERSHIP_CONFLICT',
+      collection: 'resources',
+      id: 'access-owner',
+      field: 'canonicalUrl/accessVersions.url',
+      targetId: 'https://example.com/shared-identity?a=1&b=2',
+    });
+  });
+
   it('validates typed resource topic references and requires one topical connection', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);

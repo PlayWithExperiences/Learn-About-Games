@@ -770,6 +770,20 @@ describe('raw product catalog data', () => {
     expect(sources).toHaveLength(38);
     expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
 
+    const intakeHeader = resourceIntake.slice(
+      0,
+      resourceIntake.indexOf('## 当前正规化 catalog coverage'),
+    );
+    const readHeaderWorkItemCount = (pattern: RegExp) => {
+      const match = intakeHeader.match(pattern);
+      if (!match) throw new Error(`Missing intake Work Item count: ${pattern.source}`);
+      return Number(match[1]);
+    };
+    expect([
+      readHeaderWorkItemCount(/Batch A–G 已正规化为 (\d+) 个 catalog Work Item/),
+      readHeaderWorkItemCount(/正规化后为 \*\*(\d+) 个 Work Item\*\*/),
+    ]).toEqual([resources.length, resources.length]);
+
     const coverageSection = resourceIntake.slice(
       resourceIntake.indexOf('## 当前正规化 catalog coverage'),
       resourceIntake.indexOf('## 接受候选'),
@@ -779,14 +793,15 @@ describe('raw product catalog data', () => {
       if (!match) throw new Error(`Missing coverage line: ${label}`);
       return match[1];
     };
-    const parseCoverageCounts = (value: string) =>
-      Object.fromEntries(
-        value.split(/[、；]/).map((part) => {
-          const match = part.trim().match(/^(.+?)(?:：|\s+)(\d+)$/);
-          if (!match) throw new Error(`Invalid coverage count: ${part}`);
-          return [match[1], Number(match[2])];
-        }),
-      );
+    const parseCoverageCounts = (value: string) => {
+      const entries = value.split(/[、；]/).map((part): [string, number] => {
+        const match = part.trim().match(/^(.+?)(?:：|\s+)(\d+)$/);
+        if (!match) throw new Error(`Invalid coverage count: ${part}`);
+        return [match[1], Number(match[2])];
+      });
+      expect(entries).toHaveLength(new Set(entries.map(([key]) => key)).size);
+      return Object.fromEntries(entries);
+    };
     const countValues = (values: string[]) =>
       Object.fromEntries(
         [...new Set(values)].sort().map((value) => [
@@ -823,10 +838,13 @@ describe('raw product catalog data', () => {
       countValues(resources.map(({ mediaType }) => mediaType)),
     );
 
+    const topicRows = [...coverageSection.matchAll(/^\| ([^|]+?) \| (\d+) \|$/gm)]
+      .map(([, title, count]): [string, number] => [title, Number(count)]);
+    expect(topicRows).toHaveLength(resourceTopics.length + 1);
+    expect(topicRows.filter(([title]) => title === '合计')).toHaveLength(1);
+    expect(topicRows).toHaveLength(new Set(topicRows.map(([title]) => title)).size);
     const topicCoverage = Object.fromEntries(
-      [...coverageSection.matchAll(/^\| ([^|]+?) \| (\d+) \|$/gm)]
-        .filter(([, title]) => title !== '合计')
-        .map(([, title, count]) => [title, Number(count)]),
+      topicRows.filter(([title]) => title !== '合计'),
     );
     expect(topicCoverage).toEqual(
       Object.fromEntries(
