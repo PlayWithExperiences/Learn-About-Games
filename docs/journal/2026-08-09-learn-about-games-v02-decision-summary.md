@@ -1,12 +1,16 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含 EGDS 层级表达、Atlas 全屏证据透镜与 174 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含统一左→右的 EGDS 层级、10 个 Atlas Genre Family／5 条证据谱系与 179 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
 - EGDS 能力地图重构设计：[2026-08-09-egds-expertise-map-design.md](../superpowers/specs/2026-08-09-egds-expertise-map-design.md)
 - EGDS 能力地图实施计划：[2026-08-09-egds-expertise-map-implementation-plan.md](../superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md)
+- 横向 EGDS／Genre Atlas／资源扩展设计：[2026-08-11-horizontal-egds-genre-atlas-resource-expansion-design.md](../superpowers/specs/2026-08-11-horizontal-egds-genre-atlas-resource-expansion-design.md)
+- 横向 EGDS 实施计划：[2026-08-11-horizontal-egds-implementation-plan.md](../superpowers/plans/2026-08-11-horizontal-egds-implementation-plan.md)
+- Genre Atlas 基础计划：[2026-08-11-genre-atlas-foundation-plan.md](../superpowers/plans/2026-08-11-genre-atlas-foundation-plan.md)
+- 资源下一批计划：[2026-08-11-resource-expansion-next-batch-plan.md](../superpowers/plans/2026-08-11-resource-expansion-next-batch-plan.md)
 - 私有完善 Map / Career 计划：[2026-08-09-private-refinement-map-career-plan.md](../superpowers/plans/2026-08-09-private-refinement-map-career-plan.md)
 - 私有完善 Resources 计划：[2026-08-09-private-refinement-resources-plan.md](../superpowers/plans/2026-08-09-private-refinement-resources-plan.md)
 - 私有完善 Atlas 计划：[2026-08-09-private-refinement-atlas-plan.md](../superpowers/plans/2026-08-09-private-refinement-atlas-plan.md)
@@ -171,10 +175,10 @@ Atlas 保留唯一一组 catalog-derived 透镜控件，并把它移入会成为
 ## 当前未决风险
 
 - `mindset-problem-solving-tools` 与 `leadership-management` 仍是作者地图中的有效 landmark，但当前分别没有或很少直接 Capability；界面如实显示内容缺口，不能用不相关能力填满。
-- 当前已收录 174 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持中文优先、英文其次，并维持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
+- 当前已收录 179 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持中文优先、英文其次，并维持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
 - 资源筛选只表达目录事实；不能把外部公开计数或观察转译成本站推荐、评分、排名或审核结论。
 - 当前中文界面与多语言资源元数据不等于完整双语产品；英文界面仍属后续范围。
-- Atlas 当前只有 Roguelike 与 Metroidvania 两个证据透镜；扩展必须先增加可核查关系，不能为视觉密度补无证据边。
+- Atlas 当前有 10 个非排他 Genre Family 和 5 条证据透镜；尚无谱系的 Family 必须先增加可核查节点、关系与 Evidence，不能把浏览目录当成已完成的历史沿革，也不能为视觉密度补无证据边。
 
 ## 私有完善实现状态
 
@@ -239,3 +243,17 @@ Atlas 提交 `757ff22` 把显式地图模式改为固定 `inset:0`、`100dvh` �
 资源研究使用 Agent Reach。doctor 确认 Exa via mcporter 和 Jina Reader 可用；Exa 免费额度中途返回 429 后，不用搜索摘要替代证据，而以 Jina、官方／作者／出版社页面逐条核验。提交 `ece3285` 新增 20 个 Work Item、9 个 Source 与 21 个 Access Version，目录总量为 148／29／161。新增媒介为文章 4、书籍 2、课程 1、论文 2、播客 6、网站 5；不新增评分、排名、审核状态或 externalSignals。`encounter-space-composition` 从零增至 3 条直接资源，`monetization-experience-alignment` 从零增至 4 条。Owlcat Learning 作为一个 Work Item 保存英文原始版本与官方简体中文 Access Version。
 
 主任务同步当前 README、Roadmap、Changelog、Devlog 与三个公开 E2E 数量合同。整合后的 fresh `npm run build` 为 Astro check 0 errors / warnings / hints、Vitest 141/141、116 pages；完整 Playwright 为 203 passed / 17 intentional skipped / 0 failed。地图、Career 与 Atlas 的 Light／Dark、多断点原图由实现者和主任务分别以 original resolution 检查，未发现页面级横向溢出。当前提交均只存在本地 `codex/v02`，没有 push、没有启用 Pages；本机重新启动 base-path preview 后由发起人继续查看。
+
+## 横向 EGDS、Genre Atlas 与资源 stop-condition 扩展
+
+发起人进一步明确三项方向：EGDS 既然采用从左向右阅读，就不应再混用上下展开；成长资源继续补充；Innovation Atlas 应先列常见 genre，再逐步补全常见品类的历史沿革。书面设计把真实用户决定拆成三层：EGDS 的 x 轴只表达父→子包含进展，Capability relation 不伪装成结构线；Genre Family 只提供宽泛、非排他入口；Theme 才是需要节点、关系与 Evidence 共同支撑的历史谱系。
+
+EGDS 提交 `13ae80c` 将所有 parent-child 结构统一为从父节点东口连向子节点西口的左→右布局，总览和聚焦共用同一方向语法；`bea3a76` 与 `66cc087` 保留 Career 聚焦事实、响应式五主分支计数和边界避让。几何单测最终为 24/24，Map／Career／Profile 双项目为 90/90；独立规格与质量复审均为 Approved，未发现剩余 Critical／Important／Minor。
+
+Atlas 数据提交 `829b718` 建立 10 个常见 Genre Family，并新增 Platform 与 Adventure 两条谱系切片。UI 提交 `a0b0fab` 把 Family 原生 disclosure 和唯一一组透镜控件放进同一网络／全屏工作区；Family disclosure 使用原生互斥，避免面板同时展开互相覆盖。当前 5 条 Theme 是早期电子游戏与商业化、Roguelike、Metroidvania、平台与跳跃游戏、解析器冒险到图形冒险；总量为 48 nodes／36 relations／61 Evidence。透镜只改变强调，不隐藏、不重排、不移动节点，scale、pan、search 和 map mode 保持。规格审查结论 Ready；质量审查发现同 DOM 二次执行会绑定第二套 controller、扩展 provenance 可留下半套字段、端点测试只验单一坐标三个缺口。修复提交 `a7d694c` 增加幂等 guard、原子 provenance bundle 和完整边界线段断言；target unit 91/91，Atlas／Theme／Base 双项目 45 passed／19 intentional skipped。
+
+资源研究按中文优先、英文其次执行，但证据门槛高于预设批量。Exa 在第一轮指定查询即返回 429 后停止；Jina 与具体官方页面只确认三篇 Level Design Book 原页和两篇腾讯完整实录。MOOC 搜索页只有平台说明，CNKI 页面证书失败，因此没有凑满原定数量。提交 `2a1e9ee` 把 catalog 扩为 38 Source／179 Work Item／193 Access Version；`f51a5cd` 收窄两项过度议题映射并修正研究记录；`5375b54` 与 `ac4f441` 增加统一 URL 归一化、跨 Work ownership 和 notebook 对账／mutation contracts。最终资源 reviewer 结论 Approved，目标测试 65/65、全量 unit 158/158、Resources 双项目 28/28。
+
+本轮没有 push、没有恢复 Pages、没有改变仓库 Private 状态。公开 README、Roadmap、Changelog、Devlog 005 与 visible-skeleton 合同只更新当前候选数字，历史部署段继续保留当时真实的 20／128 与 27／25／40，不改写过去。
+
+最终 root 级 fresh gate：`npm run build` 为 Astro check 67 files、0 errors／warnings／hints，Vitest 159/159，126 个静态页面；完整 Playwright 为 214 passed／20 intentional skipped／0 failed；`npm audit --audit-level=high --omit=dev` 为 0 vulnerabilities。GitHub 只读核验继续返回 Private，deploy workflow 为 `disabled_manually`，Pages API 为 404。最终提交后只重新启动本机 `127.0.0.1:4321` base-path preview，不 push、不部署。

@@ -396,3 +396,21 @@ Atlas 测试先在旧 wrapper 没有全屏状态处得到 RED。实现增加完�
 本段是脱敏的部分导出，不包含秘密、不可访问的逐字推理或完整工具日志。仓库保持 Private、Pages workflow 保持 `disabled_manually`；本轮没有 push 或线上部署，最终交付仍是 fresh build 后的本地 `/Learn-About-Games/` 预览。
 
 最终整合验证为 Astro 0 diagnostics、Vitest 144／144、125 个静态页面、完整 Playwright 208 passed／18 intentional skipped。数据探针确认 174／38／188，canonical 与 Source homepage 各自唯一，Source／Work URL 无碰撞，全部 Work Item 都引用现有 Source 且恰属一个主要资源主题；npm high-level audit 为 0 vulnerabilities，差异敏感模式扫描无命中。
+
+## 36. 横向 EGDS、常见品类目录与证据扩展（部分会话导出）
+
+发起人继续查看本地页面后指出：能力地图既然采用从左到右的结构展开，就应该全部统一为从左到右，不能同时呈现左右与上下两套层级方向；成长资源可以继续补充；Innovation Atlas 应先列出常见 genre，再逐步补全这些品类的发展沿革。发起人确认以书面方案为主，并同意并行实施。
+
+主任务以文字固定三条边界。EGDS 的 x 轴只表达父→子包含关系，支持／互补关系不改变节点所有权；常见 Genre Family 是非排他浏览目录，同一谱系可以属于多个 Family；Atlas Theme 是证据谱系，必须由节点、关系和 Evidence 共同闭合，不能从目录标签自动推导历史关系。三项工作按低重合度分别交给实现／研究 agent，根任务保留跨切片审查和最终门禁。
+
+EGDS 的 pure RED 先证明旧布局仍存在非左→右包含边；实现把总览、聚焦和关系端点统一为父节点东口到子节点西口，使用稳定 preorder 和边界避让。审查进一步补回 Career 聚焦时五主分支的汇总事实，并确保 1024px／320px 响应式大纲也保留这些计数。最终 geometry 24/24、Map／Career／Profile 双项目 90/90，规格和质量审查均通过。
+
+资源研究通过 Agent Reach 运行。Exa via mcporter 在第一轮查询返回 429 后停止；Jina Reader 与官方页面逐条核验已发现候选。三篇 Level Design Book 页面与两篇腾讯完整实录入库；MOOC 搜索页只有平台级说明、CNKI 页面证书失败，均不作为具体 Work Item 证据。本批只新增 5 项而不是凑满预设 8 项，目录成为 38 Source／179 Work Item／193 Access Version。后续审查删除两项过宽映射，并加入 URL 归一化、跨 Work ownership、动态 notebook 对账和 mutation tests。
+
+Atlas 先建立 10 个 Family：动作、射击、冒险、角色扮演、策略、模拟经营、体育竞速、益智、沙盒生存、节奏派对。它们明确不是排他分类，也不生成关系。首批新增 Platform 与 Adventure 谱系，与早期电子游戏、Roguelike、Metroidvania 合为 5 个 Theme；总量成为 48 节点／36 关系／61 Evidence。Family directory 和唯一一组 Theme buttons 在普通页面与全屏地图中复用同一 DOM；切换只改变强调，缩放、平移、搜索、节点顺序和关系几何保持。对抗审查修复了全屏 disclosure 覆盖 controls／canvas 和两个 Family 同时展开互相覆盖的问题。
+
+最终 Atlas 质量审查没有停在 DOM 数量表面。cache-bust 重执行同一编译模块时，旧实现会新增 26 个 listener 并创建第二套 map state；扩展 Evidence 删除任一关键 provenance 字段仍可能通过 validator；关系端点测试也只证明某个坐标碰到边界，没有证明另一坐标仍在线段范围内。三项分别取得 RED 后，`a7d694c` 增加单一 initialized owner、扩展 provenance 的原子 bundle 和完整矩形边界 helper／浏览器断言。`publicationDate` 与 `stableId` 继续遵守“已知时填写”，没有伪造未知资料。
+
+本节是当前运行时可保存的脱敏部分记录，不声称包含已经压缩且不可访问的逐字聊天或内部推理。仓库继续 Private，Pages workflow 继续 `disabled_manually`；所有实现仍是本地候选，没有 push 或线上部署。主任务接下来只更新当前公开说明、跑 fresh 全仓门禁并重启 base-path 本地预览。
+
+最终 root 级验证重新生成 126 个静态页面：Astro check 0 diagnostics，Vitest 159/159；完整 Playwright 234 项中 214 passed、20 project-specific skipped、0 failed。首轮公开说明 E2E 的两项失败来自 README 新增 Access Version 数字后，测试仍把 Source／Work Item／主题视作相邻文字；测试改为从真实 catalog 动态计算 193 个 Access Version 后，visible-skeleton 29 passed／1 intentional skip，完整矩阵原样复跑全绿。依赖高危审计为 0；GitHub API 仍显示仓库 Private、deploy workflow `disabled_manually`、Pages API 404。
