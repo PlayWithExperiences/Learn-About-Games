@@ -99,6 +99,89 @@ test('server renders the complete EGDS skeleton, hidden entities and stable deta
   }
 });
 
+for (const theme of ['light', 'dark'] as const) {
+  test(`desktop hierarchy territories and structural weights remain legible in ${theme}`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.addInitScript(({ storedTheme }) => {
+      window.localStorage.setItem('learn-about-games:theme:v1', storedTheme);
+    }, { storedTheme: theme });
+    await page.goto('./map/');
+
+    const map = page.locator('[data-egds-map]');
+    const scene = map.locator('[data-egds-scene]');
+    const territories = scene.locator('[data-egds-territory]');
+    await expect(territories).toHaveCount(5);
+    await expect(scene.locator('[data-egds-subterritory="experience-process"]')).toHaveCount(1);
+    await expect(scene.locator('[data-egds-structural-level="root"]')).toHaveCount(5);
+    await expect(scene.locator('[data-egds-structural-level="branch"]')).toHaveCount(19);
+    await expect(scene.locator('[data-egds-structural-level="child"]')).toHaveCount(3);
+
+    const layerOrder = await scene.evaluate((element) => {
+      const z = (selector: string) => Number.parseInt(
+        getComputedStyle(element.querySelector<HTMLElement>(selector)!).zIndex,
+        10,
+      );
+      return {
+        territory: z('[data-egds-territories]'),
+        structure: z('.capability-map__structure'),
+        nodes: z('.capability-map__framework'),
+      };
+    });
+    expect(layerOrder.territory).toBeLessThan(layerOrder.structure);
+    expect(layerOrder.structure).toBeLessThan(layerOrder.nodes);
+
+    const metrics = await scene.evaluate((element) => {
+      const root = element.querySelector<SVGPathElement>('[data-egds-structural-level="root"]')!;
+      const branch = element.querySelector<SVGPathElement>('[data-egds-structural-level="branch"]')!;
+      const child = element.querySelector<SVGPathElement>('[data-egds-structural-level="child"]')!;
+      const process = element.querySelector<SVGPathElement>('[data-egds-process-path]')!;
+      const resolveColor = (value: string) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        const context = canvas.getContext('2d')!;
+        context.fillStyle = value;
+        context.fillRect(0, 0, 1, 1);
+        return Array.from(context.getImageData(0, 0, 1, 1).data.slice(0, 3));
+      };
+      const luminance = (rgb: number[]) => {
+        const channels = rgb.map((channel) => {
+          const value = channel / 255;
+          return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * channels[0]! + 0.7152 * channels[1]! + 0.0722 * channels[2]!;
+      };
+      const contrast = (left: number[], right: number[]) => {
+        const [lighter, darker] = [luminance(left), luminance(right)].sort((a, b) => b - a);
+        return (lighter! + 0.05) / (darker! + 0.05);
+      };
+      const sceneStyle = getComputedStyle(element);
+      const pageColor = resolveColor(sceneStyle.getPropertyValue('--page'));
+      const gridColor = resolveColor(sceneStyle.getPropertyValue('--egds-grid-line'));
+      const structuralColors = [root, branch, child].map((path) => resolveColor(getComputedStyle(path).stroke));
+      return {
+        widths: [root, branch, child, process].map((path) => Number.parseFloat(getComputedStyle(path).strokeWidth)),
+        gridContrast: contrast(gridColor, pageColor),
+        weakestStructuralContrast: Math.min(...structuralColors.map((color) => contrast(color, pageColor))),
+        processMarker: process.getAttribute('marker-end'),
+        territoryBackgrounds: Array.from(element.querySelectorAll<HTMLElement>('[data-egds-territory]'))
+          .map((territory) => getComputedStyle(territory).backgroundImage),
+        nestedBackground: getComputedStyle(
+          element.querySelector<HTMLElement>('[data-egds-subterritory="experience-process"]')!,
+        ).backgroundImage,
+      };
+    });
+
+    expect(new Set(metrics.widths).size).toBe(4);
+    expect(metrics.widths[0]).toBeGreaterThan(metrics.widths[1]!);
+    expect(metrics.widths[1]).toBeGreaterThan(metrics.widths[2]!);
+    expect(metrics.processMarker).toMatch(/egds-process-arrow/);
+    expect(metrics.gridContrast).toBeLessThan(metrics.weakestStructuralContrast);
+    expect(new Set(metrics.territoryBackgrounds).size).toBe(1);
+    expect(metrics.nestedBackground).not.toBe(metrics.territoryBackgrounds[0]);
+  });
+}
+
 test('expands exactly one framework container and preserves entity control semantics', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./map/');

@@ -259,6 +259,90 @@ describe('EGDS expertise map geometry', () => {
     expect(boxes.get('innovation-possibility-space')).toEqual(expect.objectContaining({ x: expectedColumns[2], width: 360 }));
   });
 
+  it('derives five stable branch territories that contain every owned descendant', () => {
+    const layout = buildEgdsMapLayout(egdsInput());
+    const reversed = buildEgdsMapLayout({
+      frameworkNodes: [...frameworkNodes].reverse() as unknown as Catalog['egdsFrameworkNodes'],
+      frameworkRelations: [...frameworkRelations].reverse() as unknown as Catalog['egdsFrameworkRelations'],
+      capabilities: [...capabilities].reverse(),
+      knowledgeTopics: [...knowledgeTopics].reverse(),
+      capabilityRelations: [...capabilityRelations].reverse() as unknown as Catalog['capabilityRelations'],
+    });
+    const nodesById = new Map(frameworkNodes.map((node) => [node.id, node]));
+    const boxesById = new Map(layout.frameworkBoxes.map((box) => [box.id, box]));
+    const owningBranchId = (nodeId: string) => {
+      let node = nodesById.get(nodeId);
+      while (node?.parentNodeId) {
+        const parent = nodesById.get(node.parentNodeId);
+        if (parent?.kind === 'branch') return parent.id;
+        node = parent;
+      }
+      return undefined;
+    };
+
+    expect(layout.branchTerritories).toHaveLength(5);
+    expect(reversed.branchTerritories).toEqual(layout.branchTerritories);
+    expect(layout.branchTerritories.map(({ branchId }) => branchId).sort()).toEqual(
+      frameworkNodes.filter(({ kind }) => kind === 'branch').map(({ id }) => id).sort(),
+    );
+
+    for (const territory of layout.branchTerritories) {
+      const descendants = frameworkNodes
+        .filter(({ id }) => owningBranchId(id) === territory.branchId)
+        .map(({ id }) => boxesById.get(id)!);
+      const descendantKeys = new Set(descendants.map(({ key }) => key));
+      expect(descendants.length, territory.branchId).toBeGreaterThan(0);
+      for (const box of descendants) {
+        expect(box.x, `${territory.branchId} contains ${box.id} left`).toBeGreaterThanOrEqual(territory.x);
+        expect(box.y, `${territory.branchId} contains ${box.id} top`).toBeGreaterThanOrEqual(territory.y);
+        expect(box.x + box.width, `${territory.branchId} contains ${box.id} right`)
+          .toBeLessThanOrEqual(territory.x + territory.width);
+        expect(box.y + box.height, `${territory.branchId} contains ${box.id} bottom`)
+          .toBeLessThanOrEqual(territory.y + territory.height);
+      }
+      const localPaths = [...layout.structuralPaths, ...layout.processPaths]
+        .filter(({ toKey }) => descendantKeys.has(toKey));
+      for (const path of localPaths) {
+        const localPoints = allSegments(path.path)
+          .flatMap(({ x1, y1, x2, y2 }) => [{ x: x1, y: y1 }, { x: x2, y: y2 }])
+          .filter(({ x }) => x >= territory.x && x <= territory.x + territory.width);
+        expect(localPoints.length, `${territory.branchId} owns ${path.id}`).toBeGreaterThan(0);
+        for (const point of localPoints) {
+          expect(point.y, `${territory.branchId} contains ${path.id} field top`).toBeGreaterThanOrEqual(territory.y);
+          expect(point.y, `${territory.branchId} contains ${path.id} field bottom`)
+            .toBeLessThanOrEqual(territory.y + territory.height);
+        }
+      }
+    }
+
+    for (const [index, territory] of layout.branchTerritories.entries()) {
+      for (const other of layout.branchTerritories.slice(index + 1)) {
+        expect(isOverlapping(territory, other), `${territory.branchId} overlaps ${other.branchId}`).toBe(false);
+      }
+    }
+
+    const experienceTerritory = layout.branchTerritories.find(({ branchId }) => branchId === 'experience-design');
+    expect(experienceTerritory?.nestedTerritory).toEqual(expect.objectContaining({
+      id: 'experience-process',
+    }));
+    const nested = experienceTerritory!.nestedTerritory!;
+    for (const id of [
+      'perception',
+      'rationalization',
+      'deconstruction',
+      'reconstruction',
+      'narrative-lever',
+      'aesthetics-lever',
+      'gameplay-challenges-lever',
+    ]) {
+      const box = boxesById.get(id)!;
+      expect(box.x, `${nested.id} contains ${id} left`).toBeGreaterThanOrEqual(nested.x);
+      expect(box.y, `${nested.id} contains ${id} top`).toBeGreaterThanOrEqual(nested.y);
+      expect(box.x + box.width, `${nested.id} contains ${id} right`).toBeLessThanOrEqual(nested.x + nested.width);
+      expect(box.y + box.height, `${nested.id} contains ${id} bottom`).toBeLessThanOrEqual(nested.y + nested.height);
+    }
+  });
+
   it('projects the fixed overview skeleton without entities', () => {
     const layout = buildEgdsMapLayout(egdsInput());
 

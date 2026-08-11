@@ -129,15 +129,42 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       data-egds-scene
       style={`width:${layout.width}px;height:${layout.height}px`}
     >
+      <div class="capability-map__territories" data-egds-territories aria-hidden="true">
+        {layout.branchTerritories.map((territory) => (
+          <>
+            <div
+              class="egds-territory map-layout-box"
+              data-egds-territory={territory.branchId}
+              style={boxStyle(territory)}
+            ></div>
+            {territory.nestedTerritory && (
+              <div
+                class="egds-subterritory map-layout-box"
+                data-egds-subterritory={territory.nestedTerritory.id}
+                data-owner-branch={territory.branchId}
+                style={boxStyle(territory.nestedTerritory)}
+              ></div>
+            )}
+          </>
+        ))}
+      </div>
+
       <svg
         class="capability-map__structure"
         viewBox={`0 0 ${layout.width} ${layout.height}`}
         aria-hidden="true"
       >
+        <defs>
+          <marker id="egds-process-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth">
+            <path d="M 0 0 L 8 4 L 0 8 Z"></path>
+          </marker>
+        </defs>
         {layout.structuralPaths.map((path) => (
           <path
+            class:list={['egds-structural-path', `egds-structural-path--${path.hierarchyLevel}`]}
             d={path.path}
             data-egds-structural-path={path.id}
+            data-egds-structural-level={path.hierarchyLevel}
             data-from-key={path.fromKey}
             data-to-key={path.toKey}
             data-from-port={path.fromPort}
@@ -154,6 +181,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
             data-to-key={path.toKey}
             data-from-port={path.fromPort}
             data-to-port={path.toPort}
+            marker-end="url(#egds-process-arrow)"
             vector-effect="non-scaling-stroke"
           ></path>
         ))}

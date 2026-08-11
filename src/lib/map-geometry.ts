@@ -32,6 +32,21 @@ export type EgdsMapPath = Readonly<{
   path: string;
 }>;
 
+export type EgdsBranchTerritory = Readonly<{
+  branchId: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  nestedTerritory?: Readonly<{
+    id: 'experience-process';
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }>;
+}>;
+
 export type EgdsPortSide = 'north' | 'east' | 'south' | 'west';
 
 export type EgdsExpansionLeaderPath = Readonly<{
@@ -48,7 +63,10 @@ export type EgdsMapLayout = Readonly<{
   frameworkBoxes: EgdsMapBox[];
   entityBoxes: EgdsMapBox[];
   relationEndpointBoxes: EgdsMapBox[];
-  structuralPaths: EgdsMapPath[];
+  branchTerritories: EgdsBranchTerritory[];
+  structuralPaths: Array<EgdsMapPath & Readonly<{
+    hierarchyLevel: 'root' | 'branch' | 'child';
+  }>>;
   processPaths: EgdsMapPath[];
   relationPaths: Array<EgdsMapPath & Readonly<{
     relationId: string;
@@ -174,6 +192,69 @@ const compareId = (left: Readonly<{ id: string }>, right: Readonly<{ id: string 
 
 const egdsCenterX = (box: EgdsMapBox) => box.x + box.width / 2;
 const egdsCenterY = (box: EgdsMapBox) => box.y + box.height / 2;
+
+const boundsAround = (
+  boxes: readonly EgdsMapBox[],
+  horizontalPadding: number,
+  verticalPadding: number,
+) => {
+  if (boxes.length === 0) throw new Error('Cannot derive territory bounds without boxes');
+  const left = Math.max(0, Math.min(...boxes.map(({ x }) => x)) - horizontalPadding);
+  const top = Math.max(0, Math.min(...boxes.map(({ y }) => y)) - verticalPadding);
+  const right = Math.min(1180, Math.max(...boxes.map(({ x, width }) => x + width)) + horizontalPadding);
+  const bottom = Math.min(egdsOverviewHeight, Math.max(...boxes.map(({ y, height }) => y + height)) + verticalPadding);
+  return { x: left, y: top, width: right - left, height: bottom - top };
+};
+
+const deriveBranchTerritories = (
+  frameworkNodes: readonly EgdsFrameworkNodeInput[],
+  frameworkRelations: readonly EgdsFrameworkRelationInput[],
+  frameworkBoxesById: ReadonlyMap<string, EgdsMapBox>,
+): EgdsBranchTerritory[] => {
+  const nodesById = new Map(frameworkNodes.map((node) => [node.id, node]));
+  const owningBranchId = (node: EgdsFrameworkNodeInput) => {
+    let current = node;
+    while (current.parentNodeId) {
+      const parent = nodesById.get(current.parentNodeId);
+      if (!parent) return undefined;
+      if (parent.kind === 'branch') return parent.id;
+      current = parent;
+    }
+    return undefined;
+  };
+  const processNodeIds = new Set(frameworkRelations.filter(isProcessRelation).flatMap(({ fromId, toId }) => [fromId, toId]));
+  const descendsFromProcessNode = (node: EgdsFrameworkNodeInput) => {
+    let current: EgdsFrameworkNodeInput | undefined = node;
+    while (current) {
+      if (processNodeIds.has(current.id)) return true;
+      current = current.parentNodeId ? nodesById.get(current.parentNodeId) : undefined;
+    }
+    return false;
+  };
+
+  return [...frameworkNodes]
+    .filter(({ kind }) => kind === 'branch')
+    .sort(compareId)
+    .map((branch) => {
+      const descendants = frameworkNodes.filter((node) => owningBranchId(node) === branch.id);
+      const descendantBoxes = descendants.map(({ id }) => frameworkBoxesById.get(id)!);
+      const processBoxes = descendants
+        .filter(descendsFromProcessNode)
+        .map(({ id }) => frameworkBoxesById.get(id)!);
+      return {
+        branchId: branch.id,
+        ...boundsAround(descendantBoxes, 15, 18),
+        ...(branch.id === 'experience-design' && processBoxes.length > 0
+          ? {
+            nestedTerritory: {
+              id: 'experience-process' as const,
+              ...boundsAround(processBoxes, 9, 9),
+            },
+          }
+          : {}),
+      };
+    });
+};
 
 const egdsBox = (
   id: string,
@@ -434,6 +515,7 @@ export function buildEgdsMapLayout({
       return egdsBox(node.id, node.kind, egdsAnchors[node.id]!);
     });
   const frameworkBoxesById = new Map(frameworkBoxes.map((box) => [box.id, box]));
+  const branchTerritories = deriveBranchTerritories(frameworkNodes, frameworkRelations, frameworkBoxesById);
   const capabilityById = new Map<string, EgdsEntityInput>();
   for (const capability of capabilities) {
     if (capabilityById.has(capability.id)) throw new Error(`Duplicate capability: ${capability.id}`);
@@ -484,6 +566,7 @@ export function buildEgdsMapLayout({
         id: `structural:${from.key}->${to.key}`,
         fromKey: from.key,
         toKey: to.key,
+        hierarchyLevel: from.kind === 'root' ? 'root' as const : from.kind === 'branch' ? 'branch' as const : 'child' as const,
         ...projection,
       };
     });
@@ -518,6 +601,7 @@ export function buildEgdsMapLayout({
       frameworkBoxes,
       entityBoxes: [],
       relationEndpointBoxes: [],
+      branchTerritories,
       structuralPaths,
       processPaths,
       relationPaths: [],
@@ -607,6 +691,7 @@ export function buildEgdsMapLayout({
     frameworkBoxes,
     entityBoxes,
     relationEndpointBoxes,
+    branchTerritories,
     structuralPaths,
     processPaths,
     relationPaths,

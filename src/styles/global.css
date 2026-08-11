@@ -698,6 +698,14 @@ h2 {
 }
 
 .capability-map {
+  --egds-grid-line: color-mix(in srgb, var(--line) 35%, var(--page));
+  --egds-territory-fill: color-mix(in srgb, var(--surface) 32%, var(--page));
+  --egds-territory-edge: color-mix(in srgb, var(--line) 58%, var(--page));
+  --egds-subterritory-fill: color-mix(in srgb, var(--surface-strong) 38%, var(--page));
+  --egds-structure-root: var(--ink);
+  --egds-structure-branch: var(--ink-soft);
+  --egds-structure-child: color-mix(in srgb, var(--ink-soft) 75%, var(--page));
+  --egds-structure-process: var(--accent-strong);
   padding-bottom: 7rem;
 }
 
@@ -930,8 +938,8 @@ h2 {
 .capability-map__scene {
   overflow: hidden;
   background:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    linear-gradient(var(--egds-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--egds-grid-line) 1px, transparent 1px);
   background-size: 40px 40px;
   background-position: -1px -1px;
 }
@@ -946,19 +954,54 @@ h2 {
   pointer-events: none;
 }
 
-.capability-map__structure,
-.capability-map__relations {
+.capability-map__territories {
+  position: absolute;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
+}
+
+.egds-territory {
+  border-left: 1px solid var(--egds-territory-edge);
+  background-image: linear-gradient(90deg, var(--egds-territory-fill), transparent 94%);
+}
+
+.egds-subterritory {
+  border-left: 2px solid var(--egds-territory-edge);
+  background-image: linear-gradient(90deg, var(--egds-subterritory-fill), transparent 82%);
+}
+
+.capability-map__structure {
+  z-index: 2;
+}
+
+.capability-map__relations {
+  z-index: 3;
 }
 
 .capability-map__structure path {
-  stroke: var(--ink-soft);
-  stroke-width: 1.4px;
+  stroke: var(--egds-structure-child);
+  stroke-width: 1.25px;
+}
+
+.capability-map__structure .egds-structural-path--root {
+  stroke: var(--egds-structure-root);
+  stroke-width: 2.6px;
+}
+
+.capability-map__structure .egds-structural-path--branch {
+  stroke: var(--egds-structure-branch);
+  stroke-width: 1.8px;
 }
 
 .capability-map__structure .egds-process-path {
-  stroke: var(--accent-strong);
-  stroke-width: 2px;
+  stroke: var(--egds-structure-process);
+  stroke-width: 2.15px;
+}
+
+#egds-process-arrow path {
+  fill: context-stroke;
+  stroke: none;
 }
 
 .capability-map__structure [data-egds-expansion-path] {
@@ -971,7 +1014,7 @@ h2 {
 .capability-map__endpoints {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
 }
 
@@ -1159,7 +1202,7 @@ h2 {
 .capability-map__expansion {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 4;
   pointer-events: none;
 }
 
