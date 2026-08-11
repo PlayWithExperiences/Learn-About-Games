@@ -109,6 +109,9 @@ async function openAtlasFamily(page: Page, familyId: string) {
   if (await details.getAttribute('open') === null) await details.locator('summary').click();
 }
 
+const visibleThemeButton = (page: Page, themeId: string) =>
+  page.locator(`[data-atlas-theme-button="${themeId}"]:visible`).first();
+
 test('reaches the global Innovation Atlas through shared navigation', async ({ page }) => {
   await page.goto('./');
   const compactMenu = page.locator('details.site-nav__compact');
@@ -541,7 +544,7 @@ test('Atlas bootstrap keeps one controller owner when its compiled module runs a
   await expect(explorer).toHaveAttribute('data-test-atlas-listener-registrations', '0');
 });
 
-test('family directory and fullscreen theme controls stay singular and keyboard-accessible without changing map state', async ({ page }, testInfo) => {
+test('family directory and fullscreen theme controls stay synchronized and keyboard-accessible without changing map state', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Fullscreen lens ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
   await page.goto('./atlas/');
@@ -556,15 +559,14 @@ test('family directory and fullscreen theme controls stay singular and keyboard-
   await expect(familyDirectory).toHaveCount(1);
   await expect(familyDirectory.locator('[data-atlas-family]')).toHaveCount(10);
   await expect(familyDirectory.locator('[data-atlas-foundation-lens]')).toHaveCount(1);
-  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(6);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(14);
   await expect(explorer.locator('[data-atlas-lens-status]')).toHaveCount(1);
   expect(new Set(await explorer.locator('[data-atlas-theme-button]').evaluateAll((buttons) =>
     buttons.map((button) => button.getAttribute('data-atlas-theme-button')),
   )).size).toBe(6);
-  await expect(familyDirectory.locator('[data-atlas-theme-reference="roguelike"] a'))
-    .toHaveAttribute('href', '#atlas-family-action');
-  await expect(familyDirectory.locator('[data-atlas-theme-reference="metroidvania"] a'))
-    .toHaveAttribute('href', '#atlas-family-action');
+  await openAtlasFamily(page, 'role-playing');
+  await expect(familyDirectory.locator('[data-atlas-family="role-playing"] [data-atlas-theme-button="roguelike"]'))
+    .toBeEnabled();
   await search.fill('Dead Cells');
   await page.getByRole('button', { name: '放大' }).click();
   await viewport.evaluate((element) => {
@@ -592,14 +594,13 @@ test('family directory and fullscreen theme controls stay singular and keyboard-
   await expect(network).toHaveAttribute('data-map-mode', 'true');
   const lensControl = network.locator('.atlas-lens-control');
   await expect(lensControl).toBeVisible();
-  await expect(lensControl.locator('[data-atlas-family-directory]')).toHaveCount(1);
-  await expect(lensControl.locator('[data-atlas-family]')).toHaveCount(10);
-  await expect(lensControl.locator('[data-atlas-theme-button]')).toHaveCount(6);
-  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(6);
+  await expect(lensControl.locator('[data-atlas-family-directory]')).toBeHidden();
+  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(6);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(14);
   await expect(explorer.locator('#atlas-lens-status')).toHaveCount(1);
 
-  await lensControl.locator('[data-atlas-family="action"] summary').click();
-  const metroidvania = lensControl.getByRole('button', { name: 'Metroidvania', exact: true });
+  const metroidvania = lensControl.locator('[data-atlas-fullscreen-lenses]')
+    .getByRole('button', { name: 'Metroidvania', exact: true });
   await metroidvania.focus();
   await page.keyboard.press('Space');
   await expect(metroidvania).toHaveAttribute('aria-pressed', 'true');
@@ -621,17 +622,61 @@ test('family directory and fullscreen theme controls stay singular and keyboard-
   await expect(page.locator('[data-atlas-node-id="dead-cells"]')).toHaveAttribute('data-search-match', 'true');
 });
 
-test('open fullscreen family disclosures do not cover the map controls', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen layout is tested once.');
+test('cross-Family lineages activate directly and fullscreen uses a compact lens strip', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop family and fullscreen behavior is tested once.');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('./atlas/');
+
+  const directory = page.locator('[data-atlas-family-directory]');
+  const rolePlaying = directory.locator('[data-atlas-family="role-playing"]');
+  await rolePlaying.locator('summary').click();
+  const rolePlayingRoguelike = rolePlaying.locator('[data-atlas-theme-button="roguelike"]');
+  await expect(rolePlayingRoguelike).toBeEnabled();
+  await rolePlayingRoguelike.click();
+  await expect(directory.locator('[data-atlas-theme-button="roguelike"][aria-pressed="true"]')).toHaveCount(2);
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText('Roguelike');
+
+  const familyBodyMetrics = await rolePlaying.locator('.atlas-family-directory__body').evaluate((body) => {
+    const style = getComputedStyle(body);
+    const rect = body.getBoundingClientRect();
+    const familyRect = body.closest('[data-atlas-family]')!.getBoundingClientRect();
+    return {
+      position: style.position,
+      overflowY: style.overflowY,
+      containedByFamily: rect.bottom <= familyRect.bottom + 1,
+    };
+  });
+  expect(familyBodyMetrics).toEqual({ position: 'static', overflowY: 'visible', containedByFamily: true });
+
+  await page.locator('[data-atlas-map-mode]').click();
+  const network = page.locator('[data-atlas-global-network][data-map-mode="true"]');
+  const fullscreenLenses = network.locator('[data-atlas-fullscreen-lenses]');
+  await expect(fullscreenLenses).toBeVisible();
+  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(6);
+  await expect(network.locator('[data-atlas-family-directory]')).toBeHidden();
+  await expect(fullscreenLenses.locator('[data-atlas-theme-button="roguelike"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-atlas-canvas]')).toHaveAttribute('data-map-mode', 'true');
+});
+
+test('empty Genre Families state an honest zero-lineage status', async ({ page }) => {
+  await page.goto('./atlas/');
+  const strategy = page.locator('[data-atlas-family="strategy"]');
+  await expect(strategy.locator('summary')).toContainText('0 条已核查谱系，待研究');
+  await expect(strategy.locator('[data-atlas-theme-button]')).toHaveCount(0);
+  await strategy.locator('summary').click();
+  await expect(strategy.locator('.atlas-family-directory__empty')).toContainText('尚无达到证据门槛的谱系');
+});
+
+test('fullscreen lens strip does not cover the map controls or canvas', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen lens layout is tested once.');
 
   for (const width of [1151, 1200, 1440]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto('./atlas/');
     await page.locator('[data-atlas-map-mode]').click();
-    await page.locator('[data-atlas-family="action"] summary').click();
 
     const overlap = await page.evaluate(() => {
-      const body = document.querySelector<HTMLElement>('[data-atlas-family="action"] .atlas-family-directory__body')!;
+      const body = document.querySelector<HTMLElement>('[data-atlas-fullscreen-lenses]')!;
       const controls = document.querySelector<HTMLElement>('[data-atlas-view-controls]')!;
       const viewport = document.querySelector<HTMLElement>('[data-atlas-canvas]')!;
       const bodyRect = body.getBoundingClientRect();
@@ -649,15 +694,6 @@ test('open fullscreen family disclosures do not cover the map controls', async (
 
     expect(overlap).toEqual({ controls: false, viewport: false });
   }
-
-  await page.setViewportSize({ width: 1440, height: 800 });
-  await page.goto('./atlas/');
-  await page.locator('[data-atlas-map-mode]').click();
-  await page.locator('[data-atlas-family="action"] summary').click();
-  await page.locator('[data-atlas-family="adventure"] summary').click();
-
-  await expect(page.locator('[data-atlas-family="action"]')).not.toHaveAttribute('open', '');
-  await expect(page.locator('[data-atlas-family="adventure"]')).toHaveAttribute('open', '');
 });
 
 test('fullscreen detail evidence temporarily releases the page and resumes the same map context', async ({ page }, testInfo) => {
@@ -740,7 +776,7 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
   test.skip(testInfo.project.name !== 'chromium', 'Desktop pan and detail flow are tested once.');
   await page.goto('./atlas/');
   await openAtlasFamily(page, 'action');
-  await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+  await visibleThemeButton(page, 'metroidvania').click();
 
   const controls = page.locator('[data-atlas-view-controls]');
   const viewport = page.locator('[data-atlas-canvas]');
@@ -803,11 +839,11 @@ test('theme controls only change emphasis without changing graph identity or geo
   const buttons = page.locator('[data-atlas-theme-button]');
   const viewport = page.locator('[data-atlas-canvas]');
   const search = page.getByRole('searchbox', { name: '搜索节点' });
-  await expect(buttons).toHaveCount(6);
+  await expect(buttons).toHaveCount(14);
   for (const button of await buttons.all()) {
     await expect(button).toBeEnabled();
   }
-  await expect(page.locator('[data-atlas-theme-button="all"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(visibleThemeButton(page, 'all')).toHaveAttribute('aria-pressed', 'true');
   await search.fill('Dead Cells');
   await page.getByRole('button', { name: '放大' }).click();
   await viewport.evaluate((element) => {
@@ -851,8 +887,10 @@ test('theme controls only change emphasis without changing graph identity or geo
   for (const [lens, matchingNode] of Object.entries(lensNodes)) {
     const familyId = lensFamilies[lens as keyof typeof lensNodes];
     if (familyId) await openAtlasFamily(page, familyId);
-    await page.locator(`[data-atlas-theme-button="${lens}"]`).click();
-    await expect(page.locator(`[data-atlas-theme-button="${lens}"]`)).toHaveAttribute('aria-pressed', 'true');
+    await visibleThemeButton(page, lens).click();
+    expect(await page.locator(`[data-atlas-theme-button="${lens}"]`).evaluateAll((controls) =>
+      controls.every((control) => control.getAttribute('aria-pressed') === 'true'),
+    )).toBe(true);
     expect(await stableState()).toEqual(before);
     await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(48);
     await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(36);
@@ -860,7 +898,7 @@ test('theme controls only change emphasis without changing graph identity or geo
       .toHaveAttribute('data-theme-match', 'true');
   }
 
-  await page.locator('[data-atlas-theme-button="all"]').click();
+  await visibleThemeButton(page, 'all').click();
   expect(await stableState()).toEqual(before);
   await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).toHaveCount(48);
   await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).toHaveCount(36);
@@ -873,7 +911,7 @@ test('non-matching desktop edges keep neutral direction semantics and 3:1 contra
     await page.goto('./atlas/');
     await page.getByLabel('Appearance').selectOption(appearance);
     await openAtlasFamily(page, 'action');
-    await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+    await visibleThemeButton(page, 'metroidvania').click();
 
     const directed = page.locator('[data-atlas-relation="rogue-to-hack"]');
     const directedPath = directed.locator('[data-atlas-relation-path]');
@@ -888,7 +926,7 @@ test('non-matching desktop edges keep neutral direction semantics and 3:1 contra
     expect(directedStyle.dash).not.toBe('none');
     expect(directedStyle.markerFill).toBe('context-stroke');
 
-    await page.locator('[data-atlas-theme-button="roguelike"]').click();
+    await visibleThemeButton(page, 'roguelike').click();
     const undirected = page.locator('[data-atlas-relation="super-metroid-and-sotn"]');
     const undirectedStyle = await undirected.evaluate((element) => ({
       stroke: getComputedStyle(element.querySelector('[data-atlas-relation-path]')!).stroke,
@@ -909,7 +947,7 @@ test('mobile relation references participate in theme emphasis with readable non
     await page.goto('./atlas/');
     await page.getByLabel('Appearance').selectOption(appearance);
     await openAtlasFamily(page, 'action');
-    await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+    await visibleThemeButton(page, 'metroidvania').click();
     const relationRef = page.locator('[data-atlas-outline-relation-ref="rogue-to-hack"]').first();
     await expect(relationRef).toHaveAttribute('data-theme-tags', /\S+/);
     await expect(relationRef).toHaveAttribute('data-theme-match', 'false');
@@ -1124,7 +1162,7 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
   });
 
   await openAtlasFamily(page, 'action');
-  await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+  await visibleThemeButton(page, 'metroidvania').click();
   await expect(page.locator('[data-atlas-node][data-atlas-node-id="bloodstained-ritual-of-the-night"]'))
     .toHaveAttribute('data-theme-match', 'true');
   await expect(page.locator('[data-atlas-node][data-atlas-node-id="bloodstained-ritual-of-the-night"]'))
@@ -1143,7 +1181,9 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
   await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
   await expect(clear).toBeDisabled();
   await expect(page.locator('[data-atlas-node][data-search-match]')).toHaveCount(0);
-  await expect(page.locator('[data-atlas-theme-button="metroidvania"]')).toHaveAttribute('aria-pressed', 'true');
+  expect(await page.locator('[data-atlas-theme-button="metroidvania"]').evaluateAll((controls) =>
+    controls.every((control) => control.getAttribute('aria-pressed') === 'true'),
+  )).toBe(true);
   await expect(page.locator('[data-atlas-node][data-atlas-node-id="rogue"]')).toHaveAttribute('data-theme-match', 'false');
 
   await sort.selectOption('name');
@@ -1175,7 +1215,7 @@ test('search and theme emphasis keep context text readable in both themes and re
     await page.goto('./atlas/');
     await page.locator('[data-atlas-node-search]').fill('法定系列续作');
     await openAtlasFamily(page, 'action');
-    await page.locator('[data-atlas-theme-button="metroidvania"]').click();
+    await visibleThemeButton(page, 'metroidvania').click();
 
     const desktopContext = page.locator('[data-atlas-node-id="rogue"]');
     await expect(desktopContext).toHaveAttribute('data-theme-match', 'false');

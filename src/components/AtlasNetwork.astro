@@ -30,12 +30,6 @@ const genreFamilies = (await getCollection('atlasGenreFamilies'))
 const themeById = new Map(themes.map((theme) => [theme.id, theme]));
 const foundationTheme = themeById.get('early-electronic-games');
 const lineageThemes = themes.filter(({ id }) => id !== 'early-electronic-games');
-const primaryFamilyByTheme = new Map(
-  lineageThemes.map((theme) => [
-    theme.id,
-    genreFamilies.find(({ id }) => id === theme.familyIds[0]),
-  ]),
-);
 const nodeCount = nodes.length;
 const relationCount = relations.length;
 const layout = buildAtlasLayout(nodes, relations);
@@ -142,6 +136,19 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
         <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
       </div>
+      <div class="atlas-fullscreen-lenses" data-atlas-fullscreen-lenses aria-label="地图模式证据透镜">
+        <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
+        {themes.map((theme) => (
+          <button
+            type="button"
+            data-atlas-theme-button={theme.id}
+            aria-pressed="false"
+            disabled
+          >
+            {theme.title['zh-CN']}
+          </button>
+        ))}
+      </div>
       <div class="atlas-family-directory" data-atlas-family-directory>
         {foundationTheme && (
           <section class="atlas-family-directory__foundation" data-atlas-foundation-lens aria-labelledby="atlas-foundation-title">
@@ -151,7 +158,6 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
             </div>
             <div class="atlas-family-directory__theme">
               <button
-                id={`atlas-theme-control-${foundationTheme.id}`}
                 type="button"
                 data-atlas-theme-button={foundationTheme.id}
                 aria-pressed="false"
@@ -170,16 +176,15 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
               <details id={`atlas-family-${family.id}`} name="atlas-genre-family" data-atlas-family={family.id}>
                 <summary>
                   <span>{family.title['zh-CN']}</span>
-                  <small>{familyThemes.length > 0 ? `${familyThemes.length} 个透镜` : '待研究'}</small>
+                  <small>{familyThemes.length > 0 ? `${familyThemes.length} 条已核查谱系` : '0 条已核查谱系，待研究'}</small>
                 </summary>
                 <div class="atlas-family-directory__body">
                   <p>{family.summary['zh-CN']}</p>
                   {familyThemes.length > 0 ? (
                     <ul>
-                      {familyThemes.map((theme) => theme.familyIds[0] === family.id ? (
+                      {familyThemes.map((theme) => (
                         <li class="atlas-family-directory__theme">
                           <button
-                            id={`atlas-theme-control-${theme.id}`}
                             type="button"
                             data-atlas-theme-button={theme.id}
                             aria-pressed="false"
@@ -189,16 +194,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                           </button>
                           <p data-atlas-scope-note>{theme.scopeNote['zh-CN']}</p>
                         </li>
-                      ) : (
-                        <li class="atlas-family-directory__reference" data-atlas-theme-reference={theme.id}>
-                          <a href={`#atlas-family-${primaryFamilyByTheme.get(theme.id)?.id}`}>{theme.title['zh-CN']}</a>
-                          <span>控制位于{primaryFamilyByTheme.get(theme.id)?.title['zh-CN']}</span>
-                          <p data-atlas-scope-note>{theme.scopeNote['zh-CN']}</p>
-                        </li>
                       ))}
                     </ul>
                   ) : (
-                    <p class="atlas-family-directory__empty">本批尚无达到证据门槛的透镜。</p>
+                    <p class="atlas-family-directory__empty">尚无达到证据门槛的谱系。Family 保留为研究入口，不冒充已经完成的演化关系。</p>
                   )}
                 </div>
               </details>

@@ -2616,6 +2616,10 @@ h2 {
   font-size: 0.9rem;
 }
 
+.atlas-fullscreen-lenses {
+  display: none;
+}
+
 .atlas-family-directory {
   margin-top: 1rem;
   border-top: 1px solid var(--line);
@@ -2938,12 +2942,12 @@ h2 {
 }
 
 [data-atlas-global-network][data-map-mode='true'] .atlas-lens-control {
-  display: grid;
+  display: flex;
   margin: 0 0 0.35rem;
   padding: 0 0 0.35rem;
   border: 0;
-  grid-template-columns: minmax(15rem, max-content) minmax(0, 1fr);
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.65rem;
 }
 
@@ -2962,6 +2966,10 @@ h2 {
   gap: 0.5rem;
 }
 
+[data-atlas-global-network][data-map-mode='true'] .atlas-lens-control__current > button {
+  display: none;
+}
+
 [data-atlas-global-network][data-map-mode='true'] .atlas-lens-control__current > p {
   max-width: 12rem;
   font-size: 0.68rem;
@@ -2969,82 +2977,22 @@ h2 {
 }
 
 [data-atlas-global-network][data-map-mode='true'] .atlas-family-directory {
-  display: grid;
-  margin: 0;
-  border-top: 0;
-  grid-template-columns: minmax(7.5rem, 0.17fr) minmax(0, 1fr);
-  align-items: stretch;
-  gap: 0.35rem;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory:has(.atlas-family-directory__families > details[open]) {
-  padding-bottom: 10.35rem;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__foundation {
-  display: block;
-  padding: 0;
-  border-bottom: 0;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__foundation > div:first-child {
   display: none;
 }
 
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__foundation > div:first-child > p {
-  display: none;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__foundation .atlas-family-directory__theme {
-  display: block;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__foundation [data-atlas-scope-note] {
-  display: none;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__families {
-  display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
-  align-content: start;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__families > details {
-  position: relative;
+[data-atlas-global-network][data-map-mode='true'] .atlas-fullscreen-lenses {
+  display: flex;
   min-width: 0;
-  border-bottom: 1px solid var(--line);
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__families summary {
-  min-height: 2.3rem;
-  padding: 0.2rem 0.3rem;
+  align-items: center;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
   gap: 0.35rem;
-  font-size: 0.67rem;
-  line-height: 1.15;
 }
 
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__families summary small {
-  display: none;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__body {
-  position: absolute;
-  z-index: 2;
-  width: min(25rem, 90vw);
-  max-height: 10rem;
-  padding: 0.7rem;
-  overflow-y: auto;
-  border: 1px solid var(--line);
-  background: var(--page);
-  box-shadow: 0 0.55rem 1.3rem color-mix(in srgb, var(--ink) 12%, transparent);
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__families > details:nth-child(n + 7) .atlas-family-directory__body {
-  right: 0;
-}
-
-[data-atlas-global-network][data-map-mode='true'] .atlas-family-directory__body > p {
-  font-size: 0.72rem;
+[data-atlas-global-network][data-map-mode='true'] .atlas-fullscreen-lenses button {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.75rem;
 }
 
 [data-atlas-global-network][data-map-mode='true'] .atlas-view-controls__mode-title {
