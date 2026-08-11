@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选通过 runtime `cc81bf8`，Atlas 日期约束修复为 `209ae9c`，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含地图／Career `66abc47`、Atlas 全屏 `757ff22` 与资源扩充 `ece3285`，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -213,3 +213,15 @@ EGDS implementation range 是 `84e36d55171cafcdf8e809e53d4e4871479732dc..fce67d1
 根级初次 fresh gate 为：Astro check 64 files、0 errors / warnings / hints；Vitest 130/130；静态 build 105 pages；完整 Playwright 200 tests 中 185 passed / 15 intentional skipped / 0 failed。最终全局 reviewer 随后在 1024px / 320px 真实交互中发现三个测试盲区：JS 原生大纲可同时手动打开多个叶、1024px 递归缩进把深层文字压成近似逐字竖排、折叠叶缺少 Career 三档事实计数。修复提交 `fce67d1` 让 JS 只保留当前叶而 no-JS 继续原生多开，在 `<=1227px` 使用单列紧凑大纲，并把同源 Career count 投影到响应式 summary。复审结论为 Approved，0 Critical / Important / Minor；fresh build 仍为 0 diagnostics、130/130、105 pages，完整 Playwright 更新为 191 passed / 15 intentional skipped / 0 failed。
 
 仓库 API 仍返回 `PRIVATE`，deploy workflow 仍为 `disabled_manually`；远端 `codex/v02` 是 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`，本地 runtime `fce67d18947020f292d9384f6164baf2ab69699f` 与本里程碑后续文档均未推送。下一步不是自动发布，而是发起人私有复核；资源媒介／密度、Atlas engaged wheel mode 与早期电子游戏史 ontology 是三个独立后续切片。
+
+## 地图对齐、画像阅读区、Atlas 全屏与资源扩充
+
+发起人用两张本地预览截图指出三个仍可直接看见的问题：EGDS 各行并未共享同一列系统；Career 的“画像、边界与依据”未选择时留下大面积空白，选择后又被压进固定高度的窄内滚动区；Atlas 虽名为地图模式，却仍只是页面中的小窗口。发起人同时要求继续补充尚未覆盖的学习资源。
+
+地图修复先用纯几何测试确认旧实现确实存在两套列中心：体验阶段为 `[390,535,680,825]`，其他四节点行为 `[410,600,790,980]`。提交 `66abc47` 统一为 `[390,580,770,960]`、170px 宽和 20px gap，并让 structural、process 与 capability relation path 保存 `fromPort` / `toPort`，测试起点和终点是否命中对应 box boundary center。未选 Career Lens 时整个依据区现在 hidden；选中后只显示一份整宽、自然高度 disclosure，取消 17rem 固定高度、内部滚动和 placeholder。no-JS 仍可展开三份完整画像。
+
+Atlas 提交 `757ff22` 把显式地图模式改为固定 `inset:0`、`100dvh` 的全视口工作区；工具条占固定行，地图 viewport 填满剩余空间。进入时保存页面位置和焦点、锁定 html/body overflow 并让背景 inert；Esc、退出按钮或断点变化恢复页面、画布和焦点。native dialog 继续位于 top layer；从弹窗前往 Evidence 会临时释放全屏，返回时恢复同一地图模式、画布位置与节点焦点。
+
+资源研究使用 Agent Reach。doctor 确认 Exa via mcporter 和 Jina Reader 可用；Exa 免费额度中途返回 429 后，不用搜索摘要替代证据，而以 Jina、官方／作者／出版社页面逐条核验。提交 `ece3285` 新增 20 个 Work Item、9 个 Source 与 21 个 Access Version，目录总量为 148／29／161。新增媒介为文章 4、书籍 2、课程 1、论文 2、播客 6、网站 5；不新增评分、排名、审核状态或 externalSignals。`encounter-space-composition` 从零增至 3 条直接资源，`monetization-experience-alignment` 从零增至 4 条。Owlcat Learning 作为一个 Work Item 保存英文原始版本与官方简体中文 Access Version。
+
+主任务同步当前 README、Roadmap、Changelog、Devlog 与三个公开 E2E 数量合同。整合后的 fresh `npm run build` 为 Astro check 0 errors / warnings / hints、Vitest 141/141、116 pages；完整 Playwright 为 203 passed / 17 intentional skipped / 0 failed。地图、Career 与 Atlas 的 Light／Dark、多断点原图由实现者和主任务分别以 original resolution 检查，未发现页面级横向溢出。当前提交均只存在本地 `codex/v02`，没有 push、没有启用 Pages；本机重新启动 base-path preview 后由发起人继续查看。

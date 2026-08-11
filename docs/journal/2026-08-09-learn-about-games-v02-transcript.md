@@ -368,3 +368,17 @@ Map/Career 的 RED 包括顶栏仍有五项、Map 没有 lens、`/careers/` 未 
 本段仍是脱敏的部分导出，不声称包含所有中间工具输出或主任务私有推理。仓库始终保持 Private，Pages workflow 始终保持 `disabled_manually`；没有 push、没有部署。最终交付会 fresh build 并重新启动 `http://127.0.0.1:4321/Learn-About-Games/` 本地预览。
 
 连续性文档与 Devlog 写入后的 fresh build 为 Astro 0 diagnostics、Vitest 139/139、107 pages。完整 E2E 首轮 197 passed / 15 skipped / 4 failed；四项都来自公开文档测试仍锁定历史 Atlas 27/25/40 和旧 Changelog 句子，运行时功能没有失败。更新为当前 36/30/49 与“本轮尚未推送或部署”后，visible-skeleton 双端为 29 passed / 1 intentional skipped，完整 E2E 复跑为 201 passed / 15 intentional skipped / 0 failed。
+
+## 34. 地图与画像视觉复核、Atlas 全屏和第二批资源（部分会话导出）
+
+发起人在新的本地预览中继续指出：EGDS 图的多行节点肉眼可见未对齐；Career 依据区未选择时留出大空白，选择后内容窄小并被内部滚动限制；Innovation Atlas 的地图模式没有占满视口；资源仍需继续补充。发起人提供了地图与 Career 的深色截图作为事实依据。
+
+主任务把问题拆成三个低重合并行任务，并延续按难度分配模型与推理等级的要求：高推理 Sol 负责 Map/Career 几何与阅读区，高推理 Sol 负责 Atlas 全屏生命周期，高推理研究 agent 使用 Agent Reach 扩展资源；根任务负责文字规格、共享文件边界、整合测试与连续性。书面设计采用 preserve-redesign，设计刻度为 variance 4、motion 3、density 9。共享 `global.css` 只允许 Map/Career 和 Atlas 分别暂存自己的 scoped hunks。
+
+Map/Career 测试先证明视觉错位不是主观感受：体验阶段和常规四节点行使用不同 x 集合，连接线也没有 port metadata。实现把四行统一到同一列网格，并让每条路径声明和命中 N/E/S/W 边界端口。最新反馈明确覆盖旧“应用画像时 map top 不移动”合同：未选择时依据区零占位；选择后允许完整内容自然推开地图，不再用固定 17rem 与内部滚动换取表面位置稳定。提交为 `66abc47`。
+
+Atlas 测试先在旧 wrapper 没有全屏状态处得到 RED。实现增加完整视口 layer、背景 inert、滚动锁、焦点循环和退出恢复。对抗测试又发现 Evidence 返回后 canvas 会抢走原节点焦点，以及 Shift+Tab 可进入背景；两项都在提交前修复。提交为 `757ff22`。
+
+资源 agent 的 coverage audit 显示旧 catalog 中 talk 68 条，而 course 3、article 4、podcast 5、website 8；两个 Capability 没有直接资源。Agent Reach doctor 确认 Exa/Jina 可用，Exa 429 后只继续核验已经发现的官方 URL。新增 20 项以 article、book、course、paper、podcast 和 website 为主，canonical 归一化后无重复；错误 DOI、404 出版社页、403 且无法复核的候选和未核验视频搬运均拒绝。提交 `ece3285` 使总量达到 148 Work Item、29 Source、161 Access Version。
+
+整合层同步 current 文案和 148／29／161 浏览器合同，历史已部署的 20／128 证据段保持不改。fresh build 为 Astro 0 diagnostics、141 unit、116 pages；完整 Playwright 为 203 passed、17 intentional skipped、0 failed。本段是脱敏部分导出，不包含秘密、环境值或不可访问的逐字对话；仓库继续 Private、Pages 继续禁用，所有新提交均未 push。
