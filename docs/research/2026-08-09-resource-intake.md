@@ -1,14 +1,14 @@
 # Learn About Games v0.2 — 首批成长资源证据 Intake
 
 - 研究日期：2026-08-09
-- 状态：研究证据 notebook；Batch A–F 已正规化为 174 个 catalog Work Item
-- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项
-- 确定性 canonical URL 去重后：**178 项研究记录**；正规化后为 **174 个 Work Item**
+- 状态：研究证据 notebook；Batch A–G 已正规化为 179 个 catalog Work Item
+- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项
+- 确定性 canonical URL 去重后：**183 项研究记录**；正规化后为 **179 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
 
-这份 notebook 是后续内容正规化的证据层，不是对全部 178 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–F 在 2026-08-11 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
+这份 notebook 是后续内容正规化的证据层，不是对全部 183 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
 
 Source 与 Work Item 必须继续是不同实体。以下 sourceUrl 是研究批次捕获的来源证据 URL；它常与具体 Work Item 的 canonicalUrl 相同，因而不能直接当作 Source homepage。正规化时必须另建真实创作者、频道、组织、出版社或网站 Source，再由 Work Item 引用。
 
@@ -19,17 +19,17 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 ## 去重结论与待核 identity
 
 - 规则：host 小写并移除 www.、移除 fragment 与非根路径末尾 /、稳定排序 query；不跨 DOI、出版社页或不同平台猜测同一作品。
-- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–F 另增 46 条且没有命中既有 canonical URL。
+- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–G 另增 51 条且没有命中既有 canonical URL。
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
 ## 当前正规化 catalog coverage
 
-- Work Item：174；Source：38；Access Version：188；Resource Topic：15。
-- 原始语言：en 147、ja 9、zh-Hans 18。
-- 可消费语言（Work Item 计，可重叠）：en 148、ja 9、zh-Hans 20。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 159、ja 9、zh-Hans 20。
-- 媒介：article 12、book 29、course 16、paper 17、podcast 11、talk 69、video 5、website 15。
+- Work Item：179；Source：38；Access Version：193；Resource Topic：15。
+- 原始语言：en 150、ja 9、zh-Hans 20。
+- 可消费语言（Work Item 计，可重叠）：en 151、ja 9、zh-Hans 22。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 162、ja 9、zh-Hans 22。
+- 媒介：article 12、book 29、course 16、paper 17、podcast 11、talk 71、video 5、website 18。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
@@ -42,15 +42,15 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | 关卡与空间 | 21 |
 | Playtest 与游戏用户研究 | 13 |
 | 叙事与表达 | 18 |
-| 原型与实验 | 8 |
-| 生产与迭代 | 11 |
+| 原型与实验 | 9 |
+| 生产与迭代 | 12 |
 | 协作与团队 | 9 |
 | 领导与创意方向 | 8 |
 | 批判、价值观与历史语境 | 15 |
-| 研究方法与玩家体验 | 18 |
+| 研究方法与玩家体验 | 20 |
 | 从业者访谈与播客 | 7 |
-| 中文行业实践与跨专业语境 | 9 |
-| 合计 | 174 |
+| 中文行业实践与跨专业语境 | 10 |
+| 合计 | 179 |
 
 ## 接受候选
 
@@ -353,7 +353,7 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 拒绝与待核证据
 
-以下保留五批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
+以下保留七批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
 
 ### Batch A
 
@@ -393,7 +393,7 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ### Batch E
 
-- 腾讯游戏学堂 `10056`、`10141`、`10123`、`10200`、`10202`：暂不纳入。页面均明确标为“演讲实录”；虽然主题有用，但继续收录会加剧既有 talk 过量，本批改用九门有目录和课时的结构化课程。
+- 腾讯游戏学堂 `10056` 与 `10123` 在 Batch G 以明确的五条 stop-condition 批次晋升入库，并继续诚实标为 `talk`；`10141`、`10200`、`10202` 仍暂不纳入，避免用更多演讲实录填补数量。
 - 日本高校的游戏相关专业、项目和招生介绍页：拒绝。它们描述学位或入学路径，不是可独立学习、可长期引用的具体 Work Item。
 - J-STAGE `digraj/7/2/7_23`：暂不纳入。研究问题与本批较新的 `digraj/13/1/13_21` 高度重叠，保留后者避免近重复证据。
 - J-STAGE 的整卷、会议录与检索集合页：拒绝。它们是聚合身份，不应替代题名、作者、摘要和 PDF 均可核验的单篇论文。
@@ -444,19 +444,14 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - Exa via mcporter 在第 12 次查询触发免费 MCP 配额 HTTP 429；后续核验使用 Jina Reader 和官方页面。该限制缩小了候选发现面，但不降低已收录 16 项的页面证据要求。
 - 本批不转载课程、演讲或论文正文，只记录 identity、公开元数据、访问入口和与能力图谱的关联理由。
 
-### Batch G：下一批中文优先资源的发现记录（2026-08-11，未正规化）
+### Batch G：入库前发现记录（2026-08-11）
 
 - 检索后端：先运行 `agent-reach doctor --json`，确认 Exa via mcporter 与 Jina Reader 可用。按指定精确查询调用 Exa 时即返回 HTTP 429；此后停止 Exa 重试，未把结果摘要当成证据。
 - 核验方式：只以 Jina Reader 可读取的原始 Work 页面作为候选证据。中国大学 MOOC 的搜索页只有平台说明、没有可验证的课程条目；CNKI 搜索页及首页均遇到证书错误，不能作为论文 identity 或摘要证据。
-- 这一轮尚未发现足以同时满足「至少 8 条」「中文原创/官方中文至少 4 条」和单一 Source 上限的候选集合。因此以下记录不写入 `resources.json`；它们保留给后续有可核验原页时重新组合。
+- 原计划未发现足以同时满足「至少 8 条」「中文原创/官方中文至少 4 条」和单一 Source 上限的候选集合。经 stop condition 复核，3 条 The Level Design Book 页面与腾讯 `10056`、`10123` 共 5 项已晋升到上方 Batch G 接受表并写入 catalog；以下只保留未纳入项，避免同一候选同时标记为 needs-verification。
 
 | Status | Ref / canonical identity | Source evidence and bounded claim | Medium / original language | 建议关联 / reason |
 |---|---|---|---|---|
-| needs-verification | `https://book.leveldesignbook.com/process/preproduction`<br>Pre-production | Jina 在 2026-08-11 读取到原页将 pre-production 描述为以机制、体验目标、参考研究与范围问题规划关卡；仍需与完整批次的中文配额一并复核。 | website / en | production-iteration；`scope-prioritization`、`learning-prototype-design`。 |
-| needs-verification | `https://book.leveldesignbook.com/process/research`<br>Research | Jina 原页明确以参考收集、具体拆解与 moodboard 讨论关卡／现实参照研究；不主张它覆盖一般用户研究。 | website / en | research-player-experience；`experience-deconstruction`、`research-question-framing`。 |
-| needs-verification | `https://book.leveldesignbook.com/process/preproduction/scope`<br>Scope | Jina 原页把 scope 定义为项目大小与复杂度，并把 prototype 说明为回答问题的小型聚焦项目。 | website / en | prototyping-experimentation；`scope-prioritization`、`learning-prototype-design`。 |
-| needs-verification | `https://gameinstitute.qq.com/course/detail/10056`<br>聚用户之力，做更好游戏 | 腾讯游戏学堂原页明确为分享实录，叙述用户研究贯穿概念、初始版本、迭代与运营；若入库必须标为 `talk`，不能借实录改标 article。 | talk / zh-Hans | research-player-experience；`research-question-framing`、`player-behavior-observation`。 |
-| needs-verification | `https://gameinstitute.qq.com/course/detail/10123`<br>TGDC \| 《QQ飞车》的十年时光路 | 腾讯游戏学堂原页明确为主论坛主题演讲及演讲实录，包含用户动机、体验问题、运营节奏和手感调优的案例叙述；若入库必须标为 `talk`。 | talk / zh-Hans | chinese-industry-cross-discipline；`player-perspective-taking`、`game-feel-tuning`。 |
 | excluded | `https://book.leveldesignbook.com/process/preproduction/worldbuilding` | 原页可读且讨论最小世界构建，但与上列三个 LDB 页面同属一个 Source；本批单一 Source 最多三条，故不与它们并入。 | website / en | narrative-expression；不作为本轮第四个同 Source 条目。 |
 | excluded | `https://gameinstitute.qq.com/course/detail/10202`、`https://gameinstitute.qq.com/course/detail/10200` | 两个原页均明确写作演讲实录；前者讨论动作开发流程，后者讨论开放世界场景的过程化管线。腾讯候选在本批最多保留两条 talk，故不以更多 talk 填补数量。 | talk / zh-Hans | 分别可支持 `multimodal-presentation-integration`／`cross-discipline-communication`，以及 `blockout-spatial-validation`／`iteration-planning`。 |
 | excluded | `https://www.icourse163.org/search.htm?search=%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1` | Jina 只读取到平台介绍与页脚，没有课程 identity、课程大纲或访问事实；搜索结果页不能充当 Work Item。 | n/a | 等待具体官方课程页。 |

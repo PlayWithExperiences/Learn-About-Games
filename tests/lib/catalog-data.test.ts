@@ -741,6 +741,15 @@ describe('raw product catalog data', () => {
     expect(resources).toHaveLength(179);
     expect(sources).toHaveLength(38);
     expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
+    expect(resourceIntake).toContain('Batch A–G 已正规化为 179 个 catalog Work Item');
+    expect(resourceIntake).toContain('确定性 canonical URL 去重后：**183 项研究记录**');
+    expect(resourceIntake).toContain('Work Item：179；Source：38；Access Version：193');
+    expect(resourceIntake).toContain('原始语言：en 150、ja 9、zh-Hans 20');
+    expect(resourceIntake).toContain('可消费语言（Work Item 计，可重叠）：en 151、ja 9、zh-Hans 22');
+    expect(resourceIntake).toContain('Access Version 语言：en 162、ja 9、zh-Hans 22');
+    expect(resourceIntake).toContain(
+      '媒介：article 12、book 29、course 16、paper 17、podcast 11、talk 71、video 5、website 18',
+    );
     expect(expansion).toHaveLength(expansionCanonicalUrls.length);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -753,6 +762,87 @@ describe('raw product catalog data', () => {
     expect(new Set(expansion.map(({ sourceId }) => sourceId))).toEqual(
       new Set(['level-design-book', 'tencent-games-academy']),
     );
+
+    expect(
+      Object.fromEntries(
+        expansion.map((resource) => [
+          resource.canonicalUrl,
+          {
+            sourceId: resource.sourceId,
+            mediaType: resource.mediaType,
+            originalLanguage: resource.originalLanguage,
+            capabilityIds: resource.capabilityIds,
+            knowledgeTopicIds: resource.knowledgeTopicIds,
+            resourceTopicIds: resource.resourceTopicIds,
+          },
+        ]),
+      ),
+    ).toEqual({
+      'https://book.leveldesignbook.com/process/preproduction': {
+        sourceId: 'level-design-book',
+        mediaType: 'website',
+        originalLanguage: 'en',
+        capabilityIds: ['scope-prioritization', 'learning-prototype-design'],
+        knowledgeTopicIds: ['production-pipelines-constraints'],
+        resourceTopicIds: ['production-iteration'],
+      },
+      'https://book.leveldesignbook.com/process/research': {
+        sourceId: 'level-design-book',
+        mediaType: 'website',
+        originalLanguage: 'en',
+        capabilityIds: ['experience-deconstruction', 'research-question-framing'],
+        knowledgeTopicIds: [],
+        resourceTopicIds: ['research-player-experience'],
+      },
+      'https://book.leveldesignbook.com/process/preproduction/scope': {
+        sourceId: 'level-design-book',
+        mediaType: 'website',
+        originalLanguage: 'en',
+        capabilityIds: ['scope-prioritization', 'learning-prototype-design'],
+        knowledgeTopicIds: ['production-pipelines-constraints'],
+        resourceTopicIds: ['prototyping-experimentation'],
+      },
+      'https://gameinstitute.qq.com/course/detail/10056': {
+        sourceId: 'tencent-games-academy',
+        mediaType: 'talk',
+        originalLanguage: 'zh-Hans',
+        capabilityIds: ['research-question-framing', 'player-behavior-observation'],
+        knowledgeTopicIds: ['player-motivation-difference'],
+        resourceTopicIds: ['research-player-experience'],
+      },
+      'https://gameinstitute.qq.com/course/detail/10123': {
+        sourceId: 'tencent-games-academy',
+        mediaType: 'talk',
+        originalLanguage: 'zh-Hans',
+        capabilityIds: ['player-perspective-taking', 'game-feel-tuning'],
+        knowledgeTopicIds: ['player-motivation-difference', 'perception-attention-emotion'],
+        resourceTopicIds: ['chinese-industry-cross-discipline'],
+      },
+    });
+
+    for (const resource of expansion) {
+      expect(resource.accessVersions).toEqual([
+        expect.objectContaining({
+          language: resource.originalLanguage,
+          url: resource.canonicalUrl,
+          accessModel: 'free',
+          versionRelation: 'original',
+          presentationMode: 'original',
+          checkedAt: '2026-08-11',
+        }),
+      ]);
+      expect(resource).not.toHaveProperty('externalSignals');
+    }
+
+    const normalizedCanonicalUrls = resources.map((resource) => {
+      const url = new URL(resource.canonicalUrl);
+      url.hostname = url.hostname.toLowerCase().replace(/^www\./, '');
+      url.hash = '';
+      if (url.pathname !== '/') url.pathname = url.pathname.replace(/\/$/, '');
+      url.searchParams.sort();
+      return url.toString();
+    });
+    expect(new Set(normalizedCanonicalUrls).size).toBe(resources.length);
   });
 
   it('merges known language versions and applies conservative access facts', () => {

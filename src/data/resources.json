@@ -6922,9 +6922,7 @@
       "experience-deconstruction",
       "research-question-framing"
     ],
-    "knowledgeTopicIds": [
-      "spatial-cognition-wayfinding"
-    ],
+    "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "research-player-experience"
     ],
@@ -6996,7 +6994,6 @@
       "player-behavior-observation"
     ],
     "knowledgeTopicIds": [
-      "research-ethics-bias",
       "player-motivation-difference"
     ],
     "resourceTopicIds": [
