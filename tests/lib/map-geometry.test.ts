@@ -72,6 +72,31 @@ const pathStartsAndEndsOnBoundaries = (
     && onBoundary({ x: last.x2, y: last.y2 }, to);
 };
 
+const pathStartsAndEndsAtDeclaredPorts = (
+  path: string,
+  fromPort: 'north' | 'east' | 'south' | 'west',
+  toPort: 'north' | 'east' | 'south' | 'west',
+  from: { x: number; y: number; width: number; height: number },
+  to: { x: number; y: number; width: number; height: number },
+) => {
+  const segments = allSegments(path);
+  const first = segments[0];
+  const last = segments.at(-1);
+  if (!first || !last) return false;
+  const portPoint = (
+    box: typeof from,
+    side: 'north' | 'east' | 'south' | 'west',
+  ) => {
+    if (side === 'north') return { x: box.x + box.width / 2, y: box.y };
+    if (side === 'east') return { x: box.x + box.width, y: box.y + box.height / 2 };
+    if (side === 'south') return { x: box.x + box.width / 2, y: box.y + box.height };
+    return { x: box.x, y: box.y + box.height / 2 };
+  };
+  const start = portPoint(from, fromPort);
+  const end = portPoint(to, toPort);
+  return first.x1 === start.x && first.y1 === start.y && last.x2 === end.x && last.y2 === end.y;
+};
+
 const pathCrossesBoxInterior = (
   path: string,
   box: { x: number; y: number; width: number; height: number },
@@ -105,28 +130,28 @@ const expectedEgdsAnchors = {
   'with-team': [180, 360, 180, 54],
   'product-profit': [180, 500, 180, 54],
   'beyond-games': [180, 630, 180, 54],
-  'experience-journey': [390, 20, 190, 44],
-  perception: [390, 80, 125, 44],
-  rationalization: [535, 80, 125, 44],
-  deconstruction: [680, 80, 125, 44],
-  reconstruction: [825, 80, 125, 44],
-  'narrative-lever': [990, 25, 170, 42],
-  'aesthetics-lever': [990, 80, 170, 42],
-  'gameplay-challenges-lever': [990, 135, 170, 42],
-  'mindset-problem-solving-tools': [410, 225, 170, 44],
-  'prototype-production-breakdown': [600, 225, 170, 44],
-  'playtest-evidence-iteration': [790, 225, 170, 44],
-  'tradeoff-specification-delivery': [980, 225, 170, 44],
-  'vision-direction-decisions': [410, 365, 170, 44],
-  'alignment-communication': [600, 365, 170, 44],
-  'leadership-management': [790, 365, 170, 44],
-  'feedback-collaboration': [980, 365, 170, 44],
-  'audience-positioning-cluster': [410, 505, 170, 44],
-  'market-opportunity': [600, 505, 170, 44],
-  'value-exchange': [790, 505, 170, 44],
-  'monetization-alignment': [980, 505, 170, 44],
-  'values-culture': [440, 635, 220, 44],
-  'innovation-possibility-space': [720, 635, 240, 44],
+  'experience-journey': [390, 20, 170, 44],
+  perception: [390, 85, 170, 44],
+  rationalization: [580, 85, 170, 44],
+  deconstruction: [770, 85, 170, 44],
+  reconstruction: [960, 85, 170, 44],
+  'narrative-lever': [580, 145, 170, 42],
+  'aesthetics-lever': [770, 145, 170, 42],
+  'gameplay-challenges-lever': [960, 145, 170, 42],
+  'mindset-problem-solving-tools': [390, 225, 170, 44],
+  'prototype-production-breakdown': [580, 225, 170, 44],
+  'playtest-evidence-iteration': [770, 225, 170, 44],
+  'tradeoff-specification-delivery': [960, 225, 170, 44],
+  'vision-direction-decisions': [390, 365, 170, 44],
+  'alignment-communication': [580, 365, 170, 44],
+  'leadership-management': [770, 365, 170, 44],
+  'feedback-collaboration': [960, 365, 170, 44],
+  'audience-positioning-cluster': [390, 505, 170, 44],
+  'market-opportunity': [580, 505, 170, 44],
+  'value-exchange': [770, 505, 170, 44],
+  'monetization-alignment': [960, 505, 170, 44],
+  'values-culture': [390, 635, 170, 44],
+  'innovation-possibility-space': [770, 635, 360, 44],
 } as const;
 
 it('exports only EGDS geometry after the generic layout retirement', () => {
@@ -213,6 +238,27 @@ describe('EGDS expertise map geometry', () => {
     ))).toBe(true);
   });
 
+  it('places comparable framework rows on one declared four-column grid', () => {
+    const layout = buildEgdsMapLayout(egdsInput());
+    const boxes = new Map(layout.frameworkBoxes.map((box) => [box.id, box]));
+    const expectedColumns = [390, 580, 770, 960];
+    const rows = [
+      ['perception', 'rationalization', 'deconstruction', 'reconstruction'],
+      ['mindset-problem-solving-tools', 'prototype-production-breakdown', 'playtest-evidence-iteration', 'tradeoff-specification-delivery'],
+      ['vision-direction-decisions', 'alignment-communication', 'leadership-management', 'feedback-collaboration'],
+      ['audience-positioning-cluster', 'market-opportunity', 'value-exchange', 'monetization-alignment'],
+    ];
+
+    for (const row of rows) {
+      expect(row.map((id) => boxes.get(id)?.x), row.join(' -> ')).toEqual(expectedColumns);
+      expect(row.map((id) => boxes.get(id)?.width), row.join(' widths')).toEqual([170, 170, 170, 170]);
+    }
+    expect(['narrative-lever', 'aesthetics-lever', 'gameplay-challenges-lever'].map((id) => boxes.get(id)?.x))
+      .toEqual(expectedColumns.slice(1));
+    expect(boxes.get('values-culture')).toEqual(expect.objectContaining({ x: expectedColumns[0], width: 170 }));
+    expect(boxes.get('innovation-possibility-space')).toEqual(expect.objectContaining({ x: expectedColumns[2], width: 360 }));
+  });
+
   it('projects the fixed overview skeleton without entities', () => {
     const layout = buildEgdsMapLayout(egdsInput());
 
@@ -238,7 +284,7 @@ describe('EGDS expertise map geometry', () => {
       key: 'branch:experience-design', kind: 'branch', x: 180, y: 80, width: 180, height: 54,
     }));
     expect(layout.frameworkBoxes.find(({ id }) => id === 'innovation-possibility-space')).toEqual(expect.objectContaining({
-      key: 'external-entry:innovation-possibility-space', kind: 'external-entry', x: 720, y: 635, width: 240, height: 44,
+      key: 'external-entry:innovation-possibility-space', kind: 'external-entry', x: 770, y: 635, width: 360, height: 44,
     }));
   });
 
@@ -254,7 +300,7 @@ describe('EGDS expertise map geometry', () => {
     expect(layout.entityBoxes.map(({ key }) => key)).toEqual(expectedKeys);
     expect(layout.entityBoxes.every((box) => box.frameworkNodeId === expandedFrameworkNodeId)).toBe(true);
     expect(layout.frameworkBoxes.find(({ id }) => id === expandedFrameworkNodeId)).toEqual(expect.objectContaining({
-      x: 390, y: 80, width: 125, height: 44,
+      x: 390, y: 85, width: 170, height: 44,
     }));
     expect(layout.height).toBe(724 + 72 + Math.ceil(expectedKeys.length / 3) * 68 + 24);
   });
@@ -438,7 +484,15 @@ describe('EGDS expertise map geometry', () => {
     for (const path of layout.structuralPaths) {
       const from = boxesByKey.get(path.fromKey)!;
       const to = boxesByKey.get(path.toKey)!;
+      const declared = path as typeof path & {
+        fromPort?: 'north' | 'east' | 'south' | 'west';
+        toPort?: 'north' | 'east' | 'south' | 'west';
+      };
+      expect(declared.fromPort, `${path.id} from port`).toBeDefined();
+      expect(declared.toPort, `${path.id} to port`).toBeDefined();
       expect(pathStartsAndEndsOnBoundaries(path.path, from, to), path.id).toBe(true);
+      expect(pathStartsAndEndsAtDeclaredPorts(path.path, declared.fromPort!, declared.toPort!, from, to), path.id)
+        .toBe(true);
       for (const box of layout.frameworkBoxes.filter((candidate) => candidate.key !== path.fromKey && candidate.key !== path.toKey)) {
         expect(allSegments(path.path).some((segment) => {
           const horizontalThroughInterior = segment.y1 === segment.y2
@@ -458,7 +512,20 @@ describe('EGDS expertise map geometry', () => {
       fullLayout.frameworkBoxes.map((box) => [box.key, box]),
     );
     for (const path of fullLayout.processPaths) {
+      const declared = path as typeof path & {
+        fromPort?: 'north' | 'east' | 'south' | 'west';
+        toPort?: 'north' | 'east' | 'south' | 'west';
+      };
+      expect(declared.fromPort, `${path.id} from port`).toBe('east');
+      expect(declared.toPort, `${path.id} to port`).toBe('west');
       expect(pathStartsAndEndsOnBoundaries(path.path, fullBoxesByKey.get(path.fromKey)!, fullBoxesByKey.get(path.toKey)!), path.id).toBe(true);
+      expect(pathStartsAndEndsAtDeclaredPorts(
+        path.path,
+        declared.fromPort!,
+        declared.toPort!,
+        fullBoxesByKey.get(path.fromKey)!,
+        fullBoxesByKey.get(path.toKey)!,
+      ), path.id).toBe(true);
       for (const box of fullLayout.frameworkBoxes.filter((candidate) => candidate.key !== path.fromKey && candidate.key !== path.toKey)) {
         expect(allSegments(path.path).some((segment) => {
           const horizontalThroughInterior = segment.y1 === segment.y2
@@ -472,9 +539,9 @@ describe('EGDS expertise map geometry', () => {
       }
     }
     expect(Object.fromEntries(fullLayout.processPaths.map(({ id, path }) => [id, path]))).toEqual({
-      'process-perception-rationalization': 'M 515 102 H 535',
-      'process-rationalization-deconstruction': 'M 660 102 H 680',
-      'process-deconstruction-reconstruction': 'M 805 102 H 825',
+      'process-perception-rationalization': 'M 560 107 H 580',
+      'process-rationalization-deconstruction': 'M 750 107 H 770',
+      'process-deconstruction-reconstruction': 'M 940 107 H 960',
     });
   });
 
@@ -557,6 +624,7 @@ describe('EGDS expertise map geometry', () => {
         const to = boxesByKey.get(path.toKey)!;
         relationPathProbeCount += 1;
         expect(pathStartsAndEndsOnBoundaries(path.path, from, to), path.id).toBe(true);
+        expect(pathStartsAndEndsAtDeclaredPorts(path.path, path.fromPort, path.toPort, from, to), path.id).toBe(true);
         expect(pathCrossesBoxInterior(path.path, from), `${path.id} re-enters ${from.key}`).toBe(false);
         expect(pathCrossesBoxInterior(path.path, to), `${path.id} enters ${to.key}`).toBe(false);
         for (const box of boxes.filter(({ key }) => key !== path.fromKey && key !== path.toKey)) {

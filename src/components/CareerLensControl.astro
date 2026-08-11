@@ -79,10 +79,9 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     </noscript>
   </fieldset>
 
-  <section class="career-summaries career-profile-disclosures" aria-labelledby="career-summary-title">
+  <section class="career-summaries career-profile-disclosures" aria-labelledby="career-summary-title" hidden>
     <div class="career-profile-disclosures__heading">
       <h2 id="career-summary-title">画像、边界与依据</h2>
-      <p data-career-disclosure-placeholder>选择一个画像后，这里会显示关注范围、适用边界与公开依据。</p>
     </div>
 
     {profileViews.map(({ profile, projection }) => (
@@ -150,6 +149,14 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     ))}
   </section>
 
+  <noscript>
+    <style>
+      [data-career-explorer] .career-profile-disclosures[hidden] {
+        display: block !important;
+      }
+    </style>
+  </noscript>
+
   <div class="career-map" id={mapTargetId} aria-label="职业画像覆盖的能力地图">
     <slot />
   </div>
@@ -180,7 +187,6 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     const clearButton = explorer.querySelector<HTMLButtonElement>('[data-career-clear]');
     const status = explorer.querySelector<HTMLElement>('[data-career-status]');
     const disclosurePanel = explorer.querySelector<HTMLElement>('.career-profile-disclosures');
-    const disclosurePlaceholder = explorer.querySelector<HTMLElement>('[data-career-disclosure-placeholder]');
     const summaries = Array.from(explorer.querySelectorAll<HTMLDetailsElement>('[data-career-summary]'));
     const focusButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-focus-capability]'));
 
@@ -200,8 +206,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
         summary.hidden = !isActive;
         summary.open = isActive;
       });
-      disclosurePanel?.scrollTo({ top: 0 });
-      if (disclosurePlaceholder) disclosurePlaceholder.hidden = true;
+      if (disclosurePanel) disclosurePanel.hidden = false;
       if (status) status.textContent = `已应用 ${selectedButton.textContent?.trim() ?? ''}。地图仍保留全部能力。`;
       if (clearButton) clearButton.disabled = false;
     };
@@ -213,7 +218,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
         summary.hidden = true;
         summary.open = false;
       });
-      if (disclosurePlaceholder) disclosurePlaceholder.hidden = false;
+      if (disclosurePanel) disclosurePanel.hidden = true;
       if (status) status.textContent = '当前显示完整能力地图，尚未应用职业画像。';
       if (clearButton) clearButton.disabled = true;
     };

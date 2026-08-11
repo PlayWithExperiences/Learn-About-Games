@@ -140,6 +140,8 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
             data-egds-structural-path={path.id}
             data-from-key={path.fromKey}
             data-to-key={path.toKey}
+            data-from-port={path.fromPort}
+            data-to-port={path.toPort}
             vector-effect="non-scaling-stroke"
           ></path>
         ))}
@@ -150,6 +152,8 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
             data-egds-process-path={path.id}
             data-from-key={path.fromKey}
             data-to-key={path.toKey}
+            data-from-port={path.fromPort}
+            data-to-port={path.toPort}
             vector-effect="non-scaling-stroke"
           ></path>
         ))}

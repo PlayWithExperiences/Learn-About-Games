@@ -27,8 +27,12 @@ export type EgdsMapPath = Readonly<{
   id: string;
   fromKey: EgdsMapBox['key'];
   toKey: EgdsMapBox['key'];
+  fromPort: EgdsPortSide;
+  toPort: EgdsPortSide;
   path: string;
 }>;
+
+export type EgdsPortSide = 'north' | 'east' | 'south' | 'west';
 
 export type EgdsExpansionLeaderPath = Readonly<{
   id: string;
@@ -70,6 +74,30 @@ export type BuildEgdsMapLayoutInput = Readonly<{
 
 type EgdsAnchor = readonly [x: number, y: number, width: number, height: number];
 
+export const egdsOverviewGrid = {
+  childColumns: [390, 580, 770, 960],
+  childWidth: 170,
+  columnGap: 20,
+} as const;
+
+const childAnchor = (
+  column: 0 | 1 | 2 | 3,
+  y: number,
+  height = 44,
+): EgdsAnchor => [egdsOverviewGrid.childColumns[column], y, egdsOverviewGrid.childWidth, height];
+
+const childSpanAnchor = (
+  column: 0 | 1 | 2 | 3,
+  span: 2 | 3 | 4,
+  y: number,
+  height = 44,
+): EgdsAnchor => [
+  egdsOverviewGrid.childColumns[column],
+  y,
+  egdsOverviewGrid.childWidth * span + egdsOverviewGrid.columnGap * (span - 1),
+  height,
+];
+
 const egdsAnchors: Readonly<Record<string, EgdsAnchor>> = {
   'egds-root': [20, 352, 130, 60],
   'experience-design': [180, 80, 180, 54],
@@ -77,28 +105,28 @@ const egdsAnchors: Readonly<Record<string, EgdsAnchor>> = {
   'with-team': [180, 360, 180, 54],
   'product-profit': [180, 500, 180, 54],
   'beyond-games': [180, 630, 180, 54],
-  'experience-journey': [390, 20, 190, 44],
-  perception: [390, 80, 125, 44],
-  rationalization: [535, 80, 125, 44],
-  deconstruction: [680, 80, 125, 44],
-  reconstruction: [825, 80, 125, 44],
-  'narrative-lever': [990, 25, 170, 42],
-  'aesthetics-lever': [990, 80, 170, 42],
-  'gameplay-challenges-lever': [990, 135, 170, 42],
-  'mindset-problem-solving-tools': [410, 225, 170, 44],
-  'prototype-production-breakdown': [600, 225, 170, 44],
-  'playtest-evidence-iteration': [790, 225, 170, 44],
-  'tradeoff-specification-delivery': [980, 225, 170, 44],
-  'vision-direction-decisions': [410, 365, 170, 44],
-  'alignment-communication': [600, 365, 170, 44],
-  'leadership-management': [790, 365, 170, 44],
-  'feedback-collaboration': [980, 365, 170, 44],
-  'audience-positioning-cluster': [410, 505, 170, 44],
-  'market-opportunity': [600, 505, 170, 44],
-  'value-exchange': [790, 505, 170, 44],
-  'monetization-alignment': [980, 505, 170, 44],
-  'values-culture': [440, 635, 220, 44],
-  'innovation-possibility-space': [720, 635, 240, 44],
+  'experience-journey': childAnchor(0, 20),
+  perception: childAnchor(0, 85),
+  rationalization: childAnchor(1, 85),
+  deconstruction: childAnchor(2, 85),
+  reconstruction: childAnchor(3, 85),
+  'narrative-lever': childAnchor(1, 145, 42),
+  'aesthetics-lever': childAnchor(2, 145, 42),
+  'gameplay-challenges-lever': childAnchor(3, 145, 42),
+  'mindset-problem-solving-tools': childAnchor(0, 225),
+  'prototype-production-breakdown': childAnchor(1, 225),
+  'playtest-evidence-iteration': childAnchor(2, 225),
+  'tradeoff-specification-delivery': childAnchor(3, 225),
+  'vision-direction-decisions': childAnchor(0, 365),
+  'alignment-communication': childAnchor(1, 365),
+  'leadership-management': childAnchor(2, 365),
+  'feedback-collaboration': childAnchor(3, 365),
+  'audience-positioning-cluster': childAnchor(0, 505),
+  'market-opportunity': childAnchor(1, 505),
+  'value-exchange': childAnchor(2, 505),
+  'monetization-alignment': childAnchor(3, 505),
+  'values-culture': childAnchor(0, 635),
+  'innovation-possibility-space': childSpanAnchor(2, 2, 635),
 };
 
 const egdsOverviewHeight = 720;
@@ -164,25 +192,29 @@ const egdsBox = (
 });
 
 type OrthogonalPoint = Readonly<{ x: number; y: number }>;
-type OrthogonalPort = Readonly<{ boundary: OrthogonalPoint; escape: OrthogonalPoint }>;
+type OrthogonalPort = Readonly<{ side: EgdsPortSide; boundary: OrthogonalPoint; escape: OrthogonalPoint }>;
 type OrthogonalSegment = Readonly<{ start: OrthogonalPoint; end: OrthogonalPoint }>;
 
 const routeClearance = 8;
 
 const boxPorts = (box: EgdsMapBox): OrthogonalPort[] => [
   {
+    side: 'north',
     boundary: { x: egdsCenterX(box), y: box.y },
     escape: { x: egdsCenterX(box), y: box.y - routeClearance },
   },
   {
+    side: 'east',
     boundary: { x: box.x + box.width, y: egdsCenterY(box) },
     escape: { x: box.x + box.width + routeClearance, y: egdsCenterY(box) },
   },
   {
+    side: 'south',
     boundary: { x: egdsCenterX(box), y: box.y + box.height },
     escape: { x: egdsCenterX(box), y: box.y + box.height + routeClearance },
   },
   {
+    side: 'west',
     boundary: { x: box.x, y: egdsCenterY(box) },
     escape: { x: box.x - routeClearance, y: egdsCenterY(box) },
   },
@@ -270,6 +302,7 @@ const buildObstacleAvoidingPath = ({
     ...obstacles.flatMap((box) => [box.y - routeClearance, box.y + box.height + routeClearance]),
   ])].filter((y) => y >= 0 && y <= height).sort((left, right) => left - right);
   let bestRoute: OrthogonalPoint[] | undefined;
+  let bestPorts: Readonly<{ fromPort: EgdsPortSide; toPort: EgdsPortSide }> | undefined;
   let bestLength = Number.POSITIVE_INFINITY;
 
   for (const start of starts) {
@@ -297,32 +330,73 @@ const buildObstacleAvoidingPath = ({
         const length = routeLength(points);
         if (length >= bestLength || !routeIsClear(points, obstacles, width, height)) continue;
         bestRoute = points;
+        bestPorts = { fromPort: start.side, toPort: end.side };
         bestLength = length;
       }
     }
   }
 
-  if (!bestRoute) throw new Error('Cannot project an obstacle-free orthogonal path');
-  return routeToPath(bestRoute);
+  if (!bestRoute || !bestPorts) throw new Error('Cannot project an obstacle-free orthogonal path');
+  return { ...bestPorts, path: routeToPath(bestRoute) };
 };
 
-const buildEgdsStructuralPath = (from: EgdsMapBox, to: EgdsMapBox): string => {
-  const startX = from.x + from.width;
-  const startY = egdsCenterY(from);
+const boundaryPoint = (box: EgdsMapBox, side: EgdsPortSide): OrthogonalPoint => {
+  if (side === 'north') return { x: egdsCenterX(box), y: box.y };
+  if (side === 'east') return { x: box.x + box.width, y: egdsCenterY(box) };
+  if (side === 'south') return { x: egdsCenterX(box), y: box.y + box.height };
+  return { x: box.x, y: egdsCenterY(box) };
+};
+
+const buildEgdsStructuralPath = (
+  from: EgdsMapBox,
+  to: EgdsMapBox,
+): Pick<EgdsMapPath, 'fromPort' | 'toPort' | 'path'> => {
   if (from.kind === 'root' && to.kind === 'branch') {
-    return `M ${startX} ${startY} H 165 V ${egdsCenterY(to)} H ${to.x}`;
+    const start = boundaryPoint(from, 'east');
+    const end = boundaryPoint(to, 'west');
+    return {
+      fromPort: 'east',
+      toPort: 'west',
+      path: `M ${start.x} ${start.y} H 165 V ${end.y} H ${end.x}`,
+    };
   }
   if (from.id === 'experience-design' && to.id === 'experience-journey') {
-    return `M ${startX} ${startY} H 375 V ${egdsCenterY(to)} H ${to.x}`;
+    const start = boundaryPoint(from, 'east');
+    const end = boundaryPoint(to, 'west');
+    return {
+      fromPort: 'east',
+      toPort: 'west',
+      path: `M ${start.x} ${start.y} H 375 V ${end.y} H ${end.x}`,
+    };
   }
   if (from.id === 'experience-design' && to.kind === 'stage') {
-    return `M ${startX} ${startY} H 375 V 64 H ${egdsCenterX(to)} V ${to.y}`;
+    const start = boundaryPoint(from, 'east');
+    const end = boundaryPoint(to, 'north');
+    const railY = to.y - 16;
+    return {
+      fromPort: 'east',
+      toPort: 'north',
+      path: `M ${start.x} ${start.y} H 375 V ${railY} H ${end.x} V ${end.y}`,
+    };
   }
   if (from.id === 'reconstruction' && to.kind === 'lever') {
-    return `M ${startX} ${startY} H 970 V ${egdsCenterY(to)} H ${to.x}`;
+    const start = boundaryPoint(from, 'south');
+    const end = boundaryPoint(to, 'north');
+    const railY = start.y + 8;
+    return {
+      fromPort: 'south',
+      toPort: 'north',
+      path: `M ${start.x} ${start.y} V ${railY} H ${end.x} V ${end.y}`,
+    };
   }
+  const start = boundaryPoint(from, 'east');
+  const end = boundaryPoint(to, 'north');
   const railY = to.y - 16;
-  return `M ${startX} ${startY} H ${startX + 15} V ${railY} H ${egdsCenterX(to)} V ${to.y}`;
+  return {
+    fromPort: 'east',
+    toPort: 'north',
+    path: `M ${start.x} ${start.y} H ${start.x + 15} V ${railY} H ${end.x} V ${end.y}`,
+  };
 };
 
 export function buildEgdsMapLayout({
@@ -405,11 +479,12 @@ export function buildEgdsMapLayout({
       const from = frameworkBoxesById.get(node.parentNodeId);
       const to = frameworkBoxesById.get(node.id);
       if (!from || !to) throw new Error(`Cannot project structural path: ${node.parentNodeId} -> ${node.id}`);
+      const projection = buildEgdsStructuralPath(from, to);
       return {
         id: `structural:${from.key}->${to.key}`,
         fromKey: from.key,
         toKey: to.key,
-        path: buildEgdsStructuralPath(from, to),
+        ...projection,
       };
     });
   const processPaths = frameworkRelations
@@ -423,6 +498,8 @@ export function buildEgdsMapLayout({
         id: relation.id,
         fromKey: from.key,
         toKey: to.key,
+        fromPort: 'east' as const,
+        toPort: 'west' as const,
         path: `M ${from.x + from.width} ${egdsCenterY(from)} H ${to.x}`,
       };
     });
@@ -512,7 +589,7 @@ export function buildEgdsMapLayout({
       relationType: relation.type,
       fromKey: from.key,
       toKey: to.key,
-      path: buildObstacleAvoidingPath({
+      ...buildObstacleAvoidingPath({
         starts: boxPorts(from),
         ends: boxPorts(to),
         obstacles: expansionObstacles,
@@ -540,13 +617,14 @@ export function buildEgdsMapLayout({
       path: buildObstacleAvoidingPath({
         starts: boxPorts(expandedFrameworkBox),
         ends: [{
+          side: 'north',
           boundary: { x: egdsExpansionMetrics.x, y: egdsExpansionTop },
           escape: { x: egdsExpansionMetrics.x, y: egdsExpansionTop - routeClearance },
         }],
         obstacles: expansionObstacles,
         width: 1180,
         height: layoutHeight,
-      }),
+      }).path,
     },
     externalEntries,
   };
