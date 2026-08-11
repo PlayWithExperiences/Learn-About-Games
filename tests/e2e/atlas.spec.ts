@@ -507,6 +507,70 @@ test('map mode occupies the visual viewport, locks the page and restores scroll 
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(pageYBefore);
 });
 
+test('fullscreen map mode keeps one keyboard-accessible evidence lens set without changing map state', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Fullscreen lens ownership is tested once.');
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+
+  const explorer = page.locator('[data-atlas-explorer]');
+  const network = page.locator('[data-atlas-global-network]');
+  const viewport = page.locator('[data-atlas-canvas]');
+  const stage = page.locator('[data-atlas-stage]');
+  const mapMode = page.locator('[data-atlas-map-mode]');
+  const search = page.getByRole('searchbox', { name: '搜索节点' });
+  await search.fill('Dead Cells');
+  await page.getByRole('button', { name: '放大' }).click();
+  await viewport.evaluate((element) => {
+    element.scrollLeft = 320;
+    element.scrollTop = 140;
+  });
+  const stateBefore = await page.evaluate(() => ({
+    scale: document.querySelector<HTMLElement>('[data-atlas-stage]')?.dataset.scale,
+    viewport: (() => {
+      const canvas = document.querySelector<HTMLElement>('[data-atlas-canvas]')!;
+      return { left: canvas.scrollLeft, top: canvas.scrollTop };
+    })(),
+    search: (document.querySelector<HTMLInputElement>('[data-atlas-node-search]')?.value),
+    nodes: Array.from(document.querySelectorAll<HTMLElement>('[data-atlas-node]')).map((node) => ({
+      id: node.dataset.atlasNodeId,
+      style: node.getAttribute('style'),
+    })),
+    relations: Array.from(document.querySelectorAll<SVGGElement>('[data-atlas-relation]')).map((relation) => ({
+      id: relation.dataset.atlasRelation,
+      path: relation.querySelector('[data-atlas-relation-path]')?.getAttribute('d'),
+    })),
+  }));
+
+  await mapMode.click();
+  await expect(network).toHaveAttribute('data-map-mode', 'true');
+  const lensControl = network.locator('.atlas-lens-control');
+  await expect(lensControl).toBeVisible();
+  await expect(lensControl.getByRole('button')).toHaveCount(3);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(3);
+  await expect(explorer.locator('#atlas-lens-status')).toHaveCount(1);
+
+  const metroidvania = lensControl.getByRole('button', { name: 'Metroidvania', exact: true });
+  await metroidvania.focus();
+  await page.keyboard.press('Space');
+  await expect(metroidvania).toHaveAttribute('aria-pressed', 'true');
+  await expect(network).toHaveAttribute('data-map-mode', 'true');
+  await expect(stage).toHaveAttribute('data-scale', stateBefore.scale!);
+  await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
+    .toEqual(stateBefore.viewport);
+  await expect(search).toHaveValue(stateBefore.search!);
+  expect(await page.evaluate(() => ({
+    nodes: Array.from(document.querySelectorAll<HTMLElement>('[data-atlas-node]')).map((node) => ({
+      id: node.dataset.atlasNodeId,
+      style: node.getAttribute('style'),
+    })),
+    relations: Array.from(document.querySelectorAll<SVGGElement>('[data-atlas-relation]')).map((relation) => ({
+      id: relation.dataset.atlasRelation,
+      path: relation.querySelector('[data-atlas-relation-path]')?.getAttribute('d'),
+    })),
+  }))).toEqual({ nodes: stateBefore.nodes, relations: stateBefore.relations });
+  await expect(page.locator('[data-atlas-node-id="dead-cells"]')).toHaveAttribute('data-search-match', 'true');
+});
+
 test('fullscreen detail evidence temporarily releases the page and resumes the same map context', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen detail return is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });

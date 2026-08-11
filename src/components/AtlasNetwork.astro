@@ -101,22 +101,6 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     <p>横向位置只表示开始年份。纵向分道只避免碰撞并让实体类型相邻，不表示质量、重要性或固定演进顺序。</p>
   </header>
 
-  <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
-    <legend>选择证据透镜</legend>
-    <div class="atlas-lens-control__buttons">
-      <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
-      {themes.map((theme) => (
-        <button type="button" data-atlas-theme-button={theme.id} aria-pressed="false" disabled>
-          {theme.title['zh-CN']}
-        </button>
-      ))}
-    </div>
-    <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
-    <noscript>
-      <p class="script-required-note" data-atlas-no-js-note>启用 JavaScript 后可以切换强调。完整网络、关系详情与证据不依赖 JavaScript。</p>
-    </noscript>
-  </fieldset>
-
   <section class="atlas-legend" aria-labelledby="atlas-legend-title">
     <div>
       <h3 id="atlas-legend-title">图例与阅读边界</h3>
@@ -136,6 +120,21 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
   </section>
 
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
+    <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
+      <legend>选择证据透镜</legend>
+      <div class="atlas-lens-control__buttons">
+        <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
+        {themes.map((theme) => (
+          <button type="button" data-atlas-theme-button={theme.id} aria-pressed="false" disabled>
+            {theme.title['zh-CN']}
+          </button>
+        ))}
+      </div>
+      <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
+      <noscript>
+        <p class="script-required-note" data-atlas-no-js-note>启用 JavaScript 后可以切换强调。完整网络、关系详情与证据不依赖 JavaScript。</p>
+      </noscript>
+    </fieldset>
     <div class="atlas-view-controls" data-atlas-view-controls>
       <strong class="atlas-view-controls__mode-title">Innovation Atlas 地图模式</strong>
       <button type="button" data-atlas-map-mode aria-pressed="false" disabled>进入地图模式</button>

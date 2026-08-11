@@ -2756,6 +2756,26 @@ h2 {
   flex: 0 0 auto;
 }
 
+[data-atlas-global-network][data-map-mode='true'] .atlas-lens-control {
+  display: grid;
+  margin: 0 0 0.35rem;
+  padding: 0;
+  border: 0;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-lens-control__buttons {
+  margin: 0;
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-lens-control > p {
+  grid-column: 2;
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+}
+
 [data-atlas-global-network][data-map-mode='true'] .atlas-view-controls__mode-title {
   display: block;
 }
