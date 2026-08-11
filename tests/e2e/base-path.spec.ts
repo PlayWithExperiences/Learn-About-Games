@@ -1,4 +1,6 @@
 import { expect, test } from '@playwright/test';
+import atlasNodes from '../../src/data/atlas-nodes.json' with { type: 'json' };
+import atlasRelations from '../../src/data/atlas-relations.json' with { type: 'json' };
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
@@ -74,6 +76,6 @@ test('serves the static site and its visible internal links from the project bas
   const atlasDetailHrefs = await page.locator('[data-atlas-node-link], [data-atlas-relation-link]').evaluateAll((links) =>
     links.map((link) => link.getAttribute('href')),
   );
-  expect(atlasDetailHrefs).toHaveLength(66);
+  expect(atlasDetailHrefs).toHaveLength(atlasNodes.length + atlasRelations.length);
   expect(atlasDetailHrefs.every((href) => href?.startsWith('#atlas-'))).toBe(true);
 });

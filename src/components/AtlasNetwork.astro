@@ -1,4 +1,6 @@
 ---
+import { getCollection } from 'astro:content';
+
 import type { Catalog } from '../lib/catalog/validate';
 import {
   buildAtlasLayout,
@@ -22,9 +24,23 @@ interface Props {
 }
 
 const { evidence, nodes, relations, tags, themes } = Astro.props;
+const genreFamilies = (await getCollection('atlasGenreFamilies'))
+  .map(({ id, data }) => ({ ...data, id }))
+  .sort((left, right) => left.order - right.order);
+const themeById = new Map(themes.map((theme) => [theme.id, theme]));
+const foundationTheme = themeById.get('early-electronic-games');
+const lineageThemes = themes.filter(({ id }) => id !== 'early-electronic-games');
+const primaryFamilyByTheme = new Map(
+  lineageThemes.map((theme) => [
+    theme.id,
+    genreFamilies.find(({ id }) => id === theme.familyIds[0]),
+  ]),
+);
 const nodeCount = nodes.length;
 const relationCount = relations.length;
 const layout = buildAtlasLayout(nodes, relations);
+const contentBottom = Math.max(...layout.nodes.map(({ top, height }) => top + height));
+const canvasHeight = Math.max(layout.height, Math.ceil((contentBottom + 40) / 20) * 20);
 const eras = groupAtlasNodesByEra(nodes);
 const adjacency = indexAtlasRelations(nodes, relations);
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
@@ -122,15 +138,74 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
     <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
       <legend>选择证据透镜</legend>
-      <div class="atlas-lens-control__buttons">
+      <div class="atlas-lens-control__current">
         <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
-        {themes.map((theme) => (
-          <button type="button" data-atlas-theme-button={theme.id} aria-pressed="false" disabled>
-            {theme.title['zh-CN']}
-          </button>
-        ))}
+        <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
       </div>
-      <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
+      <div class="atlas-family-directory" data-atlas-family-directory>
+        {foundationTheme && (
+          <section class="atlas-family-directory__foundation" data-atlas-foundation-lens aria-labelledby="atlas-foundation-title">
+            <div>
+              <h4 id="atlas-foundation-title">历史基础</h4>
+              <p>不归入单一类型家族</p>
+            </div>
+            <div class="atlas-family-directory__theme">
+              <button
+                id={`atlas-theme-control-${foundationTheme.id}`}
+                type="button"
+                data-atlas-theme-button={foundationTheme.id}
+                aria-pressed="false"
+                disabled
+              >
+                {foundationTheme.title['zh-CN']}
+              </button>
+              <p data-atlas-scope-note>{foundationTheme.scopeNote['zh-CN']}</p>
+            </div>
+          </section>
+        )}
+        <div class="atlas-family-directory__families">
+          {genreFamilies.map((family) => {
+            const familyThemes = lineageThemes.filter(({ familyIds }) => familyIds.includes(family.id));
+            return (
+              <details id={`atlas-family-${family.id}`} name="atlas-genre-family" data-atlas-family={family.id}>
+                <summary>
+                  <span>{family.title['zh-CN']}</span>
+                  <small>{familyThemes.length > 0 ? `${familyThemes.length} 个透镜` : '待研究'}</small>
+                </summary>
+                <div class="atlas-family-directory__body">
+                  <p>{family.summary['zh-CN']}</p>
+                  {familyThemes.length > 0 ? (
+                    <ul>
+                      {familyThemes.map((theme) => theme.familyIds[0] === family.id ? (
+                        <li class="atlas-family-directory__theme">
+                          <button
+                            id={`atlas-theme-control-${theme.id}`}
+                            type="button"
+                            data-atlas-theme-button={theme.id}
+                            aria-pressed="false"
+                            disabled
+                          >
+                            {theme.title['zh-CN']}
+                          </button>
+                          <p data-atlas-scope-note>{theme.scopeNote['zh-CN']}</p>
+                        </li>
+                      ) : (
+                        <li class="atlas-family-directory__reference" data-atlas-theme-reference={theme.id}>
+                          <a href={`#atlas-family-${primaryFamilyByTheme.get(theme.id)?.id}`}>{theme.title['zh-CN']}</a>
+                          <span>控制位于{primaryFamilyByTheme.get(theme.id)?.title['zh-CN']}</span>
+                          <p data-atlas-scope-note>{theme.scopeNote['zh-CN']}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p class="atlas-family-directory__empty">本批尚无达到证据门槛的透镜。</p>
+                  )}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      </div>
       <noscript>
         <p class="script-required-note" data-atlas-no-js-note>启用 JavaScript 后可以切换强调。完整网络、关系详情与证据不依赖 JavaScript。</p>
       </noscript>
@@ -153,14 +228,14 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         class="atlas-network__stage"
         data-atlas-stage
         data-scale="1"
-        style={`width:${layout.width}px;height:${layout.height}px`}
+        style={`width:${layout.width}px;height:${canvasHeight}px`}
       >
         <div
           class="atlas-network__canvas"
           data-atlas-scene
           data-scene-width={layout.width}
-          data-scene-height={layout.height}
-          style={`width:${layout.width}px;height:${layout.height}px;transform:scale(1)`}
+          data-scene-height={canvasHeight}
+          style={`width:${layout.width}px;height:${canvasHeight}px;transform:scale(1)`}
         >
           <div class="atlas-network__years" aria-hidden="true">
             {layout.yearTicks.map(({ year, x }) => (
@@ -170,7 +245,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
 
           <svg
             class="atlas-network__relations"
-            viewBox={`0 0 ${layout.width} ${layout.height}`}
+            viewBox={`0 0 ${layout.width} ${canvasHeight}`}
             role="img"
             aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
           >
