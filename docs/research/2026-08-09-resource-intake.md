@@ -336,6 +336,21 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | F-009<br>canonicalUrl=https://doi.org/10.1145/2889160.2889253<br>title=What Went Right and What Went Wrong: An Analysis of 155 Postmortems from Game Development | sourceName=ACM<br>sourceUrl=https://dl.acm.org/ | mediaType=paper<br>originalLanguage=en | language=en; url=https://doi.org/10.1145/2889160.2889253; accessModel=subscription; versionRelation=original; presentationMode=original; checkedAt=2026-08-11<br>language=en; url=https://www.microsoft.com/en-us/research/publication/what-went-right-and-what-went-wrong-an-analysis-of-155-postmortems-from-game-development/; accessModel=free; versionRelation=official; presentationMode=original; checkedAt=2026-08-11 | topic=production-iteration<br>whyRelevant=系统分析 155 篇开发复盘并连接项目特征、正负经验、最佳实践和常见陷阱。 | DOI 由 Crossref 核验；Microsoft Research 官方页提供经 ACM 许可的作者版与 PDF。 |
 | F-010<br>canonicalUrl=https://www.choiceofgames.com/make-your-own-games/choicescript-intro/<br>title=Introduction to ChoiceScript | sourceName=Choice of Games<br>sourceUrl=https://www.choiceofgames.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=narrative-expression<br>whyRelevant=用可运行示例逐步讲解嵌套选择、后果、变量、条件文本和场景文件。 | ChoiceScript 开发与发布方的官方入门文档。 |
 
+### Batch G：证据不足时的五条 stop-condition 补充（5）
+
+- 本批按可核验原页缩小为 5 个 Work Item：The Level Design Book 3 条英文网站条目、腾讯游戏学堂 2 条中文演讲实录。未以数量目标覆盖中文非 talk 的证据缺口。
+- `agent-reach doctor --json` 显示 Exa via mcporter 和 Jina Reader 可用；指定 Exa 查询立即返回 HTTP 429 后停止重试。Jina 逐页读取下列 5 个 canonical 原页，并记录它们明确支持的有限关联。
+- 中国大学 MOOC 搜索页只提供平台说明，CNKI 原页遇证书错误；两者均未作为 Work Item 证据。中文原创／官方中文的课程、论文、作者文章或稳定网站仍是下一批优先研究项。
+- 所有条目各有恰好一个主 `resourceTopicId`、一个原始 Access Version，`checkedAt=2026-08-11`；腾讯页面虽为完整实录，仍如实归类为 `talk`。
+
+| Ref / canonical identity | Source evidence | Medium / original language | accessVersions | 主主题 / whyRelevant | notes |
+|---|---|---|---|---|---|
+| G-001<br>canonicalUrl=https://book.leveldesignbook.com/process/preproduction<br>title=Pre-production | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=production-iteration<br>whyRelevant=原页把机制、体验目标、参考研究与范围问题并列为前期规划的设计问题，并说明机制与关卡需借测试共同验证。 | 只主张关卡前期规划、范围与原型验证，不外推为一般项目管理规范。 |
+| G-002<br>canonicalUrl=https://book.leveldesignbook.com/process/research<br>title=Research | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=原页说明收集参照、拆解具体参照与建立 moodboard 的研究动作，支持把观察转成可讨论的设计问题。 | 不将关卡／现实参照研究表述为普遍的用户研究方法。 |
+| G-003<br>canonicalUrl=https://book.leveldesignbook.com/process/preproduction/scope<br>title=Scope | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=prototyping-experimentation<br>whyRelevant=原页将 scope 定义为项目大小与复杂度，并将 prototype 定义为回答单一问题的小型聚焦项目。 | 不把页面的经验性缩减建议写成普遍完成率或标准。 |
+| G-004<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10056<br>title=聚用户之力，做更好游戏 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=talk<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=官方演讲实录以概念、初始版本、迭代与运营阶段的用户研究实践为案例，说明不同问题需要选择或组合相应研究方法。 | 实录不是 article；公开入口与播放可用性仍可能受账号、地区与平台政策影响。 |
+| G-005<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10123<br>title=TGDC \| 《QQ飞车》的十年时光路 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=talk<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=chinese-industry-cross-discipline<br>whyRelevant=官方演讲实录以产品复盘讨论用户动机、基础体验、运营节奏、手感调优与关卡情绪曲线。 | 实录不等于普适因果证据；只记录该团队案例及其有限实践语境。 |
+
 ## 拒绝与待核证据
 
 以下保留五批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
@@ -428,6 +443,24 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - 六篇 J-STAGE 页面均在 2026-08-11 标记 `ジャーナル フリー` 并提供原文 PDF；本批只记录日文原始版本，未因页面存在英文导航或英文摘要而声称有英文全文版本。
 - Exa via mcporter 在第 12 次查询触发免费 MCP 配额 HTTP 429；后续核验使用 Jina Reader 和官方页面。该限制缩小了候选发现面，但不降低已收录 16 项的页面证据要求。
 - 本批不转载课程、演讲或论文正文，只记录 identity、公开元数据、访问入口和与能力图谱的关联理由。
+
+### Batch G：下一批中文优先资源的发现记录（2026-08-11，未正规化）
+
+- 检索后端：先运行 `agent-reach doctor --json`，确认 Exa via mcporter 与 Jina Reader 可用。按指定精确查询调用 Exa 时即返回 HTTP 429；此后停止 Exa 重试，未把结果摘要当成证据。
+- 核验方式：只以 Jina Reader 可读取的原始 Work 页面作为候选证据。中国大学 MOOC 的搜索页只有平台说明、没有可验证的课程条目；CNKI 搜索页及首页均遇到证书错误，不能作为论文 identity 或摘要证据。
+- 这一轮尚未发现足以同时满足「至少 8 条」「中文原创/官方中文至少 4 条」和单一 Source 上限的候选集合。因此以下记录不写入 `resources.json`；它们保留给后续有可核验原页时重新组合。
+
+| Status | Ref / canonical identity | Source evidence and bounded claim | Medium / original language | 建议关联 / reason |
+|---|---|---|---|---|
+| needs-verification | `https://book.leveldesignbook.com/process/preproduction`<br>Pre-production | Jina 在 2026-08-11 读取到原页将 pre-production 描述为以机制、体验目标、参考研究与范围问题规划关卡；仍需与完整批次的中文配额一并复核。 | website / en | production-iteration；`scope-prioritization`、`learning-prototype-design`。 |
+| needs-verification | `https://book.leveldesignbook.com/process/research`<br>Research | Jina 原页明确以参考收集、具体拆解与 moodboard 讨论关卡／现实参照研究；不主张它覆盖一般用户研究。 | website / en | research-player-experience；`experience-deconstruction`、`research-question-framing`。 |
+| needs-verification | `https://book.leveldesignbook.com/process/preproduction/scope`<br>Scope | Jina 原页把 scope 定义为项目大小与复杂度，并把 prototype 说明为回答问题的小型聚焦项目。 | website / en | prototyping-experimentation；`scope-prioritization`、`learning-prototype-design`。 |
+| needs-verification | `https://gameinstitute.qq.com/course/detail/10056`<br>聚用户之力，做更好游戏 | 腾讯游戏学堂原页明确为分享实录，叙述用户研究贯穿概念、初始版本、迭代与运营；若入库必须标为 `talk`，不能借实录改标 article。 | talk / zh-Hans | research-player-experience；`research-question-framing`、`player-behavior-observation`。 |
+| needs-verification | `https://gameinstitute.qq.com/course/detail/10123`<br>TGDC \| 《QQ飞车》的十年时光路 | 腾讯游戏学堂原页明确为主论坛主题演讲及演讲实录，包含用户动机、体验问题、运营节奏和手感调优的案例叙述；若入库必须标为 `talk`。 | talk / zh-Hans | chinese-industry-cross-discipline；`player-perspective-taking`、`game-feel-tuning`。 |
+| excluded | `https://book.leveldesignbook.com/process/preproduction/worldbuilding` | 原页可读且讨论最小世界构建，但与上列三个 LDB 页面同属一个 Source；本批单一 Source 最多三条，故不与它们并入。 | website / en | narrative-expression；不作为本轮第四个同 Source 条目。 |
+| excluded | `https://gameinstitute.qq.com/course/detail/10202`、`https://gameinstitute.qq.com/course/detail/10200` | 两个原页均明确写作演讲实录；前者讨论动作开发流程，后者讨论开放世界场景的过程化管线。腾讯候选在本批最多保留两条 talk，故不以更多 talk 填补数量。 | talk / zh-Hans | 分别可支持 `multimodal-presentation-integration`／`cross-discipline-communication`，以及 `blockout-spatial-validation`／`iteration-planning`。 |
+| excluded | `https://www.icourse163.org/search.htm?search=%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1` | Jina 只读取到平台介绍与页脚，没有课程 identity、课程大纲或访问事实；搜索结果页不能充当 Work Item。 | n/a | 等待具体官方课程页。 |
+| excluded | `https://kns.cnki.net/kns8s/defaultresult/index?kw=%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1` | Jina 返回 `ERR_CERT_COMMON_NAME_INVALID`；无可复核原页、题名或摘要，不收录。 | n/a | 等待可访问的官方论文详情页。 |
 
 ### Batch F
 

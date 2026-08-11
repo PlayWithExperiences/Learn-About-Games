@@ -453,7 +453,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(174);
+    expect(resources).toHaveLength(179);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -633,15 +633,15 @@ describe('raw product catalog data', () => {
 
     expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(13);
     expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(16);
-    expect(countBy('mediaType', 'talk')).toBe(69);
+    expect(countBy('mediaType', 'talk')).toBe(71);
     expect(countBy('originalLanguage', 'en')).toBeGreaterThanOrEqual(137);
-    expect(countBy('originalLanguage', 'zh-Hans')).toBe(18);
+    expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
     expect(consumableLanguageCount('en')).toBeGreaterThanOrEqual(138);
-    expect(consumableLanguageCount('zh-Hans')).toBe(20);
+    expect(consumableLanguageCount('zh-Hans')).toBe(22);
     expect(consumableLanguageCount('ja')).toBe(9);
     expect(accessVersionLanguageCount('en')).toBeGreaterThanOrEqual(148);
-    expect(accessVersionLanguageCount('zh-Hans')).toBe(20);
+    expect(accessVersionLanguageCount('zh-Hans')).toBe(22);
     expect(accessVersionLanguageCount('ja')).toBe(9);
 
     expect(capabilityCount('choice-consequence-design')).toBeGreaterThanOrEqual(3);
@@ -683,9 +683,9 @@ describe('raw product catalog data', () => {
       resources.flatMap(({ accessVersions }) => accessVersions)
         .filter((version) => version.language === language).length;
 
-    expect(resources).toHaveLength(174);
+    expect(resources).toHaveLength(179);
     expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(188);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
     expect(expansion).toHaveLength(10);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -702,16 +702,16 @@ describe('raw product catalog data', () => {
     expect(countBy('mediaType', 'article')).toBe(12);
     expect(countBy('mediaType', 'course')).toBe(16);
     expect(countBy('mediaType', 'paper')).toBe(17);
-    expect(countBy('mediaType', 'website')).toBe(15);
-    expect(countBy('mediaType', 'talk')).toBe(69);
-    expect(countBy('originalLanguage', 'en')).toBe(147);
-    expect(countBy('originalLanguage', 'zh-Hans')).toBe(18);
+    expect(countBy('mediaType', 'website')).toBe(18);
+    expect(countBy('mediaType', 'talk')).toBe(71);
+    expect(countBy('originalLanguage', 'en')).toBe(150);
+    expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
-    expect(consumableLanguageCount('en')).toBe(148);
-    expect(consumableLanguageCount('zh-Hans')).toBe(20);
+    expect(consumableLanguageCount('en')).toBe(151);
+    expect(consumableLanguageCount('zh-Hans')).toBe(22);
     expect(consumableLanguageCount('ja')).toBe(9);
-    expect(accessVersionLanguageCount('en')).toBe(159);
-    expect(accessVersionLanguageCount('zh-Hans')).toBe(20);
+    expect(accessVersionLanguageCount('en')).toBe(162);
+    expect(accessVersionLanguageCount('zh-Hans')).toBe(22);
     expect(accessVersionLanguageCount('ja')).toBe(9);
 
     expect(capabilityCount('choice-consequence-design')).toBe(5);
@@ -722,8 +722,37 @@ describe('raw product catalog data', () => {
     expect(capabilityCount('qualitative-evidence-synthesis')).toBe(7);
     expect(capabilityCount('narrative-exposition')).toBe(7);
     expect(capabilityCount('interactive-narrative-design')).toBe(7);
-    expect(capabilityCount('player-behavior-observation')).toBe(6);
+    expect(capabilityCount('player-behavior-observation')).toBe(7);
     expect(capabilityCount('monetization-experience-alignment')).toBe(4);
+  });
+
+  it('adds only the evidence-verified five-item stop-condition resource batch', () => {
+    const expansionCanonicalUrls = [
+      'https://book.leveldesignbook.com/process/preproduction',
+      'https://book.leveldesignbook.com/process/research',
+      'https://book.leveldesignbook.com/process/preproduction/scope',
+      'https://gameinstitute.qq.com/course/detail/10056',
+      'https://gameinstitute.qq.com/course/detail/10123',
+    ];
+    const expansion = resources.filter(({ canonicalUrl }) =>
+      expansionCanonicalUrls.includes(canonicalUrl),
+    );
+
+    expect(resources).toHaveLength(179);
+    expect(sources).toHaveLength(38);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
+    expect(expansion).toHaveLength(expansionCanonicalUrls.length);
+    expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
+      new Set(expansionCanonicalUrls),
+    );
+    expect(expansion.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'website')).toHaveLength(3);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(2);
+    expect(expansion.filter(({ originalLanguage }) => originalLanguage === 'en')).toHaveLength(3);
+    expect(expansion.filter(({ originalLanguage }) => originalLanguage === 'zh-Hans')).toHaveLength(2);
+    expect(new Set(expansion.map(({ sourceId }) => sourceId))).toEqual(
+      new Set(['level-design-book', 'tencent-games-academy']),
+    );
   });
 
   it('merges known language versions and applies conservative access facts', () => {

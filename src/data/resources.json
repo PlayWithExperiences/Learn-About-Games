@@ -6870,5 +6870,190 @@
         "checkedAt": "2026-08-11"
       }
     ]
+  },
+  {
+    "id": "g-001-level-design-book-pre-production",
+    "title": {
+      "zh-CN": "Pre-production",
+      "en": "Pre-production"
+    },
+    "summary": {
+      "zh-CN": "The Level Design Book 关于机制、体验目标、参照研究、范围与原型验证的关卡前期规划章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "scope-prioritization",
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/preproduction",
+    "whyRelevant": {
+      "zh-CN": "章节把机制、体验目标、参考研究和范围列为前期设计问题，并明确说明机制与关卡需要通过测试共同验证。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/preproduction",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "g-002-level-design-book-research",
+    "title": {
+      "zh-CN": "Research",
+      "en": "Research"
+    },
+    "summary": {
+      "zh-CN": "The Level Design Book 关于收集、拆解和组织关卡与现实参照的开放章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "research-question-framing"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/research",
+    "whyRelevant": {
+      "zh-CN": "章节以收集参照、具体拆解和 moodboard 说明如何把观察转换为可讨论的关卡设计问题。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/research",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "g-003-level-design-book-scope",
+    "title": {
+      "zh-CN": "Scope",
+      "en": "Scope"
+    },
+    "summary": {
+      "zh-CN": "The Level Design Book 关于项目范围、可行性和以原型验证风险的开放章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "scope-prioritization",
+      "learning-prototype-design"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/preproduction/scope",
+    "whyRelevant": {
+      "zh-CN": "章节将范围定义为项目大小与复杂度，并把原型定义为回答单一问题的小型聚焦项目。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/preproduction/scope",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "g-004-tencent-user-research-better-games",
+    "title": {
+      "zh-CN": "聚用户之力，做更好游戏"
+    },
+    "summary": {
+      "zh-CN": "腾讯游戏学堂关于以用户研究支持产品生命周期不同阶段决策的 TGDC 演讲实录。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "research-question-framing",
+      "player-behavior-observation"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10056",
+    "whyRelevant": {
+      "zh-CN": "官方演讲实录以概念、初始版本、迭代和运营阶段的研究实践为案例，说明需依问题选择或组合研究方法。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10056",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "g-005-tencent-qq-speed-ten-year-retrospective",
+    "title": {
+      "zh-CN": "TGDC | 《QQ飞车》的十年时光路"
+    },
+    "summary": {
+      "zh-CN": "腾讯游戏学堂关于《QQ飞车》用户动机、体验调优、运营节奏与关卡情绪设计的 TGDC 演讲实录。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "player-perspective-taking",
+      "game-feel-tuning"
+    ],
+    "knowledgeTopicIds": [
+      "player-motivation-difference",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10123",
+    "whyRelevant": {
+      "zh-CN": "官方演讲实录以产品复盘讨论用户动机、基础体验、运营节奏、手感调优与关卡情绪曲线。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10123",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
   }
 ]
