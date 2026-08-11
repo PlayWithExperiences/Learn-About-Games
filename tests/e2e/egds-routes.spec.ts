@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import resources from '../../src/data/resources.json' with { type: 'json' };
 
 const homeMapDescription = '从 PlayWithExperiences 的 EGDS 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
-const careerDescription = '用公开依据理解职业与生产语境如何参考 PlayWithExperiences 的 EGDS；它是一种可讨论的视角，不是唯一答案。';
+const mapDescription = '以 PlayWithExperiences 的 EGDS 作为可讨论、可修订的设计视角，理解设计如何成为结果。';
 const misleadingEgdsClaimPatterns = [
   /EGDS\s*(?:是|作为)\s*(?:一种|一个)?\s*行业标准/i,
   /EGDS\s*(?:是|规定|要求|提供|定义)\s*(?:一个|一种)?\s*必修顺序/i,
@@ -46,12 +46,14 @@ test('explains the map through the PlayWithExperiences EGDS framework', async ({
   ).toBeVisible();
 });
 
-test('names the authorial EGDS view in the home preview and career metadata', async ({ page }) => {
+test('names the authorial EGDS view in the home preview and integrated career entry', async ({ page }) => {
   await page.goto('./');
   await expect(page.locator('#home-map-description')).toHaveText(homeMapDescription);
 
   await page.goto('./careers/');
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', careerDescription);
+  await expect(page).toHaveURL(/\/map\/#career-lenses$/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', mapDescription);
+  await expect(page.locator('[data-career-lens-control]')).toHaveCount(1);
 });
 
 test('keeps capability and topic detail routes while linking breadcrumbs to their EGDS nodes', async ({ page }) => {

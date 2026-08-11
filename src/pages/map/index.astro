@@ -1,5 +1,6 @@
 ---
 import MapExplorer from '../../components/MapExplorer.astro';
+import CareerLensControl from '../../components/CareerLensControl.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
 
@@ -9,6 +10,8 @@ const {
   capabilities,
   knowledgeTopics,
   capabilityRelations,
+  roleProfiles,
+  resources,
 } = await loadCatalog();
 ---
 
@@ -20,12 +23,19 @@ const {
   </header>
 
   <div class="page-shell">
-    <MapExplorer
-      egdsFrameworkNodes={egdsFrameworkNodes}
-      egdsFrameworkRelations={egdsFrameworkRelations}
+    <CareerLensControl
+      roleProfiles={roleProfiles}
       capabilities={capabilities}
-      knowledgeTopics={knowledgeTopics}
-      capabilityRelations={capabilityRelations}
-    />
+      resources={resources}
+      mapTargetId="career-map"
+    >
+      <MapExplorer
+        egdsFrameworkNodes={egdsFrameworkNodes}
+        egdsFrameworkRelations={egdsFrameworkRelations}
+        capabilities={capabilities}
+        knowledgeTopics={knowledgeTopics}
+        capabilityRelations={capabilityRelations}
+      />
+    </CareerLensControl>
   </div>
 </BaseLayout>

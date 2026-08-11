@@ -4,17 +4,16 @@ import capabilityRelations from '../../src/data/capability-relations.json' with 
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 
-test('focuses desktop navigation on exactly five Chinese user tasks', async ({ page }, testInfo) => {
+test('focuses desktop navigation on exactly four Chinese user tasks', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop navigation is intentionally replaced by the compact menu on mobile.');
   await page.goto('./');
 
   const navigation = page.getByRole('navigation', { name: '主导航' });
   const links = navigation.getByRole('link');
 
-  await expect(links).toHaveCount(5);
+  await expect(links).toHaveCount(4);
   await expect(links).toHaveText([
     '能力地图',
-    '职业方向',
     '成长资源',
     '创新变迁',
     '关于本项目',
@@ -22,13 +21,14 @@ test('focuses desktop navigation on exactly five Chinese user tasks', async ({ p
 
   for (const [name, href] of [
     ['能力地图', '/Learn-About-Games/map/'],
-    ['职业方向', '/Learn-About-Games/careers/'],
     ['成长资源', '/Learn-About-Games/resources/'],
     ['创新变迁', '/Learn-About-Games/atlas/'],
     ['关于本项目', '/Learn-About-Games/about/'],
   ] as const) {
     await expect(navigation.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
+
+  await expect(navigation.getByRole('link', { name: '职业方向', exact: true })).toHaveCount(0);
 
   for (const oldItem of ['Roadmap', 'Changelog', 'Devlog', 'Methodology', 'Contributing']) {
     await expect(navigation.getByRole('link', { name: oldItem, exact: true })).toHaveCount(0);
@@ -127,11 +127,12 @@ test('publishes the current EGDS entity semantics in the methodology', async ({ 
   await expect(methodology).toContainText('不是行业标准或资格认证');
 });
 
-test('makes three career lenses useful without creating a separate map', async ({ page }) => {
-  await page.goto('./careers/');
+test('makes three career lenses useful inside the map without creating a separate map', async ({ page }) => {
+  await page.goto('./map/#career-lenses');
 
-  await expect(page.getByRole('heading', { name: '把职业语境叠加到同一张地图。', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '用职业语境观察同一张地图。', exact: true })).toBeVisible();
   const explorer = page.locator('[data-career-explorer]');
+  await expect(page.locator('[data-egds-map]')).toHaveCount(1);
   await expect(explorer.locator('[data-career-lens-button]')).toHaveCount(3);
   await expect(explorer.locator('[data-career-node]')).toHaveCount(capabilities.length * 2);
 
@@ -143,13 +144,13 @@ test('makes three career lenses useful without creating a separate map', async (
   await expect(evidence.getByRole('link', { name: 'Ubisoft Massive：Senior AI Game Designer', exact: true })).toBeVisible();
 });
 
-test('sends the three home actions to map, careers, and resources', async ({ page }) => {
+test('sends the three home actions to map, career lenses, and resources', async ({ page }) => {
   await page.goto('./');
   const journeyIndex = page.getByLabel('三个入口');
 
   for (const [name, href] of [
     ['看全貌', '/Learn-About-Games/map/'],
-    ['职业方向', '/Learn-About-Games/careers/'],
+    ['职业方向', '/Learn-About-Games/map/#career-lenses'],
     ['成长资源', '/Learn-About-Games/resources/'],
   ] as const) {
     await expect(journeyIndex.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);

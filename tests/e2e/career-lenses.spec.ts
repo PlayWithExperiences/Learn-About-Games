@@ -49,8 +49,8 @@ function frameworkCounts(profile: typeof roleProfiles[number]) {
   return counts;
 }
 
-test('server keeps the complete EGDS map and disables only unavailable career actions', async ({ page, request }) => {
-  const response = await request.get('careers/');
+test('map route owns one EGDS map and the complete career lens control', async ({ page, request }) => {
+  const response = await request.get('map/');
   expect(response.status()).toBe(200);
   const html = await response.text();
 
@@ -62,8 +62,10 @@ test('server keeps the complete EGDS map and disables only unavailable career ac
   expect(careerPayload).not.toMatch(forbiddenTerms);
 
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto('./careers/');
+  await page.goto('./map/#career-lenses');
   const explorer = page.locator('[data-career-explorer]');
+  await expect(page.locator('[data-egds-map]')).toHaveCount(1);
+  await expect(page.locator('[data-career-lens-control]')).toHaveCount(1);
   await expect(explorer.locator('[data-career-lens-button]')).toHaveCount(3);
   await expect(explorer.locator('[data-career-lens-button]')).toHaveText(roleProfiles.map(({ title }) => title['zh-CN']));
   expect(await explorer.locator('[data-career-lens-button]').evaluateAll((buttons) =>
@@ -77,10 +79,34 @@ test('server keeps the complete EGDS map and disables only unavailable career ac
   expect(await explorer.innerText()).not.toMatch(forbiddenTerms);
 });
 
+test('legacy careers route redirects to the map career lens anchor', async ({ page }) => {
+  await page.goto('./careers/');
+  await expect(page).toHaveURL(/\/map\/#career-lenses$/);
+  await expect(page.locator('[data-career-lens-control]')).toHaveCount(1);
+  await expect(page.locator('[data-egds-map]')).toHaveCount(1);
+});
+
+test('applying and focusing a lens does not insert a long summary above the map', async ({ page }) => {
+  const profile = roleProfiles[0];
+  const capabilityId = profile.capabilities[0].capabilityId;
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('./careers/');
+  const explorer = page.locator('[data-career-explorer]');
+  const map = page.locator('[data-egds-map]');
+  const documentTop = () => map.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
+  const before = await documentTop();
+
+  await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+  await explorer.locator(`[data-career-summary-item="${capabilityId}"]`)
+    .getByRole('button', { name: '在地图中聚焦', exact: true }).click();
+
+  expect(Math.abs((await documentTop()) - before)).toBeLessThanOrEqual(8);
+});
+
 for (const profile of roleProfiles) {
   test(`projects ${profile.title['zh-CN']} only onto its mapped capabilities and framework containers`, async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto('./careers/');
+    await page.goto('./map/#career-lenses');
     const explorer = page.locator('[data-career-explorer]');
     const map = explorer.locator('[data-egds-map]');
     await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
@@ -358,7 +384,7 @@ test('no-JS keeps the full outline, details, resources, and evidence readable wh
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 320, height: 900 }]) {
     const context = await browser.newContext({ javaScriptEnabled: false, viewport });
     const page = await context.newPage();
-    await page.goto('./careers/');
+    await page.goto('./map/#career-lenses');
     const explorer = page.locator('[data-career-explorer]');
     expect(await explorer.locator('[data-career-lens-button]').evaluateAll((buttons) =>
       buttons.every((button) => (button as HTMLButtonElement).disabled),
@@ -377,7 +403,7 @@ test('no-JS keeps the full outline, details, resources, and evidence readable wh
     for (const profile of roleProfiles) {
       const summary = explorer.locator(`[data-career-summary="${profile.id}"]`);
       await expect(summary.locator(':scope > summary')).toBeVisible();
-      await summary.locator(':scope > summary').click();
+      await summary.locator(':scope > summary').evaluate((element) => (element as HTMLElement).click());
       await expect(summary.locator('[data-career-summary-item]')).toHaveCount(profile.capabilities.length);
       await expect(summary.getByRole('link', { name: '能力详情', exact: true }).first()).toBeVisible();
       await expect(summary.getByRole('link', { name: '相关资源', exact: true }).first()).toBeVisible();

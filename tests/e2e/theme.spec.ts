@@ -79,14 +79,14 @@ test('falls back safely from corrupt storage and reapplies state on pageshow', a
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
-test('keeps the appearance control and all five navigation destinations within 320px', async ({ page }) => {
+test('keeps the appearance control and all four navigation destinations within 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('./');
 
   await expect(page.getByLabel('Appearance')).toBeInViewport();
   const compactMenu = page.locator('details.site-nav__compact');
   await compactMenu.locator('summary').click();
-  await expect(compactMenu.getByRole('link')).toHaveCount(5);
+  await expect(compactMenu.getByRole('link')).toHaveCount(4);
   await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
   await expect(page.locator('body').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
 });

@@ -71,13 +71,13 @@ export type BuildEgdsMapLayoutInput = Readonly<{
 type EgdsAnchor = readonly [x: number, y: number, width: number, height: number];
 
 const egdsAnchors: Readonly<Record<string, EgdsAnchor>> = {
-  'egds-root': [20, 320, 130, 60],
+  'egds-root': [20, 352, 130, 60],
   'experience-design': [180, 80, 180, 54],
   'from-plan-to-ship': [180, 220, 180, 54],
   'with-team': [180, 360, 180, 54],
   'product-profit': [180, 500, 180, 54],
   'beyond-games': [180, 630, 180, 54],
-  'experience-journey': [390, 15, 190, 44],
+  'experience-journey': [390, 20, 190, 44],
   perception: [390, 80, 125, 44],
   rationalization: [535, 80, 125, 44],
   deconstruction: [680, 80, 125, 44],
@@ -313,7 +313,7 @@ const buildEgdsStructuralPath = (from: EgdsMapBox, to: EgdsMapBox): string => {
     return `M ${startX} ${startY} H 165 V ${egdsCenterY(to)} H ${to.x}`;
   }
   if (from.id === 'experience-design' && to.id === 'experience-journey') {
-    return `M ${startX} ${startY} H 375 V 37 H ${to.x}`;
+    return `M ${startX} ${startY} H 375 V ${egdsCenterY(to)} H ${to.x}`;
   }
   if (from.id === 'experience-design' && to.kind === 'stage') {
     return `M ${startX} ${startY} H 375 V 64 H ${egdsCenterX(to)} V ${to.y}`;

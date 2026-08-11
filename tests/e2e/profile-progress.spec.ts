@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 
-test('renders independent local progress for every capability without an embedded career control', async ({ page, request }) => {
+test('renders independent local progress for every capability beside the embedded career lenses', async ({ page, request }) => {
   for (const capability of capabilities) {
     const response = await request.get(`capabilities/${capability.id}/`);
     expect(response.status(), capability.id).toBe(200);
@@ -9,7 +9,7 @@ test('renders independent local progress for every capability without an embedde
   }
 
   await page.goto('./map/');
-  await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
+  await expect(page.locator('[data-career-lens-button]')).toHaveCount(3);
   await expect(page.locator('[data-role-marker]')).toHaveCount(0);
 
   await page.goto('./capabilities/core-loop-design/');
@@ -36,7 +36,7 @@ test('keeps the complete map and personal record contract usable without JavaScr
 
   await page.goto('./map/');
   await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
-  await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
+  await expect(page.locator('[data-career-lens-button]:disabled')).toHaveCount(3);
   const relationships = page.locator('[data-egds-map] [data-outline-relations-disclosure]');
   await relationships.locator(':scope > summary').click();
   await expect(relationships).toContainText('Playtest');

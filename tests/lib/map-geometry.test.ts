@@ -99,13 +99,13 @@ const pathOverlapsBoxBoundary = (
 });
 
 const expectedEgdsAnchors = {
-  'egds-root': [20, 320, 130, 60],
+  'egds-root': [20, 352, 130, 60],
   'experience-design': [180, 80, 180, 54],
   'from-plan-to-ship': [180, 220, 180, 54],
   'with-team': [180, 360, 180, 54],
   'product-profit': [180, 500, 180, 54],
   'beyond-games': [180, 630, 180, 54],
-  'experience-journey': [390, 15, 190, 44],
+  'experience-journey': [390, 20, 190, 44],
   perception: [390, 80, 125, 44],
   rationalization: [535, 80, 125, 44],
   deconstruction: [680, 80, 125, 44],
@@ -193,6 +193,26 @@ describe('capability relation semantics', () => {
 });
 
 describe('EGDS expertise map geometry', () => {
+  it('centers the root against the primary branch field with intentional scene margins', () => {
+    const layout = buildEgdsMapLayout(egdsInput());
+    const root = layout.frameworkBoxes.find(({ id }) => id === 'egds-root');
+    const branches = layout.frameworkBoxes.filter(({ kind }) => kind === 'branch');
+    if (!root || branches.length === 0) throw new Error('Missing root or primary branches');
+
+    const branchTop = Math.min(...branches.map(({ y }) => y));
+    const branchBottom = Math.max(...branches.map(({ y, height }) => y + height));
+    const rootCenter = root.y + root.height / 2;
+    const branchFieldCenter = (branchTop + branchBottom) / 2;
+
+    expect(Math.abs(rootCenter - branchFieldCenter)).toBeLessThanOrEqual(4);
+    expect(layout.frameworkBoxes.every(({ x, y, width, height }) => (
+      x >= 20
+      && y >= 20
+      && x + width <= layout.width - 20
+      && y + height <= layout.height - 20
+    ))).toBe(true);
+  });
+
   it('projects the fixed overview skeleton without entities', () => {
     const layout = buildEgdsMapLayout(egdsInput());
 
@@ -212,7 +232,7 @@ describe('EGDS expertise map geometry', () => {
     );
 
     expect(layout.frameworkBoxes.find(({ id }) => id === 'egds-root')).toEqual(expect.objectContaining({
-      key: 'root:egds-root', kind: 'root', x: 20, y: 320, width: 130, height: 60,
+      key: 'root:egds-root', kind: 'root', x: 20, y: 352, width: 130, height: 60,
     }));
     expect(layout.frameworkBoxes.find(({ id }) => id === 'experience-design')).toEqual(expect.objectContaining({
       key: 'branch:experience-design', kind: 'branch', x: 180, y: 80, width: 180, height: 54,
