@@ -12,7 +12,7 @@ v0.2 把 M0 的纵向切片扩展成一张可以继续生长的游戏知识网�
 
 - 能力地图包含 28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条 `supports` / `complements` 关系。它以 PlayWithExperiences 的 EGDS 为作者化骨架：从体验旅程与情绪曲线出发，从感受、理解、解构走向重构，再进入叙事、美学与表现、玩法与挑战等设计杠杆；生产、团队、产品与更广语境形成其余四条条件分支。桌面所有父子包含关系统一从左向右展开，并用五条中性分支领地、不同权重的主干／分支／子级线和独立过程箭头表达层级；中间宽度、移动端与无 JavaScript 使用同源原生大纲。
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 是能力地图内的三种职业标签。它们只在唯一一张地图上改变强调，并在标签旁公开映射、依据和局限；不评分、不隐藏节点，也不生成统一成长路线。旧 `/careers/` 只保留到地图标签区的兼容跳转。
-- 成长资源收录 38 个 Source、179 个具体 Work Item、193 个 Access Version 与 15 个无顺序资源主题。主目录默认折叠为 15 个可独立展开的主题子表，也可展开全表后使用同一组表头事实筛选；Source 目录拥有独立子入口。新增资料继续遵守中文优先、英文其次和逐页核验，不为凑数量收录证据不足的候选。
+- 成长资源收录 38 个 Source、209 个具体 Work Item、223 个 Access Version 与 15 个无顺序资源主题。主目录默认折叠为 15 个可独立展开的主题子表，也可展开全表后使用同一组表头事实筛选；Source 目录拥有独立子入口。最新一批补入 20 条 GDC Vault 会话、5 篇 Lost Garden 与 5 篇 How To Market A Game 作者原页。新增资料继续逐页核验，不为凑数量收录证据不足的候选。
 - Innovation Atlas 是一张 48 节点、36 条有证据关系与 61 项 Evidence 构成的全局时间网络。10 个常见 Genre Family 只负责非排他的浏览入口；当前 5 条证据谱系覆盖早期电子游戏与商业化、Roguelike、Metroidvania、平台与跳跃游戏、解析器冒险到图形冒险。桌面只有明确进入全屏“地图模式”后，普通滚轮才围绕指针连续缩放并允许拖动；模式内可继续切换谱系透镜。早期切片从 1958 年延伸到 Pong，但不把 Pong 写成未经限定的“第一款电子游戏”。
 - 外观支持跟随系统、浅色和深色三种模式；无 JavaScript 时，地图、资源、依据与原生详情仍可阅读。
 
@@ -63,5 +63,6 @@ M0 线上复核确认：首页包含当时的 Playtest 纵向切片与 `AAA · G
 - [v0.2 milestone](docs/devlog/2026-08-09-v02-knowledge-network.md)
 - [私有完善：整合探索入口](docs/devlog/2026-08-11-integrated-exploration-refinement.md)
 - [私有完善：统一地图方向与扩展品类谱系](docs/devlog/2026-08-12-horizontal-egds-genre-atlas.md)
+- [私有完善：让地图状态可逆，并补充一手学习资料](docs/devlog/2026-08-12-reversible-maps-and-resource-depth.md)
 
 需要精确恢复历史时，再打开决策摘要链接的脱敏会话记录。

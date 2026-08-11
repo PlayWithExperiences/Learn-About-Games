@@ -414,3 +414,17 @@ Atlas 先建立 10 个 Family：动作、射击、冒险、角色扮演、策略
 本节是当前运行时可保存的脱敏部分记录，不声称包含已经压缩且不可访问的逐字聊天或内部推理。仓库继续 Private，Pages workflow 继续 `disabled_manually`；所有实现仍是本地候选，没有 push 或线上部署。主任务接下来只更新当前公开说明、跑 fresh 全仓门禁并重启 base-path 本地预览。
 
 最终 root 级验证重新生成 126 个静态页面：Astro check 0 diagnostics，Vitest 159/159；完整 Playwright 234 项中 214 passed、20 project-specific skipped、0 failed。首轮公开说明 E2E 的两项失败来自 README 新增 Access Version 数字后，测试仍把 Source／Work Item／主题视作相邻文字；测试改为从真实 catalog 动态计算 193 个 Access Version 后，visible-skeleton 29 passed／1 intentional skip，完整矩阵原样复跑全绿。依赖高危审计为 0；GitHub API 仍显示仓库 Private、deploy workflow `disabled_manually`、Pages API 404。
+
+## 37. Atlas 直接透镜、EGDS 可逆展开与一手资源扩展（部分会话导出）
+
+发起人在本地预览截图中指出：Atlas 选择 Family 后出现不自然的浮动内滚区域，角色扮演下的 Roguelike 看起来像链接却不能点击，多个 Family 又没有实际谱系；EGDS 点击能力群会突然变成另一种布局，且只有“返回全图”能恢复；学习资源应优先补 GDC 和主要作者的一手资料。发起人明确授权主任务按推荐方案直接实施，休息期间无需等待逐项审查。
+
+主任务先写三份小型设计和两份实施计划，把 Atlas Theme、Genre Family、EGDS expansion 与 Resource Work Item 的状态边界固定下来。Atlas Family 仍是非排他目录，Theme 才是证据谱系；Theme 引用必须是能直接操作的按钮。EGDS expansion 只能增加详情，不允许改变 overview 的节点、结构线、过程线或分支领地。资源采用官方／作者原页证据，Exa 429 后不重试，也不把搜索摘要或批量抓取结果直接写入 catalog。
+
+Atlas TDD 先锁定跨 Family Theme 引用必须可点击、空 Family 必须明确说明和全屏只保留紧凑透镜条。实现后 Roguelike 在角色扮演入口成为真实按钮，同一 Theme 的多个入口共享唯一状态；全屏不再显示遮挡画布的 Family directory。提交 `c0382a6`，Atlas／Theme／Base-path 双项目为 48 passed／20 project-specific skipped。
+
+EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构几何。提交 `9ac9abb` 保持 overview 不动，把展开实体和关系放到下方独立 band；数量按钮自身可 toggle，Escape 可关闭，焦点回到触发按钮。geometry 为 24/24，Map／Career／Profile／Visible Skeleton 双项目为 121 passed／1 intentional skipped。
+
+资源研究最终收敛到 30 项：GDC Vault 2025 官方会话 20 条，Lost Garden 作者文章 5 篇，How To Market A Game 作者文章 5 篇。GDC 访问方式保守记录为 subscription，两组作者文章为 free；全部 checkedAt 为 2026-08-12，canonical normalization 和跨 Work ownership 继续由 validator 保护。提交 `c1641d8` 后 catalog 为 38 Source／209 Work Item／223 Access Version；资源相关浏览器矩阵 42/42。
+
+本节只记录当前运行时可保存的脱敏合同、实现和验证事实，不包含秘密或不可访问的内部推理。仓库继续 Private，Pages workflow 继续禁用；没有 push 或线上部署。最终会在文档同步、整站 fresh gate 和原图复核后重新启动 `127.0.0.1:4321/Learn-About-Games/` 本地预览。

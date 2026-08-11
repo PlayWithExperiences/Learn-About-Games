@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含统一左→右的 EGDS 层级、10 个 Atlas Genre Family／5 条证据谱系与 179 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／5 条可直接选择的证据谱系与 209 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -175,7 +175,7 @@ Atlas 保留唯一一组 catalog-derived 透镜控件，并把它移入会成为
 ## 当前未决风险
 
 - `mindset-problem-solving-tools` 与 `leadership-management` 仍是作者地图中的有效 landmark，但当前分别没有或很少直接 Capability；界面如实显示内容缺口，不能用不相关能力填满。
-- 当前已收录 179 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持中文优先、英文其次，并维持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
+- 当前已收录 209 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需维持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。中文资料在能逐页核验时优先补充，英文一手资料不再因数量较多而暂停。
 - 资源筛选只表达目录事实；不能把外部公开计数或观察转译成本站推荐、评分、排名或审核结论。
 - 当前中文界面与多语言资源元数据不等于完整双语产品；英文界面仍属后续范围。
 - Atlas 当前有 10 个非排他 Genre Family 和 5 条证据透镜；尚无谱系的 Family 必须先增加可核查节点、关系与 Evidence，不能把浏览目录当成已完成的历史沿革，也不能为视觉密度补无证据边。
@@ -257,3 +257,15 @@ Atlas 数据提交 `829b718` 建立 10 个常见 Genre Family，并新增 Platfo
 本轮没有 push、没有恢复 Pages、没有改变仓库 Private 状态。公开 README、Roadmap、Changelog、Devlog 005 与 visible-skeleton 合同只更新当前候选数字，历史部署段继续保留当时真实的 20／128 与 27／25／40，不改写过去。
 
 最终 root 级 fresh gate：`npm run build` 为 Astro check 67 files、0 errors／warnings／hints，Vitest 159/159，126 个静态页面；完整 Playwright 为 214 passed／20 intentional skipped／0 failed；`npm audit --audit-level=high --omit=dev` 为 0 vulnerabilities。GitHub 只读核验继续返回 Private，deploy workflow 为 `disabled_manually`，Pages API 为 404。最终提交后只重新启动本机 `127.0.0.1:4321` base-path preview，不 push、不部署。
+
+## 可逆地图交互与 GDC／作者资源扩展
+
+发起人用本地截图确认两个交互问题。Atlas 的角色扮演 Family 中，Roguelike 看起来可点却不是按钮；选中 Family 后目录形成悬浮内滚区域，空 Family 又没有明确说明。EGDS 虽已统一左→右，展开一个能力群时仍会隐藏并重排总览，且只能依赖“返回全图”恢复。发起人授权主任务按推荐方案直接完成，不再等待逐项审查。
+
+Atlas 提交 `c0382a6` 将每个 Family 内的 Theme 引用都改为共享唯一状态的真实按钮；空 Family 显示“0 条已核查谱系，待研究”。普通页面保留 Family 目录，全屏地图只显示紧凑的六谱系按钮，不再让目录覆盖 controls 或 canvas。Roguelike 在角色扮演入口可直接选择；切换仍只改变强调，不改变 scale、pan、search、节点／关系位置或数量。
+
+EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 framework node、五条 branch territory、structural path 与 process path 在展开前后保持数量、顺序和坐标；具体 Capability／Knowledge Topic 进入独立下方 expansion band。同一“数量”按钮可再次收起，Escape 可撤销展开或当前选择并恢复触发焦点，“返回全图”改为准确的“收起条目”。
+
+资源扩展使用 Agent Reach；Exa 返回 429 后停止，Jina Reader 与 GDC／作者原页用于逐页核验。提交 `c1641d8` 新增 30 个 Work Item 与 30 个 Access Version：20 条 GDC Vault 2025 会话、5 篇 Lost Garden、5 篇 How To Market A Game；Source 总量仍为 38。当前目录为 209 Work Item／223 Access Version，全部继续恰属一个主要 Resource Topic，并保留 canonical ownership、访问方式与检查日期；没有站内评分、排名或审核等级。
+
+本段是脱敏连续性记录，不补造不可访问的逐字对话。仓库与 Pages 状态未改变；本轮提交尚未 push 或部署。对应公开决策见 [Devlog 006](../devlog/2026-08-12-reversible-maps-and-resource-depth.md)，精确过程证据见本文链接的脱敏 transcript。
