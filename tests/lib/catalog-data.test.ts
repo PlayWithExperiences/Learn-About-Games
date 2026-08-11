@@ -453,7 +453,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(128);
+    expect(resources).toHaveLength(148);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -522,6 +522,64 @@ describe('raw product catalog data', () => {
       ),
     };
     console.info('Resource catalog coverage', coverage);
+  });
+
+  it('adds a bounded evidence-backed resource expansion to low-coverage areas', () => {
+    const expansionCanonicalUrls = [
+      'https://ocw.mit.edu/courses/cms-608-game-design-fall-2010/',
+      'https://aaai.org/papers/ws04-04-001-mda-a-formal-approach-to-game-design-and-game-research/',
+      'https://gameaccessibilityguidelines.com/full-list/',
+      'https://research.chalmers.se/en/publication/177148',
+      'https://www.gamedeveloper.com/business/ethical-free-to-play-game-design-and-why-it-matters-',
+      'https://book.leveldesignbook.com/process/combat',
+      'https://book.leveldesignbook.com/process/combat/encounter',
+      'https://book.leveldesignbook.com/process/combat/enemy',
+      'https://thegamedesignroundtable.com/episode/303-darkest-dungeon-2-with-chris-bourassa-and-tyler-sigman/',
+      'https://thegamedesignroundtable.com/episode/305-thirsty-suitors-with-chandana-ekanayake/',
+      'https://thegamedesignroundtable.com/episode/298-tchia-with-phil-crifo/',
+      'https://thegamedesignroundtable.com/episode/293-interview-with-mark-rosewater/',
+      'https://thegamedesignroundtable.com/episode/297-gerson-da-silva-talks-kingdom-rush/',
+      'https://thegamedesignroundtable.com/episode/design-talk-nyt-games-with-rohit-crasta/',
+      'https://owlcat.games/learning',
+      'https://mud.co.uk/richard/hcds.htm',
+      'https://www.lizengland.com/blog/2014/04/the-door-problem/',
+      'https://www.routledge.com/Building-Blocks-of-Tabletop-Game-Design-An-Encyclopedia-of-Mechanisms/Engelstein-Shalev/p/book/9781032015811',
+      'https://mitpress.mit.edu/9780262017138/characteristics-of-games/',
+      'https://www.directingvideogames.com/2017/07/05/5-essential-qualities-video-game-creative-director/',
+    ];
+    const expansion = resources.filter(({ canonicalUrl }) =>
+      expansionCanonicalUrls.includes(canonicalUrl),
+    );
+
+    expect(expansion).toHaveLength(expansionCanonicalUrls.length);
+    expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
+      new Set(expansionCanonicalUrls),
+    );
+    expect(expansion.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
+    expect(expansion.every(({ accessVersions }) => accessVersions.length >= 1)).toBe(true);
+
+    const countBy = (field: 'mediaType' | 'originalLanguage', value: string) =>
+      resources.filter((resource) => resource[field] === value).length;
+    const topicCount = (topicId: string) =>
+      resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes(topicId)).length;
+    const capabilityCount = (capabilityId: string) =>
+      resources.filter(({ capabilityIds }) => capabilityIds.includes(capabilityId)).length;
+    const consumableLanguageCount = (language: string) =>
+      resources.filter(({ accessVersions }) =>
+        accessVersions.some((version) => version.language === language),
+      ).length;
+
+    expect(topicCount('systems-mechanics')).toBeGreaterThanOrEqual(8);
+    expect(topicCount('leadership-creative-direction')).toBeGreaterThanOrEqual(6);
+    expect(topicCount('practitioner-interviews-podcasts')).toBeGreaterThanOrEqual(7);
+    expect(countBy('mediaType', 'article')).toBeGreaterThanOrEqual(7);
+    expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(4);
+    expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(10);
+    expect(countBy('mediaType', 'podcast')).toBeGreaterThanOrEqual(11);
+    expect(countBy('mediaType', 'website')).toBeGreaterThanOrEqual(13);
+    expect(consumableLanguageCount('zh-Hans')).toBeGreaterThanOrEqual(10);
+    expect(capabilityCount('encounter-space-composition')).toBeGreaterThanOrEqual(3);
+    expect(capabilityCount('monetization-experience-alignment')).toBeGreaterThanOrEqual(3);
   });
 
   it('merges known language versions and applies conservative access facts', () => {

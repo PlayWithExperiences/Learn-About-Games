@@ -5051,5 +5051,801 @@
         "url": "https://www.bilibili.com/video/BV1X14y1R78h"
       }
     ]
+  },
+  {
+    "id": "d-001-mit-game-design-course",
+    "title": {
+      "zh-CN": "Game Design（MIT OpenCourseWare）",
+      "en": "Game Design"
+    },
+    "summary": {
+      "zh-CN": "MIT 的本科公开课程，包含课程说明、讲座音频、作业与学生项目示例。"
+    },
+    "sourceId": "mit-opencourseware",
+    "capabilityIds": [
+      "experience-framing",
+      "rules-system-modeling",
+      "learning-prototype-design",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://ocw.mit.edu/courses/cms-608-game-design-fall-2010/",
+    "whyRelevant": {
+      "zh-CN": "课程以非电子游戏的分析、设计与反复测试为核心，并公开学习材料和作业。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://ocw.mit.edu/courses/cms-608-game-design-fall-2010/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-002-mda-formal-approach",
+    "title": {
+      "zh-CN": "MDA: A Formal Approach to Game Design and Game Research",
+      "en": "MDA: A Formal Approach to Game Design and Game Research"
+    },
+    "summary": {
+      "zh-CN": "从 Mechanics、Dynamics、Aesthetics 三层连接实现、运行行为与玩家体验的 2004 年论文。"
+    },
+    "sourceId": "aaai",
+    "capabilityIds": [
+      "experience-framing",
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://aaai.org/papers/ws04-04-001-mda-a-formal-approach-to-game-design-and-game-research/",
+    "whyRelevant": {
+      "zh-CN": "它提供一种可复核的系统分层语言，适合分析机制如何经运行动态形成体验结果。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://aaai.org/papers/ws04-04-001-mda-a-formal-approach-to-game-design-and-game-research/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-003-game-accessibility-guidelines-full-list",
+    "title": {
+      "zh-CN": "Game Accessibility Guidelines：完整清单",
+      "en": "Game Accessibility Guidelines: Full List"
+    },
+    "summary": {
+      "zh-CN": "按基础、中级与高级分层汇总的游戏无障碍设计参考，并附具体示例。"
+    },
+    "sourceId": "game-accessibility-guidelines",
+    "capabilityIds": [
+      "player-perspective-taking",
+      "multimodal-presentation-integration",
+      "ethical-cultural-evaluation",
+      "design-specification-handoff"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://gameaccessibilityguidelines.com/full-list/",
+    "whyRelevant": {
+      "zh-CN": "它把不同障碍与设计回应写成可查阅条目，有助于从更多玩家视角检查交互和表现。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://gameaccessibilityguidelines.com/full-list/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-004-dark-patterns-in-game-design",
+    "title": {
+      "zh-CN": "Dark Patterns in the Design of Games",
+      "en": "Dark Patterns in the Design of Games"
+    },
+    "summary": {
+      "zh-CN": "Zagal、Björk 与 Lewis 对违背玩家利益且缺少知情同意的游戏设计模式所做的概念化研究。"
+    },
+    "sourceId": "chalmers-research",
+    "capabilityIds": [
+      "monetization-experience-alignment",
+      "ethical-cultural-evaluation",
+      "player-perspective-taking"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://research.chalmers.se/en/publication/177148",
+    "whyRelevant": {
+      "zh-CN": "论文给出识别时间、金钱与社会资本相关暗黑模式的问题框架，可用于审视商业目标与玩家利益的冲突。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://research.chalmers.se/en/publication/177148",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-005-ethical-free-to-play-game-design",
+    "title": {
+      "zh-CN": "Ethical Free-to-Play Game Design (And Why it Matters)",
+      "en": "Ethical Free-to-Play Game Design (And Why it Matters)"
+    },
+    "summary": {
+      "zh-CN": "Greg Costikyan 从长期留存、尊重玩家与价值交换讨论免费游戏商业化。"
+    },
+    "sourceId": "game-developer",
+    "capabilityIds": [
+      "monetization-experience-alignment",
+      "progression-economy-design",
+      "audience-positioning"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "games-values-culture"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://www.gamedeveloper.com/business/ethical-free-to-play-game-design-and-why-it-matters-",
+    "whyRelevant": {
+      "zh-CN": "文章把短期收入指标与长期玩家体验放在同一设计决策中讨论，直接对应商业化和体验目标协调。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.gamedeveloper.com/business/ethical-free-to-play-game-design-and-why-it-matters-",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-006-level-design-book-combat",
+    "title": {
+      "zh-CN": "Combat",
+      "en": "Combat"
+    },
+    "summary": {
+      "zh-CN": "The Level Design Book 对战斗系统、武器、经济与战斗关卡关系的开放章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "encounter-space-composition",
+      "challenge-difficulty-design",
+      "level-structure-design"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/combat",
+    "whyRelevant": {
+      "zh-CN": "章节明确区分战斗系统与关卡职责，并说明敌人、掩体、空间和经济如何共同约束遭遇设计。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/combat",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-007-level-design-book-encounter",
+    "title": {
+      "zh-CN": "Encounter",
+      "en": "Encounter"
+    },
+    "summary": {
+      "zh-CN": "围绕系统性挑战序列、战斗节奏、玩家战术与空间落脚点的遭遇设计章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "encounter-space-composition",
+      "pacing-control",
+      "spatial-flow-design",
+      "playtesting"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding",
+      "perception-attention-emotion"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/combat/encounter",
+    "whyRelevant": {
+      "zh-CN": "它把遭遇定义为支持多种战术的系统性挑战序列，并给出节奏、波次和空间进入方式等可操作变量。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/combat/encounter",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-008-level-design-book-enemy-design",
+    "title": {
+      "zh-CN": "Enemy Design",
+      "en": "Enemy Design"
+    },
+    "summary": {
+      "zh-CN": "用敌人职责、能力、轮廓与行为差异组织战斗系统的开放章节。"
+    },
+    "sourceId": "level-design-book",
+    "capabilityIds": [
+      "encounter-space-composition",
+      "challenge-difficulty-design",
+      "multimodal-presentation-integration",
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://book.leveldesignbook.com/process/combat/enemy",
+    "whyRelevant": {
+      "zh-CN": "章节把敌人 roster 作为相互补充的系统角色，并连接可读性、难度和跨职能实现。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://book.leveldesignbook.com/process/combat/enemy",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-009-darkest-dungeon-2-interview",
+    "title": {
+      "zh-CN": "#303 Darkest Dungeon 2 with Chris Bourassa and Tyler Sigman",
+      "en": "#303 Darkest Dungeon 2 with Chris Bourassa and Tyler Sigman"
+    },
+    "summary": {
+      "zh-CN": "Red Hook 的创意总监与设计师复盘续作风险、Early Access、路线图与范围优先级。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "scope-prioritization",
+      "iteration-planning",
+      "creative-vision-stewardship",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/303-darkest-dungeon-2-with-chris-bourassa-and-tyler-sigman/",
+    "whyRelevant": {
+      "zh-CN": "节目大纲可定位 Early Access 迭代、路线图风险和功能优先级，是公开的一手项目经验。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/303-darkest-dungeon-2-with-chris-bourassa-and-tyler-sigman/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-010-thirsty-suitors-interview",
+    "title": {
+      "zh-CN": "#305 Thirsty Suitors with Chandana Ekanayake",
+      "en": "#305 Thirsty Suitors with Chandana Ekanayake"
+    },
+    "summary": {
+      "zh-CN": "Outerloop 游戏总监讨论文化表达、预算约束、删减、艺术方向与团队工具。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "aesthetic-direction",
+      "scope-prioritization",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/305-thirsty-suitors-with-chandana-ekanayake/",
+    "whyRelevant": {
+      "zh-CN": "访谈把个人文化经验、创意方向和实际预算放在同一项目决策中讨论。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/305-thirsty-suitors-with-chandana-ekanayake/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-011-tchia-interview",
+    "title": {
+      "zh-CN": "#298 Tchia with Phil Crifo",
+      "en": "#298 Tchia with Phil Crifo"
+    },
+    "summary": {
+      "zh-CN": "Tchia 游戏总监讨论新喀里多尼亚文化、开放世界、表现机制、制作取舍与小团队融资。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "aesthetic-direction",
+      "ethical-cultural-evaluation",
+      "world-character-coherence",
+      "creative-vision-stewardship"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "audiovisual-semiotics"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/298-tchia-with-phil-crifo/",
+    "whyRelevant": {
+      "zh-CN": "它是一手导演访谈，连接文化语境、开放世界设计、美学机制与小团队生产现实。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/298-tchia-with-phil-crifo/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-012-mark-rosewater-interview",
+    "title": {
+      "zh-CN": "#293 Interview with Mark Rosewater",
+      "en": "#293 Interview with Mark Rosewater"
+    },
+    "summary": {
+      "zh-CN": "Mark Rosewater 讨论玩家心理类型、设计工具、机制评估与长期可扩展的游戏系统。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "rules-system-modeling",
+      "core-loop-design",
+      "player-perspective-taking",
+      "audience-positioning"
+    ],
+    "knowledgeTopicIds": [
+      "player-motivation-difference",
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/293-interview-with-mark-rosewater/",
+    "whyRelevant": {
+      "zh-CN": "节目大纲公开标出玩家心理类型、机制评估和系统延展性等具体讨论段落。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/293-interview-with-mark-rosewater/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-013-kingdom-rush-interview",
+    "title": {
+      "zh-CN": "#297 Gerson Da Silva Talks Kingdom Rush",
+      "en": "#297 Gerson Da Silva Talks Kingdom Rush"
+    },
+    "summary": {
+      "zh-CN": "Kingdom Rush 导演讨论受众投入差异、品类创新、市场选择、商业化与设计空间。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "audience-positioning",
+      "market-reference-analysis",
+      "monetization-experience-alignment",
+      "value-proposition-framing"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/297-gerson-da-silva-talks-kingdom-rush/",
+    "whyRelevant": {
+      "zh-CN": "一手访谈把移动市场、不同投入程度的玩家、商业化和设计延展空间放在同一案例中。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/297-gerson-da-silva-talks-kingdom-rush/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-014-nyt-games-rohit-crasta",
+    "title": {
+      "zh-CN": "Design Talk: NYT Games with Rohit Crasta",
+      "en": "Design Talk: NYT Games with Rohit Crasta"
+    },
+    "summary": {
+      "zh-CN": "NYT Games 设计师讨论日常仪式、产品支柱、社交传播、原生开发与弱化微交易的定位。"
+    },
+    "sourceId": "game-design-roundtable",
+    "capabilityIds": [
+      "value-proposition-framing",
+      "audience-positioning",
+      "monetization-experience-alignment",
+      "core-loop-design"
+    ],
+    "knowledgeTopicIds": [
+      "game-industry-platform-economics",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "practitioner-interviews-podcasts"
+    ],
+    "mediaType": "podcast",
+    "canonicalUrl": "https://thegamedesignroundtable.com/episode/design-talk-nyt-games-with-rohit-crasta/",
+    "whyRelevant": {
+      "zh-CN": "访谈以 Crossplay 为实例说明产品定位、每日循环、社交分享和商业模式如何共同塑造体验。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://thegamedesignroundtable.com/episode/design-talk-nyt-games-with-rohit-crasta/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-015-owlcat-learning-library",
+    "title": {
+      "zh-CN": "Owlcat Games 学习资料库",
+      "en": "Owlcat Games Learning Library"
+    },
+    "summary": {
+      "zh-CN": "Owlcat Games 公开列出的跨设计、叙事、艺术、工程与制作书目入口。"
+    },
+    "sourceId": "owlcat-games",
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "chinese-industry-cross-discipline"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://owlcat.games/learning",
+    "whyRelevant": {
+      "zh-CN": "它是工作室公开的学习书目集合，可作为跨专业检索入口；本站不把其收录清单转译为评分或学习顺序。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://owlcat.games/learning",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      },
+      {
+        "language": "zh-Hans",
+        "url": "https://owlcat.games/zh/learning",
+        "accessModel": "free",
+        "versionRelation": "official",
+        "presentationMode": "translated",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-016-players-who-suit-muds",
+    "title": {
+      "zh-CN": "Hearts, Clubs, Diamonds, Spades: Players Who Suit MUDs",
+      "en": "Hearts, Clubs, Diamonds, Spades: Players Who Suit MUDs"
+    },
+    "summary": {
+      "zh-CN": "Richard Bartle 从 MUD 社群观察提出四类游玩取向的历史性文章。"
+    },
+    "sourceId": "richard-bartle",
+    "capabilityIds": [
+      "player-perspective-taking",
+      "audience-positioning",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "player-motivation-difference",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://mud.co.uk/richard/hcds.htm",
+    "whyRelevant": {
+      "zh-CN": "它提供玩家取向与系统人口动态的早期概念框架；应结合其 MUD 语境阅读，而不是当作普适人格测量。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mud.co.uk/richard/hcds.htm",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-017-the-door-problem",
+    "title": {
+      "zh-CN": "The Door Problem",
+      "en": "The Door Problem"
+    },
+    "summary": {
+      "zh-CN": "Liz England 用一道门涉及的决策与分工解释游戏设计和跨职能协作。"
+    },
+    "sourceId": "liz-england",
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "design-specification-handoff",
+      "task-breakdown",
+      "alignment-facilitation"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "collaboration-teams"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://www.lizengland.com/blog/2014/04/the-door-problem/",
+    "whyRelevant": {
+      "zh-CN": "文章把一个看似简单的交互拆成设计、工程、艺术、音频与制作责任，适合解释规格和协作边界。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.lizengland.com/blog/2014/04/the-door-problem/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-018-building-blocks-tabletop-game-design",
+    "title": {
+      "zh-CN": "Building Blocks of Tabletop Game Design: An Encyclopedia of Mechanisms",
+      "en": "Building Blocks of Tabletop Game Design: An Encyclopedia of Mechanisms"
+    },
+    "summary": {
+      "zh-CN": "按类别整理数百种桌面游戏机制，并说明定义、图示、案例与实现考量的第二版工具书。"
+    },
+    "sourceId": "routledge",
+    "capabilityIds": [
+      "rules-system-modeling",
+      "core-loop-design",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity",
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://www.routledge.com/Building-Blocks-of-Tabletop-Game-Design-An-Encyclopedia-of-Mechanisms/Engelstein-Shalev/p/book/9781032015811",
+    "whyRelevant": {
+      "zh-CN": "出版方说明每个机制条目包含定义、图示、成功案例与新设计中的实现考量，适合作为机制检索工具。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.routledge.com/Building-Blocks-of-Tabletop-Game-Design-An-Encyclopedia-of-Mechanisms/Engelstein-Shalev/p/book/9781032015811",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-019-characteristics-of-games",
+    "title": {
+      "zh-CN": "Characteristics of Games",
+      "en": "Characteristics of Games"
+    },
+    "summary": {
+      "zh-CN": "从玩家数量、规则、运气与技巧、奖励和投入等共同特征比较不同游戏的分析框架。"
+    },
+    "sourceId": "mit-press",
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling",
+      "player-perspective-taking"
+    ],
+    "knowledgeTopicIds": [
+      "player-motivation-difference",
+      "probability-randomness-fairness",
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "book",
+    "canonicalUrl": "https://mitpress.mit.edu/9780262017138/characteristics-of-games/",
+    "whyRelevant": {
+      "zh-CN": "MIT Press 将其描述为从设计者视角，以共同特征比较电子游戏、桌游、卡牌和体育游戏。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://mitpress.mit.edu/9780262017138/characteristics-of-games/",
+        "accessModel": "paid",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "d-020-creative-director-qualities",
+    "title": {
+      "zh-CN": "5 Essential Qualities of a Video Game Creative Director",
+      "en": "5 Essential Qualities of a Video Game Creative Director"
+    },
+    "summary": {
+      "zh-CN": "Brian Allgeier 从愿景、结构、创意工具、团队领导与生产理解概括创意总监职责。"
+    },
+    "sourceId": "directing-video-games",
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "alignment-facilitation",
+      "cross-discipline-communication",
+      "scope-prioritization"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "production-pipelines-constraints"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://www.directingvideogames.com/2017/07/05/5-essential-qualities-video-game-creative-director/",
+    "whyRelevant": {
+      "zh-CN": "文章由长期游戏导演撰写，明确连接维持愿景、提供结构、领导协作和理解制作约束。"
+    },
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.directingvideogames.com/2017/07/05/5-essential-qualities-video-game-creative-director/",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
   }
 ]

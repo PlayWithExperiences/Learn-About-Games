@@ -1,9 +1,9 @@
 # Learn About Games v0.2 — 首批成长资源证据 Intake
 
 - 研究日期：2026-08-09
-- 状态：研究证据 notebook；尚未正规化为 catalog JSON
-- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项
-- 确定性 canonical URL 去重后：**132 项**
+- 状态：研究证据 notebook；Batch A–D 已正规化为 148 个 catalog Work Item
+- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项
+- 确定性 canonical URL 去重后：**152 项研究记录**；正规化后为 **148 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
@@ -23,34 +23,33 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
-## 去重后 coverage
+## 当前正规化 catalog coverage
 
-- canonical records：132；sourceName：23（尚未做 Source homepage identity 合并）。
-- 原始语言：en 121、ja 3、zh-Hans 8。
-- 可消费语言（Work Item 计，可重叠）：en 122、ja 3、zh-Hans 9。Apple 中文界面未计为中文内容。
-- 媒介：article 4、book 29、course 3、paper 9、podcast 5、talk 69、video 5、website 8。C-023 的 book chapter 按现行枚举归入 book。
-- 访问模式（Work Item 计，可重叠）：paid 36、subscription 74、free 31。9 个 DOI 项同时保留 paid 与 institutional subscription 观察，待正规化确认。
-- 含平台计数的 Work Item：5；其余 externalSignals: []。
-- coverage 由 132 条逐行记录重新计算；它取代研究批次内彼此不一致的手工小计（例如 Batch C 的语言与媒介小计）。
+- Work Item：148；Source：29；Access Version：161；Resource Topic：15。
+- 原始语言：en 137、ja 3、zh-Hans 8。
+- 可消费语言（Work Item 计，可重叠）：en 137、ja 3、zh-Hans 10。Apple 中文界面仍未计为中文内容。
+- 媒介：article 8、book 29、course 4、paper 10、podcast 11、talk 68、video 5、website 13。
+- 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
+- coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
-| 主主题 | canonical records |
+| 主主题 | Work Item |
 |---|---:|
-| 设计基础与概念 | 8 |
-| 系统与机制 | 7 |
-| 平衡与经济 | 7 |
+| 设计基础与概念 | 9 |
+| 系统与机制 | 9 |
+| 平衡与经济 | 8 |
 | 手感与反馈 | 7 |
-| 关卡与空间 | 18 |
-| Playtest 与游戏用户研究 | 12 |
+| 关卡与空间 | 20 |
+| Playtest 与游戏用户研究 | 11 |
 | 叙事与表达 | 13 |
 | 原型与实验 | 7 |
 | 生产与迭代 | 7 |
-| 协作与团队 | 7 |
-| 领导与创意方向 | 4 |
-| 批判、价值观与历史语境 | 12 |
-| 研究方法与玩家体验 | 12 |
-| 从业者访谈与播客 | 3 |
-| 中文行业实践与跨专业语境 | 8 |
-| 合计 | 132 |
+| 协作与团队 | 8 |
+| 领导与创意方向 | 6 |
+| 批判、价值观与历史语境 | 13 |
+| 研究方法与玩家体验 | 14 |
+| 从业者访谈与播客 | 7 |
+| 中文行业实践与跨专业语境 | 9 |
+| 合计 | 148 |
 
 ## 接受候选
 
@@ -261,6 +260,35 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | C-036<br>canonicalUrl=https://www.bilibili.com/video/BV1Cg411P72p?p=7<br>title=2021 腾讯游戏开发者大会 TGDC：游戏社会价值专场 | sourceName=腾讯游戏学堂<br>sourceUrl=https://www.bilibili.com/video/BV1Cg411P72p?p=7 | mediaType=talk<br>originalLanguage=zh-Hans | language=zh-Hans; url=https://www.bilibili.com/video/BV1Cg411P72p?p=7; accessModel=free; versionRelation=original; presentationMode=original; region note=可用性可能受地区、登录状态与平台政策影响; checkedAt=2026-08-09 | 建议关联=social impact, values, public discourse<br>whyRelevant=与 #4、#5、#6 形成中文可消费的实践／批判连接。 | [] |
 | C-037<br>canonicalUrl=https://www.bilibili.com/video/BV1X14y1R78h<br>title=为什么说交互设计师在游戏设计中不可或缺？ | sourceName=吉比特游戏<br>sourceUrl=https://www.bilibili.com/video/BV1X14y1R78h | mediaType=video<br>originalLanguage=zh-Hans | language=zh-Hans; url=https://www.bilibili.com/video/BV1X14y1R78h; accessModel=free; versionRelation=original; presentationMode=original; region note=可用性可能受地区、登录状态与平台政策影响; checkedAt=2026-08-09 | 建议关联=game UX, interaction design, roles<br>whyRelevant=公司官方账号；17,244 views、955 likes、532 favorites；需标注为岗位科普而非方法论证据。 | provider=Bilibili; label=views; value=17244; observedAt=2026-08-09; url=https://www.bilibili.com/video/BV1X14y1R78h<br>provider=Bilibili; label=likes; value=955; observedAt=2026-08-09; url=https://www.bilibili.com/video/BV1X14y1R78h<br>provider=Bilibili; label=favorites; value=532; observedAt=2026-08-09; url=https://www.bilibili.com/video/BV1X14y1R78h |
 
+### Batch D：低覆盖主题、媒介与语言补充（20）
+
+- 检索：Agent Reach `Exa via mcporter`；网页读取与抽样复核：`Jina Reader`；研究日期与链接检查日期均为 2026-08-11。
+- 取舍：优先官方课程、论文发布页、作者原文、持续维护的行业参考和有逐段大纲的一手访谈。没有引入站内评分、排名、精选或推荐强度。
+- 去重：对 20 个候选执行与现有 catalog 相同的 canonical 归一化；无完全重复 URL。同一作品的不同语言或入口仍合并为 Access Version，不拆 Work Item。
+
+| Ref / canonical identity | Source evidence | Medium / original language | accessVersions | 建议关联 / whyRelevant | notes |
+|---|---|---|---|---|---|
+| D-001<br>canonicalUrl=https://ocw.mit.edu/courses/cms-608-game-design-fall-2010/<br>title=Game Design | sourceName=MIT OpenCourseWare<br>sourceUrl=https://ocw.mit.edu/ | mediaType=course<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=design-fundamentals<br>whyRelevant=MIT 公开的本科课程包含讲座音频、作业和学生项目示例，围绕分析、设计与测试非电子游戏。 | 官方课程页；不把单次讲座重复拆项。 |
+| D-002<br>canonicalUrl=https://aaai.org/papers/ws04-04-001-mda-a-formal-approach-to-game-design-and-game-research/<br>title=MDA: A Formal Approach to Game Design and Game Research | sourceName=AAAI<br>sourceUrl=https://aaai.org/ | mediaType=paper<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=systems-mechanics<br>whyRelevant=官方论文页保存 Mechanics、Dynamics、Aesthetics 框架及其设计／研究语境。 | AAAI 一手发布页。 |
+| D-003<br>canonicalUrl=https://gameaccessibilityguidelines.com/full-list/<br>title=Game Accessibility Guidelines: Full List | sourceName=Game Accessibility Guidelines<br>sourceUrl=https://gameaccessibilityguidelines.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=完整清单按障碍与实现难度提供具体无障碍设计回应。 | 维护方说明为工作室、专业人士和学者的协作成果。 |
+| D-004<br>canonicalUrl=https://research.chalmers.se/en/publication/177148<br>title=Dark Patterns in the Design of Games | sourceName=Chalmers Research<br>sourceUrl=https://research.chalmers.se/ | mediaType=paper<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=criticism-values-history<br>whyRelevant=论文讨论违背玩家利益且缺少知情同意的时间、金钱与社会资本设计模式。 | 作者机构研究目录；未使用错误 DOI。 |
+| D-005<br>canonicalUrl=https://www.gamedeveloper.com/business/ethical-free-to-play-game-design-and-why-it-matters-<br>title=Ethical Free-to-Play Game Design (And Why it Matters) | sourceName=Game Developer<br>sourceUrl=https://www.gamedeveloper.com/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=balance-economy<br>whyRelevant=作者将短期收入、长期留存、玩家尊重与价值交换放在同一商业化决策中。 | 作者观点，不转译为本站结论。 |
+| D-006<br>canonicalUrl=https://book.leveldesignbook.com/process/combat<br>title=Combat | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=level-spatial-design<br>whyRelevant=开放章节连接战斗系统、武器、经济、敌人和空间职责。 | 复用既有 Source。 |
+| D-007<br>canonicalUrl=https://book.leveldesignbook.com/process/combat/encounter<br>title=Encounter | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=level-spatial-design<br>whyRelevant=把遭遇定义为支持多种战术的系统性挑战序列，并给出节奏、波次和空间变量。 | 直接补 encounter-space-composition。 |
+| D-008<br>canonicalUrl=https://book.leveldesignbook.com/process/combat/enemy<br>title=Enemy Design | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=systems-mechanics<br>whyRelevant=用敌人职责、能力、轮廓和行为差异说明 roster 的系统互补。 | 直接补 encounter-space-composition。 |
+| D-009<br>canonicalUrl=https://thegamedesignroundtable.com/episode/303-darkest-dungeon-2-with-chris-bourassa-and-tyler-sigman/<br>title=#303 Darkest Dungeon 2 with Chris Bourassa and Tyler Sigman | sourceName=The Game Design Roundtable<br>sourceUrl=https://thegamedesignroundtable.com/ | mediaType=podcast<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=practitioner-interviews-podcasts<br>whyRelevant=一手讨论续作风险、Early Access、路线图和功能优先级。 | 页面提供逐段大纲。 |
+| D-010<br>canonicalUrl=https://thegamedesignroundtable.com/episode/305-thirsty-suitors-with-chandana-ekanayake/<br>title=#305 Thirsty Suitors with Chandana Ekanayake | sourceName=The Game Design Roundtable<br>sourceUrl=https://thegamedesignroundtable.com/ | mediaType=podcast<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=leadership-creative-direction<br>whyRelevant=游戏总监讨论文化表达、预算、删减、艺术方向与团队工具。 | 页面提供逐段大纲。 |
+| D-011<br>canonicalUrl=https://thegamedesignroundtable.com/episode/298-tchia-with-phil-crifo/<br>title=#298 Tchia with Phil Crifo | sourceName=The Game Design Roundtable<br>sourceUrl=https://thegamedesignroundtable.com/ | mediaType=podcast<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=practitioner-interviews-podcasts<br>whyRelevant=一手讨论文化语境、开放世界、美学机制、取舍与小团队融资。 | 页面提供逐段大纲。 |
+| D-012<br>canonicalUrl=https://thegamedesignroundtable.com/episode/293-interview-with-mark-rosewater/<br>title=#293 Interview with Mark Rosewater | sourceName=The Game Design Roundtable<br>sourceUrl=https://thegamedesignroundtable.com/ | mediaType=podcast<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=systems-mechanics<br>whyRelevant=访谈涉及玩家心理类型、设计工具、机制评估和长期可扩展系统。 | 页面提供逐段大纲。 |
+| D-013<br>canonicalUrl=https://thegamedesignroundtable.com/episode/297-gerson-da-silva-talks-kingdom-rush/<br>title=#297 Gerson Da Silva Talks Kingdom Rush | sourceName=The Game Design Roundtable<br>sourceUrl=https://thegamedesignroundtable.com/ | mediaType=podcast<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=practitioner-interviews-podcasts<br>whyRelevant=一手讨论受众投入差异、品类创新、市场选择、商业化和设计空间。 | 直接补 monetization-experience-alignment。 |
+| D-014<br>canonicalUrl=https://thegamedesignroundtable.com/episode/design-talk-nyt-games-with-rohit-crasta/<br>title=Design Talk: NYT Games with Rohit Crasta | sourceName=The Game Design Roundtable<br>sourceUrl=https://thegamedesignroundtable.com/ | mediaType=podcast<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=practitioner-interviews-podcasts<br>whyRelevant=以 Crossplay 为例连接每日循环、产品支柱、社交分享和弱化微交易的定位。 | 页面提供逐段大纲。 |
+| D-015<br>canonicalUrl=https://owlcat.games/learning<br>title=Owlcat Games 学习资料库 | sourceName=Owlcat Games<br>sourceUrl=https://owlcat.games/ | mediaType=website<br>originalLanguage=en | language=en; url=https://owlcat.games/learning; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11<br>language=zh-Hans; url=https://owlcat.games/zh/learning; accessModel=free; versionRelation=official; presentationMode=translated; checkedAt=2026-08-11 | topic=chinese-industry-cross-discipline<br>whyRelevant=工作室公开的跨设计、叙事、艺术、工程与制作书目入口。 | 作为索引型 Work Item；不复制其子书目、不生成站内排序。 |
+| D-016<br>canonicalUrl=https://mud.co.uk/richard/hcds.htm<br>title=Hearts, Clubs, Diamonds, Spades: Players Who Suit MUDs | sourceName=Richard A. Bartle<br>sourceUrl=https://mud.co.uk/richard/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=从 MUD 社群观察提出四类游玩取向与人口动态。 | 作为历史框架并保留 MUD 语境，不当作普适人格量表。 |
+| D-017<br>canonicalUrl=https://www.lizengland.com/blog/2014/04/the-door-problem/<br>title=The Door Problem | sourceName=Liz England<br>sourceUrl=https://www.lizengland.com/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=collaboration-teams<br>whyRelevant=用一道门拆解设计、工程、艺术、音频与制作责任。 | 作者原文。 |
+| D-018<br>canonicalUrl=https://www.routledge.com/Building-Blocks-of-Tabletop-Game-Design-An-Encyclopedia-of-Mechanisms/Engelstein-Shalev/p/book/9781032015811<br>title=Building Blocks of Tabletop Game Design: An Encyclopedia of Mechanisms | sourceName=Routledge<br>sourceUrl=https://www.routledge.com/ | mediaType=book<br>originalLanguage=en | language=en; accessModel=paid; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=systems-mechanics<br>whyRelevant=出版方说明每个机制条目包含定义、图示、案例与实现考量。 | 出版方页；购买与版本可用性可能变化。 |
+| D-019<br>canonicalUrl=https://mitpress.mit.edu/9780262017138/characteristics-of-games/<br>title=Characteristics of Games | sourceName=MIT Press<br>sourceUrl=https://mitpress.mit.edu/ | mediaType=book<br>originalLanguage=en | language=en; accessModel=paid; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=design-fundamentals<br>whyRelevant=以玩家数量、规则、运气与技巧、奖励／投入等共同特征比较多种游戏。 | 出版方页当前标记精装绝版；不推断特定地区库存。 |
+| D-020<br>canonicalUrl=https://www.directingvideogames.com/2017/07/05/5-essential-qualities-video-game-creative-director/<br>title=5 Essential Qualities of a Video Game Creative Director | sourceName=Directing Video Games<br>sourceUrl=https://www.directingvideogames.com/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=leadership-creative-direction<br>whyRelevant=长期游戏导演从愿景、结构、创意工具、领导和生产理解概括职责。 | 作者原文。 |
+
 ## 拒绝与待核证据
 
 以下保留三批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
@@ -292,6 +320,14 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - **B 站“熟肉”“字幕”“搬运补档”：拒绝。** 即使内容本身优质，无法确认权利链／字幕权利，不符合禁令。
 - **Apple Podcasts 的中文界面：不等于中文音频。** #29 明确只记录为 `presentationMode: original`；不能把 URL 的 `l=zh-Hans-CN` 写成译本。
 - **TGDC 的地区／可用性：** B 站可免费访问，但可能受地区、登录和平台政策影响；建议 `regionRestrictions: “Bilibili availability may vary by region/platform policy”`。
+
+### Batch D
+
+- `https://doi.org/10.1145/2468356.2468778`：拒绝。Crossref 返回的真实题名是 *We'll take it from here*，并非 *Dark Patterns in the Design of Games*；最终改用作者所在机构的 Chalmers Research 记录。
+- 猜测的 Routledge *Directing Video Games* 路径：拒绝。Jina Reader 复核为 404；最终只收录 Brian Allgeier 官方站上可直接读取的具体文章。
+- AIAS 的两个访谈候选：暂不纳入。Exa 可检索摘要，但 Jina Reader 分别遇到安全校验和 403，无法在本批完成一致的正文／访问复核。
+- Game Developer 的同主题泛搜索结果、频道首页与聚合页：拒绝。只保留能够锁定作者、题名和具体正文的 Work Item。
+- 未核验的 YouTube 搬运、字幕与二次上传：拒绝。本机 `agent-reach doctor` 显示 YouTube 字幕后端未安装，不能把搜索摘要冒充内容核验。
 
 ## 访问、地区与版权疑点
 

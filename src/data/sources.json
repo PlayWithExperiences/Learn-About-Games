@@ -300,5 +300,141 @@
     "languages": [
       "zh-Hans"
     ]
+  },
+  {
+    "id": "mit-opencourseware",
+    "name": {
+      "zh-CN": "MIT OpenCourseWare",
+      "en": "MIT OpenCourseWare"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "麻省理工学院公开发布课程材料的平台。"
+    },
+    "homepage": "https://ocw.mit.edu/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "aaai",
+    "name": {
+      "zh-CN": "AAAI",
+      "en": "Association for the Advancement of Artificial Intelligence"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "AAAI 的会议与论文官方发布平台。"
+    },
+    "homepage": "https://aaai.org/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-accessibility-guidelines",
+    "name": {
+      "zh-CN": "Game Accessibility Guidelines",
+      "en": "Game Accessibility Guidelines"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "由工作室、专业人士与学者共同维护的游戏无障碍设计参考。"
+    },
+    "homepage": "https://gameaccessibilityguidelines.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-developer",
+    "name": {
+      "zh-CN": "Game Developer",
+      "en": "Game Developer"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "面向游戏开发从业者的行业出版平台。"
+    },
+    "homepage": "https://www.gamedeveloper.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "owlcat-games",
+    "name": {
+      "zh-CN": "Owlcat Games",
+      "en": "Owlcat Games"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Owlcat Games 的官方工作室网站。"
+    },
+    "homepage": "https://owlcat.games/",
+    "languages": [
+      "en",
+      "zh-Hans"
+    ]
+  },
+  {
+    "id": "richard-bartle",
+    "name": {
+      "zh-CN": "Richard A. Bartle",
+      "en": "Richard A. Bartle"
+    },
+    "kind": "creator",
+    "summary": {
+      "zh-CN": "MUD 设计者与玩家类型研究作者的个人资料站。"
+    },
+    "homepage": "https://mud.co.uk/richard/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "liz-england",
+    "name": {
+      "zh-CN": "Liz England",
+      "en": "Liz England"
+    },
+    "kind": "creator",
+    "summary": {
+      "zh-CN": "游戏设计师 Liz England 的个人网站与文章归档。"
+    },
+    "homepage": "https://www.lizengland.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "directing-video-games",
+    "name": {
+      "zh-CN": "Directing Video Games",
+      "en": "Directing Video Games"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Brian Allgeier 维护的游戏创意领导与导演实践网站。"
+    },
+    "homepage": "https://www.directingvideogames.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "chalmers-research",
+    "name": {
+      "zh-CN": "Chalmers Research",
+      "en": "Chalmers Research"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "查尔姆斯理工大学的官方研究成果目录。"
+    },
+    "homepage": "https://research.chalmers.se/",
+    "languages": [
+      "en"
+    ]
   }
 ]
