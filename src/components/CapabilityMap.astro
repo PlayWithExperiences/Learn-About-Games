@@ -525,6 +525,17 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     const capabilityById = new Map(payload.capabilities.map((item) => [item.id, item]));
     const topicById = new Map(payload.knowledgeTopics.map((item) => [item.id, item]));
     const frameworkById = new Map(payload.frameworkNodes.map((item) => [item.id, item]));
+    const descendantFrameworkNodeIdsById = new Map(
+      payload.frameworkNodes.map((node) => [node.id, new Set([node.id])]),
+    );
+    for (const node of payload.frameworkNodes) {
+      let parentId = node.parentNodeId;
+      while (parentId) {
+        descendantFrameworkNodeIdsById.get(parentId)?.add(node.id);
+        parentId = frameworkById.get(parentId)?.parentNodeId;
+      }
+    }
+    let projectedCareerNodes = new Map<string, CareerNode>();
     const allEntities = [
       ...payload.capabilities.map((item) => ({ ...item, kind: 'capability' as const })),
       ...payload.knowledgeTopics.map((item) => ({ ...item, kind: 'knowledge-topic' as const })),
@@ -550,6 +561,46 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       element.style.setProperty('--box-y', `${box.y}px`);
       element.style.setProperty('--box-width', `${box.width}px`);
       element.style.setProperty('--box-height', `${box.height}px`);
+    };
+
+    const syncCareerFrameworkFacts = () => {
+      if (!root.dataset.careerProfileId) return;
+      root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((frameworkElement) => {
+        const frameworkNodeId = frameworkElement.dataset.egdsFrameworkNode;
+        const frameworkNode = frameworkNodeId ? frameworkById.get(frameworkNodeId) : undefined;
+        const ownedFrameworkNodeIds = frameworkNode?.kind === 'branch' && frameworkNodeId
+          ? descendantFrameworkNodeIdsById.get(frameworkNodeId)
+          : frameworkNodeId
+            ? new Set([frameworkNodeId])
+            : undefined;
+        const assigned = payload.capabilities
+          .filter((capability) => ownedFrameworkNodeIds?.has(capability.frameworkNodeId))
+          .map((capability) => projectedCareerNodes.get(capability.id))
+          .filter((node): node is CareerNode => Boolean(node && node.priority !== 'unlisted'));
+        const counts = {
+          core: assigned.filter(({ priority }) => priority === 'core').length,
+          important: assigned.filter(({ priority }) => priority === 'important').length,
+          suggested: assigned.filter(({ priority }) => priority === 'suggested').length,
+        };
+        frameworkElement.dataset.careerCoreCount = String(counts.core);
+        frameworkElement.dataset.careerImportantCount = String(counts.important);
+        frameworkElement.dataset.careerSuggestedCount = String(counts.suggested);
+        const countLabel = frameworkElement.querySelector<HTMLElement>('[data-career-collapsed-count]');
+        const outlineCountLabel = frameworkNodeId
+          ? root.querySelector<HTMLElement>(
+            `[data-outline-framework-node="${CSS.escape(frameworkNodeId)}"] > summary [data-career-collapsed-count]`,
+          )
+          : undefined;
+        const showBranchAggregate = frameworkNode?.kind === 'branch' && root.dataset.layoutMode === 'focus';
+        const showFacts = frameworkNode?.kind === 'branch' ? showBranchAggregate : assigned.length > 0;
+        [countLabel, outlineCountLabel].forEach((label) => {
+          if (!label) return;
+          label.textContent = showFacts
+            ? `核心 ${counts.core}，重要 ${counts.important}，建议了解 ${counts.suggested}`
+            : '';
+          label.hidden = !showFacts;
+        });
+      });
     };
 
     const outlineDisclosureChain = (frameworkNodeId?: string) => {
@@ -801,6 +852,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
           ? `当前展开：${frameworkNode.name['zh-CN']}。同一时间只显示这一组条目。`
           : '当前显示 EGDS 全貌。选择带数量的节点可展开具体能力与知识议题。';
       }
+      syncCareerFrameworkFacts();
       renderInspector();
     };
 
@@ -904,11 +956,11 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     root.addEventListener('egds-map:apply-career-lens', (event) => {
       const detail = parseCareerLensDetail((event as CustomEvent<unknown>).detail);
       if (!detail) return;
-      const projectedNodes = new Map(detail.nodes.map((node) => [node.capabilityId, node]));
+      projectedCareerNodes = new Map(detail.nodes.map((node) => [node.capabilityId, node]));
       root.dataset.careerProfileId = detail.profileId;
       root.querySelectorAll<HTMLElement>('[data-career-node][data-capability-id]').forEach((element) => {
         const capabilityId = element.dataset.capabilityId;
-        const projected = capabilityId ? projectedNodes.get(capabilityId) : undefined;
+        const projected = capabilityId ? projectedCareerNodes.get(capabilityId) : undefined;
         delete element.dataset.rolePriority;
         delete element.dataset.roleResponsibility;
         element.dataset.roleState = !projected || projected.priority === 'unlisted' ? 'unlisted' : 'mapped';
@@ -928,38 +980,12 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
           label.hidden = !label.textContent;
         }
       });
-      root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((frameworkElement) => {
-        const frameworkNodeId = frameworkElement.dataset.egdsFrameworkNode;
-        const assigned = payload.capabilities
-          .filter((capability) => capability.frameworkNodeId === frameworkNodeId)
-          .map((capability) => projectedNodes.get(capability.id))
-          .filter((node): node is CareerNode => Boolean(node && node.priority !== 'unlisted'));
-        const counts = {
-          core: assigned.filter(({ priority }) => priority === 'core').length,
-          important: assigned.filter(({ priority }) => priority === 'important').length,
-          suggested: assigned.filter(({ priority }) => priority === 'suggested').length,
-        };
-        frameworkElement.dataset.careerCoreCount = String(counts.core);
-        frameworkElement.dataset.careerImportantCount = String(counts.important);
-        frameworkElement.dataset.careerSuggestedCount = String(counts.suggested);
-        const countLabel = frameworkElement.querySelector<HTMLElement>('[data-career-collapsed-count]');
-        const outlineCountLabel = frameworkNodeId
-          ? root.querySelector<HTMLElement>(
-            `[data-outline-framework-node="${CSS.escape(frameworkNodeId)}"] > summary [data-career-collapsed-count]`,
-          )
-          : undefined;
-        [countLabel, outlineCountLabel].forEach((label) => {
-          if (!label) return;
-          label.textContent = assigned.length > 0
-            ? `核心 ${counts.core}，重要 ${counts.important}，建议了解 ${counts.suggested}`
-            : '';
-          label.hidden = assigned.length === 0;
-        });
-      });
+      syncCareerFrameworkFacts();
     });
 
     root.addEventListener('egds-map:clear-career-lens', () => {
       delete root.dataset.careerProfileId;
+      projectedCareerNodes = new Map();
       root.querySelectorAll<HTMLElement>('[data-career-node][data-capability-id]').forEach((element) => {
         delete element.dataset.rolePriority;
         delete element.dataset.roleResponsibility;

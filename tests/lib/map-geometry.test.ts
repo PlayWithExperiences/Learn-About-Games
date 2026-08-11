@@ -18,6 +18,37 @@ import type { Catalog } from '../../src/lib/catalog/validate';
 
 const globalCssSource = readFileSync(new URL('../../src/styles/global.css', import.meta.url), 'utf8');
 
+const expectedFrameworkPreorder = [
+  'egds-root',
+  'experience-design',
+  'experience-journey',
+  'perception',
+  'rationalization',
+  'deconstruction',
+  'reconstruction',
+  'narrative-lever',
+  'aesthetics-lever',
+  'gameplay-challenges-lever',
+  'from-plan-to-ship',
+  'mindset-problem-solving-tools',
+  'prototype-production-breakdown',
+  'playtest-evidence-iteration',
+  'tradeoff-specification-delivery',
+  'with-team',
+  'vision-direction-decisions',
+  'alignment-communication',
+  'leadership-management',
+  'feedback-collaboration',
+  'product-profit',
+  'audience-positioning-cluster',
+  'market-opportunity',
+  'value-exchange',
+  'monetization-alignment',
+  'beyond-games',
+  'values-culture',
+  'innovation-possibility-space',
+] as const;
+
 const egdsInput = (overrides: Partial<BuildEgdsMapLayoutInput> = {}): BuildEgdsMapLayoutInput => ({
   frameworkNodes: frameworkNodes as unknown as Catalog['egdsFrameworkNodes'],
   frameworkRelations: frameworkRelations as unknown as Catalog['egdsFrameworkRelations'],
@@ -179,6 +210,32 @@ describe('capability relation semantics', () => {
 });
 
 describe('EGDS expertise map geometry', () => {
+  it('emits framework boxes in numeric-order hierarchy preorder for original, shuffled and reversed input', () => {
+    const shuffledFrameworkNodes = [
+      ...frameworkNodes.filter((_, index) => index % 2 === 1),
+      ...frameworkNodes.filter((_, index) => index % 2 === 0),
+    ] as unknown as Catalog['egdsFrameworkNodes'];
+    const reversedFrameworkNodes = [...frameworkNodes].reverse() as unknown as Catalog['egdsFrameworkNodes'];
+
+    for (const orderedNodes of [
+      frameworkNodes as unknown as Catalog['egdsFrameworkNodes'],
+      shuffledFrameworkNodes,
+      reversedFrameworkNodes,
+    ]) {
+      expect(buildEgdsMapLayout(egdsInput({ frameworkNodes: orderedNodes })).frameworkBoxes.map(({ id }) => id))
+        .toEqual(expectedFrameworkPreorder);
+    }
+
+    const tiedSiblingNodes = frameworkNodes.map((node) => (
+      node.id === 'aesthetics-lever' ? { ...node, order: 1 } : node
+    )) as unknown as Catalog['egdsFrameworkNodes'];
+    const tiedSiblingPreorder = [...expectedFrameworkPreorder];
+    tiedSiblingPreorder.splice(tiedSiblingPreorder.indexOf('aesthetics-lever'), 1);
+    tiedSiblingPreorder.splice(tiedSiblingPreorder.indexOf('narrative-lever'), 0, 'aesthetics-lever');
+    expect(buildEgdsMapLayout(egdsInput({ frameworkNodes: tiedSiblingNodes })).frameworkBoxes.map(({ id }) => id))
+      .toEqual(tiedSiblingPreorder);
+  });
+
   it('advances every containment child to the right through east-to-west ports only', () => {
     const layout = buildEgdsMapLayout(egdsInput());
     const boxesByKey = new Map(layout.frameworkBoxes.map((box) => [box.key, box]));

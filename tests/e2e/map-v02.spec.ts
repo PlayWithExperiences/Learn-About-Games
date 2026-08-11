@@ -16,6 +16,37 @@ const frameworkTypeLabels = {
   'external-entry': '外部入口',
 } as const;
 
+const expectedFrameworkPreorder = [
+  'egds-root',
+  'experience-design',
+  'experience-journey',
+  'perception',
+  'rationalization',
+  'deconstruction',
+  'reconstruction',
+  'narrative-lever',
+  'aesthetics-lever',
+  'gameplay-challenges-lever',
+  'from-plan-to-ship',
+  'mindset-problem-solving-tools',
+  'prototype-production-breakdown',
+  'playtest-evidence-iteration',
+  'tradeoff-specification-delivery',
+  'with-team',
+  'vision-direction-decisions',
+  'alignment-communication',
+  'leadership-management',
+  'feedback-collaboration',
+  'product-profit',
+  'audience-positioning-cluster',
+  'market-opportunity',
+  'value-exchange',
+  'monetization-alignment',
+  'beyond-games',
+  'values-culture',
+  'innovation-possibility-space',
+] as const;
+
 const directEntityCount = (frameworkNodeId: string) =>
   capabilities.filter((item) => item.frameworkNodeId === frameworkNodeId).length
   + knowledgeTopics.filter((item) => item.frameworkNodeId === frameworkNodeId).length;
@@ -54,6 +85,9 @@ test('server renders the complete EGDS skeleton, hidden entities and stable deta
   await expect(canvas).toHaveCount(1);
   await expect(canvas).toBeVisible();
   await expect(map.locator('[data-egds-framework-node]')).toHaveCount(28);
+  expect(await map.locator('[data-capability-map-canvas] [data-egds-framework-node]').evaluateAll((nodes) =>
+    nodes.map((node) => (node as HTMLElement).dataset.egdsFrameworkNode),
+  )).toEqual(expectedFrameworkPreorder);
   await expect(map.locator('[data-egds-branch]')).toHaveCount(5);
   await expect(map.locator('[data-egds-process-path]')).toHaveCount(3);
   await expect(map.locator('[data-egds-lever]')).toHaveCount(3);
@@ -281,35 +315,74 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
   await page.goto('./map/');
   const map = page.locator('[data-egds-map]');
   const scene = map.locator('[data-egds-scene]');
-  const geometrySnapshot = () => scene.evaluate((element) => ({
-    scene: {
-      width: element.style.width,
-      height: element.style.height,
-    },
-    svgs: Array.from(element.querySelectorAll<SVGSVGElement>(
-      ':scope > .capability-map__structure, :scope > .capability-map__relations',
-    )).map((svg) => ({
-      width: svg.getAttribute('width'),
-      height: svg.getAttribute('height'),
-      viewBox: svg.getAttribute('viewBox'),
-    })),
-    framework: Array.from(element.querySelectorAll<HTMLElement>('[data-egds-framework-node]'))
-      .map((node) => ({
-        id: node.dataset.egdsFrameworkNode,
-        hidden: node.hidden,
-        x: node.style.getPropertyValue('--box-x'),
-        y: node.style.getPropertyValue('--box-y'),
-        width: node.style.getPropertyValue('--box-width'),
-        height: node.style.getPropertyValue('--box-height'),
+  const geometrySnapshot = () => scene.evaluate((element) => {
+    const sceneBounds = element.getBoundingClientRect();
+    const round = (value: number) => Math.round(value * 1000) / 1000;
+    const relativeBounds = (node: Element) => {
+      const bounds = node.getBoundingClientRect();
+      return {
+        x: round(bounds.left - sceneBounds.left),
+        y: round(bounds.top - sceneBounds.top),
+        width: round(bounds.width),
+        height: round(bounds.height),
+      };
+    };
+    const pathSnapshot = (path: SVGPathElement) => {
+      const length = path.getTotalLength();
+      const start = path.getPointAtLength(0);
+      const end = path.getPointAtLength(length);
+      return {
+        id: path.dataset.egdsStructuralPath ?? path.dataset.egdsProcessPath,
+        kind: path.dataset.egdsStructuralPath ? 'structural' : 'process',
+        hidden: path.hasAttribute('hidden'),
+        d: path.getAttribute('d'),
+        fromPort: path.dataset.fromPort,
+        toPort: path.dataset.toPort,
+        start: { x: round(start.x), y: round(start.y) },
+        end: { x: round(end.x), y: round(end.y) },
+      };
+    };
+    return {
+      scene: {
+        width: element.style.width,
+        height: element.style.height,
+        bounds: relativeBounds(element),
+      },
+      svgs: Array.from(element.querySelectorAll<SVGSVGElement>(
+        ':scope > .capability-map__structure, :scope > .capability-map__relations',
+      )).map((svg) => ({
+        width: svg.getAttribute('width'),
+        height: svg.getAttribute('height'),
+        viewBox: svg.getAttribute('viewBox'),
+        bounds: relativeBounds(svg),
       })),
-  }));
+      framework: Array.from(element.querySelectorAll<HTMLElement>('[data-egds-framework-node]'))
+        .map((node) => ({
+          id: node.dataset.egdsFrameworkNode,
+          hidden: node.hidden,
+          style: {
+            x: node.style.getPropertyValue('--box-x'),
+            y: node.style.getPropertyValue('--box-y'),
+            width: node.style.getPropertyValue('--box-width'),
+            height: node.style.getPropertyValue('--box-height'),
+          },
+          bounds: relativeBounds(node),
+        })),
+      paths: Array.from(element.querySelectorAll<SVGPathElement>(
+        '[data-egds-structural-path], [data-egds-process-path]',
+      )).map(pathSnapshot),
+    };
+  });
   const overview = await geometrySnapshot();
 
   await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:apply-career-lens', {
     bubbles: true,
     detail: {
       profileId: 'horizontal-fixture',
-      nodes: [{ capabilityId: 'rules-system-modeling', priority: 'core', responsibility: 'execute' }],
+      nodes: [
+        { capabilityId: 'rules-system-modeling', priority: 'core', responsibility: 'execute' },
+        { capabilityId: 'task-breakdown', priority: 'important', responsibility: 'contribute' },
+      ],
     },
   })));
   const expandButton = map.locator('[data-expand-framework-node="gameplay-challenges-lever"]');
@@ -319,6 +392,31 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
   await expect(map.locator('[data-capability-map-canvas] [data-egds-framework-node]:not([hidden])')).toHaveCount(8);
   await expect(map.locator('[data-capability-map-canvas] [data-egds-branch]:not([hidden])')).toHaveCount(5);
   await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(14);
+  const expectedBranchFacts = {
+    'experience-design': { core: '1', important: '0', suggested: '0' },
+    'from-plan-to-ship': { core: '0', important: '1', suggested: '0' },
+    'with-team': { core: '0', important: '0', suggested: '0' },
+    'product-profit': { core: '0', important: '0', suggested: '0' },
+    'beyond-games': { core: '0', important: '0', suggested: '0' },
+  } as const;
+  const branchFacts = () => map.locator('[data-capability-map-canvas] [data-egds-branch]').evaluateAll((branches) =>
+    Object.fromEntries(branches.map((branch) => {
+      const element = branch as HTMLElement;
+      const label = element.querySelector<HTMLElement>('[data-career-collapsed-count]');
+      return [element.dataset.egdsBranch, {
+        core: element.dataset.careerCoreCount,
+        important: element.dataset.careerImportantCount,
+        suggested: element.dataset.careerSuggestedCount,
+        label: label?.textContent,
+        labelHidden: label?.hidden,
+      }];
+    })),
+  );
+  expect(await branchFacts()).toEqual(Object.fromEntries(Object.entries(expectedBranchFacts).map(([id, facts]) => [id, {
+    ...facts,
+    label: `核心 ${facts.core}，重要 ${facts.important}，建议了解 ${facts.suggested}`,
+    labelHidden: false,
+  }])));
   const horizontalPlacement = await scene.evaluate((element) => {
     const owner = element.querySelector<HTMLElement>('[data-egds-framework-node="gameplay-challenges-lever"]')!
       .getBoundingClientRect();
@@ -330,6 +428,8 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
   await assertNoPageOverflow(page);
 
   const focusGeometry = await geometrySnapshot();
+  expect(focusGeometry.framework).not.toEqual(overview.framework);
+  expect(focusGeometry.paths).not.toEqual(overview.paths);
   expect(focusGeometry.svgs).toHaveLength(2);
   for (const svg of focusGeometry.svgs) {
     expect(svg.width).toBe(Number.parseFloat(focusGeometry.scene.width).toString());
@@ -343,6 +443,11 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
   await assertNoPageOverflow(page);
   await expect(expandButton).toBeFocused();
   await expect(map).toHaveAttribute('data-career-profile-id', 'horizontal-fixture');
+  expect(await branchFacts()).toEqual(Object.fromEntries(Object.entries(expectedBranchFacts).map(([id, facts]) => [id, {
+    ...facts,
+    label: '',
+    labelHidden: true,
+  }])));
   await expect(map.locator('[data-capability-map-canvas] [data-map-entity-key="capability:rules-system-modeling"]'))
     .toHaveAttribute('data-role-priority', 'core');
 });

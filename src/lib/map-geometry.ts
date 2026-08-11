@@ -172,6 +172,28 @@ const compareCodeUnits = (left: string, right: string) => left < right ? -1 : le
 
 const compareId = (left: Readonly<{ id: string }>, right: Readonly<{ id: string }>) => compareCodeUnits(left.id, right.id);
 
+const frameworkPreorder = (nodes: readonly EgdsFrameworkNodeInput[]) => {
+  const compareFrameworkOrder = (left: EgdsFrameworkNodeInput, right: EgdsFrameworkNodeInput) => (
+    left.order - right.order || compareCodeUnits(left.id, right.id)
+  );
+  const childrenByParentId = new Map<string | undefined, EgdsFrameworkNodeInput[]>();
+  for (const node of nodes) {
+    const siblings = childrenByParentId.get(node.parentNodeId) ?? [];
+    siblings.push(node);
+    childrenByParentId.set(node.parentNodeId, siblings);
+  }
+  for (const siblings of childrenByParentId.values()) siblings.sort(compareFrameworkOrder);
+
+  const ordered: EgdsFrameworkNodeInput[] = [];
+  const visit = (node: EgdsFrameworkNodeInput) => {
+    ordered.push(node);
+    for (const child of childrenByParentId.get(node.id) ?? []) visit(child);
+  };
+  for (const root of childrenByParentId.get(undefined) ?? []) visit(root);
+  if (ordered.length !== nodes.length) throw new Error('Framework hierarchy must be reachable from a root node');
+  return ordered;
+};
+
 const egdsCenterX = (box: EgdsMapBox) => box.x + box.width / 2;
 const egdsCenterY = (box: EgdsMapBox) => box.y + box.height / 2;
 
@@ -550,8 +572,7 @@ export function buildEgdsMapLayout({
       48,
     ] as EgdsAnchor,
   ]));
-  const frameworkBoxes = [...visibleFrameworkNodes]
-    .sort(compareId)
+  const frameworkBoxes = frameworkPreorder(visibleFrameworkNodes)
     .map((node) => egdsBox(
       node.id,
       node.kind,
