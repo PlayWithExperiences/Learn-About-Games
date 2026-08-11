@@ -262,6 +262,7 @@ describe('validateCatalog', () => {
 
   it('reports missing source and capability references on resources', () => {
     const catalog = emptyCatalog();
+    seedV02References(catalog);
     catalog.resources.push({
       id: 'observation-guide',
       title: localized('观察指南'),
@@ -269,7 +270,7 @@ describe('validateCatalog', () => {
       sourceId: 'missing-source',
       capabilityIds: ['missing-capability'],
       knowledgeTopicIds: [],
-      resourceTopicIds: [],
+      resourceTopicIds: ['resource-topic'],
       mediaType: 'article',
       canonicalUrl: 'https://example.com/observation-guide',
       whyRelevant: localized('示例关联。'),
@@ -791,6 +792,44 @@ describe('validateCatalog', () => {
       'RESOURCE_KNOWLEDGE_TOPIC_MISSING',
       'RESOURCE_RESOURCE_TOPIC_MISSING',
     ]);
+  });
+
+  it('requires a primary Resource Topic for every Work Item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resources.push({
+      ...validV02Resource('missing-primary-topic', 'https://example.com/missing-primary-topic'),
+      resourceTopicIds: [],
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_PRIMARY_TOPIC_REQUIRED',
+      collection: 'resources',
+      id: 'missing-primary-topic',
+      field: 'resourceTopicIds',
+      targetId: '',
+    });
+  });
+
+  it('rejects multiple primary Resource Topics on one Work Item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resourceTopics.push({
+      ...structuredClone(catalog.resourceTopics[0]),
+      id: 'second-resource-topic',
+    });
+    catalog.resources.push({
+      ...validV02Resource('multiple-primary-topics', 'https://example.com/multiple-primary-topics'),
+      resourceTopicIds: ['resource-topic', 'second-resource-topic'],
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_PRIMARY_TOPIC_MULTIPLE',
+      collection: 'resources',
+      id: 'multiple-primary-topics',
+      field: 'resourceTopicIds',
+      targetId: 'resource-topic,second-resource-topic',
+    });
   });
 
   it('requires unique canonical identities, a checked access version, and factual external signals', () => {

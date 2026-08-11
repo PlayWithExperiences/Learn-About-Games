@@ -453,6 +453,8 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
+    expect(resources).toHaveLength(128);
+    expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
     );

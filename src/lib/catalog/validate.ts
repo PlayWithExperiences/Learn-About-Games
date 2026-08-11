@@ -218,6 +218,8 @@ export type CatalogValidationCode =
   | 'RESOURCE_CAPABILITY_MISSING'
   | 'RESOURCE_KNOWLEDGE_TOPIC_MISSING'
   | 'RESOURCE_RESOURCE_TOPIC_MISSING'
+  | 'RESOURCE_PRIMARY_TOPIC_REQUIRED'
+  | 'RESOURCE_PRIMARY_TOPIC_MULTIPLE'
   | 'RESOURCE_TOPIC_REFERENCE_REQUIRED'
   | 'RESOURCE_CANONICAL_URL_DUPLICATE'
   | 'RESOURCE_CANONICAL_URL_INVALID'
@@ -858,6 +860,25 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
           resourceTopicId,
         );
       }
+    }
+    if (resource.resourceTopicIds.length === 0) {
+      appendError(
+        errors,
+        'RESOURCE_PRIMARY_TOPIC_REQUIRED',
+        'resources',
+        resource.id,
+        'resourceTopicIds',
+        '',
+      );
+    } else if (resource.resourceTopicIds.length > 1) {
+      appendError(
+        errors,
+        'RESOURCE_PRIMARY_TOPIC_MULTIPLE',
+        'resources',
+        resource.id,
+        'resourceTopicIds',
+        resource.resourceTopicIds.join(','),
+      );
     }
     if (
       resource.capabilityIds.length === 0 &&
