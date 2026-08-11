@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；EGDS 本地候选已实现并独立批准至 runtime `fce67d1`，尚未推送或部署；远端私有 `codex/v02` 仍为 `d982ceb`
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选通过 runtime `cc81bf8`，Atlas 日期约束修复为 `209ae9c`，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -132,13 +132,27 @@ Atlas 是一张全局横向时间网络。时间只控制横轴，关系可以�
 - 移动验收显式设置 320px，不把 Pixel 7 配置误写成 320px；主题矩阵覆盖系统浅/深与两种显式反向覆盖。
 - 发布证据链固定为 runtime release SHA/run → live verification → 可选 evidence commit，不要求 metadata commit 无限自证。
 
+## 2026-08-11 整合探索完善
+
+发起人确认三项调整可以并行实施：职业方向不再拥有第二张地图，而是作为能力地图内的三个职业标签；成长资源改为可展开全表或单个主题子表；Innovation Atlas 只有明确进入地图模式后才接管普通滚轮，并继续补充通往 Pong 的早期史材料。书面设计与四份实施计划保存在 `docs/superpowers/specs/2026-08-11-integrated-exploration-refinement-design.md` 及同日 plans 目录。
+
+地图切片将顶层导航收敛为能力地图、成长资源、创新变迁、关于本项目四项。`/careers/` 构建为指向 `/map/#career-lenses` 的静态兼容页，三份画像复用唯一 CapabilityMap。布局测试发现根节点与五分支视觉中心偏 32px，修复后对齐；职业应用曾使地图向下跳 545.5px，最终选中画像使用 controls 后、map 前的固定 17rem 紧凑 disclosure，应用／切换／聚焦的 map top 位移均为 0。独立审查发现初版把 evidence 放在地图之后；`cc81bf8` 已把 mapping、basis、caveat、reviewedAt 与 sources 合并回标签旁，无 JavaScript 仍保留三份自然高度原生 disclosure。
+
+Resources 切片以 15 个 Resource Topic 作为无顺序子表。默认页面高度从 1440px 的约 21,476px 降至 2,378px，320px 从约 44,755px 降至 4,055px；用户可以只展开一个主题，也可以展开全部后使用七维事实筛选。20 个 Source 进入 `/resources/sources/`，128 个 Work Item 保持唯一渲染。独立审查发现 `resourceTopicIds[0]` 缺构建保障；`5ed1ff7` 现在以 `RESOURCE_PRIMARY_TOPIC_REQUIRED` / `MULTIPLE` 拒绝零主题或多主题条目，raw 128 项均恰属一个主题。
+
+Atlas 切片增加显式地图模式：模式外 wheel 滚页面；模式内 wheel 依据 delta 围绕指针连续缩放，wheel 与 drag 写入均由 rAF 合并，Esc 退出；按钮、键盘、no-JS 和 `<=1150px` 完整时期大纲继续存在。早期史新增 9 节点、5 条关系、9 项 Evidence 和 1 Tag，总量为 36/30/49。对象类型扩展为实验装置、实验程序、系统原型与商业硬件；没有 Tennis for Two → Pong 伪边，也没有无条件“Pong 第一”的表述。独立审查发现新类型的逆序 endYear 可绕过 validator，且时间轴缺早期刻度；`209ae9c` 统一校验所有范围并补 1958、1960、1970。
+
+所有这些行为均为本地 Private 候选，没有 push、没有恢复 Public、没有启用 Pages。用户要求的可访问交付是 fresh build 后的本机预览 `http://127.0.0.1:4321/Learn-About-Games/`。
+
+连续性文档与 Devlog 写入后的最终 fresh gate 为：Astro check 67 files、0 errors / warnings / hints；Vitest 139/139；静态 build 107 pages；完整 Playwright 216 项中 201 passed / 15 intentional skipped / 0 failed。第一次完整 E2E 有 4 个失败，全部是 `visible-skeleton` 仍锁旧的 Atlas 27/25/40 与旧 Changelog 句子；产品断言均已通过。测试更新为当前 36/30/49 与“本轮尚未推送或部署”后，定向 29 passed / 1 skipped，完整套件原样重跑得到上述 GREEN。
+
 ## 精确下一步
 
-1. 先由发起人在 Private 状态下真实使用当前 EGDS 本地候选，判断作者结构、命名、一屏密度与内容缺口是否符合预期；本地候选不自动推送。
-2. 独立形成成长资源的下一份规格：强化媒介／Source 类型文字与非颜色标识，在保持七维筛选、140 个 Access Version 和 12 条外部观察的前提下继续压缩行密度。
-3. 独立形成 Innovation Atlas 的 engaged wheel mode 规格：默认普通滚轮继续滚页面，只有明确进入地图模式后才接管连续缩放。
-4. 建立早期电子游戏史 ontology 和证据批次，区分文档化设计、实验程序／装置、系统原型、量产产品与商业突破；Pong 只作为 1972 年商业突破节点，不能写成未经限定的“第一个电子游戏”。
-5. 只有用户确认核心体验达到可用门槛后，才另行决定是否推送候选、恢复 Public、重新启用 Pages workflow 并执行线上验收。
+1. 由发起人在本地预览真实使用合并后的地图职业标签、资源子表与 Atlas 地图模式；本地候选不自动推送。
+2. 继续收集、去重和归类资源，优先补现有主题覆盖、Access Version 与可核查 Source，不增加站内评分或强制路径。
+3. 沿早期电子游戏史补充 1970s 商业化、家用系统与 arcade 分化；先补 Evidence，再补关系，不为视觉密度造边。
+4. 用真实触控板持续验证 Atlas 模式的连续缩放、边界释放和长时间帧稳定；模式外普通滚轮必须继续属于页面。
+5. 只有用户确认核心体验达到可用门槛后，才另行决定是否推送候选、恢复 Public、重新启用 Pages workflow并执行线上验收。
 
 ## 当前未决风险
 

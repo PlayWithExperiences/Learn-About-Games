@@ -256,7 +256,7 @@ test('publishes the current v0.2 scope without retaining the M0 roadmap as curre
   await expect(page.getByRole('heading', { name: '当前版本｜v0.2', exact: true })).toBeVisible();
   await expect(page.getByText(/28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
   await expect(page.getByText(/20 个 Source、128 个具体 Work Item 与 15 个无顺序资源主题/)).toBeVisible();
-  await expect(page.getByText(/27 节点、25 条有证据关系与 40 项文献/)).toBeVisible();
+  await expect(page.getByText(/36 节点、30 条有证据关系与 49 项文献/)).toBeVisible();
   await expect(page.locator('article.prose')).toContainText('从感受、理解、解构走向重构');
   await expect(page.locator('article.prose')).not.toContainText('能力地图包含 8 个领域');
   await expect(page.locator('article.prose')).not.toContainText('v0.2 已进入实施');
@@ -275,7 +275,7 @@ test('records EGDS as the current private candidate rather than a future migrati
   await page.goto('./project/changelog/');
   const changelog = page.locator('article.prose');
   await expect(changelog).toContainText('EGDS 取代通用分组成为能力地图的唯一知识骨架');
-  await expect(changelog).toContainText('本地候选尚未推送或部署');
+  await expect(changelog).toContainText('本轮尚未推送或部署');
 });
 
 test('records the verified deployment chain through the final-review fix', async ({ page }) => {

@@ -350,3 +350,21 @@ Career bridge 把三个画像投影到同一张 EGDS 地图。它只发送 apply
 里程碑文档提交 `7706520` 后，最终全局 reviewer 仍在 1024px / 320px 真实运行态确认三个 Important：JS 原生大纲可同时手动打开多个实体叶；1024px 的递归缩进和双列实体把正文压到约 31.5px；Career 三档事实计数只写入隐藏的桌面节点，响应式折叠叶没有可见载体。三项先各自取得 E2E RED，再由 `fce67d1` 统一修复：JS 只保留最后打开叶、no-JS 仍可多开，1024px 深层正文恢复到约 606px且实体单列，Career count 在 1024px / 320px apply 和 clear 都与桌面同步且不泄漏到 Framework / Topic。独立复审结论为 Approved；fresh build 为 0 diagnostics、130/130、105 pages，完整 E2E 为 191 passed / 15 intentional skipped。
 
 本记录仍是脱敏部分导出，不声称补回已经压缩且当前运行时不可访问的逐字消息。仓库保持 Private、Pages workflow 保持 `disabled_manually`；远端 `codex/v02` 停在 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。本地 EGDS runtime `fce67d18947020f292d9384f6164baf2ab69699f` 与本里程碑后续文档尚未推送或部署。下一步由发起人私有复核，而不是自动恢复公开。
+
+## 33. 地图职业合并、资源子表与 Atlas 早期史（部分会话导出）
+
+发起人继续在本地预览中反馈：能力地图与职业路径重复；资源页仍然过长；Atlas 需要更像地图的连续滚轮缩放和拖动；没有查完的早期资料应继续补充。对资源形态的进一步确认是“可以按需展开，可以展开全表后按表头筛选，也可以只展开一个子表”。发起人明确要求书面方案完成后直接并行执行，不再停下来等待方案复核，并继续要求根据难度分配 sub-agent 的模型与推理等级。
+
+主任务先用三个只读 sub-agent 分别审计 Map/Career、Resources 与 Atlas／研究。审计量化了资源页面约 21,476px／44,755px 的桌面／320px 高度；确认 `/careers/` 重复渲染同一 CapabilityMap；确认 Atlas 旧 wheel 每次固定跳 25%、使用 viewport center 且同步写 transform、stage size 与 scroll，是触控板跳动的具体机制。Agent Reach 通过 Exa、Jina 和机构原页核对 Brookhaven、Computer History Museum、Smithsonian、Stanford 与 Al Alcorn 口述史。
+
+主任务写入一份整合设计和四份分项实施计划后，按文件所有权并行派发三个实现者。Map/Career 使用高推理 Sol，Resources 使用高推理 Terra，Atlas 交互与早期史使用更高推理 Sol；主任务保留跨切片判断、审查与最终门禁。共享 `global.css` 只允许各 agent 精确修改并暂存自己的 scoped hunks，validator 在 Atlas 提交后再由 Resources review-fix 串行补充。
+
+Resources 的 RED 来自缺少 topic count helper、旧页面没有分组/展开控制；GREEN 后 15 个 topic 原生 disclosure、展开全部／收起、七维 AND filter 与独立 Source 目录均成立。默认页面高度下降约 89%／91%，而展开全表仍可恢复完整目录。独立 reviewer 找到一个 Important：`resourceTopicIds[0]` 没有 validator 保障。修复新增 REQUIRED / MULTIPLE diagnostics 并锁定 raw 128 项均恰属一个 topic；提交为 `eb5d9f1` 与 `5ed1ff7`。
+
+Atlas 的 RED 包括缺少连续 scale helper、缺少 pointer anchor 和早期 9 节点／5关系。实现新增显式地图模式、rAF 合并、指针锚定、Esc 与边界释放；数据总量变为 36 节点／30 关系／49 Evidence。新增对象类型避免把实验装置、程序、系统原型和商业硬件伪装成 Game；Odyssey Table Tennis → Pong 只标 credible participant-history，Tennis for Two 没有连向 Pong。独立 reviewer 找到新节点类型可绕过 endYear 逆序校验和早期 tick 缺失；修复提交 `209ae9c`。主实现提交为 `4212a40`。
+
+Map/Career 的 RED 包括顶栏仍有五项、Map 没有 lens、`/careers/` 未 redirect、root 与 branch field 中心偏 32px，以及 apply + focus 把地图向下推 545.5px。实现把三画像并入 Map、收敛为四项导航、构建静态兼容跳转并修正几何。独立 reviewer 又发现选中画像的 basis/mapping 被放在整张地图之后；review-fix 把所有选中事实合并为 controls 后、map 前的固定高度 disclosure，map top 在 apply/switch/focus 后均保持不变。提交为 `a3755fb` 与 `cc81bf8`。
+
+本段仍是脱敏的部分导出，不声称包含所有中间工具输出或主任务私有推理。仓库始终保持 Private，Pages workflow 始终保持 `disabled_manually`；没有 push、没有部署。最终交付会 fresh build 并重新启动 `http://127.0.0.1:4321/Learn-About-Games/` 本地预览。
+
+连续性文档与 Devlog 写入后的 fresh build 为 Astro 0 diagnostics、Vitest 139/139、107 pages。完整 E2E 首轮 197 passed / 15 skipped / 4 failed；四项都来自公开文档测试仍锁定历史 Atlas 27/25/40 和旧 Changelog 句子，运行时功能没有失败。更新为当前 36/30/49 与“本轮尚未推送或部署”后，visible-skeleton 双端为 29 passed / 1 intentional skipped，完整 E2E 复跑为 201 passed / 15 intentional skipped / 0 failed。

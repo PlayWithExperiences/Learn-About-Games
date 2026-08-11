@@ -10,10 +10,11 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 通过地图公开事件叠加到 EGDS；Career priority、个人实践状态、展开／关系选择各自独立，不生成职业适配、差距、完成率或总分。无 JavaScript 时三份画像摘要、依据、详情与资源链接仍可访问。
 - 删除旧 Domains / mapGroups JSON、placement 字段、catalog 类型、validator、generic geometry helper、无消费者样式与公开方法论残留；EGDS Framework Node、Capability、Knowledge Topic 成为当前三类地图实体。
 - 最终全局复审修复响应式 EGDS 大纲的三个盲区：JavaScript 增强态只保留一个展开叶，1024px 深层实体恢复单列横向可读，折叠叶直接显示 Career 三档事实计数；无 JavaScript 仍保留原生多开能力。
+- 将三个 Career Lens 合并为能力地图内的职业标签，顶层导航从五项收敛为能力地图、成长资源、创新变迁、关于本项目四项；`/careers/` 保留静态兼容跳转。选中画像的映射、依据、限制、复核日期和来源紧邻标签控件显示，应用、切换和聚焦不再推移地图。
 - 深色 Career Lens 以不透明填充、2px 边框、实线／虚线／点线和中文标签共同表达核心／重要／建议了解；未收录节点仍完整可读，不隐藏、不评分。
-- 成长资源收紧为单列目录：20 个 Source 与 128 个 Work Item 保持原 catalog 顺序、七维筛选、140 个 Access Version 与 12 条外部观察；版本和观察进入原生 disclosure，320px 与无 JavaScript 仍可完整访问。
-- Innovation Atlas 增加受约束的 50%–200% 缩放、适应全图、复位、拖拽和键盘平移；中间宽度使用完整时期大纲。节点索引新增中英文搜索、按时间／名称稳定排序、结果计数、空状态与无 JavaScript 说明，图的 27 个节点、25 条关系、40 项 Evidence 与主题透镜语义不变。
-- 较早的私有完善 runtime 已推送到远端 `codex/v02`；本轮 EGDS 本地候选截至 runtime commit `fce67d18947020f292d9384f6164baf2ab69699f`，本地候选尚未推送或部署。Pages workflow 仍保持手动停用。
+- 成长资源改为 15 个默认收起、可独立展开的主题子表，并提供展开全表／全部收起；七维筛选会自动打开有匹配结果的组。20 个 Source 进入独立目录，128 个 Work Item、140 个 Access Version 与 12 条外部观察保持完整；构建期强制每个 Work Item 恰属一个主要资源主题。
+- Innovation Atlas 增加显式地图模式：模式内普通滚轮按连续 delta 围绕指针缩放，wheel 与 drag 写入按帧合并，Esc 退出；模式外滚轮继续滚页面。早期史新增 9 节点、5 条有证据关系和 9 项 Evidence，总量为 36／30／49，并补充 1958、1960、1970 时间刻度与所有范围节点的日期校验。
+- 较早的私有完善 runtime 已推送到远端 `codex/v02`；当前本地候选 runtime 通过 `cc81bf8a1c7893df65a307c4bb2240401b87f881`，Atlas 日期约束修复为 `209ae9c`。本轮尚未推送或部署，Pages workflow 仍保持手动停用。
 
 ## [v0.2] - 2026-08-09
 
