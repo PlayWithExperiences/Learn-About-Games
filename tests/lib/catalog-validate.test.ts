@@ -592,6 +592,36 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('rejects reversed ranges for every extended Atlas node kind', () => {
+    const catalog = emptyCatalog();
+    const extendedKinds = [
+      'experimental-apparatus',
+      'experimental-program',
+      'system-prototype',
+      'commercial-hardware',
+    ] as const;
+    catalog.atlasNodes.push(...extendedKinds.map((kind) => ({
+      id: `reversed-${kind}`,
+      kind,
+      name: localized('逆序范围'),
+      summary: localized('结束年份早于开始年份。'),
+      startYear: 1975,
+      endYear: 1958,
+      lane: 1,
+      tags: [],
+      evidenceIds: [],
+    })));
+
+    expect(validateCatalog(catalog).filter(({ code }) => code === 'ATLAS_NODE_DATE_RANGE_INVALID'))
+      .toEqual(extendedKinds.map((kind) => ({
+        code: 'ATLAS_NODE_DATE_RANGE_INVALID',
+        collection: 'atlasNodes',
+        id: `reversed-${kind}`,
+        field: 'startYear/endYear',
+        targetId: '',
+      })));
+  });
+
   it('constrains Atlas relation type, status, and directionality enums', () => {
     const catalog = emptyCatalog();
     catalog.atlasRelations.push(

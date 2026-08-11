@@ -351,7 +351,7 @@ export function buildAtlasLayout(
     height: atlasLayoutDefaults.height,
     minYear: atlasLayoutDefaults.minYear,
     maxYear: atlasLayoutDefaults.maxYear,
-    yearTicks: [1980, 1990, 2000, 2010, 2020].map((year) => ({
+    yearTicks: [1958, 1960, 1970, 1980, 1990, 2000, 2010, 2020].map((year) => ({
       year,
       x: projectAtlasYear(year),
     })),

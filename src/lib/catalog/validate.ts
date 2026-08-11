@@ -1061,9 +1061,8 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
       !Number.isInteger(node.startYear) ||
       (node.kind === 'game' && node.endYear !== undefined) ||
       (node.kind === 'category' &&
-        (!Number.isInteger(node.endYear) || (node.endYear as number) <= node.startYear)) ||
-      (node.kind === 'innovation' &&
-        node.endYear !== undefined &&
+        (node.endYear === undefined || !Number.isInteger(node.endYear) || node.endYear <= node.startYear)) ||
+      (node.endYear !== undefined &&
         (!Number.isInteger(node.endYear) || node.endYear < node.startYear));
     if (hasInvalidDateRange) {
       appendError(errors, 'ATLAS_NODE_DATE_RANGE_INVALID', 'atlasNodes', node.id, 'startYear/endYear', '');

@@ -166,6 +166,21 @@ describe('global Atlas graph contract', () => {
 });
 
 describe('global Atlas presentation geometry', () => {
+  it('labels the complete chronological projection from its 1958 origin', () => {
+    const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
+
+    expect(layout.yearTicks.map(({ year }) => year)).toEqual([
+      1958,
+      1960,
+      1970,
+      1980,
+      1990,
+      2000,
+      2010,
+      2020,
+    ]);
+  });
+
   it('maps start years monotonically and preserves the current category ranges', () => {
     const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
     const ordered = [...layout.nodes].sort(
