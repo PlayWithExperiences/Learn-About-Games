@@ -512,6 +512,35 @@ test('map mode occupies the visual viewport, locks the page and restores scroll 
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(pageYBefore);
 });
 
+test('Atlas bootstrap keeps one controller owner when its compiled module runs again', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Controller ownership is tested once.');
+  await page.goto('./atlas/');
+  const explorer = page.locator('[data-atlas-explorer]');
+
+  await page.evaluate(async () => {
+    const root = document.querySelector<HTMLElement>('[data-atlas-explorer]');
+    const script = Array.from(document.querySelectorAll<HTMLScriptElement>('script[type="module"][src]'))
+      .find((candidate) => candidate.src.includes('AtlasNetwork.astro'));
+    if (!root || !script) throw new Error('Missing Atlas explorer or compiled module');
+
+    let listenerRegistrations = 0;
+    const original = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function addEventListener(...args) {
+      listenerRegistrations += 1;
+      return original.apply(this, args);
+    };
+    try {
+      await import(`${script.src}?cache-bust=${crypto.randomUUID()}`);
+    } finally {
+      EventTarget.prototype.addEventListener = original;
+    }
+    root.dataset.testAtlasListenerRegistrations = String(listenerRegistrations);
+  });
+
+  await expect(explorer).toHaveAttribute('data-atlas-initialized', 'true');
+  await expect(explorer).toHaveAttribute('data-test-atlas-listener-registrations', '0');
+});
+
 test('family directory and fullscreen theme controls stay singular and keyboard-accessible without changing map state', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Fullscreen lens ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
@@ -928,16 +957,24 @@ test('relation geometry preserves endpoints, arrows and an undirected structural
   for (const relation of relationGeometry) {
     const from = nodes[relation.fromId ?? ''];
     const to = nodes[relation.toId ?? ''];
-    const startOnBoundary =
-      Math.abs(relation.start.x - from.left) < 0.001 ||
-      Math.abs(relation.start.x - (from.left + from.width)) < 0.001 ||
-      Math.abs(relation.start.y - from.top) < 0.001 ||
-      Math.abs(relation.start.y - (from.top + from.height)) < 0.001;
-    const endOnBoundary =
-      Math.abs(relation.end.x - to.left) < 0.001 ||
-      Math.abs(relation.end.x - (to.left + to.width)) < 0.001 ||
-      Math.abs(relation.end.y - to.top) < 0.001 ||
-      Math.abs(relation.end.y - (to.top + to.height)) < 0.001;
+    const pointOnBoundary = (
+      point: { x: number; y: number },
+      box: { left: number; top: number; width: number; height: number },
+    ) => {
+      const within = (value: number, start: number, end: number) =>
+        value >= start - 0.001 && value <= end + 0.001;
+      const onVerticalSide = (
+        Math.abs(point.x - box.left) < 0.001 ||
+        Math.abs(point.x - (box.left + box.width)) < 0.001
+      ) && within(point.y, box.top, box.top + box.height);
+      const onHorizontalSide = (
+        Math.abs(point.y - box.top) < 0.001 ||
+        Math.abs(point.y - (box.top + box.height)) < 0.001
+      ) && within(point.x, box.left, box.left + box.width);
+      return onVerticalSide || onHorizontalSide;
+    };
+    const startOnBoundary = pointOnBoundary(relation.start, from);
+    const endOnBoundary = pointOnBoundary(relation.end, to);
     expect(startOnBoundary, `${relation.id} starts under its source node`).toBe(true);
     expect(endOnBoundary, `${relation.id} ends under its target node`).toBe(true);
     expect(relation.start, relation.id ?? '').not.toEqual({ x: from.centerX, y: from.centerY });

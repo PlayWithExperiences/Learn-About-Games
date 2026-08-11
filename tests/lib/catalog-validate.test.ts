@@ -553,7 +553,7 @@ describe('validateCatalog', () => {
         title: localized('证据'),
         sourceTitle: ' ',
         originalLanguage: 'de',
-        url: 'https://example.com/evidence',
+        url: 'not-a-url',
         summary: localized('示例证据。'),
       } as unknown as Catalog['atlasEvidence'][number],
     );
@@ -561,7 +561,46 @@ describe('validateCatalog', () => {
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID',
       'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID',
+      'ATLAS_EVIDENCE_URL_INVALID',
     ]);
+  });
+
+  it('requires every critical field when Atlas evidence opts into extended provenance', () => {
+    const provenanceEvidence = {
+      id: 'extended-provenance',
+      title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en' as const,
+      url: 'https://example.com/evidence',
+      summary: localized('示例证据。'),
+      sourceKind: 'institutional-history' as const,
+      institutionOrAuthor: 'Example Institution',
+      checkedAt: '2026-08-12',
+      locator: 'History section',
+      boundedClaim: localized('只支持这条有限主张。'),
+    } satisfies Catalog['atlasEvidence'][number];
+
+    for (const [field, invalidValue] of [
+      ['sourceKind', undefined],
+      ['institutionOrAuthor', ' '],
+      ['checkedAt', '2026-02-30'],
+      ['locator', ' '],
+      ['boundedClaim', localized(' ')],
+    ] as const) {
+      const catalog = emptyCatalog();
+      catalog.atlasEvidence.push({
+        ...provenanceEvidence,
+        [field]: invalidValue,
+      } as Catalog['atlasEvidence'][number]);
+
+      expect(validateCatalog(catalog), field).toContainEqual({
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: provenanceEvidence.id,
+        field,
+        targetId: '',
+      });
+    }
   });
 
   it('requires disputed Atlas relations to justify their explicit directionality', () => {

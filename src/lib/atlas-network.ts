@@ -36,6 +36,26 @@ export type AtlasPlacedNode = AtlasNodeForLayout & {
   displayLane: number;
 };
 
+type AtlasNodeBox = Pick<AtlasPlacedNode, 'left' | 'top' | 'width' | 'height'>;
+
+export function pointOnAtlasNodeBoundary(
+  point: { x: number; y: number },
+  node: AtlasNodeBox,
+  tolerance = 0.001,
+): boolean {
+  const within = (value: number, start: number, end: number) =>
+    value >= start - tolerance && value <= end + tolerance;
+  const onVerticalSide = (
+    Math.abs(point.x - node.left) < tolerance ||
+    Math.abs(point.x - (node.left + node.width)) < tolerance
+  ) && within(point.y, node.top, node.top + node.height);
+  const onHorizontalSide = (
+    Math.abs(point.y - node.top) < tolerance ||
+    Math.abs(point.y - (node.top + node.height)) < tolerance
+  ) && within(point.x, node.left, node.left + node.width);
+  return onVerticalSide || onHorizontalSide;
+}
+
 export type AtlasPlacedRelation = AtlasRelationForLayout & {
   start: { x: number; y: number };
   end: { x: number; y: number };

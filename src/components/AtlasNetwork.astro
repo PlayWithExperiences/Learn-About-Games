@@ -585,7 +585,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
   const explorer = document.querySelector<HTMLElement>('[data-atlas-explorer]');
   const payload = explorer?.querySelector<HTMLScriptElement>('[data-atlas-theme-data]');
 
-  if (explorer && payload) {
+  if (explorer && payload && explorer.dataset.atlasInitialized !== 'true') {
+    explorer.dataset.atlasInitialized = 'true';
     const themeMatches = JSON.parse(payload.textContent ?? '{}') as Record<string, ThemeMatch>;
     const buttons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-atlas-theme-button]'));
     const status = explorer.querySelector<HTMLElement>('[data-atlas-lens-status]');

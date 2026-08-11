@@ -264,6 +264,8 @@ export type CatalogValidationCode =
   | 'ATLAS_NODE_EVIDENCE_MISSING'
   | 'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID'
   | 'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID'
+  | 'ATLAS_EVIDENCE_URL_INVALID'
+  | 'ATLAS_EVIDENCE_PROVENANCE_INVALID'
   | 'ATLAS_RELATION_ENDPOINT_MISSING'
   | 'ATLAS_RELATION_SELF_REFERENCE'
   | 'ATLAS_RELATION_TYPE_INVALID'
@@ -313,6 +315,12 @@ const atlasEvidenceOriginalLanguages = new Set<AtlasEvidenceOriginalLanguage>([
   'ja',
   'fr',
   'es',
+]);
+const atlasEvidenceSourceKinds = new Set([
+  'institutional-history',
+  'museum-object',
+  'patent',
+  'oral-history',
 ]);
 const directedAtlasRelationTypes = new Set<AtlasRelationType>([
   'direct-influence',
@@ -1109,6 +1117,45 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         evidence.id,
         'originalLanguage',
         evidence.originalLanguage,
+      );
+    }
+    if (!isUrl(evidence.url)) {
+      appendError(
+        errors,
+        'ATLAS_EVIDENCE_URL_INVALID',
+        'atlasEvidence',
+        evidence.id,
+        'url',
+        evidence.url,
+      );
+    }
+
+    const hasExtendedProvenance = [
+      evidence.sourceKind,
+      evidence.institutionOrAuthor,
+      evidence.publicationDate,
+      evidence.checkedAt,
+      evidence.stableId,
+      evidence.locator,
+      evidence.boundedClaim,
+    ].some((value) => value !== undefined);
+    if (!hasExtendedProvenance) continue;
+
+    const invalidProvenanceFields = [
+      !atlasEvidenceSourceKinds.has(evidence.sourceKind ?? '') && 'sourceKind',
+      (typeof evidence.institutionOrAuthor !== 'string' || evidence.institutionOrAuthor.trim().length === 0) && 'institutionOrAuthor',
+      !isIsoDate(evidence.checkedAt) && 'checkedAt',
+      (typeof evidence.locator !== 'string' || evidence.locator.trim().length === 0) && 'locator',
+      !evidence.boundedClaim?.['zh-CN']?.trim() && 'boundedClaim',
+    ].filter((field): field is string => typeof field === 'string');
+    for (const field of invalidProvenanceFields) {
+      appendError(
+        errors,
+        'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        'atlasEvidence',
+        evidence.id,
+        field,
+        '',
       );
     }
   }

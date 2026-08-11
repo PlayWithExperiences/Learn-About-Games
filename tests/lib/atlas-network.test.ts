@@ -17,6 +17,7 @@ import {
   groupAtlasNodesByEra,
   indexAtlasRelations,
   matchAtlasTheme,
+  pointOnAtlasNodeBoundary,
   projectAtlasScrollAnchor,
   projectAtlasPointerAnchor,
   scaleAtlasWheelTarget,
@@ -38,7 +39,7 @@ describe('global Atlas graph contract', () => {
   });
 
   it('adds the evidence-bounded Platform and Adventure lineage batch', () => {
-    expect(atlasNodes.slice(-12).map(({ id }) => id)).toEqual([
+    const newNodeIds = new Set([
       'space-panic',
       'donkey-kong',
       'mario-bros',
@@ -52,7 +53,7 @@ describe('global Atlas graph contract', () => {
       'maniac-mansion',
       'secret-of-monkey-island',
     ]);
-    expect(atlasRelations.slice(-6).map(({ id }) => id)).toEqual([
+    const newRelationIds = new Set([
       'donkey-kong-to-super-mario-bros',
       'mario-bros-to-super-mario-bros',
       'colossal-cave-to-zork',
@@ -60,7 +61,7 @@ describe('global Atlas graph contract', () => {
       'kings-quest-to-maniac-mansion',
       'maniac-mansion-to-secret-of-monkey-island',
     ]);
-    expect(atlasEvidence.slice(-12).map(({ id }) => id)).toEqual([
+    const newEvidenceIds = new Set([
       'museum-of-game-space-panic',
       'strong-donkey-kong',
       'nintendo-original-super-mario-developers',
@@ -74,6 +75,9 @@ describe('global Atlas graph contract', () => {
       'acmi-zork',
       'strong-sierra-collection',
     ]);
+    expect(new Set(atlasNodes.filter(({ id }) => newNodeIds.has(id)).map(({ id }) => id))).toEqual(newNodeIds);
+    expect(new Set(atlasRelations.filter(({ id }) => newRelationIds.has(id)).map(({ id }) => id))).toEqual(newRelationIds);
+    expect(new Set(atlasEvidence.filter(({ id }) => newEvidenceIds.has(id)).map(({ id }) => id))).toEqual(newEvidenceIds);
     expect(atlasNodes.find(({ id }) => id === 'celeste')?.evidenceIds).toContain(
       'nintendo-celeste-release',
     );
@@ -91,8 +95,7 @@ describe('global Atlas graph contract', () => {
     expect(atlasRelations.some(({ fromId, toId }) =>
       fromId === 'super-mario-bros' && toId === 'sonic-the-hedgehog')).toBe(false);
 
-    const newEvidenceIds = new Set(atlasEvidence.slice(-12).map(({ id }) => id));
-    for (const evidence of atlasEvidence.slice(-12)) {
+    for (const evidence of atlasEvidence.filter(({ id }) => newEvidenceIds.has(id))) {
       expect(evidence.sourceKind, evidence.id).toBeTruthy();
       expect(evidence.institutionOrAuthor?.trim().length, evidence.id).toBeGreaterThan(0);
       expect(evidence.publicationDate?.trim().length, evidence.id).toBeGreaterThan(0);
@@ -101,20 +104,22 @@ describe('global Atlas graph contract', () => {
       expect(evidence.locator?.trim().length, evidence.id).toBeGreaterThan(0);
       expect(evidence.boundedClaim?.['zh-CN']?.trim().length, evidence.id).toBeGreaterThan(0);
     }
-    for (const node of atlasNodes.slice(-12)) {
+    for (const node of atlasNodes.filter(({ id }) => newNodeIds.has(id))) {
       expect(node.evidenceIds.some((id) => newEvidenceIds.has(id)), node.id).toBe(true);
     }
-    for (const relation of atlasRelations.slice(-6)) {
+    for (const relation of atlasRelations.filter(({ id }) => newRelationIds.has(id))) {
       expect(relation.evidenceIds.some((id) => newEvidenceIds.has(id)), relation.id).toBe(true);
     }
-    expect(atlasRelations.slice(-6).map(({ id, status }) => [id, status])).toEqual([
-      ['donkey-kong-to-super-mario-bros', 'confirmed'],
-      ['mario-bros-to-super-mario-bros', 'confirmed'],
-      ['colossal-cave-to-zork', 'credible'],
-      ['colossal-cave-to-mystery-house', 'credible'],
-      ['kings-quest-to-maniac-mansion', 'confirmed'],
-      ['maniac-mansion-to-secret-of-monkey-island', 'confirmed'],
-    ]);
+    expect(new Set(atlasRelations
+      .filter(({ id }) => newRelationIds.has(id))
+      .map(({ id, status }) => `${id}:${status}`))).toEqual(new Set([
+        'donkey-kong-to-super-mario-bros:confirmed',
+        'mario-bros-to-super-mario-bros:confirmed',
+        'colossal-cave-to-zork:credible',
+        'colossal-cave-to-mystery-house:credible',
+        'kings-quest-to-maniac-mansion:confirmed',
+        'maniac-mansion-to-secret-of-monkey-island:confirmed',
+      ]));
   });
 
   it('preserves the original source title and language for every evidence item', () => {
@@ -388,23 +393,17 @@ describe('global Atlas presentation geometry', () => {
       const to = nodeById.get(relation.toId);
       expect(from, relation.id).toBeDefined();
       expect(to, relation.id).toBeDefined();
-      const startsOnBoundary = from && (
-        Math.abs(relation.start.x - from.left) < 0.001 ||
-        Math.abs(relation.start.x - (from.left + from.width)) < 0.001 ||
-        Math.abs(relation.start.y - from.top) < 0.001 ||
-        Math.abs(relation.start.y - (from.top + from.height)) < 0.001
-      );
-      const endsOnBoundary = to && (
-        Math.abs(relation.end.x - to.left) < 0.001 ||
-        Math.abs(relation.end.x - (to.left + to.width)) < 0.001 ||
-        Math.abs(relation.end.y - to.top) < 0.001 ||
-        Math.abs(relation.end.y - (to.top + to.height)) < 0.001
-      );
+      const startsOnBoundary = from && pointOnAtlasNodeBoundary(relation.start, from);
+      const endsOnBoundary = to && pointOnAtlasNodeBoundary(relation.end, to);
       expect(startsOnBoundary, `${relation.id} start is hidden under its source node`).toBe(true);
       expect(endsOnBoundary, `${relation.id} arrow is hidden under its target node`).toBe(true);
       expect(relation.start, relation.id).not.toEqual({ x: from?.centerX, y: from?.centerY });
       expect(relation.end, relation.id).not.toEqual({ x: to?.centerX, y: to?.centerY });
     }
+
+    const node = layout.nodes[0];
+    expect(pointOnAtlasNodeBoundary({ x: node.left, y: node.top - 1 }, node)).toBe(false);
+    expect(pointOnAtlasNodeBoundary({ x: node.left + node.width + 1, y: node.top }, node)).toBe(false);
   });
 
   it('keeps relation render and outline focus order stable when source data order changes', () => {

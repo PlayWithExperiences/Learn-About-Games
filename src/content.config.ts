@@ -268,7 +268,36 @@ const atlasEvidence = defineCollection({
       locator: z.string().trim().min(1).optional(),
       boundedClaim: localizedText.optional(),
     })
-    .strict(),
+    .strict()
+    .superRefine((evidence, context) => {
+      const hasExtendedProvenance = [
+        evidence.sourceKind,
+        evidence.institutionOrAuthor,
+        evidence.publicationDate,
+        evidence.checkedAt,
+        evidence.stableId,
+        evidence.locator,
+        evidence.boundedClaim,
+      ].some((value) => value !== undefined);
+      if (!hasExtendedProvenance) return;
+
+      for (const field of ['sourceKind', 'institutionOrAuthor', 'checkedAt', 'locator'] as const) {
+        if (!evidence[field]) {
+          context.addIssue({
+            code: 'custom',
+            path: [field],
+            message: `Extended Atlas evidence provenance requires ${field}`,
+          });
+        }
+      }
+      if (!evidence.boundedClaim?.['zh-CN']?.trim()) {
+        context.addIssue({
+          code: 'custom',
+          path: ['boundedClaim'],
+          message: 'Extended Atlas evidence provenance requires a bounded claim',
+        });
+      }
+    }),
 });
 
 const atlasRelations = defineCollection({
