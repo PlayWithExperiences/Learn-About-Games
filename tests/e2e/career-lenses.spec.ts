@@ -86,17 +86,34 @@ test('legacy careers route redirects to the map career lens anchor', async ({ pa
   await expect(page.locator('[data-egds-map]')).toHaveCount(1);
 });
 
-test('applying and focusing a lens does not insert a long summary above the map', async ({ page }) => {
+test('keeps one complete selected profile beside the controls without moving the map', async ({ page }) => {
   const profile = roleProfiles[0];
   const capabilityId = profile.capabilities[0].capabilityId;
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./careers/');
   const explorer = page.locator('[data-career-explorer]');
+  const controls = explorer.locator('.career-lens-control');
   const map = page.locator('[data-egds-map]');
   const documentTop = () => map.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
   const before = await documentTop();
 
   await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
+  const selectedProfile = explorer.locator(`[data-career-summary="${profile.id}"]:visible`);
+  await expect(explorer.locator('[data-career-summary]:visible')).toHaveCount(1);
+  expect(await explorer.evaluate((root) => {
+    const selected = root.querySelector('[data-career-summary]:not([hidden])');
+    const mapRoot = root.querySelector('[data-egds-map]');
+    return Boolean(selected && mapRoot && (selected.compareDocumentPosition(mapRoot) & Node.DOCUMENT_POSITION_FOLLOWING));
+  })).toBe(true);
+  const controlsBox = await controls.boundingBox();
+  const selectedBox = await selectedProfile.boundingBox();
+  if (!controlsBox || !selectedBox) throw new Error('Missing career controls or selected profile bounds');
+  expect(selectedBox.y - (controlsBox.y + controlsBox.height)).toBeLessThanOrEqual(64);
+  await expect(selectedProfile).toContainText(profile.caveats['zh-CN']);
+  await expect(selectedProfile).toContainText(profile.reviewedAt);
+  await expect(selectedProfile.locator('.career-evidence__sources a')).not.toHaveCount(0);
+  expect(Math.abs((await documentTop()) - before)).toBeLessThanOrEqual(8);
+
   await explorer.locator(`[data-career-summary-item="${capabilityId}"]`)
     .getByRole('button', { name: '在地图中聚焦', exact: true }).click();
 
@@ -409,6 +426,9 @@ test('no-JS keeps the full outline, details, resources, and evidence readable wh
       await expect(summary.getByRole('link', { name: '相关资源', exact: true }).first()).toBeVisible();
       await expect(summary.getByRole('button', { name: '在地图中聚焦', exact: true }).first()).toBeDisabled();
       await expect(summary.getByText('地图聚焦需要 JavaScript。', { exact: true })).toBeVisible();
+      await expect(summary).toContainText(profile.caveats['zh-CN']);
+      await expect(summary).toContainText(profile.reviewedAt);
+      await expect(summary.locator('.career-evidence__sources a')).not.toHaveCount(0);
     }
     await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
     await context.close();

@@ -79,25 +79,21 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     </noscript>
   </fieldset>
 
-  <div class="career-map" id={mapTargetId} aria-label="职业画像覆盖的能力地图">
-    <slot />
-  </div>
-
-  <section class="career-summaries" aria-labelledby="career-summary-title">
-    <div class="career-summaries__heading">
-      <div>
-        <p class="plain-label">画像摘要</p>
-        <h2 id="career-summary-title">从关注范围进入能力与资源</h2>
-      </div>
-      <p>数量只统计 catalog 中直接关联的 Work Item，不代表内容质量或能力重要程度。</p>
+  <section class="career-summaries career-profile-disclosures" aria-labelledby="career-summary-title">
+    <div class="career-profile-disclosures__heading">
+      <h2 id="career-summary-title">画像、边界与依据</h2>
+      <p data-career-disclosure-placeholder>选择一个画像后，这里会显示关注范围、适用边界与公开依据。</p>
     </div>
 
     {profileViews.map(({ profile, projection }) => (
-      <details class="career-summary" data-career-summary={profile.id}>
+      <details
+        class="career-summary"
+        data-career-summary={profile.id}
+        data-career-evidence={profile.id}
+      >
         <summary>{profile.title['zh-CN']}</summary>
         <div class="career-summary__body">
           <header>
-            <h3>{profile.title['zh-CN']}</h3>
             <p>{profile.basis['zh-CN']}</p>
           </header>
           <div class="career-summary__groups">
@@ -128,6 +124,24 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
               </section>
             ))}
           </div>
+          <section class="career-evidence__body" aria-label={`${profile.title['zh-CN']} 的适用边界与公开依据`}>
+            <section class="career-evidence__caveat">
+              <h3>适用边界</h3>
+              <p>{profile.caveats['zh-CN']}</p>
+            </section>
+            <p class="career-evidence__reviewed">最近复核：{profile.reviewedAt}</p>
+            <section class="career-evidence__sources">
+              <h3>来源条目</h3>
+              <ul>
+                {profile.basisLinks.map((basisLink) => (
+                  <li>
+                    <a href={basisLink.url}>{displaySourceTitle(basisLink.title['zh-CN'])}</a>
+                    <span>{basisLink.sourceNote['zh-CN']}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </section>
           <noscript>
             <p class="script-required-note">地图聚焦需要 JavaScript。</p>
           </noscript>
@@ -136,43 +150,9 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     ))}
   </section>
 
-  <section class="career-evidence-index" aria-labelledby="career-evidence-title">
-    <div class="career-evidence-index__heading">
-      <div>
-        <p class="plain-label">公开依据</p>
-        <h2 id="career-evidence-title">查看取材范围与适用边界</h2>
-      </div>
-      <p>公开岗位和行业材料都只能代表具体组织、项目与时间点。</p>
-    </div>
-
-    {profileViews.map(({ profile }) => (
-      <details class="career-evidence" data-career-evidence={profile.id}>
-        <summary>{profile.title['zh-CN']}</summary>
-        <div class="career-evidence__body">
-          <section>
-            <h3>依据说明</h3>
-            <p>{profile.basis['zh-CN']}</p>
-          </section>
-          <section class="career-evidence__caveat">
-            <h3>适用边界</h3>
-            <p>{profile.caveats['zh-CN']}</p>
-          </section>
-          <p class="career-evidence__reviewed">最近复核：{profile.reviewedAt}</p>
-          <section class="career-evidence__sources">
-            <h3>来源条目</h3>
-            <ul>
-              {profile.basisLinks.map((basisLink) => (
-                <li>
-                  <a href={basisLink.url}>{displaySourceTitle(basisLink.title['zh-CN'])}</a>
-                  <span>{basisLink.sourceNote['zh-CN']}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </details>
-    ))}
-  </section>
+  <div class="career-map" id={mapTargetId} aria-label="职业画像覆盖的能力地图">
+    <slot />
+  </div>
 
   <script is:inline type="application/json" data-career-lens-data set:html={serializedLensPayload}></script>
 </section>
@@ -199,8 +179,9 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
     const lensButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-career-lens-button]'));
     const clearButton = explorer.querySelector<HTMLButtonElement>('[data-career-clear]');
     const status = explorer.querySelector<HTMLElement>('[data-career-status]');
+    const disclosurePanel = explorer.querySelector<HTMLElement>('.career-profile-disclosures');
+    const disclosurePlaceholder = explorer.querySelector<HTMLElement>('[data-career-disclosure-placeholder]');
     const summaries = Array.from(explorer.querySelectorAll<HTMLDetailsElement>('[data-career-summary]'));
-    const evidenceItems = Array.from(explorer.querySelectorAll<HTMLDetailsElement>('[data-career-evidence]'));
     const focusButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-focus-capability]'));
 
     const applyProjection = (profileId: string) => {
@@ -219,9 +200,8 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
         summary.hidden = !isActive;
         summary.open = isActive;
       });
-      evidenceItems.forEach((item) => {
-        item.open = item.dataset.careerEvidence === profileId;
-      });
+      disclosurePanel?.scrollTo({ top: 0 });
+      if (disclosurePlaceholder) disclosurePlaceholder.hidden = true;
       if (status) status.textContent = `已应用 ${selectedButton.textContent?.trim() ?? ''}。地图仍保留全部能力。`;
       if (clearButton) clearButton.disabled = false;
     };
@@ -233,7 +213,7 @@ const displaySourceTitle = (title: string) => title.replace(/\s+[—–]\s+/g, '
         summary.hidden = true;
         summary.open = false;
       });
-      evidenceItems.forEach((item) => { item.open = false; });
+      if (disclosurePlaceholder) disclosurePlaceholder.hidden = false;
       if (status) status.textContent = '当前显示完整能力地图，尚未应用职业画像。';
       if (clearButton) clearButton.disabled = true;
     };

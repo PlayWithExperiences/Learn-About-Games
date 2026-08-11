@@ -512,41 +512,45 @@ h2 {
 }
 
 .career-summaries {
-  margin-top: 3.5rem;
+  min-block-size: 17rem;
+  margin-top: 0.75rem;
+  border-block: 1px solid var(--line);
 }
 
-.career-summaries__heading {
-  display: grid;
-  padding-bottom: 1.2rem;
+.career-profile-disclosures__heading {
+  display: flex;
+  min-height: 2.5rem;
+  padding-block: 0.45rem;
   border-bottom: 1px solid var(--line);
-  grid-template-columns: minmax(12rem, 0.6fr) minmax(0, 1.4fr);
-  align-items: end;
-  gap: 0.35rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
 }
 
-.career-summaries__heading > div,
-.career-evidence-index__heading > div {
-  grid-column: 1;
-}
-
-.career-summaries__heading .plain-label,
-.career-evidence-index__heading .plain-label {
-  margin-bottom: 0.35rem;
-}
-
-.career-summaries__heading h2,
-.career-evidence-index__heading h2 {
+.career-profile-disclosures__heading h2 {
   margin: 0;
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  font-size: 1rem;
 }
 
-.career-summaries__heading > p:last-child {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  max-width: 54ch;
+.career-profile-disclosures__heading p {
+  max-width: 64ch;
   margin: 0;
   color: var(--muted);
-  font-size: 0.86rem;
+  font-size: 0.78rem;
+}
+
+.career-explorer[data-enhanced='true'] .career-profile-disclosures {
+  block-size: 17rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--accent) var(--surface-strong);
+}
+
+.career-explorer[data-enhanced='true'] .career-profile-disclosures__heading {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  background: var(--page);
 }
 
 .career-summary[hidden] {
@@ -558,7 +562,7 @@ h2 {
 }
 
 .career-summary > summary {
-  padding-block: 1rem;
+  padding-block: 0.75rem;
   color: var(--ink);
   font-weight: 760;
   cursor: pointer;
@@ -569,16 +573,8 @@ h2 {
 }
 
 .career-summary__body > header {
-  display: grid;
-  padding-block: 1.25rem;
+  padding-block: 0.9rem;
   border-bottom: 1px solid var(--line);
-  grid-template-columns: minmax(12rem, 0.6fr) minmax(0, 1.4fr);
-  gap: 2rem;
-}
-
-.career-summary__body > header h3 {
-  margin: 0;
-  font-size: 1.15rem;
 }
 
 .career-summary__body > header p {
@@ -670,48 +666,11 @@ h2 {
   padding-bottom: 0;
 }
 
-.career-evidence-index {
-  margin-top: 5rem;
-  border-top: 1px solid var(--ink);
-}
-
-.career-evidence-index__heading {
-  display: grid;
-  padding-block: 1.3rem;
-  border-bottom: 1px solid var(--line);
-  grid-template-columns: minmax(12rem, 0.6fr) minmax(0, 1.4fr);
-  align-items: end;
-  gap: 0.35rem 2rem;
-}
-
-.career-evidence-index__heading > p:last-child {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  max-width: 58ch;
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.86rem;
-}
-
-.career-evidence {
-  border-bottom: 1px solid var(--line);
-}
-
-.career-evidence > summary {
-  padding-block: 1rem;
-  cursor: pointer;
-  color: var(--ink);
-  font-weight: 760;
-}
-
-.career-evidence[open] > summary {
-  color: var(--accent-strong);
-}
-
 .career-evidence__body {
   display: grid;
-  padding: 0.5rem 0 1.8rem 1.2rem;
-  border-left: 3px solid var(--accent);
+  margin-top: 0.9rem;
+  padding: 0.9rem 0 1.3rem;
+  border-top: 1px solid var(--ink);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem 2rem;
 }
@@ -728,8 +687,7 @@ h2 {
 }
 
 .career-evidence__caveat {
-  padding-left: 1rem;
-  border-left: 1px solid var(--line);
+  grid-column: 1 / -1;
 }
 
 .career-evidence__reviewed {
@@ -3930,22 +3888,13 @@ h2 {
     justify-items: start;
   }
 
-  .career-summaries__heading,
-  .career-summary__body > header,
-  .career-evidence-index__heading,
   .career-evidence__body {
     grid-template-columns: 1fr;
   }
 
-  .career-summaries__heading > p:last-child,
-  .career-evidence-index__heading > p:last-child {
-    grid-column: 1;
-    grid-row: auto;
-    margin-top: 0.5rem;
-  }
-
-  .career-summary__body > header {
-    gap: 0.5rem;
+  .career-profile-disclosures__heading {
+    display: grid;
+    gap: 0.25rem;
   }
 
   .career-evidence__caveat {
