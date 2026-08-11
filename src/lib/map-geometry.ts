@@ -557,31 +557,16 @@ export function buildEgdsMapLayout({
     focusCursor = focusCursor.parentNodeId ? frameworkNodesById.get(focusCursor.parentNodeId) : undefined;
   }
   const focusedBranchId = focusChain.find(({ kind }) => kind === 'branch')?.id;
-  const focusChainIds = new Set(focusChain.map(({ id }) => id));
-  const visibleFrameworkNodes = expandedFrameworkNodeId
-    ? frameworkNodes.filter((node) => node.kind === 'root' || node.kind === 'branch' || focusChainIds.has(node.id))
-    : frameworkNodes;
-  const focusAncestry = focusChain.filter(({ kind }) => kind !== 'root' && kind !== 'branch');
-  const focusY = focusedBranchId ? egdsAnchors[focusedBranchId]![1] + 3 : egdsFocusMetrics.top;
-  const focusAnchors = new Map(focusAncestry.map((node, index) => [
-    node.id,
-    [
-      egdsFocusMetrics.firstAncestryX + index * (egdsFocusMetrics.ancestryWidth + structuralGap),
-      focusY,
-      egdsFocusMetrics.ancestryWidth,
-      48,
-    ] as EgdsAnchor,
-  ]));
-  const frameworkBoxes = frameworkPreorder(visibleFrameworkNodes)
+  const frameworkBoxes = frameworkPreorder(frameworkNodes)
     .map((node) => egdsBox(
       node.id,
       node.kind,
-      expandedFrameworkNodeId && focusAnchors.has(node.id) ? focusAnchors.get(node.id)! : egdsAnchors[node.id]!,
+      egdsAnchors[node.id]!,
     ));
   const frameworkBoxesById = new Map(frameworkBoxes.map((box) => [box.id, box]));
   const layoutWidth = 1180;
 
-  const structuralPaths = [...visibleFrameworkNodes]
+  const structuralPaths = [...frameworkNodes]
     .filter((node): node is EgdsFrameworkNodeInput & { parentNodeId: string } => (
       Boolean(node.parentNodeId) && frameworkBoxesById.has(node.parentNodeId!)
     ))
@@ -623,15 +608,15 @@ export function buildEgdsMapLayout({
       if (!frameworkNodesById.has(fromId)) throw new Error(`Unknown framework node in external relation: ${fromId}`);
       return { id: fromId, targetPath };
     });
+  const overviewTerritories = deriveBranchTerritories(
+    frameworkNodes,
+    frameworkRelations,
+    frameworkBoxesById,
+    layoutWidth,
+    egdsOverviewHeight,
+  );
 
   if (!expandedFrameworkNodeId) {
-    const branchTerritories = deriveBranchTerritories(
-      frameworkNodes,
-      frameworkRelations,
-      frameworkBoxesById,
-      layoutWidth,
-      egdsOverviewHeight,
-    );
     return {
       mode: 'overview',
       width: layoutWidth,
@@ -639,7 +624,7 @@ export function buildEgdsMapLayout({
       frameworkBoxes,
       entityBoxes: [],
       relationEndpointBoxes: [],
-      branchTerritories,
+      branchTerritories: overviewTerritories,
       structuralPaths,
       processPaths,
       relationPaths: [],
@@ -653,10 +638,10 @@ export function buildEgdsMapLayout({
   ]
     .filter((entity) => entity.frameworkNodeId === expandedFrameworkNodeId)
     .sort((left, right) => compareCodeUnits(egdsKey(left.kind, left.id), egdsKey(right.kind, right.id)));
-  const expandedFrameworkBox = frameworkBoxesById.get(expandedFrameworkNodeId)!;
-  const entityStartX = expandedFrameworkBox.x + expandedFrameworkBox.width + structuralGap;
-  const entityAvailableWidth = layoutWidth - egdsFocusMetrics.rightPadding - entityStartX;
-  const entityColumns = entityAvailableWidth >= 360 ? 2 : 1;
+  const entityStartX = egdsFocusMetrics.rightPadding;
+  const entityStartY = egdsOverviewHeight + 48;
+  const entityAvailableWidth = layoutWidth - egdsFocusMetrics.rightPadding * 2;
+  const entityColumns = 4;
   const entityWidth = (
     entityAvailableWidth - egdsFocusMetrics.columnGap * (entityColumns - 1)
   ) / entityColumns;
@@ -665,7 +650,7 @@ export function buildEgdsMapLayout({
     entity.kind,
     [
       entityStartX + (index % entityColumns) * (entityWidth + egdsFocusMetrics.columnGap),
-      egdsFocusMetrics.top + Math.floor(index / entityColumns) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap),
+      entityStartY + Math.floor(index / entityColumns) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap),
       entityWidth,
       egdsFocusMetrics.entityHeight,
     ],
@@ -689,7 +674,7 @@ export function buildEgdsMapLayout({
     'relation-endpoint',
     [
       entityStartX + (index % entityColumns) * (entityWidth + egdsFocusMetrics.columnGap),
-      egdsFocusMetrics.top + entityRows * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap)
+      entityStartY + entityRows * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap)
         + Math.floor(index / entityColumns) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap),
       entityWidth,
       egdsFocusMetrics.entityHeight,
@@ -698,7 +683,7 @@ export function buildEgdsMapLayout({
   const relationEndpointBoxesByCapabilityId = new Map(relationEndpointBoxes.map((box) => [box.id, box]));
   const relationPathBox = (id: string) => entityBoxesByCapabilityId.get(id) ?? relationEndpointBoxesByCapabilityId.get(id);
   const relationEndpointRows = Math.ceil(relationEndpointBoxes.length / entityColumns);
-  const focusContentHeight = egdsFocusMetrics.top
+  const focusContentHeight = entityStartY
     + (entityRows + relationEndpointRows) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap)
     + egdsFocusMetrics.bottomPadding;
   const layoutHeight = Math.max(egdsOverviewHeight, focusContentHeight);
@@ -726,14 +711,6 @@ export function buildEgdsMapLayout({
       }),
     };
   });
-  const branchTerritories = deriveBranchTerritories(
-    frameworkNodes,
-    frameworkRelations,
-    frameworkBoxesById,
-    layoutWidth,
-    layoutHeight,
-  );
-
   return {
     mode: 'focus',
     focusedBranchId,
@@ -743,7 +720,7 @@ export function buildEgdsMapLayout({
     frameworkBoxes,
     entityBoxes,
     relationEndpointBoxes,
-    branchTerritories,
+    branchTerritories: overviewTerritories,
     structuralPaths,
     processPaths,
     relationPaths,

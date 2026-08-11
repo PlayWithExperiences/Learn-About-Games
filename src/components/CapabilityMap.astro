@@ -119,7 +119,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
 
   <div class="capability-map__toolbar">
     <p data-map-status aria-live="polite">当前显示 EGDS 全貌。选择带数量的节点可展开具体能力与知识议题。</p>
-    <button type="button" data-return-map-overview hidden>返回全图</button>
+    <button type="button" data-return-map-overview hidden>收起条目</button>
   </div>
 
   <div
@@ -882,7 +882,15 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     root.querySelectorAll<HTMLButtonElement>('[data-expand-framework-node]').forEach((button) => {
       button.disabled = false;
       button.addEventListener('click', () => {
-        state.expandedFrameworkNodeId = button.dataset.expandFrameworkNode;
+        const frameworkNodeId = button.dataset.expandFrameworkNode;
+        if (state.expandedFrameworkNodeId === frameworkNodeId) {
+          delete state.expandedFrameworkNodeId;
+          delete state.selectedEntityKey;
+          render();
+          button.focus({ preventScroll: true });
+          return;
+        }
+        state.expandedFrameworkNodeId = frameworkNodeId;
         delete state.selectedEntityKey;
         render();
       });
@@ -905,6 +913,15 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       delete state.selectedEntityKey;
       render();
       focusFrameworkContext(previousFrameworkNodeId);
+    });
+    root.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || (!state.expandedFrameworkNodeId && !state.selectedEntityKey)) return;
+      const previousFrameworkNodeId = state.expandedFrameworkNodeId;
+      delete state.expandedFrameworkNodeId;
+      delete state.selectedEntityKey;
+      render();
+      focusFrameworkContext(previousFrameworkNodeId);
+      event.preventDefault();
     });
 
     root.addEventListener('egds-map:focus-capability', (event) => {

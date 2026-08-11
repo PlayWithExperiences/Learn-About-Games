@@ -285,7 +285,7 @@ describe('EGDS expertise map geometry', () => {
     }
   });
 
-  it('uses deterministic overview and focus modes with expanded entities to the owner right', () => {
+  it('keeps the authored overview fixed while expanded entities use a separate lower band', () => {
     const overview = buildEgdsMapLayout(egdsInput());
     const focus = buildEgdsMapLayout(egdsInput({ expandedFrameworkNodeId: 'gameplay-challenges-lever' }));
     const reversedFocus = buildEgdsMapLayout({
@@ -296,8 +296,6 @@ describe('EGDS expertise map geometry', () => {
       capabilityRelations: [...capabilityRelations].reverse() as unknown as Catalog['capabilityRelations'],
       expandedFrameworkNodeId: 'gameplay-challenges-lever',
     });
-    const owner = focus.frameworkBoxes.find(({ id }) => id === 'gameplay-challenges-lever')!;
-
     expect(overview).toEqual(buildEgdsMapLayout(egdsInput()));
     expect(overview).toEqual(buildEgdsMapLayout({
       frameworkNodes: [...frameworkNodes].reverse() as unknown as Catalog['egdsFrameworkNodes'],
@@ -310,8 +308,12 @@ describe('EGDS expertise map geometry', () => {
     expect(focus.mode).toBe('focus');
     expect(focus.focusedBranchId).toBe('experience-design');
     expect(focus.frameworkBoxes.filter(({ kind }) => kind === 'branch')).toHaveLength(5);
+    expect(focus.frameworkBoxes).toEqual(overview.frameworkBoxes);
+    expect(focus.structuralPaths).toEqual(overview.structuralPaths);
+    expect(focus.processPaths).toEqual(overview.processPaths);
+    expect(focus.branchTerritories).toEqual(overview.branchTerritories);
     expect(focus.entityBoxes).toHaveLength(14);
-    expect(focus.entityBoxes.every(({ x }) => x >= owner.x + owner.width + 20)).toBe(true);
+    expect(focus.entityBoxes.every(({ y }) => y >= overview.height + 32)).toBe(true);
     expect(reversedFocus).toEqual(focus);
   });
 
@@ -471,10 +473,9 @@ describe('EGDS expertise map geometry', () => {
     expect(layout.entityBoxes.map(({ key }) => key)).toEqual(expectedKeys);
     expect(layout.entityBoxes.every((box) => box.frameworkNodeId === expandedFrameworkNodeId)).toBe(true);
     expect(layout.frameworkBoxes.find(({ id }) => id === expandedFrameworkNodeId)).toEqual(expect.objectContaining({
-      x: 360, width: 170, height: 48,
+      x: 360, y: 82, width: 130, height: 44,
     }));
-    const owner = layout.frameworkBoxes.find(({ id }) => id === expandedFrameworkNodeId)!;
-    expect(layout.entityBoxes.every(({ x }) => x >= owner.x + owner.width + 20)).toBe(true);
+    expect(layout.entityBoxes.every(({ y }) => y >= 752)).toBe(true);
   });
 
   it('is invariant to reversed input order and keeps every overview or expansion box disjoint', () => {

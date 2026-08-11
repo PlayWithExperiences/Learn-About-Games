@@ -237,7 +237,7 @@ test('expands exactly one framework container and preserves entity control seman
     await expect(controls.locator('button a, a button')).toHaveCount(0);
   }
 
-  await map.getByRole('button', { name: '返回全图', exact: true }).click();
+  await map.getByRole('button', { name: '收起条目', exact: true }).click();
   await map.getByRole('button', { name: /叙事，展开/ }).click();
   await expect(map.locator('#egds-playtest-evidence-iteration')).not.toHaveAttribute('data-expanded', 'true');
   await expect(map.locator('#egds-narrative-lever')).toHaveAttribute('data-expanded', 'true');
@@ -297,7 +297,7 @@ test('returning to the overview clears expansion, selection, inspector and proje
   const expandButton = map.getByRole('button', { name: /Playtest、证据与迭代/ });
   await map.locator('[data-map-entity-key="capability:playtesting"]')
     .getByRole('button', { name: /Playtest.*关系/ }).click();
-  const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
+  const returnButton = map.getByRole('button', { name: '收起条目', exact: true });
   await returnButton.focus();
   await page.keyboard.press('Enter');
 
@@ -389,7 +389,7 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
   await expandButton.click();
 
   await expect(map).toHaveAttribute('data-layout-mode', 'focus');
-  await expect(map.locator('[data-capability-map-canvas] [data-egds-framework-node]:not([hidden])')).toHaveCount(8);
+  await expect(map.locator('[data-capability-map-canvas] [data-egds-framework-node]:not([hidden])')).toHaveCount(28);
   await expect(map.locator('[data-capability-map-canvas] [data-egds-branch]:not([hidden])')).toHaveCount(5);
   await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(14);
   const expectedBranchFacts = {
@@ -417,19 +417,19 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
     label: `核心 ${facts.core}，重要 ${facts.important}，建议了解 ${facts.suggested}`,
     labelHidden: false,
   }])));
-  const horizontalPlacement = await scene.evaluate((element) => {
-    const owner = element.querySelector<HTMLElement>('[data-egds-framework-node="gameplay-challenges-lever"]')!
-      .getBoundingClientRect();
+  const expansionPlacement = await scene.evaluate((element) => {
     const entities = Array.from(element.querySelectorAll<HTMLElement>('[data-map-entity]:not([hidden])'))
       .map((entity) => entity.getBoundingClientRect());
-    return entities.map(({ left }) => left - owner.right);
+    const overviewBottom = Math.max(...Array.from(element.querySelectorAll<HTMLElement>('[data-egds-framework-node]'))
+      .map((node) => node.getBoundingClientRect().bottom));
+    return entities.map(({ top }) => top - overviewBottom);
   });
-  expect(horizontalPlacement.every((gap) => gap >= 19.5)).toBe(true);
+  expect(expansionPlacement.every((gap) => gap >= 31.5)).toBe(true);
   await assertNoPageOverflow(page);
 
   const focusGeometry = await geometrySnapshot();
-  expect(focusGeometry.framework).not.toEqual(overview.framework);
-  expect(focusGeometry.paths).not.toEqual(overview.paths);
+  expect(focusGeometry.framework).toEqual(overview.framework);
+  expect(focusGeometry.paths).toEqual(overview.paths);
   expect(focusGeometry.svgs).toHaveLength(2);
   for (const svg of focusGeometry.svgs) {
     expect(svg.width).toBe(Number.parseFloat(focusGeometry.scene.width).toString());
@@ -437,7 +437,7 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
     expect(svg.viewBox).toBe(`0 0 ${svg.width} ${svg.height}`);
   }
 
-  await map.getByRole('button', { name: '返回全图', exact: true }).click();
+  await map.getByRole('button', { name: '收起条目', exact: true }).click();
   await expect(map).toHaveAttribute('data-layout-mode', 'overview');
   expect(await geometrySnapshot()).toEqual(overview);
   await assertNoPageOverflow(page);
@@ -450,6 +450,33 @@ test('horizontal focus synchronizes scene geometry and returns to the exact over
   }])));
   await expect(map.locator('[data-capability-map-canvas] [data-map-entity-key="capability:rules-system-modeling"]'))
     .toHaveAttribute('data-role-priority', 'core');
+});
+
+test('desktop expansion toggles in place and Escape restores the overview', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const expandButton = map.locator('[data-expand-framework-node="gameplay-challenges-lever"]');
+  const frameworkGeometry = () => map.locator('[data-egds-framework-node]').evaluateAll((nodes) =>
+    nodes.map((node) => {
+      const element = node as HTMLElement;
+      return [element.dataset.egdsFrameworkNode, element.style.cssText, element.hidden];
+    }),
+  );
+  const before = await frameworkGeometry();
+
+  await expandButton.click();
+  await expect(expandButton).toHaveAttribute('aria-expanded', 'true');
+  expect(await frameworkGeometry()).toEqual(before);
+  await expandButton.click();
+  await expect(expandButton).toHaveAttribute('aria-expanded', 'false');
+  await expect(map.locator('[data-map-expansion]')).toBeHidden();
+
+  await expandButton.click();
+  await page.keyboard.press('Escape');
+  await expect(expandButton).toHaveAttribute('aria-expanded', 'false');
+  await expect(map.locator('[data-map-expansion]')).toBeHidden();
+  await expect(expandButton).toBeFocused();
 });
 
 test('public map events apply capability-only career roles and focus through the root owner', async ({ page }) => {
@@ -553,7 +580,7 @@ test('responsive focus opens only the required disclosure chain and returns to s
     await expect(leaf.locator('[data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
     await expect(map.locator('[data-map-inspector]')).toBeVisible();
 
-    const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
+    const returnButton = map.getByRole('button', { name: '收起条目', exact: true });
     await expect(returnButton).toBeVisible();
     await returnButton.focus();
     await page.keyboard.press('Enter');
@@ -615,7 +642,7 @@ test('responsive Career focus exposes all branch aggregates in light and dark mo
       }
       await assertNoPageOverflow(page);
 
-      await map.getByRole('button', { name: '返回全图', exact: true }).click();
+      await map.getByRole('button', { name: '收起条目', exact: true }).click();
       await expect(map).toHaveAttribute('data-layout-mode', 'overview');
       await expect(map).toHaveAttribute('data-career-profile-id', 'responsive-branch-fixture');
       for (const branchId of Object.keys(expectedBranchFacts)) {
@@ -719,9 +746,9 @@ test('selected capability stays visible and focused when desktop becomes outline
   await expect(map.locator('[data-capability-map-canvas] [data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
   await expect(map.locator('[data-egds-outline] [data-map-entity-key="capability:playtesting"]')).toHaveAttribute('data-selected', 'true');
   await expect(map.locator('[data-map-inspector]')).toBeVisible();
-  await expect(map.getByRole('button', { name: '返回全图', exact: true })).toBeVisible();
+  await expect(map.getByRole('button', { name: '收起条目', exact: true })).toBeVisible();
 
-  await map.getByRole('button', { name: '返回全图', exact: true }).focus();
+  await map.getByRole('button', { name: '收起条目', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(map.locator('[data-outline-framework-node][open]')).toHaveCount(0);
   await expect(map.locator('[data-selected="true"]')).toHaveCount(0);
@@ -899,7 +926,7 @@ test('responsive selected state keeps a keyboard-operable return action', async 
     await expect(leaf).toHaveAttribute('data-map-state-owned', 'true');
     await expect(unrelated).not.toHaveAttribute('data-map-state-owned', /.+/);
     await expect(map.locator('[data-map-inspector]')).toBeVisible();
-    const returnButton = map.getByRole('button', { name: '返回全图', exact: true });
+    const returnButton = map.getByRole('button', { name: '收起条目', exact: true });
     await expect(returnButton).toBeVisible();
     await returnButton.focus();
     await expect(returnButton).toBeFocused();
@@ -955,7 +982,7 @@ test('closing a selected outline disclosure clears hidden map state without affe
       await expect(map.locator('[data-selected="true"]')).toHaveCount(0);
       await expect(map.locator('[data-capability-relation]:not([hidden])')).toHaveCount(0);
       await expect(map.locator('[data-map-inspector]')).toBeHidden();
-      await expect(map.getByRole('button', { name: '返回全图', exact: true })).toBeHidden();
+      await expect(map.getByRole('button', { name: '收起条目', exact: true })).toBeHidden();
       await expect(map.locator('[data-map-state-owned]')).toHaveCount(0);
       await expect(unrelated).toHaveAttribute('open', '');
       await expect(summary).toBeVisible();
@@ -1284,7 +1311,7 @@ test('all 19 projected expansions avoid box overlaps and unrelated path intersec
       });
       expect(intersections).toEqual([]);
     }
-    await map.getByRole('button', { name: '返回全图', exact: true }).click();
+    await map.getByRole('button', { name: '收起条目', exact: true }).click();
   }
 });
 
