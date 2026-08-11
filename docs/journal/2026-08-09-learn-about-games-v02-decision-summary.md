@@ -269,3 +269,5 @@ EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 fr
 资源扩展使用 Agent Reach；Exa 返回 429 后停止，Jina Reader 与 GDC／作者原页用于逐页核验。提交 `c1641d8` 新增 30 个 Work Item 与 30 个 Access Version：20 条 GDC Vault 2025 会话、5 篇 Lost Garden、5 篇 How To Market A Game；Source 总量仍为 38。当前目录为 209 Work Item／223 Access Version，全部继续恰属一个主要 Resource Topic，并保留 canonical ownership、访问方式与检查日期；没有站内评分、排名或审核等级。
 
 本段是脱敏连续性记录，不补造不可访问的逐字对话。仓库与 Pages 状态未改变；本轮提交尚未 push 或部署。对应公开决策见 [Devlog 006](../devlog/2026-08-12-reversible-maps-and-resource-depth.md)，精确过程证据见本文链接的脱敏 transcript。
+
+本轮整合截图保存在 `/tmp/lag-reversible-review/`，已按原始分辨率检查 Atlas Family／全屏、EGDS 总览／展开、Resources 默认／单表展开六种状态。fresh build 为 Astro 0 diagnostics、Vitest 160/160、127 pages；完整 Playwright 为 219 passed／21 project-specific skipped／0 failed；高危依赖审计为 0 vulnerabilities，提交差异敏感模式扫描无命中。仓库只读核验仍为 Private；本地候选保留在 `codex/v02`，未 push、未部署。

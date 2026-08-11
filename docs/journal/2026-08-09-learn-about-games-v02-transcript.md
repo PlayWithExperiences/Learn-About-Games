@@ -428,3 +428,5 @@ EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构
 资源研究最终收敛到 30 项：GDC Vault 2025 官方会话 20 条，Lost Garden 作者文章 5 篇，How To Market A Game 作者文章 5 篇。GDC 访问方式保守记录为 subscription，两组作者文章为 free；全部 checkedAt 为 2026-08-12，canonical normalization 和跨 Work ownership 继续由 validator 保护。提交 `c1641d8` 后 catalog 为 38 Source／209 Work Item／223 Access Version；资源相关浏览器矩阵 42/42。
 
 本节只记录当前运行时可保存的脱敏合同、实现和验证事实，不包含秘密或不可访问的内部推理。仓库继续 Private，Pages workflow 继续禁用；没有 push 或线上部署。最终会在文档同步、整站 fresh gate 和原图复核后重新启动 `127.0.0.1:4321/Learn-About-Games/` 本地预览。
+
+整合原图位于 `/tmp/lag-reversible-review/`。Atlas Family 普通页、Roguelike 全屏、EGDS 总览、Playtest 展开、Resources 默认折叠与单表展开均以原始分辨率检查；普通页没有覆盖控件，展开 EGDS 只在总览下方增加内容，资源默认页仍保持短列表。fresh build 为 Astro 0 diagnostics、Vitest 160/160、127 pages；完整 Playwright 为 219 passed／21 project-specific skipped／0 failed；高危依赖审计为 0 vulnerabilities，差异敏感模式扫描无命中。仓库保持 Private，本地 `codex/v02` 不 push、不部署。
