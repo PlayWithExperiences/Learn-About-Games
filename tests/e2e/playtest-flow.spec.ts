@@ -112,8 +112,8 @@ test('keeps all work items available without JavaScript', async ({ browser }) =>
     await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`)).toHaveCount(1);
   }
   await expect(page.getByLabel('可消费语言')).toBeDisabled();
-  await expect(page.locator('.script-required-note')).toHaveText(
-    /当前可逐个展开 15 个资源主题，全部 148 条 Work Item 均可访问/,
+  await expect(page.locator('.script-required-note')).toContainText(
+    `当前可逐个展开 15 个资源主题，全部 ${resources.length} 条 Work Item 均可访问`,
   );
 
   await context.close();

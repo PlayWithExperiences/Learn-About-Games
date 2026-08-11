@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含地图／Career `66abc47`、Atlas 全屏 `757ff22` 与资源扩充 `ece3285`，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含 EGDS 层级表达、Atlas 全屏证据透镜与 174 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -146,6 +146,20 @@ Atlas 切片增加显式地图模式：模式外 wheel 滚页面；模式内 whe
 
 连续性文档与 Devlog 写入后的最终 fresh gate 为：Astro check 67 files、0 errors / warnings / hints；Vitest 139/139；静态 build 107 pages；完整 Playwright 216 项中 201 passed / 15 intentional skipped / 0 failed。第一次完整 E2E 有 4 个失败，全部是 `visible-skeleton` 仍锁旧的 Atlas 27/25/40 与旧 Changelog 句子；产品断言均已通过。测试更新为当前 36/30/49 与“本轮尚未推送或部署”后，定向 29 passed / 1 skipped，完整套件原样重跑得到上述 GREEN。
 
+## 2026-08-11 EGDS 层级、全屏透镜与多语言资源扩展
+
+发起人复核共享列版本后确认：几何对齐并没有自动产生清晰层级。根、主分支、过程阶段、设计杠杆与能力群仍使用近似的开放框和细线，背景网格也在争夺注意力，因此父级和子级需要靠逐线追踪才能辨认。发起人同时要求 Atlas 在全屏地图模式内继续保留证据透镜，并继续扩展尚未覆盖的学习资料。
+
+本轮文字规格选择“主干、分支领地、子节点”作为唯一层级语法，而不是再加一组随意分类色或封闭卡片。五条领地由现有 parentNodeId 与确定性盒几何派生，体验设计内部另有过程子带；根主干、分支轨、子级轨、过程箭头和背景网格分别使用不同可测权重。领地只用于解释当前 EGDS 作者结构，不增加数据实体、重要性、评分或学习顺序。
+
+Atlas 保留唯一一组 catalog-derived 透镜控件，并把它移入会成为全屏的 network workspace。键盘切换 Roguelike／Metroidvania 后，地图模式、scale、scrollLeft／scrollTop、搜索文本、节点 style 与关系 path 均保持；没有复制 button、ID、payload 或 listener。Light／Dark 的 1440px 全屏原图已经复核。
+
+资源研究第二批用 Agent Reach 的 Exa via mcporter 发现候选、Jina Reader 与官方页面核验。Exa 第 12 次精确查询触发免费额度 429 后停止使用；没有把搜索摘要当成收录证据。第二批新增 16 个 Work Item：10 项中文、6 项日文；发起人随后明确后续顺序应为中文优先、英文其次，已经核验的日文资料继续保留。第三批据此补入 10 项英文课程、文章、网站与论文，不用演讲填充数量。总量成为 38 Source／174 Work Item／188 Access Version。canonical 重复、Source／Work URL 冲突与多主题错误均为 0；没有评分、排名、review status 或 external signal。
+
+本轮规格和计划是 `2026-08-11-egds-hierarchy-atlas-lenses-resource-expansion-*`。实现按三个低重合切片并行：高推理 Sol 负责层级几何与视觉，高推理 Terra 负责 Atlas 控件状态，高推理 Sol 负责多语言研究；主任务保留整合、对抗审查、文档和最终门禁。所有提交都只存在于本地 Private 候选，没有 push、没有启用 Pages。
+
+英文补充合并后的最终 fresh gate 为：Astro check 67 files、0 errors／warnings／hints；Vitest 144／144；静态 build 125 pages；完整 Playwright 208 passed／18 intentional skipped／0 failed。独立数据探针确认 174 Work Item／38 Source／188 Access Version，canonical URL、Source homepage 均无重复，Source／Work URL 无碰撞，Source 引用与单一主要资源主题均完整。
+
 ## 精确下一步
 
 1. 由发起人在本地预览真实使用合并后的地图职业标签、资源子表与 Atlas 地图模式；本地候选不自动推送。
@@ -157,7 +171,7 @@ Atlas 切片增加显式地图模式：模式外 wheel 滚页面；模式内 whe
 ## 当前未决风险
 
 - `mindset-problem-solving-tools` 与 `leadership-management` 仍是作者地图中的有效 landmark，但当前分别没有或很少直接 Capability；界面如实显示内容缺口，不能用不相关能力填满。
-- 当前已收录 128 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
+- 当前已收录 174 个 Work Item，但覆盖密度并不等同于主题质量认证；后续贡献仍需保持中文优先、英文其次，并维持 canonical 去重、Source 归属、Access Version 与能力/议题引用完整。
 - 资源筛选只表达目录事实；不能把外部公开计数或观察转译成本站推荐、评分、排名或审核结论。
 - 当前中文界面与多语言资源元数据不等于完整双语产品；英文界面仍属后续范围。
 - Atlas 当前只有 Roguelike 与 Metroidvania 两个证据透镜；扩展必须先增加可核查关系，不能为视觉密度补无证据边。

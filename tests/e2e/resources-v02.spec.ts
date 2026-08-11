@@ -278,7 +278,9 @@ test('keeps all Sources and Work Items readable without JavaScript while control
   for (const control of await page.locator('[data-resource-table-control]').all()) {
     await expect(control).toBeDisabled();
   }
-  await expect(page.locator('.script-required-note')).toContainText('当前可逐个展开 15 个资源主题，全部 148 条 Work Item 均可访问');
+  await expect(page.locator('.script-required-note')).toContainText(
+    `当前可逐个展开 ${resourceTopics.length} 个资源主题，全部 ${resources.length} 条 Work Item 均可访问`,
+  );
 
   await context.close();
 });

@@ -3,6 +3,8 @@ import capabilities from '../../src/data/capabilities.json' with { type: 'json' 
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
+import resources from '../../src/data/resources.json' with { type: 'json' };
+import sources from '../../src/data/sources.json' with { type: 'json' };
 
 test('focuses desktop navigation on exactly four Chinese user tasks', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop navigation is intentionally replaced by the compact menu on mobile.');
@@ -255,7 +257,9 @@ test('publishes the current v0.2 scope without retaining the M0 roadmap as curre
 
   await expect(page.getByRole('heading', { name: '当前版本｜v0.2', exact: true })).toBeVisible();
   await expect(page.getByText(/28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
-  await expect(page.getByText(/29 个 Source、148 个具体 Work Item 与 15 个无顺序资源主题/)).toBeVisible();
+  await expect(page.getByText(new RegExp(
+    `${sources.length} 个 Source、${resources.length} 个具体 Work Item 与 15 个无顺序资源主题`,
+  ))).toBeVisible();
   await expect(page.getByText(/36 节点、30 条有证据关系与 49 项文献/)).toBeVisible();
   await expect(page.locator('article.prose')).toContainText('从感受、理解、解构走向重构');
   await expect(page.locator('article.prose')).not.toContainText('能力地图包含 8 个领域');

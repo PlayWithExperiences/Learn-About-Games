@@ -382,3 +382,17 @@ Atlas 测试先在旧 wrapper 没有全屏状态处得到 RED。实现增加完�
 资源 agent 的 coverage audit 显示旧 catalog 中 talk 68 条，而 course 3、article 4、podcast 5、website 8；两个 Capability 没有直接资源。Agent Reach doctor 确认 Exa/Jina 可用，Exa 429 后只继续核验已经发现的官方 URL。新增 20 项以 article、book、course、paper、podcast 和 website 为主，canonical 归一化后无重复；错误 DOI、404 出版社页、403 且无法复核的候选和未核验视频搬运均拒绝。提交 `ece3285` 使总量达到 148 Work Item、29 Source、161 Access Version。
 
 整合层同步 current 文案和 148／29／161 浏览器合同，历史已部署的 20／128 证据段保持不改。fresh build 为 Astro 0 diagnostics、141 unit、116 pages；完整 Playwright 为 203 passed、17 intentional skipped、0 failed。本段是脱敏部分导出，不包含秘密、环境值或不可访问的逐字对话；仓库继续 Private、Pages 继续禁用，所有新提交均未 push。
+
+## 35. EGDS 层级语法、Atlas 全屏透镜与多语言资源（部分会话导出）
+
+发起人查看共享列修复后仍明确指出，能力地图的父级和子级关系看不清楚；问题可能表现为对比色不足，但核心是不同层级没有不同的视觉语法。发起人还要求全屏 Atlas 继续允许选择特殊标签，并询问资源搜索与扩展是否已经完成，要求继续补充。
+
+主任务用文字说明选定“主干、分支领地、子节点”方案：不改变 EGDS 28 个方法节点及其作者结构，不回到通用分类，也不画五个封闭卡片。五条分支领地由 parentNodeId 和现有盒几何自动派生，体验分支另有过程子带；根主干、分支轨、子级轨、过程箭头、语义关系与背景网格各自只有一种含义。设计刻度为 variance 4、motion 2、density 9。
+
+任务继续按用户长期确认的方式并行分配：高推理 Sol 处理 EGDS 几何与视觉，高推理 Terra 处理 Atlas 全屏控件，高推理 Sol 使用 Agent Reach 做下一批资源研究，根任务负责规格、交叉审查、整合门禁和本地预览。Atlas 测试先证明唯一透镜 fieldset 位于全屏 wrapper 外；实现将同一控件移入 workspace，切换时保持 scale、pan、search 和节点／关系几何。没有复制控件或状态所有者。
+
+资源第二批不以凑总数为目标。coverage audit 后只纳入 10 项中文和 6 项日文资料，其中 9 门课程、6 篇论文、1 份完整实录；腾讯其他演讲候选因 talk 已过度集中而排除。发起人随后修正优先级：后续应先找中文、其次英文；已经核验的日文资料仍可纳入。第三批因此只补 10 项英文课程、文章、网站与论文，talk 为 0。Exa via mcporter 持续 429 后停止，最终条目均由 Jina Reader 和官方页面继续核验。目录总量成为 38 Source、174 Work Item、188 Access Version，仍没有站内评分、排名、审核等级或规定路径。
+
+本段是脱敏的部分导出，不包含秘密、不可访问的逐字推理或完整工具日志。仓库保持 Private、Pages workflow 保持 `disabled_manually`；本轮没有 push 或线上部署，最终交付仍是 fresh build 后的本地 `/Learn-About-Games/` 预览。
+
+最终整合验证为 Astro 0 diagnostics、Vitest 144／144、125 个静态页面、完整 Playwright 208 passed／18 intentional skipped。数据探针确认 174／38／188，canonical 与 Source homepage 各自唯一，Source／Work URL 无碰撞，全部 Work Item 都引用现有 Source 且恰属一个主要资源主题；npm high-level audit 为 0 vulnerabilities，差异敏感模式扫描无命中。
