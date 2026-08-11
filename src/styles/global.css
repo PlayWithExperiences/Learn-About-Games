@@ -1971,6 +1971,21 @@ h2 {
   max-width: 760px;
 }
 
+.resource-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.86rem;
+  font-weight: 720;
+}
+
+.resource-subnav a[aria-current='page'] {
+  color: var(--ink);
+}
+
 .resource-topic-index {
   display: grid;
   margin-top: 3rem;
@@ -2077,6 +2092,97 @@ h2 {
   padding: 1rem;
   border-left: 4px solid var(--accent);
   background: var(--surface);
+}
+
+.resource-table {
+  margin-top: 2.5rem;
+}
+
+.resource-table__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.resource-table__controls button {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 720;
+}
+
+.resource-table__controls button:not(:disabled) {
+  cursor: pointer;
+}
+
+.resource-table__controls button:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.resource-table__groups {
+  border-top: 1px solid var(--line);
+}
+
+.resource-table__group {
+  border-bottom: 1px solid var(--line);
+}
+
+.resource-table__group > summary {
+  display: grid;
+  padding: 0.85rem 0;
+  list-style: none;
+  grid-template-columns: min-content minmax(13rem, 0.65fr) minmax(16rem, 1fr) auto;
+  align-items: baseline;
+  gap: 0.45rem 1rem;
+  cursor: pointer;
+}
+
+.resource-table__group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.resource-table__group > summary::before {
+  content: '+';
+  color: var(--accent-strong);
+  font-size: 1rem;
+  font-weight: 760;
+}
+
+.resource-table__group[open] > summary::before {
+  content: '−';
+}
+
+.resource-table__group-title {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 760;
+}
+
+.resource-table__group-summary {
+  color: var(--muted);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.resource-table__group-count {
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 720;
+  white-space: nowrap;
+}
+
+.resource-table__group .work-item-directory {
+  margin-top: 0;
+}
+
+.resource-table__group .work-item-result-list {
+  padding-bottom: 0.15rem;
 }
 
 .source-directory,
@@ -2232,7 +2338,7 @@ h2 {
 
 .work-item-result__relevance {
   max-width: 78ch;
-  margin: 0.5rem 0 0;
+  margin: 0.75rem 0 0;
   color: var(--ink-soft);
   font-size: 0.88rem;
   overflow-wrap: anywhere;
@@ -3797,6 +3903,19 @@ h2 {
 
   .resource-topic-index {
     gap: 1rem;
+  }
+
+  .resource-table__group > summary {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .resource-table__group > summary::before {
+    display: none;
+  }
+
+  .resource-table__group-count {
+    white-space: normal;
   }
 
   .work-item-result {

@@ -55,3 +55,19 @@ export function filterResources(
     return true;
   });
 }
+
+export function countResourcesByTopic(
+  resources: readonly Resource[],
+  topicIds: readonly string[],
+): Map<string, number> {
+  const counts = new Map(topicIds.map((topicId) => [topicId, 0]));
+
+  for (const resource of resources) {
+    const topicId = resource.resourceTopicIds[0];
+    if (topicId && counts.has(topicId)) {
+      counts.set(topicId, (counts.get(topicId) ?? 0) + 1);
+    }
+  }
+
+  return counts;
+}

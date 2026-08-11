@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Catalog } from '../../src/lib/catalog/validate';
-import { filterResources } from '../../src/lib/resource-filter';
+import { countResourcesByTopic, filterResources } from '../../src/lib/resource-filter';
 
 type Resource = Catalog['resources'][number];
 
@@ -114,5 +114,12 @@ describe('resource factual filtering', () => {
       'different-facts',
       'second-match',
     ]);
+  });
+
+  it('derives matching counts by primary Resource Topic without changing catalog order', () => {
+    expect(countResourcesByTopic(resources, ['topic-a', 'topic-b'])).toEqual(new Map([
+      ['topic-a', 3],
+      ['topic-b', 1],
+    ]));
   });
 });

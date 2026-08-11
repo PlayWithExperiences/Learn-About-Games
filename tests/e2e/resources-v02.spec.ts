@@ -29,24 +29,60 @@ function median(values: number[]) {
   return sorted[Math.floor(sorted.length / 2)];
 }
 
-test('server renders distinct Source and Work Item result kinds without host merging', async ({ page, request }) => {
+test('server renders each Work Item once in fifteen closed topic subtables and links to Sources', async ({ page, request }) => {
   const response = await request.get('resources/');
   expect(response.status()).toBe(200);
   const html = await response.text();
 
-  expect(html.match(/<article[^>]+data-result-kind="source"/g) ?? []).toHaveLength(sources.length);
   expect(html.match(/<article[^>]+data-result-kind="work-item"/g) ?? []).toHaveLength(resources.length);
 
   await page.goto('./resources/');
-  await expect(page.locator('[data-result-kind="source"]')).toHaveCount(sources.length);
+  await expect(page.locator('[data-resource-group]')).toHaveCount(resourceTopics.length);
+  await expect(page.locator('[data-resource-group][open]')).toHaveCount(0);
+  await expect(page.locator('[data-resource-group] [data-result-kind="work-item"]')).toHaveCount(resources.length);
   await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(resources.length);
-  await expect(page.locator('.source-result')).toHaveCount(sources.length);
-  await expect(page.locator('.work-item-result')).toHaveCount(resources.length);
+  await expect(page.locator('[data-result-kind="source"]')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: '来源' })).toHaveAttribute('href', /resources\/sources\/$/);
 
-  const source = sources.find(({ id }) => id === resources[0].sourceId);
-  expect(source).toBeTruthy();
-  await expect(page.locator(`[data-result-kind="source"][data-result-id="${source?.id}"]`)).toHaveCount(1);
-  await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resources[0].id}"]`)).toHaveCount(1);
+  const ids = await page.locator('[data-result-kind="work-item"]').evaluateAll((items) =>
+    items.map((item) => item.getAttribute('data-result-id')),
+  );
+  expect(new Set(ids).size).toBe(resources.length);
+});
+
+test('opens all matching topic subtables and collapses them again', async ({ page }) => {
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+  await expect(page.locator('[data-resource-group][open]')).toHaveCount(resourceTopics.length);
+  await page.getByRole('button', { name: '全部收起' }).click();
+  await expect(page.locator('[data-resource-group][open]')).toHaveCount(0);
+});
+
+test('keeps collapsed topic summaries compact and switches resource rows to vertical records on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('./resources/');
+
+  const summary = page.locator('[data-resource-group] > summary').first();
+  const desktop = await summary.evaluate((element) => ({
+    display: getComputedStyle(element).display,
+    columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+    height: element.getBoundingClientRect().height,
+  }));
+  expect(desktop.display).toBe('grid');
+  expect(desktop.columns).toBeGreaterThanOrEqual(2);
+  expect(desktop.height).toBeLessThanOrEqual(100);
+
+  await page.getByRole('button', { name: '展开全表' }).click();
+  await page.setViewportSize({ width: 320, height: 900 });
+  const mobile = await summary.evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length);
+  expect(mobile).toBe(1);
+  expect(await page.locator('html').evaluate((element) => element.scrollWidth)).toBe(320);
+});
+
+test('keeps the Source directory as a separate static route', async ({ page }) => {
+  await page.goto('./resources/sources/');
+  await expect(page.locator('[data-result-kind="source"]')).toHaveCount(sources.length);
+  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(0);
 });
 
 test('exposes fifteen unordered topic entries and combines factual filters in a shareable URL', async ({ page }) => {
@@ -75,11 +111,8 @@ test('exposes fifteen unordered topic entries and combines factual filters in a 
   expect(url.searchParams.get('source')).toBe(target.sourceId);
 
   await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(expected.length);
-  await expect(page.locator('[data-result-kind="source"]:visible')).toHaveCount(
-    new Set(expected.map(({ sourceId }) => sourceId)).size,
-  );
   await expect(page.getByRole('status')).toHaveText(
-    `共 ${new Set(expected.map(({ sourceId }) => sourceId)).size} 个 Source，${expected.length} 条 Work Item`,
+    `共 ${expected.length} 条 Work Item`,
   );
 });
 
@@ -146,16 +179,19 @@ test('renders raw external observations in catalog order without quality badges'
 
 test('uses one compact editorial row per Source and Work Item', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.goto('./resources/');
+  await page.goto('./resources/sources/');
 
   const sourceList = page.locator('.source-result-list');
   const sourceColumns = await sourceList.evaluate((element) => getComputedStyle(element).gridTemplateColumns);
   expect(sourceColumns.split(' ')).toHaveLength(1);
 
   const sourceRow = page.locator('.source-result').first();
-  const workRow = page.locator('.work-item-result').first();
   await expect(sourceRow.locator('[data-source-row-main]')).toHaveCount(1);
   await expect(sourceRow.locator('[data-source-row-facts]')).toHaveCount(1);
+
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+  const workRow = page.locator('.work-item-result').first();
   await expect(workRow.locator('[data-work-row-main]')).toHaveCount(1);
   await expect(workRow.locator('[data-work-row-facts]')).toHaveCount(1);
   await expect(workRow.locator('[data-work-row-access]')).toHaveCount(1);
@@ -164,6 +200,7 @@ test('uses one compact editorial row per Source and Work Item', async ({ page })
 test('keeps all collapsed Work Item facts compact at desktop and mobile widths', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
 
   const rows = page.locator('.work-item-result');
   await expect(rows).toHaveCount(resources.length);
@@ -203,6 +240,7 @@ test('keeps access versions and external observations in catalog order inside th
   expect(resource).toBeTruthy();
 
   await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
   const row = page.locator(`[data-result-id="${resource?.id}"]`);
   const disclosure = row.locator('.work-item-result__more');
   await expect(disclosure).toHaveCount(1);
@@ -230,13 +268,17 @@ test('keeps all Sources and Work Items readable without JavaScript while control
   const page = await context.newPage();
 
   await page.goto(`${projectBasePath}resources/`);
-  await expect(page.locator('[data-result-kind="source"]')).toHaveCount(sources.length);
+  await expect(page.locator('[data-resource-group]')).toHaveCount(resourceTopics.length);
   await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(resources.length);
   await expect(page.locator('[data-resource-filter]')).toHaveCount(7);
   for (const control of await page.locator('[data-resource-filter]').all()) {
     await expect(control).toBeDisabled();
   }
-  await expect(page.locator('.script-required-note')).toContainText('当前列出全部 Source 与 Work Item');
+  await expect(page.locator('[data-resource-table-control]')).toHaveCount(2);
+  for (const control of await page.locator('[data-resource-table-control]').all()) {
+    await expect(control).toBeDisabled();
+  }
+  await expect(page.locator('.script-required-note')).toContainText('当前可逐个展开 15 个资源主题，全部 128 条 Work Item 均可访问');
 
   await context.close();
 });

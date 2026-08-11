@@ -1,0 +1,21 @@
+---
+import ResourceResults from '../../../components/ResourceResults.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../../lib/catalog/load';
+import { sitePath } from '../../../lib/site-path';
+
+const catalog = await loadCatalog();
+---
+
+<BaseLayout title="来源" description="浏览 Learn About Games 记录的发布者、创作者与资料站。">
+  <article class="page-shell resource-page source-directory-page">
+    <nav class="resource-subnav" aria-label="成长资源入口">
+      <a href={sitePath('resources/')}>资源表</a>
+      <a href={sitePath('resources/sources/')} aria-current="page">来源</a>
+    </nav>
+    <p class="plain-label">来源</p>
+    <h1>发布者、创作者与资料站</h1>
+    <p class="lede">Source 是发布实体，具体可消费内容仍以 Work Item 的形式保留在资源表中。</p>
+    <ResourceResults resources={catalog.resources} sources={catalog.sources} showSources showWorkItems={false} />
+  </article>
+</BaseLayout>

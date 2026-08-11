@@ -15,9 +15,11 @@ interface Props {
   resources: Catalog['resources'];
   sources: Catalog['sources'];
   showSources?: boolean;
+  showWorkItems?: boolean;
+  showHeading?: boolean;
 }
 
-const { resources, sources, showSources = false } = Astro.props;
+const { resources, sources, showSources = false, showWorkItems = true, showHeading = true } = Astro.props;
 const workCountBySource = new Map(
   sources.map((source) => [
     source.id,
@@ -58,12 +60,15 @@ const workCountBySource = new Map(
   </section>
 )}
 
-<section class="work-item-directory" aria-labelledby="work-item-directory-title">
-  <div class="result-section-heading">
-    <p class="plain-label">Work Item</p>
-    <h2 id="work-item-directory-title">可直接阅读、观看或收听的内容</h2>
-    <p>按目录顺序列出。外部观察只记录公开事实，不用于评分或排序。</p>
-  </div>
+{showWorkItems && (
+<section class="work-item-directory" aria-label={showHeading ? undefined : 'Work Item'}>
+  {showHeading && (
+    <div class="result-section-heading">
+      <p class="plain-label">Work Item</p>
+      <h2 id="work-item-directory-title">可直接阅读、观看或收听的内容</h2>
+      <p>按目录顺序列出。外部观察只记录公开事实，不用于评分或排序。</p>
+    </div>
+  )}
 
   <div class="work-item-result-list">
     {resources.map((resource) => {
@@ -91,7 +96,6 @@ const workCountBySource = new Map(
           <div class="work-item-result__main" data-work-row-main>
             <h3>{resource.title['zh-CN']}</h3>
             {source && <p>Source：<a href={sitePath(`sources/${source.id}/`)}>{source.name['zh-CN']}</a></p>}
-            <p class="work-item-result__relevance">{resource.whyRelevant['zh-CN']}</p>
           </div>
           <dl class="work-item-result__facts" data-work-row-facts>
             <div><dt>媒介</dt><dd>{formatMediaType(resource.mediaType)}</dd></div>
@@ -121,6 +125,7 @@ const workCountBySource = new Map(
               </li>
             ))}
             </ul>
+            <p class="work-item-result__relevance">{resource.whyRelevant['zh-CN']}</p>
             {resource.externalSignals && resource.externalSignals.length > 0 && (
               <section class="external-observations" aria-label={`${resource.title['zh-CN']} 的外部观察`}>
                 <h4>外部公开观察</h4>
@@ -144,3 +149,4 @@ const workCountBySource = new Map(
     })}
   </div>
 </section>
+)}

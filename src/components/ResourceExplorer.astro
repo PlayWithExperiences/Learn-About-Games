@@ -1,5 +1,5 @@
 ---
-import ResourceResults from './ResourceResults.astro';
+import ResourceTable from './ResourceTable.astro';
 import type { Catalog } from '../lib/catalog/validate';
 import { formatAccessModel, formatLanguage, formatMediaType } from '../lib/resource-display';
 import { sitePath } from '../lib/site-path';
@@ -40,6 +40,11 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     <h1 id="resource-list-title">{title}</h1>
     <p class="lede">{lede}</p>
   </header>
+
+  <nav class="resource-subnav" aria-label="成长资源入口">
+    <a href={sitePath('resources/')} aria-current="page">资源表</a>
+    <a href={sitePath('resources/sources/')}>来源</a>
+  </nav>
 
   <nav class="resource-topic-index" aria-labelledby="resource-topic-index-title">
     <div>
@@ -112,23 +117,24 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
       </label>
     </div>
     <noscript>
-      <p class="script-required-note">启用 JavaScript 后可以组合筛选；当前列出全部 Source 与 Work Item。</p>
+      <p class="script-required-note">启用 JavaScript 后可以组合筛选或展开全部；当前可逐个展开 {resourceTopics.length} 个资源主题，全部 {resources.length} 条 Work Item 均可访问。</p>
     </noscript>
   </fieldset>
 
   <p id="resource-result-count" role="status" aria-live="polite">
-    共 {sources.length} 个 Source，{resources.length} 条 Work Item
+    共 {resources.length} 条 Work Item
   </p>
 
   <p class="resource-empty-state" hidden>没有同时符合这些事实条件的 Work Item。可以移除一个筛选条件再看。</p>
 
-  <ResourceResults resources={resources} sources={sources} showSources />
+  <ResourceTable resources={resources} sources={sources} resourceTopics={resourceTopics} />
 </section>
 
 <script>
   const controls = Array.from(document.querySelectorAll<HTMLSelectElement>('[data-resource-filter]'));
   const workItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="work-item"]'));
-  const sourceItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="source"]'));
+  const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-resource-group]'));
+  const tableControls = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-resource-table-control]'));
   const resultCount = document.querySelector<HTMLElement>('#resource-result-count');
   const emptyState = document.querySelector<HTMLElement>('.resource-empty-state');
 
@@ -171,14 +177,18 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
       item.hidden = !visible;
       return visible;
     });
-    const visibleSourceIds = new Set(visibleWorkItems.map((item) => item.dataset.sourceId));
-    const visibleSources = sourceItems.filter((item) => {
-      const visible = visibleSourceIds.has(item.dataset.sourceId);
-      item.hidden = !visible;
-      return visible;
-    });
+    const filtersActive = Object.values(values).some((value) => value !== 'all');
+    for (const group of groups) {
+      const matchingCount = workItems.filter((item) =>
+        item.closest<HTMLElement>('[data-resource-group]') === group && !item.hidden,
+      ).length;
+      const count = group.querySelector<HTMLElement>('[data-resource-group-matching-count]');
+      if (count) count.textContent = `${matchingCount} 条 Work Item`;
+      group.hidden = filtersActive && matchingCount === 0;
+      if (filtersActive) group.open = matchingCount > 0;
+    }
 
-    resultCount.textContent = `共 ${visibleSources.length} 个 Source，${visibleWorkItems.length} 条 Work Item`;
+    resultCount.textContent = `共 ${visibleWorkItems.length} 条 Work Item`;
     if (emptyState) emptyState.hidden = visibleWorkItems.length > 0;
   }
 
@@ -212,6 +222,16 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     control.addEventListener('change', () => {
       writeUrlFromControls();
       updateResults();
+    });
+  }
+
+  for (const control of tableControls) {
+    control.disabled = false;
+    control.addEventListener('click', () => {
+      const open = control.dataset.resourceTableControl === 'expand';
+      for (const group of groups) {
+        if (!group.hidden) group.open = open;
+      }
     });
   }
 

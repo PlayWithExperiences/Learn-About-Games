@@ -1,0 +1,44 @@
+---
+import ResourceResults from './ResourceResults.astro';
+import type { Catalog } from '../lib/catalog/validate';
+
+interface Props {
+  resources: Catalog['resources'];
+  sources: Catalog['sources'];
+  resourceTopics: Catalog['resourceTopics'];
+}
+
+const { resources, sources, resourceTopics } = Astro.props;
+---
+
+<section class="resource-table" aria-labelledby="resource-table-title">
+  <div class="result-section-heading">
+    <p class="plain-label">资源表</p>
+    <h2 id="resource-table-title">按资源主题展开 Work Item</h2>
+    <p>每条 Work Item 只在一个主题表中出现。可按需展开一个主题，或展开全部表格。</p>
+  </div>
+
+  <div class="resource-table__controls" aria-label="资源表展示方式">
+    <button type="button" data-resource-table-control="expand" disabled>展开全表</button>
+    <button type="button" data-resource-table-control="collapse" disabled>全部收起</button>
+  </div>
+
+  <div class="resource-table__groups">
+    {resourceTopics.map((topic) => {
+      const items = resources.filter(({ resourceTopicIds }) => resourceTopicIds[0] === topic.id);
+
+      return (
+        <details class="resource-table__group" data-resource-group={topic.id}>
+          <summary>
+            <span class="resource-table__group-title">{topic.title['zh-CN']}</span>
+            <span class="resource-table__group-summary">{topic.summary['zh-CN']}</span>
+            <span class="resource-table__group-count" data-resource-group-matching-count>
+              {items.length} 条 Work Item
+            </span>
+          </summary>
+          <ResourceResults resources={items} sources={sources} showHeading={false} />
+        </details>
+      );
+    })}
+  </div>
+</section>

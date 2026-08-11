@@ -52,20 +52,19 @@ test('filters work items by consumable access-version language', async ({ page }
     const visibleResources = resources.filter((resource) =>
       language === 'all' || resource.accessVersions.some((version) => version.language === language),
     );
-    const visibleSources = new Set(visibleResources.map(({ sourceId }) => sourceId));
-    await expect(resultCount).toHaveText(`共 ${visibleSources.size} 个 Source，${visibleResources.length} 条 Work Item`);
-    await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(visibleResources.length);
+    await expect(resultCount).toHaveText(`共 ${visibleResources.length} 条 Work Item`);
     for (const resource of resources) {
       const card = page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`);
       if (visibleResources.includes(resource)) {
-        await expect(card).toBeVisible();
+        await expect(card).not.toHaveAttribute('hidden', '');
       } else {
-        await expect(card).toBeHidden();
+        await expect(card).toHaveAttribute('hidden', '');
       }
     }
   }
 
   const firstResource = resources[0];
+  await page.getByRole('button', { name: '展开全表' }).click();
   const firstResourceRow = page.locator(`[data-result-id="${firstResource.id}"]`);
   await expect(firstResourceRow.locator(`a[href="${firstResource.canonicalUrl}"]`).first()).toBeVisible();
 });
@@ -96,7 +95,7 @@ test('reapplies the selected language filter after history back', async ({ page 
   );
   await expect(languageSelect).toHaveValue('zh-Hans');
   await expect(page.getByRole('status')).toHaveText(
-    `共 ${new Set(matchingResources.map(({ sourceId }) => sourceId)).size} 个 Source，${matchingResources.length} 条 Work Item`,
+    `共 ${matchingResources.length} 条 Work Item`,
   );
   await expect(matchingRow).toBeVisible();
   for (const resource of resources.filter((resource) => !matchingResources.includes(resource))) {
@@ -110,11 +109,11 @@ test('keeps all work items available without JavaScript', async ({ browser }) =>
 
   await page.goto('./resources/');
   for (const resource of resources) {
-    await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`)).toBeVisible();
+    await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`)).toHaveCount(1);
   }
   await expect(page.getByLabel('可消费语言')).toBeDisabled();
   await expect(page.locator('.script-required-note')).toHaveText(
-    /当前列出全部 Source 与 Work Item/,
+    /当前可逐个展开 15 个资源主题，全部 128 条 Work Item 均可访问/,
   );
 
   await context.close();
