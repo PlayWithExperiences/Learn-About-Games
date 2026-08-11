@@ -318,5 +318,59 @@
     "title": { "zh-CN": "Bloodstained Launch Trailer", "en": "Bloodstained Launch Trailer" },
     "url": "https://www.youtube.com/watch?v=d79KArgmgcc",
     "summary": { "zh-CN": "PlayStation 发行预告，用于 2019 年 6 月作品发行背景。" }
+  },
+  {
+    "id": "bnl-tennis-for-two", "sourceTitle": "The First Video Game?", "originalLanguage": "en",
+    "title": { "zh-CN": "Brookhaven: Tennis for Two", "en": "Brookhaven: Tennis for Two" },
+    "url": "https://www.bnl.gov/about/history/firstvideo.php", "summary": { "zh-CN": "Brookhaven 机构史记录 William Higinbotham 于 1958 年为访客日制作 Tennis for Two。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Brookhaven National Laboratory", "checkedAt": "2026-08-11", "stableId": "BNL firstvideo", "locator": "Opening history and 1958 visitor-day sections", "boundedClaim": { "zh-CN": "支持 1958 年实验装置与公开演示，不支持它影响 Pong。" }
+  },
+  {
+    "id": "chm-spacewar", "sourceTitle": "Spacewar!", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Spacewar!", "en": "Computer History Museum: Spacewar!" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/189", "summary": { "zh-CN": "CHM 记录 Spacewar! 于 1962 年在 MIT PDP-1 上完成并广泛传播。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM revolution 16/189", "locator": "Spacewar! exhibit text", "boundedClaim": { "zh-CN": "支持作品、年份与后续投币改作背景，不宣称唯一第一。" }
+  },
+  {
+    "id": "smithsonian-brown-box", "sourceTitle": "Brown Box prototype", "originalLanguage": "en",
+    "title": { "zh-CN": "Smithsonian: Brown Box", "en": "Smithsonian: Brown Box" },
+    "url": "https://americanhistory.si.edu/collections/object/nmah_1301997", "summary": { "zh-CN": "Smithsonian 馆藏记录 Ralph Baer 团队的 Brown Box 电视游戏原型。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Smithsonian National Museum of American History", "checkedAt": "2026-08-11", "stableId": "nmah_1301997", "locator": "Object description", "boundedClaim": { "zh-CN": "支持 Brown Box 是 Odyssey 开发链的原型。" }
+  },
+  {
+    "id": "stanford-galaxy-game", "sourceTitle": "The Galaxy Game", "originalLanguage": "en",
+    "title": { "zh-CN": "Stanford: Galaxy Game", "en": "Stanford: Galaxy Game" },
+    "url": "http://infolab.stanford.edu/pub/voy/museum/galaxy.html", "summary": { "zh-CN": "Stanford 资料记载 Galaxy Game 是 1971 年投入使用的投币式 Spacewar! 版本。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Stanford University", "checkedAt": "2026-08-11", "stableId": "Stanford Galaxy Game museum", "locator": "Introduction", "boundedClaim": { "zh-CN": "支持从 Spacewar! 到 Galaxy Game 的商业化改作。" }
+  },
+  {
+    "id": "chm-computer-space", "sourceTitle": "Computer Space", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Computer Space", "en": "Computer History Museum: Computer Space" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/210/874", "summary": { "zh-CN": "CHM 记录 1971 年 Computer Space 将 Spacewar! 改造成商业街机。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM 16/210/874", "locator": "Catalog description", "boundedClaim": { "zh-CN": "支持商业产品及 Spacewar! 来源，不扩大为全部街机史的唯一第一。" }
+  },
+  {
+    "id": "smithsonian-odyssey", "sourceTitle": "Magnavox Odyssey Video Game Unit, 1972", "originalLanguage": "en",
+    "title": { "zh-CN": "Smithsonian: Magnavox Odyssey", "en": "Smithsonian: Magnavox Odyssey" },
+    "url": "https://americanhistory.si.edu/collections/object/nmah_1302004", "summary": { "zh-CN": "Smithsonian 馆藏记录 1972 年 Magnavox Odyssey 及其 Ralph Baer 原型链。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Smithsonian National Museum of American History", "checkedAt": "2026-08-11", "stableId": "nmah_1302004", "locator": "Object description", "boundedClaim": { "zh-CN": "支持 Odyssey 商业硬件及其桌上网球游戏，不将其写成 Pong。" }
+  },
+  {
+    "id": "chm-pong-prototype", "sourceTitle": "Pong prototype", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Pong prototype", "en": "Computer History Museum: Pong prototype" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/183/746", "summary": { "zh-CN": "CHM 馆藏记录 Al Alcorn 于 1972 年制作的 Pong 原型。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM 16/183/746", "locator": "Catalog description", "boundedClaim": { "zh-CN": "支持 Pong 原型、作者与年份，不宣称 Pong 是第一款电子游戏。" }
+  },
+  {
+    "id": "alcorn-oral-history", "sourceTitle": "Oral History of Allan Alcorn", "originalLanguage": "en",
+    "title": { "zh-CN": "Allan Alcorn 口述史", "en": "Oral History of Allan Alcorn" },
+    "url": "https://archive.computerhistory.org/resources/access/text/2012/09/102658257-05-01-acc.pdf", "summary": { "zh-CN": "Alcorn 回忆 Bushnell 看过 Odyssey 的网球演示后交付 Pong 练习项目。" },
+    "sourceKind": "oral-history", "institutionOrAuthor": "Allan Alcorn / Computer History Museum", "checkedAt": "2026-08-11", "stableId": "102658257", "locator": "Odyssey and Pong development discussion", "boundedClaim": { "zh-CN": "支持 Odyssey Table Tennis 对 Pong 项目构成直接设计触发；这是参与者回忆。" }
+  },
+  {
+    "id": "chm-home-pong", "sourceTitle": "Pong", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Pong history", "en": "Computer History Museum: Pong history" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/183", "summary": { "zh-CN": "CHM 综述记录 Pong 从街机原型走向 1975 年家用版本。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM revolution 16/183", "locator": "Pong exhibit narrative", "boundedClaim": { "zh-CN": "支持从 Pong 到 Home Pong 的商业产品演化。" }
   }
 ]

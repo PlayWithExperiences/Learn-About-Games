@@ -226,7 +226,7 @@ const atlasNodes = defineCollection({
   schema: z
     .object({
       id: z.string().trim().min(1),
-      kind: z.enum(['game', 'innovation', 'category']),
+      kind: z.enum(['game', 'innovation', 'category', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware']),
       name: localizedText,
       summary: localizedText,
       startYear: z.number().int(),
@@ -248,6 +248,13 @@ const atlasEvidence = defineCollection({
       originalLanguage: z.enum(['en', 'ja', 'fr', 'es']),
       url: httpUrl,
       summary: localizedText,
+      sourceKind: z.enum(['institutional-history', 'museum-object', 'patent', 'oral-history']).optional(),
+      institutionOrAuthor: z.string().trim().min(1).optional(),
+      publicationDate: z.string().trim().min(1).optional(),
+      checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+      stableId: z.string().trim().min(1).optional(),
+      locator: z.string().trim().min(1).optional(),
+      boundedClaim: localizedText.optional(),
     })
     .strict(),
 });
@@ -266,6 +273,9 @@ const atlasRelations = defineCollection({
         'revival',
         'parallel-origin',
         'structural-similarity',
+        'prototype-to-product',
+        'commercialized-as',
+        'design-response',
         'disputed',
       ]),
       status: z.enum(['confirmed', 'credible', 'inferred', 'disputed']),

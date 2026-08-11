@@ -2694,6 +2694,27 @@ h2 {
   clip-path: polygon(0.35rem 0, 100% 0, calc(100% - 0.35rem) 100%, 0 100%);
 }
 
+.atlas-legend__shape--apparatus,
+.atlas-network-node--experimental-apparatus a {
+  border-style: double;
+}
+
+.atlas-legend__shape--program,
+.atlas-network-node--experimental-program a {
+  border-radius: 999px 5px 5px 999px;
+}
+
+.atlas-legend__shape--prototype,
+.atlas-network-node--system-prototype a {
+  border-style: dashed;
+}
+
+.atlas-legend__shape--hardware,
+.atlas-network-node--commercial-hardware a {
+  border-width: 3px;
+  background: var(--surface-strong);
+}
+
 .atlas-legend__line {
   position: relative;
   height: 0;
@@ -2736,11 +2757,23 @@ h2 {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  cursor: grab;
+  cursor: auto;
   overscroll-behavior-x: contain;
   overscroll-behavior-y: auto;
   scrollbar-color: var(--accent) var(--surface-strong);
   touch-action: pan-x pan-y;
+}
+
+.atlas-network__viewport[data-map-mode='true'] {
+  border-color: var(--accent-strong);
+  cursor: grab;
+  overscroll-behavior: contain;
+}
+
+.atlas-view-controls [data-atlas-map-mode][aria-pressed='true'] {
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  color: var(--page);
 }
 
 .atlas-network__viewport[data-dragging='true'] {

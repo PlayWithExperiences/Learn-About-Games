@@ -38,6 +38,10 @@ const kindLabels: Record<AtlasNode['kind'], string> = {
   game: 'Game',
   innovation: 'Innovation',
   category: 'Category Formation',
+  'experimental-apparatus': 'Experimental Apparatus',
+  'experimental-program': 'Experimental Program',
+  'system-prototype': 'System Prototype',
+  'commercial-hardware': 'Commercial Hardware',
 };
 
 const relationLabels: Record<AtlasRelation['type'], string> = {
@@ -47,6 +51,9 @@ const relationLabels: Record<AtlasRelation['type'], string> = {
   revival: '复兴或重新流行',
   'parallel-origin': '平行或独立产生',
   'structural-similarity': '结构相似，影响未知',
+  'prototype-to-product': '原型到产品',
+  'commercialized-as': '商业化改作',
+  'design-response': '设计回应',
   disputed: '存在争议',
 };
 
@@ -119,6 +126,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game</strong><span>单一发行年份</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation</strong><span>可讨论的设计结构</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--category" aria-hidden="true"></span><strong>Category Formation</strong><span>真实时间范围</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--apparatus" aria-hidden="true"></span><strong>Experimental Apparatus</strong><span>实验装置</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--program" aria-hidden="true"></span><strong>Experimental Program</strong><span>实验程序</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--prototype" aria-hidden="true"></span><strong>System Prototype</strong><span>系统原型</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--hardware" aria-hidden="true"></span><strong>Commercial Hardware</strong><span>商业硬件</span></li>
       <li><span class="atlas-legend__line atlas-legend__line--directed" aria-hidden="true"></span><strong>有向关系</strong><span>箭头只用于有证据的方向</span></li>
       <li><span class="atlas-legend__line atlas-legend__line--undirected" aria-hidden="true"></span><strong>无向关系</strong><span>结构对照不冒充影响</span></li>
     </ul>
@@ -126,6 +137,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
 
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
     <div class="atlas-view-controls" data-atlas-view-controls>
+      <button type="button" data-atlas-map-mode aria-pressed="false" disabled>进入地图模式</button>
       <button type="button" data-atlas-fit disabled>适应全图</button>
       <button type="button" data-atlas-zoom-out aria-label="缩小" disabled>−</button>
       <output data-atlas-scale-status aria-live="polite">100%</output>
@@ -135,7 +147,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     <noscript>
       <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
     </noscript>
-    <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1980–2020</p>
+    <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1958–2020</p>
     <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
       <div
         class="atlas-network__stage"
@@ -485,7 +497,9 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     clampAtlasScale,
     filterAtlasNodeIndex,
     fitAtlasScale,
+    projectAtlasPointerAnchor,
     projectAtlasScrollAnchor,
+    scaleAtlasWheelTarget,
     sortAtlasNodeIndex,
     stepAtlasScale,
     type AtlasIndexNode,
@@ -596,16 +610,22 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const scene = explorer.querySelector<HTMLElement>('[data-atlas-scene]');
     const viewControls = explorer.querySelector<HTMLElement>('[data-atlas-view-controls]');
     const fitButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-fit]');
+    const mapModeButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-map-mode]');
     const zoomOutButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-out]');
     const zoomInButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-in]');
     const resetButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-reset]');
     const scaleStatus = viewControls?.querySelector<HTMLOutputElement>('[data-atlas-scale-status]');
 
-    if (canvas && stage && scene && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
+    if (canvas && stage && scene && mapModeButton && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
       const sceneWidth = Number(scene.dataset.sceneWidth);
       const sceneHeight = Number(scene.dataset.sceneHeight);
       let scale = 1;
+      let targetScale = 1;
       let fitMode = false;
+      let mapMode = false;
+      let frame = 0;
+      let wheelAnchor: { x: number; y: number } | null = null;
+      let pendingPan: { left: number; top: number } | null = null;
 
       const updateViewControls = () => {
         scaleStatus.textContent = `${Math.round(scale * 100)}%`;
@@ -626,6 +646,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
               viewportHeight: canvas.clientHeight,
             });
         scale = boundedScale;
+        targetScale = boundedScale;
         scene.style.transform = `scale(${scale})`;
         stage.style.width = `${sceneWidth * scale}px`;
         stage.style.height = `${sceneHeight * scale}px`;
@@ -633,6 +654,46 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         canvas.scrollLeft = nextScroll.scrollLeft;
         canvas.scrollTop = nextScroll.scrollTop;
         updateViewControls();
+      };
+
+      const commitFrame = () => {
+        frame = 0;
+        if (wheelAnchor && targetScale !== scale) {
+          const nextScroll = projectAtlasPointerAnchor({
+            oldScale: scale,
+            newScale: targetScale,
+            scrollLeft: canvas.scrollLeft,
+            scrollTop: canvas.scrollTop,
+            pointerX: wheelAnchor.x,
+            pointerY: wheelAnchor.y,
+          });
+          scale = targetScale;
+          scene.style.transform = `scale(${scale})`;
+          stage.style.width = `${sceneWidth * scale}px`;
+          stage.style.height = `${sceneHeight * scale}px`;
+          stage.dataset.scale = String(scale);
+          canvas.scrollLeft = nextScroll.scrollLeft;
+          canvas.scrollTop = nextScroll.scrollTop;
+          updateViewControls();
+        }
+        if (pendingPan) {
+          canvas.scrollLeft = pendingPan.left;
+          canvas.scrollTop = pendingPan.top;
+        }
+        wheelAnchor = null;
+        pendingPan = null;
+      };
+
+      const scheduleFrame = () => {
+        if (!frame) frame = requestAnimationFrame(commitFrame);
+      };
+
+      const setMapMode = (active: boolean) => {
+        mapMode = active;
+        mapModeButton.setAttribute('aria-pressed', String(active));
+        mapModeButton.textContent = active ? '退出地图模式' : '进入地图模式';
+        canvas.dataset.mapMode = String(active);
+        if (!active) delete canvas.dataset.dragging;
       };
 
       const fitView = () => {
@@ -651,12 +712,21 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       };
 
       fitButton.disabled = false;
+      mapModeButton.disabled = false;
       resetButton.disabled = false;
       updateViewControls();
       fitButton.addEventListener('click', fitView);
       zoomOutButton.addEventListener('click', () => applyManualScale(stepAtlasScale(scale, -1)));
       zoomInButton.addEventListener('click', () => applyManualScale(stepAtlasScale(scale, 1)));
       resetButton.addEventListener('click', () => applyManualScale(1, true));
+      mapModeButton.addEventListener('click', () => setMapMode(!mapMode));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && mapMode) setMapMode(false);
+      });
+      const outlineBreakpoint = matchMedia('(max-width: 1150px)');
+      outlineBreakpoint.addEventListener('change', ({ matches }) => {
+        if (matches) setMapMode(false);
+      });
 
       const resizeObserver = new ResizeObserver(() => {
         if (fitMode) fitView();
@@ -678,10 +748,15 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       });
 
       canvas.addEventListener('wheel', (event) => {
-        if (!event.ctrlKey && !event.metaKey) return;
+        if (!mapMode || event.deltaY === 0) return;
+        const nextScale = scaleAtlasWheelTarget({ currentScale: targetScale, deltaY: event.deltaY });
+        if (nextScale === targetScale) return;
         event.preventDefault();
-        if (event.deltaY === 0) return;
-        applyManualScale(stepAtlasScale(scale, event.deltaY < 0 ? 1 : -1));
+        fitMode = false;
+        targetScale = nextScale;
+        const bounds = canvas.getBoundingClientRect();
+        wheelAnchor = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+        scheduleFrame();
       }, { passive: false });
 
       let drag: {
@@ -694,6 +769,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       const interactiveSelector = 'a, button, input, select, summary, details';
 
       canvas.addEventListener('pointerdown', (event) => {
+        if (!mapMode) return;
         if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
         if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
         drag = {
@@ -710,8 +786,11 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       canvas.addEventListener('pointermove', (event) => {
         if (!drag || event.pointerId !== drag.pointerId) return;
         event.preventDefault();
-        canvas.scrollLeft = drag.scrollLeft + drag.clientX - event.clientX;
-        canvas.scrollTop = drag.scrollTop + drag.clientY - event.clientY;
+        pendingPan = {
+          left: drag.scrollLeft + drag.clientX - event.clientX,
+          top: drag.scrollTop + drag.clientY - event.clientY,
+        };
+        scheduleFrame();
       });
 
       const finishDrag = (event: PointerEvent) => {

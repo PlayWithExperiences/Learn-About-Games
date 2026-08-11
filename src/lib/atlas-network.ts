@@ -7,7 +7,7 @@ type AtlasThemeLens = {
   tags: readonly string[];
 };
 
-type AtlasNodeKind = 'game' | 'innovation' | 'category';
+type AtlasNodeKind = 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
 
 type AtlasNodeForLayout = {
   id: string;
@@ -85,6 +85,27 @@ export function clampAtlasScale(value: number): number {
 
 export function stepAtlasScale(current: number, direction: -1 | 1): number {
   return clampAtlasScale(current + atlasScaleBounds.step * direction);
+}
+
+export function scaleAtlasWheelTarget(input: { currentScale: number; deltaY: number }): number {
+  if (input.deltaY === 0) return clampAtlasScale(input.currentScale);
+  return clampAtlasScale(input.currentScale * Math.exp(-input.deltaY * 0.001));
+}
+
+export function projectAtlasPointerAnchor(input: {
+  oldScale: number;
+  newScale: number;
+  scrollLeft: number;
+  scrollTop: number;
+  pointerX: number;
+  pointerY: number;
+}) {
+  const logicalX = (input.scrollLeft + input.pointerX) / input.oldScale;
+  const logicalY = (input.scrollTop + input.pointerY) / input.oldScale;
+  return {
+    scrollLeft: Math.max(0, logicalX * input.newScale - input.pointerX),
+    scrollTop: Math.max(0, logicalY * input.newScale - input.pointerY),
+  };
 }
 
 export function fitAtlasScale(input: {
@@ -205,7 +226,7 @@ export function sortAtlasNodeIndex(
 const atlasLayoutDefaults = {
   width: 2200,
   height: 900,
-  minYear: 1980,
+  minYear: 1958,
   maxYear: 2020,
   horizontalInset: 100,
   firstLaneY: 100,
@@ -277,7 +298,7 @@ export function buildAtlasLayout(
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'
         ? 180
-        : 140;
+        : 96;
     const height = node.kind === 'category' ? 46 : node.kind === 'innovation' ? 84 : 86;
     const centerY = atlasLayoutDefaults.firstLaneY + displayLane * atlasLayoutDefaults.laneGap;
     const left = hasRange ? yearX : yearX - width / 2;

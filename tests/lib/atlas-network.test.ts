@@ -17,6 +17,8 @@ import {
   indexAtlasRelations,
   matchAtlasTheme,
   projectAtlasScrollAnchor,
+  projectAtlasPointerAnchor,
+  scaleAtlasWheelTarget,
   sortAtlasNodeIndex,
   stepAtlasScale,
 } from '../../src/lib/atlas-network';
@@ -27,17 +29,17 @@ const typedAtlasRelations = atlasRelations as Catalog['atlasRelations'];
 describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(25);
-    expect(atlasNodes.length).toBeLessThanOrEqual(40);
+    expect(atlasNodes.length).toBeLessThanOrEqual(45);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
-    expect(atlasRelations.length).toBeLessThanOrEqual(25);
-    expect(atlasNodes).toHaveLength(27);
-    expect(atlasRelations).toHaveLength(25);
+    expect(atlasRelations.length).toBeLessThanOrEqual(35);
+    expect(atlasNodes).toHaveLength(36);
+    expect(atlasRelations).toHaveLength(30);
   });
 
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
 
-    expect(atlasEvidence).toHaveLength(40);
+    expect(atlasEvidence).toHaveLength(49);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -92,6 +94,9 @@ describe('global Atlas graph contract', () => {
       'revival',
       'parallel-origin',
       'structural-similarity',
+      'prototype-to-product',
+      'commercialized-as',
+      'design-response',
       'disputed',
     ]);
     const evidenceStatuses = new Set(['confirmed', 'credible', 'inferred', 'disputed']);
@@ -155,8 +160,8 @@ describe('global Atlas graph contract', () => {
     );
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
-    expect(nodes).toHaveLength(27);
-    expect(relations).toHaveLength(25);
+    expect(nodes).toHaveLength(36);
+    expect(relations).toHaveLength(30);
   });
 });
 
@@ -277,15 +282,18 @@ describe('global Atlas presentation geometry', () => {
     );
 
     expect(eras.map(({ label }) => label)).toEqual([
+      '1950-1959',
+      '1960-1969',
+      '1970-1979',
       '1980-1989',
       '1990-1999',
       '2000-2009',
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(27);
-    expect(new Set(outlinedNodeIds).size).toBe(27);
-    expect(outlinedRelationIds.size).toBe(25);
+    expect(outlinedNodeIds).toHaveLength(36);
+    expect(new Set(outlinedNodeIds).size).toBe(36);
+    expect(outlinedRelationIds.size).toBe(30);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -298,6 +306,28 @@ describe('global Atlas presentation geometry', () => {
 });
 
 describe('Atlas viewport helpers', () => {
+  it('maps wheel delta continuously within the Atlas bounds', () => {
+    expect(scaleAtlasWheelTarget({ currentScale: 1, deltaY: -120 })).toBeCloseTo(1.1275, 3);
+    expect(scaleAtlasWheelTarget({ currentScale: 1, deltaY: 120 })).toBeCloseTo(0.8869, 3);
+    expect(scaleAtlasWheelTarget({ currentScale: 1, deltaY: 0 })).toBe(1);
+    expect(scaleAtlasWheelTarget({ currentScale: 2, deltaY: -120 })).toBe(2);
+    expect(scaleAtlasWheelTarget({ currentScale: 0.5, deltaY: 120 })).toBe(0.5);
+  });
+
+  it('preserves the logical point beneath the wheel pointer', () => {
+    const before = { x: 720, y: 360 };
+    const next = projectAtlasPointerAnchor({
+      oldScale: 1,
+      newScale: 1.2,
+      scrollLeft: 300,
+      scrollTop: 120,
+      pointerX: 420,
+      pointerY: 240,
+    });
+    expect((next.scrollLeft + 420) / 1.2).toBeCloseTo(before.x);
+    expect((next.scrollTop + 240) / 1.2).toBeCloseTo(before.y);
+  });
+
   it('bounds scale changes to 50% through 200% in 25% steps', () => {
     expect(atlasScaleBounds).toEqual({ min: 0.5, max: 2, step: 0.25 });
     expect(clampAtlasScale(0.1)).toBe(0.5);
@@ -346,7 +376,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'roguelike-run-structure');
 
-    expect(indexed).toHaveLength(27);
+    expect(indexed).toHaveLength(36);
     expect(runStructure).toMatchObject({
       id: 'roguelike-run-structure',
       startYear: 1980,

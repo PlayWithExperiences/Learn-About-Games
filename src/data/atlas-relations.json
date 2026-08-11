@@ -273,5 +273,10 @@
     "evidenceIds": ["bloodstained-kickstarter", "igarashi-bloodstained-interview"],
     "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "revival-context"],
     "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作；这不是法定系列续作。" }
-  }
+  },
+  { "id": "spacewar-to-galaxy-game", "fromId": "spacewar", "toId": "galaxy-game", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["stanford-galaxy-game"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "Stanford 资料把 Galaxy Game 描述为投币式 Spacewar! 版本。" } },
+  { "id": "spacewar-to-computer-space", "fromId": "spacewar", "toId": "computer-space", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-computer-space"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "CHM 将 Computer Space 的玩法来源追溯到 Spacewar!。" } },
+  { "id": "brown-box-to-odyssey", "fromId": "brown-box", "toId": "magnavox-odyssey", "type": "prototype-to-product", "status": "confirmed", "directionality": "directed", "evidenceIds": ["smithsonian-brown-box", "smithsonian-odyssey"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "Smithsonian 馆藏把 Brown Box 放在 Magnavox Odyssey 的开发链中。" } },
+  { "id": "odyssey-table-tennis-to-pong", "fromId": "odyssey-table-tennis", "toId": "pong", "type": "design-response", "status": "credible", "directionality": "directed", "evidenceIds": ["alcorn-oral-history"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "Alcorn 的参与者口述把 Odyssey 网球演示置于 Pong 练习项目的直接触发背景中。" } },
+  { "id": "pong-to-home-pong", "fromId": "pong", "toId": "home-pong", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-home-pong"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "CHM 综述记录 Pong 从投币产品走向 1975 年家用专用机。" } }
 ]

@@ -133,5 +133,10 @@
     "id": "narrative-continuity",
     "name": { "zh-CN": "跨单局叙事连续", "en": "Cross-run narrative continuity" },
     "summary": { "zh-CN": "让角色与故事记住重复失败并保持叙事推进。" }
+  },
+  {
+    "id": "early-electronic-games",
+    "name": { "zh-CN": "早期电子游戏史", "en": "Early electronic games" },
+    "summary": { "zh-CN": "1958 至 1975 年实验装置、程序、原型与商业产品之间的有证据联系。" }
   }
 ]

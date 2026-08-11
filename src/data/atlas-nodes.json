@@ -270,5 +270,14 @@
     "lane": 3,
     "tags": ["roguelike-lens", "run-based-structure", "real-time-action", "narrative-continuity"],
     "evidenceIds": ["gamedeveloper-kasavin-interview", "supergiant-hades-faq"]
-  }
+  },
+  { "id": "tennis-for-two", "kind": "experimental-apparatus", "name": { "zh-CN": "Tennis for Two", "en": "Tennis for Two" }, "summary": { "zh-CN": "1958 年 Brookhaven 为访客日制作的示波器互动装置；这里不建立它到 Pong 的因果边。" }, "startYear": 1958, "lane": 0, "tags": ["early-electronic-games"], "evidenceIds": ["bnl-tennis-for-two"] },
+  { "id": "spacewar", "kind": "experimental-program", "name": { "zh-CN": "Spacewar!", "en": "Spacewar!" }, "summary": { "zh-CN": "1962 年 MIT PDP-1 程序，后来被分别改作投币系统。" }, "startYear": 1962, "lane": 1, "tags": ["early-electronic-games"], "evidenceIds": ["chm-spacewar"] },
+  { "id": "brown-box", "kind": "system-prototype", "name": { "zh-CN": "Brown Box / TV Game Unit #7", "en": "Brown Box / TV Game Unit #7" }, "summary": { "zh-CN": "Ralph Baer 团队的电视游戏系统原型，是 Magnavox Odyssey 产品链的一部分。" }, "startYear": 1968, "lane": 2, "tags": ["early-electronic-games"], "evidenceIds": ["smithsonian-brown-box"] },
+  { "id": "galaxy-game", "kind": "commercial-hardware", "name": { "zh-CN": "Galaxy Game", "en": "Galaxy Game" }, "summary": { "zh-CN": "1971 年在 Stanford 运行的投币式 Spacewar! 改作。" }, "startYear": 1971, "lane": 2, "tags": ["early-electronic-games"], "evidenceIds": ["stanford-galaxy-game"] },
+  { "id": "computer-space", "kind": "commercial-hardware", "name": { "zh-CN": "Computer Space", "en": "Computer Space" }, "summary": { "zh-CN": "1971 年面向商业街机环境的 Spacewar! 改作。" }, "startYear": 1971, "lane": 3, "tags": ["early-electronic-games"], "evidenceIds": ["chm-computer-space"] },
+  { "id": "magnavox-odyssey", "kind": "commercial-hardware", "name": { "zh-CN": "Magnavox Odyssey", "en": "Magnavox Odyssey" }, "summary": { "zh-CN": "1972 年商业化的家庭电视游戏硬件，源自 Baer 团队原型链。" }, "startYear": 1972, "lane": 4, "tags": ["early-electronic-games"], "evidenceIds": ["smithsonian-odyssey"] },
+  { "id": "odyssey-table-tennis", "kind": "game", "name": { "zh-CN": "Odyssey Table Tennis", "en": "Odyssey Table Tennis" }, "summary": { "zh-CN": "Magnavox Odyssey 的桌上网球游戏；Alcorn 口述史把其演示置于 Pong 项目之前。" }, "startYear": 1972, "lane": 5, "tags": ["early-electronic-games"], "evidenceIds": ["smithsonian-odyssey", "alcorn-oral-history"] },
+  { "id": "pong", "kind": "game", "name": { "zh-CN": "Pong", "en": "Pong" }, "summary": { "zh-CN": "1972 年由 Al Alcorn 制作的投币式网球游戏原型；本图不称它为第一款电子游戏。" }, "startYear": 1972, "lane": 6, "tags": ["early-electronic-games"], "evidenceIds": ["chm-pong-prototype", "alcorn-oral-history"] },
+  { "id": "home-pong", "kind": "commercial-hardware", "name": { "zh-CN": "Home Pong", "en": "Home Pong" }, "summary": { "zh-CN": "1975 年面向家庭市场的 Pong 专用硬件版本。" }, "startYear": 1975, "lane": 6, "tags": ["early-electronic-games"], "evidenceIds": ["chm-home-pong"] }
 ]

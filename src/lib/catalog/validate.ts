@@ -19,6 +19,9 @@ export type AtlasRelationType =
   | 'revival'
   | 'parallel-origin'
   | 'structural-similarity'
+  | 'prototype-to-product'
+  | 'commercialized-as'
+  | 'design-response'
   | 'disputed';
 
 export type AtlasEvidenceStatus = 'confirmed' | 'credible' | 'inferred' | 'disputed';
@@ -146,7 +149,7 @@ export type Catalog = {
   }>;
   atlasNodes: Array<{
     id: string;
-    kind: 'game' | 'innovation' | 'category';
+    kind: 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
     name: LocalizedText;
     summary: LocalizedText;
     startYear: number;
@@ -162,6 +165,13 @@ export type Catalog = {
     originalLanguage: AtlasEvidenceOriginalLanguage;
     url: string;
     summary: LocalizedText;
+    sourceKind?: 'institutional-history' | 'museum-object' | 'patent' | 'oral-history';
+    institutionOrAuthor?: string;
+    publicationDate?: string;
+    checkedAt?: string;
+    stableId?: string;
+    locator?: string;
+    boundedClaim?: LocalizedText;
   }>;
   atlasRelations: Array<{
     id: string;
@@ -272,6 +282,9 @@ const atlasRelationTypes = new Set<AtlasRelationType>([
   'revival',
   'parallel-origin',
   'structural-similarity',
+  'prototype-to-product',
+  'commercialized-as',
+  'design-response',
   'disputed',
 ]);
 const atlasEvidenceStatuses = new Set<AtlasEvidenceStatus>([
@@ -291,6 +304,9 @@ const directedAtlasRelationTypes = new Set<AtlasRelationType>([
   'derived-variant',
   'fusion',
   'revival',
+  'prototype-to-product',
+  'commercialized-as',
+  'design-response',
 ]);
 const undirectedAtlasRelationTypes = new Set<AtlasRelationType>([
   'parallel-origin',

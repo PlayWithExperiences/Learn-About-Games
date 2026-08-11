@@ -39,6 +39,29 @@ const collections = {
 };
 const rawDataFiles = Object.keys(import.meta.glob('../../src/data/*.json'));
 
+describe('early electronic game Atlas slice', () => {
+  it('contains the approved nodes and bounded relation claims', () => {
+    const nodeIds = [
+      'tennis-for-two', 'spacewar', 'brown-box', 'galaxy-game', 'computer-space',
+      'magnavox-odyssey', 'odyssey-table-tennis', 'pong', 'home-pong',
+    ];
+    expect(nodeIds.every((id) => atlasNodes.some((node) => node.id === id))).toBe(true);
+    for (const tuple of [
+      ['spacewar', 'galaxy-game', 'commercialized-as'],
+      ['spacewar', 'computer-space', 'commercialized-as'],
+      ['brown-box', 'magnavox-odyssey', 'prototype-to-product'],
+      ['odyssey-table-tennis', 'pong', 'design-response'],
+      ['pong', 'home-pong', 'commercialized-as'],
+    ]) {
+      expect(atlasRelations).toContainEqual(expect.objectContaining({
+        fromId: tuple[0], toId: tuple[1], type: tuple[2],
+      }));
+    }
+    expect(atlasRelations.some(({ fromId, toId }) => fromId === 'tennis-for-two' && toId === 'pong')).toBe(false);
+    expect(JSON.stringify([...atlasNodes, ...atlasRelations])).not.toMatch(/Pong (是|为)(第一款|first video game)/i);
+  });
+});
+
 describe('raw product catalog data', () => {
   it('fully retires the generic map catalog and entity placement fields', () => {
     const retiredCollectionKeys = [
