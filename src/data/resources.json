@@ -7052,5 +7052,1080 @@
         "checkedAt": "2026-08-11"
       }
     ]
-  }
+  },
+  {
+      "id": "h-001-gdc-honkai-rpg-mass-audiences",
+      "title": {
+        "zh-CN": "'Honkai: Star Rail': Reimagining RPGs for Mass Audiences and Broad Appeal",
+        "en": "'Honkai: Star Rail': Reimagining RPGs for Mass Audiences and Broad Appeal"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论如何在 RPG 结构与更广泛受众之间做设计取舍。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "audience-positioning",
+        "progression-economy-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "systems-mechanics"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035480/-Honkai-Star-Rail-Reimagining",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论如何在 RPG 结构与更广泛受众之间做设计取舍。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035480/-Honkai-Star-Rail-Reimagining",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-002-gdc-prince-modern-metroidvania",
+      "title": {
+        "zh-CN": "'Prince of Persia: The Lost Crown': Making a Modern Metroidvania Both Challenging and Accessible",
+        "en": "'Prince of Persia: The Lost Crown': Making a Modern Metroidvania Both Challenging and Accessible"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话复盘现代 Metroidvania 的挑战、导航与可访问性设计。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "level-structure-design",
+        "challenge-difficulty-design",
+        "navigation-wayfinding-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "level-spatial-design"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035518/-Prince-of-Persia-The",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话复盘现代 Metroidvania 的挑战、导航与可访问性设计。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035518/-Prince-of-Persia-The",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-003-gdc-historical-accuracy-trap",
+      "title": {
+        "zh-CN": "Avoiding the Historical Accuracy Trap",
+        "en": "Avoiding the Historical Accuracy Trap"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论历史题材如何在研究、表达与玩家理解之间保持诚实边界。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "ethical-cultural-evaluation",
+        "world-character-coherence"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "criticism-values-history"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035528/Avoiding-the-Historical-Accuracy-Trap",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论历史题材如何在研究、表达与玩家理解之间保持诚实边界。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035528/Avoiding-the-Historical-Accuracy-Trap",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-004-gdc-character-archetypes",
+      "title": {
+        "zh-CN": "Babygirls, Daddies, and Himbos: Updating Archetypes for Compelling Characters",
+        "en": "Babygirls, Daddies, and Himbos: Updating Archetypes for Compelling Characters"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话以当代角色原型讨论人物塑造与叙事表达。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "world-character-coherence",
+        "narrative-exposition"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "narrative-expression"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035113/Babygirls-Daddies-and-Himbos-Updating",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话以当代角色原型讨论人物塑造与叙事表达。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035113/Babygirls-Daddies-and-Himbos-Updating",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-005-gdc-cozy-grove-stories",
+      "title": {
+        "zh-CN": "Bear Hugs and Dev Tears: Building Stories for 'Cozy Grove: Camp Spirit'",
+        "en": "Bear Hugs and Dev Tears: Building Stories for 'Cozy Grove: Camp Spirit'"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话复盘 Cozy Grove 的角色、情绪与持续叙事制作。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "narrative-architecture",
+        "emotional-arc-shaping",
+        "world-character-coherence"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "narrative-expression"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035544/Bear-Hugs-and-Dev-Tears",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话复盘 Cozy Grove 的角色、情绪与持续叙事制作。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035544/Bear-Hugs-and-Dev-Tears",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-006-gdc-lego-marginal-gains",
+      "title": {
+        "zh-CN": "Building Big Impact, One Brick at a Time: Marginal Gains in 'LEGO Horizon Adventures'",
+        "en": "Building Big Impact, One Brick at a Time: Marginal Gains in 'LEGO Horizon Adventures'"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论以小步改进、反馈与制作取舍累积产品质量。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "iteration-planning",
+        "scope-prioritization"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "production-iteration"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035529/Building-Big-Impact-One-Brick",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论以小步改进、反馈与制作取舍累积产品质量。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035529/Building-Big-Impact-One-Brick",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-007-gdc-collaboration-original-ip",
+      "title": {
+        "zh-CN": "Collaboration and Creativity: Building Original Game IP at LIGHTSPEED STUDIOS",
+        "en": "Collaboration and Creativity: Building Original Game IP at LIGHTSPEED STUDIOS"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论原创 IP 过程中愿景、协作与跨职能对齐。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "creative-vision-stewardship",
+        "alignment-facilitation",
+        "cross-discipline-communication"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "collaboration-teams"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035366/Collaboration-and-Creativity-Building-Original",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论原创 IP 过程中愿景、协作与跨职能对齐。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035366/Collaboration-and-Creativity-Building-Original",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-008-gdc-handcrafted-puzzles",
+      "title": {
+        "zh-CN": "Designing 10,000 Handcrafted Puzzles for 'Islands of Insight'",
+        "en": "Designing 10,000 Handcrafted Puzzles for 'Islands of Insight'"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话复盘大规模手工谜题的规则、难度与内容生产。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "challenge-difficulty-design",
+        "rules-system-modeling",
+        "task-breakdown"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "balance-economy"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035540/Designing-10-000-Handcrafted-Puzzles",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话复盘大规模手工谜题的规则、难度与内容生产。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035540/Designing-10-000-Handcrafted-Puzzles",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-009-gdc-rpg-companions",
+      "title": {
+        "zh-CN": "Designing Relationships: How to Make Compelling RPG Companions",
+        "en": "Designing Relationships: How to Make Compelling RPG Companions"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论 RPG 同伴的关系、选择与角色一致性。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "world-character-coherence",
+        "choice-consequence-design",
+        "interactive-narrative-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "narrative-expression"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035527/Designing-Relationships-How-to-Make",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论 RPG 同伴的关系、选择与角色一致性。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035527/Designing-Relationships-How-to-Make",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-010-gdc-metaphor-command-battle",
+      "title": {
+        "zh-CN": "Developing 'Metaphor: ReFantazio' and the Potential of RPG Command Battle Systems",
+        "en": "Developing 'Metaphor: ReFantazio' and the Potential of RPG Command Battle Systems"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话以 Metaphor 讨论指令战斗的规则、挑战与成长结构。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "rules-system-modeling",
+        "challenge-difficulty-design",
+        "progression-economy-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "systems-mechanics"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035147/Developing-Metaphor-ReFantazio-and-the",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话以 Metaphor 讨论指令战斗的规则、挑战与成长结构。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035147/Developing-Metaphor-ReFantazio-and-the",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-011-gdc-process-lite",
+      "title": {
+        "zh-CN": "Process Lite: Less Time on Process, More Time on Development",
+        "en": "Process Lite: Less Time on Process, More Time on Development"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论如何减少流程负担并保留必要的任务、迭代与交付节奏。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "task-breakdown",
+        "iteration-planning",
+        "design-specification-handoff"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "production-iteration"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035541/Process-Lite-Less-Time-on",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论如何减少流程负担并保留必要的任务、迭代与交付节奏。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035541/Process-Lite-Less-Time-on",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-012-gdc-production-traps",
+      "title": {
+        "zh-CN": "Production Traps: How Producers and Leaders Get Stuck",
+        "en": "Production Traps: How Producers and Leaders Get Stuck"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话梳理制作人与领导者常见的流程、范围与团队陷阱。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "alignment-facilitation",
+        "scope-prioritization",
+        "constraint-aware-decision-making"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "leadership-creative-direction"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035520/Production-Traps-How-Producers-and",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话梳理制作人与领导者常见的流程、范围与团队陷阱。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035520/Production-Traps-How-Producers-and",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-013-gdc-delta-force-pvp-level-design",
+      "title": {
+        "zh-CN": "Tencent Games Developer Summit: Large Scale PvP Level Design in DELTA FORCE",
+        "en": "Tencent Games Developer Summit: Large Scale PvP Level Design in DELTA FORCE"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话复盘大型 PvP 地图的空间流动、遭遇与关卡结构。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "spatial-flow-design",
+        "level-structure-design",
+        "encounter-space-composition"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "level-spatial-design"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035407/Tencent-Games-Developer-Summit-Large",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话复盘大型 PvP 地图的空间流动、遭遇与关卡结构。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035407/Tencent-Games-Developer-Summit-Large",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-014-gdc-real-playtest-insights",
+      "title": {
+        "zh-CN": "Tencent Games Developer Summit: Noise or Insight? Five Tips to Get Real Insights in Playtests!",
+        "en": "Tencent Games Developer Summit: Noise or Insight? Five Tips to Get Real Insights in Playtests!"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论如何从 Playtest 观察中区分噪声并形成可行动结论。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "playtesting",
+        "qualitative-evidence-synthesis",
+        "research-question-framing"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035410/Tencent-Games-Developer-Summit-Noise",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论如何从 Playtest 观察中区分噪声并形成可行动结论。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035410/Tencent-Games-Developer-Summit-Noise",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-015-gdc-final-fantasy-battle-system",
+      "title": {
+        "zh-CN": "The Challenges in Developing an Innovative Battle System for 'Final Fantasy VII Remake and Rebirth'",
+        "en": "The Challenges in Developing an Innovative Battle System for 'Final Fantasy VII Remake and Rebirth'"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话复盘战斗系统在规则、手感与难度之间的创新取舍。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "rules-system-modeling",
+        "game-feel-tuning",
+        "challenge-difficulty-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "systems-mechanics"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035152/The-Challenges-in-Developing-an",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话复盘战斗系统在规则、手感与难度之间的创新取舍。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035152/The-Challenges-in-Developing-an",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-016-gdc-four-one-page-design-docs",
+      "title": {
+        "zh-CN": "The Four One-Page Design Docs You Need (And How to Use Them)",
+        "en": "The Four One-Page Design Docs You Need (And How to Use Them)"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话提供四类一页设计文档，用于规格、协作与范围沟通。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "design-specification-handoff",
+        "cross-discipline-communication",
+        "scope-prioritization"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "production-iteration"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035510/The-Four-One-Page-Design",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话提供四类一页设计文档，用于规格、协作与范围沟通。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035510/The-Four-One-Page-Design",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-017-gdc-like-a-dragon-short-development",
+      "title": {
+        "zh-CN": "The Secret to Narrative-Driven and Short-Term Development in 'Like a Dragon'",
+        "en": "The Secret to Narrative-Driven and Short-Term Development in 'Like a Dragon'"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论叙事驱动项目如何在短周期内组织架构、范围与迭代。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "narrative-architecture",
+        "scope-prioritization",
+        "iteration-planning"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "narrative-expression"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035156/The-Secret-to-Narrative-Driven",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论叙事驱动项目如何在短周期内组织架构、范围与迭代。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035156/The-Secret-to-Narrative-Driven",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-018-gdc-world-class-team-mindsets",
+      "title": {
+        "zh-CN": "Three Mindset Shifts to Lead a World-Class Team",
+        "en": "Three Mindset Shifts to Lead a World-Class Team"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论创意团队领导中的愿景、授权与决策方式。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "creative-vision-stewardship",
+        "alignment-facilitation",
+        "constraint-aware-decision-making"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "leadership-creative-direction"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035490/Three-Mindset-Shifts-to-Lead",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论创意团队领导中的愿景、授权与决策方式。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035490/Three-Mindset-Shifts-to-Lead",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-019-gdc-player-first-monetization",
+      "title": {
+        "zh-CN": "Unity Developer Summit: Player-First Monetization: How Metacore Balances Engagement & Revenue",
+        "en": "Unity Developer Summit: Player-First Monetization: How Metacore Balances Engagement & Revenue"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话讨论留存、体验与商业化之间的玩家优先取舍。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "monetization-experience-alignment",
+        "progression-economy-design",
+        "player-perspective-taking"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "balance-economy"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035406/Unity-Developer-Summit-Player-First",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话讨论留存、体验与商业化之间的玩家优先取舍。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035406/Unity-Developer-Summit-Player-First",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-020-gdc-animal-well-args",
+      "title": {
+        "zh-CN": "Using ARGs to Communicate What Makes 'Animal Well' Special",
+        "en": "Using ARGs to Communicate What Makes 'Animal Well' Special"
+      },
+      "summary": {
+        "zh-CN": "GDC 2025 会话复盘如何用 ARG 表达产品特征、连接受众并支持定位。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "audience-positioning",
+        "value-proposition-framing",
+        "market-reference-analysis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "leadership-creative-direction"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1035483/Using-ARGs-to-Communicate-What",
+      "whyRelevant": {
+        "zh-CN": "GDC 2025 会话复盘如何用 ARG 表达产品特征、连接受众并支持定位。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1035483/Using-ARGs-to-Communicate-What",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-021-lost-garden-kind-games",
+      "title": {
+        "zh-CN": "Kind Games: Designing for Prosocial Multiplayer",
+        "en": "Kind Games: Designing for Prosocial Multiplayer"
+      },
+      "summary": {
+        "zh-CN": "Daniel Cook 讨论如何用系统和社会规则支持亲社会多人体验。"
+      },
+      "sourceId": "lost-garden",
+      "capabilityIds": [
+        "player-perspective-taking",
+        "ethical-cultural-evaluation",
+        "rules-system-modeling"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "systems-mechanics"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://lostgarden.com/2023/07/08/kind-games-designing-for-prosocial-multiplayer/",
+      "whyRelevant": {
+        "zh-CN": "Daniel Cook 讨论如何用系统和社会规则支持亲社会多人体验。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://lostgarden.com/2023/07/08/kind-games-designing-for-prosocial-multiplayer/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-022-lost-garden-social-systems-practice",
+      "title": {
+        "zh-CN": "A Design Practice for Social Systems",
+        "en": "A Design Practice for Social Systems"
+      },
+      "summary": {
+        "zh-CN": "Daniel Cook 提供观察、建模和迭代社会系统的设计实践。"
+      },
+      "sourceId": "lost-garden",
+      "capabilityIds": [
+        "rules-system-modeling",
+        "player-behavior-observation",
+        "player-perspective-taking"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "research-player-experience"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://lostgarden.com/2023/04/07/a-design-practice-for-social-systems/",
+      "whyRelevant": {
+        "zh-CN": "Daniel Cook 提供观察、建模和迭代社会系统的设计实践。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://lostgarden.com/2023/04/07/a-design-practice-for-social-systems/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-023-lost-garden-value-chains",
+      "title": {
+        "zh-CN": "Value Chains: A Method for Creating and Balancing Faucet-and-Drain Game Economies",
+        "en": "Value Chains: A Method for Creating and Balancing Faucet-and-Drain Game Economies"
+      },
+      "summary": {
+        "zh-CN": "Daniel Cook 用价值链建模资源来源、消耗与经济平衡。"
+      },
+      "sourceId": "lost-garden",
+      "capabilityIds": [
+        "progression-economy-design",
+        "rules-system-modeling",
+        "monetization-experience-alignment"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "balance-economy"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://lostgarden.com/2021/12/12/value-chains/",
+      "whyRelevant": {
+        "zh-CN": "Daniel Cook 用价值链建模资源来源、消耗与经济平衡。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://lostgarden.com/2021/12/12/value-chains/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-024-lost-garden-content-architectures",
+      "title": {
+        "zh-CN": "Designing Game Content Architectures",
+        "en": "Designing Game Content Architectures"
+      },
+      "summary": {
+        "zh-CN": "Daniel Cook 讨论如何组织可扩展的内容结构、生产任务与范围。"
+      },
+      "sourceId": "lost-garden",
+      "capabilityIds": [
+        "narrative-architecture",
+        "task-breakdown",
+        "scope-prioritization"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "production-iteration"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://lostgarden.com/2021/01/04/designing-game-content-architectures/",
+      "whyRelevant": {
+        "zh-CN": "Daniel Cook 讨论如何组织可扩展的内容结构、生产任务与范围。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://lostgarden.com/2021/01/04/designing-game-content-architectures/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-025-lost-garden-cozy-games",
+      "title": {
+        "zh-CN": "Cozy Games",
+        "en": "Cozy Games"
+      },
+      "summary": {
+        "zh-CN": "Daniel Cook 提出 Cozy Games 的体验支柱与非暴力、照料型设计空间。"
+      },
+      "sourceId": "lost-garden",
+      "capabilityIds": [
+        "emotional-arc-shaping",
+        "player-perspective-taking",
+        "aesthetic-direction"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "game-feel-feedback"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://lostgarden.com/2018/01/24/cozy-games/",
+      "whyRelevant": {
+        "zh-CN": "Daniel Cook 提出 Cozy Games 的体验支柱与非暴力、照料型设计空间。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://lostgarden.com/2018/01/24/cozy-games/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-026-market-game-virtual-festivals-2026",
+      "title": {
+        "zh-CN": "The State of Virtual 3rd-Party Festivals 2026",
+        "en": "The State of Virtual 3rd-Party Festivals 2026"
+      },
+      "summary": {
+        "zh-CN": "How To Market A Game 对虚拟第三方节庆的发现、受众与展示效果进行当期分析。"
+      },
+      "sourceId": "how-to-market-a-game",
+      "capabilityIds": [
+        "audience-positioning",
+        "market-reference-analysis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "leadership-creative-direction"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://howtomarketagame.com/2026/08/11/the-state-of-virtual-3rd-party-festivals-2026/",
+      "whyRelevant": {
+        "zh-CN": "How To Market A Game 对虚拟第三方节庆的发现、受众与展示效果进行当期分析。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://howtomarketagame.com/2026/08/11/the-state-of-virtual-3rd-party-festivals-2026/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-027-market-game-steam-calendar",
+      "title": {
+        "zh-CN": "How the Steam Personal Calendar Affects Your Launch",
+        "en": "How the Steam Personal Calendar Affects Your Launch"
+      },
+      "summary": {
+        "zh-CN": "How To Market A Game 讨论 Steam 日历与发行窗口对可见性和节奏的影响。"
+      },
+      "sourceId": "how-to-market-a-game",
+      "capabilityIds": [
+        "iteration-planning",
+        "audience-positioning",
+        "market-reference-analysis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "production-iteration"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://howtomarketagame.com/2026/06/25/how-the-steam-personal-calendar-affects-your-launch/",
+      "whyRelevant": {
+        "zh-CN": "How To Market A Game 讨论 Steam 日历与发行窗口对可见性和节奏的影响。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://howtomarketagame.com/2026/06/25/how-the-steam-personal-calendar-affects-your-launch/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-028-market-game-next-fest-february-2026",
+      "title": {
+        "zh-CN": "Making Sense of the February 2026 Steam Next Fest",
+        "en": "Making Sense of the February 2026 Steam Next Fest"
+      },
+      "summary": {
+        "zh-CN": "How To Market A Game 用当期数据复盘 Next Fest 的展示、愿望单与品类表现。"
+      },
+      "sourceId": "how-to-market-a-game",
+      "capabilityIds": [
+        "market-reference-analysis",
+        "telemetry-interpretation",
+        "audience-positioning"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "research-player-experience"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://howtomarketagame.com/2026/04/13/making-sense-of-the-february-2026-steam-next-fest/",
+      "whyRelevant": {
+        "zh-CN": "How To Market A Game 用当期数据复盘 Next Fest 的展示、愿望单与品类表现。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://howtomarketagame.com/2026/04/13/making-sense-of-the-february-2026-steam-next-fest/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-029-market-game-dlc-revenue",
+      "title": {
+        "zh-CN": "How Much Money Can You Make from DLC?",
+        "en": "How Much Money Can You Make from DLC?"
+      },
+      "summary": {
+        "zh-CN": "How To Market A Game 用公开样本讨论 DLC 收入、产品价值与商业化边界。"
+      },
+      "sourceId": "how-to-market-a-game",
+      "capabilityIds": [
+        "value-proposition-framing",
+        "monetization-experience-alignment",
+        "telemetry-interpretation"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "balance-economy"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://howtomarketagame.com/2026/03/03/benchmark-how-much-money-can-you-make-from-dlc/",
+      "whyRelevant": {
+        "zh-CN": "How To Market A Game 用公开样本讨论 DLC 收入、产品价值与商业化边界。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://howtomarketagame.com/2026/03/03/benchmark-how-much-money-can-you-make-from-dlc/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "h-030-market-game-bad-launch-recovery",
+      "title": {
+        "zh-CN": "Only 28 Games Recovered from a Bad Launch in 2024: What Do They Have in Common?",
+        "en": "Only 28 Games Recovered from a Bad Launch in 2024: What Do They Have in Common?"
+      },
+      "summary": {
+        "zh-CN": "How To Market A Game 对低开后恢复的作品做样本复盘，连接市场观察、更新节奏与范围判断。"
+      },
+      "sourceId": "how-to-market-a-game",
+      "capabilityIds": [
+        "market-reference-analysis",
+        "telemetry-interpretation",
+        "scope-prioritization"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "research-player-experience"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://howtomarketagame.com/2026/02/12/only-28-games-recovered-from-a-bad-launch-in-2024-what-do-they-have-in-common/",
+      "whyRelevant": {
+        "zh-CN": "How To Market A Game 对低开后恢复的作品做样本复盘，连接市场观察、更新节奏与范围判断。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://howtomarketagame.com/2026/02/12/only-28-games-recovered-from-a-bad-launch-in-2024-what-do-they-have-in-common/",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    }
 ]

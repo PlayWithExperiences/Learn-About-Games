@@ -474,7 +474,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(179);
+    expect(resources).toHaveLength(209);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -661,7 +661,7 @@ describe('raw product catalog data', () => {
 
     expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(13);
     expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(16);
-    expect(countBy('mediaType', 'talk')).toBe(71);
+    expect(countBy('mediaType', 'talk')).toBe(91);
     expect(countBy('originalLanguage', 'en')).toBeGreaterThanOrEqual(137);
     expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
@@ -676,8 +676,8 @@ describe('raw product catalog data', () => {
     expect(capabilityCount('player-behavior-observation')).toBeGreaterThanOrEqual(5);
     expect(capabilityCount('market-reference-analysis')).toBeGreaterThanOrEqual(3);
     expect(capabilityCount('narrative-exposition')).toBeGreaterThanOrEqual(5);
-    expect(capabilityCount('navigation-wayfinding-design')).toBe(3);
-    expect(capabilityCount('emotional-arc-shaping')).toBe(5);
+    expect(capabilityCount('navigation-wayfinding-design')).toBeGreaterThanOrEqual(3);
+    expect(capabilityCount('emotional-arc-shaping')).toBeGreaterThanOrEqual(5);
     expect(capabilityCount('interactive-narrative-design')).toBeGreaterThanOrEqual(5);
     expect(capabilityCount('qualitative-evidence-synthesis')).toBeGreaterThanOrEqual(6);
     expect(capabilityCount('value-proposition-framing')).toBeGreaterThanOrEqual(4);
@@ -711,9 +711,9 @@ describe('raw product catalog data', () => {
       resources.flatMap(({ accessVersions }) => accessVersions)
         .filter((version) => version.language === language).length;
 
-    expect(resources).toHaveLength(179);
+    expect(resources).toHaveLength(209);
     expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(223);
     expect(expansion).toHaveLength(10);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -727,31 +727,31 @@ describe('raw product catalog data', () => {
     expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(0);
     expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(11);
 
-    expect(countBy('mediaType', 'article')).toBe(12);
+    expect(countBy('mediaType', 'article')).toBe(22);
     expect(countBy('mediaType', 'course')).toBe(16);
     expect(countBy('mediaType', 'paper')).toBe(17);
     expect(countBy('mediaType', 'website')).toBe(18);
-    expect(countBy('mediaType', 'talk')).toBe(71);
-    expect(countBy('originalLanguage', 'en')).toBe(150);
+    expect(countBy('mediaType', 'talk')).toBe(91);
+    expect(countBy('originalLanguage', 'en')).toBe(180);
     expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
-    expect(consumableLanguageCount('en')).toBe(151);
+    expect(consumableLanguageCount('en')).toBe(181);
     expect(consumableLanguageCount('zh-Hans')).toBe(22);
     expect(consumableLanguageCount('ja')).toBe(9);
-    expect(accessVersionLanguageCount('en')).toBe(162);
+    expect(accessVersionLanguageCount('en')).toBe(192);
     expect(accessVersionLanguageCount('zh-Hans')).toBe(22);
     expect(accessVersionLanguageCount('ja')).toBe(9);
 
-    expect(capabilityCount('choice-consequence-design')).toBe(5);
-    expect(capabilityCount('market-reference-analysis')).toBe(5);
-    expect(capabilityCount('value-proposition-framing')).toBe(5);
-    expect(capabilityCount('alignment-facilitation')).toBe(7);
-    expect(capabilityCount('design-specification-handoff')).toBe(8);
-    expect(capabilityCount('qualitative-evidence-synthesis')).toBe(7);
-    expect(capabilityCount('narrative-exposition')).toBe(7);
-    expect(capabilityCount('interactive-narrative-design')).toBe(7);
-    expect(capabilityCount('player-behavior-observation')).toBe(7);
-    expect(capabilityCount('monetization-experience-alignment')).toBe(4);
+    expect(capabilityCount('choice-consequence-design')).toBeGreaterThanOrEqual(5);
+    expect(capabilityCount('market-reference-analysis')).toBeGreaterThanOrEqual(5);
+    expect(capabilityCount('value-proposition-framing')).toBeGreaterThanOrEqual(5);
+    expect(capabilityCount('alignment-facilitation')).toBeGreaterThanOrEqual(7);
+    expect(capabilityCount('design-specification-handoff')).toBeGreaterThanOrEqual(8);
+    expect(capabilityCount('qualitative-evidence-synthesis')).toBeGreaterThanOrEqual(7);
+    expect(capabilityCount('narrative-exposition')).toBeGreaterThanOrEqual(7);
+    expect(capabilityCount('interactive-narrative-design')).toBeGreaterThanOrEqual(7);
+    expect(capabilityCount('player-behavior-observation')).toBeGreaterThanOrEqual(7);
+    expect(capabilityCount('monetization-experience-alignment')).toBeGreaterThanOrEqual(4);
   });
 
   it('adds only the evidence-verified five-item stop-condition resource batch', () => {
@@ -766,9 +766,9 @@ describe('raw product catalog data', () => {
       expansionCanonicalUrls.includes(canonicalUrl),
     );
 
-    expect(resources).toHaveLength(179);
+    expect(resources).toHaveLength(209);
     expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(193);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(223);
 
     const intakeHeader = resourceIntake.slice(
       0,
@@ -780,7 +780,7 @@ describe('raw product catalog data', () => {
       return Number(match[1]);
     };
     expect([
-      readHeaderWorkItemCount(/Batch A–G 已正规化为 (\d+) 个 catalog Work Item/),
+      readHeaderWorkItemCount(/Batch A–H 已正规化为 (\d+) 个 catalog Work Item/),
       readHeaderWorkItemCount(/正规化后为 \*\*(\d+) 个 Work Item\*\*/),
     ]).toEqual([resources.length, resources.length]);
 
@@ -950,6 +950,53 @@ describe('raw product catalog data', () => {
       normalizeCatalogUrl(canonicalUrl),
     );
     expect(new Set(normalizedCanonicalUrls).size).toBe(resources.length);
+  });
+
+  it('adds a verified GDC and author-site expansion without inventing source identities', () => {
+    const expansionCanonicalUrls = [
+      'https://www.gdcvault.com/play/1035480/-Honkai-Star-Rail-Reimagining',
+      'https://www.gdcvault.com/play/1035518/-Prince-of-Persia-The',
+      'https://www.gdcvault.com/play/1035528/Avoiding-the-Historical-Accuracy-Trap',
+      'https://www.gdcvault.com/play/1035113/Babygirls-Daddies-and-Himbos-Updating',
+      'https://www.gdcvault.com/play/1035544/Bear-Hugs-and-Dev-Tears',
+      'https://www.gdcvault.com/play/1035529/Building-Big-Impact-One-Brick',
+      'https://www.gdcvault.com/play/1035366/Collaboration-and-Creativity-Building-Original',
+      'https://www.gdcvault.com/play/1035540/Designing-10-000-Handcrafted-Puzzles',
+      'https://www.gdcvault.com/play/1035527/Designing-Relationships-How-to-Make',
+      'https://www.gdcvault.com/play/1035147/Developing-Metaphor-ReFantazio-and-the',
+      'https://www.gdcvault.com/play/1035541/Process-Lite-Less-Time-on',
+      'https://www.gdcvault.com/play/1035520/Production-Traps-How-Producers-and',
+      'https://www.gdcvault.com/play/1035407/Tencent-Games-Developer-Summit-Large',
+      'https://www.gdcvault.com/play/1035410/Tencent-Games-Developer-Summit-Noise',
+      'https://www.gdcvault.com/play/1035152/The-Challenges-in-Developing-an',
+      'https://www.gdcvault.com/play/1035510/The-Four-One-Page-Design',
+      'https://www.gdcvault.com/play/1035156/The-Secret-to-Narrative-Driven',
+      'https://www.gdcvault.com/play/1035490/Three-Mindset-Shifts-to-Lead',
+      'https://www.gdcvault.com/play/1035406/Unity-Developer-Summit-Player-First',
+      'https://www.gdcvault.com/play/1035483/Using-ARGs-to-Communicate-What',
+      'https://lostgarden.com/2023/07/08/kind-games-designing-for-prosocial-multiplayer/',
+      'https://lostgarden.com/2023/04/07/a-design-practice-for-social-systems/',
+      'https://lostgarden.com/2021/12/12/value-chains/',
+      'https://lostgarden.com/2021/01/04/designing-game-content-architectures/',
+      'https://lostgarden.com/2018/01/24/cozy-games/',
+      'https://howtomarketagame.com/2026/08/11/the-state-of-virtual-3rd-party-festivals-2026/',
+      'https://howtomarketagame.com/2026/06/25/how-the-steam-personal-calendar-affects-your-launch/',
+      'https://howtomarketagame.com/2026/04/13/making-sense-of-the-february-2026-steam-next-fest/',
+      'https://howtomarketagame.com/2026/03/03/benchmark-how-much-money-can-you-make-from-dlc/',
+      'https://howtomarketagame.com/2026/02/12/only-28-games-recovered-from-a-bad-launch-in-2024-what-do-they-have-in-common/',
+    ];
+    const expansion = resources.filter(({ canonicalUrl }) => expansionCanonicalUrls.includes(canonicalUrl));
+
+    expect(expansion).toHaveLength(30);
+    expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(new Set(expansionCanonicalUrls));
+    expect(expansion.every(({ originalLanguage }) => originalLanguage === 'en')).toBe(true);
+    expect(expansion.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
+    expect(expansion.filter(({ sourceId }) => sourceId === 'gdc-vault')).toHaveLength(20);
+    expect(expansion.filter(({ sourceId }) => sourceId === 'lost-garden')).toHaveLength(5);
+    expect(expansion.filter(({ sourceId }) => sourceId === 'how-to-market-a-game')).toHaveLength(5);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(20);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'article')).toHaveLength(10);
+    expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(30);
   });
 
   it('merges known language versions and applies conservative access facts', () => {

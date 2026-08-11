@@ -1,14 +1,14 @@
 # Learn About Games v0.2 — 首批成长资源证据 Intake
 
 - 研究日期：2026-08-09
-- 状态：研究证据 notebook；Batch A–G 已正规化为 179 个 catalog Work Item
-- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项
-- 确定性 canonical URL 去重后：**183 项研究记录**；正规化后为 **179 个 Work Item**
+- 状态：研究证据 notebook；Batch A–H 已正规化为 209 个 catalog Work Item
+- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项
+- 确定性 canonical URL 去重后：**213 项研究记录**；正规化后为 **209 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
 
-这份 notebook 是后续内容正规化的证据层，不是对全部 183 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
+这份 notebook 是后续内容正规化的证据层，不是对全部 213 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11、Batch H 在 2026-08-12 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
 
 Source 与 Work Item 必须继续是不同实体。以下 sourceUrl 是研究批次捕获的来源证据 URL；它常与具体 Work Item 的 canonicalUrl 相同，因而不能直接当作 Source homepage。正规化时必须另建真实创作者、频道、组织、出版社或网站 Source，再由 Work Item 引用。
 
@@ -19,38 +19,38 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 ## 去重结论与待核 identity
 
 - 规则：host 小写并移除 www.、移除 fragment 与非根路径末尾 /、稳定排序 query；不跨 DOI、出版社页或不同平台猜测同一作品。
-- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–G 另增 51 条且没有命中既有 canonical URL。
+- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–H 另增 81 条且没有命中既有 canonical URL。
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
 ## 当前正规化 catalog coverage
 
-- Work Item：179；Source：38；Access Version：193；Resource Topic：15。
-- 原始语言：en 150、ja 9、zh-Hans 20。
-- 可消费语言（Work Item 计，可重叠）：en 151、ja 9、zh-Hans 22。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 162、ja 9、zh-Hans 22。
-- 媒介：article 12、book 29、course 16、paper 17、podcast 11、talk 71、video 5、website 18。
+- Work Item：209；Source：38；Access Version：223；Resource Topic：15。
+- 原始语言：en 180、ja 9、zh-Hans 20。
+- 可消费语言（Work Item 计，可重叠）：en 181、ja 9、zh-Hans 22。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 192、ja 9、zh-Hans 22。
+- 媒介：article 22、book 29、course 16、paper 17、podcast 11、talk 91、video 5、website 18。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
 | 主主题 | Work Item |
 |---|---:|
 | 设计基础与概念 | 9 |
-| 系统与机制 | 10 |
-| 平衡与经济 | 10 |
-| 手感与反馈 | 8 |
-| 关卡与空间 | 21 |
-| Playtest 主题资源集合 | 13 |
-| 叙事与表达 | 18 |
+| 系统与机制 | 14 |
+| 平衡与经济 | 14 |
+| 手感与反馈 | 9 |
+| 关卡与空间 | 23 |
+| Playtest 主题资源集合 | 14 |
+| 叙事与表达 | 22 |
 | 原型与实验 | 9 |
-| 生产与迭代 | 12 |
-| 协作与团队 | 9 |
-| 领导与创意方向 | 8 |
-| 批判、价值观与历史语境 | 15 |
-| 研究方法与玩家体验 | 20 |
+| 生产与迭代 | 17 |
+| 协作与团队 | 10 |
+| 领导与创意方向 | 12 |
+| 批判、价值观与历史语境 | 16 |
+| 研究方法与玩家体验 | 23 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 10 |
-| 合计 | 179 |
+| 合计 | 209 |
 
 ## 接受候选
 
@@ -350,6 +350,45 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | G-003<br>canonicalUrl=https://book.leveldesignbook.com/process/preproduction/scope<br>title=Scope | sourceName=The Level Design Book<br>sourceUrl=https://book.leveldesignbook.com/ | mediaType=website<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=prototyping-experimentation<br>whyRelevant=原页将 scope 定义为项目大小与复杂度，并将 prototype 定义为回答单一问题的小型聚焦项目。 | 不把页面的经验性缩减建议写成普遍完成率或标准。 |
 | G-004<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10056<br>title=聚用户之力，做更好游戏 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=talk<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=官方演讲实录以概念、初始版本、迭代与运营阶段的用户研究实践为案例，说明不同问题需要选择或组合相应研究方法。 | 实录不是 article；公开入口与播放可用性仍可能受账号、地区与平台政策影响。 |
 | G-005<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10123<br>title=TGDC \| 《QQ飞车》的十年时光路 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=talk<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=chinese-industry-cross-discipline<br>whyRelevant=官方演讲实录以产品复盘讨论用户动机、基础体验、运营节奏、手感调优与关卡情绪曲线。 | 实录不等于普适因果证据；只记录该团队案例及其有限实践语境。 |
+
+### Batch H：GDC 2025 与作者原站扩展（30）
+
+- 研究日期：2026-08-12。先运行 `agent-reach doctor --json`；Exa via mcporter 仍受 HTTP 429 免费额度限制，因此停止重试，改用 Jina Reader 读取 GDC Vault 官方免费目录、具体会话页与作者原站。
+- 边界：20 个 GDC 条目各只保留一个具体 session identity；遇到同题 slide/video 双 ID 时不重复建 Work Item。GDC 访问状态继续保守标为 `subscription`；Lost Garden 与 How To Market A Game 原文页标为 `free`。
+- 取舍：优先设计、制作、Playtest、关卡、叙事、领导与商业化，不纳入赞助工具演示、未核实搬运、搜索结果页或只有聚合页的候选。本批复用既有三个 Source，不制造“作者=作品”的伪 Source。
+
+| Ref / canonical identity | Source | Medium / original language | bounded whyRelevant |
+|---|---|---|---|
+| H-001-GDC-HONKAI-RPG-MASS-AUDIENCES<br>canonicalUrl=https://www.gdcvault.com/play/1035480/-Honkai-Star-Rail-Reimagining<br>title='Honkai: Star Rail': Reimagining RPGs for Mass Audiences and Broad Appeal | gdc-vault | talk / en | GDC 2025 会话讨论如何在 RPG 结构与更广泛受众之间做设计取舍。 |
+| H-002-GDC-PRINCE-MODERN-METROIDVANIA<br>canonicalUrl=https://www.gdcvault.com/play/1035518/-Prince-of-Persia-The<br>title='Prince of Persia: The Lost Crown': Making a Modern Metroidvania Both Challenging and Accessible | gdc-vault | talk / en | GDC 2025 会话复盘现代 Metroidvania 的挑战、导航与可访问性设计。 |
+| H-003-GDC-HISTORICAL-ACCURACY-TRAP<br>canonicalUrl=https://www.gdcvault.com/play/1035528/Avoiding-the-Historical-Accuracy-Trap<br>title=Avoiding the Historical Accuracy Trap | gdc-vault | talk / en | GDC 2025 会话讨论历史题材如何在研究、表达与玩家理解之间保持诚实边界。 |
+| H-004-GDC-CHARACTER-ARCHETYPES<br>canonicalUrl=https://www.gdcvault.com/play/1035113/Babygirls-Daddies-and-Himbos-Updating<br>title=Babygirls, Daddies, and Himbos: Updating Archetypes for Compelling Characters | gdc-vault | talk / en | GDC 2025 会话以当代角色原型讨论人物塑造与叙事表达。 |
+| H-005-GDC-COZY-GROVE-STORIES<br>canonicalUrl=https://www.gdcvault.com/play/1035544/Bear-Hugs-and-Dev-Tears<br>title=Bear Hugs and Dev Tears: Building Stories for 'Cozy Grove: Camp Spirit' | gdc-vault | talk / en | GDC 2025 会话复盘 Cozy Grove 的角色、情绪与持续叙事制作。 |
+| H-006-GDC-LEGO-MARGINAL-GAINS<br>canonicalUrl=https://www.gdcvault.com/play/1035529/Building-Big-Impact-One-Brick<br>title=Building Big Impact, One Brick at a Time: Marginal Gains in 'LEGO Horizon Adventures' | gdc-vault | talk / en | GDC 2025 会话讨论以小步改进、反馈与制作取舍累积产品质量。 |
+| H-007-GDC-COLLABORATION-ORIGINAL-IP<br>canonicalUrl=https://www.gdcvault.com/play/1035366/Collaboration-and-Creativity-Building-Original<br>title=Collaboration and Creativity: Building Original Game IP at LIGHTSPEED STUDIOS | gdc-vault | talk / en | GDC 2025 会话讨论原创 IP 过程中愿景、协作与跨职能对齐。 |
+| H-008-GDC-HANDCRAFTED-PUZZLES<br>canonicalUrl=https://www.gdcvault.com/play/1035540/Designing-10-000-Handcrafted-Puzzles<br>title=Designing 10,000 Handcrafted Puzzles for 'Islands of Insight' | gdc-vault | talk / en | GDC 2025 会话复盘大规模手工谜题的规则、难度与内容生产。 |
+| H-009-GDC-RPG-COMPANIONS<br>canonicalUrl=https://www.gdcvault.com/play/1035527/Designing-Relationships-How-to-Make<br>title=Designing Relationships: How to Make Compelling RPG Companions | gdc-vault | talk / en | GDC 2025 会话讨论 RPG 同伴的关系、选择与角色一致性。 |
+| H-010-GDC-METAPHOR-COMMAND-BATTLE<br>canonicalUrl=https://www.gdcvault.com/play/1035147/Developing-Metaphor-ReFantazio-and-the<br>title=Developing 'Metaphor: ReFantazio' and the Potential of RPG Command Battle Systems | gdc-vault | talk / en | GDC 2025 会话以 Metaphor 讨论指令战斗的规则、挑战与成长结构。 |
+| H-011-GDC-PROCESS-LITE<br>canonicalUrl=https://www.gdcvault.com/play/1035541/Process-Lite-Less-Time-on<br>title=Process Lite: Less Time on Process, More Time on Development | gdc-vault | talk / en | GDC 2025 会话讨论如何减少流程负担并保留必要的任务、迭代与交付节奏。 |
+| H-012-GDC-PRODUCTION-TRAPS<br>canonicalUrl=https://www.gdcvault.com/play/1035520/Production-Traps-How-Producers-and<br>title=Production Traps: How Producers and Leaders Get Stuck | gdc-vault | talk / en | GDC 2025 会话梳理制作人与领导者常见的流程、范围与团队陷阱。 |
+| H-013-GDC-DELTA-FORCE-PVP-LEVEL-DESIGN<br>canonicalUrl=https://www.gdcvault.com/play/1035407/Tencent-Games-Developer-Summit-Large<br>title=Tencent Games Developer Summit: Large Scale PvP Level Design in DELTA FORCE | gdc-vault | talk / en | GDC 2025 会话复盘大型 PvP 地图的空间流动、遭遇与关卡结构。 |
+| H-014-GDC-REAL-PLAYTEST-INSIGHTS<br>canonicalUrl=https://www.gdcvault.com/play/1035410/Tencent-Games-Developer-Summit-Noise<br>title=Tencent Games Developer Summit: Noise or Insight? Five Tips to Get Real Insights in Playtests! | gdc-vault | talk / en | GDC 2025 会话讨论如何从 Playtest 观察中区分噪声并形成可行动结论。 |
+| H-015-GDC-FINAL-FANTASY-BATTLE-SYSTEM<br>canonicalUrl=https://www.gdcvault.com/play/1035152/The-Challenges-in-Developing-an<br>title=The Challenges in Developing an Innovative Battle System for 'Final Fantasy VII Remake and Rebirth' | gdc-vault | talk / en | GDC 2025 会话复盘战斗系统在规则、手感与难度之间的创新取舍。 |
+| H-016-GDC-FOUR-ONE-PAGE-DESIGN-DOCS<br>canonicalUrl=https://www.gdcvault.com/play/1035510/The-Four-One-Page-Design<br>title=The Four One-Page Design Docs You Need (And How to Use Them) | gdc-vault | talk / en | GDC 2025 会话提供四类一页设计文档，用于规格、协作与范围沟通。 |
+| H-017-GDC-LIKE-A-DRAGON-SHORT-DEVELOPMENT<br>canonicalUrl=https://www.gdcvault.com/play/1035156/The-Secret-to-Narrative-Driven<br>title=The Secret to Narrative-Driven and Short-Term Development in 'Like a Dragon' | gdc-vault | talk / en | GDC 2025 会话讨论叙事驱动项目如何在短周期内组织架构、范围与迭代。 |
+| H-018-GDC-WORLD-CLASS-TEAM-MINDSETS<br>canonicalUrl=https://www.gdcvault.com/play/1035490/Three-Mindset-Shifts-to-Lead<br>title=Three Mindset Shifts to Lead a World-Class Team | gdc-vault | talk / en | GDC 2025 会话讨论创意团队领导中的愿景、授权与决策方式。 |
+| H-019-GDC-PLAYER-FIRST-MONETIZATION<br>canonicalUrl=https://www.gdcvault.com/play/1035406/Unity-Developer-Summit-Player-First<br>title=Unity Developer Summit: Player-First Monetization: How Metacore Balances Engagement & Revenue | gdc-vault | talk / en | GDC 2025 会话讨论留存、体验与商业化之间的玩家优先取舍。 |
+| H-020-GDC-ANIMAL-WELL-ARGS<br>canonicalUrl=https://www.gdcvault.com/play/1035483/Using-ARGs-to-Communicate-What<br>title=Using ARGs to Communicate What Makes 'Animal Well' Special | gdc-vault | talk / en | GDC 2025 会话复盘如何用 ARG 表达产品特征、连接受众并支持定位。 |
+| H-021-LOST-GARDEN-KIND-GAMES<br>canonicalUrl=https://lostgarden.com/2023/07/08/kind-games-designing-for-prosocial-multiplayer/<br>title=Kind Games: Designing for Prosocial Multiplayer | lost-garden | article / en | Daniel Cook 讨论如何用系统和社会规则支持亲社会多人体验。 |
+| H-022-LOST-GARDEN-SOCIAL-SYSTEMS-PRACTICE<br>canonicalUrl=https://lostgarden.com/2023/04/07/a-design-practice-for-social-systems/<br>title=A Design Practice for Social Systems | lost-garden | article / en | Daniel Cook 提供观察、建模和迭代社会系统的设计实践。 |
+| H-023-LOST-GARDEN-VALUE-CHAINS<br>canonicalUrl=https://lostgarden.com/2021/12/12/value-chains/<br>title=Value Chains: A Method for Creating and Balancing Faucet-and-Drain Game Economies | lost-garden | article / en | Daniel Cook 用价值链建模资源来源、消耗与经济平衡。 |
+| H-024-LOST-GARDEN-CONTENT-ARCHITECTURES<br>canonicalUrl=https://lostgarden.com/2021/01/04/designing-game-content-architectures/<br>title=Designing Game Content Architectures | lost-garden | article / en | Daniel Cook 讨论如何组织可扩展的内容结构、生产任务与范围。 |
+| H-025-LOST-GARDEN-COZY-GAMES<br>canonicalUrl=https://lostgarden.com/2018/01/24/cozy-games/<br>title=Cozy Games | lost-garden | article / en | Daniel Cook 提出 Cozy Games 的体验支柱与非暴力、照料型设计空间。 |
+| H-026-MARKET-GAME-VIRTUAL-FESTIVALS-2026<br>canonicalUrl=https://howtomarketagame.com/2026/08/11/the-state-of-virtual-3rd-party-festivals-2026/<br>title=The State of Virtual 3rd-Party Festivals 2026 | how-to-market-a-game | article / en | How To Market A Game 对虚拟第三方节庆的发现、受众与展示效果进行当期分析。 |
+| H-027-MARKET-GAME-STEAM-CALENDAR<br>canonicalUrl=https://howtomarketagame.com/2026/06/25/how-the-steam-personal-calendar-affects-your-launch/<br>title=How the Steam Personal Calendar Affects Your Launch | how-to-market-a-game | article / en | How To Market A Game 讨论 Steam 日历与发行窗口对可见性和节奏的影响。 |
+| H-028-MARKET-GAME-NEXT-FEST-FEBRUARY-2026<br>canonicalUrl=https://howtomarketagame.com/2026/04/13/making-sense-of-the-february-2026-steam-next-fest/<br>title=Making Sense of the February 2026 Steam Next Fest | how-to-market-a-game | article / en | How To Market A Game 用当期数据复盘 Next Fest 的展示、愿望单与品类表现。 |
+| H-029-MARKET-GAME-DLC-REVENUE<br>canonicalUrl=https://howtomarketagame.com/2026/03/03/benchmark-how-much-money-can-you-make-from-dlc/<br>title=How Much Money Can You Make from DLC? | how-to-market-a-game | article / en | How To Market A Game 用公开样本讨论 DLC 收入、产品价值与商业化边界。 |
+| H-030-MARKET-GAME-BAD-LAUNCH-RECOVERY<br>canonicalUrl=https://howtomarketagame.com/2026/02/12/only-28-games-recovered-from-a-bad-launch-in-2024-what-do-they-have-in-common/<br>title=Only 28 Games Recovered from a Bad Launch in 2024: What Do They Have in Common? | how-to-market-a-game | article / en | How To Market A Game 对低开后恢复的作品做样本复盘，连接市场观察、更新节奏与范围判断。 |
 
 ## 拒绝与待核证据
 
