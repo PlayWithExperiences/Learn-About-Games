@@ -5847,5 +5847,621 @@
         "checkedAt": "2026-08-11"
       }
     ]
+  },
+  {
+    "id": "e-001-action-game-design-introduction",
+    "title": {
+      "zh-CN": "动作游戏设计入门"
+    },
+    "summary": {
+      "zh-CN": "从动作体验、视觉反馈与难度节奏切入，系统讲解动作游戏的基础设计方法。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "game-feel-tuning",
+      "multimodal-presentation-integration",
+      "pacing-control",
+      "challenge-difficulty-design"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "audiovisual-semiotics"
+    ],
+    "resourceTopicIds": [
+      "game-feel-feedback"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10029",
+    "whyRelevant": {
+      "zh-CN": "官方课程目录把动作设计拆为基础概念、表现反馈与难度节奏等课时，可直接支持手感与挑战调优。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10029",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-002-target-audience-game-development",
+    "title": {
+      "zh-CN": "精准开发——为目标用户做游戏"
+    },
+    "summary": {
+      "zh-CN": "围绕目标用户、市场参照与产品卖点，建立从受众判断到设计取舍的开发框架。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "audience-positioning",
+      "market-reference-analysis",
+      "value-proposition-framing",
+      "player-perspective-taking"
+    ],
+    "knowledgeTopicIds": [
+      "player-motivation-difference",
+      "game-industry-platform-economics"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10033",
+    "whyRelevant": {
+      "zh-CN": "官方课程收益与课时明确覆盖用户细分、竞品参照和产品定位，补足市场证据如何进入设计决策。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10033",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-003-project-management-six-methods",
+    "title": {
+      "zh-CN": "项目管理的“六脉神剑”"
+    },
+    "summary": {
+      "zh-CN": "将目标、范围、任务、节奏、协作与风险组织为游戏项目管理的实用方法。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "task-breakdown",
+      "scope-prioritization",
+      "iteration-planning",
+      "alignment-facilitation",
+      "constraint-aware-decision-making"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "leadership-creative-direction"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10034",
+    "whyRelevant": {
+      "zh-CN": "官方课程以六个管理模块覆盖拆解、优先级、计划与团队对齐，适合把抽象管理职责落到项目动作。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10034",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-004-level-design-practice",
+    "title": {
+      "zh-CN": "游戏中关卡设计的那些事儿"
+    },
+    "summary": {
+      "zh-CN": "从关卡结构、空间流线、引导与验证讨论关卡设计的完整工作过程。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "level-structure-design",
+      "spatial-flow-design",
+      "navigation-wayfinding-design",
+      "blockout-spatial-validation"
+    ],
+    "knowledgeTopicIds": [
+      "spatial-cognition-wayfinding"
+    ],
+    "resourceTopicIds": [
+      "level-spatial-design"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10028",
+    "whyRelevant": {
+      "zh-CN": "官方课程目录明确覆盖关卡构成、玩家引导与制作验证，可用于补强寻路和空间流线能力。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10028",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-005-game-system-design-basics",
+    "title": {
+      "zh-CN": "游戏系统策划基础"
+    },
+    "summary": {
+      "zh-CN": "以规则、循环与系统拆解为核心，介绍系统策划的基础概念和设计流程。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "rules-system-modeling",
+      "core-loop-design",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "emergence-complexity"
+    ],
+    "resourceTopicIds": [
+      "systems-mechanics"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10025",
+    "whyRelevant": {
+      "zh-CN": "官方课程目录围绕系统构成、核心循环和策划方法展开，提供中文原始的系统设计入门路径。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10025",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-006-game-numerical-design-basics",
+    "title": {
+      "zh-CN": "游戏数值设计基础"
+    },
+    "summary": {
+      "zh-CN": "从数值结构、成长经济与难度平衡建立游戏数值设计的基础方法。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "progression-economy-design",
+      "challenge-difficulty-design",
+      "rules-system-modeling"
+    ],
+    "knowledgeTopicIds": [
+      "probability-randomness-fairness"
+    ],
+    "resourceTopicIds": [
+      "balance-economy"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10003",
+    "whyRelevant": {
+      "zh-CN": "官方课时从数值基础进入成长、经济和难度，适合作为平衡与经济设计的中文结构化入口。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10003",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-007-game-designer-work-overview",
+    "title": {
+      "zh-CN": "游戏策划的方方面面"
+    },
+    "summary": {
+      "zh-CN": "从职责分工、需求拆解、文档交接与跨职能协作介绍游戏策划工作的全貌。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "task-breakdown",
+      "design-specification-handoff",
+      "cross-discipline-communication",
+      "scope-prioritization"
+    ],
+    "knowledgeTopicIds": [
+      "production-pipelines-constraints",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "production-iteration"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10010",
+    "whyRelevant": {
+      "zh-CN": "官方课程将策划岗位的拆解、规格表达和团队配合放在同一学习路径中，补足从设计到交付的衔接。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10010",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-008-introduction-to-game-narrative",
+    "title": {
+      "zh-CN": "游戏叙事初探"
+    },
+    "summary": {
+      "zh-CN": "介绍游戏叙事结构、信息呈现与情绪塑造，并讨论叙事和玩法之间的关系。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "narrative-architecture",
+      "narrative-exposition",
+      "experience-deconstruction",
+      "emotional-arc-shaping"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "audiovisual-semiotics"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10243",
+    "whyRelevant": {
+      "zh-CN": "官方课程目录以叙事基础、结构和表现为主线，是中文原始的结构化游戏叙事入口。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10243",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-009-game-psychology-mooc",
+    "title": {
+      "zh-CN": "游戏心理学"
+    },
+    "summary": {
+      "zh-CN": "从感知、动机与玩家体验理解游戏行为，并介绍心理学问题与研究方法。"
+    },
+    "sourceId": "chinese-university-mooc",
+    "capabilityIds": [
+      "player-perspective-taking",
+      "experience-deconstruction",
+      "research-question-framing"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://www.icourse163.org/course/CUC-1003769001",
+    "whyRelevant": {
+      "zh-CN": "中国大学 MOOC 的中国传媒大学课程提供明确教学大纲，把心理学概念与游戏体验和行为研究连接起来。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://www.icourse163.org/course/CUC-1003769001",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-010-interactive-works-summer",
+    "title": {
+      "zh-CN": "这是一个影响深远的选择！——迈入互动作品的夏天"
+    },
+    "summary": {
+      "zh-CN": "以互动作品案例讨论选择、分支、信息呈现和角色世界的一致性。"
+    },
+    "sourceId": "tencent-games-academy",
+    "capabilityIds": [
+      "choice-consequence-design",
+      "interactive-narrative-design",
+      "narrative-architecture",
+      "narrative-exposition",
+      "world-character-coherence"
+    ],
+    "knowledgeTopicIds": [
+      "narratology-agency-authorship",
+      "audiovisual-semiotics"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "talk",
+    "canonicalUrl": "https://gameinstitute.qq.com/course/detail/10191",
+    "whyRelevant": {
+      "zh-CN": "官方演讲实录以具体互动作品为对象，直接分析选择后果、分支结构与叙事呈现；本批仅保留这一条演讲。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://gameinstitute.qq.com/course/detail/10191",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-011-conversation-analysis-player-interaction",
+    "title": {
+      "zh-CN": "プレーヤー間相互作用モデル化のための会話分析手法の構築"
+    },
+    "summary": {
+      "zh-CN": "构建以会话分析观察和建模多人游戏中玩家互动的质性研究方法。"
+    },
+    "sourceId": "j-stage",
+    "capabilityIds": [
+      "player-behavior-observation",
+      "qualitative-evidence-synthesis",
+      "research-question-framing"
+    ],
+    "knowledgeTopicIds": [
+      "research-ethics-bias",
+      "organizational-dynamics-power"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.jstage.jst.go.jp/article/digraj/2/1/2_56/_article/-char/ja",
+    "whyRelevant": {
+      "zh-CN": "J-STAGE 摘要明确提出用会话分析处理多人游戏互动，为观察玩家协作和整理质性证据提供可复用方法。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.jstage.jst.go.jp/article/digraj/2/1/2_56/_article/-char/ja",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-012-prosocial-behavior-in-games",
+    "title": {
+      "zh-CN": "デジタルゲーム内の向社会的行動とプレイヤーの向社会性の関係に関する実証的研究"
+    },
+    "summary": {
+      "zh-CN": "通过实证研究考察游戏内亲社会行为与玩家自身亲社会倾向之间的关系。"
+    },
+    "sourceId": "j-stage",
+    "capabilityIds": [
+      "ethical-cultural-evaluation",
+      "player-behavior-observation",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.jstage.jst.go.jp/article/digraj/10/0/10_9/_article/-char/ja",
+    "whyRelevant": {
+      "zh-CN": "论文以数据检验游戏行为和玩家倾向的关系，适合训练对价值影响主张的谨慎分析。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.jstage.jst.go.jp/article/digraj/10/0/10_9/_article/-char/ja",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-013-action-game-mastery-emotion",
+    "title": {
+      "zh-CN": "即時的な反応を要求するゲームとその熟達が感情経験に与える影響"
+    },
+    "summary": {
+      "zh-CN": "比较即时反应型游戏及玩家熟练度如何影响情绪体验，为体验研究提供实证依据。"
+    },
+    "sourceId": "j-stage",
+    "capabilityIds": [
+      "emotional-arc-shaping",
+      "player-behavior-observation",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "player-motivation-difference"
+    ],
+    "resourceTopicIds": [
+      "research-player-experience"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.jstage.jst.go.jp/article/digraj/13/1/13_21/_article/-char/ja",
+    "whyRelevant": {
+      "zh-CN": "J-STAGE 摘要直接连接游戏的即时反应要求、熟练度和情绪经验，补充体验曲线的研究证据。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.jstage.jst.go.jp/article/digraj/13/1/13_21/_article/-char/ja",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-014-interpreting-digital-games",
+    "title": {
+      "zh-CN": "デジタルゲームの作品解釈に向けて"
+    },
+    "summary": {
+      "zh-CN": "讨论如何综合规则、影像和叙事信息，对数字游戏作品进行解释。"
+    },
+    "sourceId": "j-stage",
+    "capabilityIds": [
+      "narrative-exposition",
+      "multimodal-presentation-integration",
+      "experience-deconstruction"
+    ],
+    "knowledgeTopicIds": [
+      "audiovisual-semiotics",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "narrative-expression"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.jstage.jst.go.jp/article/digraj/3/1/3_51/_article/-char/ja",
+    "whyRelevant": {
+      "zh-CN": "论文把游戏解释问题扩展到规则、影像和叙事的组合，可用于训练多模态表达的拆解。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.jstage.jst.go.jp/article/digraj/3/1/3_51/_article/-char/ja",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-015-player-input-pulse-emotion",
+    "title": {
+      "zh-CN": "ビデオゲームプレイヤーの操作行動が脈波のカオス解析による心理状態と主観的感情に及ぼす影響"
+    },
+    "summary": {
+      "zh-CN": "结合操作行为、脉波分析与主观报告，研究游戏过程中的心理状态和情绪。"
+    },
+    "sourceId": "j-stage",
+    "capabilityIds": [
+      "player-behavior-observation",
+      "telemetry-interpretation",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [
+      "perception-attention-emotion",
+      "research-ethics-bias"
+    ],
+    "resourceTopicIds": [
+      "playtesting"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.jstage.jst.go.jp/article/digraj/4/2/4_1/_article/-char/ja",
+    "whyRelevant": {
+      "zh-CN": "论文把行为日志、生理指标与主观情绪并置，展示多类测试证据应如何交叉解释。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.jstage.jst.go.jp/article/digraj/4/2/4_1/_article/-char/ja",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
+  },
+  {
+    "id": "e-016-death-loss-games-student-growth",
+    "title": {
+      "zh-CN": "死と喪失をテーマにしたゲームが学生の自己成長感に及ぼす影響の検討"
+    },
+    "summary": {
+      "zh-CN": "研究死亡与失落主题游戏如何关联学生的自我成长感和意义体验。"
+    },
+    "sourceId": "j-stage",
+    "capabilityIds": [
+      "choice-consequence-design",
+      "interactive-narrative-design",
+      "ethical-cultural-evaluation",
+      "research-question-framing"
+    ],
+    "knowledgeTopicIds": [
+      "games-values-culture",
+      "research-ethics-bias",
+      "narratology-agency-authorship"
+    ],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.jstage.jst.go.jp/article/digraj/17/1/17_1/_article/-char/ja",
+    "whyRelevant": {
+      "zh-CN": "论文以敏感主题和玩家成长感为对象，提供讨论互动叙事选择、价值影响与研究伦理的原始证据。"
+    },
+    "originalLanguage": "ja",
+    "accessVersions": [
+      {
+        "language": "ja",
+        "url": "https://www.jstage.jst.go.jp/article/digraj/17/1/17_1/_article/-char/ja",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-11"
+      }
+    ]
   }
 ]

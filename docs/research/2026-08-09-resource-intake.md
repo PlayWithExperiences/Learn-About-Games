@@ -1,14 +1,14 @@
 # Learn About Games v0.2 — 首批成长资源证据 Intake
 
 - 研究日期：2026-08-09
-- 状态：研究证据 notebook；Batch A–D 已正规化为 148 个 catalog Work Item
-- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项
-- 确定性 canonical URL 去重后：**152 项研究记录**；正规化后为 **148 个 Work Item**
+- 状态：研究证据 notebook；Batch A–E 已正规化为 164 个 catalog Work Item
+- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项
+- 确定性 canonical URL 去重后：**168 项研究记录**；正规化后为 **164 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
 
-这份 notebook 是后续内容正规化的证据层，不是对 132 个链接逐项完成浏览器人工复核的声明。三批研究 agent 在 2026-08-09 进行了只读检索与页面核验；本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
+这份 notebook 是后续内容正规化的证据层，不是对全部 168 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–E 在 2026-08-11 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
 
 Source 与 Work Item 必须继续是不同实体。以下 sourceUrl 是研究批次捕获的来源证据 URL；它常与具体 Work Item 的 canonicalUrl 相同，因而不能直接当作 Source homepage。正规化时必须另建真实创作者、频道、组织、出版社或网站 Source，再由 Work Item 引用。
 
@@ -19,37 +19,38 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 ## 去重结论与待核 identity
 
 - 规则：host 小写并移除 www.、移除 fragment 与非根路径末尾 /、稳定排序 query；不跨 DOI、出版社页或不同平台猜测同一作品。
-- 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；没有可安全自动合并的完全重复 URL。
+- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–E 另增 36 条且没有命中既有 canonical URL。
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
 ## 当前正规化 catalog coverage
 
-- Work Item：148；Source：29；Access Version：161；Resource Topic：15。
-- 原始语言：en 137、ja 3、zh-Hans 8。
-- 可消费语言（Work Item 计，可重叠）：en 137、ja 3、zh-Hans 10。Apple 中文界面仍未计为中文内容。
-- 媒介：article 8、book 29、course 4、paper 10、podcast 11、talk 68、video 5、website 13。
+- Work Item：164；Source：31；Access Version：177；Resource Topic：15。
+- 原始语言：en 137、ja 9、zh-Hans 18。
+- 可消费语言（Work Item 计，可重叠）：en 138、ja 9、zh-Hans 20。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 148、ja 9、zh-Hans 20。
+- 媒介：article 8、book 29、course 13、paper 16、podcast 11、talk 69、video 5、website 13。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
 | 主主题 | Work Item |
 |---|---:|
 | 设计基础与概念 | 9 |
-| 系统与机制 | 9 |
-| 平衡与经济 | 8 |
-| 手感与反馈 | 7 |
-| 关卡与空间 | 20 |
-| Playtest 与游戏用户研究 | 11 |
-| 叙事与表达 | 13 |
+| 系统与机制 | 10 |
+| 平衡与经济 | 9 |
+| 手感与反馈 | 8 |
+| 关卡与空间 | 21 |
+| Playtest 与游戏用户研究 | 13 |
+| 叙事与表达 | 16 |
 | 原型与实验 | 7 |
-| 生产与迭代 | 7 |
+| 生产与迭代 | 8 |
 | 协作与团队 | 8 |
-| 领导与创意方向 | 6 |
-| 批判、价值观与历史语境 | 13 |
-| 研究方法与玩家体验 | 14 |
+| 领导与创意方向 | 7 |
+| 批判、价值观与历史语境 | 15 |
+| 研究方法与玩家体验 | 17 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 9 |
-| 合计 | 148 |
+| 合计 | 164 |
 
 ## 接受候选
 
@@ -289,9 +290,35 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | D-019<br>canonicalUrl=https://mitpress.mit.edu/9780262017138/characteristics-of-games/<br>title=Characteristics of Games | sourceName=MIT Press<br>sourceUrl=https://mitpress.mit.edu/ | mediaType=book<br>originalLanguage=en | language=en; accessModel=paid; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=design-fundamentals<br>whyRelevant=以玩家数量、规则、运气与技巧、奖励／投入等共同特征比较多种游戏。 | 出版方页当前标记精装绝版；不推断特定地区库存。 |
 | D-020<br>canonicalUrl=https://www.directingvideogames.com/2017/07/05/5-essential-qualities-video-game-creative-director/<br>title=5 Essential Qualities of a Video Game Creative Director | sourceName=Directing Video Games<br>sourceUrl=https://www.directingvideogames.com/ | mediaType=article<br>originalLanguage=en | language=en; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=leadership-creative-direction<br>whyRelevant=长期游戏导演从愿景、结构、创意工具、领导和生产理解概括职责。 | 作者原文。 |
 
+### Batch E：中文课程与日文原始论文补充（16）
+
+- `agent-reach doctor --json` 实测发现后端为 **Exa via mcporter**，网页核验后端为 **Jina Reader**；版本为 `v1.5.0`。
+- Exa 用于中日文定向发现；第 12 次精确查询触发免费 MCP 配额 HTTP 429 后即停止继续调用。余下候选只通过 Jina Reader 和腾讯游戏学堂、中国大学 MOOC、J-STAGE 官方页面核验，不以搜索摘要替代页面证据。
+- 本批锁定 16 个新 canonical identity：中文原始 10、日文原始 6；course 9、paper 6、talk 1。所有条目仅附一个原始语言 Access Version，`checkedAt=2026-08-11`。
+- canonical URL 按 host 小写、移除 fragment 与非根路径末尾 `/`、稳定排序 query 后与既有 148 项比较；无重复。Source homepage 与 Work canonical 分离，每项只归属一个 `resourceTopicId`。
+
+| Ref / canonical identity | Source evidence | Medium / original language | accessVersions | 主主题 / whyRelevant | notes |
+|---|---|---|---|---|---|
+| E-001<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10029<br>title=动作游戏设计入门 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=game-feel-feedback<br>whyRelevant=官方课时从动作体验进入视觉反馈与难度节奏，支持手感、表现反馈与挑战调优。 | 官方页有课程目录、课时与课程收益。 |
+| E-002<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10033<br>title=精准开发——为目标用户做游戏 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=课程覆盖目标用户、市场参照与产品卖点，补足市场证据进入设计决策的路径。 | 官方结构化课程。 |
+| E-003<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10034<br>title=项目管理的“六脉神剑” | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=leadership-creative-direction<br>whyRelevant=六个管理模块覆盖拆解、范围、计划、约束与团队对齐，把管理职责落到项目动作。 | 官方结构化课程。 |
+| E-004<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10028<br>title=游戏中关卡设计的那些事儿 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=level-spatial-design<br>whyRelevant=课程明确覆盖关卡构成、空间流线、玩家引导与制作验证。 | 直接补 navigation-wayfinding-design。 |
+| E-005<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10025<br>title=游戏系统策划基础 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=systems-mechanics<br>whyRelevant=课程以系统构成、规则和核心循环提供中文原始的系统设计入门路径。 | 官方结构化课程。 |
+| E-006<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10003<br>title=游戏数值设计基础 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=balance-economy<br>whyRelevant=课时从数值结构进入成长、经济和难度，为平衡与经济设计提供结构化入口。 | 官方结构化课程。 |
+| E-007<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10010<br>title=游戏策划的方方面面 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=production-iteration<br>whyRelevant=把策划职责、需求拆解、规格交接和跨职能协作放在同一学习路径。 | 官方结构化课程。 |
+| E-008<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10243<br>title=游戏叙事初探 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=narrative-expression<br>whyRelevant=课程以叙事基础、结构、信息呈现和情绪塑造为主线。 | 官方结构化课程。 |
+| E-009<br>canonicalUrl=https://www.icourse163.org/course/CUC-1003769001<br>title=游戏心理学 | sourceName=中国大学 MOOC<br>sourceUrl=https://www.icourse163.org/ | mediaType=course<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=中国传媒大学课程用明确大纲连接感知、动机、玩家体验与心理研究问题。 | 官方课程页；不把平台首页当 Work。 |
+| E-010<br>canonicalUrl=https://gameinstitute.qq.com/course/detail/10191<br>title=这是一个影响深远的选择！——迈入互动作品的夏天 | sourceName=腾讯游戏学堂<br>sourceUrl=https://gameinstitute.qq.com/ | mediaType=talk<br>originalLanguage=zh-Hans | language=zh-Hans; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=narrative-expression<br>whyRelevant=以具体互动作品分析选择后果、分支、信息呈现和角色世界的一致性。 | 官方页明确标为“演讲实录”；本批只保留这一条 talk。 |
+| E-011<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/2/1/2_56/_article/-char/ja<br>title=プレーヤー間相互作用モデル化のための会話分析手法の構築 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=playtesting<br>whyRelevant=以会话分析观察和建模多人游戏互动，为玩家行为观察与质性证据整理提供方法。 | J-STAGE 题名、作者、摘要与 PDF；页面标记ジャーナル フリー。 |
+| E-012<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/10/0/10_9/_article/-char/ja<br>title=デジタルゲーム内の向社会的行動とプレイヤーの向社会性の関係に関する実証的研究 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=criticism-values-history<br>whyRelevant=用实证数据检验游戏内亲社会行为与玩家倾向的关系，训练对价值影响主张的谨慎分析。 | 官方期刊页与 PDF 可访问。 |
+| E-013<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/13/1/13_21/_article/-char/ja<br>title=即時的な反応を要求するゲームとその熟達が感情経験に与える影響 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=research-player-experience<br>whyRelevant=直接研究即时反应要求、玩家熟练度和情绪经验，为体验曲线补充原始证据。 | 官方期刊页与 PDF 可访问。 |
+| E-014<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/3/1/3_51/_article/-char/ja<br>title=デジタルゲームの作品解釈に向けて | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=narrative-expression<br>whyRelevant=综合规则、影像和叙事信息讨论数字游戏作品解释，补足多模态表达拆解。 | 官方期刊页与 PDF 可访问。 |
+| E-015<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/4/2/4_1/_article/-char/ja<br>title=ビデオゲームプレイヤーの操作行動が脈波のカオス解析による心理状態と主観的感情に及ぼす影響 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=playtesting<br>whyRelevant=把操作行为、生理指标与主观报告并置，展示多类测试证据的交叉解释。 | 官方期刊页与 PDF 可访问。 |
+| E-016<br>canonicalUrl=https://www.jstage.jst.go.jp/article/digraj/17/1/17_1/_article/-char/ja<br>title=死と喪失をテーマにしたゲームが学生の自己成長感に及ぼす影響の検討 | sourceName=J-STAGE<br>sourceUrl=https://www.jstage.jst.go.jp/ | mediaType=paper<br>originalLanguage=ja | language=ja; accessModel=free; versionRelation=original; presentationMode=original; checkedAt=2026-08-11 | topic=criticism-values-history<br>whyRelevant=以死亡与失落主题和玩家成长感为对象，连接互动选择、价值影响与研究伦理。 | 官方期刊页与 PDF 可访问。 |
+
 ## 拒绝与待核证据
 
-以下保留三批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
+以下保留五批原始结论。拒绝仅表示不作为当前 Work Item 入库；待核表示 canonical identity、权利链、语言或访问事实不足。
 
 ### Batch A
 
@@ -329,6 +356,14 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - Game Developer 的同主题泛搜索结果、频道首页与聚合页：拒绝。只保留能够锁定作者、题名和具体正文的 Work Item。
 - 未核验的 YouTube 搬运、字幕与二次上传：拒绝。本机 `agent-reach doctor` 显示 YouTube 字幕后端未安装，不能把搜索摘要冒充内容核验。
 
+### Batch E
+
+- 腾讯游戏学堂 `10056`、`10141`、`10123`、`10200`、`10202`：暂不纳入。页面均明确标为“演讲实录”；虽然主题有用，但继续收录会加剧既有 talk 过量，本批改用九门有目录和课时的结构化课程。
+- 日本高校的游戏相关专业、项目和招生介绍页：拒绝。它们描述学位或入学路径，不是可独立学习、可长期引用的具体 Work Item。
+- J-STAGE `digraj/7/2/7_23`：暂不纳入。研究问题与本批较新的 `digraj/13/1/13_21` 高度重叠，保留后者避免近重复证据。
+- J-STAGE 的整卷、会议录与检索集合页：拒绝。它们是聚合身份，不应替代题名、作者、摘要和 PDF 均可核验的单篇论文。
+- Exa 配额耗尽后的搜索摘要候选：不纳入。HTTP 429 之后只接受能由 Jina Reader 或官方页面独立复核的候选。
+
 ## 访问、地区与版权疑点
 
 ### Batch A
@@ -356,6 +391,14 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 - ACM、Elsevier、Springer、Wiley 的 DOI 落地页稳定，但全文通常是付费或机构订阅；不要把摘要可见写成全文免费。
 - MIT Press 的 *Optimizing Play* 页面标明开放获取；其余 MIT Press 图书应按具体版本记录 paid，不能因存在 sample chapter 写为整书 free。
 - 拒绝收录未经权利方确认的搬运、扫描件、字幕下载与“熟肉”视频。
+
+### Batch E
+
+- 腾讯游戏学堂九门课程和一篇演讲实录的官方详情页在 2026-08-11 可读取元数据、课程目录或正文；具体视频播放仍可能受账号登录、地区和平台政策影响，因此 `free` 只描述本次核验到的公开入口，不承诺永久或全球可用。
+- 中国大学 MOOC《游戏心理学》的官方课程页和教学大纲在 2026-08-11 可访问；开课周期、选课、视频播放和证书条件可能变化，未将这些变化推断为新的 Access Version。
+- 六篇 J-STAGE 页面均在 2026-08-11 标记 `ジャーナル フリー` 并提供原文 PDF；本批只记录日文原始版本，未因页面存在英文导航或英文摘要而声称有英文全文版本。
+- Exa via mcporter 在第 12 次查询触发免费 MCP 配额 HTTP 429；后续核验使用 Jina Reader 和官方页面。该限制缩小了候选发现面，但不降低已收录 16 项的页面证据要求。
+- 本批不转载课程、演讲或论文正文，只记录 identity、公开元数据、访问入口和与能力图谱的关联理由。
 
 ## 尚待核 canonical links
 

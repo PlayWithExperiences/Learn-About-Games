@@ -453,7 +453,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(148);
+    expect(resources).toHaveLength(164);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -580,6 +580,79 @@ describe('raw product catalog data', () => {
     expect(consumableLanguageCount('zh-Hans')).toBeGreaterThanOrEqual(10);
     expect(capabilityCount('encounter-space-composition')).toBeGreaterThanOrEqual(3);
     expect(capabilityCount('monetization-experience-alignment')).toBeGreaterThanOrEqual(3);
+  });
+
+  it('adds a second bounded multilingual expansion without growing the talk catalog', () => {
+    const expansionCanonicalUrls = [
+      'https://gameinstitute.qq.com/course/detail/10029',
+      'https://gameinstitute.qq.com/course/detail/10033',
+      'https://gameinstitute.qq.com/course/detail/10034',
+      'https://gameinstitute.qq.com/course/detail/10028',
+      'https://gameinstitute.qq.com/course/detail/10025',
+      'https://gameinstitute.qq.com/course/detail/10003',
+      'https://gameinstitute.qq.com/course/detail/10010',
+      'https://gameinstitute.qq.com/course/detail/10243',
+      'https://www.icourse163.org/course/CUC-1003769001',
+      'https://gameinstitute.qq.com/course/detail/10191',
+      'https://www.jstage.jst.go.jp/article/digraj/2/1/2_56/_article/-char/ja',
+      'https://www.jstage.jst.go.jp/article/digraj/10/0/10_9/_article/-char/ja',
+      'https://www.jstage.jst.go.jp/article/digraj/13/1/13_21/_article/-char/ja',
+      'https://www.jstage.jst.go.jp/article/digraj/3/1/3_51/_article/-char/ja',
+      'https://www.jstage.jst.go.jp/article/digraj/4/2/4_1/_article/-char/ja',
+      'https://www.jstage.jst.go.jp/article/digraj/17/1/17_1/_article/-char/ja',
+    ];
+    const expansion = resources.filter(({ canonicalUrl }) =>
+      expansionCanonicalUrls.includes(canonicalUrl),
+    );
+    const countBy = (field: 'mediaType' | 'originalLanguage', value: string) =>
+      resources.filter((resource) => resource[field] === value).length;
+    const capabilityCount = (capabilityId: string) =>
+      resources.filter(({ capabilityIds }) => capabilityIds.includes(capabilityId)).length;
+    const consumableLanguageCount = (language: string) =>
+      resources.filter(({ accessVersions }) =>
+        accessVersions.some((version) => version.language === language),
+      ).length;
+    const accessVersionLanguageCount = (language: string) =>
+      resources.flatMap(({ accessVersions }) => accessVersions)
+        .filter((version) => version.language === language).length;
+
+    expect(resources).toHaveLength(164);
+    expect(sources).toHaveLength(31);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(177);
+    expect(expansion).toHaveLength(16);
+    expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
+      new Set(expansionCanonicalUrls),
+    );
+    expect(expansion.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
+    expect(expansion.every(({ accessVersions }) => accessVersions.length === 1)).toBe(true);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'course')).toHaveLength(9);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'paper')).toHaveLength(6);
+    expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(1);
+    expect(expansion.filter(({ originalLanguage }) => originalLanguage === 'zh-Hans')).toHaveLength(10);
+    expect(expansion.filter(({ originalLanguage }) => originalLanguage === 'ja')).toHaveLength(6);
+
+    expect(countBy('mediaType', 'course')).toBe(13);
+    expect(countBy('mediaType', 'paper')).toBe(16);
+    expect(countBy('mediaType', 'talk')).toBe(69);
+    expect(countBy('originalLanguage', 'en')).toBe(137);
+    expect(countBy('originalLanguage', 'zh-Hans')).toBe(18);
+    expect(countBy('originalLanguage', 'ja')).toBe(9);
+    expect(consumableLanguageCount('en')).toBe(138);
+    expect(consumableLanguageCount('zh-Hans')).toBe(20);
+    expect(consumableLanguageCount('ja')).toBe(9);
+    expect(accessVersionLanguageCount('en')).toBe(148);
+    expect(accessVersionLanguageCount('zh-Hans')).toBe(20);
+    expect(accessVersionLanguageCount('ja')).toBe(9);
+
+    expect(capabilityCount('choice-consequence-design')).toBe(3);
+    expect(capabilityCount('player-behavior-observation')).toBe(5);
+    expect(capabilityCount('market-reference-analysis')).toBe(3);
+    expect(capabilityCount('narrative-exposition')).toBe(5);
+    expect(capabilityCount('navigation-wayfinding-design')).toBe(3);
+    expect(capabilityCount('emotional-arc-shaping')).toBe(5);
+    expect(capabilityCount('interactive-narrative-design')).toBe(5);
+    expect(capabilityCount('qualitative-evidence-synthesis')).toBe(6);
+    expect(capabilityCount('value-proposition-framing')).toBe(4);
   });
 
   it('merges known language versions and applies conservative access facts', () => {

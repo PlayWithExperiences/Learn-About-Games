@@ -294,9 +294,9 @@
     },
     "kind": "organization",
     "summary": {
-      "zh-CN": "腾讯游戏学堂在哔哩哔哩的官方账号。"
+      "zh-CN": "腾讯面向游戏开发者发布课程、演讲实录与行业学习内容的官方平台。"
     },
-    "homepage": "https://space.bilibili.com/425475475",
+    "homepage": "https://gameinstitute.qq.com/",
     "languages": [
       "zh-Hans"
     ]
@@ -435,6 +435,37 @@
     "homepage": "https://research.chalmers.se/",
     "languages": [
       "en"
+    ]
+  },
+  {
+    "id": "j-stage",
+    "name": {
+      "zh-CN": "J-STAGE",
+      "en": "J-STAGE"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "日本科学技术振兴机构运营的学术期刊与会议论文官方发布平台。"
+    },
+    "homepage": "https://www.jstage.jst.go.jp/",
+    "languages": [
+      "ja",
+      "en"
+    ]
+  },
+  {
+    "id": "chinese-university-mooc",
+    "name": {
+      "zh-CN": "中国大学 MOOC",
+      "en": "Chinese University MOOC"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "汇集中国高校公开课程的官方在线学习平台。"
+    },
+    "homepage": "https://www.icourse163.org/",
+    "languages": [
+      "zh-Hans"
     ]
   }
 ]
