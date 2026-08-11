@@ -29,6 +29,9 @@ const layout = buildEgdsMapLayout({
 });
 const frameworkNodesById = new Map(egdsFrameworkNodes.map((node) => [node.id, node]));
 const capabilitiesById = new Map(capabilities.map((capability) => [capability.id, capability]));
+const compareCodeUnits = (left: string, right: string) => left < right ? -1 : left > right ? 1 : 0;
+const orderedCapabilityRelations = [...capabilityRelations]
+  .sort((left, right) => compareCodeUnits(left.id, right.id));
 const allEntities = [
   ...capabilities.map((entity) => ({
     ...entity,
@@ -44,18 +47,18 @@ const allEntities = [
     kindLabel: '知识议题',
     href: sitePath(`topics/${entity.id}/`),
   })),
-];
+].sort((left, right) => compareCodeUnits(left.key, right.key));
 const entitiesByFrameworkNodeId = new Map(egdsFrameworkNodes.map((node) => [
   node.id,
   allEntities
     .filter((entity) => entity.frameworkNodeId === node.id)
-    .sort((left, right) => left.key.localeCompare(right.key)),
+    .sort((left, right) => compareCodeUnits(left.key, right.key)),
 ]));
 const frameworkChildrenById = new Map(egdsFrameworkNodes.map((node) => [
   node.id,
   egdsFrameworkNodes
     .filter(({ parentNodeId }) => parentNodeId === node.id)
-    .sort((left, right) => left.order - right.order || left.id.localeCompare(right.id)),
+    .sort((left, right) => left.order - right.order || compareCodeUnits(left.id, right.id)),
 ]));
 const outlineRoot = egdsFrameworkNodes.find(({ parentNodeId }) => !parentNodeId);
 const outlineBranches = outlineRoot
@@ -86,7 +89,7 @@ const mapData = JSON.stringify({
   frameworkRelations: egdsFrameworkRelations,
   capabilities,
   knowledgeTopics,
-  capabilityRelations,
+  capabilityRelations: orderedCapabilityRelations,
 }).replaceAll('<', '\\u003c');
 
 const boxStyle = (box: { x: number; y: number; width: number; height: number }) =>
@@ -96,6 +99,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
 <section
   class="capability-map"
   data-egds-map
+  data-layout-mode={layout.mode}
   data-site-base={sitePath()}
   aria-labelledby="capability-map-title"
 >
@@ -151,6 +155,8 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
 
       <svg
         class="capability-map__structure"
+        width={layout.width}
+        height={layout.height}
         viewBox={`0 0 ${layout.width} ${layout.height}`}
         aria-hidden="true"
       >
@@ -185,11 +191,12 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
             vector-effect="non-scaling-stroke"
           ></path>
         ))}
-        <path data-egds-expansion-path style="display:none" vector-effect="non-scaling-stroke"></path>
       </svg>
 
       <svg
         class="capability-map__relations"
+        width={layout.width}
+        height={layout.height}
         viewBox={`0 0 ${layout.width} ${layout.height}`}
         aria-label="当前选择的 Capability 直接关系"
       >
@@ -198,7 +205,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
             <path d="M 0 0 L 8 4 L 0 8 Z"></path>
           </marker>
         </defs>
-        {capabilityRelations.map((relation) => (
+        {orderedCapabilityRelations.map((relation) => (
           <path
             class:list={['map-relation', `map-relation--${relation.type}`]}
             data-capability-relation={relation.id}
@@ -257,11 +264,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
         })}
       </div>
 
-      <section class="capability-map__expansion" data-map-expansion aria-labelledby="map-expansion-title" hidden>
-        <header class="capability-map__expansion-heading" data-expansion-heading>
-          <span>展开的能力群</span>
-          <h3 id="map-expansion-title" data-expansion-title></h3>
-        </header>
+      <section class="capability-map__expansion" data-map-expansion aria-label="聚焦能力与知识议题" hidden>
         <div class="capability-map__entities">
           {allEntities.map((entity) => (
             <article
@@ -447,11 +450,11 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
     </ol>
 
     <details class="egds-outline-relations" data-outline-relations-disclosure>
-      <summary>Capability 直接关系，共 {capabilityRelations.length} 条</summary>
+      <summary>Capability 直接关系，共 {orderedCapabilityRelations.length} 条</summary>
       <div>
         <p>支持为有向作用，互补为无向关系。二者都不规定学习顺序。</p>
         <ol>
-          {capabilityRelations.map((relation) => (
+          {orderedCapabilityRelations.map((relation) => (
             <li data-outline-relation={relation.id} data-relation-type={relation.type}>
               <a href={sitePath(`capabilities/${relation.fromId}/`)}>{capabilitiesById.get(relation.fromId)?.name['zh-CN']}</a>
               <strong>{relationLabels[relation.type]}</strong>
@@ -527,10 +530,11 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       ...payload.knowledgeTopics.map((item) => ({ ...item, kind: 'knowledge-topic' as const })),
     ];
     const entityFrameworkNodeIds = new Set(allEntities.map(({ frameworkNodeId }) => frameworkNodeId));
+    const compareCodeUnits = (left: string, right: string) => left < right ? -1 : left > right ? 1 : 0;
     const returnButton = root.querySelector<HTMLButtonElement>('[data-return-map-overview]');
     const status = root.querySelector<HTMLElement>('[data-map-status]');
-    const expansionTitle = root.querySelector<HTMLElement>('[data-expansion-title]');
-    const expansionPath = root.querySelector<SVGPathElement>('[data-egds-expansion-path]');
+    const structureSvg = root.querySelector<SVGSVGElement>('.capability-map__structure');
+    const relationsSvg = root.querySelector<SVGSVGElement>('.capability-map__relations');
     const selectButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-select-map-entity]'));
     const responsiveMedia = window.matchMedia('(max-width: 1227px)');
     const outlineDetailsById = new Map(
@@ -634,7 +638,7 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
       const directRelations = kind === 'capability'
         ? payload.capabilityRelations
           .filter(({ fromId, toId }) => fromId === id || toId === id)
-          .sort((left, right) => left.id.localeCompare(right.id))
+          .sort((left, right) => compareCodeUnits(left.id, right.id))
         : [];
       const kindElement = inspector.querySelector<HTMLElement>('[data-map-inspector-kind]');
       const nameElement = inspector.querySelector<HTMLElement>('[data-map-inspector-name]');
@@ -679,20 +683,78 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
         expandedFrameworkNodeId: state.expandedFrameworkNodeId,
         selectedCapabilityId,
       });
+      root.dataset.layoutMode = nextLayout.mode;
+      if (nextLayout.focusedBranchId) root.dataset.focusedBranchId = nextLayout.focusedBranchId;
+      else delete root.dataset.focusedBranchId;
+      scene.style.width = `${nextLayout.width}px`;
       scene.style.height = `${nextLayout.height}px`;
       canvas.style.setProperty('--map-height', `${nextLayout.height}px`);
+      [structureSvg, relationsSvg].forEach((svg) => {
+        if (!svg) return;
+        svg.setAttribute('width', String(nextLayout.width));
+        svg.setAttribute('height', String(nextLayout.height));
+        svg.setAttribute('viewBox', `0 0 ${nextLayout.width} ${nextLayout.height}`);
+      });
       expansion.hidden = !state.expandedFrameworkNodeId;
       if (returnButton) returnButton.hidden = !state.expandedFrameworkNodeId;
       if (state.selectedEntityKey) root.dataset.selectedEntityKey = state.selectedEntityKey;
       else delete root.dataset.selectedEntityKey;
       syncOutlineDisclosures();
 
+      const frameworkBoxesById = new Map(nextLayout.frameworkBoxes.map((box) => [box.id, box]));
       root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((element) => {
+        const id = element.dataset.egdsFrameworkNode;
+        const box = id ? frameworkBoxesById.get(id) : undefined;
+        element.hidden = !box;
+        if (box) setBox(element, box);
         const expanded = element.dataset.egdsFrameworkNode === state.expandedFrameworkNodeId;
+        const inFocusContext = nextLayout.mode === 'focus' && (
+          element.dataset.egdsFrameworkNode === nextLayout.focusedBranchId
+          || element.dataset.egdsFrameworkNode === state.expandedFrameworkNodeId
+        );
+        element.toggleAttribute('data-focus-context', inFocusContext);
         if (expanded) element.dataset.expanded = 'true';
         else delete element.dataset.expanded;
         const button = element.querySelector<HTMLButtonElement>('[data-expand-framework-node]');
         if (button) button.setAttribute('aria-expanded', String(expanded));
+      });
+
+      const territoriesById = new Map(nextLayout.branchTerritories.map((territory) => [territory.branchId, territory]));
+      root.querySelectorAll<HTMLElement>('[data-egds-territory]').forEach((element) => {
+        const id = element.dataset.egdsTerritory;
+        const territory = id ? territoriesById.get(id) : undefined;
+        element.hidden = !territory;
+        if (territory) setBox(element, territory);
+      });
+      root.querySelectorAll<HTMLElement>('[data-egds-subterritory]').forEach((element) => {
+        const territory = Array.from(territoriesById.values())
+          .map(({ nestedTerritory }) => nestedTerritory)
+          .find((candidate) => candidate?.id === element.dataset.egdsSubterritory);
+        element.hidden = !territory;
+        if (territory) setBox(element, territory);
+      });
+
+      const structuralPathsById = new Map(nextLayout.structuralPaths.map((path) => [path.id, path]));
+      root.querySelectorAll<SVGPathElement>('[data-egds-structural-path]').forEach((element) => {
+        const id = element.dataset.egdsStructuralPath;
+        const path = id ? structuralPathsById.get(id) : undefined;
+        element.toggleAttribute('hidden', !path);
+        if (path) {
+          element.setAttribute('d', path.path);
+          element.dataset.fromPort = path.fromPort;
+          element.dataset.toPort = path.toPort;
+        }
+      });
+      const processPathsById = new Map(nextLayout.processPaths.map((path) => [path.id, path]));
+      root.querySelectorAll<SVGPathElement>('[data-egds-process-path]').forEach((element) => {
+        const id = element.dataset.egdsProcessPath;
+        const path = id ? processPathsById.get(id) : undefined;
+        element.toggleAttribute('hidden', !path);
+        if (path) {
+          element.setAttribute('d', path.path);
+          element.dataset.fromPort = path.fromPort;
+          element.dataset.toPort = path.toPort;
+        }
       });
 
       const entityBoxesByKey = new Map(nextLayout.entityBoxes.map((box) => [box.key, box]));
@@ -731,22 +793,9 @@ const boxStyle = (box: { x: number; y: number; width: number; height: number }) 
           element.removeAttribute('d');
         }
       });
-      if (expansionPath) {
-        if (nextLayout.expansionLeaderPath) {
-          expansionPath.removeAttribute('hidden');
-          expansionPath.style.removeProperty('display');
-          expansionPath.setAttribute('d', nextLayout.expansionLeaderPath.path);
-        } else {
-          expansionPath.setAttribute('hidden', '');
-          expansionPath.style.removeProperty('display');
-          expansionPath.removeAttribute('d');
-        }
-      }
-
       const frameworkNode = state.expandedFrameworkNodeId
         ? frameworkById.get(state.expandedFrameworkNodeId)
         : undefined;
-      if (expansionTitle) expansionTitle.textContent = frameworkNode?.name['zh-CN'] ?? '';
       if (status) {
         status.textContent = frameworkNode
           ? `当前展开：${frameworkNode.name['zh-CN']}。同一时间只显示这一组条目。`

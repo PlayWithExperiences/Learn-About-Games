@@ -203,6 +203,7 @@ test('expands exactly one framework container and preserves entity control seman
     await expect(controls.locator('button a, a button')).toHaveCount(0);
   }
 
+  await map.getByRole('button', { name: '返回全图', exact: true }).click();
   await map.getByRole('button', { name: /叙事，展开/ }).click();
   await expect(map.locator('#egds-playtest-evidence-iteration')).not.toHaveAttribute('data-expanded', 'true');
   await expect(map.locator('#egds-narrative-lever')).toHaveAttribute('data-expanded', 'true');
@@ -273,6 +274,77 @@ test('returning to the overview clears expansion, selection, inspector and proje
   await expect(map.locator('[data-map-inspector]')).toBeHidden();
   await expect(map).not.toHaveAttribute('data-selected-entity-key', /.+/);
   await expect(expandButton).toBeFocused();
+});
+
+test('horizontal focus synchronizes scene geometry and returns to the exact overview with Career state', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+  const map = page.locator('[data-egds-map]');
+  const scene = map.locator('[data-egds-scene]');
+  const geometrySnapshot = () => scene.evaluate((element) => ({
+    scene: {
+      width: element.style.width,
+      height: element.style.height,
+    },
+    svgs: Array.from(element.querySelectorAll<SVGSVGElement>(
+      ':scope > .capability-map__structure, :scope > .capability-map__relations',
+    )).map((svg) => ({
+      width: svg.getAttribute('width'),
+      height: svg.getAttribute('height'),
+      viewBox: svg.getAttribute('viewBox'),
+    })),
+    framework: Array.from(element.querySelectorAll<HTMLElement>('[data-egds-framework-node]'))
+      .map((node) => ({
+        id: node.dataset.egdsFrameworkNode,
+        hidden: node.hidden,
+        x: node.style.getPropertyValue('--box-x'),
+        y: node.style.getPropertyValue('--box-y'),
+        width: node.style.getPropertyValue('--box-width'),
+        height: node.style.getPropertyValue('--box-height'),
+      })),
+  }));
+  const overview = await geometrySnapshot();
+
+  await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:apply-career-lens', {
+    bubbles: true,
+    detail: {
+      profileId: 'horizontal-fixture',
+      nodes: [{ capabilityId: 'rules-system-modeling', priority: 'core', responsibility: 'execute' }],
+    },
+  })));
+  const expandButton = map.locator('[data-expand-framework-node="gameplay-challenges-lever"]');
+  await expandButton.click();
+
+  await expect(map).toHaveAttribute('data-layout-mode', 'focus');
+  await expect(map.locator('[data-capability-map-canvas] [data-egds-framework-node]:not([hidden])')).toHaveCount(8);
+  await expect(map.locator('[data-capability-map-canvas] [data-egds-branch]:not([hidden])')).toHaveCount(5);
+  await expect(map.locator('[data-map-entity]:not([hidden])')).toHaveCount(14);
+  const horizontalPlacement = await scene.evaluate((element) => {
+    const owner = element.querySelector<HTMLElement>('[data-egds-framework-node="gameplay-challenges-lever"]')!
+      .getBoundingClientRect();
+    const entities = Array.from(element.querySelectorAll<HTMLElement>('[data-map-entity]:not([hidden])'))
+      .map((entity) => entity.getBoundingClientRect());
+    return entities.map(({ left }) => left - owner.right);
+  });
+  expect(horizontalPlacement.every((gap) => gap >= 19.5)).toBe(true);
+  await assertNoPageOverflow(page);
+
+  const focusGeometry = await geometrySnapshot();
+  expect(focusGeometry.svgs).toHaveLength(2);
+  for (const svg of focusGeometry.svgs) {
+    expect(svg.width).toBe(Number.parseFloat(focusGeometry.scene.width).toString());
+    expect(svg.height).toBe(Number.parseFloat(focusGeometry.scene.height).toString());
+    expect(svg.viewBox).toBe(`0 0 ${svg.width} ${svg.height}`);
+  }
+
+  await map.getByRole('button', { name: '返回全图', exact: true }).click();
+  await expect(map).toHaveAttribute('data-layout-mode', 'overview');
+  expect(await geometrySnapshot()).toEqual(overview);
+  await assertNoPageOverflow(page);
+  await expect(expandButton).toBeFocused();
+  await expect(map).toHaveAttribute('data-career-profile-id', 'horizontal-fixture');
+  await expect(map.locator('[data-capability-map-canvas] [data-map-entity-key="capability:rules-system-modeling"]'))
+    .toHaveAttribute('data-role-priority', 'core');
 });
 
 test('public map events apply capability-only career roles and focus through the root owner', async ({ page }) => {

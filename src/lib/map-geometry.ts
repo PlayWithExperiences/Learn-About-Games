@@ -49,15 +49,10 @@ export type EgdsBranchTerritory = Readonly<{
 
 export type EgdsPortSide = 'north' | 'east' | 'south' | 'west';
 
-export type EgdsExpansionLeaderPath = Readonly<{
-  id: string;
-  fromKey: EgdsMapBox['key'];
-  toKey: `expansion-heading:${string}`;
-  path: string;
-}>;
-
 export type EgdsMapLayout = Readonly<{
-  width: 1180;
+  mode: 'overview' | 'focus';
+  focusedBranchId?: string;
+  width: number;
   height: number;
   expandedFrameworkNodeId?: string;
   frameworkBoxes: EgdsMapBox[];
@@ -72,7 +67,6 @@ export type EgdsMapLayout = Readonly<{
     relationId: string;
     relationType: 'supports' | 'complements';
   }>>;
-  expansionLeaderPath?: EgdsExpansionLeaderPath;
   externalEntries: Array<Readonly<{ id: string; targetPath: 'atlas/' }>>;
 }>;
 
@@ -93,8 +87,8 @@ export type BuildEgdsMapLayoutInput = Readonly<{
 type EgdsAnchor = readonly [x: number, y: number, width: number, height: number];
 
 export const egdsOverviewGrid = {
-  childColumns: [390, 580, 770, 960],
-  childWidth: 170,
+  childColumns: [360, 510, 660, 810],
+  childWidth: 130,
   columnGap: 20,
 } as const;
 
@@ -104,60 +98,48 @@ const childAnchor = (
   height = 44,
 ): EgdsAnchor => [egdsOverviewGrid.childColumns[column], y, egdsOverviewGrid.childWidth, height];
 
-const childSpanAnchor = (
-  column: 0 | 1 | 2 | 3,
-  span: 2 | 3 | 4,
-  y: number,
-  height = 44,
-): EgdsAnchor => [
-  egdsOverviewGrid.childColumns[column],
-  y,
-  egdsOverviewGrid.childWidth * span + egdsOverviewGrid.columnGap * (span - 1),
-  height,
-];
-
 const egdsAnchors: Readonly<Record<string, EgdsAnchor>> = {
-  'egds-root': [20, 352, 130, 60],
-  'experience-design': [180, 80, 180, 54],
-  'from-plan-to-ship': [180, 220, 180, 54],
-  'with-team': [180, 360, 180, 54],
-  'product-profit': [180, 500, 180, 54],
-  'beyond-games': [180, 630, 180, 54],
-  'experience-journey': childAnchor(0, 20),
-  perception: childAnchor(0, 85),
-  rationalization: childAnchor(1, 85),
-  deconstruction: childAnchor(2, 85),
-  reconstruction: childAnchor(3, 85),
-  'narrative-lever': childAnchor(1, 145, 42),
-  'aesthetics-lever': childAnchor(2, 145, 42),
-  'gameplay-challenges-lever': childAnchor(3, 145, 42),
-  'mindset-problem-solving-tools': childAnchor(0, 225),
-  'prototype-production-breakdown': childAnchor(1, 225),
-  'playtest-evidence-iteration': childAnchor(2, 225),
-  'tradeoff-specification-delivery': childAnchor(3, 225),
-  'vision-direction-decisions': childAnchor(0, 365),
-  'alignment-communication': childAnchor(1, 365),
-  'leadership-management': childAnchor(2, 365),
-  'feedback-collaboration': childAnchor(3, 365),
-  'audience-positioning-cluster': childAnchor(0, 505),
-  'market-opportunity': childAnchor(1, 505),
-  'value-exchange': childAnchor(2, 505),
-  'monetization-alignment': childAnchor(3, 505),
-  'values-culture': childAnchor(0, 635),
-  'innovation-possibility-space': childSpanAnchor(2, 2, 635),
+  'egds-root': [20, 343, 130, 60],
+  'experience-design': [180, 66, 160, 54],
+  'from-plan-to-ship': [180, 210, 160, 54],
+  'with-team': [180, 350, 160, 54],
+  'product-profit': [180, 490, 160, 54],
+  'beyond-games': [180, 626, 160, 54],
+  'experience-journey': [360, 20, 180, 54],
+  perception: childAnchor(0, 82, 44),
+  rationalization: childAnchor(1, 82, 44),
+  deconstruction: childAnchor(2, 82, 44),
+  reconstruction: childAnchor(3, 82, 44),
+  'narrative-lever': [960, 20, 200, 42],
+  'aesthetics-lever': [960, 76, 200, 42],
+  'gameplay-challenges-lever': [960, 132, 200, 42],
+  'mindset-problem-solving-tools': [360, 195, 170, 44],
+  'prototype-production-breakdown': [550, 195, 170, 44],
+  'playtest-evidence-iteration': [360, 249, 170, 44],
+  'tradeoff-specification-delivery': [550, 249, 170, 44],
+  'vision-direction-decisions': [360, 335, 170, 44],
+  'alignment-communication': [550, 335, 170, 44],
+  'leadership-management': [360, 389, 170, 44],
+  'feedback-collaboration': [550, 389, 170, 44],
+  'audience-positioning-cluster': [360, 475, 170, 44],
+  'market-opportunity': [550, 475, 170, 44],
+  'value-exchange': [360, 529, 170, 44],
+  'monetization-alignment': [550, 529, 170, 44],
+  'values-culture': [360, 620, 170, 44],
+  'innovation-possibility-space': [550, 620, 360, 44],
 };
 
 const egdsOverviewHeight = 720;
-const egdsExpansionTop = 724;
-const egdsExpansionMetrics = {
-  headingHeight: 72,
-  bottomPadding: 24,
-  x: 210,
-  width: 280,
-  height: 52,
-  columns: 3,
-  columnGap: 24,
-  rowGap: 16,
+const structuralGap = 20;
+const egdsFocusMetrics = {
+  firstAncestryX: 360,
+  ancestryWidth: 170,
+  entityHeight: 58,
+  columnGap: 20,
+  rowGap: 12,
+  top: 20,
+  rightPadding: 20,
+  bottomPadding: 20,
 } as const;
 
 const egdsKey = (kind: EgdsBoxKind, id: string) => `${kind}:${id}` as EgdsMapBox['key'];
@@ -197,12 +179,14 @@ const boundsAround = (
   boxes: readonly EgdsMapBox[],
   horizontalPadding: number,
   verticalPadding: number,
+  width: number,
+  height: number,
 ) => {
   if (boxes.length === 0) throw new Error('Cannot derive territory bounds without boxes');
   const left = Math.max(0, Math.min(...boxes.map(({ x }) => x)) - horizontalPadding);
   const top = Math.max(0, Math.min(...boxes.map(({ y }) => y)) - verticalPadding);
-  const right = Math.min(1180, Math.max(...boxes.map(({ x, width }) => x + width)) + horizontalPadding);
-  const bottom = Math.min(egdsOverviewHeight, Math.max(...boxes.map(({ y, height }) => y + height)) + verticalPadding);
+  const right = Math.min(width, Math.max(...boxes.map(({ x, width }) => x + width)) + horizontalPadding);
+  const bottom = Math.min(height, Math.max(...boxes.map(({ y, height }) => y + height)) + verticalPadding);
   return { x: left, y: top, width: right - left, height: bottom - top };
 };
 
@@ -210,6 +194,8 @@ const deriveBranchTerritories = (
   frameworkNodes: readonly EgdsFrameworkNodeInput[],
   frameworkRelations: readonly EgdsFrameworkRelationInput[],
   frameworkBoxesById: ReadonlyMap<string, EgdsMapBox>,
+  width: number,
+  height: number,
 ): EgdsBranchTerritory[] => {
   const nodesById = new Map(frameworkNodes.map((node) => [node.id, node]));
   const owningBranchId = (node: EgdsFrameworkNodeInput) => {
@@ -237,23 +223,28 @@ const deriveBranchTerritories = (
     .sort(compareId)
     .map((branch) => {
       const descendants = frameworkNodes.filter((node) => owningBranchId(node) === branch.id);
-      const descendantBoxes = descendants.map(({ id }) => frameworkBoxesById.get(id)!);
+      const descendantBoxes = descendants
+        .map(({ id }) => frameworkBoxesById.get(id))
+        .filter((box): box is EgdsMapBox => Boolean(box));
       const processBoxes = descendants
         .filter(descendsFromProcessNode)
-        .map(({ id }) => frameworkBoxesById.get(id)!);
+        .map(({ id }) => frameworkBoxesById.get(id))
+        .filter((box): box is EgdsMapBox => Boolean(box));
+      if (descendantBoxes.length === 0) return undefined;
       return {
         branchId: branch.id,
-        ...boundsAround(descendantBoxes, 15, 18),
+        ...boundsAround(descendantBoxes, 15, 8, width, height),
         ...(branch.id === 'experience-design' && processBoxes.length > 0
           ? {
             nestedTerritory: {
               id: 'experience-process' as const,
-              ...boundsAround(processBoxes, 9, 9),
+              ...boundsAround(processBoxes, 9, 9, width, height),
             },
           }
           : {}),
       };
-    });
+    })
+    .filter((territory): territory is EgdsBranchTerritory => Boolean(territory));
 };
 
 const egdsBox = (
@@ -431,53 +422,44 @@ const boundaryPoint = (box: EgdsMapBox, side: EgdsPortSide): OrthogonalPoint => 
 const buildEgdsStructuralPath = (
   from: EgdsMapBox,
   to: EgdsMapBox,
+  obstacles: readonly EgdsMapBox[],
+  width: number,
+  height: number,
 ): Pick<EgdsMapPath, 'fromPort' | 'toPort' | 'path'> => {
-  if (from.kind === 'root' && to.kind === 'branch') {
-    const start = boundaryPoint(from, 'east');
-    const end = boundaryPoint(to, 'west');
-    return {
-      fromPort: 'east',
-      toPort: 'west',
-      path: `M ${start.x} ${start.y} H 165 V ${end.y} H ${end.x}`,
-    };
-  }
-  if (from.id === 'experience-design' && to.id === 'experience-journey') {
-    const start = boundaryPoint(from, 'east');
-    const end = boundaryPoint(to, 'west');
-    return {
-      fromPort: 'east',
-      toPort: 'west',
-      path: `M ${start.x} ${start.y} H 375 V ${end.y} H ${end.x}`,
-    };
-  }
-  if (from.id === 'experience-design' && to.kind === 'stage') {
-    const start = boundaryPoint(from, 'east');
-    const end = boundaryPoint(to, 'north');
-    const railY = to.y - 16;
-    return {
-      fromPort: 'east',
-      toPort: 'north',
-      path: `M ${start.x} ${start.y} H 375 V ${railY} H ${end.x} V ${end.y}`,
-    };
-  }
-  if (from.id === 'reconstruction' && to.kind === 'lever') {
-    const start = boundaryPoint(from, 'south');
-    const end = boundaryPoint(to, 'north');
-    const railY = start.y + 8;
-    return {
-      fromPort: 'south',
-      toPort: 'north',
-      path: `M ${start.x} ${start.y} V ${railY} H ${end.x} V ${end.y}`,
-    };
-  }
   const start = boundaryPoint(from, 'east');
-  const end = boundaryPoint(to, 'north');
-  const railY = to.y - 16;
-  return {
-    fromPort: 'east',
-    toPort: 'north',
-    path: `M ${start.x} ${start.y} H ${start.x + 15} V ${railY} H ${end.x} V ${end.y}`,
-  };
+  const end = boundaryPoint(to, 'west');
+  if (end.x - start.x < structuralGap) {
+    throw new Error(`Containment child must clear parent by ${structuralGap}px: ${from.id} -> ${to.id}`);
+  }
+  const startEscapeX = start.x + routeClearance;
+  const endEscapeX = end.x - routeClearance;
+  const localObstacles = obstacles.filter(({ key }) => key !== from.key && key !== to.key);
+  const laneYs = [...new Set([
+    start.y,
+    end.y,
+    routeClearance,
+    height - routeClearance,
+    ...localObstacles.flatMap((box) => [box.y - routeClearance, box.y + box.height + routeClearance]),
+  ])]
+    .filter((y) => y >= routeClearance && y <= height - routeClearance)
+    .sort((left, right) => (
+      Math.abs(left - end.y) - Math.abs(right - end.y) || left - right
+    ));
+
+  const candidates = [
+    normalizeRoutePoints([start, { x: startEscapeX, y: start.y }, { x: startEscapeX, y: end.y }, end]),
+    ...laneYs.map((laneY) => normalizeRoutePoints([
+      start,
+      { x: startEscapeX, y: start.y },
+      { x: startEscapeX, y: laneY },
+      { x: endEscapeX, y: laneY },
+      { x: endEscapeX, y: end.y },
+      end,
+    ])),
+  ];
+  const route = candidates.find((points) => routeIsClear(points, localObstacles, width, height));
+  if (!route) throw new Error(`Cannot project monotonic containment path: ${from.id} -> ${to.id}`);
+  return { fromPort: 'east', toPort: 'west', path: routeToPath(route) };
 };
 
 export function buildEgdsMapLayout({
@@ -508,14 +490,6 @@ export function buildEgdsMapLayout({
     throw new Error('Selected capability requires an expanded framework node');
   }
 
-  const frameworkBoxes = [...frameworkNodes]
-    .sort(compareId)
-    .map((node) => {
-      if (!isEgdsFrameworkBoxKind(node.kind)) throw new Error(`Unknown framework node kind: ${node.kind}`);
-      return egdsBox(node.id, node.kind, egdsAnchors[node.id]!);
-    });
-  const frameworkBoxesById = new Map(frameworkBoxes.map((box) => [box.id, box]));
-  const branchTerritories = deriveBranchTerritories(frameworkNodes, frameworkRelations, frameworkBoxesById);
   const capabilityById = new Map<string, EgdsEntityInput>();
   for (const capability of capabilities) {
     if (capabilityById.has(capability.id)) throw new Error(`Duplicate capability: ${capability.id}`);
@@ -554,14 +528,48 @@ export function buildEgdsMapLayout({
     }
   }
 
-  const structuralPaths = [...frameworkNodes]
-    .filter((node): node is EgdsFrameworkNodeInput & { parentNodeId: string } => Boolean(node.parentNodeId))
+  const focusChain: EgdsFrameworkNodeInput[] = [];
+  let focusCursor = expandedFrameworkNodeId ? frameworkNodesById.get(expandedFrameworkNodeId) : undefined;
+  while (focusCursor) {
+    focusChain.unshift(focusCursor);
+    focusCursor = focusCursor.parentNodeId ? frameworkNodesById.get(focusCursor.parentNodeId) : undefined;
+  }
+  const focusedBranchId = focusChain.find(({ kind }) => kind === 'branch')?.id;
+  const focusChainIds = new Set(focusChain.map(({ id }) => id));
+  const visibleFrameworkNodes = expandedFrameworkNodeId
+    ? frameworkNodes.filter((node) => node.kind === 'root' || node.kind === 'branch' || focusChainIds.has(node.id))
+    : frameworkNodes;
+  const focusAncestry = focusChain.filter(({ kind }) => kind !== 'root' && kind !== 'branch');
+  const focusY = focusedBranchId ? egdsAnchors[focusedBranchId]![1] + 3 : egdsFocusMetrics.top;
+  const focusAnchors = new Map(focusAncestry.map((node, index) => [
+    node.id,
+    [
+      egdsFocusMetrics.firstAncestryX + index * (egdsFocusMetrics.ancestryWidth + structuralGap),
+      focusY,
+      egdsFocusMetrics.ancestryWidth,
+      48,
+    ] as EgdsAnchor,
+  ]));
+  const frameworkBoxes = [...visibleFrameworkNodes]
+    .sort(compareId)
+    .map((node) => egdsBox(
+      node.id,
+      node.kind,
+      expandedFrameworkNodeId && focusAnchors.has(node.id) ? focusAnchors.get(node.id)! : egdsAnchors[node.id]!,
+    ));
+  const frameworkBoxesById = new Map(frameworkBoxes.map((box) => [box.id, box]));
+  const layoutWidth = 1180;
+
+  const structuralPaths = [...visibleFrameworkNodes]
+    .filter((node): node is EgdsFrameworkNodeInput & { parentNodeId: string } => (
+      Boolean(node.parentNodeId) && frameworkBoxesById.has(node.parentNodeId!)
+    ))
     .sort(compareId)
     .map((node) => {
       const from = frameworkBoxesById.get(node.parentNodeId);
       const to = frameworkBoxesById.get(node.id);
       if (!from || !to) throw new Error(`Cannot project structural path: ${node.parentNodeId} -> ${node.id}`);
-      const projection = buildEgdsStructuralPath(from, to);
+      const projection = buildEgdsStructuralPath(from, to, frameworkBoxes, layoutWidth, egdsOverviewHeight);
       return {
         id: `structural:${from.key}->${to.key}`,
         fromKey: from.key,
@@ -572,6 +580,7 @@ export function buildEgdsMapLayout({
     });
   const processPaths = frameworkRelations
     .filter(isProcessRelation)
+    .filter(({ fromId, toId }) => frameworkBoxesById.has(fromId) && frameworkBoxesById.has(toId))
     .sort(compareId)
     .map((relation) => {
       const from = frameworkBoxesById.get(relation.fromId);
@@ -595,8 +604,16 @@ export function buildEgdsMapLayout({
     });
 
   if (!expandedFrameworkNodeId) {
+    const branchTerritories = deriveBranchTerritories(
+      frameworkNodes,
+      frameworkRelations,
+      frameworkBoxesById,
+      layoutWidth,
+      egdsOverviewHeight,
+    );
     return {
-      width: 1180,
+      mode: 'overview',
+      width: layoutWidth,
       height: egdsOverviewHeight,
       frameworkBoxes,
       entityBoxes: [],
@@ -615,14 +632,21 @@ export function buildEgdsMapLayout({
   ]
     .filter((entity) => entity.frameworkNodeId === expandedFrameworkNodeId)
     .sort((left, right) => compareCodeUnits(egdsKey(left.kind, left.id), egdsKey(right.kind, right.id)));
+  const expandedFrameworkBox = frameworkBoxesById.get(expandedFrameworkNodeId)!;
+  const entityStartX = expandedFrameworkBox.x + expandedFrameworkBox.width + structuralGap;
+  const entityAvailableWidth = layoutWidth - egdsFocusMetrics.rightPadding - entityStartX;
+  const entityColumns = entityAvailableWidth >= 360 ? 2 : 1;
+  const entityWidth = (
+    entityAvailableWidth - egdsFocusMetrics.columnGap * (entityColumns - 1)
+  ) / entityColumns;
   const entityBoxes = expandedEntities.map((entity, index) => egdsBox(
     entity.id,
     entity.kind,
     [
-      egdsExpansionMetrics.x + (index % egdsExpansionMetrics.columns) * (egdsExpansionMetrics.width + egdsExpansionMetrics.columnGap),
-      egdsExpansionTop + egdsExpansionMetrics.headingHeight + Math.floor(index / egdsExpansionMetrics.columns) * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap),
-      egdsExpansionMetrics.width,
-      egdsExpansionMetrics.height,
+      entityStartX + (index % entityColumns) * (entityWidth + egdsFocusMetrics.columnGap),
+      egdsFocusMetrics.top + Math.floor(index / entityColumns) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap),
+      entityWidth,
+      egdsFocusMetrics.entityHeight,
     ],
     expandedFrameworkNodeId,
   ));
@@ -638,26 +662,25 @@ export function buildEgdsMapLayout({
     .map((relation) => relation.fromId === selectedCapabilityId ? relation.toId : relation.fromId)
     .filter((id) => !entityBoxesByCapabilityId.has(id)))]
     .sort(compareCodeUnits);
-  const entityRows = Math.ceil(entityBoxes.length / egdsExpansionMetrics.columns);
+  const entityRows = Math.ceil(entityBoxes.length / entityColumns);
   const relationEndpointBoxes = externalNeighborIds.map((id, index) => egdsBox(
     id,
     'relation-endpoint',
     [
-      egdsExpansionMetrics.x + (index % egdsExpansionMetrics.columns) * (egdsExpansionMetrics.width + egdsExpansionMetrics.columnGap),
-      egdsExpansionTop + egdsExpansionMetrics.headingHeight + entityRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
-        + Math.floor(index / egdsExpansionMetrics.columns) * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap),
-      egdsExpansionMetrics.width,
-      egdsExpansionMetrics.height,
+      entityStartX + (index % entityColumns) * (entityWidth + egdsFocusMetrics.columnGap),
+      egdsFocusMetrics.top + entityRows * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap)
+        + Math.floor(index / entityColumns) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap),
+      entityWidth,
+      egdsFocusMetrics.entityHeight,
     ],
   ));
   const relationEndpointBoxesByCapabilityId = new Map(relationEndpointBoxes.map((box) => [box.id, box]));
   const relationPathBox = (id: string) => entityBoxesByCapabilityId.get(id) ?? relationEndpointBoxesByCapabilityId.get(id);
-  const relationEndpointRows = Math.ceil(relationEndpointBoxes.length / egdsExpansionMetrics.columns);
-  const expansionHeight = egdsExpansionMetrics.headingHeight
-    + entityRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
-    + relationEndpointRows * (egdsExpansionMetrics.height + egdsExpansionMetrics.rowGap)
-    + egdsExpansionMetrics.bottomPadding;
-  const layoutHeight = egdsExpansionTop + expansionHeight;
+  const relationEndpointRows = Math.ceil(relationEndpointBoxes.length / entityColumns);
+  const focusContentHeight = egdsFocusMetrics.top
+    + (entityRows + relationEndpointRows) * (egdsFocusMetrics.entityHeight + egdsFocusMetrics.rowGap)
+    + egdsFocusMetrics.bottomPadding;
+  const layoutHeight = Math.max(egdsOverviewHeight, focusContentHeight);
   const expansionObstacles = [
     ...frameworkBoxes,
     ...entityBoxes,
@@ -677,15 +700,23 @@ export function buildEgdsMapLayout({
         starts: boxPorts(from),
         ends: boxPorts(to),
         obstacles: expansionObstacles,
-        width: 1180,
+        width: layoutWidth,
         height: layoutHeight,
       }),
     };
   });
-  const expandedFrameworkBox = frameworkBoxesById.get(expandedFrameworkNodeId)!;
+  const branchTerritories = deriveBranchTerritories(
+    frameworkNodes,
+    frameworkRelations,
+    frameworkBoxesById,
+    layoutWidth,
+    layoutHeight,
+  );
 
   return {
-    width: 1180,
+    mode: 'focus',
+    focusedBranchId,
+    width: layoutWidth,
     height: layoutHeight,
     expandedFrameworkNodeId,
     frameworkBoxes,
@@ -695,22 +726,6 @@ export function buildEgdsMapLayout({
     structuralPaths,
     processPaths,
     relationPaths,
-    expansionLeaderPath: {
-      id: `expansion-leader:${expandedFrameworkNodeId}`,
-      fromKey: expandedFrameworkBox.key,
-      toKey: `expansion-heading:${expandedFrameworkNodeId}` as const,
-      path: buildObstacleAvoidingPath({
-        starts: boxPorts(expandedFrameworkBox),
-        ends: [{
-          side: 'north',
-          boundary: { x: egdsExpansionMetrics.x, y: egdsExpansionTop },
-          escape: { x: egdsExpansionMetrics.x, y: egdsExpansionTop - routeClearance },
-        }],
-        obstacles: expansionObstacles,
-        width: 1180,
-        height: layoutHeight,
-      }).path,
-    },
     externalEntries,
   };
 }

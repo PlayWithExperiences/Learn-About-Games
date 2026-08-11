@@ -819,6 +819,13 @@ h2 {
   height: var(--box-height);
 }
 
+.egds-framework-node[hidden],
+.egds-territory[hidden],
+.egds-subterritory[hidden],
+.capability-map__structure path[hidden] {
+  display: none;
+}
+
 .capability-map__structure,
 .capability-map__relations {
   position: absolute;
@@ -1004,11 +1011,6 @@ h2 {
   stroke: none;
 }
 
-.capability-map__structure [data-egds-expansion-path] {
-  stroke: var(--accent-strong);
-  stroke-dasharray: 3 3;
-}
-
 .capability-map__framework,
 .capability-map__entities,
 .capability-map__endpoints {
@@ -1188,6 +1190,16 @@ h2 {
   box-shadow: inset 0 0 0 1px var(--accent-strong);
 }
 
+.capability-map[data-layout-mode='focus'] .egds-framework-node--branch:not([data-focus-context]) {
+  border-left-color: var(--line);
+  background: var(--page);
+}
+
+.capability-map[data-layout-mode='focus'] .egds-framework-node--branch[data-focus-context] {
+  border-left-color: var(--accent-strong);
+  background: var(--surface-strong);
+}
+
 .egds-framework-node [data-career-collapsed-count] {
   position: absolute;
   top: calc(100% + 0.15rem);
@@ -1213,29 +1225,6 @@ h2 {
   display: none;
 }
 
-.capability-map__expansion-heading {
-  position: absolute;
-  top: 724px;
-  left: 20px;
-  width: 190px;
-  height: 72px;
-  padding: 0.7rem 0.8rem;
-  border-top: 3px solid var(--accent-strong);
-  background: var(--page);
-}
-
-.capability-map__expansion-heading span {
-  color: var(--muted);
-  font-size: 0.65rem;
-  font-weight: 740;
-}
-
-.capability-map__expansion-heading h3 {
-  margin: 0.22rem 0 0;
-  font-size: 0.94rem;
-  line-height: 1.2;
-}
-
 .map-entity,
 .map-relation-endpoint {
   display: grid;
@@ -1247,10 +1236,33 @@ h2 {
   border-left-width: 4px;
   border-radius: 6px;
   background: var(--page);
-  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
   align-items: center;
   gap: 0.35rem;
   pointer-events: auto;
+}
+
+.map-entity__type,
+.map-relation-endpoint small {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.map-entity > strong,
+.map-relation-endpoint > strong {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.map-entity__controls {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.map-entity .career-node-role-label {
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .map-entity__type,
