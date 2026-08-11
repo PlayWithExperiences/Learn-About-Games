@@ -271,13 +271,133 @@
     "tags": ["roguelike-lens", "run-based-structure", "real-time-action", "narrative-continuity"],
     "evidenceIds": ["gamedeveloper-kasavin-interview", "supergiant-hades-faq"]
   },
-  { "id": "tennis-for-two", "kind": "experimental-apparatus", "name": { "zh-CN": "Tennis for Two", "en": "Tennis for Two" }, "summary": { "zh-CN": "1958 年 Brookhaven 为访客日制作的示波器互动装置；这里不建立它到 Pong 的因果边。" }, "startYear": 1958, "lane": 0, "tags": ["early-electronic-games"], "evidenceIds": ["bnl-tennis-for-two"] },
-  { "id": "spacewar", "kind": "experimental-program", "name": { "zh-CN": "Spacewar!", "en": "Spacewar!" }, "summary": { "zh-CN": "1962 年 MIT PDP-1 程序，后来被分别改作投币系统。" }, "startYear": 1962, "lane": 1, "tags": ["early-electronic-games"], "evidenceIds": ["chm-spacewar"] },
-  { "id": "brown-box", "kind": "system-prototype", "name": { "zh-CN": "Brown Box / TV Game Unit #7", "en": "Brown Box / TV Game Unit #7" }, "summary": { "zh-CN": "Ralph Baer 团队的电视游戏系统原型，是 Magnavox Odyssey 产品链的一部分。" }, "startYear": 1968, "lane": 2, "tags": ["early-electronic-games"], "evidenceIds": ["smithsonian-brown-box"] },
-  { "id": "galaxy-game", "kind": "commercial-hardware", "name": { "zh-CN": "Galaxy Game", "en": "Galaxy Game" }, "summary": { "zh-CN": "1971 年在 Stanford 运行的投币式 Spacewar! 改作。" }, "startYear": 1971, "lane": 2, "tags": ["early-electronic-games"], "evidenceIds": ["stanford-galaxy-game"] },
-  { "id": "computer-space", "kind": "commercial-hardware", "name": { "zh-CN": "Computer Space", "en": "Computer Space" }, "summary": { "zh-CN": "1971 年面向商业街机环境的 Spacewar! 改作。" }, "startYear": 1971, "lane": 3, "tags": ["early-electronic-games"], "evidenceIds": ["chm-computer-space"] },
-  { "id": "magnavox-odyssey", "kind": "commercial-hardware", "name": { "zh-CN": "Magnavox Odyssey", "en": "Magnavox Odyssey" }, "summary": { "zh-CN": "1972 年商业化的家庭电视游戏硬件，源自 Baer 团队原型链。" }, "startYear": 1972, "lane": 4, "tags": ["early-electronic-games"], "evidenceIds": ["smithsonian-odyssey"] },
-  { "id": "odyssey-table-tennis", "kind": "game", "name": { "zh-CN": "Odyssey Table Tennis", "en": "Odyssey Table Tennis" }, "summary": { "zh-CN": "Magnavox Odyssey 的桌上网球游戏；Alcorn 口述史把其演示置于 Pong 项目之前。" }, "startYear": 1972, "lane": 5, "tags": ["early-electronic-games"], "evidenceIds": ["smithsonian-odyssey", "alcorn-oral-history"] },
-  { "id": "pong", "kind": "game", "name": { "zh-CN": "Pong", "en": "Pong" }, "summary": { "zh-CN": "1972 年由 Al Alcorn 制作的投币式网球游戏原型；本图不称它为第一款电子游戏。" }, "startYear": 1972, "lane": 6, "tags": ["early-electronic-games"], "evidenceIds": ["chm-pong-prototype", "alcorn-oral-history"] },
-  { "id": "home-pong", "kind": "commercial-hardware", "name": { "zh-CN": "Home Pong", "en": "Home Pong" }, "summary": { "zh-CN": "1975 年面向家庭市场的 Pong 专用硬件版本。" }, "startYear": 1975, "lane": 6, "tags": ["early-electronic-games"], "evidenceIds": ["chm-home-pong"] }
+  { "id": "tennis-for-two", "kind": "experimental-apparatus", "name": { "zh-CN": "Tennis for Two", "en": "Tennis for Two" }, "summary": { "zh-CN": "1958 年 Brookhaven 为访客日制作的示波器互动装置；这里不建立它到 Pong 的因果边。" }, "startYear": 1958, "lane": 0, "tags": ["early-electronic-games-lens"], "evidenceIds": ["bnl-tennis-for-two"] },
+  { "id": "spacewar", "kind": "experimental-program", "name": { "zh-CN": "Spacewar!", "en": "Spacewar!" }, "summary": { "zh-CN": "1962 年 MIT PDP-1 程序，后来被分别改作投币系统。" }, "startYear": 1962, "lane": 1, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-spacewar"] },
+  { "id": "brown-box", "kind": "system-prototype", "name": { "zh-CN": "Brown Box / TV Game Unit #7", "en": "Brown Box / TV Game Unit #7" }, "summary": { "zh-CN": "Ralph Baer 团队的电视游戏系统原型，是 Magnavox Odyssey 产品链的一部分。" }, "startYear": 1968, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-brown-box"] },
+  { "id": "galaxy-game", "kind": "commercial-hardware", "name": { "zh-CN": "Galaxy Game", "en": "Galaxy Game" }, "summary": { "zh-CN": "1971 年在 Stanford 运行的投币式 Spacewar! 改作。" }, "startYear": 1971, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["stanford-galaxy-game"] },
+  { "id": "computer-space", "kind": "commercial-hardware", "name": { "zh-CN": "Computer Space", "en": "Computer Space" }, "summary": { "zh-CN": "1971 年面向商业街机环境的 Spacewar! 改作。" }, "startYear": 1971, "lane": 3, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-computer-space"] },
+  { "id": "magnavox-odyssey", "kind": "commercial-hardware", "name": { "zh-CN": "Magnavox Odyssey", "en": "Magnavox Odyssey" }, "summary": { "zh-CN": "1972 年商业化的家庭电视游戏硬件，源自 Baer 团队原型链。" }, "startYear": 1972, "lane": 4, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-odyssey"] },
+  { "id": "odyssey-table-tennis", "kind": "game", "name": { "zh-CN": "Odyssey Table Tennis", "en": "Odyssey Table Tennis" }, "summary": { "zh-CN": "Magnavox Odyssey 的桌上网球游戏；Alcorn 口述史把其演示置于 Pong 项目之前。" }, "startYear": 1972, "lane": 5, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-odyssey", "alcorn-oral-history"] },
+  { "id": "pong", "kind": "game", "name": { "zh-CN": "Pong", "en": "Pong" }, "summary": { "zh-CN": "1972 年由 Al Alcorn 制作的投币式网球游戏原型；本图不称它为第一款电子游戏。" }, "startYear": 1972, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-pong-prototype", "alcorn-oral-history"] },
+  { "id": "home-pong", "kind": "commercial-hardware", "name": { "zh-CN": "Home Pong", "en": "Home Pong" }, "summary": { "zh-CN": "1975 年面向家庭市场的 Pong 专用硬件版本。" }, "startYear": 1975, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-home-pong"] },
+  {
+    "id": "space-panic",
+    "kind": "game",
+    "name": { "zh-CN": "Space Panic", "en": "Space Panic" },
+    "summary": { "zh-CN": "1980 年 Universal 街机，以梯子连接多层平台，并通过挖洞困住敌人；本轮不建立它到 Donkey Kong 的直接影响边。" },
+    "startYear": 1980,
+    "lane": 6,
+    "tags": ["platform-jumping-lens", "fixed-screen-climbing"],
+    "evidenceIds": ["museum-of-game-space-panic"]
+  },
+  {
+    "id": "donkey-kong",
+    "kind": "game",
+    "name": { "zh-CN": "Donkey Kong", "en": "Donkey Kong" },
+    "summary": { "zh-CN": "1981 年 Nintendo 街机，以跳跃、梯子、斜坡与多场景组织救援故事。" },
+    "startYear": 1981,
+    "lane": 5,
+    "tags": ["platform-jumping-lens", "fixed-screen-climbing", "jump-action"],
+    "evidenceIds": ["strong-donkey-kong", "nintendo-original-super-mario-developers"]
+  },
+  {
+    "id": "mario-bros",
+    "kind": "game",
+    "name": { "zh-CN": "Mario Bros.", "en": "Mario Bros." },
+    "summary": { "zh-CN": "1983 年 Nintendo 街机，以固定画面平台、敌人移动与 POW Block 组织双人动作。" },
+    "startYear": 1983,
+    "lane": 6,
+    "tags": ["platform-jumping-lens", "fixed-screen-climbing", "jump-action"],
+    "evidenceIds": ["nintendo-original-super-mario-developers"]
+  },
+  {
+    "id": "super-mario-bros",
+    "kind": "game",
+    "name": { "zh-CN": "Super Mario Bros.", "en": "Super Mario Bros." },
+    "summary": { "zh-CN": "1985 年 Nintendo 横向卷轴平台游戏，开发者回顾明确说明它综合了此前多款作品的设计元素。" },
+    "startYear": 1985,
+    "lane": 8,
+    "tags": ["platform-jumping-lens", "jump-action", "side-scrolling-platform"],
+    "evidenceIds": ["nintendo-original-super-mario-developers"]
+  },
+  {
+    "id": "sonic-the-hedgehog",
+    "kind": "game",
+    "name": { "zh-CN": "Sonic the Hedgehog", "en": "Sonic the Hedgehog" },
+    "summary": { "zh-CN": "1991 年 Sega 平台游戏，以速度、坡面、弹簧与环形轨道组织移动，并被博物馆置于与 Mario 竞争的开发语境。" },
+    "startYear": 1991,
+    "lane": 6,
+    "tags": ["platform-jumping-lens", "side-scrolling-platform", "speed-platform"],
+    "evidenceIds": ["strong-sonic-the-hedgehog"]
+  },
+  {
+    "id": "celeste",
+    "kind": "game",
+    "name": { "zh-CN": "Celeste", "en": "Celeste" },
+    "summary": { "zh-CN": "2018 年手工制作的紧凑平台游戏，以攀登 Celeste Mountain 的精确移动挑战承载 Madeline 的旅程。" },
+    "startYear": 2018,
+    "lane": 5,
+    "tags": ["platform-jumping-lens", "jump-action", "precision-platform", "indie"],
+    "evidenceIds": ["celeste-official-site", "nintendo-celeste-release"]
+  },
+  {
+    "id": "colossal-cave-adventure",
+    "kind": "game",
+    "name": { "zh-CN": "Colossal Cave Adventure", "en": "Colossal Cave Adventure" },
+    "summary": { "zh-CN": "1976 年由 Will Crowther 完成并由 Don Woods 扩展的文本冒险，以文字命令构建洞穴探索与解谜。" },
+    "startYear": 1976,
+    "lane": 2,
+    "tags": ["parser-graphical-adventure-lens", "text-parser"],
+    "evidenceIds": ["strong-colossal-cave-adventure"]
+  },
+  {
+    "id": "zork",
+    "kind": "game",
+    "name": { "zh-CN": "Zork", "en": "Zork" },
+    "summary": { "zh-CN": "1977 年由 MIT 团队为 PDP-10 制作的文本冒险；成员后来成立 Infocom，并为家用电脑重新制作。" },
+    "startYear": 1977,
+    "lane": 3,
+    "tags": ["parser-graphical-adventure-lens", "text-parser"],
+    "evidenceIds": ["strong-colossal-cave-adventure", "acmi-zork"]
+  },
+  {
+    "id": "mystery-house",
+    "kind": "game",
+    "name": { "zh-CN": "Mystery House", "en": "Mystery House" },
+    "summary": { "zh-CN": "1980 年 On-Line Systems 的 Apple II 冒险，由 Roberta Williams 的叙事与 Ken Williams 的编程协作完成，并结合文字与图形。" },
+    "startYear": 1980,
+    "lane": 4,
+    "tags": ["parser-graphical-adventure-lens", "text-parser", "graphical-adventure"],
+    "evidenceIds": ["strong-colossal-cave-adventure", "strong-sierra-collection"]
+  },
+  {
+    "id": "kings-quest",
+    "kind": "game",
+    "name": { "zh-CN": "King's Quest", "en": "King's Quest" },
+    "summary": { "zh-CN": "1984 年为 IBM PCjr 推出的图形冒险，在文本解析器之外让玩家角色在伪三维场景中移动。" },
+    "startYear": 1984,
+    "lane": 5,
+    "tags": ["parser-graphical-adventure-lens", "text-parser", "graphical-adventure"],
+    "evidenceIds": ["strong-kings-quest", "gamedeveloper-maniac-mansion-gdc"]
+  },
+  {
+    "id": "maniac-mansion",
+    "kind": "game",
+    "name": { "zh-CN": "Maniac Mansion", "en": "Maniac Mansion" },
+    "summary": { "zh-CN": "1987 年 Lucasfilm Games 图形冒险，以屏幕上的动词和指针替代自由文本解析，并促成 SCUMM。" },
+    "startYear": 1987,
+    "lane": 7,
+    "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click", "scumm-lineage"],
+    "evidenceIds": ["gamedeveloper-maniac-mansion-gdc", "lucasfilm-scumm-history"]
+  },
+  {
+    "id": "secret-of-monkey-island",
+    "kind": "game",
+    "name": { "zh-CN": "The Secret of Monkey Island", "en": "The Secret of Monkey Island" },
+    "summary": { "zh-CN": "1990 年 Lucasfilm Games 图形冒险，使用从 Maniac Mansion 起持续修订的 SCUMM 系统。" },
+    "startYear": 1990,
+    "lane": 2,
+    "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click", "scumm-lineage"],
+    "evidenceIds": ["lucasfilm-scumm-history"]
+  }
 ]

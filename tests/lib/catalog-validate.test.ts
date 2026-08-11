@@ -20,6 +20,7 @@ const emptyCatalog = (): Catalog => ({
   sources: [],
   resources: [],
   roleProfiles: [],
+  atlasGenreFamilies: [],
   atlasTags: [],
   atlasNodes: [],
   atlasEvidence: [],
@@ -91,6 +92,96 @@ const seedV02References = (catalog: Catalog) => {
 };
 
 describe('validateCatalog', () => {
+  it('validates Atlas Genre Family orders and Theme family references', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasGenreFamilies.push(
+      {
+        id: 'action',
+        title: localized('动作'),
+        summary: localized('强调实时输入与动作执行。'),
+        order: 1,
+      },
+      {
+        id: 'adventure',
+        title: localized('冒险'),
+        summary: localized('强调探索、叙事与问题求解。'),
+        order: 1,
+      },
+    );
+    catalog.atlasThemes.push({
+      id: 'invalid-lineage',
+      title: localized('无效谱系'),
+      summary: localized('用于验证 family 引用。'),
+      familyIds: ['action', 'action', 'missing-family'],
+      scopeNote: localized(' '),
+      tags: [],
+    });
+
+    expect(validateCatalog(catalog).filter(({ code }) => code.startsWith('ATLAS_'))).toEqual([
+      {
+        code: 'ATLAS_GENRE_FAMILY_ORDER_DUPLICATE',
+        collection: 'atlasGenreFamilies',
+        id: 'adventure',
+        field: 'order',
+        targetId: '1',
+      },
+      {
+        code: 'ATLAS_THEME_FAMILY_DUPLICATE',
+        collection: 'atlasThemes',
+        id: 'invalid-lineage',
+        field: 'familyIds.1',
+        targetId: 'action',
+      },
+      {
+        code: 'ATLAS_THEME_FAMILY_MISSING',
+        collection: 'atlasThemes',
+        id: 'invalid-lineage',
+        field: 'familyIds.2',
+        targetId: 'missing-family',
+      },
+      {
+        code: 'ATLAS_THEME_SCOPE_INVALID',
+        collection: 'atlasThemes',
+        id: 'invalid-lineage',
+        field: 'scopeNote',
+        targetId: '',
+      },
+    ]);
+  });
+
+  it('allows only the foundation Atlas Theme to omit Genre Families', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasThemes.push(
+      {
+        id: 'early-electronic-games',
+        title: localized('早期电子游戏与商业化'),
+        summary: localized('非类型的基础历史透镜。'),
+        familyIds: [],
+        scopeNote: localized('追踪实验、原型与商业产品，不将其归为单一类型。'),
+        tags: [],
+      },
+      {
+        id: 'lineage-without-family',
+        title: localized('缺少 Family 的谱系'),
+        summary: localized('用于验证非基础透镜必须引用 Family。'),
+        familyIds: [],
+        scopeNote: localized('只验证 family 约束。'),
+        tags: [],
+      },
+    );
+
+    expect(validateCatalog(catalog).filter(({ code }) => code === 'ATLAS_THEME_FAMILY_MISSING'))
+      .toEqual([
+        {
+          code: 'ATLAS_THEME_FAMILY_MISSING',
+          collection: 'atlasThemes',
+          id: 'lineage-without-family',
+          field: 'familyIds',
+          targetId: '',
+        },
+      ]);
+  });
+
   it('reports a framework node with a missing parent', () => {
     const catalog = emptyCatalog();
     const node = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-journey');
@@ -431,9 +522,17 @@ describe('validateCatalog', () => {
         id: 'theme',
         title: localized('主题'),
         summary: localized('示例主题。'),
+        familyIds: ['family'],
+        scopeNote: localized('示例范围。'),
         tags: ['missing-theme-tag'],
       } as unknown as Catalog['atlasThemes'][number],
     );
+    catalog.atlasGenreFamilies.push({
+      id: 'family',
+      title: localized('Family'),
+      summary: localized('示例 Family。'),
+      order: 1,
+    });
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'ATLAS_TAG_REFERENCE_MISSING',

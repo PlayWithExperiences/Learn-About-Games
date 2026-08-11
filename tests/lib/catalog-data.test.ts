@@ -4,6 +4,7 @@ import resourceIntake from '../../docs/research/2026-08-09-resource-intake.md?ra
 import contentConfigSource from '../../src/content.config.ts?raw';
 
 import atlasEvidence from '../../src/data/atlas-evidence.json';
+import atlasGenreFamilies from '../../src/data/atlas-genre-families.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
 import atlasRelations from '../../src/data/atlas-relations.json';
 import atlasTags from '../../src/data/atlas-tags.json';
@@ -31,6 +32,7 @@ const collections = {
   sources,
   resources,
   roleProfiles,
+  atlasGenreFamilies,
   atlasTags,
   atlasNodes,
   atlasEvidence,
@@ -63,6 +65,21 @@ describe('early electronic game Atlas slice', () => {
 });
 
 describe('raw product catalog data', () => {
+  it('defines the approved ordered Atlas Genre Family directory', () => {
+    expect(atlasGenreFamilies.map(({ id, order }) => [id, order])).toEqual([
+      ['action', 1],
+      ['shooter', 2],
+      ['adventure', 3],
+      ['role-playing', 4],
+      ['strategy', 5],
+      ['simulation-management', 6],
+      ['sports-racing', 7],
+      ['puzzle', 8],
+      ['sandbox-survival', 9],
+      ['rhythm-party', 10],
+    ]);
+  });
+
   it('fully retires the generic map catalog and entity placement fields', () => {
     const retiredCollectionKeys = [
       ['domain', 's'].join(''),

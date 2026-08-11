@@ -1,0 +1,62 @@
+[
+  {
+    "id": "action",
+    "title": { "zh-CN": "动作", "en": "Action" },
+    "summary": { "zh-CN": "以实时输入、动作执行与空间挑战为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 1
+  },
+  {
+    "id": "shooter",
+    "title": { "zh-CN": "射击", "en": "Shooter" },
+    "summary": { "zh-CN": "以瞄准、射击与弹道互动为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 2
+  },
+  {
+    "id": "adventure",
+    "title": { "zh-CN": "冒险", "en": "Adventure" },
+    "summary": { "zh-CN": "以探索、叙事与问题求解为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 3
+  },
+  {
+    "id": "role-playing",
+    "title": { "zh-CN": "角色扮演", "en": "Role-playing" },
+    "summary": { "zh-CN": "以角色成长、属性系统与身份扮演为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 4
+  },
+  {
+    "id": "strategy",
+    "title": { "zh-CN": "策略", "en": "Strategy" },
+    "summary": { "zh-CN": "以规划、资源配置与多步决策为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 5
+  },
+  {
+    "id": "simulation-management",
+    "title": { "zh-CN": "模拟与经营", "en": "Simulation and Management" },
+    "summary": { "zh-CN": "以系统模拟、运营与持续管理为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 6
+  },
+  {
+    "id": "sports-racing",
+    "title": { "zh-CN": "体育与竞速", "en": "Sports and Racing" },
+    "summary": { "zh-CN": "以运动规则、竞赛与速度控制为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 7
+  },
+  {
+    "id": "puzzle",
+    "title": { "zh-CN": "益智", "en": "Puzzle" },
+    "summary": { "zh-CN": "以规则推理、模式识别与问题求解为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 8
+  },
+  {
+    "id": "sandbox-survival",
+    "title": { "zh-CN": "沙盒与生存", "en": "Sandbox and Survival" },
+    "summary": { "zh-CN": "以开放系统、资源生存与玩家自定目标为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 9
+  },
+  {
+    "id": "rhythm-party",
+    "title": { "zh-CN": "节奏与派对", "en": "Rhythm and Party" },
+    "summary": { "zh-CN": "以音乐节拍、表演或多人聚会为常见入口的宽泛导航 Family；不表示排他归类。" },
+    "order": 10
+  }
+]

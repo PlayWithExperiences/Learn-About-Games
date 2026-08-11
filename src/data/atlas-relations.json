@@ -274,9 +274,75 @@
     "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "revival-context"],
     "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作；这不是法定系列续作。" }
   },
-  { "id": "spacewar-to-galaxy-game", "fromId": "spacewar", "toId": "galaxy-game", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["stanford-galaxy-game"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "Stanford 资料把 Galaxy Game 描述为投币式 Spacewar! 版本。" } },
-  { "id": "spacewar-to-computer-space", "fromId": "spacewar", "toId": "computer-space", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-computer-space"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "CHM 将 Computer Space 的玩法来源追溯到 Spacewar!。" } },
-  { "id": "brown-box-to-odyssey", "fromId": "brown-box", "toId": "magnavox-odyssey", "type": "prototype-to-product", "status": "confirmed", "directionality": "directed", "evidenceIds": ["smithsonian-brown-box", "smithsonian-odyssey"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "Smithsonian 馆藏把 Brown Box 放在 Magnavox Odyssey 的开发链中。" } },
-  { "id": "odyssey-table-tennis-to-pong", "fromId": "odyssey-table-tennis", "toId": "pong", "type": "design-response", "status": "credible", "directionality": "directed", "evidenceIds": ["alcorn-oral-history"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "Alcorn 的参与者口述把 Odyssey 网球演示置于 Pong 练习项目的直接触发背景中。" } },
-  { "id": "pong-to-home-pong", "fromId": "pong", "toId": "home-pong", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-home-pong"], "tags": ["early-electronic-games"], "summary": { "zh-CN": "CHM 综述记录 Pong 从投币产品走向 1975 年家用专用机。" } }
+  { "id": "spacewar-to-galaxy-game", "fromId": "spacewar", "toId": "galaxy-game", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["stanford-galaxy-game"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "Stanford 资料把 Galaxy Game 描述为投币式 Spacewar! 版本。" } },
+  { "id": "spacewar-to-computer-space", "fromId": "spacewar", "toId": "computer-space", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-computer-space"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "CHM 将 Computer Space 的玩法来源追溯到 Spacewar!。" } },
+  { "id": "brown-box-to-odyssey", "fromId": "brown-box", "toId": "magnavox-odyssey", "type": "prototype-to-product", "status": "confirmed", "directionality": "directed", "evidenceIds": ["smithsonian-brown-box", "smithsonian-odyssey"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "Smithsonian 馆藏把 Brown Box 放在 Magnavox Odyssey 的开发链中。" } },
+  { "id": "odyssey-table-tennis-to-pong", "fromId": "odyssey-table-tennis", "toId": "pong", "type": "design-response", "status": "credible", "directionality": "directed", "evidenceIds": ["alcorn-oral-history"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "Alcorn 的参与者口述把 Odyssey 网球演示置于 Pong 练习项目的直接触发背景中。" } },
+  { "id": "pong-to-home-pong", "fromId": "pong", "toId": "home-pong", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-home-pong"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "CHM 综述记录 Pong 从投币产品走向 1975 年家用专用机。" } },
+  {
+    "id": "donkey-kong-to-super-mario-bros",
+    "fromId": "donkey-kong",
+    "toId": "super-mario-bros",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-original-super-mario-developers"],
+    "tags": ["platform-jumping-lens", "jump-action", "side-scrolling-platform"],
+    "summary": { "zh-CN": "Nintendo 开发者回顾中的设计规格明确要求在 Super Mario Bros. 中细化 Donkey Kong 的斜坡、升降台、传送带与梯子。" }
+  },
+  {
+    "id": "mario-bros-to-super-mario-bros",
+    "fromId": "mario-bros",
+    "toId": "super-mario-bros",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-original-super-mario-developers"],
+    "tags": ["platform-jumping-lens", "jump-action", "side-scrolling-platform"],
+    "summary": { "zh-CN": "Nintendo 开发者回顾中的设计规格明确列出 Mario Bros. 的敌人攻击、移动、冻结平台与 POW Block，作为 Super Mario Bros. 的综合材料。" }
+  },
+  {
+    "id": "colossal-cave-to-zork",
+    "fromId": "colossal-cave-adventure",
+    "toId": "zork",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["strong-colossal-cave-adventure"],
+    "tags": ["parser-graphical-adventure-lens", "text-parser"],
+    "summary": { "zh-CN": "The Strong 的机构史明确将 Zork 列为受 Colossal Cave Adventure 启发的作品；没有参与者原话，因此标为 credible。" }
+  },
+  {
+    "id": "colossal-cave-to-mystery-house",
+    "fromId": "colossal-cave-adventure",
+    "toId": "mystery-house",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["strong-colossal-cave-adventure"],
+    "tags": ["parser-graphical-adventure-lens", "text-parser", "graphical-adventure"],
+    "summary": { "zh-CN": "The Strong 明确记录 Roberta Williams 玩 Colossal Cave Adventure 后受到启发并创作 Mystery House；机构史关系标为 credible。" }
+  },
+  {
+    "id": "kings-quest-to-maniac-mansion",
+    "fromId": "kings-quest",
+    "toId": "maniac-mansion",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["gamedeveloper-maniac-mansion-gdc"],
+    "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click"],
+    "summary": { "zh-CN": "Ron Gilbert 在 GDC 回顾中说明观看 King's Quest 让 Maniac Mansion 的形式成形，而对解析器的不满直接促成屏幕动词与指向点击界面。" }
+  },
+  {
+    "id": "maniac-mansion-to-secret-of-monkey-island",
+    "fromId": "maniac-mansion",
+    "toId": "secret-of-monkey-island",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["lucasfilm-scumm-history"],
+    "tags": ["parser-graphical-adventure-lens", "point-and-click", "scumm-lineage"],
+    "summary": { "zh-CN": "Lucasfilm 官方史记录 SCUMM 为 Maniac Mansion 创建，随后持续修订并用于 1990 年 The Secret of Monkey Island；这里只表达明确技术沿用。" }
+  }
 ]

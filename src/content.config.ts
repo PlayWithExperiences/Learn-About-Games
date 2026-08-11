@@ -221,6 +221,18 @@ const atlasTags = defineCollection({
     .strict(),
 });
 
+const atlasGenreFamilies = defineCollection({
+  loader: file('src/data/atlas-genre-families.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      summary: localizedText,
+      order: z.number().int().positive(),
+    })
+    .strict(),
+});
+
 const atlasNodes = defineCollection({
   loader: file('src/data/atlas-nodes.json'),
   schema: z
@@ -312,6 +324,8 @@ const atlasThemes = defineCollection({
       id: z.string().trim().min(1),
       title: localizedText,
       summary: localizedText,
+      familyIds: z.array(z.string().trim().min(1)),
+      scopeNote: localizedText,
       tags: z.array(z.string().trim().min(1)).min(1),
     })
     .strict(),
@@ -344,6 +358,7 @@ export const collections = {
   sources,
   resources,
   roleProfiles,
+  atlasGenreFamilies,
   atlasTags,
   atlasNodes,
   atlasEvidence,

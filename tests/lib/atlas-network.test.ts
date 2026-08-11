@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import atlasEvidence from '../../src/data/atlas-evidence.json';
+import atlasGenreFamilies from '../../src/data/atlas-genre-families.json';
 import atlasNodes from '../../src/data/atlas-nodes.json';
 import atlasRelations from '../../src/data/atlas-relations.json';
 import atlasTags from '../../src/data/atlas-tags.json';
@@ -29,17 +30,97 @@ const typedAtlasRelations = atlasRelations as Catalog['atlasRelations'];
 describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(25);
-    expect(atlasNodes.length).toBeLessThanOrEqual(45);
+    expect(atlasNodes.length).toBeLessThanOrEqual(60);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
-    expect(atlasRelations.length).toBeLessThanOrEqual(35);
-    expect(atlasNodes).toHaveLength(36);
-    expect(atlasRelations).toHaveLength(30);
+    expect(atlasRelations.length).toBeLessThanOrEqual(50);
+    expect(atlasNodes).toHaveLength(48);
+    expect(atlasRelations).toHaveLength(36);
+  });
+
+  it('adds the evidence-bounded Platform and Adventure lineage batch', () => {
+    expect(atlasNodes.slice(-12).map(({ id }) => id)).toEqual([
+      'space-panic',
+      'donkey-kong',
+      'mario-bros',
+      'super-mario-bros',
+      'sonic-the-hedgehog',
+      'celeste',
+      'colossal-cave-adventure',
+      'zork',
+      'mystery-house',
+      'kings-quest',
+      'maniac-mansion',
+      'secret-of-monkey-island',
+    ]);
+    expect(atlasRelations.slice(-6).map(({ id }) => id)).toEqual([
+      'donkey-kong-to-super-mario-bros',
+      'mario-bros-to-super-mario-bros',
+      'colossal-cave-to-zork',
+      'colossal-cave-to-mystery-house',
+      'kings-quest-to-maniac-mansion',
+      'maniac-mansion-to-secret-of-monkey-island',
+    ]);
+    expect(atlasEvidence.slice(-12).map(({ id }) => id)).toEqual([
+      'museum-of-game-space-panic',
+      'strong-donkey-kong',
+      'nintendo-original-super-mario-developers',
+      'strong-sonic-the-hedgehog',
+      'celeste-official-site',
+      'strong-colossal-cave-adventure',
+      'strong-kings-quest',
+      'gamedeveloper-maniac-mansion-gdc',
+      'lucasfilm-scumm-history',
+      'nintendo-celeste-release',
+      'acmi-zork',
+      'strong-sierra-collection',
+    ]);
+    expect(atlasNodes.find(({ id }) => id === 'celeste')?.evidenceIds).toContain(
+      'nintendo-celeste-release',
+    );
+    expect(atlasNodes.find(({ id }) => id === 'zork')?.evidenceIds).toContain('acmi-zork');
+    expect(atlasNodes.find(({ id }) => id === 'mystery-house')?.evidenceIds).toContain(
+      'strong-sierra-collection',
+    );
+    expect(atlasNodes.find(({ id }) => id === 'space-panic')?.summary['zh-CN']).not.toMatch(
+      /第一款|first platform/i,
+    );
+    expect(atlasRelations.some(({ fromId, toId }) =>
+      fromId === 'space-panic' && toId === 'donkey-kong')).toBe(false);
+    expect(atlasRelations.some(({ fromId, toId }) =>
+      fromId === 'super-mario-bros' && toId === 'celeste')).toBe(false);
+    expect(atlasRelations.some(({ fromId, toId }) =>
+      fromId === 'super-mario-bros' && toId === 'sonic-the-hedgehog')).toBe(false);
+
+    const newEvidenceIds = new Set(atlasEvidence.slice(-12).map(({ id }) => id));
+    for (const evidence of atlasEvidence.slice(-12)) {
+      expect(evidence.sourceKind, evidence.id).toBeTruthy();
+      expect(evidence.institutionOrAuthor?.trim().length, evidence.id).toBeGreaterThan(0);
+      expect(evidence.publicationDate?.trim().length, evidence.id).toBeGreaterThan(0);
+      expect(evidence.checkedAt, evidence.id).toBe('2026-08-11');
+      expect(evidence.stableId?.trim().length, evidence.id).toBeGreaterThan(0);
+      expect(evidence.locator?.trim().length, evidence.id).toBeGreaterThan(0);
+      expect(evidence.boundedClaim?.['zh-CN']?.trim().length, evidence.id).toBeGreaterThan(0);
+    }
+    for (const node of atlasNodes.slice(-12)) {
+      expect(node.evidenceIds.some((id) => newEvidenceIds.has(id)), node.id).toBe(true);
+    }
+    for (const relation of atlasRelations.slice(-6)) {
+      expect(relation.evidenceIds.some((id) => newEvidenceIds.has(id)), relation.id).toBe(true);
+    }
+    expect(atlasRelations.slice(-6).map(({ id, status }) => [id, status])).toEqual([
+      ['donkey-kong-to-super-mario-bros', 'confirmed'],
+      ['mario-bros-to-super-mario-bros', 'confirmed'],
+      ['colossal-cave-to-zork', 'credible'],
+      ['colossal-cave-to-mystery-house', 'credible'],
+      ['kings-quest-to-maniac-mansion', 'confirmed'],
+      ['maniac-mansion-to-secret-of-monkey-island', 'confirmed'],
+    ]);
   });
 
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
 
-    expect(atlasEvidence).toHaveLength(49);
+    expect(atlasEvidence).toHaveLength(61);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -58,14 +139,34 @@ describe('global Atlas graph contract', () => {
     );
   });
 
-  it('defines Roguelike and Metroidvania as tag-only lenses', () => {
-    expect(atlasThemes.map(({ id }) => id)).toEqual(['roguelike', 'metroidvania']);
+  it('defines foundation and four evidence lineages as tag-only lenses', () => {
+    expect(atlasGenreFamilies).toHaveLength(10);
+    expect(atlasThemes.map(({ id }) => id)).toEqual([
+      'early-electronic-games',
+      'roguelike',
+      'metroidvania',
+      'platform-lineage',
+      'adventure-lineage',
+    ]);
     expect(
       atlasThemes.every((theme) => !('nodeIds' in theme) && !('relationIds' in theme)),
     ).toBe(true);
     expect(atlasThemes.every((theme) => Array.isArray(theme.tags) && theme.tags.length > 0)).toBe(
       true,
     );
+    expect(atlasThemes.every((theme) => theme.scopeNote['zh-CN'].trim().length > 0)).toBe(true);
+    expect(atlasThemes.find(({ id }) => id === 'early-electronic-games')?.familyIds).toEqual([]);
+    expect(atlasThemes.find(({ id }) => id === 'early-electronic-games')?.tags).toEqual([
+      'early-electronic-games-lens',
+    ]);
+    expect(atlasThemes.find(({ id }) => id === 'roguelike')?.familyIds).toEqual([
+      'action',
+      'role-playing',
+    ]);
+    expect(atlasThemes.find(({ id }) => id === 'metroidvania')?.familyIds).toEqual([
+      'action',
+      'adventure',
+    ]);
   });
 
   it('uses one year for Games and a required range for Category Formation', () => {
@@ -144,11 +245,24 @@ describe('global Atlas graph contract', () => {
     const beforeRelations = structuredClone(relations);
     const roguelike = atlasThemes.find(({ id }) => id === 'roguelike');
     const metroidvania = atlasThemes.find(({ id }) => id === 'metroidvania');
+    const platform = atlasThemes.find(({ id }) => id === 'platform-lineage');
+    const adventure = atlasThemes.find(({ id }) => id === 'adventure-lineage');
+    const layoutsBefore = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
 
     expect(roguelike).toBeDefined();
     expect(metroidvania).toBeDefined();
+    expect(platform).toBeDefined();
+    expect(adventure).toBeDefined();
     const roguelikeMatches = matchAtlasTheme(nodes, relations, roguelike!);
     const metroidvaniaMatches = matchAtlasTheme(nodes, relations, metroidvania!);
+    const platformMatches = matchAtlasTheme(nodes, relations, platform!);
+    const adventureMatches = matchAtlasTheme(nodes, relations, adventure!);
+
+    for (const theme of atlasThemes) {
+      const matches = matchAtlasTheme(nodes, relations, theme);
+      expect(matches.nodeIds.length, `${theme.id} has no matching node`).toBeGreaterThan(0);
+      expect(matches.relationIds.length, `${theme.id} has no matching relation`).toBeGreaterThan(0);
+    }
 
     expect(roguelikeMatches.nodeIds).toEqual(expect.arrayContaining(['rogue', 'dead-cells']));
     expect(roguelikeMatches.relationIds).toEqual(
@@ -158,10 +272,30 @@ describe('global Atlas graph contract', () => {
     expect(metroidvaniaMatches.relationIds).toEqual(
       expect.arrayContaining(['super-metroid-and-sotn', 'spelunky-to-dead-cells']),
     );
+    expect(platformMatches.nodeIds).toEqual(
+      expect.arrayContaining(['space-panic', 'super-mario-bros', 'celeste']),
+    );
+    expect(platformMatches.relationIds).toEqual(
+      expect.arrayContaining([
+        'donkey-kong-to-super-mario-bros',
+        'mario-bros-to-super-mario-bros',
+      ]),
+    );
+    expect(adventureMatches.nodeIds).toEqual(
+      expect.arrayContaining(['colossal-cave-adventure', 'maniac-mansion', 'secret-of-monkey-island']),
+    );
+    expect(adventureMatches.relationIds).toEqual(
+      expect.arrayContaining([
+        'colossal-cave-to-zork',
+        'kings-quest-to-maniac-mansion',
+        'maniac-mansion-to-secret-of-monkey-island',
+      ]),
+    );
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
-    expect(nodes).toHaveLength(36);
-    expect(relations).toHaveLength(30);
+    expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
+    expect(nodes).toHaveLength(48);
+    expect(relations).toHaveLength(36);
   });
 });
 
@@ -306,9 +440,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(36);
-    expect(new Set(outlinedNodeIds).size).toBe(36);
-    expect(outlinedRelationIds.size).toBe(30);
+    expect(outlinedNodeIds).toHaveLength(48);
+    expect(new Set(outlinedNodeIds).size).toBe(48);
+    expect(outlinedRelationIds.size).toBe(36);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -391,7 +525,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'roguelike-run-structure');
 
-    expect(indexed).toHaveLength(36);
+    expect(indexed).toHaveLength(48);
     expect(runStructure).toMatchObject({
       id: 'roguelike-run-structure',
       startYear: 1980,

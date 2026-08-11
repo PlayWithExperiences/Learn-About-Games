@@ -1,14 +1,42 @@
 [
   {
+    "id": "early-electronic-games",
+    "title": { "zh-CN": "早期电子游戏与商业化", "en": "Early electronic games and commercialization" },
+    "summary": { "zh-CN": "高亮 1958 至 1975 年实验装置、程序、系统原型与商业产品之间有证据支持的联系。" },
+    "familyIds": [],
+    "scopeNote": { "zh-CN": "这是基础历史透镜，不是类型 Family；它不主张唯一第一款电子游戏，也不以时间相邻代替影响证据。" },
+    "tags": ["early-electronic-games-lens"]
+  },
+  {
     "id": "roguelike",
     "title": { "zh-CN": "Roguelike", "en": "Roguelike" },
     "summary": { "zh-CN": "高亮与 Roguelike 历史、run-based 结构及跨类型转译有证据关系的节点与边；不隐藏全局上下文。" },
+    "familyIds": ["action", "role-playing"],
+    "scopeNote": { "zh-CN": "追踪可核查的单局结构、直接影响与跨类型转译；不主张 Rogue 是第一款 Roguelike，也不将所有 run-based 游戏视为同一类型。" },
     "tags": ["roguelike-lens"]
   },
   {
     "id": "metroidvania",
     "title": { "zh-CN": "Metroidvania", "en": "Metroidvania" },
     "summary": { "zh-CN": "高亮命名史、探索结构、直接影响、融合与类别形成；不寻找唯一第一款，也不隐藏全局上下文。" },
+    "familyIds": ["action", "adventure"],
+    "scopeNote": { "zh-CN": "追踪探索平台结构、作品间直接证据与类别形成；不主张 Metroid 或其他单一作品发明了这一类型。" },
     "tags": ["metroidvania-lens"]
+  },
+  {
+    "id": "platform-lineage",
+    "title": { "zh-CN": "平台与跳跃游戏", "en": "Platform and jumping games" },
+    "summary": { "zh-CN": "高亮固定画面攀爬、跳跃、横向卷轴、速度与精密平台设计之间有证据支持的关系。" },
+    "familyIds": ["action"],
+    "scopeNote": { "zh-CN": "纳入不同历史阶段的平台与跳跃作品，但不声明唯一第一款 platform game，也不因同类标签或时间相邻自动连边。" },
+    "tags": ["platform-jumping-lens"]
+  },
+  {
+    "id": "adventure-lineage",
+    "title": { "zh-CN": "解析器冒险到图形冒险", "en": "Parser adventure to graphical adventure" },
+    "summary": { "zh-CN": "高亮文本解析器、图形呈现、指向点击界面与 SCUMM 技术沿用之间有证据支持的关系。" },
+    "familyIds": ["adventure"],
+    "scopeNote": { "zh-CN": "追踪两条相交的演化路径，不主张单一作品发明 adventure 或 graphical adventure，也不把界面相似当作直接影响。" },
+    "tags": ["parser-graphical-adventure-lens"]
   }
 ]

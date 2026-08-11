@@ -14,6 +14,7 @@ const productCollections: ProductCollection[] = [
   'sources',
   'resources',
   'roleProfiles',
+  'atlasGenreFamilies',
   'atlasTags',
   'atlasNodes',
   'atlasEvidence',

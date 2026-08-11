@@ -135,8 +135,63 @@
     "summary": { "zh-CN": "让角色与故事记住重复失败并保持叙事推进。" }
   },
   {
-    "id": "early-electronic-games",
+    "id": "early-electronic-games-lens",
     "name": { "zh-CN": "早期电子游戏史", "en": "Early electronic games" },
     "summary": { "zh-CN": "1958 至 1975 年实验装置、程序、原型与商业产品之间的有证据联系。" }
+  },
+  {
+    "id": "platform-jumping-lens",
+    "name": { "zh-CN": "平台与跳跃谱系", "en": "Platform and jumping lineage" },
+    "summary": { "zh-CN": "追踪平台、攀爬、跳跃、卷轴与速度结构的有证据关系。" }
+  },
+  {
+    "id": "fixed-screen-climbing",
+    "name": { "zh-CN": "固定画面攀爬", "en": "Fixed-screen climbing" },
+    "summary": { "zh-CN": "在固定画面中以楼层、平台或梯子组织垂直移动。" }
+  },
+  {
+    "id": "jump-action",
+    "name": { "zh-CN": "跳跃动作", "en": "Jump action" },
+    "summary": { "zh-CN": "以可控跳跃跨越间隙、障碍或敌人。" }
+  },
+  {
+    "id": "side-scrolling-platform",
+    "name": { "zh-CN": "横向卷轴平台", "en": "Side-scrolling platform" },
+    "summary": { "zh-CN": "让平台动作在横向卷动的空间中连续展开。" }
+  },
+  {
+    "id": "speed-platform",
+    "name": { "zh-CN": "速度平台", "en": "Speed platform" },
+    "summary": { "zh-CN": "以速度、坡面与动量组织平台移动。" }
+  },
+  {
+    "id": "precision-platform",
+    "name": { "zh-CN": "精密平台", "en": "Precision platform" },
+    "summary": { "zh-CN": "以紧凑关卡与精确移动输入构成主要挑战。" }
+  },
+  {
+    "id": "parser-graphical-adventure-lens",
+    "name": { "zh-CN": "解析器到图形冒险谱系", "en": "Parser to graphical adventure lineage" },
+    "summary": { "zh-CN": "追踪文本解析、图形呈现与指向点击界面的有证据关系。" }
+  },
+  {
+    "id": "text-parser",
+    "name": { "zh-CN": "文本解析器", "en": "Text parser" },
+    "summary": { "zh-CN": "玩家通过输入文字命令与游戏世界互动。" }
+  },
+  {
+    "id": "graphical-adventure",
+    "name": { "zh-CN": "图形冒险", "en": "Graphical adventure" },
+    "summary": { "zh-CN": "以可视场景扩展或替代纯文本环境描述。" }
+  },
+  {
+    "id": "point-and-click",
+    "name": { "zh-CN": "指向点击", "en": "Point and click" },
+    "summary": { "zh-CN": "以指针和预设动作替代自由文本命令的一类交互。" }
+  },
+  {
+    "id": "scumm-lineage",
+    "name": { "zh-CN": "SCUMM 技术沿用", "en": "SCUMM technical lineage" },
+    "summary": { "zh-CN": "由 SCUMM 脚本系统的明确开发与复用形成的技术谱系。" }
   }
 ]

@@ -142,6 +142,12 @@ export type Catalog = {
       responsibility: 'execute' | 'contribute' | 'decide' | 'direct';
     }>;
   }>;
+  atlasGenreFamilies: Array<{
+    id: string;
+    title: LocalizedText;
+    summary: LocalizedText;
+    order: number;
+  }>;
   atlasTags: Array<{
     id: string;
     name: LocalizedText;
@@ -190,6 +196,8 @@ export type Catalog = {
     id: string;
     title: LocalizedText;
     summary: LocalizedText;
+    familyIds: string[];
+    scopeNote: LocalizedText;
     tags: string[];
   }>;
 };
@@ -245,6 +253,10 @@ export type CatalogValidationCode =
   | 'PROFILE_CAPABILITY_DUPLICATE'
   | 'PROFILE_PRIORITY_INVALID'
   | 'PROFILE_RESPONSIBILITY_INVALID'
+  | 'ATLAS_GENRE_FAMILY_ORDER_DUPLICATE'
+  | 'ATLAS_THEME_FAMILY_MISSING'
+  | 'ATLAS_THEME_FAMILY_DUPLICATE'
+  | 'ATLAS_THEME_SCOPE_INVALID'
   | 'ATLAS_TAG_REFERENCE_MISSING'
   | 'ATLAS_NODE_DATE_RANGE_INVALID'
   | 'ATLAS_NODE_EVIDENCE_REQUIRED'
@@ -345,6 +357,7 @@ const collectionNames = [
   'sources',
   'resources',
   'roleProfiles',
+  'atlasGenreFamilies',
   'atlasTags',
   'atlasNodes',
   'atlasEvidence',
@@ -454,6 +467,7 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   const knowledgeTopicIds = new Set(catalog.knowledgeTopics.map(({ id }) => id));
   const resourceTopicIds = new Set(catalog.resourceTopics.map(({ id }) => id));
   const sourceIds = new Set(catalog.sources.map(({ id }) => id));
+  const atlasGenreFamilyIds = new Set(catalog.atlasGenreFamilies.map(({ id }) => id));
   const atlasNodeIds = new Set(catalog.atlasNodes.map(({ id }) => id));
   const atlasNodesById = new Map(catalog.atlasNodes.map((node) => [node.id, node]));
   const atlasEvidenceIds = new Set(catalog.atlasEvidence.map(({ id }) => id));
@@ -1056,6 +1070,21 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     }
   }
 
+  const atlasGenreFamilyOrders = new Set<number>();
+  for (const family of catalog.atlasGenreFamilies) {
+    if (atlasGenreFamilyOrders.has(family.order)) {
+      appendError(
+        errors,
+        'ATLAS_GENRE_FAMILY_ORDER_DUPLICATE',
+        'atlasGenreFamilies',
+        family.id,
+        'order',
+        String(family.order),
+      );
+    }
+    atlasGenreFamilyOrders.add(family.order);
+  }
+
   for (const node of catalog.atlasNodes) {
     const hasInvalidDateRange =
       !Number.isInteger(node.startYear) ||
@@ -1217,6 +1246,37 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   }
 
   for (const theme of catalog.atlasThemes) {
+    const familyIds = Array.isArray(theme.familyIds) ? theme.familyIds : [];
+    if (theme.id !== 'early-electronic-games' && familyIds.length === 0) {
+      appendError(errors, 'ATLAS_THEME_FAMILY_MISSING', 'atlasThemes', theme.id, 'familyIds', '');
+    }
+    const seenFamilyIds = new Set<string>();
+    for (const [familyIndex, familyId] of familyIds.entries()) {
+      if (seenFamilyIds.has(familyId)) {
+        appendError(
+          errors,
+          'ATLAS_THEME_FAMILY_DUPLICATE',
+          'atlasThemes',
+          theme.id,
+          `familyIds.${familyIndex}`,
+          familyId,
+        );
+      }
+      seenFamilyIds.add(familyId);
+      if (!atlasGenreFamilyIds.has(familyId)) {
+        appendError(
+          errors,
+          'ATLAS_THEME_FAMILY_MISSING',
+          'atlasThemes',
+          theme.id,
+          `familyIds.${familyIndex}`,
+          familyId,
+        );
+      }
+    }
+    if (!theme.scopeNote?.['zh-CN']?.trim()) {
+      appendError(errors, 'ATLAS_THEME_SCOPE_INVALID', 'atlasThemes', theme.id, 'scopeNote', '');
+    }
     for (const tag of theme.tags) {
       if (!atlasTagIds.has(tag)) {
         appendError(errors, 'ATLAS_TAG_REFERENCE_MISSING', 'atlasThemes', theme.id, 'tags', tag);
