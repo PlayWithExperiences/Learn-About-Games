@@ -142,6 +142,21 @@ const pathCrossesBoxInterior = (
   return horizontalThroughInterior || verticalThroughInterior;
 });
 
+const pathOverlapsBoxBoundary = (
+  path: string,
+  box: { x: number; y: number; width: number; height: number },
+) => allSegments(path).some((segment) => {
+  const horizontalBoundaryOverlap = segment.y1 === segment.y2
+    && (segment.y1 === box.y || segment.y1 === box.y + box.height)
+    && Math.max(Math.min(segment.x1, segment.x2), box.x)
+      < Math.min(Math.max(segment.x1, segment.x2), box.x + box.width);
+  const verticalBoundaryOverlap = segment.x1 === segment.x2
+    && (segment.x1 === box.x || segment.x1 === box.x + box.width)
+    && Math.max(Math.min(segment.y1, segment.y2), box.y)
+      < Math.min(Math.max(segment.y1, segment.y2), box.y + box.height);
+  return horizontalBoundaryOverlap || verticalBoundaryOverlap;
+});
+
 it('exports only EGDS geometry after the generic layout retirement', () => {
   const retiredSymbols = [
     ['Map', 'Point'].join(''),
@@ -536,18 +551,28 @@ describe('EGDS expertise map geometry', () => {
       .map(({ frameworkNodeId }) => frameworkNodeId))]
       .sort();
 
+    expect(populatedFrameworkNodeIds).toHaveLength(19);
+
     for (const expandedFrameworkNodeId of populatedFrameworkNodeIds) {
       const layout = buildEgdsMapLayout({ ...egdsInput(), expandedFrameworkNodeId });
       const expectedKeys = [...capabilities, ...knowledgeTopics]
         .filter((entity) => entity.frameworkNodeId === expandedFrameworkNodeId)
         .map(entityKey)
         .sort();
-      const boxes = [...layout.frameworkBoxes, ...layout.entityBoxes];
+      const boxes = [...layout.frameworkBoxes, ...layout.entityBoxes, ...layout.relationEndpointBoxes];
 
       expect(layout.entityBoxes.map(({ key }) => key), expandedFrameworkNodeId).toEqual(expectedKeys);
       for (const [index, box] of boxes.entries()) {
         for (const other of boxes.slice(index + 1)) {
           expect(isOverlapping(box, other), `${expandedFrameworkNodeId}:${box.key} overlaps ${other.key}`).toBe(false);
+        }
+      }
+      for (const path of [...layout.structuralPaths, ...layout.processPaths]) {
+        for (const box of boxes.filter(({ key }) => key !== path.fromKey && key !== path.toKey)) {
+          expect(
+            pathOverlapsBoxBoundary(path.path, box),
+            `${expandedFrameworkNodeId}:${path.id} reuses ${box.key} boundary`,
+          ).toBe(false);
         }
       }
     }
@@ -616,6 +641,7 @@ describe('EGDS expertise map geometry', () => {
             && Math.max(Math.min(segment.y1, segment.y2), box.y) < Math.min(Math.max(segment.y1, segment.y2), box.y + box.height);
           return horizontalThroughInterior || verticalThroughInterior;
         }), `${path.id} crosses ${box.key}`).toBe(false);
+        expect(pathOverlapsBoxBoundary(path.path, box), `${path.id} reuses ${box.key} boundary`).toBe(false);
       }
     }
     expect(layout.processPaths).toHaveLength(0);
@@ -649,6 +675,7 @@ describe('EGDS expertise map geometry', () => {
             && Math.max(Math.min(segment.y1, segment.y2), box.y) < Math.min(Math.max(segment.y1, segment.y2), box.y + box.height);
           return horizontalThroughInterior || verticalThroughInterior;
         }), `${path.id} crosses ${box.key}`).toBe(false);
+        expect(pathOverlapsBoxBoundary(path.path, box), `${path.id} reuses ${box.key} boundary`).toBe(false);
       }
     }
     expect(fullLayout.processPaths.every(({ path }) => (
@@ -738,6 +765,7 @@ describe('EGDS expertise map geometry', () => {
         expect(pathCrossesBoxInterior(path.path, to), `${path.id} enters ${to.key}`).toBe(false);
         for (const box of boxes.filter(({ key }) => key !== path.fromKey && key !== path.toKey)) {
           expect(pathCrossesBoxInterior(path.path, box), `${path.id} crosses ${box.key}`).toBe(false);
+          expect(pathOverlapsBoxBoundary(path.path, box), `${path.id} reuses ${box.key} boundary`).toBe(false);
         }
       }
     }

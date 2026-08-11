@@ -570,6 +570,67 @@ test('responsive focus opens only the required disclosure chain and returns to s
   }
 });
 
+test('responsive Career focus exposes all branch aggregates in light and dark modes and returns cleanly', async ({ page }) => {
+  const expectedBranchFacts = {
+    'experience-design': '核心 1，重要 0，建议了解 0',
+    'from-plan-to-ship': '核心 0，重要 1，建议了解 0',
+    'with-team': '核心 0，重要 0，建议了解 0',
+    'product-profit': '核心 0，重要 0，建议了解 0',
+    'beyond-games': '核心 0，重要 0，建议了解 0',
+  } as const;
+
+  for (const colorScheme of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme });
+    for (const width of [1024, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('./map/');
+      const map = page.locator('[data-egds-map]');
+      const outline = map.locator('[data-egds-outline]');
+
+      await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:apply-career-lens', {
+        bubbles: true,
+        detail: {
+          profileId: 'responsive-branch-fixture',
+          nodes: [
+            { capabilityId: 'rules-system-modeling', priority: 'core', responsibility: 'execute' },
+            { capabilityId: 'task-breakdown', priority: 'important', responsibility: 'contribute' },
+          ],
+        },
+      })));
+      await map.evaluate((element) => element.dispatchEvent(new CustomEvent('egds-map:focus-capability', {
+        bubbles: true,
+        detail: { capabilityId: 'rules-system-modeling' },
+      })));
+
+      await expect(outline).toBeVisible();
+      await expect(map.locator('[data-capability-map-canvas]')).toBeHidden();
+      await expect(map).toHaveAttribute('data-layout-mode', 'focus');
+      await expect(map).toHaveAttribute('data-career-profile-id', 'responsive-branch-fixture');
+      for (const [branchId, expected] of Object.entries(expectedBranchFacts)) {
+        const label = outline.locator(
+          `[data-outline-framework-node="${branchId}"] > summary [data-career-collapsed-count]`,
+        );
+        await expect(label, `${colorScheme}/${width}/${branchId}`).toBeVisible();
+        await expect(label, `${colorScheme}/${width}/${branchId}`).toHaveText(expected);
+      }
+      await assertNoPageOverflow(page);
+
+      await map.getByRole('button', { name: '返回全图', exact: true }).click();
+      await expect(map).toHaveAttribute('data-layout-mode', 'overview');
+      await expect(map).toHaveAttribute('data-career-profile-id', 'responsive-branch-fixture');
+      for (const branchId of Object.keys(expectedBranchFacts)) {
+        const label = outline.locator(
+          `[data-outline-framework-node="${branchId}"] > summary [data-career-collapsed-count]`,
+        );
+        await expect(label, `${colorScheme}/${width}/${branchId} return`).toBeHidden();
+        await expect(label, `${colorScheme}/${width}/${branchId} return`).toHaveText('');
+      }
+      await expect(outline.locator('[data-outline-framework-node][open]')).toHaveCount(0);
+      await assertNoPageOverflow(page);
+    }
+  }
+});
+
 test('enhanced outline keeps only the last manually opened entity leaf while no-JS disclosures stay independent', async ({ browser, page }) => {
   for (const width of [1024, 320]) {
     await page.setViewportSize({ width, height: 900 });

@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
+import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import resources from '../../src/data/resources.json' with { type: 'json' };
 import roleProfiles from '../../src/data/role-profiles.json' with { type: 'json' };
 
@@ -210,6 +211,13 @@ test('responsive outline summaries mirror career fact counts and clear them with
   const profile = roleProfiles[0];
   const expectedCounts = frameworkCounts(profile);
   const capabilityFrameworkNodeIds = new Set(capabilities.map(({ frameworkNodeId }) => frameworkNodeId));
+  const rootNodeId = egdsFrameworkNodes.find(({ kind }) => kind === 'root')?.id;
+  if (!rootNodeId) throw new Error('Missing EGDS root node');
+  const primaryBranchIds = egdsFrameworkNodes
+    .filter(({ kind, parentNodeId }) => kind === 'branch' && parentNodeId === rootNodeId)
+    .map(({ id }) => id);
+
+  expect(primaryBranchIds).toHaveLength(5);
 
   for (const width of [1024, 320]) {
     await page.setViewportSize({ width, height: 900 });
@@ -218,7 +226,12 @@ test('responsive outline summaries mirror career fact counts and clear them with
     const map = explorer.locator('[data-egds-map]');
     const outline = map.locator('[data-egds-outline]');
     await expect(outline.locator('[data-outline-framework-node] > summary [data-career-collapsed-count]'))
-      .toHaveCount(capabilityFrameworkNodeIds.size);
+      .toHaveCount(capabilityFrameworkNodeIds.size + primaryBranchIds.length);
+    for (const branchId of primaryBranchIds) {
+      await expect(outline.locator(
+        `[data-outline-framework-node="${branchId}"] > summary [data-career-collapsed-count]`,
+      ), branchId).toHaveCount(1);
+    }
 
     await explorer.getByRole('button', { name: profile.title['zh-CN'], exact: true }).click();
     for (const [frameworkNodeId, counts] of expectedCounts) {
