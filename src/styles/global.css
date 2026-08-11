@@ -2596,6 +2596,13 @@ h2 {
   gap: 0.45rem;
 }
 
+.atlas-view-controls__mode-title {
+  display: none;
+  margin-right: auto;
+  font-size: 0.9rem;
+  font-weight: 780;
+}
+
 .atlas-view-controls button {
   min-height: 2.6rem;
   padding: 0.45rem 0.75rem;
@@ -2753,6 +2760,41 @@ h2 {
   border-color: var(--accent-strong);
   cursor: grab;
   overscroll-behavior: contain;
+}
+
+[data-atlas-global-network][data-map-mode='true'] {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  width: auto;
+  height: 100dvh;
+  margin: 0;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+  overflow: hidden;
+  background: var(--page);
+  flex-direction: column;
+  isolation: isolate;
+  overscroll-behavior: none;
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-view-controls {
+  margin-bottom: 0.65rem;
+  flex: 0 0 auto;
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-view-controls__mode-title {
+  display: block;
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-network__scroll-note {
+  flex: 0 0 auto;
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-network__viewport {
+  min-height: 0;
+  height: auto;
+  flex: 1 1 auto;
 }
 
 .atlas-view-controls [data-atlas-map-mode][aria-pressed='true'] {

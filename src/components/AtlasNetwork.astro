@@ -137,6 +137,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
 
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
     <div class="atlas-view-controls" data-atlas-view-controls>
+      <strong class="atlas-view-controls__mode-title">Innovation Atlas 地图模式</strong>
       <button type="button" data-atlas-map-mode aria-pressed="false" disabled>进入地图模式</button>
       <button type="button" data-atlas-fit disabled>适应全图</button>
       <button type="button" data-atlas-zoom-out aria-label="缩小" disabled>−</button>
@@ -606,6 +607,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     }
 
     const canvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
+    const networkShell = explorer.querySelector<HTMLElement>('[data-atlas-global-network]');
     const stage = explorer.querySelector<HTMLElement>('[data-atlas-stage]');
     const scene = explorer.querySelector<HTMLElement>('[data-atlas-scene]');
     const viewControls = explorer.querySelector<HTMLElement>('[data-atlas-view-controls]');
@@ -616,7 +618,17 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const resetButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-reset]');
     const scaleStatus = viewControls?.querySelector<HTMLOutputElement>('[data-atlas-scale-status]');
 
-    if (canvas && stage && scene && mapModeButton && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
+    type AtlasMapModeController = {
+      isActive: () => boolean;
+      setActive: (active: boolean, options?: {
+        focusCanvas?: boolean;
+        preserveSnapshot?: boolean;
+        restoreFocus?: boolean;
+      }) => void;
+    };
+    let mapModeController: AtlasMapModeController | null = null;
+
+    if (canvas && networkShell && stage && scene && mapModeButton && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
       const sceneWidth = Number(scene.dataset.sceneWidth);
       const sceneHeight = Number(scene.dataset.sceneHeight);
       let scale = 1;
@@ -626,6 +638,31 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       let frame = 0;
       let wheelAnchor: { x: number; y: number } | null = null;
       let pendingPan: { left: number; top: number } | null = null;
+      let mapModeSnapshot: {
+        pageX: number;
+        pageY: number;
+        activeElement: HTMLElement | null;
+        documentOverflow: string;
+        bodyOverflow: string;
+        inertElements: Array<{ element: HTMLElement; wasInert: boolean }>;
+      } | null = null;
+      const outlineBreakpoint = matchMedia('(max-width: 1150px)');
+
+      const collectMapModeBackground = () => {
+        const elements: Array<{ element: HTMLElement; wasInert: boolean }> = [];
+        let branch: HTMLElement = networkShell;
+        while (branch.parentElement) {
+          const parent = branch.parentElement;
+          Array.from(parent.children).forEach((sibling) => {
+            if (!(sibling instanceof HTMLElement) || sibling === branch) return;
+            if (sibling.matches('[data-atlas-selected-detail]')) return;
+            elements.push({ element: sibling, wasInert: sibling.inert });
+          });
+          if (parent === document.body) break;
+          branch = parent;
+        }
+        return elements;
+      };
 
       const updateViewControls = () => {
         scaleStatus.textContent = `${Math.round(scale * 100)}%`;
@@ -688,12 +725,73 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         if (!frame) frame = requestAnimationFrame(commitFrame);
       };
 
-      const setMapMode = (active: boolean) => {
+      const setMapMode = (
+        active: boolean,
+        options: { focusCanvas?: boolean; preserveSnapshot?: boolean; restoreFocus?: boolean } = {},
+      ) => {
+        if (active === mapMode || (active && outlineBreakpoint.matches)) return;
+        if (active) {
+          mapModeSnapshot ??= {
+            pageX: window.scrollX,
+            pageY: window.scrollY,
+            activeElement: document.activeElement instanceof HTMLElement ? document.activeElement : null,
+            documentOverflow: document.documentElement.style.overflow,
+            bodyOverflow: document.body.style.overflow,
+            inertElements: collectMapModeBackground(),
+          };
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+          mapModeSnapshot.inertElements.forEach(({ element }) => {
+            element.inert = true;
+          });
+          networkShell.dataset.mapMode = 'true';
+          networkShell.setAttribute('role', 'dialog');
+          networkShell.setAttribute('aria-modal', 'true');
+        } else {
+          delete networkShell.dataset.mapMode;
+          networkShell.removeAttribute('role');
+          networkShell.removeAttribute('aria-modal');
+          if (frame) cancelAnimationFrame(frame);
+          frame = 0;
+          wheelAnchor = null;
+          pendingPan = null;
+        }
         mapMode = active;
         mapModeButton.setAttribute('aria-pressed', String(active));
         mapModeButton.textContent = active ? '退出地图模式' : '进入地图模式';
         canvas.dataset.mapMode = String(active);
         if (!active) delete canvas.dataset.dragging;
+
+        if (active) {
+          requestAnimationFrame(() => {
+            if (!mapMode) return;
+            if (fitMode) fitView();
+            if (options.focusCanvas !== false) canvas.focus({ preventScroll: true });
+          });
+          return;
+        }
+
+        if (!mapModeSnapshot) return;
+        const snapshot = mapModeSnapshot;
+        if (!options.preserveSnapshot) mapModeSnapshot = null;
+        document.documentElement.style.overflow = snapshot.documentOverflow;
+        document.body.style.overflow = snapshot.bodyOverflow;
+        snapshot.inertElements.forEach(({ element, wasInert }) => {
+          element.inert = wasInert;
+        });
+        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = 'auto';
+        if (options.restoreFocus !== false) {
+          const focusTarget = snapshot.activeElement?.isConnected ? snapshot.activeElement : mapModeButton;
+          focusTarget.focus({ preventScroll: true });
+        }
+        window.scrollTo(snapshot.pageX, snapshot.pageY);
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      };
+
+      mapModeController = {
+        isActive: () => mapMode,
+        setActive: setMapMode,
       };
 
       const fitView = () => {
@@ -721,9 +819,26 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       resetButton.addEventListener('click', () => applyManualScale(1, true));
       mapModeButton.addEventListener('click', () => setMapMode(!mapMode));
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && mapMode) setMapMode(false);
+        if (!mapMode) return;
+        if (event.key === 'Escape') {
+          setMapMode(false);
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = Array.from(networkShell.querySelectorAll<HTMLElement>(
+          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        )).filter((element) => element.getClientRects().length > 0);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !networkShell.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus({ preventScroll: true });
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus({ preventScroll: true });
+        }
       });
-      const outlineBreakpoint = matchMedia('(max-width: 1150px)');
       outlineBreakpoint.addEventListener('change', ({ matches }) => {
         if (matches) setMapMode(false);
       });
@@ -813,6 +928,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     let detailOrigin: Element | null = null;
     let savedPosition: { pageX: number; pageY: number; canvasX: number; canvasY: number; url: string } | null = null;
     let evidenceDestination: HTMLElement | null = null;
+    let resumeMapModeAfterEvidence = false;
 
     const restoreNetworkPosition = () => {
       if (!savedPosition) return;
@@ -860,12 +976,20 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         if (!target) return;
         event.preventDefault();
         evidenceDestination = target;
+        resumeMapModeAfterEvidence = mapModeController?.isActive() ?? false;
+        if (resumeMapModeAfterEvidence) {
+          mapModeController?.setActive(false, { preserveSnapshot: true, restoreFocus: false });
+        }
         dialog.close();
         return;
       }
       const evidenceReturn = event.target.closest<HTMLButtonElement>('[data-atlas-evidence-return]');
       if (evidenceReturn) {
         evidenceReturn.hidden = true;
+        if (resumeMapModeAfterEvidence) {
+          mapModeController?.setActive(true, { focusCanvas: false, restoreFocus: false });
+        }
+        resumeMapModeAfterEvidence = false;
         restoreNetworkPosition();
         return;
       }

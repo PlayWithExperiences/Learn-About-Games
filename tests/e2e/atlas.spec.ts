@@ -425,6 +425,126 @@ test('ordinary wheel scrolls the page outside map mode and zooms continuously in
   await expect(mapMode).toHaveAttribute('aria-pressed', 'false');
 });
 
+test('map mode occupies the visual viewport, locks the page and restores scroll and focus on exit', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen ownership is tested once.');
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+
+  const network = page.locator('[data-atlas-global-network]');
+  const viewport = page.locator('[data-atlas-canvas]');
+  const mapMode = page.locator('[data-atlas-map-mode]');
+  await network.scrollIntoViewIfNeeded();
+  const pageYBefore = await page.evaluate(() => window.scrollY);
+
+  await mapMode.click();
+  await expect(mapMode).toHaveAttribute('aria-pressed', 'true');
+  await expect(network).toHaveAttribute('data-map-mode', 'true');
+  await expect(viewport).toBeFocused();
+
+  const active = await network.evaluate((element) => {
+    const viewport = element.querySelector<HTMLElement>('[data-atlas-canvas]')!;
+    const networkStyle = getComputedStyle(element);
+    const viewportStyle = getComputedStyle(viewport);
+    const networkRect = element.getBoundingClientRect();
+    const viewportRect = viewport.getBoundingClientRect();
+    return {
+      position: networkStyle.position,
+      inset: [networkRect.top, networkRect.right, networkRect.bottom, networkRect.left],
+      visualViewport: {
+        width: window.visualViewport?.width ?? window.innerWidth,
+        height: window.visualViewport?.height ?? window.innerHeight,
+      },
+      network: { width: networkRect.width, height: networkRect.height },
+      viewport: { top: viewportRect.top, bottom: viewportRect.bottom, height: viewportRect.height },
+      viewportFlexGrow: viewportStyle.flexGrow,
+      htmlOverflow: getComputedStyle(document.documentElement).overflow,
+      bodyOverflow: getComputedStyle(document.body).overflow,
+      pageY: window.scrollY,
+    };
+  });
+  expect(active.position).toBe('fixed');
+  expect(Math.abs(active.inset[0])).toBeLessThanOrEqual(1);
+  expect(Math.abs(active.inset[1] - active.visualViewport.width)).toBeLessThanOrEqual(1);
+  expect(Math.abs(active.inset[2] - active.visualViewport.height)).toBeLessThanOrEqual(1);
+  expect(Math.abs(active.inset[3])).toBeLessThanOrEqual(1);
+  expect(Math.abs(active.network.width - active.visualViewport.width)).toBeLessThanOrEqual(1);
+  expect(Math.abs(active.network.height - active.visualViewport.height)).toBeLessThanOrEqual(1);
+  expect(active.viewport.height).toBeGreaterThan(600);
+  expect(active.viewport.bottom).toBeLessThanOrEqual(active.visualViewport.height);
+  expect(active.viewportFlexGrow).toBe('1');
+  expect(active.htmlOverflow).toBe('hidden');
+  expect(active.bodyOverflow).toBe('hidden');
+  expect(active.pageY).toBe(pageYBefore);
+
+  await mapMode.focus();
+  await page.keyboard.press('Shift+Tab');
+  expect(await page.evaluate(() => Boolean(document.activeElement?.closest('[data-atlas-global-network]')))).toBe(true);
+  await viewport.focus();
+
+  const controlsBox = await mapMode.boundingBox();
+  expect(controlsBox).not.toBeNull();
+  await page.mouse.move(controlsBox!.x + controlsBox!.width / 2, controlsBox!.y + controlsBox!.height / 2);
+  await page.mouse.wheel(0, 360);
+  expect(await page.evaluate(() => window.scrollY)).toBe(pageYBefore);
+
+  await page.keyboard.press('Escape');
+  await expect(mapMode).toHaveAttribute('aria-pressed', 'false');
+  await expect(network).not.toHaveAttribute('data-map-mode', 'true');
+  await expect(mapMode).toBeFocused();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(pageYBefore);
+  const restored = await page.evaluate(() => ({
+    htmlOverflow: getComputedStyle(document.documentElement).overflow,
+    bodyOverflow: getComputedStyle(document.body).overflow,
+  }));
+  expect(restored.htmlOverflow).not.toBe('hidden');
+  expect(restored.bodyOverflow).not.toBe('hidden');
+  await expect(page.locator('[inert]')).toHaveCount(0);
+
+  await mapMode.click();
+  await mapMode.click();
+  await expect(mapMode).toHaveAttribute('aria-pressed', 'false');
+  await expect(mapMode).toBeFocused();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(pageYBefore);
+});
+
+test('fullscreen detail evidence temporarily releases the page and resumes the same map context', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen detail return is tested once.');
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('./atlas/');
+
+  const network = page.locator('[data-atlas-global-network]');
+  const viewport = page.locator('[data-atlas-canvas]');
+  const mapMode = page.locator('[data-atlas-map-mode]');
+  await mapMode.click();
+  await page.getByRole('button', { name: '放大' }).click();
+  await viewport.evaluate((element) => {
+    element.scrollLeft = 240;
+    element.scrollTop = 110;
+  });
+
+  const nodeLink = page.locator('[data-atlas-node-id="dead-cells"] [data-atlas-node-link]');
+  await nodeLink.scrollIntoViewIfNeeded();
+  const selectedPosition = await viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop }));
+  await nodeLink.click();
+  const dialog = page.locator('dialog[data-atlas-selected-detail]');
+  await expect(dialog).toBeVisible();
+  const evidenceTarget = await dialog.locator('[data-atlas-evidence-ref]').first().getAttribute('href');
+  await dialog.locator('[data-atlas-evidence-ref]').first().click();
+
+  await expect(mapMode).toHaveAttribute('aria-pressed', 'false');
+  await expect(network).not.toHaveAttribute('data-map-mode', 'true');
+  await expect(page.locator(evidenceTarget!)).toBeVisible();
+  const returnButton = page.locator(`${evidenceTarget} [data-atlas-evidence-return]`);
+  await expect(returnButton).toBeVisible();
+  await returnButton.click();
+
+  await expect(mapMode).toHaveAttribute('aria-pressed', 'true');
+  await expect(network).toHaveAttribute('data-map-mode', 'true');
+  await expect(nodeLink).toBeFocused();
+  await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
+    .toEqual(selectedPosition);
+});
+
 test('fit follows viewport resizing until manual zoom or reset takes ownership', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Fit resize ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
