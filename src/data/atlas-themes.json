@@ -38,5 +38,21 @@
     "familyIds": ["adventure"],
     "scopeNote": { "zh-CN": "追踪两条相交的演化路径，不主张单一作品发明 adventure 或 graphical adventure，也不把界面相似当作直接影响。" },
     "tags": ["parser-graphical-adventure-lens"]
+  },
+  {
+    "id": "first-person-shooter-lineage",
+    "title": { "zh-CN": "第一人称射击开发谱系", "en": "First-person shooter development lineage" },
+    "summary": { "zh-CN": "高亮早期第一人称网络空间，以及 id Software 与 Valve 的可核查开发响应；不把年代相邻当作影响。" },
+    "familyIds": ["shooter"],
+    "scopeNote": { "zh-CN": "这是选择性开发谱系，不主张 Maze War、Wolfenstein 3D 或 Doom 是唯一第一款 FPS，也不把 Spacewar! 直接连到 1990 年代作品。" },
+    "tags": ["first-person-shooter-lens"]
+  },
+  {
+    "id": "real-time-strategy-lineage",
+    "title": { "zh-CN": "即时战略开发谱系", "en": "Real-time strategy development lineage" },
+    "summary": { "zh-CN": "高亮 Dune II、Warcraft 与 StarCraft 之间由参与者明确记录的开发响应。" },
+    "familyIds": ["strategy"],
+    "scopeNote": { "zh-CN": "这是 RTS 的选择性谱系，不等于全部策略游戏史，也不主张 Dune II 是无争议的绝对起点。" },
+    "tags": ["real-time-strategy-lens"]
   }
 ]

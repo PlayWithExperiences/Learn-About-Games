@@ -193,5 +193,15 @@
     "id": "scumm-lineage",
     "name": { "zh-CN": "SCUMM 技术沿用", "en": "SCUMM technical lineage" },
     "summary": { "zh-CN": "由 SCUMM 脚本系统的明确开发与复用形成的技术谱系。" }
+  },
+  {
+    "id": "first-person-shooter-lens",
+    "name": { "zh-CN": "第一人称射击开发谱系", "en": "First-person shooter development lineage" },
+    "summary": { "zh-CN": "只追踪有开发者或机构证据支持的第一人称、引擎与设计沿用关系。" }
+  },
+  {
+    "id": "real-time-strategy-lens",
+    "name": { "zh-CN": "即时战略开发谱系", "en": "Real-time strategy development lineage" },
+    "summary": { "zh-CN": "只追踪有参与者或机构证据支持的 RTS 作品与开发响应关系。" }
   }
 ]

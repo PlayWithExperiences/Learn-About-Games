@@ -344,5 +344,41 @@
     "evidenceIds": ["lucasfilm-scumm-history"],
     "tags": ["parser-graphical-adventure-lens", "point-and-click", "scumm-lineage"],
     "summary": { "zh-CN": "Lucasfilm 官方史记录 SCUMM 为 Maniac Mansion 创建，随后持续修订并用于 1990 年 The Secret of Monkey Island；这里只表达明确技术沿用。" }
+  },
+  {
+    "id": "catacomb-3d-to-wolfenstein-3d", "fromId": "catacomb-3d", "toId": "wolfenstein-3d",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["gdc-wolfenstein-postmortem"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "John Romero 的开发者回顾说明团队刚发布 Catacomb 3-D 后开始规划并在七个月内制作 Wolfenstein 3D。" }
+  },
+  {
+    "id": "wolfenstein-3d-to-doom", "fromId": "wolfenstein-3d", "toId": "doom",
+    "type": "design-response", "status": "credible", "directionality": "directed",
+    "evidenceIds": ["gdc-doom-postmortem"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "DOOM 开发回顾把项目放在 Wolfenstein 3D 之后，并记录团队对技术与设计目标的重新构建；不把它写成简单变体。" }
+  },
+  {
+    "id": "doom-to-quake", "fromId": "doom", "toId": "quake",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["gdc-quake-postmortem"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "John Romero 的 Quake 回顾明确从 DOOM 与 DOOM II 后的团队状态进入 Quake 开发；这里表达同团队的后续设计响应。" }
+  },
+  {
+    "id": "quake-to-half-life", "fromId": "quake", "toId": "half-life",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["valve-cabal-half-life"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "Ken Birdwell 说明 Half-Life 的最初目标本质上是精致的 Quake Total Conversion，随后因整体体验不成立而推倒重做。" }
+  },
+  {
+    "id": "dune-ii-to-warcraft", "fromId": "dune-ii", "toId": "warcraft-orcs-humans",
+    "type": "direct-influence", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["patrick-wyatt-making-warcraft"], "tags": ["real-time-strategy-lens"],
+    "summary": { "zh-CN": "Warcraft 首席程序员 Patrick Wyatt 明确写道早期 Warcraft 原型受到 Dune II 启发，且当时像其精简版本。" }
+  },
+  {
+    "id": "warcraft-ii-to-starcraft", "fromId": "warcraft-ii", "toId": "starcraft",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["blizzard-starcraft-20"], "tags": ["real-time-strategy-lens"],
+    "summary": { "zh-CN": "Mike Morhaime 回顾称 StarCraft 初版使用 Warcraft II 引擎换皮；外部反响促使团队重写引擎并提高设计目标。" }
   }
 ]

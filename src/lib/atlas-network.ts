@@ -134,10 +134,10 @@ export function fitAtlasScale(input: {
   sceneWidth: number;
   sceneHeight: number;
 }): number {
-  return clampAtlasScale(Math.min(
+  return Math.min(atlasScaleBounds.max, Math.max(0.1, Math.min(
     input.viewportWidth / input.sceneWidth,
     input.viewportHeight / input.sceneHeight,
-  ));
+  )));
 }
 
 export function projectAtlasScrollAnchor(input: {

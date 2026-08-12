@@ -34,8 +34,37 @@ describe('global Atlas graph contract', () => {
     expect(atlasNodes.length).toBeLessThanOrEqual(60);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
     expect(atlasRelations.length).toBeLessThanOrEqual(50);
-    expect(atlasNodes).toHaveLength(48);
-    expect(atlasRelations).toHaveLength(36);
+    expect(atlasNodes).toHaveLength(58);
+    expect(atlasRelations).toHaveLength(42);
+  });
+
+  it('adds bounded first-person shooter and RTS development lineages', () => {
+    const nodeIds = new Set([
+      'maze-war', 'catacomb-3d', 'wolfenstein-3d', 'doom', 'quake', 'half-life',
+      'dune-ii', 'warcraft-orcs-humans', 'warcraft-ii', 'starcraft',
+    ]);
+    const relationIds = new Set([
+      'catacomb-3d-to-wolfenstein-3d', 'wolfenstein-3d-to-doom',
+      'doom-to-quake', 'quake-to-half-life', 'dune-ii-to-warcraft',
+      'warcraft-ii-to-starcraft',
+    ]);
+    const evidenceIds = new Set([
+      'acmi-maze-war', 'gdc-wolfenstein-postmortem', 'gdc-doom-postmortem',
+      'gdc-quake-postmortem', 'valve-cabal-half-life', 'acmi-dune-ii',
+      'patrick-wyatt-making-warcraft', 'blizzard-starcraft-20',
+    ]);
+
+    expect(new Set(atlasNodes.filter(({ id }) => nodeIds.has(id)).map(({ id }) => id))).toEqual(nodeIds);
+    expect(new Set(atlasRelations.filter(({ id }) => relationIds.has(id)).map(({ id }) => id))).toEqual(relationIds);
+    expect(new Set(atlasEvidence.filter(({ id }) => evidenceIds.has(id)).map(({ id }) => id))).toEqual(evidenceIds);
+    expect(atlasThemes.find(({ id }) => id === 'first-person-shooter-lineage')?.familyIds).toEqual(['shooter']);
+    expect(atlasThemes.find(({ id }) => id === 'real-time-strategy-lineage')?.familyIds).toEqual(['strategy']);
+    expect(atlasRelations.some(({ fromId, toId }) =>
+      fromId === 'spacewar' && toId === 'maze-war')).toBe(false);
+    expect(atlasRelations.some(({ fromId, toId }) =>
+      fromId === 'maze-war' && ['wolfenstein-3d', 'doom'].includes(toId))).toBe(false);
+    expect(atlasNodes.filter(({ id }) => nodeIds.has(id)).every(({ summary }) =>
+      !/第一款|绝对起点|the first/i.test(summary['zh-CN']))).toBe(true);
   });
 
   it('adds the evidence-bounded Platform and Adventure lineage batch', () => {
@@ -125,7 +154,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
 
-    expect(atlasEvidence).toHaveLength(61);
+    expect(atlasEvidence).toHaveLength(69);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -155,7 +184,7 @@ describe('global Atlas graph contract', () => {
     }
   });
 
-  it('defines foundation and four evidence lineages as tag-only lenses', () => {
+  it('defines foundation and six evidence lineages as tag-only lenses', () => {
     expect(atlasGenreFamilies).toHaveLength(10);
     expect(atlasThemes.map(({ id }) => id)).toEqual([
       'early-electronic-games',
@@ -163,6 +192,8 @@ describe('global Atlas graph contract', () => {
       'metroidvania',
       'platform-lineage',
       'adventure-lineage',
+      'first-person-shooter-lineage',
+      'real-time-strategy-lineage',
     ]);
     expect(
       atlasThemes.every((theme) => !('nodeIds' in theme) && !('relationIds' in theme)),
@@ -310,8 +341,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(48);
-    expect(relations).toHaveLength(36);
+    expect(nodes).toHaveLength(58);
+    expect(relations).toHaveLength(42);
   });
 });
 
@@ -464,9 +495,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(48);
-    expect(new Set(outlinedNodeIds).size).toBe(48);
-    expect(outlinedRelationIds.size).toBe(36);
+    expect(outlinedNodeIds).toHaveLength(58);
+    expect(new Set(outlinedNodeIds).size).toBe(58);
+    expect(outlinedRelationIds.size).toBe(42);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -511,7 +542,7 @@ describe('Atlas viewport helpers', () => {
     expect(stepAtlasScale(2, 1)).toBe(2);
   });
 
-  it('fits legal viewport dimensions inside the scale bounds', () => {
+  it('fits the complete scene even when that requires going below the manual zoom floor', () => {
     expect(fitAtlasScale({
       viewportWidth: 1100,
       viewportHeight: 600,
@@ -524,6 +555,12 @@ describe('Atlas viewport helpers', () => {
       sceneWidth: 2200,
       sceneHeight: 900,
     })).toBe(0.75);
+    expect(fitAtlasScale({
+      viewportWidth: 1178,
+      viewportHeight: 525,
+      sceneWidth: 2200,
+      sceneHeight: 1240,
+    })).toBeCloseTo(525 / 1240);
     expect(fitAtlasScale({
       viewportWidth: 4400,
       viewportHeight: 1800,
@@ -549,7 +586,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'roguelike-run-structure');
 
-    expect(indexed).toHaveLength(48);
+    expect(indexed).toHaveLength(58);
     expect(runStructure).toMatchObject({
       id: 'roguelike-run-structure',
       startYear: 1980,

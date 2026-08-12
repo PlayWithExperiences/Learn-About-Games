@@ -744,8 +744,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         zoomInButton.disabled = scale >= 2;
       };
 
-      const applyScale = (nextScale: number, resetOrigin = false) => {
-        const boundedScale = clampAtlasScale(nextScale);
+      const applyScale = (nextScale: number, resetOrigin = false, fitOverride = false) => {
+        const boundedScale = fitOverride
+          ? Math.min(2, Math.max(0.1, nextScale))
+          : clampAtlasScale(nextScale);
         const nextScroll = resetOrigin
           ? { scrollLeft: 0, scrollTop: 0 }
           : projectAtlasScrollAnchor({
@@ -875,7 +877,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           viewportHeight: canvas.clientHeight,
           sceneWidth,
           sceneHeight,
-        }));
+        }), false, true);
       };
 
       const applyManualScale = (nextScale: number, resetOrigin = false) => {

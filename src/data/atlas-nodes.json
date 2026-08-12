@@ -399,5 +399,75 @@
     "lane": 2,
     "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click", "scumm-lineage"],
     "evidenceIds": ["lucasfilm-scumm-history"]
+  },
+  {
+    "id": "maze-war", "kind": "game",
+    "name": { "zh-CN": "Maze War", "en": "Maze War" },
+    "summary": { "zh-CN": "1973 年的第一人称三维迷宫与网络游玩实验；作为早期语境节点，不据年代推断它直接影响后来的 FPS。" },
+    "startYear": 1973, "lane": 7,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["acmi-maze-war"]
+  },
+  {
+    "id": "catacomb-3d", "kind": "game",
+    "name": { "zh-CN": "Catacomb 3-D", "en": "Catacomb 3-D" },
+    "summary": { "zh-CN": "id Software 在 Wolfenstein 3D 之前发布的纹理映射第一人称射击作品。" },
+    "startYear": 1991, "lane": 7,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-wolfenstein-postmortem"]
+  },
+  {
+    "id": "wolfenstein-3d", "kind": "game",
+    "name": { "zh-CN": "Wolfenstein 3D", "en": "Wolfenstein 3D" },
+    "summary": { "zh-CN": "John Romero 的 GDC 回顾将其置于 Catacomb 3-D 之后的七个月开发过程。" },
+    "startYear": 1992, "lane": 8,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-wolfenstein-postmortem"]
+  },
+  {
+    "id": "doom", "kind": "game",
+    "name": { "zh-CN": "DOOM", "en": "DOOM" },
+    "summary": { "zh-CN": "id Software 在 Wolfenstein 3D 经验之后重新构建引擎与设计目标的作品。" },
+    "startYear": 1993, "lane": 3,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-doom-postmortem"]
+  },
+  {
+    "id": "quake", "kind": "game",
+    "name": { "zh-CN": "Quake", "en": "Quake" },
+    "summary": { "zh-CN": "John Romero 的 GDC 回顾把 Quake 放在 DOOM 与 DOOM II 后的 id Software 开发历程中。" },
+    "startYear": 1996, "lane": 5,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-quake-postmortem"]
+  },
+  {
+    "id": "half-life", "kind": "game",
+    "name": { "zh-CN": "Half-Life", "en": "Half-Life" },
+    "summary": { "zh-CN": "Valve 开发者回顾称最初目标本质上是精致的 Quake Total Conversion，随后推倒重做。" },
+    "startYear": 1998, "lane": 0,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["valve-cabal-half-life"]
+  },
+  {
+    "id": "dune-ii", "kind": "game",
+    "name": { "zh-CN": "Dune II: The Building of a Dynasty", "en": "Dune II: The Building of a Dynasty" },
+    "summary": { "zh-CN": "1992 年的 RTS 作品；ACMI 记录其资源、建造、单位与阵营结构，但这里不主张无争议的绝对第一。" },
+    "startYear": 1992, "lane": 9,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["acmi-dune-ii"]
+  },
+  {
+    "id": "warcraft-orcs-humans", "kind": "game",
+    "name": { "zh-CN": "Warcraft: Orcs & Humans", "en": "Warcraft: Orcs & Humans" },
+    "summary": { "zh-CN": "Patrick Wyatt 的开发回顾明确记录 Warcraft 原型受到 Dune II 启发。" },
+    "startYear": 1994, "lane": 4,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["patrick-wyatt-making-warcraft"]
+  },
+  {
+    "id": "warcraft-ii", "kind": "game",
+    "name": { "zh-CN": "Warcraft II: Tides of Darkness", "en": "Warcraft II: Tides of Darkness" },
+    "summary": { "zh-CN": "Blizzard 在 StarCraft 回顾中将 Warcraft II 列为此前的 RTS 开发基础与早期引擎来源。" },
+    "startYear": 1995, "lane": 6,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20"]
+  },
+  {
+    "id": "starcraft", "kind": "game",
+    "name": { "zh-CN": "StarCraft", "en": "StarCraft" },
+    "summary": { "zh-CN": "Blizzard 回顾称早期版本使用 Warcraft II 引擎换皮，反响不佳后重写引擎并提高目标。" },
+    "startYear": 1998, "lane": 6,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20"]
   }
 ]

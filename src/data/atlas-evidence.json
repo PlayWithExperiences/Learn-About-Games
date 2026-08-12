@@ -752,5 +752,85 @@
     "stableId": "Collection identifier 111.4936",
     "locator": "Historical Note, paragraphs 1-2",
     "boundedClaim": { "zh-CN": "支持 Mystery House 的 1980 年、Apple II、On-Line Systems、文字与图形结合及 Williams 夫妇的分工协作；不主张绝对第一。" }
+  },
+  {
+    "id": "acmi-maze-war", "sourceTitle": "Maze War", "originalLanguage": "en",
+    "title": { "zh-CN": "ACMI 馆藏：Maze War", "en": "ACMI collection: Maze War" },
+    "url": "https://www.acmi.net.au/works/60826--maze-war/",
+    "summary": { "zh-CN": "ACMI 将 1973 年 Maze War 描述为较早创建第一人称三维世界并支持网络游玩的电子游戏之一。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "ACMI",
+    "checkedAt": "2026-08-13", "stableId": "ACMI work 60826",
+    "locator": "Collection description and production date",
+    "boundedClaim": { "zh-CN": "仅支持 Maze War 的 1973 年时间坐标、第一人称三维迷宫与网络游玩语境；不证明它直接影响 1990 年代 FPS。" }
+  },
+  {
+    "id": "gdc-wolfenstein-postmortem", "sourceTitle": "Classic Game Postmortem: 'Wolfenstein 3D' (Achtung!)", "originalLanguage": "en",
+    "title": { "zh-CN": "John Romero：Wolfenstein 3D 经典游戏回顾", "en": "Classic Game Postmortem: Wolfenstein 3D" },
+    "url": "https://www.gdcvault.com/play/1027860/Classic-Game-Postmortem-Wolfenstein-3D",
+    "summary": { "zh-CN": "GDC 会话页由 John Romero 回顾 Catacomb 3-D 发布后，id Software 在七个月内开发 Wolfenstein 3D 的过程。" },
+    "sourceKind": "conference-talk", "institutionOrAuthor": "John Romero / Game Developers Conference",
+    "publicationDate": "2022", "checkedAt": "2026-08-13", "stableId": "GDC Vault 1027860",
+    "locator": "Session overview and speaker metadata",
+    "boundedClaim": { "zh-CN": "支持 Catacomb 3-D 与 Wolfenstein 3D 的节点事实及同团队连续开发关系；不主张类型唯一发明。" }
+  },
+  {
+    "id": "gdc-doom-postmortem", "sourceTitle": "Classic Game Postmortem - DOOM", "originalLanguage": "en",
+    "title": { "zh-CN": "John Romero 与 Tom Hall：DOOM 经典游戏回顾", "en": "Classic Game Postmortem: DOOM" },
+    "url": "https://www.gdcvault.com/play/1014627/",
+    "summary": { "zh-CN": "GDC 会话由 John Romero 与 Tom Hall 回顾 DOOM 的灵感、设计选择与开发挑战。" },
+    "sourceKind": "conference-talk", "institutionOrAuthor": "John Romero, Tom Hall / Game Developers Conference",
+    "publicationDate": "2011", "checkedAt": "2026-08-13", "stableId": "GDC Vault 1014627",
+    "locator": "Session title, speakers and overview",
+    "boundedClaim": { "zh-CN": "支持 DOOM 的开发者回顾及其位于 Wolfenstein 3D 之后的设计响应；不把新引擎描述为前作的简单派生。" }
+  },
+  {
+    "id": "gdc-quake-postmortem", "sourceTitle": "Classic Game Postmortem: 'Quake': The End of the Original Id", "originalLanguage": "en",
+    "title": { "zh-CN": "John Romero：Quake 经典游戏回顾", "en": "Classic Game Postmortem: Quake" },
+    "url": "https://www.gdcvault.com/play/1027152/Classic-Game-Postmortem-Quake-The",
+    "summary": { "zh-CN": "GDC 会话页由 John Romero 回顾 id Software 在 DOOM 与 DOOM II 成功之后制作 Quake 的过程。" },
+    "sourceKind": "conference-talk", "institutionOrAuthor": "John Romero / Game Developers Conference",
+    "publicationDate": "2021", "checkedAt": "2026-08-13", "stableId": "GDC Vault 1027152",
+    "locator": "Session overview and speaker metadata",
+    "boundedClaim": { "zh-CN": "支持 Quake 的节点事实以及它作为 DOOM 系列后续的同团队设计响应；不证明所有技术或玩法直接继承。" }
+  },
+  {
+    "id": "valve-cabal-half-life", "sourceTitle": "The Cabal: Valve’s Design Process For Creating Half-Life", "originalLanguage": "en",
+    "title": { "zh-CN": "Ken Birdwell：Half-Life 的 Cabal 设计过程", "en": "The Cabal: Valve’s Design Process For Creating Half-Life" },
+    "url": "https://www.gamedeveloper.com/design/the-cabal-valve-s-design-process-for-creating-i-half-life-i-",
+    "summary": { "zh-CN": "Valve 开发者 Ken Birdwell 记录 Half-Life 最初目标本质上是精致的 Quake TC，并在效果不佳后推倒重做。" },
+    "sourceKind": "creator-account", "institutionOrAuthor": "Ken Birdwell / Valve",
+    "publicationDate": "1999-12-10", "checkedAt": "2026-08-13", "stableId": "Game Developer article: The Cabal",
+    "locator": "Opening section, paragraph beginning 'Our initial target release date'",
+    "boundedClaim": { "zh-CN": "支持 Half-Life 的 1998 年项目语境、最初 Quake TC 目标及后续重构；关系类型为 design-response，而非完整派生。" }
+  },
+  {
+    "id": "acmi-dune-ii", "sourceTitle": "Dune II: The Building of a Dynasty", "originalLanguage": "en",
+    "title": { "zh-CN": "ACMI 馆藏：Dune II", "en": "ACMI collection: Dune II" },
+    "url": "https://www.acmi.net.au/works/107341--dune-ii-the-building-of-a-dynasty/",
+    "summary": { "zh-CN": "ACMI 记录 Dune II 的 1992 年时间、RTS 语境以及资源、建造、单位和阵营结构。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "ACMI",
+    "checkedAt": "2026-08-13", "stableId": "ACMI work 107341 / igdb-86",
+    "locator": "Collection description, production date and subject categories",
+    "boundedClaim": { "zh-CN": "支持 Dune II 的时间与 RTS 设计语境；不把馆藏的常见历史评价改写为无争议的绝对第一。" }
+  },
+  {
+    "id": "patrick-wyatt-making-warcraft", "sourceTitle": "The making of Warcraft part 1", "originalLanguage": "en",
+    "title": { "zh-CN": "Patrick Wyatt：Warcraft 的制作（第一部分）", "en": "The making of Warcraft part 1" },
+    "url": "https://www.codeofhonor.com/blog/the-making-of-warcraft-part-1/",
+    "summary": { "zh-CN": "Warcraft 首席程序员 Patrick Wyatt 回顾早期原型受到 Dune II 启发，并一度像其精简版本。" },
+    "sourceKind": "creator-account", "institutionOrAuthor": "Patrick Wyatt",
+    "publicationDate": "2012", "checkedAt": "2026-08-13", "stableId": "Code of Honor: making Warcraft part 1",
+    "locator": "Section describing the first multiplayer prototype and Dune 2 comparison",
+    "boundedClaim": { "zh-CN": "支持 Dune II 对 Warcraft 初期设计的直接影响；不主张两款作品结构完全相同。" }
+  },
+  {
+    "id": "blizzard-starcraft-20", "sourceTitle": "Mike Morhaime on 20 Years of StarCraft Esports", "originalLanguage": "en",
+    "title": { "zh-CN": "Mike Morhaime 回顾 StarCraft 二十年", "en": "Mike Morhaime on 20 Years of StarCraft Esports" },
+    "url": "https://news.blizzard.com/en-us/article/21574697/mike-morhaime-on-20-years-of-starcraft-esports",
+    "summary": { "zh-CN": "Blizzard 回顾称 StarCraft 初版使用 Warcraft II 引擎换皮，E3 反响促使 Bob Fitch 重写引擎并提高目标。" },
+    "sourceKind": "creator-account", "institutionOrAuthor": "Mike Morhaime / Blizzard Entertainment",
+    "publicationDate": "2018", "checkedAt": "2026-08-13", "stableId": "Blizzard article 21574697",
+    "locator": "Opening development recollection, paragraphs on the 1996 E3 alpha",
+    "boundedClaim": { "zh-CN": "支持 Warcraft II 作为 StarCraft 初版技术基础，以及外部反馈后重写引擎的设计响应；不主张最终作品只是换皮。" }
   }
 ]
