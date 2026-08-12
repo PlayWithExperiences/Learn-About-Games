@@ -16,7 +16,7 @@
 - Modify: `tests/e2e/egds-routes.spec.ts`
 - Modify: `tests/e2e/visible-skeleton.spec.ts`
 
-- [ ] **Step 1: Write the failing route test**
+- [x] **Step 1: Write the failing route test**
 
 Add a Playwright test that opens `./egds/` and requires:
 
@@ -31,11 +31,11 @@ await expect(page.getByRole('link', { name: '打开当前 EGDS Digital Garden' }
 );
 ```
 
-- [ ] **Step 2: Write failing contextual-entry tests**
+- [x] **Step 2: Write failing contextual-entry tests**
 
 Require `/about/` and `/map/` to expose base-path-safe `/Learn-About-Games/egds/` links while keeping the desktop top navigation at four items.
 
-- [ ] **Step 3: Run the tests and verify RED**
+- [x] **Step 3: Run the tests and verify RED**
 
 Run:
 
@@ -52,15 +52,15 @@ Expected: FAIL because `/egds/` and both contextual links do not exist.
 - Modify: `src/pages/about/index.astro`
 - Modify: `src/pages/map/index.astro`
 
-- [ ] **Step 1: Create the server-rendered page**
+- [x] **Step 1: Create the server-rendered page**
 
 Use `BaseLayout` and arrays declared in frontmatter for the five current-model layers, four practice-cycle verbs, three lever families, and four published articles. Include the current-authority, history, map relationship, and boundary copy defined by the design spec.
 
-- [ ] **Step 2: Add contextual links**
+- [x] **Step 2: Add contextual links**
 
 Use `sitePath('egds/')` in About and Map. Do not alter `BaseLayout` navigation.
 
-- [ ] **Step 3: Run the targeted tests and verify GREEN**
+- [x] **Step 3: Run the targeted tests and verify GREEN**
 
 Run the same Playwright command from Task 1. Expected: PASS.
 
@@ -70,19 +70,19 @@ Run the same Playwright command from Task 1. Expected: PASS.
 - Modify: `src/styles/global.css`
 - Modify: `tests/e2e/egds-routes.spec.ts`
 
-- [ ] **Step 1: Add failing visual-structure assertions**
+- [x] **Step 1: Add failing visual-structure assertions**
 
 Require the current model to render five ordered items, the practice cycle to render four ordered items, all external links to be visible, and `document.documentElement.scrollWidth === document.documentElement.clientWidth` at 1440px and 320px.
 
-- [ ] **Step 2: Run the assertions and verify RED**
+- [x] **Step 2: Run the assertions and verify RED**
 
 Expected: the unstyled mobile structure or required data hooks fail.
 
-- [ ] **Step 3: Add scoped `.egds-page` CSS**
+- [x] **Step 3: Add scoped `.egds-page` CSS**
 
 Use existing tokens only. Implement a compact asymmetric intro, five-step linear model, four-part practice cycle, sparse history grid, single-column mobile collapse, and Light/Dark parity. Do not add external dependencies, new fonts, decorative SVG, scroll listeners, or animation libraries.
 
-- [ ] **Step 4: Run desktop/mobile tests and verify GREEN**
+- [x] **Step 4: Run desktop/mobile tests and verify GREEN**
 
 ```bash
 CI=1 npx playwright test tests/e2e/egds-routes.spec.ts --project=chromium --project=mobile-chromium
@@ -97,18 +97,18 @@ Expected: all EGDS route tests pass.
 - Modify: `ROADMAP.md`
 - Modify: `CHANGELOG.md`
 - Create: `docs/devlog/2026-08-12-egds-method-page.md`
-- Modify: `docs/journal/2026-08-08-learn-about-games-decision-summary.md`
-- Modify: `docs/journal/2026-08-08-learn-about-games-transcript.md`
+- Modify: `docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md`
+- Modify: `docs/journal/2026-08-09-learn-about-games-v02-transcript.md`
 
-- [ ] **Step 1: Record the product decision**
+- [x] **Step 1: Record the product decision**
 
 State that PKM is the current EGDS authority, the four articles are historical evidence, `/egds/` is the public introduction, and the global navigation remains four items.
 
-- [ ] **Step 2: Record verification and limitations**
+- [x] **Step 2: Record verification and limitations**
 
 Record source URLs, local-only status, test counts, no-JS behavior, and the fact that the repository does not mirror the full PKM.
 
-- [ ] **Step 3: Run public-copy tests**
+- [x] **Step 3: Run public-copy tests**
 
 ```bash
 CI=1 npx playwright test tests/e2e/visible-skeleton.spec.ts tests/e2e/egds-routes.spec.ts --project=chromium --project=mobile-chromium
@@ -121,7 +121,7 @@ Expected: PASS with no misleading EGDS claims.
 **Files:**
 - Verify only.
 
-- [ ] **Step 1: Run build gates**
+- [x] **Step 1: Run build gates**
 
 ```bash
 npm run check
@@ -131,7 +131,7 @@ npm run build
 
 Expected: zero diagnostics, zero unit failures, successful static build.
 
-- [ ] **Step 2: Run the complete browser suite**
+- [x] **Step 2: Run the complete browser suite**
 
 ```bash
 CI=1 npm run test:e2e
@@ -139,11 +139,11 @@ CI=1 npm run test:e2e
 
 Expected: zero unexpected failures.
 
-- [ ] **Step 3: Inspect visual states**
+- [x] **Step 3: Inspect visual states**
 
 Capture and inspect `/egds/` at 1440px and 320px in Light and Dark, plus a 320px no-JS state. Check heading hierarchy, copy, focus, link wrapping, contrast, and horizontal overflow.
 
-- [ ] **Step 4: Run final static gates**
+- [x] **Step 4: Run final static gates**
 
 ```bash
 git diff --check
@@ -152,4 +152,3 @@ git status --short
 ```
 
 Expected: clean diff check, no forbidden dash characters on the page, and only intended project files changed before commit.
-

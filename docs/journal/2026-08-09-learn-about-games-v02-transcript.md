@@ -430,3 +430,17 @@ EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构
 本节只记录当前运行时可保存的脱敏合同、实现和验证事实，不包含秘密或不可访问的内部推理。仓库继续 Private，Pages workflow 继续禁用；没有 push 或线上部署。最终会在文档同步、整站 fresh gate 和原图复核后重新启动 `127.0.0.1:4321/Learn-About-Games/` 本地预览。
 
 整合原图位于 `/tmp/lag-reversible-review/`。Atlas Family 普通页、Roguelike 全屏、EGDS 总览、Playtest 展开、Resources 默认折叠与单表展开均以原始分辨率检查；普通页没有覆盖控件，展开 EGDS 只在总览下方增加内容，资源默认页仍保持短列表。fresh build 为 Astro 0 diagnostics、Vitest 160/160、127 pages；完整 Playwright 为 219 passed／21 project-specific skipped／0 failed；高危依赖审计为 0 vulnerabilities，差异敏感模式扫描无命中。仓库保持 Private，本地 `codex/v02` 不 push、不部署。
+
+## 38. EGDS 当前模型与独立介绍页（部分会话导出）
+
+记录说明：以下为当前会话可访问范围的脱敏摘要，是 partial export，不是聊天 UI 的完整逐字导出。未导出的私有推理、完整工具输出和不可访问的原始消息不声称完整；本文不记录凭据、环境变量或其他秘密。
+
+发起人指出，能力地图只在体验设计分支中显示感受、理解、解构和重构，无法系统说明整套 EGDS，也无法解释这套作者方法为何成为 Learn About Games 的构建依据。发起人提供四篇已发布 Emotional Game Design System 文章和 PlayWithExperiences Digital Garden，并说明最新理论内容主要位于 PKM；旧文章仍是过去真实、已经公开的版本。
+
+主任务通过 Agent Reach 检查网络工具，确认 Jina Reader 可用并逐页读取四篇作者文章、Digital Garden 首页和 sitemap；Agent Reach 版本为 v1.5.0。研究结论是：四篇文章保存方法从叙事结构、早期系统、探索感分析到 BOSS 战应用的演进；当前 PKM 使用情绪曲线、情绪体验、主观感受、客观原因、设计杠杆五层因果链，并以感知、理解、解构、重构描述反复工作的动作。两者不能被伪装成同一时间的固定规范。
+
+信息架构比较了三种方案：只扩写 About、建立独立 `/egds/`、增加第五个全局导航项。发起人批准推荐方案：当前完整模型在前，演进历史和工作知识库在后；独立页面由 About 和 Map 进入，四项全局导航保持不变。页面采用文字优先的编辑型结构，不生成一张准确性更低的新示意图，也不复制整个 PKM。
+
+实现以 Playwright 先取得两个有效 RED：`/egds/` 返回 404，About／Map 方法入口不存在。最小页面与链接实现后两项 GREEN；随后桌面五列因果链的样式合同在旧未样式化页面收到 1 列并取得第二轮 RED，CSS 完成后 EGDS route desktop／mobile 18 项通过。
+
+最终 fresh 验证为 Astro 68 files 0 errors／warnings／hints、Vitest 160/160、129 pages、完整 Playwright 227 passed／21 project-specific skipped／0 failed，高危依赖审计 0 vulnerabilities。`/tmp/lag-egds-method/` 中 1440px／320px Light／Dark 与 320px no-JS 五张截图均按原始分辨率检查，所有状态横向溢出为 0。仓库继续 Private、Pages 继续禁用；本轮不 push、不恢复线上部署，只在本地恢复可预览地址。

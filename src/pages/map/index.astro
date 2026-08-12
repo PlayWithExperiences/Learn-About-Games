@@ -3,6 +3,7 @@ import MapExplorer from '../../components/MapExplorer.astro';
 import CareerLensControl from '../../components/CareerLensControl.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
+import { sitePath } from '../../lib/site-path';
 
 const {
   egdsFrameworkNodes,
@@ -20,6 +21,7 @@ const {
     <p class="plain-label">能力地图</p>
     <h1>从体验出发，理解设计如何成为结果。</h1>
     <p class="lede">本地图以 PlayWithExperiences 的 EGDS 为知识骨架，结合公开资料与行业实践持续修订。它是一种可讨论的设计视角，不是唯一标准答案。</p>
+    <p class="map-intro__method-link"><a class="text-link" href={sitePath('egds/')}>了解 EGDS 方法</a></p>
   </header>
 
   <div class="page-shell">

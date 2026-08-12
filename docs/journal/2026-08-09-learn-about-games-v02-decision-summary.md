@@ -271,3 +271,13 @@ EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 fr
 本段是脱敏连续性记录，不补造不可访问的逐字对话。仓库与 Pages 状态未改变；本轮提交尚未 push 或部署。对应公开决策见 [Devlog 006](../devlog/2026-08-12-reversible-maps-and-resource-depth.md)，精确过程证据见本文链接的脱敏 transcript。
 
 本轮整合截图保存在 `/tmp/lag-reversible-review/`，已按原始分辨率检查 Atlas Family／全屏、EGDS 总览／展开、Resources 默认／单表展开六种状态。fresh build 为 Astro 0 diagnostics、Vitest 160/160、127 pages；完整 Playwright 为 219 passed／21 project-specific skipped／0 failed；高危依赖审计为 0 vulnerabilities，提交差异敏感模式扫描无命中。仓库只读核验仍为 Private；本地候选保留在 `codex/v02`，未 push、未部署。
+
+## EGDS 独立方法介绍页
+
+发起人确认能力地图虽然采用 EGDS，方法本身不应只藏在体验设计分支。当前理论内容应以 PlayWithExperiences PKM 为先，2024 年四篇已发布文章则保留为过去真实版本与演进证据。主任务据此选择独立 `/egds/` 页面，而不是 About 内长文或第五个全局导航项；About 与能力地图各提供一个上下文入口，顶层用户任务仍为四项。
+
+当前页面明确两组结构：情绪曲线 → 情绪体验 → 主观感受 → 客观原因 → 设计杠杆的体验因果链，以及感知 → 理解 → 解构 → 重构的工作循环。玩法与挑战、叙事、美学与表现作为可共同使用的设计杠杆。页面同时解释 EGDS Framework Node、Capability 与 Knowledge Topic 的边界，以及生产、协作、产品和更广语境属于 Learn About Games 的应用扩展。
+
+证据层使用四个作者已发布页面和当前 Digital Garden 入口。Learn About Games 不镜像完整 PKM，不把历史文章写成当前模型的上限，也不把 EGDS 写成行业标准、认证、必修顺序、唯一道路或个人评分。页面全部服务器渲染，并以 1440px／320px、Light／Dark、无 JavaScript 和 base path 浏览器合同验收。
+
+最终 fresh 验证为 Astro 68 files 0 errors／warnings／hints、Vitest 160/160、129 pages、完整 Playwright 227 passed／21 project-specific skipped／0 failed，高危依赖审计 0 vulnerabilities。五张原图位于 `/tmp/lag-egds-method/`，均已按原始分辨率检查，页面横向溢出为 0。本轮仍只存在本地 `codex/v02`，不 push、不恢复 Pages。

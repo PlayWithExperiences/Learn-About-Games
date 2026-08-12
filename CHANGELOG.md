@@ -6,6 +6,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 - 将 `PlayWithExperiences/Learn-About-Games` 暂时从 Public 改为 Private；未经身份验证的仓库 URL 与原 GitHub Pages URL 均返回 404，并手动停用 Pages workflow，避免私有完善期间触发无效部署。历史发布证据继续保留，重新公开前需完成当前核心体验修正、重新启用 workflow 与线上验收。
 - EGDS 取代通用分组成为能力地图的唯一知识骨架：28 个方法节点表达体验设计、从计划到落地、团队、产品／盈利与更广语境；体验设计内部固定显示体验旅程以及感受 → 理解 → 解构 → 重构，并由重构进入叙事、美学与表现、玩法与挑战三类设计杠杆。
+- 新增独立 `/egds/` 方法介绍页，并从 About 与能力地图提供上下文入口。页面以 Digital Garden 当前工作模型为先，公开情绪曲线 → 情绪体验 → 主观感受 → 客观原因 → 设计杠杆的因果链、感知 → 理解 → 解构 → 重构的工作循环，以及四篇已发布文章的历史位置；顶层导航继续保持四项。
 - 42 个 Capability 与 12 个 Knowledge Topic 只在一个叶容器中按需展开；64 条 `supports` / `complements` 关系默认不显示，只在选中 Capability 时显示其直接关系。桌面取消纵向嵌套滚动，1024px、320px 与无 JavaScript 使用同源原生层级和关系大纲。
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 通过地图公开事件叠加到 EGDS；Career priority、个人实践状态、展开／关系选择各自独立，不生成职业适配、差距、完成率或总分。无 JavaScript 时三份画像摘要、依据、详情与资源链接仍可访问。
 - 删除旧 Domains / mapGroups JSON、placement 字段、catalog 类型、validator、generic geometry helper、无消费者样式与公开方法论残留；EGDS Framework Node、Capability、Knowledge Topic 成为当前三类地图实体。

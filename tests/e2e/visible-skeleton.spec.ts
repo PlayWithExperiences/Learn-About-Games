@@ -239,6 +239,7 @@ test('lists each Devlog entry with its own title', async ({ page }) => {
   await expect(page.getByRole('link', { name: /Devlog 001：Learn About Games 从哪里来/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Devlog 002：M0 为什么从纵向切片开始/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Devlog 003：v0.2 为什么改成知识网络/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Devlog 007：为什么 EGDS 需要独立的说明页/ })).toBeVisible();
 });
 
 test('maps non-public Markdown links to absolute repository URLs', async ({ page }) => {
