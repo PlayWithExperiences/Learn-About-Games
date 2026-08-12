@@ -23,7 +23,7 @@ Add a Playwright test that opens `./egds/` and requires:
 ```ts
 await expect(page.getByRole('heading', { name: 'EGDS｜情感化游戏设计系统' })).toBeVisible();
 await expect(page.locator('[data-egds-current-model]')).toContainText('情绪曲线');
-await expect(page.locator('[data-egds-practice-cycle]')).toContainText('感知');
+await expect(page.locator('[data-egds-practice-cycle]')).toContainText('感受');
 await expect(page.locator('[data-egds-history] article')).toHaveCount(4);
 await expect(page.getByRole('link', { name: '打开当前 EGDS Digital Garden' })).toHaveAttribute(
   'href',

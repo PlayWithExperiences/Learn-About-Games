@@ -83,7 +83,7 @@ test('publishes the current EGDS method from PKM while preserving its article hi
 
   const practiceCycle = page.locator('[data-egds-practice-cycle]');
   await expect(practiceCycle.locator('li')).toHaveCount(4);
-  await expect(practiceCycle.locator('li')).toHaveText([/感知/, /理解/, /解构/, /重构/]);
+  await expect(practiceCycle.locator('li')).toHaveText([/感受/, /理解/, /解构/, /重构/]);
 
   await expect(page.locator('[data-egds-levers] li')).toHaveText([
     /玩法与挑战/,

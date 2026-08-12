@@ -276,7 +276,7 @@ EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 fr
 
 发起人确认能力地图虽然采用 EGDS，方法本身不应只藏在体验设计分支。当前理论内容应以 PlayWithExperiences PKM 为先，2024 年四篇已发布文章则保留为过去真实版本与演进证据。主任务据此选择独立 `/egds/` 页面，而不是 About 内长文或第五个全局导航项；About 与能力地图各提供一个上下文入口，顶层用户任务仍为四项。
 
-当前页面明确两组结构：情绪曲线 → 情绪体验 → 主观感受 → 客观原因 → 设计杠杆的体验因果链，以及感知 → 理解 → 解构 → 重构的工作循环。玩法与挑战、叙事、美学与表现作为可共同使用的设计杠杆。页面同时解释 EGDS Framework Node、Capability 与 Knowledge Topic 的边界，以及生产、协作、产品和更广语境属于 Learn About Games 的应用扩展。
+当前页面明确两组结构：情绪曲线 → 情绪体验 → 主观感受 → 客观原因 → 设计杠杆的体验因果链，以及感受 → 理解 → 解构 → 重构的工作循环。玩法与挑战、叙事、美学与表现作为可共同使用的设计杠杆。页面同时解释 EGDS Framework Node、Capability 与 Knowledge Topic 的边界，以及生产、协作、产品和更广语境属于 Learn About Games 的应用扩展。
 
 证据层使用四个作者已发布页面和当前 Digital Garden 入口。Learn About Games 不镜像完整 PKM，不把历史文章写成当前模型的上限，也不把 EGDS 写成行业标准、认证、必修顺序、唯一道路或个人评分。页面全部服务器渲染，并以 1440px／320px、Light／Dark、无 JavaScript 和 base path 浏览器合同验收。
 
