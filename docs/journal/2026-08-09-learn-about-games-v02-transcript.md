@@ -444,3 +444,11 @@ EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构
 实现以 Playwright 先取得两个有效 RED：`/egds/` 返回 404，About／Map 方法入口不存在。最小页面与链接实现后两项 GREEN；随后桌面五列因果链的样式合同在旧未样式化页面收到 1 列并取得第二轮 RED，CSS 完成后 EGDS route desktop／mobile 18 项通过。
 
 最终 fresh 验证为 Astro 68 files 0 errors／warnings／hints、Vitest 160/160、129 pages、完整 Playwright 227 passed／21 project-specific skipped／0 failed，高危依赖审计 0 vulnerabilities。`/tmp/lag-egds-method/` 中 1440px／320px Light／Dark 与 320px no-JS 五张截图均按原始分辨率检查，所有状态横向溢出为 0。仓库继续 Private、Pages 继续禁用；本轮不 push、不恢复线上部署，只在本地恢复可预览地址。
+
+## 39. 下一轮资料与 Atlas 扩展（部分会话导出）
+
+记录说明：以下为当前会话可访问范围的脱敏摘要，是 partial export，不是聊天 UI 的完整逐字导出。未导出的私有推理、完整工具输出和不可访问的原始消息不声称完整；本文不记录凭据、环境变量或其他秘密。
+
+发起人要求继续补全学习资料与 Innovation Map。主任务审计到当前目录为 209 Work Items、38 Sources、223 Access Versions；Innovation Atlas 为 10 Genre Families、5 themes、48 nodes、36 relations、61 Evidence，其中 Shooter、Strategy 等七个 Family 仍没有核查谱系。发起人批准先做资料与 Shooter／Strategy 的均衡批次，同时明确最终目标是尽可能覆盖，不能要求各部分数量接近。
+
+主任务据此把“均衡”定义为检索顺序而非收录配额：从薄弱主题与空 Family 开始发现，但只按证据门槛决定是否纳入。学习资料预计形成一个约 20–35 条的可审查批次；Atlas 只添加有参与者、机构档案、同期文档或可靠历史资料支持的节点和关系，不用相似性或时间相邻补线。当前仓库继续 Private，Pages 继续禁用；没有授权 push 或部署。

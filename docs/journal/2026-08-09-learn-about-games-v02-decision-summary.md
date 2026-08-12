@@ -281,3 +281,9 @@ EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 fr
 证据层使用四个作者已发布页面和当前 Digital Garden 入口。Learn About Games 不镜像完整 PKM，不把历史文章写成当前模型的上限，也不把 EGDS 写成行业标准、认证、必修顺序、唯一道路或个人评分。页面全部服务器渲染，并以 1440px／320px、Light／Dark、无 JavaScript 和 base path 浏览器合同验收。
 
 最终 fresh 验证为 Astro 68 files 0 errors／warnings／hints、Vitest 160/160、129 pages、完整 Playwright 227 passed／21 project-specific skipped／0 failed，高危依赖审计 0 vulnerabilities。五张原图位于 `/tmp/lag-egds-method/`，均已按原始分辨率检查，页面横向溢出为 0。本轮仍只存在本地 `codex/v02`，不 push、不恢复 Pages。
+
+## 下一轮资料与 Atlas 扩展边界
+
+发起人批准继续补充学习资料以及 Innovation Atlas，并明确“均衡”只能作为检索优先级，不能成为数量配额。最终目标是尽可能覆盖；已核验的好资料不因所属主题已有较多条目而被拒绝，薄弱主题也不能靠弱资料凑数。
+
+本轮拆成两个独立切片：学习资料从从业者访谈、设计基础、手感反馈和原型实验等薄弱主题开始，但同一批一手来源中通过证据门槛的其他资料也可纳入；Atlas 先研究当前为空的 Shooter 与 Strategy 两条谱系。Family 继续只是非排他导航，关系只由开发者、参与者、机构档案、同期文档或可靠历史资料支持，不由相似性和时间相邻生成。对应设计见 [balanced resource and Atlas expansion design](../superpowers/specs/2026-08-12-balanced-resource-atlas-expansion-design.md)。
