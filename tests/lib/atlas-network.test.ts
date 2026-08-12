@@ -144,6 +144,17 @@ describe('global Atlas graph contract', () => {
     );
   });
 
+  it('keeps every published Evidence item reproducibly traceable', () => {
+    for (const evidence of atlasEvidence) {
+      expect(evidence.url, evidence.id).toMatch(/^https?:\/\//);
+      expect(evidence.sourceKind, evidence.id).toBeTruthy();
+      expect(evidence.institutionOrAuthor.trim(), evidence.id).not.toBe('');
+      expect(evidence.checkedAt, evidence.id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(evidence.locator.trim(), evidence.id).not.toBe('');
+      expect(evidence.boundedClaim['zh-CN'].trim(), evidence.id).not.toBe('');
+    }
+  });
+
   it('defines foundation and four evidence lineages as tag-only lenses', () => {
     expect(atlasGenreFamilies).toHaveLength(10);
     expect(atlasThemes.map(({ id }) => id)).toEqual([
@@ -404,6 +415,20 @@ describe('global Atlas presentation geometry', () => {
     const node = layout.nodes[0];
     expect(pointOnAtlasNodeBoundary({ x: node.left, y: node.top - 1 }, node)).toBe(false);
     expect(pointOnAtlasNodeBoundary({ x: node.left + node.width + 1, y: node.top }, node)).toBe(false);
+  });
+
+  it('requires the companion coordinate to remain within the contacted node side', () => {
+    const node = { left: 120, top: 80, width: 96, height: 86 };
+
+    expect(pointOnAtlasNodeBoundary({ x: node.left, y: node.top + node.height / 2 }, node)).toBe(true);
+    expect(pointOnAtlasNodeBoundary({ x: node.left + node.width, y: node.top + node.height / 2 }, node)).toBe(true);
+    expect(pointOnAtlasNodeBoundary({ x: node.left + node.width / 2, y: node.top }, node)).toBe(true);
+    expect(pointOnAtlasNodeBoundary({ x: node.left + node.width / 2, y: node.top + node.height }, node)).toBe(true);
+
+    expect(pointOnAtlasNodeBoundary({ x: node.left, y: node.top - 1 }, node)).toBe(false);
+    expect(pointOnAtlasNodeBoundary({ x: node.left + node.width, y: node.top + node.height + 1 }, node)).toBe(false);
+    expect(pointOnAtlasNodeBoundary({ x: node.left - 1, y: node.top }, node)).toBe(false);
+    expect(pointOnAtlasNodeBoundary({ x: node.left + node.width + 1, y: node.top + node.height }, node)).toBe(false);
   });
 
   it('keeps relation render and outline focus order stable when source data order changes', () => {

@@ -260,41 +260,35 @@ const atlasEvidence = defineCollection({
       originalLanguage: z.enum(['en', 'ja', 'fr', 'es']),
       url: httpUrl,
       summary: localizedText,
-      sourceKind: z.enum(['institutional-history', 'museum-object', 'patent', 'oral-history']).optional(),
-      institutionOrAuthor: z.string().trim().min(1).optional(),
+      sourceKind: z.enum([
+        'institutional-history',
+        'museum-object',
+        'patent',
+        'oral-history',
+        'creator-account',
+        'project-history',
+        'interview',
+        'official-statement',
+        'catalog-record',
+        'archival-record',
+        'historical-analysis',
+        'conference-talk',
+        'publisher-release',
+      ]),
+      institutionOrAuthor: z.string().trim().min(1),
       publicationDate: z.string().trim().min(1).optional(),
-      checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+      checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
       stableId: z.string().trim().min(1).optional(),
-      locator: z.string().trim().min(1).optional(),
-      boundedClaim: localizedText.optional(),
+      locator: z.string().trim().min(1),
+      boundedClaim: localizedText,
     })
     .strict()
     .superRefine((evidence, context) => {
-      const hasExtendedProvenance = [
-        evidence.sourceKind,
-        evidence.institutionOrAuthor,
-        evidence.publicationDate,
-        evidence.checkedAt,
-        evidence.stableId,
-        evidence.locator,
-        evidence.boundedClaim,
-      ].some((value) => value !== undefined);
-      if (!hasExtendedProvenance) return;
-
-      for (const field of ['sourceKind', 'institutionOrAuthor', 'checkedAt', 'locator'] as const) {
-        if (!evidence[field]) {
-          context.addIssue({
-            code: 'custom',
-            path: [field],
-            message: `Extended Atlas evidence provenance requires ${field}`,
-          });
-        }
-      }
-      if (!evidence.boundedClaim?.['zh-CN']?.trim()) {
+      if (!evidence.boundedClaim['zh-CN'].trim()) {
         context.addIssue({
           code: 'custom',
           path: ['boundedClaim'],
-          message: 'Extended Atlas evidence provenance requires a bounded claim',
+          message: 'Atlas evidence provenance requires a bounded claim',
         });
       }
     }),

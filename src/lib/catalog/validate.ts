@@ -30,6 +30,21 @@ export type AtlasDirectionality = 'directed' | 'undirected';
 
 export type AtlasEvidenceOriginalLanguage = 'en' | 'ja' | 'fr' | 'es';
 
+export type AtlasEvidenceSourceKind =
+  | 'institutional-history'
+  | 'museum-object'
+  | 'patent'
+  | 'oral-history'
+  | 'creator-account'
+  | 'project-history'
+  | 'interview'
+  | 'official-statement'
+  | 'catalog-record'
+  | 'archival-record'
+  | 'historical-analysis'
+  | 'conference-talk'
+  | 'publisher-release';
+
 export type EgdsFrameworkNodeKind =
   | 'root'
   | 'branch'
@@ -171,13 +186,13 @@ export type Catalog = {
     originalLanguage: AtlasEvidenceOriginalLanguage;
     url: string;
     summary: LocalizedText;
-    sourceKind?: 'institutional-history' | 'museum-object' | 'patent' | 'oral-history';
-    institutionOrAuthor?: string;
+    sourceKind: AtlasEvidenceSourceKind;
+    institutionOrAuthor: string;
     publicationDate?: string;
-    checkedAt?: string;
+    checkedAt: string;
     stableId?: string;
-    locator?: string;
-    boundedClaim?: LocalizedText;
+    locator: string;
+    boundedClaim: LocalizedText;
   }>;
   atlasRelations: Array<{
     id: string;
@@ -316,11 +331,20 @@ const atlasEvidenceOriginalLanguages = new Set<AtlasEvidenceOriginalLanguage>([
   'fr',
   'es',
 ]);
-const atlasEvidenceSourceKinds = new Set([
+const atlasEvidenceSourceKinds = new Set<AtlasEvidenceSourceKind>([
   'institutional-history',
   'museum-object',
   'patent',
   'oral-history',
+  'creator-account',
+  'project-history',
+  'interview',
+  'official-statement',
+  'catalog-record',
+  'archival-record',
+  'historical-analysis',
+  'conference-talk',
+  'publisher-release',
 ]);
 const directedAtlasRelationTypes = new Set<AtlasRelationType>([
   'direct-influence',
@@ -1129,17 +1153,6 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         evidence.url,
       );
     }
-
-    const hasExtendedProvenance = [
-      evidence.sourceKind,
-      evidence.institutionOrAuthor,
-      evidence.publicationDate,
-      evidence.checkedAt,
-      evidence.stableId,
-      evidence.locator,
-      evidence.boundedClaim,
-    ].some((value) => value !== undefined);
-    if (!hasExtendedProvenance) continue;
 
     const invalidProvenanceFields = [
       !atlasEvidenceSourceKinds.has(evidence.sourceKind ?? '') && 'sourceKind',

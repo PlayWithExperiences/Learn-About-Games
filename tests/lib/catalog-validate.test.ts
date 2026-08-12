@@ -485,6 +485,11 @@ describe('validateCatalog', () => {
       originalLanguage: 'en',
       url: 'https://example.com/evidence',
       summary: localized('示例证据。'),
+      sourceKind: 'institutional-history',
+      institutionOrAuthor: 'Example Institution',
+      checkedAt: '2026-08-13',
+      locator: 'Example record',
+      boundedClaim: localized('只支持示例节点和标签测试。'),
     } as Catalog['atlasEvidence'][number]);
     catalog.atlasNodes.push(
       {
@@ -562,6 +567,61 @@ describe('validateCatalog', () => {
       'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID',
       'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID',
       'ATLAS_EVIDENCE_URL_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+    ]);
+  });
+
+  it('requires traceable provenance on every Atlas evidence item', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasEvidence.push({
+      id: 'untraceable-evidence',
+      title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en',
+      url: 'https://example.com/evidence',
+      summary: localized('示例证据。'),
+    } as Catalog['atlasEvidence'][number]);
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'sourceKind',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'institutionOrAuthor',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'checkedAt',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'locator',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'boundedClaim',
+        targetId: '',
+      },
     ]);
   });
 
@@ -843,6 +903,11 @@ describe('validateCatalog', () => {
       originalLanguage: 'en',
       url: 'https://example.com/evidence',
       summary: localized('示例证据。'),
+      sourceKind: 'institutional-history',
+      institutionOrAuthor: 'Example Institution',
+      checkedAt: '2026-08-13',
+      locator: 'Example record',
+      boundedClaim: localized('只支持时间顺序测试。'),
     });
     catalog.atlasNodes.push(
       {
