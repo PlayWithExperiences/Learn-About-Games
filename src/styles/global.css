@@ -549,6 +549,27 @@ h2 {
   background: linear-gradient(90deg, color-mix(in srgb, var(--surface) 72%, transparent), transparent 85%);
 }
 
+.egds-practice-cycle .egds-practice-cycle__pair {
+  display: grid;
+  margin: 0;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.35rem;
+  color: var(--muted);
+}
+
+.egds-practice-cycle__pair strong {
+  display: inline;
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.egds-practice-cycle__pair span {
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
 .egds-lever-list {
   display: grid;
   grid-template-columns: 1.1fr 0.85fr 1.05fr;

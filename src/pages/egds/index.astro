@@ -34,21 +34,25 @@ const practiceCycle = [
   {
     name: '感受',
     english: 'Perception',
+    causalLayer: '情绪体验',
     description: '先确认玩家实际经历了什么，不急于替体验下结论。',
   },
   {
     name: '理解',
     english: 'Rationalize',
+    causalLayer: '主观感受',
     description: '为感受建立可讨论的解释，区分观察、推断和假设。',
   },
   {
     name: '解构',
     english: 'Deconstruct',
+    causalLayer: '客观原因',
     description: '把体验拆到规则、反馈、叙事、空间和表现等可检查原因。',
   },
   {
     name: '重构',
     english: 'Reconstruct',
+    causalLayer: '设计杠杆',
     description: '使用设计杠杆重新组织体验，并通过游玩证据继续修正。',
   },
 ];
@@ -119,7 +123,7 @@ const publishedArticles = [
       </div>
       <ol class="egds-model-chain" data-egds-current-model>
         {currentModel.map((layer) => (
-          <li>
+          <li data-egds-emotional-curve-entry={currentModel.indexOf(layer) === 0 ? '' : undefined}>
             <span class="egds-model-chain__index" aria-hidden="true">{String(currentModel.indexOf(layer) + 1).padStart(2, '0')}</span>
             <strong>{layer.name}</strong>
             <span lang="en">{layer.english}</span>
@@ -132,12 +136,16 @@ const publishedArticles = [
     <section class="egds-page__practice page-shell" aria-labelledby="egds-practice-heading">
       <div class="egds-page__section-copy">
         <h2 id="egds-practice-heading">把感受转成可以讨论的设计工作。</h2>
-        <p>感受、理解、解构与重构是一组反复进行的工作动作。新证据会让设计者重新回到前面的动作。</p>
+        <p>情绪曲线是整体体验入口。感受、理解、解构与重构分别对应情绪体验、主观感受、客观原因与设计杠杆；新证据会让设计者重新回到前面的动作。</p>
       </div>
       <ol class="egds-practice-cycle" data-egds-practice-cycle>
         {practiceCycle.map((step) => (
-          <li>
-            <strong>{step.name}</strong>
+          <li data-egds-cycle-pair>
+            <p class="egds-practice-cycle__pair">
+              <strong>{step.name}</strong>
+              <span>对应</span>
+              <strong>{step.causalLayer}</strong>
+            </p>
             <span lang="en">{step.english}</span>
             <p>{step.description}</p>
           </li>

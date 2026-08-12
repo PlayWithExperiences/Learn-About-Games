@@ -105,6 +105,20 @@ test('publishes the current EGDS method from PKM while preserving its article hi
   await expect(page.getByText(/四篇文章记录的是方法形成时的真实版本/)).toBeVisible();
 });
 
+test('pairs each EGDS practice action with its causal layer', async ({ page }) => {
+  await page.goto('./egds/');
+
+  const pairs = page.locator('[data-egds-cycle-pair]');
+  await expect(pairs).toHaveCount(4);
+  await expect(pairs).toHaveText([
+    /感受.*情绪体验/,
+    /理解.*主观感受/,
+    /解构.*客观原因/,
+    /重构.*设计杠杆/,
+  ]);
+  await expect(page.locator('[data-egds-emotional-curve-entry]')).toContainText('情绪曲线');
+});
+
 test('links the EGDS method from About and the capability map without adding a fifth top task', async ({ page }, testInfo) => {
   await page.goto('./about/');
   await expect(page.getByRole('link', { name: '系统了解 EGDS', exact: true })).toHaveAttribute(

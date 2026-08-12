@@ -15,7 +15,7 @@
 **Files:**
 - Modify: `tests/e2e/egds-routes.spec.ts`
 
-- [ ] **Step 1: Write the failing browser contract**
+- [x] **Step 1: Write the failing browser contract**
 
 Add a test that requires exactly four pairing rows and exact text pairs:
 
@@ -35,7 +35,7 @@ test('pairs each EGDS practice action with its causal layer', async ({ page }) =
 });
 ```
 
-- [ ] **Step 2: Run the test and verify RED**
+- [x] **Step 2: Run the test and verify RED**
 
 Run:
 
@@ -51,7 +51,7 @@ Expected: FAIL because `[data-egds-cycle-pair]` does not exist.
 - Modify: `src/pages/egds/index.astro`
 - Modify: `src/styles/global.css`
 
-- [ ] **Step 1: Extend the server data**
+- [x] **Step 1: Extend the server data**
 
 Add `causalLayer` to each practice-cycle item:
 
@@ -84,7 +84,7 @@ const practiceCycle = [
 ];
 ```
 
-- [ ] **Step 2: Mark the emotional-curve entry and render each pair**
+- [x] **Step 2: Mark the emotional-curve entry and render each pair**
 
 Give the first current-model item `data-egds-emotional-curve-entry`. In each practice list item, add `data-egds-cycle-pair` and a visible pairing line:
 
@@ -98,11 +98,11 @@ Give the first current-model item `data-egds-emotional-curve-entry`. In each pra
 
 Keep the English label and explanatory paragraph. Do not duplicate IDs or generate client-side content.
 
-- [ ] **Step 3: Add scoped responsive styling**
+- [x] **Step 3: Add scoped responsive styling**
 
 Use the existing `.egds-practice-cycle` block. Give the pairing line a readable internal grid and existing theme tokens. At 320px the four items remain one column and the pair stays on one readable row when possible, wrapping as a unit when necessary. Do not add arrows, new colors or animation.
 
-- [ ] **Step 4: Run the pairing test and verify GREEN**
+- [x] **Step 4: Run the pairing test and verify GREEN**
 
 Run:
 
@@ -123,11 +123,11 @@ Expected: all selected tests pass at desktop and mobile widths.
 - Modify: `docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md`
 - Modify: `docs/journal/2026-08-09-learn-about-games-v02-transcript.md`
 
-- [ ] **Step 1: Record the pairing decision**
+- [x] **Step 1: Record the pairing decision**
 
 State exactly that the emotional curve is the overall entry and the four mappings are `感受 ↔ 情绪体验`, `理解 ↔ 主观感受`, `解构 ↔ 客观原因`, and `重构 ↔ 设计杠杆`.
 
-- [ ] **Step 2: Run verification**
+- [x] **Step 2: Run verification**
 
 Run:
 
@@ -141,7 +141,7 @@ git diff --check
 
 Expected: zero Astro diagnostics, zero Vitest failures, successful static build, zero unexpected Playwright failures and a clean diff check.
 
-- [ ] **Step 3: Inspect visual states**
+- [x] **Step 3: Inspect visual states**
 
 Capture `/egds/` at 1440px Light and 320px Dark/no-JavaScript. Verify the pairing text is readable, no item is clipped, and `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
 

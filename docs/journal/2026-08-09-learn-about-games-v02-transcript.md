@@ -452,3 +452,5 @@ EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构
 发起人要求继续补全学习资料与 Innovation Map。主任务审计到当前目录为 209 Work Items、38 Sources、223 Access Versions；Innovation Atlas 为 10 Genre Families、5 themes、48 nodes、36 relations、61 Evidence，其中 Shooter、Strategy 等七个 Family 仍没有核查谱系。发起人批准先做资料与 Shooter／Strategy 的均衡批次，同时明确最终目标是尽可能覆盖，不能要求各部分数量接近。
 
 主任务据此把“均衡”定义为检索顺序而非收录配额：从薄弱主题与空 Family 开始发现，但只按证据门槛决定是否纳入。学习资料预计形成一个约 20–35 条的可审查批次；Atlas 只添加有参与者、机构档案、同期文档或可靠历史资料支持的节点和关系，不用相似性或时间相邻补线。当前仓库继续 Private，Pages 继续禁用；没有授权 push 或部署。
+
+发起人补充 EGDS 的四组一一对应关系：感受 ↔ 情绪体验、理解 ↔ 主观感受、解构 ↔ 客观原因、重构 ↔ 设计杠杆；情绪曲线是整体体验入口。主任务先以 Playwright 取得配对元素 0／4 的有效 RED，再在同一服务器渲染列表项中加入可读配对文字。英文 `Perception` 保留为辅助标签，中文仍以作者原词“感受”为准。
