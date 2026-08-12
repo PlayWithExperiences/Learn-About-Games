@@ -53,14 +53,10 @@ test('filters work items by consumable access-version language', async ({ page }
       language === 'all' || resource.accessVersions.some((version) => version.language === language),
     );
     await expect(resultCount).toHaveText(`共 ${visibleResources.length} 条 Work Item`);
-    for (const resource of resources) {
-      const card = page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`);
-      if (visibleResources.includes(resource)) {
-        await expect(card).not.toHaveAttribute('hidden', '');
-      } else {
-        await expect(card).toHaveAttribute('hidden', '');
-      }
-    }
+    const visibleIds = await page.locator(
+      '[data-result-kind="work-item"]:not([hidden])',
+    ).evaluateAll((rows) => rows.map((row) => row.getAttribute('data-result-id')));
+    expect(new Set(visibleIds)).toEqual(new Set(visibleResources.map(({ id }) => id)));
   }
 
   const firstResource = resources[0];

@@ -1,14 +1,14 @@
 # Learn About Games v0.2 — 首批成长资源证据 Intake
 
 - 研究日期：2026-08-09
-- 状态：研究证据 notebook；Batch A–H 已正规化为 209 个 catalog Work Item
-- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项
-- 确定性 canonical URL 去重后：**213 项研究记录**；正规化后为 **209 个 Work Item**
+- 状态：研究证据 notebook；Batch A–I 已正规化为 225 个 catalog Work Item
+- 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项、Batch I 16 项
+- 确定性 canonical URL 去重后：**229 项研究记录**；正规化后为 **225 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
 
-这份 notebook 是后续内容正规化的证据层，不是对全部 213 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11、Batch H 在 2026-08-12 按同一边界补充低覆盖主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
+这份 notebook 是后续内容正规化的证据层，不是对全部 229 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11、Batch H–I 在 2026-08-12 按同一边界补充主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
 
 Source 与 Work Item 必须继续是不同实体。以下 sourceUrl 是研究批次捕获的来源证据 URL；它常与具体 Work Item 的 canonicalUrl 相同，因而不能直接当作 Source homepage。正规化时必须另建真实创作者、频道、组织、出版社或网站 Source，再由 Work Item 引用。
 
@@ -19,38 +19,38 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 ## 去重结论与待核 identity
 
 - 规则：host 小写并移除 www.、移除 fragment 与非根路径末尾 /、稳定排序 query；不跨 DOI、出版社页或不同平台猜测同一作品。
-- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–H 另增 81 条且没有命中既有 canonical URL。
+- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–I 另增 97 条且没有命中既有 canonical URL。
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
 ## 当前正规化 catalog coverage
 
-- Work Item：209；Source：38；Access Version：223；Resource Topic：15。
-- 原始语言：en 180、ja 9、zh-Hans 20。
-- 可消费语言（Work Item 计，可重叠）：en 181、ja 9、zh-Hans 22。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 192、ja 9、zh-Hans 22。
-- 媒介：article 22、book 29、course 16、paper 17、podcast 11、talk 91、video 5、website 18。
+- Work Item：225；Source：38；Access Version：239；Resource Topic：15。
+- 原始语言：en 196、ja 9、zh-Hans 20。
+- 可消费语言（Work Item 计，可重叠）：en 197、ja 9、zh-Hans 22。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 208、ja 9、zh-Hans 22。
+- 媒介：article 31、book 29、course 16、paper 17、podcast 11、talk 98、video 5、website 18。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
 | 主主题 | Work Item |
 |---|---:|
-| 设计基础与概念 | 9 |
-| 系统与机制 | 14 |
+| 设计基础与概念 | 10 |
+| 系统与机制 | 15 |
 | 平衡与经济 | 14 |
 | 手感与反馈 | 9 |
 | 关卡与空间 | 23 |
-| Playtest 主题资源集合 | 14 |
+| Playtest 主题资源集合 | 20 |
 | 叙事与表达 | 22 |
-| 原型与实验 | 9 |
+| 原型与实验 | 16 |
 | 生产与迭代 | 17 |
-| 协作与团队 | 10 |
+| 协作与团队 | 11 |
 | 领导与创意方向 | 12 |
 | 批判、价值观与历史语境 | 16 |
 | 研究方法与玩家体验 | 23 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 10 |
-| 合计 | 209 |
+| 合计 | 225 |
 
 ## 接受候选
 
@@ -389,6 +389,31 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | H-028-MARKET-GAME-NEXT-FEST-FEBRUARY-2026<br>canonicalUrl=https://howtomarketagame.com/2026/04/13/making-sense-of-the-february-2026-steam-next-fest/<br>title=Making Sense of the February 2026 Steam Next Fest | how-to-market-a-game | article / en | How To Market A Game 用当期数据复盘 Next Fest 的展示、愿望单与品类表现。 |
 | H-029-MARKET-GAME-DLC-REVENUE<br>canonicalUrl=https://howtomarketagame.com/2026/03/03/benchmark-how-much-money-can-you-make-from-dlc/<br>title=How Much Money Can You Make from DLC? | how-to-market-a-game | article / en | How To Market A Game 用公开样本讨论 DLC 收入、产品价值与商业化边界。 |
 | H-030-MARKET-GAME-BAD-LAUNCH-RECOVERY<br>canonicalUrl=https://howtomarketagame.com/2026/02/12/only-28-games-recovered-from-a-bad-launch-in-2024-what-do-they-have-in-common/<br>title=Only 28 Games Recovered from a Bad Launch in 2024: What Do They Have in Common? | how-to-market-a-game | article / en | How To Market A Game 对低开后恢复的作品做样本复盘，连接市场观察、更新节奏与范围判断。 |
+
+### Batch I：Playtest、反馈与原型工作流扩展（16）
+
+- 研究日期：2026-08-12。`agent-reach doctor --json` 确认 Exa via mcporter 与 Jina Reader 可用；部分 Exa 查询返回 HTTP 405 后停止重试，所有收录项均回到 GDC Vault 或 Game Developer 的具体官方页面逐项核验。
+- 边界：7 个 GDC 条目都保守标为 `subscription`，因为公开会话说明不代表完整媒体免费；9 个 Game Developer 作者文章可公开读取，标为 `free`。两类条目均各有一个英文原始 Access Version。
+- 取舍：本批完整收录选定来源集合里 16 个通过核验且未与既有 209 项规范化 URL 重复的作品。原型和 Playtest 数量较多是实际发现结果，不是分类配额；没有为追求均匀而删除强资源或补入弱候选。
+
+| Ref / canonical identity | Source / author evidence | Medium / access | 主主题 / bounded whyRelevant |
+|---|---|---|---|
+| I-001<br>canonicalUrl=https://www.gdcvault.com/play/1014938/Where-s-the-Fun-How<br>title=Where's the Fun? How to Test Your Game Before You Build a Thing | GDC Vault；Rob Davis / Playniac | talk / en / subscription | prototyping-experimentation；只支持用桌面或纸面原型在写代码前检验机制、动态与可玩性假设。 |
+| I-002<br>canonicalUrl=https://www.gdcvault.com/play/1021660/Learning-from-Feedback-with-Gunhouse<br>title=Learning from Feedback with Gunhouse: Improve your Game through Playtesting | GDC Vault；Brandon Sheffield / Necrosoft Games | talk / en / subscription | playtesting；以 Gunhouse 为案例讨论如何解释反馈并形成设计判断，不把意见直接当成指令。 |
+| I-003<br>canonicalUrl=https://www.gdcvault.com/play/1027870/Early-Stage-Game-Evaluation-Lessons<br>title=Early Stage Game Evaluation: Lessons Learned and Best Practices | GDC Vault；Jiasheng Hu、Yongcheng Liu / NetEase | talk / en / subscription | playtesting；记录网易早期评估与 3X10 冷启动评估案例，不外推为普适标准。 |
+| I-004<br>canonicalUrl=https://www.gdcvault.com/play/1021181/Where-are-the-Sharks-User<br>title=Where are the Sharks? User Research in the Far Cry Production Pipeline | GDC Vault；Ian Livingston / Ubisoft | talk / en / subscription | playtesting；复盘 Far Cry 3 如何把用户研究嵌入制作节奏并将结果带回决策。 |
+| I-005<br>canonicalUrl=https://www.gdcvault.com/play/1019938/Dynamics-for<br>title=Dynamics for Designers | GDC Vault；Will Wright / Stupid Fun Club | talk / en / subscription | systems-mechanics；讨论因果、反馈循环、信息传播、涌现及用原型探索动态系统。 |
+| I-006<br>canonicalUrl=https://www.gdcvault.com/play/1027615/Give-Your-Players-a-Seat<br>title=Give Your Players a Seat at the Table: Feedback Fundamentals | GDC Vault；Emma Bridle、Savannah Harrison / World's Edge、Xbox Game Studios | talk / en / subscription | playtesting；用 Age of Empires II: DE 与 IV 说明持续反馈回路，不声称是唯一流程。 |
+| I-007<br>canonicalUrl=https://www.gdcvault.com/play/1023059/Improving-Playtesting-Through-Workshops-Focusing<br>title=Improving Playtesting through Workshops Focusing on Exploring, Refining, Proving | GDC Vault；Mike Christel / Carnegie Mellon ETC | talk / en / subscription | playtesting；区分探索、细化、证明三类测试目的及相应观察与解释方式。 |
+| I-008<br>canonicalUrl=https://www.gamedeveloper.com/design/tips-for-encouraging-embracing-and-processing-game-design-feedback<br>title=Tips for Encouraging, Embracing and Processing Game Design Feedback | Game Developer；Karl Morley | article / en / free | collaboration-teams；把邀请、理解、追问与处理反馈作为团队实践，不作为个人评分。 |
+| I-009<br>canonicalUrl=https://www.gamedeveloper.com/design/how-supporting-core-loops-and-early-prototyping-are-key-to-your-game-s-success<br>title=How supporting core loops and early prototyping are key to your game's success | Game Developer；Holly Green | article / en / free | prototyping-experimentation；连接核心循环、早期可玩原型与团队／外部试玩验证。 |
+| I-010<br>canonicalUrl=https://www.gamedeveloper.com/design/reminder-use-rapid-prototyping<br>title=Reminder: Use rapid prototyping | Game Developer；Lars Tornbjerg / Ahoot Media | article / en / free | prototyping-experimentation；把快速原型限定为探索与快速修改工具，而非为既定方案背书。 |
+| I-011<br>canonicalUrl=https://www.gamedeveloper.com/design/an-approach-to-game-design<br>title=An approach to game design | Game Developer；Catalin Marcu | article / en / free | design-fundamentals；记录从想法、参考、研究、原型到设计文档的个人流程，不当作唯一方法。 |
+| I-012<br>canonicalUrl=https://www.gamedeveloper.com/design/the-imposter-s-guide-to-taking-feedback<br>title=The imposter's guide to taking feedback | Game Developer；Tanya X. Short / Kitfox Games | article / en / free | playtesting；讨论先写假设、少干预观察与审慎解释反馈。 |
+| I-013<br>canonicalUrl=https://www.gamedeveloper.com/design/on-prototyping-and-coding-your-own-ideas<br>title=On prototyping and coding your own ideas | Game Developer；Adriaan de Jongh | article / en / free | prototyping-experimentation；说明设计师制作原型如何验证想法、展示细节并缩小沟通偏差。 |
+| I-014<br>canonicalUrl=https://www.gamedeveloper.com/design/prototypes-the-lego-blocks-of-game-development<br>title=Prototypes: The Lego Blocks Of Game Development | Game Developer；Gabriel Cornish | article / en / free | prototyping-experimentation；以小型、带问题的快速原型积累机制实验与可复用学习。 |
+| I-015<br>canonicalUrl=https://www.gamedeveloper.com/design/rapid-prototyping-tips-for-running-an-effective-r-d-process<br>title=Rapid Prototyping: Tips for Running an Effective R&D Process | Game Developer；Tom Rassweiler / Arkadium R&D | article / en / free | prototyping-experimentation；记录一个 R&D 团队如何用可玩原型、试玩和停止条件控制范围。 |
+| I-016<br>canonicalUrl=https://www.gamedeveloper.com/programming/prototyping-and-code-quality<br>title=Prototyping and Code Quality | Game Developer；Timo Heinapurola | article / en / free | prototyping-experimentation；区分可抛弃原型代码与进入生产后的重实现和质量要求。 |
 
 ## 拒绝与待核证据
 

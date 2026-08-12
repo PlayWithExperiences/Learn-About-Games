@@ -38,6 +38,571 @@
       }
     ]
   },
+    {
+      "id": "i-001-gdc-test-before-build",
+      "title": {
+        "zh-CN": "Where's the Fun? How to Test Your Game Before You Build a Thing",
+        "en": "Where's the Fun? How to Test Your Game Before You Build a Thing"
+      },
+      "summary": {
+        "zh-CN": "Rob Davis 讨论如何在写代码前用桌面和纸面版本检验机制、动态与可玩性假设。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "learning-prototype-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1014938/Where-s-the-Fun-How",
+      "whyRelevant": {
+        "zh-CN": "会话把低成本原型作为提前回答设计问题的工具，而不是成品的缩小版。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1014938/Where-s-the-Fun-How",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-002-gdc-gunhouse-feedback",
+      "title": {
+        "zh-CN": "Learning from Feedback with Gunhouse: Improve your Game through Playtesting",
+        "en": "Learning from Feedback with Gunhouse: Improve your Game through Playtesting"
+      },
+      "summary": {
+        "zh-CN": "Brandon Sheffield 以 Gunhouse 为例讨论如何从玩家反馈形成可用的设计判断。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "playtesting",
+        "qualitative-evidence-synthesis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1021660/Learning-from-Feedback-with-Gunhouse",
+      "whyRelevant": {
+        "zh-CN": "会话聚焦于如何解释反馈并将其转化为改动，而不是把玩家意见直接当作设计指令。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1021660/Learning-from-Feedback-with-Gunhouse",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-003-gdc-early-stage-evaluation",
+      "title": {
+        "zh-CN": "Early Stage Game Evaluation: Lessons Learned and Best Practices",
+        "en": "Early Stage Game Evaluation: Lessons Learned and Best Practices"
+      },
+      "summary": {
+        "zh-CN": "网易研究人员介绍早期游戏评估与 3X10 冷启动评估流程中的实践经验。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "research-question-framing",
+        "playtesting"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1027870/Early-Stage-Game-Evaluation-Lessons",
+      "whyRelevant": {
+        "zh-CN": "会话提供一个团队的早期评估流程实例；这里只记录该案例，不把 3X10 外推为普适标准。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1027870/Early-Stage-Game-Evaluation-Lessons",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-004-gdc-far-cry-user-research",
+      "title": {
+        "zh-CN": "Where are the Sharks? User Research in the Far Cry Production Pipeline",
+        "en": "Where are the Sharks? User Research in the Far Cry Production Pipeline"
+      },
+      "summary": {
+        "zh-CN": "Ian Livingston 复盘 Far Cry 3 如何把用户研究嵌入紧凑的生产节奏。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "playtesting",
+        "qualitative-evidence-synthesis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1021181/Where-are-the-Sharks-User",
+      "whyRelevant": {
+        "zh-CN": "该案例说明早测、常测及把研究结果放回制作决策的具体组织方式。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1021181/Where-are-the-Sharks-User",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-005-gdc-dynamics-for-designers",
+      "title": {
+        "zh-CN": "Dynamics for Designers",
+        "en": "Dynamics for Designers"
+      },
+      "summary": {
+        "zh-CN": "Will Wright 讨论因果、反馈循环、信息传播与涌现，并以原型探索动态系统。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "rules-system-modeling",
+        "learning-prototype-design"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "systems-mechanics"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1019938/Dynamics-for",
+      "whyRelevant": {
+        "zh-CN": "会话把原型与系统建模联系起来，用于观察设计规则产生的动态行为。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1019938/Dynamics-for",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-006-gdc-feedback-fundamentals",
+      "title": {
+        "zh-CN": "Give Your Players a Seat at the Table: Feedback Fundamentals",
+        "en": "Give Your Players a Seat at the Table: Feedback Fundamentals"
+      },
+      "summary": {
+        "zh-CN": "World's Edge 团队以 Age of Empires II: DE 与 IV 说明从早期到上线后持续纳入玩家反馈。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "playtesting",
+        "design-critique-feedback"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1027615/Give-Your-Players-a-Seat",
+      "whyRelevant": {
+        "zh-CN": "会话提供持续反馈回路的项目案例，不将单个团队做法写成唯一流程。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1027615/Give-Your-Players-a-Seat",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-007-gdc-playtesting-workshops",
+      "title": {
+        "zh-CN": "Improving Playtesting through Workshops Focusing on Exploring, Refining, Proving",
+        "en": "Improving Playtesting through Workshops Focusing on Exploring, Refining, Proving"
+      },
+      "summary": {
+        "zh-CN": "Mike Christel 区分探索、细化与证明三种 Playtest 阶段及其相应方法。"
+      },
+      "sourceId": "gdc-vault",
+      "capabilityIds": [
+        "research-question-framing",
+        "playtesting",
+        "player-behavior-observation",
+        "qualitative-evidence-synthesis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "talk",
+      "canonicalUrl": "https://www.gdcvault.com/play/1023059/Improving-Playtesting-Through-Workshops-Focusing",
+      "whyRelevant": {
+        "zh-CN": "会话帮助把测试目的、观察方式和证据解释与项目阶段对应起来。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gdcvault.com/play/1023059/Improving-Playtesting-Through-Workshops-Focusing",
+          "accessModel": "subscription",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-008-game-developer-processing-feedback",
+      "title": {
+        "zh-CN": "Tips for Encouraging, Embracing and Processing Game Design Feedback",
+        "en": "Tips for Encouraging, Embracing and Processing Game Design Feedback"
+      },
+      "summary": {
+        "zh-CN": "Karl Morley 围绕团队反馈的邀请、理解、追问与语境判断给出实践建议。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "design-critique-feedback",
+        "alignment-facilitation"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "collaboration-teams"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/tips-for-encouraging-embracing-and-processing-game-design-feedback",
+      "whyRelevant": {
+        "zh-CN": "文章把反馈处理作为团队协作实践，而不是评价个人能力的分数。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/tips-for-encouraging-embracing-and-processing-game-design-feedback",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-009-game-developer-core-loops-prototyping",
+      "title": {
+        "zh-CN": "How supporting core loops and early prototyping are key to your game's success",
+        "en": "How supporting core loops and early prototyping are key to your game's success"
+      },
+      "summary": {
+        "zh-CN": "Holly Green 讨论拆解核心循环、尽早原型化，并用团队与外部试玩检验。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "core-loop-design",
+        "learning-prototype-design",
+        "playtesting"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/how-supporting-core-loops-and-early-prototyping-are-key-to-your-game-s-success",
+      "whyRelevant": {
+        "zh-CN": "文章连接核心循环、早期可玩原型与外部验证，适合作为原型工作流实例。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/how-supporting-core-loops-and-early-prototyping-are-key-to-your-game-s-success",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-010-game-developer-rapid-prototyping-reminder",
+      "title": {
+        "zh-CN": "Reminder: Use rapid prototyping",
+        "en": "Reminder: Use rapid prototyping"
+      },
+      "summary": {
+        "zh-CN": "Lars Tornbjerg 强调用快速原型探索和快速修改，而不是为既定方案背书。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "learning-prototype-design",
+        "iteration-planning"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/reminder-use-rapid-prototyping",
+      "whyRelevant": {
+        "zh-CN": "文章明确把原型定位为探索工具，并强调控制投入和快速学习。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/reminder-use-rapid-prototyping",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-011-game-developer-design-approach",
+      "title": {
+        "zh-CN": "An approach to game design",
+        "en": "An approach to game design"
+      },
+      "summary": {
+        "zh-CN": "Catalin Marcu 给出从想法、参考与研究，经原型走向设计文档和愿景表达的个人流程。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "experience-framing",
+        "learning-prototype-design",
+        "design-specification-handoff"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "design-fundamentals"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/an-approach-to-game-design",
+      "whyRelevant": {
+        "zh-CN": "文章是一位实践者的工作流程实例，不将个人方法写成唯一正确步骤。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/an-approach-to-game-design",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-012-game-developer-taking-feedback",
+      "title": {
+        "zh-CN": "The imposter's guide to taking feedback",
+        "en": "The imposter's guide to taking feedback"
+      },
+      "summary": {
+        "zh-CN": "Tanya X. Short 讨论在试玩前写下假设、少干预地观察，并审慎消化反馈。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "playtesting",
+        "player-behavior-observation",
+        "qualitative-evidence-synthesis"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "playtesting"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/the-imposter-s-guide-to-taking-feedback",
+      "whyRelevant": {
+        "zh-CN": "文章把假设、观察与解释区分开，适合作为 Playtest 证据阅读的实践参考。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/the-imposter-s-guide-to-taking-feedback",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-013-game-developer-coding-prototypes",
+      "title": {
+        "zh-CN": "On prototyping and coding your own ideas",
+        "en": "On prototyping and coding your own ideas"
+      },
+      "summary": {
+        "zh-CN": "Adriaan de Jongh 说明设计师亲自制作原型如何验证想法、展示细节并缩小沟通偏差。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "learning-prototype-design",
+        "cross-discipline-communication"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/on-prototyping-and-coding-your-own-ideas",
+      "whyRelevant": {
+        "zh-CN": "文章聚焦原型作为验证与跨职能沟通媒介的有限用途。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/on-prototyping-and-coding-your-own-ideas",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-014-game-developer-prototype-lego-blocks",
+      "title": {
+        "zh-CN": "Prototypes: The Lego Blocks Of Game Development",
+        "en": "Prototypes: The Lego Blocks Of Game Development"
+      },
+      "summary": {
+        "zh-CN": "Gabriel Cornish 讨论以小型、带明确问题的快速原型积累机制实验与可复用学习。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "learning-prototype-design",
+        "iteration-planning"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/prototypes-the-lego-blocks-of-game-development",
+      "whyRelevant": {
+        "zh-CN": "文章强调为单一问题制作轻量实验，并保留由失败产生的知识。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/prototypes-the-lego-blocks-of-game-development",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-015-game-developer-rd-process",
+      "title": {
+        "zh-CN": "Rapid Prototyping: Tips for Running an Effective R&D Process",
+        "en": "Rapid Prototyping: Tips for Running an Effective R&D Process"
+      },
+      "summary": {
+        "zh-CN": "Tom Rassweiler 以 Arkadium R&D 为例讨论快速可玩原型、试玩、分析与尽早停止不成立的方向。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "learning-prototype-design",
+        "scope-prioritization",
+        "playtesting"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/design/rapid-prototyping-tips-for-running-an-effective-r-d-process",
+      "whyRelevant": {
+        "zh-CN": "文章提供一个 R&D 团队如何用可玩证据控制范围和停止条件的实践案例。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/design/rapid-prototyping-tips-for-running-an-effective-r-d-process",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "i-016-game-developer-prototyping-code-quality",
+      "title": {
+        "zh-CN": "Prototyping and Code Quality",
+        "en": "Prototyping and Code Quality"
+      },
+      "summary": {
+        "zh-CN": "Timo Heinapurola 区分轻量、可抛弃的原型代码与进入生产后的重实现和质量要求。"
+      },
+      "sourceId": "game-developer",
+      "capabilityIds": [
+        "learning-prototype-design",
+        "scope-prioritization"
+      ],
+      "knowledgeTopicIds": [],
+      "resourceTopicIds": [
+        "prototyping-experimentation"
+      ],
+      "mediaType": "article",
+      "canonicalUrl": "https://www.gamedeveloper.com/programming/prototyping-and-code-quality",
+      "whyRelevant": {
+        "zh-CN": "文章明确原型的代码质量边界，帮助避免把探索代码未经判断直接当作生产实现。"
+      },
+      "originalLanguage": "en",
+      "accessVersions": [
+        {
+          "language": "en",
+          "url": "https://www.gamedeveloper.com/programming/prototyping-and-code-quality",
+          "accessModel": "free",
+          "versionRelation": "original",
+          "presentationMode": "original",
+          "checkedAt": "2026-08-12"
+        }
+      ]
+    },
   {
     "id": "a-002-rules-of-play-game-design-fundamentals",
     "title": {

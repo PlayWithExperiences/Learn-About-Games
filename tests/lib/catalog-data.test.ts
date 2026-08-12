@@ -474,7 +474,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(209);
+    expect(resources).toHaveLength(225);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -661,7 +661,7 @@ describe('raw product catalog data', () => {
 
     expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(13);
     expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(16);
-    expect(countBy('mediaType', 'talk')).toBe(91);
+    expect(countBy('mediaType', 'talk')).toBe(98);
     expect(countBy('originalLanguage', 'en')).toBeGreaterThanOrEqual(137);
     expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
@@ -711,9 +711,9 @@ describe('raw product catalog data', () => {
       resources.flatMap(({ accessVersions }) => accessVersions)
         .filter((version) => version.language === language).length;
 
-    expect(resources).toHaveLength(209);
+    expect(resources).toHaveLength(225);
     expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(223);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(239);
     expect(expansion).toHaveLength(10);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -727,18 +727,18 @@ describe('raw product catalog data', () => {
     expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(0);
     expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(11);
 
-    expect(countBy('mediaType', 'article')).toBe(22);
+    expect(countBy('mediaType', 'article')).toBe(31);
     expect(countBy('mediaType', 'course')).toBe(16);
     expect(countBy('mediaType', 'paper')).toBe(17);
     expect(countBy('mediaType', 'website')).toBe(18);
-    expect(countBy('mediaType', 'talk')).toBe(91);
-    expect(countBy('originalLanguage', 'en')).toBe(180);
+    expect(countBy('mediaType', 'talk')).toBe(98);
+    expect(countBy('originalLanguage', 'en')).toBe(196);
     expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
     expect(countBy('originalLanguage', 'ja')).toBe(9);
-    expect(consumableLanguageCount('en')).toBe(181);
+    expect(consumableLanguageCount('en')).toBe(197);
     expect(consumableLanguageCount('zh-Hans')).toBe(22);
     expect(consumableLanguageCount('ja')).toBe(9);
-    expect(accessVersionLanguageCount('en')).toBe(192);
+    expect(accessVersionLanguageCount('en')).toBe(208);
     expect(accessVersionLanguageCount('zh-Hans')).toBe(22);
     expect(accessVersionLanguageCount('ja')).toBe(9);
 
@@ -766,9 +766,9 @@ describe('raw product catalog data', () => {
       expansionCanonicalUrls.includes(canonicalUrl),
     );
 
-    expect(resources).toHaveLength(209);
+    expect(resources).toHaveLength(225);
     expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(223);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(239);
 
     const intakeHeader = resourceIntake.slice(
       0,
@@ -780,7 +780,7 @@ describe('raw product catalog data', () => {
       return Number(match[1]);
     };
     expect([
-      readHeaderWorkItemCount(/Batch A–H 已正规化为 (\d+) 个 catalog Work Item/),
+      readHeaderWorkItemCount(/Batch A–I 已正规化为 (\d+) 个 catalog Work Item/),
       readHeaderWorkItemCount(/正规化后为 \*\*(\d+) 个 Work Item\*\*/),
     ]).toEqual([resources.length, resources.length]);
 
@@ -1087,5 +1087,55 @@ describe('raw product catalog data', () => {
         }),
       ]),
     );
+  });
+
+  it('adds the verified GDC and Game Developer resource batch', () => {
+    const batchCanonicalUrls = [
+      'https://www.gdcvault.com/play/1014938/Where-s-the-Fun-How',
+      'https://www.gdcvault.com/play/1021660/Learning-from-Feedback-with-Gunhouse',
+      'https://www.gdcvault.com/play/1027870/Early-Stage-Game-Evaluation-Lessons',
+      'https://www.gdcvault.com/play/1021181/Where-are-the-Sharks-User',
+      'https://www.gdcvault.com/play/1019938/Dynamics-for',
+      'https://www.gdcvault.com/play/1027615/Give-Your-Players-a-Seat',
+      'https://www.gdcvault.com/play/1023059/Improving-Playtesting-Through-Workshops-Focusing',
+      'https://www.gamedeveloper.com/design/tips-for-encouraging-embracing-and-processing-game-design-feedback',
+      'https://www.gamedeveloper.com/design/how-supporting-core-loops-and-early-prototyping-are-key-to-your-game-s-success',
+      'https://www.gamedeveloper.com/design/reminder-use-rapid-prototyping',
+      'https://www.gamedeveloper.com/design/an-approach-to-game-design',
+      'https://www.gamedeveloper.com/design/the-imposter-s-guide-to-taking-feedback',
+      'https://www.gamedeveloper.com/design/on-prototyping-and-coding-your-own-ideas',
+      'https://www.gamedeveloper.com/design/prototypes-the-lego-blocks-of-game-development',
+      'https://www.gamedeveloper.com/design/rapid-prototyping-tips-for-running-an-effective-r-d-process',
+      'https://www.gamedeveloper.com/programming/prototyping-and-code-quality',
+    ];
+    const batch = resources.filter(({ canonicalUrl }) =>
+      batchCanonicalUrls.includes(canonicalUrl),
+    );
+
+    expect(resources).toHaveLength(225);
+    expect(sources).toHaveLength(38);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(239);
+    expect(new Set(batch.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
+      new Set(batchCanonicalUrls),
+    );
+    expect(batch).toHaveLength(16);
+    expect(batch.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(7);
+    expect(batch.filter(({ mediaType }) => mediaType === 'article')).toHaveLength(9);
+    expect(batch.every(({ originalLanguage }) => originalLanguage === 'en')).toBe(true);
+    expect(batch.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
+    expect(batch.every(({ accessVersions }) =>
+      accessVersions.length === 1
+      && accessVersions[0].language === 'en'
+      && accessVersions[0].versionRelation === 'original'
+      && accessVersions[0].presentationMode === 'original'
+      && accessVersions[0].checkedAt === '2026-08-12'
+      && accessVersions[0].url.length > 0,
+    )).toBe(true);
+    expect(batch.filter(({ sourceId }) => sourceId === 'gdc-vault').every(({ accessVersions }) =>
+      accessVersions[0].accessModel === 'subscription',
+    )).toBe(true);
+    expect(batch.filter(({ sourceId }) => sourceId === 'game-developer').every(({ accessVersions }) =>
+      accessVersions[0].accessModel === 'free',
+    )).toBe(true);
   });
 });
