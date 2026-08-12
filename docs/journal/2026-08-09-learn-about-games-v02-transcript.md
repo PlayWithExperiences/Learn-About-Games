@@ -454,3 +454,17 @@ EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构
 主任务据此把“均衡”定义为检索顺序而非收录配额：从薄弱主题与空 Family 开始发现，但只按证据门槛决定是否纳入。学习资料预计形成一个约 20–35 条的可审查批次；Atlas 只添加有参与者、机构档案、同期文档或可靠历史资料支持的节点和关系，不用相似性或时间相邻补线。当前仓库继续 Private，Pages 继续禁用；没有授权 push 或部署。
 
 发起人补充 EGDS 的四组一一对应关系：感受 ↔ 情绪体验、理解 ↔ 主观感受、解构 ↔ 客观原因、重构 ↔ 设计杠杆；情绪曲线是整体体验入口。主任务先以 Playwright 取得配对元素 0／4 的有效 RED，再在同一服务器渲染列表项中加入可读配对文字。英文 `Perception` 保留为辅助标签，中文仍以作者原词“感受”为准。
+
+## 40. GDC／Game Developer 资料与 Shooter／RTS 谱系（部分会话导出）
+
+记录说明：以下为当前会话可访问范围的脱敏摘要，是 partial export，不是聊天 UI 的完整逐字导出。未导出的私有推理、完整工具输出和不可访问的原始消息不声称完整；本文不记录凭据、环境变量或其他秘密。
+
+发起人确认执行，并再次强调资源扩充最终追求尽可能覆盖，不要求各主题数量相等。主任务将资源、Atlas 研究和证据合同交给三个边界互不重叠的 agent，同时保留跨切片整合、浏览器验收和提交所有权。Agent Reach doctor 确认 Exa via mcporter 与 Jina Reader；Exa 出现 405 后停止，所有最终入库资源与 Atlas 来源都由官方、作者、机构馆藏或行业原页继续核验。
+
+资源批次新增 7 条 GDC Vault 原始会话和 9 篇 Game Developer 作者文章。GDC 条目保守记录 subscription 访问方式，公开作者文章记录 free；同一 Work Item 继续拥有唯一主要 Resource Topic、canonical ownership、语言、媒介和检查日期。目录从 209／223 增至 225 Work Item／239 Access Version，Source 仍为 38。旧浏览器测试逐条串行等待 225 行造成超时，改为一次读取可见 ID 集合后继续锁定 exact match；Resources／Playtest 双项目最终 40/40。
+
+Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆藏、GDC 的 Wolfenstein／Doom／Quake postmortem 与 Valve 开发者文章；RTS 使用 ACMI Dune II 馆藏、Patrick Wyatt 的 Warcraft 开发记录和 Blizzard 的 StarCraft 回顾。新增 10 节点、6 关系与 8 Evidence，总量变为 58／42／69。明确排除 Spacewar! 或 Maze War 到 1990 年代 FPS 的年代捷径，也不把 Dune II 或任何节点写成无条件绝对第一。
+
+第一次 Atlas 双项目浏览器运行出现 11 个失败：10 个是测试仍锁 48／36／61、五 Theme 与 Strategy 空状态；一个是真实产品问题——scene height 增至 1240 后，fit 被 50% 手动下限钳住，底部超出 viewport 约 45px。unit 先收到 0.5 而非约 0.423 的有效 RED；修复让 fit 可以为完整场景低于手动下限，按钮和 wheel 仍保持原边界。第二轮 Atlas／Theme／Base 为 48 pass／20 skip，完整 Playwright 为 229 pass／21 skip／0 fail。
+
+视觉证据保存于 `/tmp/lag-final-review/`：1440 Light Shooter 与 Dark RTS 全屏均完整 fit、58／42／69 且横溢出为 0；320 Dark no-JS 为 58 outline node、42 unique relation、69 Evidence、横溢出 0；1440 Resources 默认页高度 2378px，仍只展示折叠主题入口和筛选表头。本节对应提交为 `7893272`、`c701241` 与 `fa8ac11`；仓库、Pages、push 与线上状态均未改变。

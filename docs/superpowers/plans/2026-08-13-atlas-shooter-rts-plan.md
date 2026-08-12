@@ -21,7 +21,7 @@
 
 ## Task 3: Verify the existing product behavior
 
-- [ ] Run Atlas unit tests, validator tests, Astro check, full Vitest and fresh build.
-- [ ] Run Atlas/theme/base-path Playwright at desktop and mobile widths.
-- [ ] Verify no-JavaScript reachability, family controls, full-screen map mode and zero page overflow.
-- [ ] Record research decisions, update public counts and commit the Atlas slice independently.
+- [x] Run Atlas unit tests, validator tests, Astro check, full Vitest and fresh build.
+- [x] Run Atlas/theme/base-path Playwright at desktop and mobile widths.
+- [x] Verify no-JavaScript reachability, family controls, full-screen map mode and zero page overflow.
+- [x] Record research decisions, update public counts and commit the Atlas slice independently.

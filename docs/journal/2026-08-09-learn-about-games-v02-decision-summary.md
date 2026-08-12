@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／5 条可直接选择的证据谱系与 209 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／7 条可直接选择的证据谱系与 225 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -289,3 +289,13 @@ EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 fr
 本轮拆成两个独立切片：学习资料从从业者访谈、设计基础、手感反馈和原型实验等薄弱主题开始，但同一批一手来源中通过证据门槛的其他资料也可纳入；Atlas 先研究当前为空的 Shooter 与 Strategy 两条谱系。Family 继续只是非排他导航，关系只由开发者、参与者、机构档案、同期文档或可靠历史资料支持，不由相似性和时间相邻生成。对应设计见 [balanced resource and Atlas expansion design](../superpowers/specs/2026-08-12-balanced-resource-atlas-expansion-design.md)。
 
 发起人进一步校正 EGDS 当前模型：情绪曲线是整体体验入口；感受、理解、解构、重构与情绪体验、主观感受、客观原因、设计杠杆一一对应。页面不再把两组结构显示成彼此无关的列表，而是在每个工作动作中直接写出对应层；中文作者术语继续使用“感受”，英文辅助标签保留 `Perception`。
+
+## GDC／Game Developer 资料与 Shooter／RTS 谱系
+
+本批把“均衡”继续限定为发现顺序，而不是各主题数量配额。资源研究使用 Agent Reach 检查 Exa 与 Jina；Exa 出现 405 后停止继续请求，最终纳入项全部由 GDC Vault 或 Game Developer 官方原页逐条核验。提交 `c701241` 新增 16 个 Work Item：7 条 GDC Vault 原始会话和 9 篇 Game Developer 作者文章，重点补原型、玩法测试、生产协作和系统设计。当前资源目录为 38 Source／225 Work Item／239 Access Version；每项仍恰属一个主要 Resource Topic，不新增站内评分、排名或审核等级。
+
+Atlas 研究建立第一人称射击与即时战略两条选择性 Theme，而不是宣称完整品类史。Shooter 新增 Maze War、Catacomb 3-D、Wolfenstein 3D、Doom、Quake 与 Half-Life；RTS 新增 Dune II、Warcraft、Warcraft II 与 StarCraft。只纳入开发者回顾、机构馆藏或同期材料能够支持的 6 条有向关系；不连接 Spacewar!／Maze War 到 1990 年代 FPS，不把 Dune II 写成无条件“第一款 RTS”。提交 `fa8ac11` 后 Atlas 为 58 nodes／42 relations／69 Evidence／7 themes／10 families。
+
+内容增加把 Atlas scene height 从 1120px 提高到 1240px，并暴露旧的 fit 语义错误：手动缩放下限 50% 会让“适应全图”仍裁掉底部。修复先以 unit 和 browser 取得 RED，再让 fit 在必要时低于手动下限；加减按钮、普通 wheel 与重置仍保持 50%–200%。Light Shooter 与 Dark RTS 全屏实测 scale 为 0.60645、四边完整落在 viewport 内；320px no-JS 保留 58／42／69 且页面横向溢出为 0。
+
+Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuthor`、`checkedAt`、`locator` 与 `boundedClaim` 设为每条必填，`publicationDate` 与 `stableId` 只在可核实时填写，并为既有 Evidence 补齐来源上下文；关系端点测试同时锁定完整边界线段。最终 fresh build 为 Astro 68 files、0 diagnostics，Vitest 165/165，130 pages；Atlas／Theme／Base 双项目 48 passed／20 project-specific skipped，Resources／Playtest 40/40，完整 Playwright 250 项为 229 passed／21 project-specific skipped／0 failed。四张视觉证据位于 `/tmp/lag-final-review/`。仓库仍 Private、Pages 仍禁用，本轮不 push；提交后重新启动 base-path 本地预览。
