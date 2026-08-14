@@ -573,4 +573,50 @@
       "en"
     ]
   }
+,
+  {
+    "id": "game-ai-pro",
+    "name": {
+      "zh-CN": "Game AI Pro",
+      "en": "Game AI Pro"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Game AI Pro 系列编辑与作者发布的游戏人工智能章节与技术资料。"
+    },
+    "homepage": "http://www.gameaipro.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "atlassian-team-playbook",
+    "name": {
+      "zh-CN": "Atlassian Team Playbook",
+      "en": "Atlassian Team Playbook"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Atlassian 发布的团队协作、决策、回顾与项目工作方法。"
+    },
+    "homepage": "https://www.atlassian.com/team-playbook",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "coursera",
+    "name": {
+      "zh-CN": "Coursera",
+      "en": "Coursera"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "承载大学与专业机构课程页面的开放在线学习平台；课程归属仍以页面标注的机构为准。"
+    },
+    "homepage": "https://www.coursera.org/",
+    "languages": [
+      "en"
+    ]
+  }
 ]

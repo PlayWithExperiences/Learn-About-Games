@@ -99,7 +99,7 @@ test('exposes fifteen unordered topic entries and combines factual filters in a 
   await page.getByLabel('可消费语言').selectOption(target.accessVersions[0].language);
   await page.getByLabel('媒介').selectOption(target.mediaType);
   await page.getByLabel('访问方式').selectOption(target.accessVersions[0].accessModel);
-  await page.getByLabel('Source').selectOption(target.sourceId);
+  await page.getByLabel('Source', { exact: true }).selectOption(target.sourceId);
 
   const url = new URL(page.url());
   expect(url.searchParams.get('resourceTopic')).toBe(target.resourceTopicIds[0]);
@@ -131,9 +131,9 @@ test('restores filter state from reload, history and pageshow', async ({ page })
   await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
   await expect(page.getByLabel('媒介')).toHaveValue(target.mediaType);
 
-  await page.getByLabel('Source').selectOption(target.sourceId);
+  await page.getByLabel('Source', { exact: true }).selectOption(target.sourceId);
   await page.goBack();
-  await expect(page.getByLabel('Source')).toHaveValue('all');
+  await expect(page.getByLabel('Source', { exact: true })).toHaveValue('all');
   await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
   await expect(page.getByLabel('媒介')).toHaveValue(target.mediaType);
 });

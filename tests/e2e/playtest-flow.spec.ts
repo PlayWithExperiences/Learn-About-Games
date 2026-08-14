@@ -94,9 +94,10 @@ test('reapplies the selected language filter after history back', async ({ page 
     `共 ${matchingResources.length} 条 Work Item`,
   );
   await expect(matchingRow).toBeVisible();
-  for (const resource of resources.filter((resource) => !matchingResources.includes(resource))) {
-    await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`)).toBeHidden();
-  }
+  const visibleIds = await page.locator('[data-result-kind="work-item"]:not([hidden])').evaluateAll((rows) =>
+    rows.map((row) => row.getAttribute('data-result-id')),
+  );
+  expect(new Set(visibleIds)).toEqual(new Set(matchingResources.map(({ id }) => id)));
 });
 
 test('keeps all work items available without JavaScript', async ({ browser }) => {
@@ -104,9 +105,7 @@ test('keeps all work items available without JavaScript', async ({ browser }) =>
   const page = await context.newPage();
 
   await page.goto('./resources/');
-  for (const resource of resources) {
-    await expect(page.locator(`[data-result-kind="work-item"][data-result-id="${resource.id}"]`)).toHaveCount(1);
-  }
+  await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(resources.length);
   await expect(page.getByLabel('可消费语言')).toBeDisabled();
   await expect(page.locator('.script-required-note')).toContainText(
     `当前可逐个展开 15 个资源主题，全部 ${resources.length} 条 Work Item 均可访问`,

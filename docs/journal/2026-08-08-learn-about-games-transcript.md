@@ -297,3 +297,13 @@ fresh build 后首页 targeted Chromium 1/1 GREEN。写入交接记录后的第�
 此前的部署证据 metadata 对齐 commit `9b756374292343f68fe0bac6b741b8a01c5108b8` 已由 workflow run `31265993889` 成功发布；它没有新增产品行为。主 agent 随后将 final-review 修复及其回归测试推送到远端 `main`。GitHub Pages workflow [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 记录的 head SHA 是 `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2`，build 与 deploy jobs 均 completed / success；`git ls-remote` 同时确认远端 `main` 指向该 SHA。公开首页随后用精确文本复核，确认已出现“用已发布的 AAA / Game Designer 参考画像理解一种生产语境；它只是参考，不作评分，更多画像后续扩展。”
 
 因此首页修复从 Changelog 的 `Unreleased` 移入已发布 M0，并保留 run 与完整 SHA。当前证据写回只更新 README、Changelog、决策摘要、transcript 与部署回归断言，不新增产品行为；后续内容扩展仍以决策摘要的“精确下一步”为准。
+
+### 34. 2026-08-15：成长资源 300+ 扩展（partial export）
+
+记录说明：以下是本次资源扩展会话的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括完整工具输出、子代理内部推理和未转发的中间消息；未获取的内容不声称完整，也没有记录凭据、环境变量或外部账户信息。
+
+用户确认继续补全成长资源，并明确英文、中文优先，日文优先级较低；目标为至少新增 300 个 Work Item。主任务先阅读项目入口、产品设计、路线图、变更记录与 Agent Reach 研究规范，然后将检索拆为 GDC／创作者、学术／课程、中文与全球补缺三个独立批次。Agent Reach doctor 确认 Exa via mcporter 与 Jina Reader 可用；Exa 在检索过程中返回配额限制后停止重试，后续只使用 Jina 与官方原页复核。YouTube 字幕后端未启用，因此没有把搜索摘要或自动字幕当作页面证据。
+
+第一轮研究报告提供 200 条 GDC／Game Developer、100 条学术／课程和 100 条中文／全球候选。写入前按 canonical URL 归一化并与现有 catalog 及其他批次做 union/diff；其中 1 条 GDC URL 与既有 Work Item 规范化后重复，被排除，最终净增 385 条。数据最终为 41 个 Source、610 个 Work Item、624 个 Access Version；每条只有一个主要 Resource Topic，保留 originalLanguage、access model、versionRelation、presentationMode 与 checkedAt。新增 Source 仅在真实发布实体有必要时建立，不能把单篇内容误当 Source。
+
+实现先在 `catalog-data.test.ts` 写入批次 RED，再写资源与 Source 数据；随后补上批次 A/B/C 的 200/100/85 条 intake 行锁定、规范化 URL 唯一性和全量资源引用。Resources 与 Playtest E2E 首轮暴露两类测试契约问题：`Source` aria-label 的宽匹配与 610 行逐条轮询造成浏览器会话过载；修正为 exact label 和集合级 DOM 断言后，桌面／移动 40/40 通过。最终 fresh 门禁为 check 0 diagnostics、unit 168/168、静态构建 134 pages、完整 E2E 229 passed / 21 intentional skipped；随后还需完成静态 diff/secret scan、commit 与本地预览。

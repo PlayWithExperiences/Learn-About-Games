@@ -1,14 +1,14 @@
-# Learn About Games v0.2 — 首批成长资源证据 Intake
+# Learn About Games v0.2 — 成长资源证据 Intake
 
-- 研究日期：2026-08-09
-- 状态：研究证据 notebook；Batch A–I 已正规化为 225 个 catalog Work Item
+- 研究日期：2026-08-09；扩展核验：2026-08-15
+- 状态：研究证据 notebook；Batch A–I 已正规化为 610 个 catalog Work Item（含 2026-08-15 扩展批次；首批为 225 个）
 - 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项、Batch I 16 项
-- 确定性 canonical URL 去重后：**229 项研究记录**；正规化后为 **225 个 Work Item**
+- 确定性 canonical URL 去重后：首批 **229 项研究记录**；扩展批次另核验 386 条候选，其中 1 条与既有 Work Item 的规范化 URL 重复；正规化后为 **610 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
 
-这份 notebook 是后续内容正规化的证据层，不是对全部 229 条研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11、Batch H–I 在 2026-08-12 按同一边界补充主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
+这份 notebook 是后续内容正规化的证据层，不是对全部研究记录逐项完成浏览器人工复核的声明。Batch A–C 的研究 agent 在 2026-08-09 进行了只读检索与页面核验；Batch D–G 在 2026-08-11、Batch H–I 在 2026-08-12；2026-08-15 的扩展批次使用官方 GDC Vault、Game Developer、学术/课程站点与腾讯/J-STAGE 页面按同一边界补充主题、媒介和语言。本次合并完整保留接受、拒绝与待核记录，只做可重复的 canonical URL 归一化比较。
 
 Source 与 Work Item 必须继续是不同实体。以下 sourceUrl 是研究批次捕获的来源证据 URL；它常与具体 Work Item 的 canonicalUrl 相同，因而不能直接当作 Source homepage。正规化时必须另建真实创作者、频道、组织、出版社或网站 Source，再由 Work Item 引用。
 
@@ -19,38 +19,38 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 ## 去重结论与待核 identity
 
 - 规则：host 小写并移除 www.、移除 fragment 与非根路径末尾 /、稳定排序 query；不跨 DOI、出版社页或不同平台猜测同一作品。
-- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–I 另增 97 条且没有命中既有 canonical URL。
+- Batch A–C 输入 132 条，规范化后仍为 **132 条 canonical URL 记录**；Batch D–I 另增 97 条。2026-08-15 扩展候选 386 条，规范化后新增 385 个 Work Item；另 1 条（GDC play/1026705）与已有条目归一化为同一 URL，按规则排除。
 - The Science of Play Testing: EA’s Methods for User Research 同时出现为 [play/1014552](https://www.gdcvault.com/play/1014552/The-Science-of-Play-Testing) 与 [play/1014551](https://www.gdcvault.com/play/1014551/The-Science-of-Play-Testing)：**待人工确认 duplicate session ID**。当前保留两条证据记录，不断言不同，也不擅自合并；若确认同一 session，最终 Work Item 数应减 1，并合并有效 accessVersions。
 - 自动发现的完全重复组：[]。
 
 ## 当前正规化 catalog coverage
 
-- Work Item：225；Source：38；Access Version：239；Resource Topic：15。
-- 原始语言：en 196、ja 9、zh-Hans 20。
-- 可消费语言（Work Item 计，可重叠）：en 197、ja 9、zh-Hans 22。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 208、ja 9、zh-Hans 22。
-- 媒介：article 31、book 29、course 16、paper 17、podcast 11、talk 98、video 5、website 18。
+- Work Item：610；Source：41；Access Version：624；Resource Topic：15。
+- 原始语言：en 555、ja 17、zh-Hans 38。
+- 可消费语言（Work Item 计，可重叠）：en 556、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 567、ja 17、zh-Hans 40。
+- 媒介：article 65、book 29、course 38、paper 34、podcast 11、talk 335、video 15、website 83。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
 | 主主题 | Work Item |
 |---|---:|
-| 设计基础与概念 | 10 |
-| 系统与机制 | 15 |
-| 平衡与经济 | 14 |
-| 手感与反馈 | 9 |
-| 关卡与空间 | 23 |
-| Playtest 主题资源集合 | 20 |
-| 叙事与表达 | 22 |
-| 原型与实验 | 16 |
-| 生产与迭代 | 17 |
-| 协作与团队 | 11 |
-| 领导与创意方向 | 12 |
-| 批判、价值观与历史语境 | 16 |
-| 研究方法与玩家体验 | 23 |
+| 设计基础与概念 | 86 |
+| 系统与机制 | 50 |
+| 平衡与经济 | 32 |
+| 手感与反馈 | 25 |
+| 关卡与空间 | 121 |
+| Playtest 主题资源集合 | 29 |
+| 叙事与表达 | 80 |
+| 原型与实验 | 26 |
+| 生产与迭代 | 50 |
+| 协作与团队 | 21 |
+| 领导与创意方向 | 14 |
+| 批判、价值观与历史语境 | 20 |
+| 研究方法与玩家体验 | 38 |
 | 从业者访谈与播客 | 7 |
-| 中文行业实践与跨专业语境 | 10 |
-| 合计 | 225 |
+| 中文行业实践与跨专业语境 | 11 |
+| 合计 | 610 |
 
 ## 接受候选
 

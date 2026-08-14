@@ -13,7 +13,7 @@ v0.2 把 M0 的纵向切片扩展成一张可以继续生长的游戏知识网�
 - 能力地图包含 28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条 `supports` / `complements` 关系。它以 PlayWithExperiences 的 EGDS 为作者化骨架：从体验旅程与情绪曲线出发，从感受、理解、解构走向重构，再进入叙事、美学与表现、玩法与挑战等设计杠杆；生产、团队、产品与更广语境形成其余四条条件分支。桌面所有父子包含关系统一从左向右展开，并用五条中性分支领地、不同权重的主干／分支／子级线和独立过程箭头表达层级；中间宽度、移动端与无 JavaScript 使用同源原生大纲。
 - 独立的 [EGDS 方法介绍页](src/pages/egds/index.astro) 说明能力地图采用的作者方法基础。正文以 PlayWithExperiences Digital Garden 的当前工作模型为先：情绪曲线是整体入口；感受 ↔ 情绪体验、理解 ↔ 主观感受、解构 ↔ 客观原因、重构 ↔ 设计杠杆构成四组明确对应；2024 年四篇已发布文章作为真实演进记录保留。
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 是能力地图内的三种职业标签。它们只在唯一一张地图上改变强调，并在标签旁公开映射、依据和局限；不评分、不隐藏节点，也不生成统一成长路线。旧 `/careers/` 只保留到地图标签区的兼容跳转。
-- 成长资源收录 38 个 Source、225 个具体 Work Item、239 个 Access Version 与 15 个无顺序资源主题。主目录默认折叠为 15 个可独立展开的主题子表，也可展开全表后使用同一组表头事实筛选；Source 目录拥有独立子入口。最新一批补入 7 条 GDC Vault 原始会话与 9 篇 Game Developer 作者文章，重点覆盖原型、玩法测试、生产协作和系统设计。新增资料继续逐页核验，不为凑数量收录证据不足的候选。
+- 成长资源收录 41 个 Source、610 个具体 Work Item、624 个 Access Version 与 15 个无顺序资源主题。主目录默认折叠为 15 个可独立展开的主题子表，也可展开全表后使用同一组表头事实筛选；Source 目录拥有独立子入口。本轮净增 385 条：以英文 GDC Vault／Game Developer、Level Design Book、Game AI Pro、Game Accessibility Guidelines、MIT OCW、Atlassian 与课程原页为主，同时补入已核验的中文腾讯游戏学堂和少量日文 J-STAGE 研究。每条仍逐页核验、规范化去重、恰属一个主题，不为凑数量收录证据不足的候选。
 - Innovation Atlas 是一张 58 节点、42 条有证据关系与 69 项 Evidence 构成的全局时间网络。10 个常见 Genre Family 只负责非排他的浏览入口；当前 7 条证据谱系在既有早期电子游戏、Roguelike、Metroidvania、平台与冒险切片之外，新增第一人称射击与即时战略的选择性沿革。桌面只有明确进入全屏“地图模式”后，普通滚轮才围绕指针连续缩放并允许拖动；“适应全图”会以完整内容为先，必要时可以低于手动缩放的 50% 下限。谱系透镜不隐藏或重排全局网络，也不把选择性切片写成完整品类史。
 - 外观支持跟随系统、浅色和深色三种模式；无 JavaScript 时，地图、资源、依据与原生详情仍可阅读。
 
@@ -67,5 +67,6 @@ M0 线上复核确认：首页包含当时的 Playtest 纵向切片与 `AAA · G
 - [私有完善：整合探索入口](docs/devlog/2026-08-11-integrated-exploration-refinement.md)
 - [私有完善：统一地图方向与扩展品类谱系](docs/devlog/2026-08-12-horizontal-egds-genre-atlas.md)
 - [私有完善：让地图状态可逆，并补充一手学习资料](docs/devlog/2026-08-12-reversible-maps-and-resource-depth.md)
+- [私有完善：把成长资源扩到 300+](docs/devlog/2026-08-15-resource-300-expansion.md)
 
 需要精确恢复历史时，再打开决策摘要链接的脱敏会话记录。

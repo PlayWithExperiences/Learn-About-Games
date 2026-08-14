@@ -4,6 +4,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 成长资源扩充完成首个 300+ 目标批次：净增 385 个经过官方页面或可复核原页核验的 Work Item，目录达到 41 个 Source、610 个 Work Item 与 624 个 Access Version。新增以英文 GDC Vault／Game Developer、学术章节、课程与方法指南为主，另补 18 条中文 Work Item 与 8 条日文研究；所有条目规范化 URL 去重、恰属一个资源主题并保留检查日期，不添加评分或排名。
 - 将 `PlayWithExperiences/Learn-About-Games` 暂时从 Public 改为 Private；未经身份验证的仓库 URL 与原 GitHub Pages URL 均返回 404，并手动停用 Pages workflow，避免私有完善期间触发无效部署。历史发布证据继续保留，重新公开前需完成当前核心体验修正、重新启用 workflow 与线上验收。
 - EGDS 取代通用分组成为能力地图的唯一知识骨架：28 个方法节点表达体验设计、从计划到落地、团队、产品／盈利与更广语境；体验设计内部固定显示体验旅程以及感受 → 理解 → 解构 → 重构，并由重构进入叙事、美学与表现、玩法与挑战三类设计杠杆。
 - 新增独立 `/egds/` 方法介绍页，并从 About 与能力地图提供上下文入口。页面以 Digital Garden 当前工作模型为先，公开情绪曲线作为整体入口，以及感受 ↔ 情绪体验、理解 ↔ 主观感受、解构 ↔ 客观原因、重构 ↔ 设计杠杆四组对应关系；四篇已发布文章保留历史位置，顶层导航继续保持四项。

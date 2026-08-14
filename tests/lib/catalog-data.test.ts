@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import resourceIntake from '../../docs/research/2026-08-09-resource-intake.md?raw';
+import resourceExpansionIntake from '../../docs/research/2026-08-15-resource-300-intake.md?raw';
 import contentConfigSource from '../../src/content.config.ts?raw';
 
 import atlasEvidence from '../../src/data/atlas-evidence.json';
@@ -454,13 +455,269 @@ describe('raw product catalog data', () => {
     expect(knowledgeTopics.every(({ frameworkNodeId }) => typeof frameworkNodeId === 'string')).toBe(true);
   });
 
+  it('locks the first 100 GDC official candidates into the expansion batch', () => {
+    const gdcBatchCanonicalUrls = [
+      'https://www.gdcvault.com/play/1027835/UX-Summit-DEATHLOOP-s-User',
+      'https://www.gdcvault.com/play/1027964/Level-Design-Summit-Designing-the',
+      'https://www.gdcvault.com/play/1024302/Level-Design-Workshop-A-Narrative',
+      'https://www.gdcvault.com/play/1020526/Using-User-Research-to-Improve',
+      'https://www.gdcvault.com/play/1021108/Paper-Tales-A-Guide-to',
+      'https://www.gdcvault.com/play/1025178/Level-Design-Workshop-Designing-for',
+      'https://www.gdcvault.com/play/1034839/Level-Design-Summit-The-Player',
+      'https://www.gdcvault.com/play/1034615/Level-Design-Summit-The-Flame',
+      'https://www.gdcvault.com/play/1029158/How-to-Build-a-Home',
+      'https://www.gdcvault.com/play/1025105/Designing-Unforgettable-Titanfall-Single-Player',
+      'https://www.gdcvault.com/play/1029436/Closing-the-Gap-Chasing-Effective',
+      'https://www.gdcvault.com/play/1028870/The-Level-Design-Evolution-of',
+      'https://www.gdcvault.com/play/1034413/Alpha-Puzzles-Shipped-Solutions-Exploring',
+      'https://www.gdcvault.com/play/1027764/Level-Design-Summit-Knocking-on',
+      'https://www.gdcvault.com/play/1027993/Level-Design-Summit-Deathloop-How',
+      'https://www.gdcvault.com/play/1025183/Level-Design-Workshop-The-Holy',
+      'https://www.gdcvault.com/play/1024423/Level-Design-Workshop-Singleplayer-vs',
+      'https://www.gdcvault.com/play/1029213/Level-Design-Summit-Benefits-of',
+      'https://www.gdcvault.com/play/1023795/Narrative-Experience-First-Interaction-Design',
+      'https://www.gdcvault.com/play/1025180/Level-Design-Workshop-Navigating-Conversation',
+      'https://www.gdcvault.com/play/1029217/Level-Design-Summit-The-Pandemic',
+      'https://www.gdcvault.com/play/1034581/Level-Design-Summit-Building-Before',
+      'https://www.gdcvault.com/play/1020777/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1025732/-Mooncrash-Resetting-the-Immersive',
+      'https://www.gdcvault.com/play/1020398/Rayman-Legends-The-Design-Process',
+      'https://www.gdcvault.com/play/1025176/Level-Design-Workshop-An-Architectural',
+      'https://www.gdcvault.com/play/1022116/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1022768/Modular-Sandbox-Design-Tools-and',
+      'https://www.gdcvault.com/play/1022113/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1020570/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1014016/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1028766/Tabletop-Summit-Encouraging-Emergent-Narratives',
+      'https://www.gdcvault.com/play/1029215/Level-Design-Summit-Moving-Mountains',
+      'https://www.gdcvault.com/play/1027998/Level-Design-Summit-Just-Me',
+      'https://www.gdcvault.com/play/1023235/Keeping-Level-Designers-in-the',
+      'https://www.gdcvault.com/play/1022110/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1028723/AI-Summit-Beyond-WaveFunctionCollapse-Constraint',
+      'https://www.gdcvault.com/play/1012156/Iterative-Level',
+      'https://www.gdcvault.com/play/1020174/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1017637/AAA-Level-Design-in-a',
+      'https://www.gdcvault.com/play/1025182/Level-Design-Workshop-Set-this',
+      'https://www.gdcvault.com/play/1034179/Testing-Empowered-Integrating-Machine-Learning',
+      'https://www.gdcvault.com/play/1016759/Indie-Level-Design-Adventures-in',
+      'https://www.gdcvault.com/play/1027681/The-Design-Direction-of-I',
+      'https://www.gdcvault.com/play/1023551/Level-Design-Workshop-Adding-Life',
+      'https://www.gdcvault.com/play/1034415/System-Centric-Puzzle-Design-in',
+      'https://www.gdcvault.com/play/1034177/Refining-Player-Traversal-in-Star',
+      'https://www.gdcvault.com/play/1017638/AAA-Level-Design-in-a',
+      'https://www.gdcvault.com/play/1012667/Prototyping-for-Engagement-and',
+      'https://www.gdcvault.com/play/1025556/Weaving-13-Prototypes-into-1',
+      'https://www.gdcvault.com/play/1025181/Level-Design-Workshop-Procedural-Regeneration',
+      'https://www.gdcvault.com/play/1024308/Level-Design-Workshop-Level-Flow',
+      'https://www.gdcvault.com/play/1022115/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1025392/-Heaven-s-Vault-Creating',
+      'https://www.gdcvault.com/play/1025179/Level-Design-Workshop-Invisible-Intuition',
+      'https://www.gdcvault.com/play/1022930/-Fallout-4-s-Modular',
+      'https://www.gdcvault.com/play/1035543/Bear-Hugs-and-Dev-Tears',
+      'https://www.gdcvault.com/play/1025885/Level-Design-Workshop-Nothing-is',
+      'https://www.gdcvault.com/play/1017641/AAA-Level-Design-in-a',
+      'https://www.gdcvault.com/play/1022457/Level-Design-Fundamentals',
+      'https://www.gdcvault.com/play/1035209/Level-Design-Summit-The-Unusual',
+      'https://www.gdcvault.com/play/1034350/Relic-Ruins-Creating-Environmental-Puzzles',
+      'https://www.gdcvault.com/play/1029384/-TUNIC-This-Was-Here',
+      'https://www.gdcvault.com/play/1017639/AAA-Level-Design-in-a',
+      'https://www.gdcvault.com/play/1015052/The-Future-Is-Now-Emergent',
+      'https://www.gdcvault.com/play/1028810/Layered-Battles-Generating-Multiple-Qualitative',
+      'https://www.gdcvault.com/play/1023854/Level-Design-Saga-Creating-Levels',
+      'https://www.gdcvault.com/play/1035054/Teaching-First-Time-Level-Designers',
+      'https://www.gdcvault.com/play/1022118/Level-Design-in-a-Day',
+      'https://www.gdcvault.com/play/1021511/Raw-Game-Design-You-Have',
+      'https://www.gdcvault.com/play/1027601/Game-Design',
+      'https://www.gdcvault.com/play/1028948/Applying-Blizzard-s-Core-Design',
+      'https://www.gdcvault.com/play/1022458/Game-Design-Case-Studies-One',
+      'https://www.gdcvault.com/play/1025846/How-to-Teach-Game-Design',
+      'https://www.gdcvault.com/play/1026336/Cursed-Problems-in-Game',
+      'https://www.gdcvault.com/play/1016743/Machinations-A-New-Way-to',
+      'https://www.gdcvault.com/play/1023975/Game-Design-Tools-For-When',
+      'https://www.gdcvault.com/play/1034175/Developing-and-Sharpening-Your-Design',
+      'https://www.gdcvault.com/play/1021359/Rebooting-Game-Design-for-Virtual',
+      'https://www.gdcvault.com/play/1015901/Design-in-Detail-Identifying-the',
+      'https://www.gdcvault.com/play/1017043/Designing-Fun-Easier-Said-Then',
+      'https://www.gdcvault.com/play/1024959/Good-Game-Design-is-like',
+      'https://www.gdcvault.com/play/1022935/Rules-of-the-Game-Five',
+      'https://www.gdcvault.com/play/1025772/-Into-the-Breach-Design',
+      'https://www.gdcvault.com/play/1027580/Design-Sandbox-Analog-vs-Digital',
+      'https://www.gdcvault.com/play/1015305/Designing-Games-for-Game',
+      'https://www.gdcvault.com/play/1017791/Of-Choice-and-Breaking-New',
+      'https://www.gdcvault.com/play/1013222/Rules-Worth',
+      'https://www.gdcvault.com/play/1015033/Designers-are-Human-Too-Causes',
+      'https://www.gdcvault.com/play/1019096/From-Concept-to-Release-Designing',
+      'https://www.gdcvault.com/play/1025983/Can-You-Make-a-Good',
+      'https://www.gdcvault.com/play/1019447/Designing-Assassin-s-Creed',
+      'https://www.gdcvault.com/play/1012356/One-Page',
+      'https://www.gdcvault.com/play/1015466/Designing-Over-the-Top-Saints',
+      'https://www.gdcvault.com/play/1014860/Game-Design-Challenge-The-Love',
+      'https://www.gdcvault.com/play/1016686/Game-Design-is-Business',
+      'https://www.gdcvault.com/play/1018899/One-with-Lara-The-Croft',
+      'https://www.gdcvault.com/play/1015845/Reimagining-a-Classic-The-Design',
+      'https://www.gdcvault.com/play/1016154/Attention-Not-Immersion-Making-Your',
+      'https://www.gdcvault.com/play/1012229/Design-in-the-Trenches-The',
+    ];
+    expect(gdcBatchCanonicalUrls).toHaveLength(100);
+    expect(new Set(gdcBatchCanonicalUrls).size).toBe(gdcBatchCanonicalUrls.length);
+    expect(gdcBatchCanonicalUrls.every((url) => resources.some((resource) => resource.canonicalUrl === url))).toBe(true);
+  });
+
+  it('locks the second 100 official creator candidates into the expansion batch', () => {
+    const secondCreatorBatchCanonicalUrls = [
+      "https://www.gdcvault.com/play/1014982/Truth-in-Game",
+      "https://www.gdcvault.com/play/1021066/Jiro-Dreams-of-Game",
+      "https://www.gdcvault.com/play/1015556/Creating-Atmosphere-in",
+      "https://www.gdcvault.com/play/1017715/Humanity-s-Last-Game-The",
+      "https://www.gdcvault.com/play/1022934/Audio-Driven-Game",
+      "https://www.gdcvault.com/play/1014657/Player-Driven-Stories-How-Do",
+      "https://www.gdcvault.com/play/1016433/The-Self-Presence-and",
+      "https://www.gdcvault.com/play/1013660/Heavy-Rain-How-Far-Are",
+      "https://www.gdcvault.com/play/1013669/Viral-Mechanics",
+      "https://www.gdcvault.com/play/1022560/Games-with-Collectable",
+      "https://www.gdcvault.com/play/1018055/Working-with-Designers-Scaling-Your",
+      "https://www.gdcvault.com/play/1027302/Rules-of-the-Game-2021",
+      "https://www.gdcvault.com/play/1012225/Designing-Shadow",
+      "https://www.gdcvault.com/play/1016849/The-Other-White-Meat-Design",
+      "https://www.gdcvault.com/play/1012975/Making-a-Standard-(and-Trying",
+      "https://www.gdcvault.com/play/1014932/The-Evolution-of-RPG-Mechanics",
+      "https://www.gdcvault.com/play/1025745/The-Design-of-Subnautica",
+      "https://www.gdcvault.com/play/1016352/Breaking-the-Rules-of-Game",
+      "https://www.gdcvault.com/play/1025413/To-Err-is-to-Play",
+      "https://www.gdcvault.com/play/1022669/Game-Design-Patterns-Parts-1",
+      "https://www.gdcvault.com/play/1024069/Inviting-Player-Creativity-Through-Game",
+      "https://www.gdcvault.com/play/1013830/Economic-Decision-Making-in-Game",
+      "https://www.gdcvault.com/play/1024984/Nuke-Possum-Springs-A-Night",
+      "https://www.gdcvault.com/play/1013646/Five-Rules-for-Draft-One",
+      "https://www.gdcvault.com/play/1022334/Thinking-About-People-Designing-Games",
+      "https://www.gdcvault.com/play/1029244/Moving-the-Needle-Microtalks-on",
+      "https://www.gdcvault.com/play/1021912/Designing-for-Empathy-with-Sensory",
+      "https://www.gdcvault.com/play/1014292/ONE-FALLS-FOR-EACH-OF",
+      "https://www.gdcvault.com/play/1014958/The-Turducken-Method-of-Game",
+      "https://www.gdcvault.com/play/1026075/Design-Philosophies-and-Lessons-from",
+      "https://www.gdcvault.com/play/1014890/Evoking-Emotions-and-Achieving-Success",
+      "https://www.gdcvault.com/play/1024963/-Horizon-Zero-Dawn-A",
+      "https://www.gdcvault.com/play/1022239/Rules-of-the-Game-Five",
+      "https://www.gdcvault.com/play/1027874/Game-Design",
+      "https://www.gdcvault.com/play/1012895/Designing-Assassin-s-Creed",
+      "https://www.gdcvault.com/play/1015805/What-You-Don-t-Know",
+      "https://www.gdcvault.com/play/1012250/Broadening-a-Genre-While-Retaining",
+      "https://www.gdcvault.com/play/1025784/Designing-Path-of-Exile-to",
+      "https://www.gdcvault.com/play/1018975/Design-Occlusion-is-Killing-Your",
+      "https://www.gdcvault.com/play/1016830/Psychology-vs-Structure-The-Power",
+      "https://www.gdcvault.com/play/1026023/Taking-an-Axe-to-God",
+      "https://www.gdcvault.com/play/1017761/Emotional-Journey-BioWare-s-Methods",
+      "https://www.gdcvault.com/play/1034832/Level-Design-Summit-Level-and",
+      "https://www.gdcvault.com/play/1022454/Level-Design-Fundamentals",
+      "https://www.gdcvault.com/play/1020434/Narrative",
+      "https://www.gdcvault.com/play/1025880/Level-Design-Workshop-The-Level",
+      "https://www.gdcvault.com/play/1023556/Level-Design-Workshop-Building-Firewatch",
+      "https://www.gdcvault.com/play/1029115/Game-Narrative-Summit-AAA-TYPICAL",
+      "https://www.gdcvault.com/play/1027206/Stop-Getting-Lost-Make-Cognitive",
+      "https://www.gdcvault.com/play/1025387/Plot-and-Parcel-Procedural-Level",
+      "https://www.gdcvault.com/play/1027369/Great-Level-Design-is-a",
+      "https://www.gdcvault.com/play/1028876/Level-Design-Summit-A-Visual",
+      "https://www.gdcvault.com/play/1021305/Believable-Make-Believe-Putting-the",
+      "https://www.gdcvault.com/play/1023976/Snap-to-Character-Building-Strong",
+      "https://www.gdcvault.com/play/1034507/Machine-Learning-Summit-Would-You",
+      "https://www.gdcvault.com/play/1029129/Game-Narrative-Summit-Story-An",
+      "https://www.gdcvault.com/play/1027854/Level-Design-Summit-1-2",
+      "https://www.gdcvault.com/play/1021868/Community-Level-Design-for-Competitive",
+      "https://www.gdcvault.com/play/1017636/AAA-Level-Design-in-a",
+      "https://www.gdcvault.com/play/1027254/Environment-Design-as-Visual-Storytelling",
+      "https://www.gdcvault.com/play/1029373/Three-Musketeers-of-Narrative-Design",
+      "https://www.gdcvault.com/play/1024511/Telling-Reactive-Stories-in-an",
+      "https://www.gdcvault.com/play/1018840/Schrodinger-s-Cat-in-a",
+      "https://www.gdcvault.com/play/1027692/Level-Design-Summit-Torchbearers-New",
+      "https://www.gdcvault.com/play/1023849/Level-Design-in-HITMAN-Guiding",
+      "https://www.gdcvault.com/play/1025878/Investing-in-the-Future-Narrative",
+      "https://www.gdcvault.com/play/1029125/Game-Narrative-Summit-Minimal-Space",
+      "https://www.gdcvault.com/play/1022944/Ink-The-Narrative-Scripting-Language",
+      "https://www.gdcvault.com/play/1017933/Assassin-s-Creed-III-Homestead",
+      "https://www.gdcvault.com/play/1016166/Do-(Say)-The-Right-Thing",
+      "https://www.gdcvault.com/play/1029123/Game-Narrative-Summit-Learning-From",
+      "https://www.gdcvault.com/play/1018056/Never-Mind-Small-Steps-What",
+      "https://www.gdcvault.com/play/1025883/Level-Design-Workshop-Designing-Radically",
+      "https://www.gdcvault.com/play/1021036/Getting-Players-to-Care-Using",
+      "https://www.gdcvault.com/play/1029119/Game-Narrative-Summit-Effective-Feedback",
+      "https://www.gdcvault.com/play/1034733/Level-Design-Summit-Shapeshifters-The",
+      "https://www.gdcvault.com/play/1029343/The-Final-Battle-of-God",
+      "https://www.gdcvault.com/play/1022108/Designing-for-Exploration-and-Choice",
+      "https://www.gdcvault.com/play/1024245/Designing-Interactive-Fiction-on-Episode",
+      "https://www.gdcvault.com/play/1024158/Building-Non-linear-Narratives-in",
+      "https://www.gdcvault.com/play/1027183/Google-Maps-Not-Greyboxes-Digital",
+      "https://www.gdcvault.com/play/1024172/Force-and-Fire-Making-Your",
+      "https://www.gdcvault.com/play/1025765/Procedurally-Crafting-Manhattan-for-Marvel",
+      "https://www.gdcvault.com/play/1027316/Sigmoids-for-Storytellers-Mathematical-Solutions",
+      "https://www.gdcvault.com/play/1023555/Level-Design-Workshop-What-Level",
+      "https://www.gdcvault.com/play/1024896/A-Long-Dark-Road-Blending",
+      "https://www.gdcvault.com/play/1023383/Blending-Autonomy-and-Control-Creating",
+      "https://www.gdcvault.com/play/1023553/Level-Design-Workshop-Level-Design",
+      "https://www.gdcvault.com/play/1025881/Level-Design-Workshop-World-Design",
+      "https://www.gdcvault.com/play/1027961/Game-Narrative-Summit-Narrative-Tools",
+      "https://www.gamedeveloper.com/design/playtesting-102-who-and-where",
+      "https://www.gamedeveloper.com/design/playtesting-mobile-games-at-the-dmv",
+      "https://www.gamedeveloper.com/design/prevent-broken-games-with-computer-play-testing---part2",
+      "https://www.gamedeveloper.com/design/changeable-minds",
+      "https://www.gamedeveloper.com/design/buying-a-design-partner",
+      "https://www.gamedeveloper.com/design/screen-play-narrative-postpartum",
+      "https://www.gamedeveloper.com/design/hands-on-predicting-players-thinking",
+      "https://www.gamedeveloper.com/design/book-excerpt-game-design-workshop",
+      "https://www.gamedeveloper.com/design/10-game-design-process-pitfalls",
+      "https://www.gamedeveloper.com/design/how-to-write-a-game-design-document",
+    ];
+    expect(secondCreatorBatchCanonicalUrls).toHaveLength(100);
+    expect(new Set(secondCreatorBatchCanonicalUrls).size).toBe(secondCreatorBatchCanonicalUrls.length);
+    expect(secondCreatorBatchCanonicalUrls.every((url) => resources.some((resource) => resource.canonicalUrl === url))).toBe(true);
+  });
+
+  it('locks every accepted expansion intake row to a catalog Work Item', () => {
+    const acceptedExpansion = resourceExpansionIntake.slice(
+      resourceExpansionIntake.indexOf('## 已接受'),
+      resourceExpansionIntake.indexOf('## 排除表'),
+    );
+    const rowsFor = (heading: string, nextHeading: string) => {
+      const section = acceptedExpansion.slice(
+        acceptedExpansion.indexOf(heading),
+        acceptedExpansion.indexOf(nextHeading),
+      );
+      return [...section.matchAll(/^- id=([^ |]+) \| canonicalUrl=([^ |]+)/gm)].map(([, id, canonicalUrl]) => ({
+        id,
+        canonicalUrl,
+      }));
+    };
+    const batches = [
+      rowsFor('## 已接受：批次 A', '## 已接受：批次 B'),
+      rowsFor('## 已接受：批次 B', '## 已接受：批次 C'),
+      rowsFor('## 已接受：批次 C', '## 排除表'),
+    ];
+    expect(batches.map((rows) => rows.length)).toEqual([200, 100, 85]);
+    for (const rows of batches) {
+      expect(new Set(rows.map(({ canonicalUrl }) => canonicalUrl)).size).toBe(rows.length);
+      for (const { id, canonicalUrl } of rows) {
+        const resource = resources.find((candidate) => candidate.id === id);
+        expect(resource?.canonicalUrl, id).toBe(canonicalUrl);
+        expect(resource?.resourceTopicIds).toHaveLength(1);
+        expect(resource?.accessVersions.length).toBeGreaterThan(0);
+      }
+    }
+    expect(batches[0].every(({ id }) => resources.find((resource) => resource.id === id)?.originalLanguage === 'en')).toBe(true);
+    expect(batches[1].every(({ id }) => resources.find((resource) => resource.id === id)?.originalLanguage === 'en')).toBe(true);
+    const batchCLanguages = batches[2].map(({ id }) => resources.find((resource) => resource.id === id)?.originalLanguage);
+    expect(batchCLanguages).toEqual(expect.arrayContaining(['en', 'zh-Hans', 'ja']));
+  });
+
+
   it('normalizes a broad, unordered and evidence-backed resource catalog', () => {
     const acceptedIntake = resourceIntake.slice(
       resourceIntake.indexOf('## 接受候选'),
       resourceIntake.indexOf('## 拒绝与待核证据'),
+    ) + resourceExpansionIntake.slice(
+      resourceExpansionIntake.indexOf('## 已接受'),
+      resourceExpansionIntake.indexOf('## 排除表'),
     );
     const intakeCanonicalUrls = new Set(
-      [...acceptedIntake.matchAll(/canonicalUrl=([^<\n|]+)/g)].map((match) => match[1]),
+      [...acceptedIntake.matchAll(/canonicalUrl=([^<\n|]+)/g)].map((match) => match[1].trim()),
     );
     const capabilityIds = new Set(capabilities.map(({ id }) => id));
     const knowledgeTopicIds = new Set(knowledgeTopics.map(({ id }) => id));
@@ -474,7 +731,7 @@ describe('raw product catalog data', () => {
     );
 
     expect(resourceTopics.length).toBeGreaterThanOrEqual(12);
-    expect(resources).toHaveLength(225);
+    expect(resources.length).toBeGreaterThanOrEqual(525);
     expect(resources.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
     expect(new Set(resources.flatMap(({ resourceTopicIds }) => resourceTopicIds)).size).toBeGreaterThanOrEqual(
       12,
@@ -661,16 +918,16 @@ describe('raw product catalog data', () => {
 
     expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(13);
     expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(16);
-    expect(countBy('mediaType', 'talk')).toBe(98);
+    expect(countBy('mediaType', 'talk')).toBeGreaterThanOrEqual(98);
     expect(countBy('originalLanguage', 'en')).toBeGreaterThanOrEqual(137);
-    expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
-    expect(countBy('originalLanguage', 'ja')).toBe(9);
+    expect(countBy('originalLanguage', 'zh-Hans')).toBeGreaterThanOrEqual(20);
+    expect(countBy('originalLanguage', 'ja')).toBeGreaterThanOrEqual(9);
     expect(consumableLanguageCount('en')).toBeGreaterThanOrEqual(138);
-    expect(consumableLanguageCount('zh-Hans')).toBe(22);
-    expect(consumableLanguageCount('ja')).toBe(9);
+    expect(consumableLanguageCount('zh-Hans')).toBeGreaterThanOrEqual(22);
+    expect(consumableLanguageCount('ja')).toBeGreaterThanOrEqual(9);
     expect(accessVersionLanguageCount('en')).toBeGreaterThanOrEqual(148);
-    expect(accessVersionLanguageCount('zh-Hans')).toBe(22);
-    expect(accessVersionLanguageCount('ja')).toBe(9);
+    expect(accessVersionLanguageCount('zh-Hans')).toBeGreaterThanOrEqual(22);
+    expect(accessVersionLanguageCount('ja')).toBeGreaterThanOrEqual(9);
 
     expect(capabilityCount('choice-consequence-design')).toBeGreaterThanOrEqual(3);
     expect(capabilityCount('player-behavior-observation')).toBeGreaterThanOrEqual(5);
@@ -711,9 +968,9 @@ describe('raw product catalog data', () => {
       resources.flatMap(({ accessVersions }) => accessVersions)
         .filter((version) => version.language === language).length;
 
-    expect(resources).toHaveLength(225);
-    expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(239);
+    expect(resources.length).toBeGreaterThanOrEqual(225);
+    expect(sources.length).toBeGreaterThanOrEqual(38);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions).length).toBeGreaterThanOrEqual(239);
     expect(expansion).toHaveLength(10);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
@@ -727,20 +984,20 @@ describe('raw product catalog data', () => {
     expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(0);
     expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(11);
 
-    expect(countBy('mediaType', 'article')).toBe(31);
-    expect(countBy('mediaType', 'course')).toBe(16);
-    expect(countBy('mediaType', 'paper')).toBe(17);
-    expect(countBy('mediaType', 'website')).toBe(18);
-    expect(countBy('mediaType', 'talk')).toBe(98);
-    expect(countBy('originalLanguage', 'en')).toBe(196);
-    expect(countBy('originalLanguage', 'zh-Hans')).toBe(20);
-    expect(countBy('originalLanguage', 'ja')).toBe(9);
-    expect(consumableLanguageCount('en')).toBe(197);
-    expect(consumableLanguageCount('zh-Hans')).toBe(22);
-    expect(consumableLanguageCount('ja')).toBe(9);
-    expect(accessVersionLanguageCount('en')).toBe(208);
-    expect(accessVersionLanguageCount('zh-Hans')).toBe(22);
-    expect(accessVersionLanguageCount('ja')).toBe(9);
+    expect(countBy('mediaType', 'article')).toBeGreaterThanOrEqual(31);
+    expect(countBy('mediaType', 'course')).toBeGreaterThanOrEqual(16);
+    expect(countBy('mediaType', 'paper')).toBeGreaterThanOrEqual(17);
+    expect(countBy('mediaType', 'website')).toBeGreaterThanOrEqual(18);
+    expect(countBy('mediaType', 'talk')).toBeGreaterThanOrEqual(98);
+    expect(countBy('originalLanguage', 'en')).toBeGreaterThanOrEqual(196);
+    expect(countBy('originalLanguage', 'zh-Hans')).toBeGreaterThanOrEqual(20);
+    expect(countBy('originalLanguage', 'ja')).toBeGreaterThanOrEqual(9);
+    expect(consumableLanguageCount('en')).toBeGreaterThanOrEqual(197);
+    expect(consumableLanguageCount('zh-Hans')).toBeGreaterThanOrEqual(22);
+    expect(consumableLanguageCount('ja')).toBeGreaterThanOrEqual(9);
+    expect(accessVersionLanguageCount('en')).toBeGreaterThanOrEqual(208);
+    expect(accessVersionLanguageCount('zh-Hans')).toBeGreaterThanOrEqual(22);
+    expect(accessVersionLanguageCount('ja')).toBeGreaterThanOrEqual(9);
 
     expect(capabilityCount('choice-consequence-design')).toBeGreaterThanOrEqual(5);
     expect(capabilityCount('market-reference-analysis')).toBeGreaterThanOrEqual(5);
@@ -766,9 +1023,9 @@ describe('raw product catalog data', () => {
       expansionCanonicalUrls.includes(canonicalUrl),
     );
 
-    expect(resources).toHaveLength(225);
-    expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(239);
+    expect(resources.length).toBeGreaterThanOrEqual(225);
+    expect(sources.length).toBeGreaterThanOrEqual(38);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions).length).toBeGreaterThanOrEqual(239);
 
     const intakeHeader = resourceIntake.slice(
       0,
@@ -1112,9 +1369,9 @@ describe('raw product catalog data', () => {
       batchCanonicalUrls.includes(canonicalUrl),
     );
 
-    expect(resources).toHaveLength(225);
-    expect(sources).toHaveLength(38);
-    expect(resources.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(239);
+    expect(resources.length).toBeGreaterThanOrEqual(225);
+    expect(sources.length).toBeGreaterThanOrEqual(38);
+    expect(resources.flatMap(({ accessVersions }) => accessVersions).length).toBeGreaterThanOrEqual(239);
     expect(new Set(batch.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(batchCanonicalUrls),
     );

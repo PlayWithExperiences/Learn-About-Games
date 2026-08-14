@@ -1,11 +1,18 @@
 # Learn About Games 决策摘要
 
 - 日期：2026-08-08
-- 状态：M0 纵向切片已部署并完成本地对抗验收；正式第一版的内容规模尚未开始扩展
-- 线上站点：[https://playwithexperiences.github.io/Learn-About-Games/](https://playwithexperiences.github.io/Learn-About-Games/)
+- 状态：M0 线上发布作为历史证据保留；仓库当前 Private，最新候选只在本地预览并完成构建验收
+- 当前预览：[http://127.0.0.1:4321/Learn-About-Games/](http://127.0.0.1:4321/Learn-About-Games/)
 - 产品设计：[2026-08-08-learn-about-games-design.md](../superpowers/specs/2026-08-08-learn-about-games-design.md)
 - M0 Devlog：[2026-08-08-m0-vertical-slice.md](../devlog/2026-08-08-m0-vertical-slice.md)
 - 会话记录：[2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)
+
+## 2026-08-15 当前里程碑
+
+- 成长资源首个 300+ 扩展目标已完成：净增 385 个 Work Item，当前为 41 个 Source、610 个 Work Item、624 个 Access Version、15 个 Resource Topic。
+- 扩展优先英文与中文：英文 GDC／Game Developer、学术章节、课程与方法指南构成主体；补入已核验中文腾讯游戏学堂条目，日文只保留明确原页研究。每项继续执行 canonical URL 规范化去重、唯一主要主题、访问版本与检查日期约束。
+- 证据边界已记录在 [2026-08-15-resource-300-intake.md](../research/2026-08-15-resource-300-intake.md)。Exa 配额受限后停止重试，未把搜索摘要、聚合页或无法核验的候选写入 catalog；1 条规范化重复候选被排除。
+- 当前 fresh 门禁：Astro check 0 errors / warnings / hints，Vitest 168/168，静态构建 134 pages，Resources 与 Playtest 桌面／移动 E2E 40/40，完整 E2E 229 passed / 21 intentional skipped。
 
 ## 项目来源
 
