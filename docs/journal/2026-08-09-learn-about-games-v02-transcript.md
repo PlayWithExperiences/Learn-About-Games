@@ -500,3 +500,11 @@ Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆�
 Innovation Atlas 本轮只新增一个证据透镜“解谜冒险结构谱系”，复用现有 parser→graphical adventure 证据，将 Puzzle 与 Adventure 作为非排他入口；58 nodes、42 relations、69 Evidence 和既有几何保持不变。该入口明确说明不等于完整益智游戏史，后续仍可基于新证据扩展节点与关系。
 
 本段是脱敏 partial export，不声称覆盖聊天 UI 的完整逐字记录；未记录凭据、环境变量或其他秘密。当前工作树尚未提交或部署，完成前需执行完整 check、unit、build、Playwright 和本地 4321 预览验收。
+
+## 45. 页面密度与 Game Developer 复盘批次（partial export）
+
+发起人继续指出全站存在无意义分割线、长中文说明被截成孤立短行，以及资源页需要在同一屏看到更多信息。主任务将说明文本从强制平衡换行收敛为 `text-wrap: pretty`，放宽 EGDS 和资源页长文案宽度，保留框架节点的词组平衡换行；Career、地图和资源标题区删除重复边界，只保留表格行与必要结构线。新增浏览器合同覆盖 1440px 资源表头、职业地图边界和 EGDS 长标题／节点标签。
+
+资源研究继续使用官方 Game Developer 页面，新增 10 条设计复盘，目录达到 41 Source／2120 Work Item／2134 Access Version。每条保存英文原始语言、免费访问、唯一主要资源主题、canonical URL 与检查日期；没有将标题或来源页推断为评分、排名或学习顺序。Atlas 当前 58 nodes／42 relations／69 Evidence，Roguelike Family 入口已验证可点击，空 Family 仍明确显示待研究。
+
+本段是脱敏 partial export，不声称覆盖聊天 UI 的完整逐字记录；未记录凭据、环境变量或其他秘密。提交前仍需以 fresh check、unit、build 与关键 Playwright 矩阵确认工作树状态。

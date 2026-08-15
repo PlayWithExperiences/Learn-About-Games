@@ -1432,4 +1432,23 @@ describe('raw product catalog data', () => {
       accessVersions[0].accessModel === 'free',
     )).toBe(true);
   });
+
+  it('includes the next verified Game Developer design retrospectives', () => {
+    const expected = [
+      'https://www.gamedeveloper.com/design/classic-postmortem-the-making-of-i-half-life-2-i-',
+      'https://www.gamedeveloper.com/design/postmortem-children-of-morta',
+      'https://www.gamedeveloper.com/design/postmortem-the-singular-design-of-namco-s-katamari-damacy-2004-',
+      'https://www.gamedeveloper.com/design/perfecting-the-recipe-for-mobile-success-restaurant-story-2-post-mortem',
+      'https://www.gamedeveloper.com/design/making-i-neverwinter-nights-i-a-classic-bioware-postmortem',
+      'https://www.gamedeveloper.com/design/-i-sound-shapes-i-postmortem-don-t-make-your-game-something-it-s-not',
+      'https://www.gamedeveloper.com/design/postmortem-a-rationally-designed-funny-game---the-making-of-biped-in-hindsight',
+      'https://www.gamedeveloper.com/design/stealth-in-2d-design-lessons-from-i-mark-of-the-ninja-i-',
+      'https://www.gamedeveloper.com/design/postmortem-i-thief-the-dark-project-i-',
+      'https://www.gamedeveloper.com/design/postmortem-how-empires-of-the-undergrowth-came-together-in-over-7-years-of-early-access',
+    ];
+    const byUrl = new Map(resources.map((resource) => [resource.canonicalUrl, resource]));
+    expect(expected.every((url) => byUrl.has(url))).toBe(true);
+    expect(expected.every((url) => byUrl.get(url)?.sourceId === 'game-developer')).toBe(true);
+    expect(expected.every((url) => byUrl.get(url)?.originalLanguage === 'en')).toBe(true);
+  });
 });

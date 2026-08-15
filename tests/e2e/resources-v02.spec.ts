@@ -302,6 +302,37 @@ test('keeps resource search, facts, count and table actions in one compact table
   await expect(table.locator('[data-resource-filter]')).toHaveCount(7);
 });
 
+test('keeps resource copy wide and uses sparse table separators', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./resources/');
+
+  const layout = await page.evaluate(() => {
+    const intro = document.querySelector<HTMLElement>('.resource-explorer__intro .lede');
+    const tableHeader = document.querySelector<HTMLElement>('.resource-table__header');
+    const tableHeading = document.querySelector<HTMLElement>('.resource-table__heading');
+    const tableHeadingCopy = document.querySelector<HTMLElement>('.resource-table__heading > p:last-child');
+    const groups = document.querySelector<HTMLElement>('.resource-table__groups');
+    const style = (element: HTMLElement | null) => element ? getComputedStyle(element) : null;
+    return {
+      introWidth: intro?.getBoundingClientRect().width ?? 0,
+      introTextWrap: style(intro)?.textWrap ?? '',
+      headingWidth: tableHeading?.getBoundingClientRect().width ?? 0,
+      headingCopyWidth: tableHeadingCopy?.getBoundingClientRect().width ?? 0,
+      headerBorder: style(tableHeader)?.borderBottomWidth ?? '',
+      headingBorder: style(tableHeading)?.borderBottomWidth ?? '',
+      groupsBorder: style(groups)?.borderTopWidth ?? '',
+    };
+  });
+
+  expect(layout.introWidth).toBeGreaterThanOrEqual(1000);
+  expect(layout.introTextWrap).not.toBe('balance');
+  expect(layout.headingWidth).toBeGreaterThanOrEqual(520);
+  expect(layout.headingCopyWidth).toBeGreaterThanOrEqual(520);
+  expect(layout.headerBorder).toBe('1px');
+  expect(layout.headingBorder).toBe('0px');
+  expect(layout.groupsBorder).toBe('0px');
+});
+
 test('gives the access-version detail panel an opaque elevated surface', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./resources/');

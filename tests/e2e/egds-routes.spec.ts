@@ -162,6 +162,47 @@ test('gives the EGDS method a compact editorial layout without page overflow', a
   }
 });
 
+test('keeps long Chinese headings from leaving a one- or two-character orphan line', async ({ page }) => {
+  await page.goto('./egds/');
+  const egdsLines = await page.locator('.egds-page__intro h1').evaluate((element) => {
+    const text = element.firstChild as Text | null;
+    if (!text) return [];
+    const rows = new Map<number, string[]>();
+    for (let index = 0; index < text.length; index += 1) {
+      const range = document.createRange();
+      range.setStart(text, index);
+      range.setEnd(text, index + 1);
+      const rect = range.getBoundingClientRect();
+      const row = rows.get(Math.round(rect.top)) ?? [];
+      row.push(text.textContent?.[index] ?? '');
+      rows.set(Math.round(rect.top), row);
+    }
+    return [...rows.values()].map((row) => row.join(''));
+  });
+  expect(egdsLines.every((line) => [...line].length >= 3)).toBe(true);
+
+  await page.goto('./map/');
+  const mapLines = await page.locator('[data-capability-map-canvas] .egds-framework-node h3').evaluateAll((elements) =>
+    elements.flatMap((element) => {
+      const text = element.firstChild as Text | null;
+      if (!text) return [];
+      const rows = new Map<number, string[]>();
+      for (let index = 0; index < text.length; index += 1) {
+        const range = document.createRange();
+        range.setStart(text, index);
+        range.setEnd(text, index + 1);
+        const rect = range.getBoundingClientRect();
+        const row = rows.get(Math.round(rect.top)) ?? [];
+        row.push(text.textContent?.[index] ?? '');
+        rows.set(Math.round(rect.top), row);
+      }
+      const lines = [...rows.values()].filter((line) => line.length > 1);
+      return lines.length > 1 ? lines.map((line) => line.join('')) : [];
+    }),
+  );
+  expect(mapLines.every((line) => [...line].length >= 3)).toBe(true);
+});
+
 test('keeps the full EGDS explanation readable without JavaScript', async ({ browser }) => {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 320, height: 900 }]) {
     const context = await browser.newContext({

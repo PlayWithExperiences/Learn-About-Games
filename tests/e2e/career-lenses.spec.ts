@@ -80,6 +80,32 @@ test('map route owns one EGDS map and the complete career lens control', async (
   expect(await explorer.innerText()).not.toMatch(forbiddenTerms);
 });
 
+test('uses whitespace instead of duplicate career and map divider rules', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./map/');
+
+  const rules = await page.evaluate(() => {
+    const read = (selector: string) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      if (!element) return null;
+      const style = getComputedStyle(element);
+      return {
+        top: style.borderTopWidth,
+        bottom: style.borderBottomWidth,
+      };
+    };
+    return {
+      lens: read('.career-lens-control'),
+      summaries: read('.career-summaries'),
+      mapKey: read('.map-key'),
+    };
+  });
+
+  expect(rules.lens).toEqual({ top: '0px', bottom: '0px' });
+  expect(rules.summaries).toEqual({ top: '0px', bottom: '0px' });
+  expect(rules.mapKey).toEqual({ top: '0px', bottom: '1px' });
+});
+
 test('legacy careers route redirects to the map career lens anchor', async ({ page }) => {
   await page.goto('./careers/');
   await expect(page).toHaveURL(/\/map\/#career-lenses$/);

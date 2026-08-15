@@ -1,9 +1,9 @@
 # Learn About Games v0.2 — 成长资源证据 Intake
 
 - 研究日期：2026-08-09；扩展核验：2026-08-15
-- 状态：研究证据 notebook；Batch A–I 已正规化为 2110 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话
+- 状态：研究证据 notebook；Batch A–I 已正规化为 2120 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘
 - 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项、Batch I 16 项
-- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；正规化后为 **2110 个 Work Item**
+- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；正规化后为 **2120 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
@@ -25,25 +25,25 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 当前正规化 catalog coverage
 
-- Work Item：2110；Source：41；Access Version：2124；Resource Topic：16。
-- 原始语言：en 2055、ja 17、zh-Hans 38。
-- 可消费语言（Work Item 计，可重叠）：en 2056、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 2067、ja 17、zh-Hans 40。
-- 媒介：article 65、book 29、course 38、paper 34、podcast 11、talk 1835、video 15、website 83。
+- Work Item：2120；Source：41；Access Version：2134；Resource Topic：16。
+- 原始语言：en 2065、ja 17、zh-Hans 38。
+- 可消费语言（Work Item 计，可重叠）：en 2066、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 2077、ja 17、zh-Hans 40。
+- 媒介：article 75、book 29、course 38、paper 34、podcast 11、talk 1835、video 15、website 83。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
 | 主主题 | Work Item |
 |---|---:|
 | 设计基础与概念 | 335 |
-| 系统与机制 | 112 |
+| 系统与机制 | 115 |
 | 平衡与经济 | 138 |
-| 手感与反馈 | 287 |
+| 手感与反馈 | 288 |
 | 关卡与空间 | 187 |
-| Playtest 主题资源集合 | 34 |
-| 叙事与表达 | 261 |
-| 原型与实验 | 45 |
-| 生产与迭代 | 214 |
+| Playtest 主题资源集合 | 35 |
+| 叙事与表达 | 262 |
+| 原型与实验 | 46 |
+| 生产与迭代 | 217 |
 | 协作与团队 | 98 |
 | 领导与创意方向 | 218 |
 | 批判、价值观与历史语境 | 60 |
@@ -51,7 +51,7 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 11 |
 | 职业与行业实践 | 29 |
-| 合计 | 2110 |
+| 合计 | 2120 |
 
 ## 接受候选
 
@@ -1427,6 +1427,23 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
  - id=batch1000-gdc-1022243 | canonicalUrl=https://www.gdcvault.com/play/1022243/Scroll-Back-The-Theory-and | title=Scroll Back: The Theory and Practice of Cameras in Side-Scrollers | source=gdc-vault | originalLanguage=en | mediaType=talk | accessModel=subscription | resourceTopicId=game-feel-feedback | checkedAt=2026-08-15 | include=官方 GDC Vault 页面 HTTP 200，标题与页面 metadata 已核验；主张限定在会话标题/简介范围
  - id=batch1000-gdc-1022255 | canonicalUrl=https://www.gdcvault.com/play/1022255/Social-Impact-in-Design-and | title=Social Impact in Design and Acquisition | source=gdc-vault | originalLanguage=en | mediaType=talk | accessModel=subscription | resourceTopicId=systems-mechanics | checkedAt=2026-08-15 | include=官方 GDC Vault 页面 HTTP 200，标题与页面 metadata 已核验；主张限定在会话标题/简介范围
  - id=batch1000-gdc-1022260 | canonicalUrl=https://www.gdcvault.com/play/1022260/StarCraft-II-and-GameHeart-Evolving | title=StarCraft II and GameHeart: Evolving eSports Interfaces with Modders | source=gdc-vault | originalLanguage=en | mediaType=talk | accessModel=subscription | resourceTopicId=production-iteration | checkedAt=2026-08-15 | include=官方 GDC Vault 页面 HTTP 200，标题与页面 metadata 已核验；主张限定在会话标题/简介范围
+
+### Batch K：Game Developer 设计复盘（10）
+
+以下条目均为 Game Developer 的具体文章页，不是频道或搜索集合页。2026-08-15 逐页以官方 HTML/Jina Reader 核验题名、作者或正文摘要，HTTP 入口均返回 200；主张限定在文章本身可见的复盘与设计经验范围。所有条目使用既有 `game-developer` Source、英文原版、免费文章入口，每条只归入一个资源主题。
+
+| Ref / canonical identity | title | Medium / original language | 建议关联 / whyRelevant |
+|---|---|---|---|
+| K-001<br>canonicalUrl=https://www.gamedeveloper.com/design/classic-postmortem-the-making-of-i-half-life-2-i- | Postmortem: The making of Valve's Half-Life 2 (2004) | article / en | 生产与迭代；开发复盘、管线取舍与团队协作。 |
+| K-002<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-children-of-morta | Postmortem: Children of Morta | article / en | 生产与迭代；独立项目范围控制与长期制作。 |
+| K-003<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-the-singular-design-of-namco-s-katamari-damacy-2004- | Postmortem: The Singular Design of Namco's Katamari Damacy | article / en | 设计基础与概念；单一核心动词、表达与迭代。 |
+| K-004<br>canonicalUrl=https://www.gamedeveloper.com/design/perfecting-the-recipe-for-mobile-success-restaurant-story-2-post-mortem | Perfecting the Recipe for Mobile Success: Restaurant Story 2 Post-Mortem | article / en | 平衡与经济；移动游戏循环、留存与经济调节。 |
+| K-005<br>canonicalUrl=https://www.gamedeveloper.com/design/making-i-neverwinter-nights-i-a-classic-bioware-postmortem | Making Neverwinter Nights: A Classic BioWare Postmortem | article / en | 生产与迭代；工具、内容生产与协作交付。 |
+| K-006<br>canonicalUrl=https://www.gamedeveloper.com/design/-i-sound-shapes-i-postmortem-don-t-make-your-game-something-it-s-not | Sound Shapes Postmortem: Don't Make Your Game Something It Isn't | article / en | 手感与反馈；核心体验、音画表达与项目定位。 |
+| K-007<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-a-rationally-designed-funny-game---the-making-of-biped-in-hindsight | Postmortem: The Making of Biped in Hindsight | article / en | 原型与实验；关卡协作、双角色交互与验证。 |
+| K-008<br>canonicalUrl=https://www.gamedeveloper.com/design/stealth-in-2d-design-lessons-from-i-mark-of-the-ninja-i- | Stealth in 2D: Design Lessons from Mark of the Ninja | article / en | 关卡与空间；潜行反馈、可读性与空间引导。 |
+| K-009<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-i-thief-the-dark-project-i- | Postmortem: Thief: The Dark Project | article / en | 叙事与表达；沉浸式空间、声音与玩家行为。 |
+| K-010<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-how-empires-of-the-undergrowth-came-together-in-over-7-years-of-early-access | Postmortem: How Empires of the Undergrowth Came Together in Over 7 Years of Early Access | article / en | 生产与迭代；Early Access 节奏、反馈与持续交付。 |
 
 ## 拒绝与待核证据
 
