@@ -550,6 +550,67 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('requires event metadata and an explicit role for event relations', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasEvidence.push({
+      id: 'event-evidence',
+      title: localized('事件证据'),
+      sourceTitle: 'Example archive',
+      originalLanguage: 'en',
+      url: 'https://example.com/event',
+      summary: localized('支持示例事件。'),
+      sourceKind: 'institutional-history',
+      institutionOrAuthor: 'Example archive',
+      checkedAt: '2026-08-13',
+      locator: 'Example record',
+      boundedClaim: localized('只用于事件元数据校验。'),
+    } as Catalog['atlasEvidence'][number]);
+    catalog.atlasTags.push(
+      { id: 'innovation-event', name: localized('创新事件'), summary: localized('事件标签。') },
+      { id: 'event-theme', name: localized('事件主题'), summary: localized('主题标签。') },
+    );
+    catalog.atlasNodes.push(
+      {
+        id: 'event-node',
+        kind: 'innovation',
+        name: localized('事件节点'),
+        summary: localized('示例事件。'),
+        startYear: 1993,
+        lane: 0,
+        tags: ['innovation-event'],
+        evidenceIds: ['event-evidence'],
+      } as unknown as Catalog['atlasNodes'][number],
+      {
+        id: 'carrier-game',
+        kind: 'game',
+        name: localized('承载作品'),
+        summary: localized('示例作品。'),
+        startYear: 1993,
+        lane: 1,
+        tags: ['event-theme'],
+        evidenceIds: ['event-evidence'],
+      } as unknown as Catalog['atlasNodes'][number],
+    );
+    catalog.atlasRelations.push({
+      id: 'event-carrier',
+      fromId: 'event-node',
+      toId: 'carrier-game',
+      type: 'design-response',
+      status: 'confirmed',
+      directionality: 'directed',
+      tags: ['event-theme'],
+      evidenceIds: ['event-evidence'],
+      summary: localized('示例事件关系。'),
+    } as unknown as Catalog['atlasRelations'][number]);
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'ATLAS_EVENT_ROLE_REQUIRED',
+      'ATLAS_EVENT_THEME_REQUIRED',
+      'ATLAS_EVENT_MECHANISM_REQUIRED',
+      'ATLAS_RELATION_ROLE_REQUIRED',
+    ]);
+  });
+
   it('requires original provenance fields on Atlas evidence', () => {
     const catalog = emptyCatalog();
     catalog.atlasEvidence.push(

@@ -319,3 +319,21 @@ fresh build 后首页 targeted Chromium 1/1 GREEN。写入交接记录后的第�
 内容扩展使用 Agent Reach doctor 确认的研究边界。Exa 在检索阶段触发配额限制后停止重试；本批不把搜索摘要当证据，而是直接读取 GDC Vault 官方 sitemap 与逐条会话页的 HTML metadata／HTTP 200。按 GDC play ID 和规范化 URL 去重后，净增 500 个英文 `talk` Work Item，统一保守标记为 `subscription`；既有中文资源继续保留，未用未经核验中文页面凑数。目录达到 41 个 Source、1110 个 Work Item、1124 个 Access Version 与 15 个 Resource Topic。
 
 最终 fresh 证据为：Astro check 0 errors / warnings / hints，Vitest 169/169，静态构建 135 pages，Resources 桌面／移动 E2E 32/32，完整 Chromium + mobile E2E 233 passed / 21 intentional skipped / 0 failed；`git diff --check`、canonical／topic／Source 引用审计与 secret filename/content scan 均通过。代码、资源数据、研究 notebook 与文档仍在本地 Private 候选工作树，4321 预览已服务最新 dist，入口为 `/Learn-About-Games/resources/`，未推送或部署。
+
+### 36. 2026-08-16：Innovation Atlas 事件路线化（partial export）
+
+记录说明：以下是本次 Atlas 事件优先改造的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括子任务内部推理、完整工具输出和未转发的中间消息；未获取内容不声称完整，也没有记录凭据、环境变量或外部账户信息。
+
+用户确认 Innovation Atlas 的主语应当是“品类如何演进的创新事件”，而不是游戏标题。实现先在纯测试中锁定事件角色、主题、机制说明、事件演进关系与承载作品闭包，再把第一人称射击样例扩成三段路线：第一人称视角定义、垂直空间战斗、网络化战斗空间。Doom、Quake、Half-Life 保留为事件详情中的 carrier closure，不把年代相邻写成影响，也不宣称绝对第一。
+
+Catalog schema 与 validator 现在要求带 `innovation-event` 标签的事件节点拥有有限角色、至少一个 themeId 和中文 mechanism；所有接触事件节点的关系必须显式声明 `evolution` 或 `carrier`，并检查事件→事件或事件→游戏的端点方向。事件纯 helper 按 startYear/id 稳定排序，提供空路线状态，并将 carrier 作品收集到事件详情。
+
+页面把事件索引放在网络前面。选择 Genre Family 后，普通阅读流隐藏全局游戏网络，只保留事件路线与可逆详情；地图模式仍保留完整网络、Family 透镜和缩放／平移。事件详情显示角色、引入方式、承载作品和证据链接；关闭或返回恢复原网络位置与焦点。无事件证据的品类明确显示空状态。
+
+一次 targeted E2E 首先误把 hidden DOM 条目计入可见事件数，修正断言为 `:not([hidden])` 后通过；随后发现事件索引包裹网络使地图模式的 flex 高度失效，加入 primary-network flex wrapper 规则并 fresh build。最终证据：`npm run check` 0 diagnostics，Vitest 177/177，静态构建 139 pages，Atlas 双视口 39 passed / 19 intentional skipped，base-path 2/2。4321 预览保持运行，仓库仍 Private，未推送或部署。
+
+### 37. 2026-08-16：事件索引列布局与最终回归（partial export）
+
+本节记录事件优先路线的最终收尾。事件卡初版落在 Atlas 说明左侧的窄列，中文标题因此出现近似逐字竖排；桌面改为右侧双列，移动端恢复单列，事件列表不再挤压说明区域。专项截图确认桌面事件列表宽约 832px，FPS 选择后可见 3 个创新事件与 2 条事件演进关系，作品只在事件详情中作为承载证据出现。
+
+README 的 Atlas 当前计数同步为 66 nodes、50 relations、73 evidence。最终 fresh 门禁为 `npm run build`：Astro check 0/0/0、Vitest 178/178、静态构建 140 pages；Atlas 与 base-path 定向为 41 passed / 19 intentional skipped；完整 Chromium + mobile E2E 为 251 passed / 21 intentional skipped / 0 failed。4321 本地预览保持运行，仓库仍为 Private，未推送或部署。

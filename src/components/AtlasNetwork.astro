@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 
 import type { Catalog } from '../lib/catalog/validate';
 import {
+  buildAtlasEventTimeline,
   buildAtlasLayout,
   buildAtlasNodeIndex,
   groupAtlasNodesByEra,
@@ -48,6 +49,7 @@ const eventNodeIds = new Set(
     .filter((node) => node.kind === 'innovation' && node.tags.includes('innovation-event'))
     .map((node) => node.id),
 );
+const eventTimeline = buildAtlasEventTimeline(nodes, relations);
 const carrierNodeIds = new Set(
   [...eventNodeIds].flatMap((eventId) => relations
     .filter((relation) => relation.fromId === eventId)
@@ -86,6 +88,13 @@ const statusLabels: Record<AtlasRelation['status'], string> = {
   credible: '可信历史综合',
   inferred: '推断',
   disputed: '有争议',
+};
+
+const eventRoleLabels: Record<NonNullable<AtlasNode['eventRole']>, string> = {
+  definition: '定义事件',
+  mechanism: '机制事件',
+  transformation: '转译事件',
+  diffusion: '扩散事件',
 };
 
 const languageLabels: Record<AtlasEvidence['originalLanguage'], string> = {
@@ -146,19 +155,27 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
   <section class="atlas-event-index" data-atlas-event-index aria-labelledby="atlas-event-index-title">
     <div class="atlas-event-index__intro">
       <p class="plain-label">Innovation events</p>
-      <h3 id="atlas-event-index-title">先看创新事件，再看承载作品</h3>
-      <p>这里记录的是被作品承载、并由证据支持的设计事件：某种视角、机制或结构何时出现，以及后来由哪些作品把它带入更大的语境。作品是证据入口，不等于“唯一发明者”。</p>
+      <h3 id="atlas-event-index-title">选择品类后，沿着创新事件看演进</h3>
+      <p>主线节点描述品类如何被定义、引入机制、发生转译与扩散；作品只作为承载证据。选择透镜后，这里会收敛为一条可逆的事件路线。</p>
     </div>
-    <div class="atlas-event-index__list">
-      {nodes.filter((node) => eventNodeIds.has(node.id)).sort((left, right) => left.startYear - right.startYear).map((event) => {
-        const carriers = carriersFor(event.id);
+    <p class="atlas-event-index__status" data-atlas-event-index-status aria-live="polite">当前展示全部 {eventTimeline.events.length} 个创新事件。</p>
+    <div class="atlas-event-index__list" data-atlas-event-timeline>
+      {eventTimeline.events.map((event) => {
+        const carriers = eventTimeline.carriersByEvent[event.id] ?? [];
         return (
-          <article data-atlas-event-card={event.id}>
+          <article
+            data-atlas-event-card={event.id}
+            data-atlas-event-timeline-item={event.id}
+            data-atlas-event-role={event.eventRole}
+            data-atlas-theme-ids={event.themeIds?.join(' ')}
+            data-theme-tags={event.tags.join(' ')}
+          >
             <header>
-              <span>Innovation · {event.startYear}</span>
+              <span>{eventRoleLabels[event.eventRole ?? 'mechanism']} · {event.startYear}</span>
               <a href={`#atlas-node-detail-${event.id}`} data-atlas-event-link>{event.name['zh-CN']}</a>
             </header>
             <p>{event.summary['zh-CN']}</p>
+            {event.mechanism && <p class="atlas-event-index__mechanism"><strong>引入方式：</strong>{event.mechanism['zh-CN']}</p>}
             <footer>
               <span>承载作品</span>
               {carriers.length > 0 ? (
@@ -171,6 +188,24 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         );
       })}
     </div>
+    <div class="atlas-event-index__evolution" data-atlas-event-evolution>
+      <h4>事件之间的演进关系</h4>
+      <ul>
+        {eventTimeline.evolutionRelations.map((relation) => {
+          const from = nodeById.get(relation.fromId);
+          const to = nodeById.get(relation.toId);
+          if (!from || !to) return null;
+          return (
+            <li data-atlas-event-evolution-item={relation.id} data-theme-tags={relation.tags?.join(' ') ?? ''}>
+              <a href={`#atlas-relation-detail-${relation.id}`} data-atlas-event-link>
+                {from.name['zh-CN']} → {to.name['zh-CN']}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+    <p class="atlas-event-index__empty" data-atlas-event-empty hidden>这个品类还没有达到证据门槛的创新事件；先保留空状态，不用游戏年代相邻关系代替证据。</p>
   </section>
 
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
@@ -266,6 +301,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
     </noscript>
     <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1958–2020</p>
+    <div data-atlas-primary-network>
     <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
       <div
         class="atlas-network__stage"
@@ -312,6 +348,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                 data-relation-type={relation.type}
                 data-relation-status={relation.status}
                 data-relation-directionality={relation.directionality}
+                data-relation-role={relation.relationRole}
+                data-atlas-event-relation={relation.relationRole === 'evolution' ? relation.id : undefined}
                 data-start-x={placedRelation.start.x}
                 data-start-y={placedRelation.start.y}
                 data-end-x={placedRelation.end.x}
@@ -357,6 +395,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                   data-atlas-node
                   data-atlas-node-id={node.id}
                   data-atlas-node-kind={node.kind}
+                  data-atlas-event-node={eventNodeIds.has(node.id) ? node.id : undefined}
+                  data-atlas-game-node={node.kind === 'game' ? node.id : undefined}
+                  data-atlas-event-role={eventNodeIds.has(node.id) ? node.eventRole : undefined}
+                  data-atlas-theme-ids={eventNodeIds.has(node.id) ? node.themeIds?.join(' ') : undefined}
                   data-atlas-carrier={carrierNodeIds.has(node.id) ? node.id : undefined}
                   data-atlas-event={eventNodeIds.has(node.id) ? node.id : undefined}
                   data-start-year={node.startYear}
@@ -443,6 +485,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         </section>
       ))}
     </div>
+    </div>
   </section>
 
   <section class="atlas-details" aria-labelledby="atlas-details-title">
@@ -503,6 +546,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
               {eventNodeIds.has(node.id) && (
                 <section class="atlas-detail__event" data-atlas-event-detail-body>
                   <h4>创新事件</h4>
+                  <dl class="atlas-detail__facts atlas-detail__event-facts">
+                    <div><dt>事件角色</dt><dd>{eventRoleLabels[node.eventRole ?? 'mechanism']}</dd></div>
+                    {node.mechanism && <div><dt>引入方式</dt><dd>{node.mechanism['zh-CN']}</dd></div>}
+                  </dl>
                   <p>这个节点记录的是可讨论、可核查的设计事件；游戏是它在时间线上可观察的承载作品。</p>
                   <h5>承载作品</h5>
                   {carriersFor(node.id).length > 0 ? (
@@ -656,11 +703,20 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const networkRelations = Array.from(explorer.querySelectorAll<SVGGElement>('[data-atlas-relation]'));
     const outlineNodes = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-outline-node]'));
     const outlineRelations = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-outline-relation-ref]'));
+    const eventIndex = explorer.querySelector<HTMLElement>('[data-atlas-event-index]');
+    const eventItems = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-event-timeline-item]'));
+    const eventEvolutionItems = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-event-evolution-item]'));
+    const primaryNetwork = explorer.querySelector<HTMLElement>('[data-atlas-primary-network]');
+    const eventIndexStatus = eventIndex?.querySelector<HTMLElement>('[data-atlas-event-index-status]');
+    const eventEmpty = eventIndex?.querySelector<HTMLElement>('[data-atlas-event-empty]');
     const nodeCount = networkNodes.length;
     const relationCount = networkRelations.length;
     const globalCountMessage = `当前显示全部 ${nodeCount} 个节点与 ${relationCount} 条关系。`;
+    let activeThemeId = 'all';
+    let eventNetworkSnapshot: { left: number; top: number; scale: string | null } | null = null;
 
     const applyTheme = (themeId: string) => {
+      activeThemeId = themeId;
       const match = themeId === 'all' ? null : themeMatches[themeId];
       const matchingNodeIds = new Set(match?.nodeIds ?? []);
       const matchingRelationIds = new Set(match?.relationIds ?? []);
@@ -676,6 +732,45 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       outlineRelations.forEach((relation) => {
         relation.dataset.themeMatch = String(!match || matchingRelationIds.has(relation.dataset.atlasOutlineRelationRef ?? ''));
       });
+      const eventTheme = themeId !== 'all';
+      let visibleEventCount = 0;
+      eventItems.forEach((item) => {
+        const matches = !eventTheme || matchingNodeIds.has(item.dataset.atlasEventTimelineItem ?? '');
+        item.hidden = !matches;
+        item.dataset.themeMatch = String(matches);
+        if (matches) visibleEventCount += 1;
+      });
+      eventEvolutionItems.forEach((item) => {
+        const matches = !eventTheme || matchingRelationIds.has(item.dataset.atlasEventEvolutionItem ?? '');
+        item.hidden = !matches;
+        item.dataset.themeMatch = String(matches);
+      });
+      if (eventEmpty) eventEmpty.hidden = !eventTheme || visibleEventCount > 0;
+      if (eventIndexStatus) {
+        eventIndexStatus.textContent = eventTheme
+          ? `${visibleEventCount} 个创新事件；承载作品仅在事件详情中展开。`
+          : `当前展示全部 ${eventItems.length} 个创新事件。`;
+      }
+      if (primaryNetwork) {
+        const keepMapInPlace = networkShell?.dataset.mapMode === 'true';
+        const shouldHideNetwork = eventTheme && !keepMapInPlace;
+        const mapCanvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
+        if (shouldHideNetwork && !primaryNetwork.hidden && mapCanvas) {
+          eventNetworkSnapshot = {
+            left: mapCanvas.scrollLeft,
+            top: mapCanvas.scrollTop,
+            scale: explorer.querySelector<HTMLElement>('[data-atlas-stage]')?.dataset.scale ?? null,
+          };
+        }
+        primaryNetwork.hidden = shouldHideNetwork;
+        if (!shouldHideNetwork && !eventTheme && eventNetworkSnapshot && mapCanvas) {
+          const snapshot = eventNetworkSnapshot;
+          requestAnimationFrame(() => {
+            mapCanvas.scrollLeft = snapshot.left;
+            mapCanvas.scrollTop = snapshot.top;
+          });
+        }
+      }
       buttons.forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.atlasThemeButton === themeId));
       });
@@ -683,7 +778,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       if (status) {
         status.textContent = themeId === 'all'
           ? globalCountMessage
-          : `已强调 ${activeButton?.textContent?.trim() ?? ''}，全局节点、关系与位置保持不变。`;
+          : `已切换为 ${activeButton?.textContent?.trim() ?? ''} 的创新事件路线；作品只作为承载证据。`;
       }
     };
 
@@ -886,6 +981,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           networkShell.dataset.mapMode = 'true';
           networkShell.setAttribute('role', 'dialog');
           networkShell.setAttribute('aria-modal', 'true');
+          if (primaryNetwork) primaryNetwork.hidden = false;
         } else {
           delete networkShell.dataset.mapMode;
           networkShell.removeAttribute('role');
@@ -894,6 +990,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           frame = 0;
           wheelAnchor = null;
           pendingPan = null;
+          if (activeThemeId !== 'all' && primaryNetwork) primaryNetwork.hidden = true;
         }
         mapMode = active;
         mapModeButton.setAttribute('aria-pressed', String(active));

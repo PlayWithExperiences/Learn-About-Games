@@ -97,6 +97,76 @@ export function matchAtlasTheme(
   };
 }
 
+export type AtlasEventTimelineNode = {
+  id: string;
+  kind: AtlasNodeKind;
+  name: AtlasLocalizedText;
+  summary: AtlasLocalizedText;
+  startYear: number;
+  tags: readonly string[];
+  evidenceIds: readonly string[];
+  eventRole?: 'definition' | 'mechanism' | 'transformation' | 'diffusion';
+  themeIds?: readonly string[];
+  mechanism?: AtlasLocalizedText;
+};
+
+export type AtlasEventTimelineRelation = {
+  id: string;
+  fromId: string;
+  toId: string;
+  relationRole?: 'evolution' | 'carrier';
+  tags?: readonly string[];
+};
+
+export type AtlasEventTimeline = {
+  events: AtlasEventTimelineNode[];
+  evolutionRelations: AtlasEventTimelineRelation[];
+  carriersByEvent: Record<string, AtlasEventTimelineNode[]>;
+  emptyState: boolean;
+};
+
+export function buildAtlasEventTimeline(
+  nodes: readonly AtlasEventTimelineNode[],
+  relations: readonly AtlasEventTimelineRelation[],
+  themeTags: readonly string[] = [],
+): AtlasEventTimeline {
+  const requestedTags = new Set(themeTags);
+  const allEvents = nodes.filter(
+    (node) => node.kind === 'innovation' && node.tags.includes('innovation-event'),
+  );
+  const events = allEvents
+    .filter((node) =>
+      requestedTags.size === 0 ||
+      node.themeIds?.some((themeId) => requestedTags.has(themeId)) ||
+      node.tags.some((tag) => requestedTags.has(tag)),
+    )
+    .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
+  const eventIds = new Set(events.map(({ id }) => id));
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const evolutionRelations = relations
+    .filter(({ relationRole, fromId, toId }) =>
+      relationRole === 'evolution' && eventIds.has(fromId) && eventIds.has(toId),
+    )
+    .slice()
+    .sort((left, right) => left.id.localeCompare(right.id));
+  const carriersByEvent: Record<string, AtlasEventTimelineNode[]> = {};
+
+  for (const event of events) {
+    carriersByEvent[event.id] = relations
+      .filter(({ relationRole, fromId }) => relationRole === 'carrier' && fromId === event.id)
+      .map(({ toId }) => nodeById.get(toId))
+      .filter((node): node is AtlasEventTimelineNode => node?.kind === 'game')
+      .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
+  }
+
+  return {
+    events,
+    evolutionRelations,
+    carriersByEvent,
+    emptyState: events.length === 0,
+  };
+}
+
 export const atlasScaleBounds = { min: 0.5, max: 2, step: 0.25 } as const;
 
 export function clampAtlasScale(value: number): number {
@@ -310,7 +380,7 @@ export function buildAtlasLayout(
       ? projectAtlasYear(rangeEndYear)
       : yearX;
     const displayLane = node.kind === 'innovation'
-      ? 0
+      ? node.lane
       : node.kind === 'category'
         ? (categoryLaneById.get(node.id) ?? 1)
         : Math.max(3, node.lane + 1);

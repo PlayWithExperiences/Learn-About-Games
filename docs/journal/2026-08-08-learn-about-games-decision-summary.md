@@ -9,11 +9,19 @@
 
 ## 2026-08-15 当前里程碑
 
-- 成长资源已完成首个 300+ 扩展并继续增加 500 条 GDC 官方会话：当前为 41 个 Source、1110 个 Work Item、1124 个 Access Version、15 个 Resource Topic。每个 Work Item 仍恰属一个主要主题，并保留规范化 canonical URL、访问版本与检查日期。
+- 成长资源已完成首个 300+ 扩展并继续增加 500 条 GDC 官方会话：当前为 41 个 Source、2120 个 Work Item、2134 个 Access Version、16 个 Resource Topic。每个 Work Item 仍恰属一个主要主题，并保留规范化 canonical URL、访问版本与检查日期。
 - 扩展优先英文与中文：本轮 500 条新增内容均为英文 GDC Vault 官方会话；既有已核验中文条目继续保留，日文只在明确原页研究缺口时纳入。GDC Vault 会话统一标记为 subscription，不把搜索摘要、聚合页或完整录播可用性推断写入 catalog。
 - 资源目录新增标题／简介／来源搜索框，支持 NFKC 归一化、中文与英文匹配、可分享 `q` URL 参数；主题子表与七维事实筛选、展开全表仍保留。编辑行进一步收紧，方便一屏扫描更多 Work Item。
 - 证据边界已记录在 [2026-08-15-resource-500-gdc-intake.md](../research/2026-08-15-resource-500-gdc-intake.md) 与 [2026-08-09-resource-intake.md](../research/2026-08-09-resource-intake.md)。Exa 配额受限后停止重试，新增批次直接使用 GDC 官方 sitemap 与会话页 HTTP 200/HTML metadata 核验。
-- 当前 fresh 门禁已通过：Astro check 0 errors / warnings / hints，Vitest 169/169，静态构建 135 pages，Resources 桌面／移动 E2E 32/32，完整 Chromium + mobile E2E 233 passed / 21 intentional skipped / 0 failed。搜索实测 `q=Metroidvania`、1110 条 server-rendered Work Item 与 1440/320 无横溢出均成立。本地预览固定使用 [http://127.0.0.1:4321/Learn-About-Games/resources/](http://127.0.0.1:4321/Learn-About-Games/resources/)，仓库仍 Private，未推送或部署。
+- 当前 fresh 门禁已通过：Astro check 0 errors / warnings / hints，Vitest 178/178，静态构建 140 pages，Resources 桌面／移动 E2E 保持通过，完整 Chromium + mobile E2E 251 passed / 21 intentional skipped / 0 failed。搜索实测、2120 条 server-rendered Work Item 与 1440/320 无横溢出均成立。本地预览固定使用 [http://127.0.0.1:4321/Learn-About-Games/resources/](http://127.0.0.1:4321/Learn-About-Games/resources/)，仓库仍 Private，未推送或部署。
+
+## 2026-08-16 当前里程碑
+
+- Innovation Atlas 的主语改为“品类创新事件路线”：选择 Genre Family 后，主阅读区只保留有证据的定义、机制、转译与扩散事件；游戏不再冒充创新本体，而是在事件详情中作为承载作品与原始证据入口。当前 Atlas 为 66 个节点、50 条关系、73 项 Evidence，其中 7 个节点是事件节点。
+- 第一人称射击样例已形成三段事件路线：第一人称视角定义 → 垂直空间战斗 → 网络化战斗空间；Doom、Quake、Half-Life 只作为 carrier closure 展示。没有用“第一款／唯一发明者”替代来源支持，也没有把年代相邻写成因果。
+- 普通页面选择品类后隐藏全局游戏网络，保留事件路线和可逆详情；地图模式仍保留完整网络、Family 透镜、缩放／平移与焦点恢复。无事件证据的品类显示明确空状态，不伪造路线。
+- 事件节点与关系新增构建期契约：事件必须有角色、主题与中文机制说明；事件关系必须明确为 evolution 或 carrier，并检查端点方向。纯测试覆盖事件路线排序、空状态、carrier closure 与关系角色。
+- 本轮 fresh 验证：`npm run check` 0 errors / warnings / hints，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 41 passed / 19 intentional skipped，base-path 2/2；完整 Chromium + mobile 251 passed / 21 intentional skipped。当前预览仍固定为 [http://127.0.0.1:4321/Learn-About-Games/](http://127.0.0.1:4321/Learn-About-Games/)，仓库保持 Private，未推送或部署。
 
 ## 项目来源
 

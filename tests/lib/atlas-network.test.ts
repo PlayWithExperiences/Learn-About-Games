@@ -11,6 +11,7 @@ import {
   atlasScaleBounds,
   buildAtlasNodeIndex,
   buildAtlasLayout,
+  buildAtlasEventTimeline,
   clampAtlasScale,
   filterAtlasNodeIndex,
   fitAtlasScale,
@@ -28,7 +29,106 @@ import {
 const typedAtlasNodes = atlasNodes as Catalog['atlasNodes'];
 const typedAtlasRelations = atlasRelations as Catalog['atlasRelations'];
 
+type EventNodeContract = {
+  id: string;
+  kind: string;
+  tags: string[];
+  eventRole?: 'definition' | 'mechanism' | 'transformation' | 'diffusion';
+  themeIds?: string[];
+  mechanism?: { 'zh-CN': string };
+};
+
+type EventRelationContract = {
+  id: string;
+  fromId: string;
+  toId: string;
+  relationRole?: 'evolution' | 'carrier';
+};
+
 describe('global Atlas graph contract', () => {
+  it('innovation nodes expose bounded event roles and theme ids', () => {
+    const innovationEvents = atlasNodes.filter(({ kind, tags }) =>
+      kind === 'innovation' && tags.includes('innovation-event')) as EventNodeContract[];
+
+    expect(innovationEvents.length).toBeGreaterThan(0);
+    for (const event of innovationEvents) {
+      expect(event.eventRole, event.id).toMatch(/^(definition|mechanism|transformation|diffusion)$/);
+      expect(event.themeIds?.length, event.id).toBeGreaterThan(0);
+      expect(event.mechanism?.['zh-CN']?.trim().length, event.id).toBeGreaterThan(0);
+    }
+  });
+
+  it('event relations distinguish evolution from carrier evidence', () => {
+    const eventIds = new Set(
+      (atlasNodes as EventNodeContract[])
+        .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
+        .map(({ id }) => id),
+    );
+    const gameIds = new Set(atlasNodes.filter(({ kind }) => kind === 'game').map(({ id }) => id));
+    const eventRelations = atlasRelations.filter(({ fromId, toId }) => eventIds.has(fromId) || eventIds.has(toId)) as EventRelationContract[];
+
+    expect(eventRelations.length).toBeGreaterThan(0);
+    for (const relation of eventRelations) {
+      expect(relation.relationRole, relation.id).toMatch(/^(evolution|carrier)$/);
+      if (relation.relationRole === 'carrier') {
+        expect(eventIds.has(relation.fromId), relation.id).toBe(true);
+        expect(gameIds.has(relation.toId), relation.id).toBe(true);
+      }
+      if (relation.relationRole === 'evolution') {
+        expect(eventIds.has(relation.fromId), relation.id).toBe(true);
+        expect(eventIds.has(relation.toId), relation.id).toBe(true);
+      }
+    }
+  });
+
+  it('FPS event sample has carrier closure', () => {
+    const eventIds = new Set(
+      (atlasNodes as EventNodeContract[])
+        .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
+        .map(({ id }) => id),
+    );
+    const shooterEvents = (atlasNodes as Array<EventNodeContract & { themeIds?: string[] }>)
+      .filter((node) => eventIds.has(node.id) && node.themeIds?.includes('first-person-shooter-lineage'));
+    const gameIds = new Set(atlasNodes.filter(({ kind }) => kind === 'game').map(({ id }) => id));
+    const carrierRelations = (atlasRelations as EventRelationContract[])
+      .filter(({ relationRole, fromId }) => relationRole === 'carrier' && shooterEvents.some((event) => event.id === fromId));
+
+    expect(shooterEvents.length).toBeGreaterThanOrEqual(2);
+    expect(new Set(carrierRelations.map(({ fromId }) => fromId))).toEqual(
+      new Set(shooterEvents.map(({ id }) => id)),
+    );
+    expect(carrierRelations.every(({ toId }) => gameIds.has(toId))).toBe(true);
+  });
+
+  it('builds a theme-filtered event timeline with evolution and carrier closure', () => {
+    const timeline = buildAtlasEventTimeline(typedAtlasNodes, typedAtlasRelations, [
+      'first-person-shooter-lineage',
+      'first-person-shooter-lens',
+    ]);
+
+    expect(timeline.emptyState).toBe(false);
+    expect(timeline.events.map(({ id }) => id)).toEqual([
+      'first-person-shooter-perspective',
+      'fps-vertical-space-combat',
+      'fps-networked-combat-space',
+    ]);
+    expect(timeline.evolutionRelations.map(({ id }) => id)).toEqual([
+      'fps-perspective-to-vertical-space-combat',
+      'vertical-space-combat-to-networked-space',
+    ]);
+    expect(timeline.carriersByEvent['fps-vertical-space-combat'].map(({ id }) => id)).toEqual(['doom']);
+    expect(timeline.carriersByEvent['fps-networked-combat-space'].map(({ id }) => id)).toEqual(['half-life']);
+  });
+
+  it('returns an explicit empty timeline for a theme without events', () => {
+    const timeline = buildAtlasEventTimeline(typedAtlasNodes, typedAtlasRelations, ['missing-genre']);
+
+    expect(timeline.events).toEqual([]);
+    expect(timeline.evolutionRelations).toEqual([]);
+    expect(timeline.carriersByEvent).toEqual({});
+    expect(timeline.emptyState).toBe(true);
+  });
+
   it('publishes the EGDS-aligned innovation events as first-class, evidenced nodes', () => {
     const eventIds = [
       'first-person-shooter-perspective',
@@ -57,8 +157,8 @@ describe('global Atlas graph contract', () => {
     expect(atlasNodes.length).toBeLessThanOrEqual(70);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
     expect(atlasRelations.length).toBeLessThanOrEqual(50);
-    expect(atlasNodes).toHaveLength(64);
-    expect(atlasRelations).toHaveLength(46);
+    expect(atlasNodes).toHaveLength(66);
+    expect(atlasRelations).toHaveLength(50);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -365,8 +465,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(64);
-    expect(relations).toHaveLength(46);
+    expect(nodes).toHaveLength(66);
+    expect(relations).toHaveLength(50);
   });
 });
 
@@ -519,9 +619,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(64);
-    expect(new Set(outlinedNodeIds).size).toBe(64);
-    expect(outlinedRelationIds.size).toBe(46);
+    expect(outlinedNodeIds).toHaveLength(66);
+    expect(new Set(outlinedNodeIds).size).toBe(66);
+    expect(outlinedRelationIds.size).toBe(50);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -610,7 +710,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(64);
+    expect(indexed).toHaveLength(66);
     expect(runStructure).toMatchObject({
       id: 'procedural-run-structure',
       startYear: 1980,

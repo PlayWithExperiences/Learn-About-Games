@@ -17,6 +17,9 @@
     "startYear": 1980,
     "lane": 0,
     "tags": ["innovation-event", "roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "eventRole": "definition",
+    "themeIds": ["roguelike"],
+    "mechanism": { "zh-CN": "把程序生成、单局失败与重新开始组织成可重复的运行结构。" },
     "evidenceIds": ["wichman-rogue-history"]
   },
   {
@@ -478,6 +481,9 @@
     "startYear": 1991,
     "lane": 0,
     "tags": ["innovation-event", "first-person-shooter-lens"],
+    "eventRole": "definition",
+    "themeIds": ["first-person-shooter-lineage"],
+    "mechanism": { "zh-CN": "把第一人称空间、连续移动与武器瞄准组织成可持续扩展的射击结构。" },
     "evidenceIds": ["gdc-wolfenstein-postmortem", "gdc-doom-postmortem"]
   },
   {
@@ -488,7 +494,36 @@
     "startYear": 1998,
     "lane": 0,
     "tags": ["innovation-event", "zelda-lineage", "action-adventure"],
+    "eventRole": "mechanism",
+    "themeIds": ["platform-lineage"],
+    "mechanism": { "zh-CN": "用目标锁定与镜头协同，把一对多空间战斗转化为可读的交互机制。" },
     "evidenceIds": ["nintendo-ocarina-z-targeting"]
+  },
+  {
+    "id": "fps-vertical-space-combat",
+    "kind": "innovation",
+    "name": { "zh-CN": "垂直空间与武器反馈", "en": "Vertical space and weapon feedback" },
+    "summary": { "zh-CN": "把高度差、武器反馈与更复杂的空间压迫组合成第一人称射击的后续设计事件；不把单一作品写成绝对起点。" },
+    "startYear": 1993,
+    "lane": 1,
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "eventRole": "mechanism",
+    "themeIds": ["first-person-shooter-lineage"],
+    "mechanism": { "zh-CN": "以高度差、速度与武器反馈扩展第一人称空间的可读性和压迫感。" },
+    "evidenceIds": ["gdc-doom-postmortem"]
+  },
+  {
+    "id": "fps-networked-combat-space",
+    "kind": "innovation",
+    "name": { "zh-CN": "网络化战斗空间与沉浸叙事", "en": "Networked combat space and situated narrative" },
+    "summary": { "zh-CN": "记录第一人称射击从纯竞技空间向网络化、可探索且承载叙事的场景转译；关系只表达有来源支持的响应。" },
+    "startYear": 1998,
+    "lane": 2,
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "eventRole": "transformation",
+    "themeIds": ["first-person-shooter-lineage"],
+    "mechanism": { "zh-CN": "将网络化对战、可探索场景与情境叙事编织到同一第一人称空间中。" },
+    "evidenceIds": ["gdc-quake-postmortem", "valve-cabal-half-life"]
   },
   {
     "id": "rpg-character-progression",
@@ -498,6 +533,9 @@
     "startYear": 1974,
     "lane": 0,
     "tags": ["innovation-event", "rpg-progression", "action-rpg"],
+    "eventRole": "mechanism",
+    "themeIds": ["roguelike"],
+    "mechanism": { "zh-CN": "把经验、等级、能力或装备的累积变成跨场景的持续反馈。" },
     "evidenceIds": ["gamedeveloper-dd-rpg-history", "gamedeveloper-fundamentals-progression"]
   },
   {
@@ -508,6 +546,9 @@
     "startYear": 2017,
     "lane": 0,
     "tags": ["innovation-event", "nonlinear-world", "zelda-lineage"],
+    "eventRole": "transformation",
+    "themeIds": ["metroidvania"],
+    "mechanism": { "zh-CN": "让玩家在大尺度空间中自行决定路线、顺序与目标，并以系统交互维持探索动力。" },
     "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
   },
   {

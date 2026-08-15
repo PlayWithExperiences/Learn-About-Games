@@ -28,6 +28,9 @@ export type AtlasEvidenceStatus = 'confirmed' | 'credible' | 'inferred' | 'dispu
 
 export type AtlasDirectionality = 'directed' | 'undirected';
 
+export type AtlasEventRole = 'definition' | 'mechanism' | 'transformation' | 'diffusion';
+export type AtlasRelationRole = 'evolution' | 'carrier';
+
 export type AtlasEvidenceOriginalLanguage = 'en' | 'ja' | 'fr' | 'es';
 
 export type AtlasEvidenceSourceKind =
@@ -178,6 +181,9 @@ export type Catalog = {
     lane: number;
     tags: string[];
     evidenceIds: string[];
+    eventRole?: AtlasEventRole;
+    themeIds?: string[];
+    mechanism?: LocalizedText;
   }>;
   atlasEvidence: Array<{
     id: string;
@@ -206,6 +212,7 @@ export type Catalog = {
     summary: LocalizedText;
     chronologyExplanation?: LocalizedText;
     directionalityNote?: LocalizedText;
+    relationRole?: AtlasRelationRole;
   }>;
   atlasThemes: Array<{
     id: string;
@@ -277,6 +284,9 @@ export type CatalogValidationCode =
   | 'ATLAS_NODE_DATE_RANGE_INVALID'
   | 'ATLAS_NODE_EVIDENCE_REQUIRED'
   | 'ATLAS_NODE_EVIDENCE_MISSING'
+  | 'ATLAS_EVENT_ROLE_REQUIRED'
+  | 'ATLAS_EVENT_THEME_REQUIRED'
+  | 'ATLAS_EVENT_MECHANISM_REQUIRED'
   | 'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID'
   | 'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID'
   | 'ATLAS_EVIDENCE_URL_INVALID'
@@ -289,7 +299,9 @@ export type CatalogValidationCode =
   | 'ATLAS_RELATION_EVIDENCE_REQUIRED'
   | 'ATLAS_RELATION_EVIDENCE_MISSING'
   | 'ATLAS_RELATION_DIRECTIONALITY_NOTE_REQUIRED'
-  | 'ATLAS_RELATION_CHRONOLOGY_UNEXPLAINED';
+  | 'ATLAS_RELATION_CHRONOLOGY_UNEXPLAINED'
+  | 'ATLAS_RELATION_ROLE_REQUIRED'
+  | 'ATLAS_RELATION_ROLE_INVALID';
 
 export type CatalogValidationError = {
   code: CatalogValidationCode;
@@ -346,6 +358,8 @@ const atlasEvidenceSourceKinds = new Set<AtlasEvidenceSourceKind>([
   'conference-talk',
   'publisher-release',
 ]);
+const atlasEventRoles = new Set<AtlasEventRole>(['definition', 'mechanism', 'transformation', 'diffusion']);
+const atlasRelationRoles = new Set<AtlasRelationRole>(['evolution', 'carrier']);
 const directedAtlasRelationTypes = new Set<AtlasRelationType>([
   'direct-influence',
   'derived-variant',
@@ -1220,6 +1234,18 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         appendError(errors, 'ATLAS_TAG_REFERENCE_MISSING', 'atlasNodes', node.id, 'tags', tag);
       }
     }
+
+    if (node.kind === 'innovation' && node.tags.includes('innovation-event')) {
+      if (!node.eventRole || !atlasEventRoles.has(node.eventRole)) {
+        appendError(errors, 'ATLAS_EVENT_ROLE_REQUIRED', 'atlasNodes', node.id, 'eventRole', '');
+      }
+      if (!node.themeIds?.length) {
+        appendError(errors, 'ATLAS_EVENT_THEME_REQUIRED', 'atlasNodes', node.id, 'themeIds', '');
+      }
+      if (!node.mechanism?.['zh-CN']?.trim()) {
+        appendError(errors, 'ATLAS_EVENT_MECHANISM_REQUIRED', 'atlasNodes', node.id, 'mechanism', '');
+      }
+    }
   }
 
   for (const relation of catalog.atlasRelations) {
@@ -1329,6 +1355,25 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
 
     const fromNode = atlasNodesById.get(relation.fromId);
     const toNode = atlasNodesById.get(relation.toId);
+    const touchesEvent =
+      fromNode?.kind === 'innovation' && fromNode.tags.includes('innovation-event') ||
+      toNode?.kind === 'innovation' && toNode.tags.includes('innovation-event');
+    if (touchesEvent) {
+      if (!relation.relationRole || !atlasRelationRoles.has(relation.relationRole)) {
+        appendError(errors, 'ATLAS_RELATION_ROLE_REQUIRED', 'atlasRelations', relation.id, 'relationRole', '');
+      } else if (
+        relation.relationRole === 'carrier' &&
+        !(fromNode?.kind === 'innovation' && fromNode.tags.includes('innovation-event') && toNode?.kind === 'game')
+      ) {
+        appendError(errors, 'ATLAS_RELATION_ROLE_INVALID', 'atlasRelations', relation.id, 'relationRole', 'carrier');
+      } else if (
+        relation.relationRole === 'evolution' &&
+        !(fromNode?.kind === 'innovation' && fromNode.tags.includes('innovation-event') &&
+          toNode?.kind === 'innovation' && toNode.tags.includes('innovation-event'))
+      ) {
+        appendError(errors, 'ATLAS_RELATION_ROLE_INVALID', 'atlasRelations', relation.id, 'relationRole', 'evolution');
+      }
+    }
     if (
       relation.type === 'direct-influence' &&
       relation.status === 'confirmed' &&

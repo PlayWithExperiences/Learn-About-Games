@@ -63,6 +63,7 @@
     "directionality": "directed",
     "evidenceIds": ["rps-spelunky-interview"],
     "tags": ["roguelike-lens", "run-based-structure", "fusion"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自 Roguelike 与平台游戏原型的融合。" }
   },
   {
@@ -129,6 +130,7 @@
     "directionality": "directed",
     "evidenceIds": ["motion-twin-presskit", "motion-twin-xbox-interview"],
     "tags": ["roguelike-lens", "metroidvania-lens", "cross-theme", "run-based-structure", "fusion"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Motion Twin 明确说 Dead Cells 有意混合 Roguelite 与 Metroidvania；单局结构节点表达前者的设计概念。" }
   },
   {
@@ -390,6 +392,7 @@
     "directionality": "directed",
     "evidenceIds": ["gdc-wolfenstein-postmortem", "gdc-doom-postmortem"],
     "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Wolfenstein 3D 把第一人称空间与连续射击组织成可传播的作品形态；GDC 回顾支持其开发语境，但不宣称它是唯一类型起点。" }
   },
   {
@@ -401,6 +404,7 @@
     "directionality": "directed",
     "evidenceIds": ["nintendo-ocarina-z-targeting"],
     "tags": ["innovation-event", "zelda-lineage"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Nintendo 开发者回顾说明 Z-targeting 用来解决一对多战斗的空间可读性问题，并与镜头协同。" }
   },
   {
@@ -412,6 +416,7 @@
     "directionality": "directed",
     "evidenceIds": ["rpgfan-brevik-interview", "gamedeveloper-fundamentals-progression"],
     "tags": ["innovation-event", "rpg-progression", "fusion"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Diablo 将持续角色成长与实时动作结合；Brevik 的回顾支持其从 Roguelike 原型转译而来，概念来源并非单一谱系。" }
   },
   {
@@ -423,6 +428,55 @@
     "directionality": "directed",
     "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
     "tags": ["innovation-event", "nonlinear-world", "zelda-lineage"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Nintendo 幕后回顾把 open-air 方向与大尺度探索、路线选择和系统交互放在同一设计目标中。" }
+  },
+  {
+    "id": "fps-perspective-to-vertical-space-combat",
+    "fromId": "first-person-shooter-perspective",
+    "toId": "fps-vertical-space-combat",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-doom-postmortem"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "evolution",
+    "summary": { "zh-CN": "从第一人称空间的基础可读性，推进到高度差、速度与武器反馈共同构成的压迫感；Doom 的开发回顾提供承载语境。" }
+  },
+  {
+    "id": "vertical-space-combat-to-networked-space",
+    "fromId": "fps-vertical-space-combat",
+    "toId": "fps-networked-combat-space",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-quake-postmortem", "valve-cabal-half-life"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "evolution",
+    "summary": { "zh-CN": "随后谱系把第一人称战斗推进到网络化空间与情境叙事；Quake 与 Half-Life 的开发材料支持这种设计响应，而非单线发明叙事。" }
+  },
+  {
+    "id": "fps-vertical-space-to-doom",
+    "fromId": "fps-vertical-space-combat",
+    "toId": "doom",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-doom-postmortem"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Doom 是高度差、武器反馈与高速空间组织的一个承载作品；它是材料入口，不是事件本身。" }
+  },
+  {
+    "id": "fps-networked-space-to-half-life",
+    "fromId": "fps-networked-combat-space",
+    "toId": "half-life",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["valve-cabal-half-life"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Half-Life 承载了把第一人称空间、网络/引擎语境与情境叙事结合起来的后续转译。" }
   }
 ]

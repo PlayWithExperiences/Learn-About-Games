@@ -246,6 +246,9 @@ const atlasNodes = defineCollection({
       lane: z.number().int().min(0),
       tags: z.array(z.string().trim().min(1)).min(1),
       evidenceIds: z.array(z.string().trim().min(1)).min(1),
+      eventRole: z.enum(['definition', 'mechanism', 'transformation', 'diffusion']).optional(),
+      themeIds: z.array(z.string().trim().min(1)).min(1).optional(),
+      mechanism: localizedText.optional(),
     })
     .strict(),
 });
@@ -320,6 +323,7 @@ const atlasRelations = defineCollection({
       summary: localizedText,
       chronologyExplanation: localizedText.optional(),
       directionalityNote: localizedText.optional(),
+      relationRole: z.enum(['evolution', 'carrier']).optional(),
     })
     .strict()
     .superRefine((relation, context) => {
