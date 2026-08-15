@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
@@ -6,14 +6,9 @@ import resources from '../../src/data/resources.json' with { type: 'json' };
 import sources from '../../src/data/sources.json' with { type: 'json' };
 import { formatLanguage } from '../../src/lib/resource-display';
 
-const projectBasePath = '/Learn-About-Games/';
+test.setTimeout(60_000);
 
-async function openFactsFilter(page: Page) {
-  const details = page.locator('[data-resource-facts-details]');
-  if (!(await details.evaluate((element) => (element as HTMLDetailsElement).open))) {
-    await details.locator('summary').click();
-  }
-}
+const projectBasePath = '/Learn-About-Games/';
 
 function matchingResources(target: (typeof resources)[number]) {
   const targetAccessModel = target.accessVersions[0].accessModel;
@@ -100,7 +95,6 @@ test('exposes unordered topic entries and combines factual filters in a shareabl
   await expect(page.locator('[data-resource-topic-control]')).toHaveCount(resourceTopics.length);
   await expect(page.locator('[data-resource-topic-control]')).toHaveCount(resourceTopics.length);
 
-  await openFactsFilter(page);
   await page.getByLabel('资源主题', { exact: true }).selectOption(target.resourceTopicIds[0]);
   await page.getByLabel('知识主题').selectOption(target.knowledgeTopicIds[0]);
   await page.getByLabel('能力').selectOption(target.capabilityIds[0]);
@@ -137,7 +131,6 @@ test('searches localized resource text and combines with factual filters', async
     return text.includes('metroidvania');
   }).length);
 
-  await openFactsFilter(page);
   await page.getByLabel('媒介').selectOption('talk');
   expect(new URL(page.url()).searchParams.get('mediaType')).toBe('talk');
   await expect(page.getByRole('status')).toContainText('条 Work Item');
@@ -156,7 +149,6 @@ test('restores filter state from reload, history and pageshow', async ({ page })
   await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
   await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(expectedTopicCount);
 
-  await openFactsFilter(page);
   await page.getByLabel('媒介').selectOption(target.mediaType);
   await page.reload();
   await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue(target.resourceTopicIds[0]);
@@ -297,18 +289,17 @@ test('keeps resource search, facts, count and table actions in one compact table
   await expect(table.locator('#resource-result-count')).toContainText(`共 ${resources.length} 条 Work Item`);
   await expect(table.locator('[data-resource-table-control="expand"]')).toBeVisible();
   await expect(table.getByRole('searchbox', { name: '搜索资源' })).toBeVisible();
-  await expect(table.locator('[data-resource-facts-details]')).not.toHaveAttribute('open', '');
   await expect(table.locator('.resource-filter-panel')).toHaveCount(1);
 
   const ownership = await table.evaluate((element) => ({
     search: Boolean(element.querySelector('[data-resource-search]')),
-    facts: Boolean(element.querySelector('[data-resource-facts-details]')),
+    facts: Boolean(element.querySelector('[data-resource-facts-panel]')),
     resultCount: Boolean(element.querySelector('#resource-result-count')),
   }));
   expect(ownership).toEqual({ search: true, facts: true, resultCount: true });
 
-  await table.locator('[data-resource-facts-details] > summary').click();
-  await expect(table.locator('[data-resource-facts-details]')).toHaveAttribute('open', '');
+  await expect(table.locator('[data-resource-facts-panel]')).toBeVisible();
+  await expect(table.locator('[data-resource-filter]')).toHaveCount(7);
 });
 
 test('gives the access-version detail panel an opaque elevated surface', async ({ page }) => {

@@ -184,7 +184,7 @@ describe('global Atlas graph contract', () => {
     }
   });
 
-  it('defines foundation and six evidence lineages as tag-only lenses', () => {
+  it('defines foundation and seven evidence lineages as tag-only lenses', () => {
     expect(atlasGenreFamilies).toHaveLength(10);
     expect(atlasThemes.map(({ id }) => id)).toEqual([
       'early-electronic-games',
@@ -194,6 +194,7 @@ describe('global Atlas graph contract', () => {
       'adventure-lineage',
       'first-person-shooter-lineage',
       'real-time-strategy-lineage',
+      'puzzle-adventure-lineage',
     ]);
     expect(
       atlasThemes.every((theme) => !('nodeIds' in theme) && !('relationIds' in theme)),

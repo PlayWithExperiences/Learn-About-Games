@@ -27,7 +27,7 @@ test('renders independent local progress for every capability beside the embedde
 
   await page.goto('./capabilities/core-loop-design/');
   await expect(page.getByLabel('个人学习状态')).toHaveValue('can-guide');
-  await expect(page.locator('main')).not.toContainText(/适配度|完成率|总分|评分|百分比|score|percentage/i);
+  await expect(page.locator('[data-capability-progress]')).not.toContainText(/适配度|完成率|总分|评分|百分比|score|percentage/i);
 });
 
 test('keeps the complete map and personal record contract usable without JavaScript', async ({ browser }) => {

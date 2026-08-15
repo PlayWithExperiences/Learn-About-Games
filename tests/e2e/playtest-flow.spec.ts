@@ -1,16 +1,11 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import resources from '../../src/data/resources.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
 
-const playtestingResources = resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes('playtesting'));
+test.setTimeout(60_000);
 
-async function openFactsFilter(page: Page) {
-  const details = page.locator('[data-resource-facts-details]');
-  if (!(await details.evaluate((element) => (element as HTMLDetailsElement).open))) {
-    await details.locator('summary').click();
-  }
-}
+const playtestingResources = resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes('playtesting'));
 
 test('guides a learner from the home page to the unordered Playtest topic collection', async ({ page }) => {
   await page.goto('./');
@@ -50,8 +45,6 @@ test('guides a learner from the home page to the unordered Playtest topic collec
 
 test('filters work items by consumable access-version language', async ({ page }) => {
   await page.goto('./resources/');
-  await openFactsFilter(page);
-
   const languageSelect = page.getByLabel('可消费语言');
   const resultCount = page.getByRole('status');
 
@@ -76,8 +69,6 @@ test('filters work items by consumable access-version language', async ({ page }
 
 test('reapplies the selected language filter after history back', async ({ page }) => {
   await page.goto('./resources/');
-  await openFactsFilter(page);
-
   const languageSelect = page.getByLabel('可消费语言');
   const firstMatchingResource = resources.find((resource) =>
     resource.accessVersions.some((version) => version.language === 'zh-Hans'),

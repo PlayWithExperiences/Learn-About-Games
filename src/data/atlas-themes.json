@@ -54,5 +54,13 @@
     "familyIds": ["strategy"],
     "scopeNote": { "zh-CN": "这是 RTS 的选择性谱系，不等于全部策略游戏史，也不主张 Dune II 是无争议的绝对起点。" },
     "tags": ["real-time-strategy-lens"]
+  },
+  {
+    "id": "puzzle-adventure-lineage",
+    "title": { "zh-CN": "解谜冒险结构谱系", "en": "Puzzle-adventure structure lineage" },
+    "summary": { "zh-CN": "把文本解析、图形冒险与指向点击中的解谜结构作为益智 Family 的研究入口；不把所有冒险作品重新归类为益智游戏。" },
+    "familyIds": ["puzzle", "adventure"],
+    "scopeNote": { "zh-CN": "当前沿用已核查的解析器到图形冒险证据，强调问题求解结构而非宣称一个唯一的益智游戏起点；后续继续补充纯益智谱系。" },
+    "tags": ["parser-graphical-adventure-lens"]
   }
 ]

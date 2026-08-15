@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／7 条可直接选择的证据谱系与 1110 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 2110 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -269,6 +269,18 @@ EGDS 提交 `9ac9abb` 把 overview geometry 固定为展开不变量。28 个 fr
 资源扩展使用 Agent Reach；Exa 返回 429 后停止，Jina Reader 与 GDC／作者原页用于逐页核验。提交 `c1641d8` 新增 30 个 Work Item 与 30 个 Access Version：20 条 GDC Vault 2025 会话、5 篇 Lost Garden、5 篇 How To Market A Game；Source 总量仍为 38。当前目录为 209 Work Item／223 Access Version，全部继续恰属一个主要 Resource Topic，并保留 canonical ownership、访问方式与检查日期；没有站内评分、排名或审核等级。
 
 本段是脱敏连续性记录，不补造不可访问的逐字对话。仓库与 Pages 状态未改变；本轮提交尚未 push 或部署。对应公开决策见 [Devlog 006](../devlog/2026-08-12-reversible-maps-and-resource-depth.md)，精确过程证据见本文链接的脱敏 transcript。
+
+## 资源表密度、全站换行与新一轮目录扩展
+
+发起人要求资源页默认把事实筛选全部列出，不再让“按事实筛选”成为额外的可开关标签，并希望搜索、计数、展开／收起和筛选尽量同处资源表头。实现移除了外层筛选 `details`，七项事实筛选直接进入常驻紧凑工具条；访问版本仍使用原生 `details`，但桌面关闭态摘要位于 Work Item 同一行末端，打开后的详情使用不透明 `surface-strong` 层，避免透出相邻条目。移动端保留自然文档流和无 JavaScript 的完整可读性。
+
+全站短说明文本增加平衡换行与中文严格断行，重点覆盖首页、EGDS、Career、Atlas、资源页和主题入口，避免第二行只剩一个词或一两个汉字。资源页标题与说明设置有限阅读宽度，避免超大标题在窄列中产生孤立尾行。
+
+本轮按“英文优先、中文继续补、日文低优先级”的方向从 GDC Vault 官方 sitemap 与会话页补入 1000 个新的英文 Work Item。每条使用唯一 batch ID、官方 canonical URL、单一主要 Resource Topic、subscription 访问方式和 2026-08-15 检查日期；不把搜索摘要或录播可用性推断成免费事实。目录当前为 41 Source、2110 Work Item、2124 Access Version、16 Resource Topic；Batch J 的 1000 条会话已写入研究 notebook 并通过 catalog URL／主题／唯一性合同。
+
+Innovation Atlas 本轮没有凭时间或相似性编造新边，而是增加“解谜冒险结构谱系”作为 Puzzle 与 Adventure Family 的非排他研究入口，复用已核查的解析器到图形冒险结构证据，并明确说明它不是完整品类史。全局网络仍为 58 nodes、42 relations、69 Evidence；谱系入口数量更新为 8。
+
+当前阶段的验证记录：资源 catalog 定向测试 22/22，Atlas unit 与 catalog 定向 50/50；资源工具条与 Atlas 新入口在 fresh dist 上通过对应 Chromium 合同；最终提交前仍需串行重跑 `npm run check`、全量 unit、`npm run build` 和完整 Playwright，并重启本地 `/Learn-About-Games/` preview。
 
 本轮整合截图保存在 `/tmp/lag-reversible-review/`，已按原始分辨率检查 Atlas Family／全屏、EGDS 总览／展开、Resources 默认／单表展开六种状态。fresh build 为 Astro 0 diagnostics、Vitest 160/160、127 pages；完整 Playwright 为 219 passed／21 project-specific skipped／0 failed；高危依赖审计为 0 vulnerabilities，提交差异敏感模式扫描无命中。仓库只读核验仍为 Private；本地候选保留在 `codex/v02`，未 push、未部署。
 

@@ -4,6 +4,10 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 资源表事实筛选改为常驻紧凑工具栏：七项筛选、搜索、结果数和展开／收起在同一表头直接可见，不再额外包一层“按事实筛选”标签；访问版本详情提高层级并使用明确不透明背景，避免透出相邻 Work Item。
+- 通过全站短文案换行检查，首页、EGDS、Career、Atlas 与资源页的说明文本使用平衡换行与中文严格断行，减少被截断的孤字与只有一两个字的第二行。
+- 新增 1000 条经 GDC Vault 官方 sitemap 与会话页 HTTP／metadata 核验的英文 Work Item；目录达到 41 个 Source、2110 个 Work Item 与 2124 个 Access Version。GDC 会话统一保守标记为 subscription，不把搜索摘要或录播可用性推断为事实。
+- Innovation Atlas 新增“解谜冒险结构谱系”证据透镜，复用已核查的解析器到图形冒险结构关系，并将其同时作为 Puzzle 与 Adventure Family 的非排他研究入口；全局网络节点、关系与位置保持不变。
 - 修正资源主题映射：GDC 的 `Your Game Career – What You Need to Get Hired` 及 7 条同类求职、教育转行业与工作环境会话改归新增“职业与行业实践”，不再错误落入“手感与反馈”；该主题以官方 GDC 的 Game Career Seminar / Game Career Education 标注为依据。
 - 资源表把搜索、事实筛选、结果总数和展开／收起合并进同一工具栏；事实筛选在增强态默认收起、带 URL 筛选时自动展开，无 JavaScript 仍保留完整禁用控件与说明。访问版本详情改用不透明的层级表面，避免浮层透出底下条目。
 - 成长资源目录新增搜索框（支持标题、简介与来源的中英文检索、NFKC 归一化与可分享 `q` URL 参数），并将 Work Item 改为更窄的编辑型行；桌面展开态中位行高约 94px，移动端继续保持单列可读。

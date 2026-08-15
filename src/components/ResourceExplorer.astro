@@ -69,7 +69,6 @@ const {
   const workItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="work-item"]'));
   const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-resource-group]'));
   const tableControls = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-resource-table-control]'));
-  const factsDetails = document.querySelector<HTMLDetailsElement>('[data-resource-facts-details]');
   const resultCount = document.querySelector<HTMLElement>('#resource-result-count');
   const emptyState = document.querySelector<HTMLElement>('.resource-empty-state');
 
@@ -197,13 +196,6 @@ const {
     syncControlsFromUrl();
     updateResults();
   }
-
-  const initialParams = new URLSearchParams(window.location.search);
-  const hasInitialFilters = ['q', ...Object.values(queryParamByFilter)].some((key) => {
-    const value = initialParams.get(key);
-    return Boolean(value && value !== 'all');
-  });
-  if (factsDetails && !hasInitialFilters) factsDetails.open = false;
 
   window.addEventListener('popstate', restoreFromUrl);
   window.addEventListener('pageshow', restoreFromUrl);

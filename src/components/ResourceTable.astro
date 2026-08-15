@@ -26,8 +26,8 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
   <header class="resource-table__header">
     <div class="resource-table__heading result-section-heading">
       <p class="plain-label">资源表</p>
-      <h2 id="resource-table-title">按资源主题展开 Work Item</h2>
-      <p>每条 Work Item 只在一个主题表中出现。可按需展开一个主题，或展开全部表格。</p>
+      <h2 id="resource-table-title">Work Item 资源表</h2>
+      <p>按资源主题展开；每条 Work Item 只在一个主题表中出现，可按需展开一个主题或展开全部表格。</p>
     </div>
     <div class="resource-table__toolbar" aria-label="资源表工具">
       <p id="resource-result-count" role="status" aria-live="polite">共 {resources.length} 条 Work Item</p>
@@ -50,8 +50,7 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     </div>
   </header>
 
-  <details class="resource-filter-panel resource-table__filters" data-resource-facts-details open>
-    <summary>按事实筛选 <span>主题、知识、能力、语言、媒介、访问方式与 Source</span></summary>
+  <div class="resource-filter-panel resource-table__filters" data-resource-facts-panel>
     <div class="resource-filter-grid">
       <label>
         <span>资源主题</span>
@@ -106,7 +105,7 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     <noscript>
       <p class="script-required-note">启用 JavaScript 后可以搜索、组合筛选或展开全部；当前可逐个展开 {resourceTopics.length} 个资源主题，全部 {resources.length} 条 Work Item 均可访问。</p>
     </noscript>
-  </details>
+  </div>
 
   <p class="resource-empty-state" hidden>没有同时符合这些事实条件的 Work Item。可以移除一个筛选条件再看。</p>
 

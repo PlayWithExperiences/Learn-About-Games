@@ -559,11 +559,11 @@ test('family directory and fullscreen theme controls stay synchronized and keybo
   await expect(familyDirectory).toHaveCount(1);
   await expect(familyDirectory.locator('[data-atlas-family]')).toHaveCount(10);
   await expect(familyDirectory.locator('[data-atlas-foundation-lens]')).toHaveCount(1);
-  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(18);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(21);
   await expect(explorer.locator('[data-atlas-lens-status]')).toHaveCount(1);
   expect(new Set(await explorer.locator('[data-atlas-theme-button]').evaluateAll((buttons) =>
     buttons.map((button) => button.getAttribute('data-atlas-theme-button')),
-  )).size).toBe(8);
+  )).size).toBe(9);
   await openAtlasFamily(page, 'role-playing');
   await expect(familyDirectory.locator('[data-atlas-family="role-playing"] [data-atlas-theme-button="roguelike"]'))
     .toBeEnabled();
@@ -595,8 +595,8 @@ test('family directory and fullscreen theme controls stay synchronized and keybo
   const lensControl = network.locator('.atlas-lens-control');
   await expect(lensControl).toBeVisible();
   await expect(lensControl.locator('[data-atlas-family-directory]')).toBeHidden();
-  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(8);
-  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(18);
+  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(9);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(21);
   await expect(explorer.locator('#atlas-lens-status')).toHaveCount(1);
 
   const metroidvania = lensControl.locator('[data-atlas-fullscreen-lenses]')
@@ -652,7 +652,7 @@ test('cross-Family lineages activate directly and fullscreen uses a compact lens
   const network = page.locator('[data-atlas-global-network][data-map-mode="true"]');
   const fullscreenLenses = network.locator('[data-atlas-fullscreen-lenses]');
   await expect(fullscreenLenses).toBeVisible();
-  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(8);
+  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(9);
   await expect(network.locator('[data-atlas-family-directory]')).toBeHidden();
   await expect(fullscreenLenses.locator('[data-atlas-theme-button="roguelike"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('[data-atlas-canvas]')).toHaveAttribute('data-map-mode', 'true');
@@ -670,6 +670,11 @@ test('new Strategy lineage and empty Genre Families expose honest status', async
   await expect(simulation.locator('[data-atlas-theme-button]')).toHaveCount(0);
   await simulation.locator('summary').click();
   await expect(simulation.locator('.atlas-family-directory__empty')).toContainText('尚无达到证据门槛的谱系');
+
+  const puzzle = page.locator('[data-atlas-family="puzzle"]');
+  await expect(puzzle.locator('summary')).toContainText('1 条已核查谱系');
+  await puzzle.locator('summary').click();
+  await expect(puzzle.locator('[data-atlas-theme-button="puzzle-adventure-lineage"]')).toBeEnabled();
 });
 
 test('fullscreen lens strip does not cover the map controls or canvas', async ({ page }, testInfo) => {
@@ -844,7 +849,7 @@ test('theme controls only change emphasis without changing graph identity or geo
   const buttons = page.locator('[data-atlas-theme-button]');
   const viewport = page.locator('[data-atlas-canvas]');
   const search = page.getByRole('searchbox', { name: '搜索节点' });
-  await expect(buttons).toHaveCount(18);
+  await expect(buttons).toHaveCount(21);
   for (const button of await buttons.all()) {
     await expect(button).toBeEnabled();
   }
@@ -1296,7 +1301,7 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(familyDirectory).toHaveCount(1);
   await expect(familyDirectory.locator('details[data-atlas-family]')).toHaveCount(10);
   await expect(familyDirectory.locator('[data-atlas-foundation-lens]')).toHaveCount(1);
-  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(9);
+  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(11);
   await familyDirectory.locator('[data-atlas-family="action"] summary').click();
   await expect(familyDirectory.locator('[data-atlas-family="action"] [data-atlas-scope-note]')).toHaveCount(3);
   await expect(familyDirectory.locator('[data-atlas-family="action"] [data-atlas-scope-note]').first()).toBeVisible();
@@ -1348,7 +1353,7 @@ test('320px no-JavaScript hides view controls and keeps the complete period outl
   await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
   const familyDirectory = page.locator('[data-atlas-family-directory]');
   await expect(familyDirectory.locator('details[data-atlas-family]')).toHaveCount(10);
-  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(9);
+  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(11);
   await familyDirectory.locator('[data-atlas-family="adventure"] summary').click();
   await expect(familyDirectory.locator('[data-atlas-family="adventure"] [data-atlas-scope-note]').first()).toBeVisible();
   const nodeIndex = page.locator('[data-atlas-node-index]');

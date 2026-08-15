@@ -488,3 +488,15 @@ Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆�
 发起人指出“按事实筛选 Work Item”占据独立大模块，与资源表割裂；同时访问版本详情的浮层背景不够明确。主任务选择把搜索、七项事实筛选、结果总数和展开／收起合并到资源表标题右侧工具栏。事实筛选改为原生 details：无筛选的 JavaScript 增强态默认折叠，URL 已带筛选时展开；无 JavaScript 仍显示禁用控件和说明。
 
 访问版本详情的桌面浮层改用不透明 `surface-strong` 表面，保留边框、阴影和高层级；移动端继续使用静态文档流，避免浮层遮挡。TDD 先新增表头归属和面板不透明度 RED，GREEN 后 Resources／Playtest 桌面与移动共 50 项通过；未记录凭据或其他秘密。
+
+## 44. 资源表直接筛选、全站短文案换行与 Batch J（partial export）
+
+发起人进一步指出事实筛选外层标签占据额外空间，要求默认直接显示所有筛选框；同时要求搜索、结果数、展开／收起和筛选贴近资源表头，访问版本面板不能透出后面的 Work Item。实现移除外层筛选 `details`，保留七个原生 select 和搜索输入；桌面 Work Item 的访问版本摘要继续与首行对齐，展开内容使用不透明层级表面，移动端回到文档流。
+
+发起人又指出全站说明文本常出现“第一行完整、第二行只剩一两个字”的视觉问题。主任务在不改变语义的前提下为首页、EGDS、Career、Atlas、资源页说明和主题入口加入 `text-wrap: balance` 与中文 `line-break: strict`，并给资源页标题限制阅读宽度。该修正目标是减少孤立尾行，不是强行让所有正文保持同一行数。
+
+资源研究继续使用 Agent Reach 与官方页面核验。GDC 官方 sitemap 共发现 1402 个新候选；筛选出 1000 个标题唯一且 HTTP 200 的会话，逐条保留官方 play URL、标题 metadata、subscription 访问模型、英文原始语言、主要 Resource Topic、checkedAt 和受限主张。最终目录达到 2110 Work Item、41 Source、2124 Access Version；Batch J 1000 条已追加到研究 notebook。没有把订阅会话误报为免费，也没有新增站内评分或排序。
+
+Innovation Atlas 本轮只新增一个证据透镜“解谜冒险结构谱系”，复用现有 parser→graphical adventure 证据，将 Puzzle 与 Adventure 作为非排他入口；58 nodes、42 relations、69 Evidence 和既有几何保持不变。该入口明确说明不等于完整益智游戏史，后续仍可基于新证据扩展节点与关系。
+
+本段是脱敏 partial export，不声称覆盖聊天 UI 的完整逐字记录；未记录凭据、环境变量或其他秘密。当前工作树尚未提交或部署，完成前需执行完整 check、unit、build、Playwright 和本地 4321 预览验收。
