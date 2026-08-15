@@ -5,6 +5,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 ## [Unreleased]
 
 - 修正资源主题映射：GDC 的 `Your Game Career – What You Need to Get Hired` 及 7 条同类求职、教育转行业与工作环境会话改归新增“职业与行业实践”，不再错误落入“手感与反馈”；该主题以官方 GDC 的 Game Career Seminar / Game Career Education 标注为依据。
+- 资源表把搜索、事实筛选、结果总数和展开／收起合并进同一工具栏；事实筛选在增强态默认收起、带 URL 筛选时自动展开，无 JavaScript 仍保留完整禁用控件与说明。访问版本详情改用不透明的层级表面，避免浮层透出底下条目。
 - 成长资源目录新增搜索框（支持标题、简介与来源的中英文检索、NFKC 归一化与可分享 `q` URL 参数），并将 Work Item 改为更窄的编辑型行；桌面展开态中位行高约 94px，移动端继续保持单列可读。
 - 进一步收紧 Work Item 行：访问版本入口回到同一行末端，展开详情改为不打断目录节奏的下方详情区；桌面行不再为“查看访问版本”单独占一行，移动端仍保持原生顺序展开。
 - 按“英文与中文优先、日文低优先级”的方向新增 500 个经 GDC Vault 官方 sitemap 与会话页逐条核验的英文 Work Item；目录达到 41 个 Source、1110 个 Work Item 与 1124 个 Access Version。GDC Vault 会话统一保守标记为 subscription，不把搜索摘要或完整录播可用性当作事实。

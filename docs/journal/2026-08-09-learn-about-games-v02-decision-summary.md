@@ -311,3 +311,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 发起人指出 `Your Game Career – What You Need to Get Hired` 被放进“手感与反馈”。核对 GDC Vault 官方页面后确认它属于 `Game Career Seminar`，并带有 `Game Career / Education` 标签；原条目的视听反馈摘要、能力映射与主题均是批量导入模板错配。主任务对 1110 条资源做标题、摘要、来源和现有主题的高置信冲突扫描，先修正 8 条明确的职业／教育转行业／工作环境会话，新增 `career-industry-practice`（职业与行业实践）主题；其余仅凭标题无法确定主主题的营销、奖项、AI、社区等候选保留待来源页复核，不做自动挪动。
 
 修正后目录仍为 41 Source／1110 Work Item／1124 Access Version，Resource Topic 为 16；新增回归测试确保 8 条职业会话各自只有该主题且不再落入 `game-feel-feedback`。定向 catalog 73/73、Astro check 0/0/0、fresh build 170/170（136 pages）通过；相关浏览器回归中同步了公开 README 的旧 15 主题文案。官方依据：[GDC Vault session page](https://www.gdcvault.com/play/1011932/Your-Game-Career-ndash-What)。本地预览保持在 `http://127.0.0.1:4321/Learn-About-Games/resources/`，仓库仍 Private、未 push。
+
+## 43. 资源表头工具栏与访问版本面板
+
+发起人指出事实筛选独占大面板、搜索和资源表割裂，且访问版本浮层会透出后面的条目。主任务把搜索、事实筛选、总 Work Item 数和展开／收起操作移入资源表头：桌面同一工具栏横向排列，事实筛选折叠为可展开 details；初始无筛选时增强态收起，URL 带筛选时保留打开，移动端自然折行。访问版本详情使用 `surface-strong` 不透明表面和独立层级，移动端仍回到文档流。
+
+先以 2 条浏览器 RED 锁定表头归属与面板颜色，再 GREEN。最终 Resources／Playtest 桌面与移动 50/50，新增合同通过；fresh `npm run build` 保持 Astro check 0/0/0、Vitest 170/170、136 pages。本地预览继续为 `http://127.0.0.1:4321/Learn-About-Games/resources/`，仓库仍 Private、未 push。

@@ -482,3 +482,9 @@ Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆�
 审计没有仅按一个关键词大规模重排，而是把标题、摘要、来源与主题交叉核对，修正 8 条高置信职业／教育转行业／工作环境会话，新增 `career-industry-practice` 主题，并让每条只保留一个主要主题。营销、奖项、AI、社区等只凭标题无法确定的候选记录为待人工复核，未强行改类。同步更新 README、Roadmap、Changelog 的当前资源规模与 16 个主题文案，补充目录回归测试。
 
 验证：catalog 定向 73/73，Astro check 0/0/0，fresh build 为 170/170 tests、136 pages；相关桌面／移动 E2E 在安装本地 Chromium 后运行，公开 README 的旧 15 主题文案已同步。官方来源为 https://www.gdcvault.com/play/1011932/Your-Game-Career-ndash-What；未记录凭据、环境变量或其他秘密。
+
+## 43. 资源表头工具栏与访问版本面板（脱敏记录）
+
+发起人指出“按事实筛选 Work Item”占据独立大模块，与资源表割裂；同时访问版本详情的浮层背景不够明确。主任务选择把搜索、七项事实筛选、结果总数和展开／收起合并到资源表标题右侧工具栏。事实筛选改为原生 details：无筛选的 JavaScript 增强态默认折叠，URL 已带筛选时展开；无 JavaScript 仍显示禁用控件和说明。
+
+访问版本详情的桌面浮层改用不透明 `surface-strong` 表面，保留边框、阴影和高层级；移动端继续使用静态文档流，避免浮层遮挡。TDD 先新增表头归属和面板不透明度 RED，GREEN 后 Resources／Playtest 桌面与移动共 50 项通过；未记录凭据或其他秘密。

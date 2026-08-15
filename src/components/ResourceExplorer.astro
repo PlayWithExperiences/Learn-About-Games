@@ -1,7 +1,6 @@
 ---
 import ResourceTable from './ResourceTable.astro';
 import type { Catalog } from '../lib/catalog/validate';
-import { formatAccessModel, formatLanguage, formatMediaType } from '../lib/resource-display';
 import { sitePath } from '../lib/site-path';
 
 interface Props {
@@ -24,14 +23,6 @@ const {
   lede = '先选择想理解的主题，再按能力、语言、媒介、访问方式或 Source 缩小范围。这里没有固定顺序。',
 } = Astro.props;
 
-const languages = [...new Set(resources.flatMap((resource) => [
-  resource.originalLanguage,
-  ...resource.accessVersions.map(({ language }) => language),
-]))];
-const mediaTypes = [...new Set(resources.map(({ mediaType }) => mediaType))];
-const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
-  accessVersions.map(({ accessModel }) => accessModel),
-))];
 ---
 
 <section class="resource-explorer" aria-labelledby="resource-list-title">
@@ -63,83 +54,13 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     </div>
   </nav>
 
-  <fieldset class="resource-filter-panel">
-    <legend>按事实筛选 Work Item</legend>
-    <label class="resource-search-field">
-      <span>搜索资源</span>
-      <input
-        type="search"
-        name="q"
-        aria-label="搜索资源"
-        placeholder="标题、简介、来源……"
-        autocomplete="off"
-        data-resource-search
-        disabled
-      />
-    </label>
-    <div class="resource-filter-grid">
-      <label>
-        <span>资源主题</span>
-        <select name="resourceTopic" aria-label="资源主题" data-resource-filter data-query-param="resourceTopic" disabled>
-          <option value="all">全部主题</option>
-          {resourceTopics.map((topic) => <option value={topic.id}>{topic.title['zh-CN']}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>知识主题</span>
-        <select name="knowledgeTopic" aria-label="知识主题" data-resource-filter data-query-param="knowledgeTopic" disabled>
-          <option value="all">全部知识主题</option>
-          {knowledgeTopics.map((topic) => <option value={topic.id}>{topic.name['zh-CN']}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>能力</span>
-        <select name="capability" aria-label="能力" data-resource-filter data-query-param="capability" disabled>
-          <option value="all">全部能力</option>
-          {capabilities.map((capability) => <option value={capability.id}>{capability.name['zh-CN']}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>可消费语言</span>
-        <select name="language" aria-label="可消费语言" data-resource-filter data-query-param="language" disabled>
-          <option value="all">全部语言</option>
-          {languages.map((language) => <option value={language}>{formatLanguage(language)}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>媒介</span>
-        <select name="mediaType" aria-label="媒介" data-resource-filter data-query-param="mediaType" disabled>
-          <option value="all">全部媒介</option>
-          {mediaTypes.map((mediaType) => <option value={mediaType}>{formatMediaType(mediaType)}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>访问方式</span>
-        <select name="accessModel" aria-label="访问方式" data-resource-filter data-query-param="accessModel" disabled>
-          <option value="all">全部访问方式</option>
-          {accessModels.map((accessModel) => <option value={accessModel}>{formatAccessModel(accessModel)}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>Source</span>
-        <select name="source" aria-label="Source" data-resource-filter data-query-param="source" disabled>
-          <option value="all">全部 Source</option>
-          {sources.map((source) => <option value={source.id}>{source.name['zh-CN']}</option>)}
-        </select>
-      </label>
-    </div>
-    <noscript>
-      <p class="script-required-note">启用 JavaScript 后可以搜索、组合筛选或展开全部；当前可逐个展开 {resourceTopics.length} 个资源主题，全部 {resources.length} 条 Work Item 均可访问。</p>
-    </noscript>
-  </fieldset>
-
-  <p id="resource-result-count" role="status" aria-live="polite">
-    共 {resources.length} 条 Work Item
-  </p>
-
-  <p class="resource-empty-state" hidden>没有同时符合这些事实条件的 Work Item。可以移除一个筛选条件再看。</p>
-
-  <ResourceTable resources={resources} sources={sources} resourceTopics={resourceTopics} />
+  <ResourceTable
+    resources={resources}
+    sources={sources}
+    resourceTopics={resourceTopics}
+    knowledgeTopics={knowledgeTopics}
+    capabilities={capabilities}
+  />
 </section>
 
 <script>
@@ -148,6 +69,7 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
   const workItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="work-item"]'));
   const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-resource-group]'));
   const tableControls = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-resource-table-control]'));
+  const factsDetails = document.querySelector<HTMLDetailsElement>('[data-resource-facts-details]');
   const resultCount = document.querySelector<HTMLElement>('#resource-result-count');
   const emptyState = document.querySelector<HTMLElement>('.resource-empty-state');
 
@@ -275,6 +197,13 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     syncControlsFromUrl();
     updateResults();
   }
+
+  const initialParams = new URLSearchParams(window.location.search);
+  const hasInitialFilters = ['q', ...Object.values(queryParamByFilter)].some((key) => {
+    const value = initialParams.get(key);
+    return Boolean(value && value !== 'all');
+  });
+  if (factsDetails && !hasInitialFilters) factsDetails.open = false;
 
   window.addEventListener('popstate', restoreFromUrl);
   window.addEventListener('pageshow', restoreFromUrl);
