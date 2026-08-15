@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import resourceIntake from '../../docs/research/2026-08-09-resource-intake.md?raw';
 import resourceExpansionIntake from '../../docs/research/2026-08-15-resource-300-intake.md?raw';
+import resourceGdc500Intake from '../../docs/research/2026-08-15-resource-500-gdc-intake.md?raw';
 import contentConfigSource from '../../src/content.config.ts?raw';
 
 import atlasEvidence from '../../src/data/atlas-evidence.json';
@@ -715,6 +716,9 @@ describe('raw product catalog data', () => {
     ) + resourceExpansionIntake.slice(
       resourceExpansionIntake.indexOf('## 已接受'),
       resourceExpansionIntake.indexOf('## 排除表'),
+    ) + resourceGdc500Intake.slice(
+      resourceGdc500Intake.indexOf('## 已接受'),
+      resourceGdc500Intake.indexOf('## 排除与限制'),
     );
     const intakeCanonicalUrls = new Set(
       [...acceptedIntake.matchAll(/canonicalUrl=([^<\n|]+)/g)].map((match) => match[1].trim()),
@@ -1011,7 +1015,7 @@ describe('raw product catalog data', () => {
     expect(capabilityCount('monetization-experience-alignment')).toBeGreaterThanOrEqual(4);
   });
 
-  it('adds only the evidence-verified five-item stop-condition resource batch', () => {
+  it('keeps the evidence-verified expansion batches reconciled with the catalog', () => {
     const expansionCanonicalUrls = [
       'https://book.leveldesignbook.com/process/preproduction',
       'https://book.leveldesignbook.com/process/research',
@@ -1128,6 +1132,15 @@ describe('raw product catalog data', () => {
     expect(new Set(expansion.map(({ sourceId }) => sourceId))).toEqual(
       new Set(['level-design-book', 'tencent-games-academy']),
     );
+
+    const gdc500Rows = resourceGdc500Intake.slice(
+      resourceGdc500Intake.indexOf('## 已接受'),
+      resourceGdc500Intake.indexOf('## 排除与限制'),
+    );
+    const gdc500CanonicalUrls = [...gdc500Rows.matchAll(/canonicalUrl=([^<\n|]+)/g)].map(([, url]) => url.trim());
+    expect(gdc500CanonicalUrls).toHaveLength(500);
+    expect(new Set(gdc500CanonicalUrls).size).toBe(500);
+    expect(resources.filter(({ canonicalUrl }) => gdc500CanonicalUrls.includes(canonicalUrl))).toHaveLength(500);
 
     const expectedBatchG = {
       'https://book.leveldesignbook.com/process/preproduction': {

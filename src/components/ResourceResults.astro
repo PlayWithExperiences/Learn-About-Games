@@ -73,6 +73,16 @@ const workCountBySource = new Map(
   <div class="work-item-result-list">
     {resources.map((resource) => {
       const source = sources.find(({ id }) => id === resource.sourceId);
+      const searchText = [
+        resource.title['zh-CN'],
+        resource.title.en,
+        resource.summary['zh-CN'],
+        resource.summary.en,
+        resource.whyRelevant['zh-CN'],
+        resource.whyRelevant.en,
+        source?.name['zh-CN'],
+        source?.name.en,
+      ].filter((value): value is string => Boolean(value)).join(' ');
       const languages = [...new Set([
         resource.originalLanguage,
         ...resource.accessVersions.map(({ language }) => language),
@@ -91,6 +101,7 @@ const workCountBySource = new Map(
           data-languages={languages.join(' ')}
           data-media-type={resource.mediaType}
           data-access-models={accessModels.join(' ')}
+          data-search-text={searchText}
         >
           <div class="work-item-result__index" aria-hidden="true">Work Item</div>
           <div class="work-item-result__main" data-work-row-main>

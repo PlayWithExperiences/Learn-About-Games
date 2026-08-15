@@ -116,6 +116,27 @@ test('exposes fifteen unordered topic entries and combines factual filters in a 
   );
 });
 
+test('searches localized resource text and combines with factual filters', async ({ page }) => {
+  await page.goto('./resources/');
+  const search = page.getByRole('searchbox', { name: '搜索资源' });
+  await expect(search).toBeEnabled();
+
+  await search.fill('Metroidvania');
+  await expect(page).toHaveURL(/[?&]q=Metroidvania(?:&|$)/);
+  const matching = page.locator('[data-result-kind="work-item"]:visible');
+  await expect(matching).toHaveCount(resources.filter((resource) => {
+    const text = JSON.stringify(resource).toLowerCase();
+    return text.includes('metroidvania');
+  }).length);
+
+  await page.getByLabel('媒介').selectOption('talk');
+  expect(new URL(page.url()).searchParams.get('mediaType')).toBe('talk');
+  await expect(page.getByRole('status')).toContainText('条 Work Item');
+
+  await search.fill('');
+  await expect(page).not.toHaveURL(/[?&]q=/);
+});
+
 test('restores filter state from reload, history and pageshow', async ({ page }) => {
   const target = resources[0];
   const expectedTopicCount = resources.filter(({ resourceTopicIds }) =>
@@ -235,6 +256,16 @@ test('keeps all collapsed Work Item facts compact at desktop and mobile widths',
   expect(median(mobileRows.map(({ height }) => height))).toBeLessThanOrEqual(340);
 });
 
+test('keeps the expanded desktop directory dense enough for scanning', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+  const heights = await page.locator('.work-item-result').evaluateAll((rows) =>
+    rows.map((row) => row.getBoundingClientRect().height),
+  );
+  expect(median(heights)).toBeLessThanOrEqual(110);
+});
+
 test('keeps access versions and external observations in catalog order inside the disclosure', async ({ page }) => {
   const resource = resources.find(({ externalSignals }) => (externalSignals?.length ?? 0) > 1);
   expect(resource).toBeTruthy();
@@ -274,6 +305,7 @@ test('keeps all Sources and Work Items readable without JavaScript while control
   for (const control of await page.locator('[data-resource-filter]').all()) {
     await expect(control).toBeDisabled();
   }
+  await expect(page.getByRole('searchbox', { name: '搜索资源' })).toBeDisabled();
   await expect(page.locator('[data-resource-table-control]')).toHaveCount(2);
   for (const control of await page.locator('[data-resource-table-control]').all()) {
     await expect(control).toBeDisabled();

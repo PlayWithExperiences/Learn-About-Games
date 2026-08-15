@@ -65,6 +65,18 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
 
   <fieldset class="resource-filter-panel">
     <legend>按事实筛选 Work Item</legend>
+    <label class="resource-search-field">
+      <span>搜索资源</span>
+      <input
+        type="search"
+        name="q"
+        aria-label="搜索资源"
+        placeholder="标题、简介、来源……"
+        autocomplete="off"
+        data-resource-search
+        disabled
+      />
+    </label>
     <div class="resource-filter-grid">
       <label>
         <span>资源主题</span>
@@ -117,7 +129,7 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
       </label>
     </div>
     <noscript>
-      <p class="script-required-note">启用 JavaScript 后可以组合筛选或展开全部；当前可逐个展开 {resourceTopics.length} 个资源主题，全部 {resources.length} 条 Work Item 均可访问。</p>
+      <p class="script-required-note">启用 JavaScript 后可以搜索、组合筛选或展开全部；当前可逐个展开 {resourceTopics.length} 个资源主题，全部 {resources.length} 条 Work Item 均可访问。</p>
     </noscript>
   </fieldset>
 
@@ -132,6 +144,7 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
 
 <script>
   const controls = Array.from(document.querySelectorAll<HTMLSelectElement>('[data-resource-filter]'));
+  const searchInput = document.querySelector<HTMLInputElement>('[data-resource-search]');
   const workItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="work-item"]'));
   const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-resource-group]'));
   const tableControls = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-resource-table-control]'));
@@ -152,8 +165,14 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     return (value?.split(' ') ?? []).includes(expected);
   }
 
+  function normalizeSearchText(value: string) {
+    return value.normalize('NFKC').trim().toLocaleLowerCase();
+  }
+
   function workItemMatches(item: HTMLElement, values: Record<string, string>) {
     return (
+      (!values.search || normalizeSearchText(item.dataset.searchText ?? '').includes(normalizeSearchText(values.search)))
+      &&
       (values.resourceTopic === 'all' || hasListValue(item.dataset.resourceTopics, values.resourceTopic))
       && (values.knowledgeTopic === 'all' || hasListValue(item.dataset.knowledgeTopics, values.knowledgeTopic))
       && (values.capability === 'all' || hasListValue(item.dataset.capabilities, values.capability))
@@ -165,7 +184,10 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
   }
 
   function valuesFromControls() {
-    return Object.fromEntries(controls.map((control) => [control.name, control.value]));
+    return {
+      search: searchInput?.value ?? '',
+      ...Object.fromEntries(controls.map((control) => [control.name, control.value])),
+    };
   }
 
   function updateResults() {
@@ -177,7 +199,9 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
       item.hidden = !visible;
       return visible;
     });
-    const filtersActive = Object.values(values).some((value) => value !== 'all');
+    const filtersActive = Object.entries(values).some(([key, value]) =>
+      key === 'search' ? value.length > 0 : value !== 'all',
+    );
     for (const group of groups) {
       const matchingCount = workItems.filter((item) =>
         item.closest<HTMLElement>('[data-resource-group]') === group && !item.hidden,
@@ -194,6 +218,7 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
 
   function syncControlsFromUrl() {
     const params = new URLSearchParams(window.location.search);
+    if (searchInput) searchInput.value = params.get('q') ?? '';
     for (const control of controls) {
       const paramName = queryParamByFilter[control.name as keyof typeof queryParamByFilter];
       const requestedValue = paramName ? params.get(paramName) : null;
@@ -205,6 +230,9 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
 
   function writeUrlFromControls() {
     const url = new URL(window.location.href);
+    const search = searchInput?.value.trim() ?? '';
+    if (search) url.searchParams.set('q', search);
+    else url.searchParams.delete('q');
     for (const control of controls) {
       const paramName = queryParamByFilter[control.name as keyof typeof queryParamByFilter];
       if (!paramName) continue;
@@ -220,6 +248,14 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
   for (const control of controls) {
     control.disabled = false;
     control.addEventListener('change', () => {
+      writeUrlFromControls();
+      updateResults();
+    });
+  }
+
+  if (searchInput) {
+    searchInput.disabled = false;
+    searchInput.addEventListener('input', () => {
       writeUrlFromControls();
       updateResults();
     });

@@ -4,6 +4,8 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 成长资源目录新增搜索框（支持标题、简介与来源的中英文检索、NFKC 归一化与可分享 `q` URL 参数），并将 Work Item 改为更窄的编辑型行；桌面展开态中位行高约 94px，移动端继续保持单列可读。
+- 按“英文与中文优先、日文低优先级”的方向新增 500 个经 GDC Vault 官方 sitemap 与会话页逐条核验的英文 Work Item；目录达到 41 个 Source、1110 个 Work Item 与 1124 个 Access Version。GDC Vault 会话统一保守标记为 subscription，不把搜索摘要或完整录播可用性当作事实。
 - 成长资源扩充完成首个 300+ 目标批次：净增 385 个经过官方页面或可复核原页核验的 Work Item，目录达到 41 个 Source、610 个 Work Item 与 624 个 Access Version。新增以英文 GDC Vault／Game Developer、学术章节、课程与方法指南为主，另补 18 条中文 Work Item 与 8 条日文研究；所有条目规范化 URL 去重、恰属一个资源主题并保留检查日期，不添加评分或排名。
 - 将 `PlayWithExperiences/Learn-About-Games` 暂时从 Public 改为 Private；未经身份验证的仓库 URL 与原 GitHub Pages URL 均返回 404，并手动停用 Pages workflow，避免私有完善期间触发无效部署。历史发布证据继续保留，重新公开前需完成当前核心体验修正、重新启用 workflow 与线上验收。
 - EGDS 取代通用分组成为能力地图的唯一知识骨架：28 个方法节点表达体验设计、从计划到落地、团队、产品／盈利与更广语境；体验设计内部固定显示体验旅程以及感受 → 理解 → 解构 → 重构，并由重构进入叙事、美学与表现、玩法与挑战三类设计杠杆。

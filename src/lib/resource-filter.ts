@@ -3,6 +3,7 @@ import type { Catalog } from './catalog/validate';
 type Resource = Catalog['resources'][number];
 
 export type ResourceFilters = {
+  search?: string;
   resourceTopic?: string;
   knowledgeTopic?: string;
   capabilityId?: string;
@@ -12,11 +13,30 @@ export type ResourceFilters = {
   sourceId?: string;
 };
 
+export function normalizeResourceSearchText(value: string): string {
+  return value.normalize('NFKC').trim().toLocaleLowerCase();
+}
+
+function resourceSearchText(resource: Resource): string {
+  return normalizeResourceSearchText([
+    resource.title['zh-CN'],
+    resource.title.en,
+    resource.summary['zh-CN'],
+    resource.summary.en,
+    resource.whyRelevant['zh-CN'],
+    resource.whyRelevant.en,
+  ].filter((value): value is string => Boolean(value)).join(' '));
+}
+
 export function filterResources(
   resources: readonly Resource[],
   filters: ResourceFilters,
 ): Resource[] {
   return resources.filter((resource) => {
+    if (filters.search && !resourceSearchText(resource).includes(normalizeResourceSearchText(filters.search))) {
+      return false;
+    }
+
     if (filters.resourceTopic && !resource.resourceTopicIds.includes(filters.resourceTopic)) {
       return false;
     }

@@ -307,3 +307,15 @@ fresh build 后首页 targeted Chromium 1/1 GREEN。写入交接记录后的第�
 第一轮研究报告提供 200 条 GDC／Game Developer、100 条学术／课程和 100 条中文／全球候选。写入前按 canonical URL 归一化并与现有 catalog 及其他批次做 union/diff；其中 1 条 GDC URL 与既有 Work Item 规范化后重复，被排除，最终净增 385 条。数据最终为 41 个 Source、610 个 Work Item、624 个 Access Version；每条只有一个主要 Resource Topic，保留 originalLanguage、access model、versionRelation、presentationMode 与 checkedAt。新增 Source 仅在真实发布实体有必要时建立，不能把单篇内容误当 Source。
 
 实现先在 `catalog-data.test.ts` 写入批次 RED，再写资源与 Source 数据；随后补上批次 A/B/C 的 200/100/85 条 intake 行锁定、规范化 URL 唯一性和全量资源引用。Resources 与 Playtest E2E 首轮暴露两类测试契约问题：`Source` aria-label 的宽匹配与 610 行逐条轮询造成浏览器会话过载；修正为 exact label 和集合级 DOM 断言后，桌面／移动 40/40 通过。最终 fresh 门禁为 check 0 diagnostics、unit 168/168、静态构建 134 pages、完整 E2E 229 passed / 21 intentional skipped；随后还需完成静态 diff/secret scan、commit 与本地预览。
+
+### 35. 2026-08-15：资源搜索、紧凑目录与 500 条 GDC 扩展
+
+记录说明：以下是本次会话的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括完整工具输出、子任务内部推理和未转发消息；未获取内容不声称完整，也没有记录凭据、环境变量或私有账户信息。
+
+用户在完成 300+ 扩展后继续要求：成长资源页增加搜索框，列表减少留白、一次显示更多条目，并再补至少 500 条资源；优先英文与中文，日文优先级较低。实现先在资源过滤单元测试和 Resources Playwright 测试中取得 RED，再加入标题／简介／来源搜索、NFKC 归一化、`q` URL 参数、reload/history 恢复和无 JavaScript 禁用说明。默认主题子表、展开全表、全部收起与七维事实筛选保持不变。
+
+紧凑化只调整 Resources scoped CSS：筛选面板、主题表、Work Item 主信息／事实／访问三列的间距、字号和行 padding 收紧；移动端仍保持事实区与访问区的垂直阅读顺序。新密度回归锁定桌面展开态中位 Work Item 行高不超过 110px，并保留无横向溢出检查。
+
+内容扩展使用 Agent Reach doctor 确认的研究边界。Exa 在检索阶段触发配额限制后停止重试；本批不把搜索摘要当证据，而是直接读取 GDC Vault 官方 sitemap 与逐条会话页的 HTML metadata／HTTP 200。按 GDC play ID 和规范化 URL 去重后，净增 500 个英文 `talk` Work Item，统一保守标记为 `subscription`；既有中文资源继续保留，未用未经核验中文页面凑数。目录达到 41 个 Source、1110 个 Work Item、1124 个 Access Version 与 15 个 Resource Topic。
+
+最终 fresh 证据为：Astro check 0 errors / warnings / hints，Vitest 169/169，静态构建 135 pages，Resources 桌面／移动 E2E 32/32，完整 Chromium + mobile E2E 233 passed / 21 intentional skipped / 0 failed；`git diff --check`、canonical／topic／Source 引用审计与 secret filename/content scan 均通过。代码、资源数据、研究 notebook 与文档仍在本地 Private 候选工作树，4321 预览已服务最新 dist，入口为 `/Learn-About-Games/resources/`，未推送或部署。

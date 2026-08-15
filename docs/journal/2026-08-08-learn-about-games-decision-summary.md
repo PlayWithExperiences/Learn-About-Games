@@ -9,10 +9,11 @@
 
 ## 2026-08-15 当前里程碑
 
-- 成长资源首个 300+ 扩展目标已完成：净增 385 个 Work Item，当前为 41 个 Source、610 个 Work Item、624 个 Access Version、15 个 Resource Topic。
-- 扩展优先英文与中文：英文 GDC／Game Developer、学术章节、课程与方法指南构成主体；补入已核验中文腾讯游戏学堂条目，日文只保留明确原页研究。每项继续执行 canonical URL 规范化去重、唯一主要主题、访问版本与检查日期约束。
-- 证据边界已记录在 [2026-08-15-resource-300-intake.md](../research/2026-08-15-resource-300-intake.md)。Exa 配额受限后停止重试，未把搜索摘要、聚合页或无法核验的候选写入 catalog；1 条规范化重复候选被排除。
-- 当前 fresh 门禁：Astro check 0 errors / warnings / hints，Vitest 168/168，静态构建 134 pages，Resources 与 Playtest 桌面／移动 E2E 40/40，完整 E2E 229 passed / 21 intentional skipped。
+- 成长资源已完成首个 300+ 扩展并继续增加 500 条 GDC 官方会话：当前为 41 个 Source、1110 个 Work Item、1124 个 Access Version、15 个 Resource Topic。每个 Work Item 仍恰属一个主要主题，并保留规范化 canonical URL、访问版本与检查日期。
+- 扩展优先英文与中文：本轮 500 条新增内容均为英文 GDC Vault 官方会话；既有已核验中文条目继续保留，日文只在明确原页研究缺口时纳入。GDC Vault 会话统一标记为 subscription，不把搜索摘要、聚合页或完整录播可用性推断写入 catalog。
+- 资源目录新增标题／简介／来源搜索框，支持 NFKC 归一化、中文与英文匹配、可分享 `q` URL 参数；主题子表与七维事实筛选、展开全表仍保留。编辑行进一步收紧，方便一屏扫描更多 Work Item。
+- 证据边界已记录在 [2026-08-15-resource-500-gdc-intake.md](../research/2026-08-15-resource-500-gdc-intake.md) 与 [2026-08-09-resource-intake.md](../research/2026-08-09-resource-intake.md)。Exa 配额受限后停止重试，新增批次直接使用 GDC 官方 sitemap 与会话页 HTTP 200/HTML metadata 核验。
+- 当前 fresh 门禁已通过：Astro check 0 errors / warnings / hints，Vitest 169/169，静态构建 135 pages，Resources 桌面／移动 E2E 32/32，完整 Chromium + mobile E2E 233 passed / 21 intentional skipped / 0 failed。搜索实测 `q=Metroidvania`、1110 条 server-rendered Work Item 与 1440/320 无横溢出均成立。本地预览固定使用 [http://127.0.0.1:4321/Learn-About-Games/resources/](http://127.0.0.1:4321/Learn-About-Games/resources/)，仓库仍 Private，未推送或部署。
 
 ## 项目来源
 
