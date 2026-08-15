@@ -468,3 +468,9 @@ Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆�
 第一次 Atlas 双项目浏览器运行出现 11 个失败：10 个是测试仍锁 48／36／61、五 Theme 与 Strategy 空状态；一个是真实产品问题——scene height 增至 1240 后，fit 被 50% 手动下限钳住，底部超出 viewport 约 45px。unit 先收到 0.5 而非约 0.423 的有效 RED；修复让 fit 可以为完整场景低于手动下限，按钮和 wheel 仍保持原边界。第二轮 Atlas／Theme／Base 为 48 pass／20 skip，完整 Playwright 为 229 pass／21 skip／0 fail。
 
 视觉证据保存于 `/tmp/lag-final-review/`：1440 Light Shooter 与 Dark RTS 全屏均完整 fit、58／42／69 且横溢出为 0；320 Dark no-JS 为 58 outline node、42 unique relation、69 Evidence、横溢出 0；1440 Resources 默认页高度 2378px，仍只展示折叠主题入口和筛选表头。本节对应提交为 `7893272`、`c701241` 与 `fa8ac11`；仓库、Pages、push 与线上状态均未改变。
+
+## 41. 资源 Work Item 单行密度修正（部分会话导出）
+
+发起人查看资源目录后指出，标题、事实、打开原页和“查看访问版本”仍被拉成过宽的编辑行；访问版本入口没有必要独占下一行，希望一个页面能扫描更多条目。主任务保留事实字段、原生 `details`、访问版本顺序、搜索与七维筛选，只改变关闭态的排版：桌面新增独立的版本控制列，把摘要放回同一行末端；打开后，版本列表、关联说明与外部公开观察进入同一行下方的可滚动详情区。移动端仍切换为单列自然流，避免窄屏浮层遮挡和横向溢出。
+
+先新增桌面浏览器 RED：旧 DOM 中版本摘要相对 Work Item 行顶偏移超过 24px，且仍位于第二行。最小 GREEN 后，1440px 每个摘要都与首行对齐并位于访问区右侧；打开版本详情仍可见版本链接和检查日期。Fresh `npm run build` 为 Astro check 0 errors／warnings／hints、Vitest 169/169、135 pages；资源桌面／移动 E2E 34/34；截图检查确认默认与打开态均无页面横向溢出。仓库继续 Private，`127.0.0.1:4321/Learn-About-Games/resources/` 预览保持运行，本轮没有 push 或部署。

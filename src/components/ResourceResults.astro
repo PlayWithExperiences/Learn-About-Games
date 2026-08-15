@@ -119,41 +119,43 @@ const workCountBySource = new Map(
           </div>
           <details class="work-item-result__more">
             <summary>{resource.externalSignals?.length ? '查看访问版本与外部事实' : '查看访问版本'}</summary>
-            <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
-              {resource.accessVersions.map((version) => (
-                <li>
-                  <div class="access-version-list__facts">
-                    <span>{formatLanguage(version.language)}</span>
-                    <span>{formatVersionRelation(version.versionRelation)}</span>
-                    <span>{formatPresentationMode(version.presentationMode)}</span>
-                    <span>{formatAccessModel(version.accessModel)}</span>
-                    <span>检查于 {version.checkedAt}</span>
-                  </div>
-                  <a href={version.url}>访问此版本</a>
-                  {version.regionRestrictions?.map((restriction) => (
-                    <p class="access-version-list__restriction">{formatRegionRestriction(restriction)}</p>
+            <div class="work-item-result__more-body">
+              <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
+                {resource.accessVersions.map((version) => (
+                  <li>
+                    <div class="access-version-list__facts">
+                      <span>{formatLanguage(version.language)}</span>
+                      <span>{formatVersionRelation(version.versionRelation)}</span>
+                      <span>{formatPresentationMode(version.presentationMode)}</span>
+                      <span>{formatAccessModel(version.accessModel)}</span>
+                      <span>检查于 {version.checkedAt}</span>
+                    </div>
+                    <a href={version.url}>访问此版本</a>
+                    {version.regionRestrictions?.map((restriction) => (
+                      <p class="access-version-list__restriction">{formatRegionRestriction(restriction)}</p>
+                    ))}
+                  </li>
                 ))}
-              </li>
-            ))}
-            </ul>
-            <p class="work-item-result__relevance">{resource.whyRelevant['zh-CN']}</p>
-            {resource.externalSignals && resource.externalSignals.length > 0 && (
-              <section class="external-observations" aria-label={`${resource.title['zh-CN']} 的外部观察`}>
-                <h4>外部公开观察</h4>
-                <ul>
-                  {resource.externalSignals.map((signal) => (
-                    <li data-external-observation>
-                      <a href={signal.url}>
-                        <span>{signal.provider}</span>
-                        <span>{signal.label}：{signal.value}</span>
-                        {signal.sampleSize && <span>样本：{signal.sampleSize}</span>}
-                        <span>观察于 {signal.observedAt}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+              </ul>
+              <p class="work-item-result__relevance">{resource.whyRelevant['zh-CN']}</p>
+              {resource.externalSignals && resource.externalSignals.length > 0 && (
+                <section class="external-observations" aria-label={`${resource.title['zh-CN']} 的外部观察`}>
+                  <h4>外部公开观察</h4>
+                  <ul>
+                    {resource.externalSignals.map((signal) => (
+                      <li data-external-observation>
+                        <a href={signal.url}>
+                          <span>{signal.provider}</span>
+                          <span>{signal.label}：{signal.value}</span>
+                          {signal.sampleSize && <span>样本：{signal.sampleSize}</span>}
+                          <span>观察于 {signal.observedAt}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </div>
           </details>
         </article>
       );

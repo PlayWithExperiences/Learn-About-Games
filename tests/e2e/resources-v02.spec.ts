@@ -256,6 +256,29 @@ test('keeps all collapsed Work Item facts compact at desktop and mobile widths',
   expect(median(mobileRows.map(({ height }) => height))).toBeLessThanOrEqual(340);
 });
 
+test('keeps the access-version control on the same desktop row as the Work Item facts', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+
+  const rows = page.locator('.work-item-result');
+  const inlineControls = await rows.evaluateAll((elements) => elements.map((row) => {
+    const rowRect = row.getBoundingClientRect();
+    const summary = row.querySelector<HTMLElement>('.work-item-result__more > summary');
+    const access = row.querySelector<HTMLElement>('[data-work-row-access]');
+    const summaryRect = summary?.getBoundingClientRect();
+    const accessRect = access?.getBoundingClientRect();
+    return {
+      summaryOffset: summaryRect && rowRect ? summaryRect.top - rowRect.top : Infinity,
+      summaryInAccessColumn: Boolean(summaryRect && accessRect && summaryRect.left >= accessRect.left - 2),
+    };
+  }));
+
+  expect(inlineControls.every(({ summaryOffset, summaryInAccessColumn }) =>
+    summaryOffset <= 24 && summaryInAccessColumn,
+  )).toBe(true);
+});
+
 test('keeps the expanded desktop directory dense enough for scanning', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./resources/');

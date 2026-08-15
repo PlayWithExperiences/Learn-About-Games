@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／7 条可直接选择的证据谱系与 225 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／7 条可直接选择的证据谱系与 1110 项资源目录，尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -299,3 +299,9 @@ Atlas 研究建立第一人称射击与即时战略两条选择性 Theme，而�
 内容增加把 Atlas scene height 从 1120px 提高到 1240px，并暴露旧的 fit 语义错误：手动缩放下限 50% 会让“适应全图”仍裁掉底部。修复先以 unit 和 browser 取得 RED，再让 fit 在必要时低于手动下限；加减按钮、普通 wheel 与重置仍保持 50%–200%。Light Shooter 与 Dark RTS 全屏实测 scale 为 0.60645、四边完整落在 viewport 内；320px no-JS 保留 58／42／69 且页面横向溢出为 0。
 
 Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuthor`、`checkedAt`、`locator` 与 `boundedClaim` 设为每条必填，`publicationDate` 与 `stableId` 只在可核实时填写，并为既有 Evidence 补齐来源上下文；关系端点测试同时锁定完整边界线段。最终 fresh build 为 Astro 68 files、0 diagnostics，Vitest 165/165，130 pages；Atlas／Theme／Base 双项目 48 passed／20 project-specific skipped，Resources／Playtest 40/40，完整 Playwright 250 项为 229 passed／21 project-specific skipped／0 failed。四张视觉证据位于 `/tmp/lag-final-review/`。仓库仍 Private、Pages 仍禁用，本轮不 push；提交后重新启动 base-path 本地预览。
+
+## 资源目录单行密度修正
+
+发起人继续指出资源页的 Work Item 行仍然过宽、访问版本入口独占第二行，要求尽量在同一行看见更多事实。主任务保留原生 `details` 和无 JavaScript 可读性，只把“查看访问版本”移入桌面行末端；展开内容进入该行下方的独立详情区，不再把关闭态行撑成两行。移动端仍按标题、事实、访问和详情顺序自然堆叠。
+
+本次只改 `ResourceResults.astro`、资源页 scoped CSS 与资源 E2E。新增浏览器合同要求 1440px 下每个版本入口摘要距行顶不超过 24px、落在访问列右侧；详情顺序、搜索、筛选、Source 路由、无 JavaScript 与 320px 横向溢出合同保持不变。fresh 门禁为 Astro check 0/0/0、Vitest 169/169、135 pages；Resources Chromium／mobile 34/34。仓库仍 Private，本地预览固定为 `/Learn-About-Games/resources/`，未 push 或部署。
