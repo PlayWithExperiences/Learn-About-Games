@@ -832,5 +832,63 @@
     "publicationDate": "2018", "checkedAt": "2026-08-13", "stableId": "Blizzard article 21574697",
     "locator": "Opening development recollection, paragraphs on the 1996 E3 alpha",
     "boundedClaim": { "zh-CN": "支持 Warcraft II 作为 StarCraft 初版技术基础，以及外部反馈后重写引擎的设计响应；不主张最终作品只是换皮。" }
+  },
+  {
+    "id": "nintendo-ocarina-z-targeting",
+    "sourceTitle": "Iwata Asks: The Legend of Zelda: Ocarina of Time 3D",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Nintendo Iwata Asks：Ocarina of Time 的 Z-targeting", "en": "Nintendo Iwata Asks: Ocarina of Time Z-targeting" },
+    "url": "https://iwataasks.nintendo.com/interviews/3ds/zelda-ocarina-of-time/1/2/",
+    "summary": { "zh-CN": "Nintendo 开发者回顾 Z-targeting 如何通过锁定敌人与调整镜头解决一对多战斗的空间可读性问题。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Nintendo / Ocarina of Time developers",
+    "checkedAt": "2026-08-15",
+    "stableId": "Iwata Asks Ocarina of Time 3DS 1-2",
+    "locator": "Developer discussion of Z-targeting, camera and one-versus-many combat",
+    "boundedClaim": { "zh-CN": "支持 Ocarina of Time 中 Z-targeting 的设计问题与解决方向；不把它写成所有锁定系统的唯一发明。" }
+  },
+  {
+    "id": "gamedeveloper-dd-rpg-history",
+    "sourceTitle": "Dungeons & Dragons: The First Modern RPG? A History of Game Design",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Game Developer：Dungeons & Dragons 与现代 RPG 的形成", "en": "Dungeons & Dragons: The First Modern RPG?" },
+    "url": "https://www.gamedeveloper.com/design/dungeons-and-dragons-the-first-modern-rpg-history-of-game-design-",
+    "summary": { "zh-CN": "Game Developer 的历史回顾讨论角色职业、经验、等级与持续战役如何构成现代 RPG 的成长语法。" },
+    "sourceKind": "historical-analysis",
+    "institutionOrAuthor": "Game Developer",
+    "publicationDate": "2014",
+    "checkedAt": "2026-08-15",
+    "stableId": "Game Developer RPG history",
+    "locator": "Sections on character classes, experience and levels",
+    "boundedClaim": { "zh-CN": "支持 RPG 持续角色成长语法的历史形成语境；不将某个单一桌游或电子游戏写成唯一发明者。" }
+  },
+  {
+    "id": "gamedeveloper-fundamentals-progression",
+    "sourceTitle": "The Fundamentals of Game Progression",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Game Developer：游戏进展的基础", "en": "The Fundamentals of Game Progression" },
+    "url": "https://www.gamedeveloper.com/design/the-fundamentals-of-game-progression",
+    "summary": { "zh-CN": "Game Developer 从关卡、角色和能力变化讨论游戏进展如何把玩家行动转成持续反馈。" },
+    "sourceKind": "historical-analysis",
+    "institutionOrAuthor": "Game Developer",
+    "checkedAt": "2026-08-15",
+    "stableId": "Game Developer game progression fundamentals",
+    "locator": "Sections defining progression and character progression",
+    "boundedClaim": { "zh-CN": "支持持续进展作为跨作品设计概念的解释框架；不对作品质量或唯一来源作判断。" }
+  },
+  {
+    "id": "nintendo-breath-of-the-wild-behind-scenes",
+    "sourceTitle": "Go behind the scenes with the making of The Legend of Zelda: Breath of the Wild",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Nintendo：Breath of the Wild 制作幕后", "en": "Nintendo: Behind the scenes with Breath of the Wild" },
+    "url": "https://www.nintendo.com/en-gb/News/2017/March/Go-behind-the-scenes-with-the-making-of-The-Legend-of-Zelda-Breath-of-the-Wild-1206592.html",
+    "summary": { "zh-CN": "Nintendo 幕后材料讨论 open-air 方向、广阔空间、探索路线与系统交互如何共同塑造 Breath of the Wild。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Nintendo",
+    "publicationDate": "2017-03-01",
+    "checkedAt": "2026-08-15",
+    "stableId": "Nintendo news 1206592",
+    "locator": "Making-of discussion of open-air concept and large-scale exploration",
+    "boundedClaim": { "zh-CN": "支持 Breath of the Wild 的 open-air 设计方向与非线性探索语境；不主张它是开放世界的唯一先驱。" }
   }
 ]

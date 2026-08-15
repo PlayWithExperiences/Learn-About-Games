@@ -10,13 +10,13 @@
     "evidenceIds": ["wichman-rogue-history"]
   },
   {
-    "id": "roguelike-run-structure",
+    "id": "procedural-run-structure",
     "kind": "innovation",
-    "name": { "zh-CN": "Roguelike run-based 单局结构", "en": "Roguelike run-based structure" },
+    "name": { "zh-CN": "程序生成与单局结构", "en": "Procedural run structure" },
     "summary": { "zh-CN": "把程序生成、单局失败与重新开始视为可跨类型转译的设计概念，而不是某一款游戏。" },
     "startYear": 1980,
     "lane": 0,
-    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "tags": ["innovation-event", "roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
     "evidenceIds": ["wichman-rogue-history"]
   },
   {
@@ -469,5 +469,65 @@
     "summary": { "zh-CN": "Blizzard 回顾称早期版本使用 Warcraft II 引擎换皮，反响不佳后重写引擎并提高目标。" },
     "startYear": 1998, "lane": 6,
     "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20"]
+  },
+  {
+    "id": "first-person-shooter-perspective",
+    "kind": "innovation",
+    "name": { "zh-CN": "第一人称射击视角", "en": "First-person shooter perspective" },
+    "summary": { "zh-CN": "把第一人称空间、连续移动与武器瞄准组合成可持续扩展的射击体验；这里记录设计事件，不宣称唯一发明者。" },
+    "startYear": 1991,
+    "lane": 0,
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "evidenceIds": ["gdc-wolfenstein-postmortem", "gdc-doom-postmortem"]
+  },
+  {
+    "id": "lock-on-targeting-combat",
+    "kind": "innovation",
+    "name": { "zh-CN": "锁定目标的空间战斗", "en": "Lock-on targeting for spatial combat" },
+    "summary": { "zh-CN": "用目标锁定与镜头协同把一对多的空间战斗变得可读；Nintendo 的开发者回顾把它放在 Ocarina of Time 的设计问题中。" },
+    "startYear": 1998,
+    "lane": 0,
+    "tags": ["innovation-event", "zelda-lineage", "action-adventure"],
+    "evidenceIds": ["nintendo-ocarina-z-targeting"]
+  },
+  {
+    "id": "rpg-character-progression",
+    "kind": "innovation",
+    "name": { "zh-CN": "角色成长与持续进展", "en": "Character progression and persistent growth" },
+    "summary": { "zh-CN": "把经验、等级、能力或装备的累积作为跨场景的持续反馈；它是 RPG 设计事件，不等于某个单一作品的发明。" },
+    "startYear": 1974,
+    "lane": 0,
+    "tags": ["innovation-event", "rpg-progression", "action-rpg"],
+    "evidenceIds": ["gamedeveloper-dd-rpg-history", "gamedeveloper-fundamentals-progression"]
+  },
+  {
+    "id": "open-world-nonlinear-exploration",
+    "kind": "innovation",
+    "name": { "zh-CN": "开放世界与非线性探索", "en": "Open-world nonlinear exploration" },
+    "summary": { "zh-CN": "让玩家在大尺度空间中自行决定路线、顺序与目标；Nintendo 对 Breath of the Wild 的幕后回顾将其称为 open-air 方向。" },
+    "startYear": 2017,
+    "lane": 0,
+    "tags": ["innovation-event", "nonlinear-world", "zelda-lineage"],
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+  },
+  {
+    "id": "ocarina-of-time",
+    "kind": "game",
+    "name": { "zh-CN": "The Legend of Zelda: Ocarina of Time", "en": "The Legend of Zelda: Ocarina of Time" },
+    "summary": { "zh-CN": "Nintendo 开发者回顾中的 3D Zelda 作品；锁定目标的空间战斗事件在此成为可观察的承载作品。" },
+    "startYear": 1998,
+    "lane": 9,
+    "tags": ["zelda-lineage", "action-adventure", "innovation-event"],
+    "evidenceIds": ["nintendo-ocarina-z-targeting"]
+  },
+  {
+    "id": "breath-of-the-wild",
+    "kind": "game",
+    "name": { "zh-CN": "The Legend of Zelda: Breath of the Wild", "en": "The Legend of Zelda: Breath of the Wild" },
+    "summary": { "zh-CN": "Nintendo 幕后回顾中的 open-air 作品；开放世界与非线性探索事件在此成为可观察的承载作品。" },
+    "startYear": 2017,
+    "lane": 8,
+    "tags": ["zelda-lineage", "nonlinear-world", "innovation-event"],
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
   }
 ]

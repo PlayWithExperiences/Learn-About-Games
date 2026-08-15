@@ -43,6 +43,20 @@ const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 const tagById = new Map(tags.map((tag) => [tag.id, tag]));
 const relationById = new Map(relations.map((relation) => [relation.id, relation]));
 const nodeIndex = sortAtlasNodeIndex(buildAtlasNodeIndex(nodes, tags), 'time');
+const eventNodeIds = new Set(
+  nodes
+    .filter((node) => node.kind === 'innovation' && node.tags.includes('innovation-event'))
+    .map((node) => node.id),
+);
+const carrierNodeIds = new Set(
+  [...eventNodeIds].flatMap((eventId) => relations
+    .filter((relation) => relation.fromId === eventId)
+    .map((relation) => relation.toId)),
+);
+const carriersFor = (eventId: string) => relations
+  .filter((relation) => relation.fromId === eventId)
+  .map((relation) => nodeById.get(relation.toId))
+  .filter((node): node is AtlasNode => node?.kind === 'game');
 
 const kindLabels: Record<AtlasNode['kind'], string> = {
   game: 'Game',
@@ -107,8 +121,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
   aria-labelledby="atlas-network-title"
 >
   <header class="atlas-network__heading">
-    <h2 id="atlas-network-title">同一张全局时间网络</h2>
-    <p>横向位置只表示开始年份。纵向分道只避免碰撞并让实体类型相邻，不表示质量、重要性或固定演进顺序。</p>
+    <h2 id="atlas-network-title">创新事件与承载作品时间网络</h2>
+    <p>横向位置只表示开始年份。创新事件是主线，游戏、硬件与实验程序是承载它们的作品或历史对象；纵向分道只避免碰撞，不表示质量、重要性或固定演进顺序。</p>
   </header>
 
   <section class="atlas-legend" aria-labelledby="atlas-legend-title">
@@ -117,8 +131,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       <p>Evidence 只出现在详情文献行，不作为网络节点。时间相邻也不会自动产生关系。</p>
     </div>
     <ul>
-      <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game</strong><span>单一发行年份</span></li>
-      <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation</strong><span>可讨论的设计结构</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game / Carrier</strong><span>承载创新事件的作品</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation event</strong><span>被证据支持的机制或结构事件</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--category" aria-hidden="true"></span><strong>Category Formation</strong><span>真实时间范围</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--apparatus" aria-hidden="true"></span><strong>Experimental Apparatus</strong><span>实验装置</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--program" aria-hidden="true"></span><strong>Experimental Program</strong><span>实验程序</span></li>
@@ -127,6 +141,36 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       <li><span class="atlas-legend__line atlas-legend__line--directed" aria-hidden="true"></span><strong>有向关系</strong><span>箭头只用于有证据的方向</span></li>
       <li><span class="atlas-legend__line atlas-legend__line--undirected" aria-hidden="true"></span><strong>无向关系</strong><span>结构对照不冒充影响</span></li>
     </ul>
+  </section>
+
+  <section class="atlas-event-index" data-atlas-event-index aria-labelledby="atlas-event-index-title">
+    <div class="atlas-event-index__intro">
+      <p class="plain-label">Innovation events</p>
+      <h3 id="atlas-event-index-title">先看创新事件，再看承载作品</h3>
+      <p>这里记录的是被作品承载、并由证据支持的设计事件：某种视角、机制或结构何时出现，以及后来由哪些作品把它带入更大的语境。作品是证据入口，不等于“唯一发明者”。</p>
+    </div>
+    <div class="atlas-event-index__list">
+      {nodes.filter((node) => eventNodeIds.has(node.id)).sort((left, right) => left.startYear - right.startYear).map((event) => {
+        const carriers = carriersFor(event.id);
+        return (
+          <article data-atlas-event-card={event.id}>
+            <header>
+              <span>Innovation · {event.startYear}</span>
+              <a href={`#atlas-node-detail-${event.id}`} data-atlas-event-link>{event.name['zh-CN']}</a>
+            </header>
+            <p>{event.summary['zh-CN']}</p>
+            <footer>
+              <span>承载作品</span>
+              {carriers.length > 0 ? (
+                <ul>
+                  {carriers.map((carrier) => <li><a href={`#atlas-node-detail-${carrier.id}`}>{carrier.name['zh-CN']}</a></li>)}
+                </ul>
+              ) : <span>当前发布集尚未记录</span>}
+            </footer>
+          </article>
+        );
+      })}
+    </div>
   </section>
 
   <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
@@ -313,6 +357,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                   data-atlas-node
                   data-atlas-node-id={node.id}
                   data-atlas-node-kind={node.kind}
+                  data-atlas-carrier={carrierNodeIds.has(node.id) ? node.id : undefined}
+                  data-atlas-event={eventNodeIds.has(node.id) ? node.id : undefined}
                   data-start-year={node.startYear}
                   data-end-year={node.endYear}
                   data-year-x={placed.yearX}
@@ -350,6 +396,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
               <article
                 class="atlas-outline-node"
                 data-atlas-outline-node={node.id}
+                data-atlas-carrier={carrierNodeIds.has(node.id) ? node.id : undefined}
+                data-atlas-event={eventNodeIds.has(node.id) ? node.id : undefined}
                 data-theme-tags={node.tags.join(' ')}
                 data-theme-match="true"
               >
@@ -435,6 +483,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           <details
             id={`atlas-node-detail-${node.id}`}
             data-atlas-node-detail={node.id}
+            data-atlas-event-detail={eventNodeIds.has(node.id) ? node.id : undefined}
             data-atlas-index-item={node.id}
             data-index-id={node.id}
             data-index-name={indexItem.name}
@@ -451,6 +500,20 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
               <ul class="atlas-detail__tags" data-atlas-node-tags>
                 {tagsFor(node.tags).map((tag) => <li>{tag.name['zh-CN']}</li>)}
               </ul>
+              {eventNodeIds.has(node.id) && (
+                <section class="atlas-detail__event" data-atlas-event-detail-body>
+                  <h4>创新事件</h4>
+                  <p>这个节点记录的是可讨论、可核查的设计事件；游戏是它在时间线上可观察的承载作品。</p>
+                  <h5>承载作品</h5>
+                  {carriersFor(node.id).length > 0 ? (
+                    <ul>
+                      {carriersFor(node.id).map((carrier) => (
+                        <li><a href={`#atlas-node-detail-${carrier.id}`}>{carrier.name['zh-CN']}</a></li>
+                      ))}
+                    </ul>
+                  ) : <p>当前发布集尚未记录承载作品。</p>}
+                </section>
+              )}
               <section class="atlas-detail__relations">
                 <h4>关联关系</h4>
                 <ul>

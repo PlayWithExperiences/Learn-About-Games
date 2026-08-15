@@ -56,7 +56,7 @@
   },
   {
     "id": "run-structure-to-spelunky",
-    "fromId": "roguelike-run-structure",
+    "fromId": "procedural-run-structure",
     "toId": "spelunky",
     "type": "fusion",
     "status": "confirmed",
@@ -122,7 +122,7 @@
   },
   {
     "id": "run-structure-to-dead-cells",
-    "fromId": "roguelike-run-structure",
+    "fromId": "procedural-run-structure",
     "toId": "dead-cells",
     "type": "fusion",
     "status": "confirmed",
@@ -380,5 +380,49 @@
     "type": "design-response", "status": "confirmed", "directionality": "directed",
     "evidenceIds": ["blizzard-starcraft-20"], "tags": ["real-time-strategy-lens"],
     "summary": { "zh-CN": "Mike Morhaime 回顾称 StarCraft 初版使用 Warcraft II 引擎换皮；外部反响促使团队重写引擎并提高设计目标。" }
+  },
+  {
+    "id": "fps-perspective-to-wolfenstein-3d",
+    "fromId": "first-person-shooter-perspective",
+    "toId": "wolfenstein-3d",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-wolfenstein-postmortem", "gdc-doom-postmortem"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "summary": { "zh-CN": "Wolfenstein 3D 把第一人称空间与连续射击组织成可传播的作品形态；GDC 回顾支持其开发语境，但不宣称它是唯一类型起点。" }
+  },
+  {
+    "id": "lock-on-targeting-to-ocarina-of-time",
+    "fromId": "lock-on-targeting-combat",
+    "toId": "ocarina-of-time",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-ocarina-z-targeting"],
+    "tags": ["innovation-event", "zelda-lineage"],
+    "summary": { "zh-CN": "Nintendo 开发者回顾说明 Z-targeting 用来解决一对多战斗的空间可读性问题，并与镜头协同。" }
+  },
+  {
+    "id": "rpg-progression-to-diablo",
+    "fromId": "rpg-character-progression",
+    "toId": "diablo",
+    "type": "fusion",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["rpgfan-brevik-interview", "gamedeveloper-fundamentals-progression"],
+    "tags": ["innovation-event", "rpg-progression", "fusion"],
+    "summary": { "zh-CN": "Diablo 将持续角色成长与实时动作结合；Brevik 的回顾支持其从 Roguelike 原型转译而来，概念来源并非单一谱系。" }
+  },
+  {
+    "id": "open-world-exploration-to-breath-of-the-wild",
+    "fromId": "open-world-nonlinear-exploration",
+    "toId": "breath-of-the-wild",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+    "tags": ["innovation-event", "nonlinear-world", "zelda-lineage"],
+    "summary": { "zh-CN": "Nintendo 幕后回顾把 open-air 方向与大尺度探索、路线选择和系统交互放在同一设计目标中。" }
   }
 ]

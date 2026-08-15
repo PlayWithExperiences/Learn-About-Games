@@ -29,13 +29,36 @@ const typedAtlasNodes = atlasNodes as Catalog['atlasNodes'];
 const typedAtlasRelations = atlasRelations as Catalog['atlasRelations'];
 
 describe('global Atlas graph contract', () => {
+  it('publishes the EGDS-aligned innovation events as first-class, evidenced nodes', () => {
+    const eventIds = [
+      'first-person-shooter-perspective',
+      'lock-on-targeting-combat',
+      'rpg-character-progression',
+      'open-world-nonlinear-exploration',
+      'procedural-run-structure',
+    ];
+    const events = atlasNodes.filter(({ id }) => eventIds.includes(id));
+
+    expect(new Set(events.map(({ id }) => id))).toEqual(new Set(eventIds));
+    expect(events.every(({ kind }) => kind === 'innovation' || kind === 'category')).toBe(true);
+    expect(events.every(({ evidenceIds }) => evidenceIds.length > 0)).toBe(true);
+    expect(events.every(({ tags }) => tags.includes('innovation-event'))).toBe(true);
+    for (const event of events) {
+      expect(atlasEvidence.some(({ id }) => event.evidenceIds.includes(id)), event.id).toBe(true);
+      expect(
+        atlasRelations.some(({ fromId, toId }) => fromId === event.id || toId === event.id),
+        event.id,
+      ).toBe(true);
+    }
+  });
+
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(25);
-    expect(atlasNodes.length).toBeLessThanOrEqual(60);
+    expect(atlasNodes.length).toBeLessThanOrEqual(70);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
     expect(atlasRelations.length).toBeLessThanOrEqual(50);
-    expect(atlasNodes).toHaveLength(58);
-    expect(atlasRelations).toHaveLength(42);
+    expect(atlasNodes).toHaveLength(64);
+    expect(atlasRelations).toHaveLength(46);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -154,7 +177,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
 
-    expect(atlasEvidence).toHaveLength(69);
+    expect(atlasEvidence).toHaveLength(73);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -342,8 +365,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(58);
-    expect(relations).toHaveLength(42);
+    expect(nodes).toHaveLength(64);
+    expect(relations).toHaveLength(46);
   });
 });
 
@@ -496,9 +519,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(58);
-    expect(new Set(outlinedNodeIds).size).toBe(58);
-    expect(outlinedRelationIds.size).toBe(42);
+    expect(outlinedNodeIds).toHaveLength(64);
+    expect(new Set(outlinedNodeIds).size).toBe(64);
+    expect(outlinedRelationIds.size).toBe(46);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -585,13 +608,13 @@ describe('Atlas viewport helpers', () => {
 describe('Atlas node index helpers', () => {
   it('indexes localized names and bilingual searchable node and tag text', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
-    const runStructure = indexed.find(({ id }) => id === 'roguelike-run-structure');
+    const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(58);
+    expect(indexed).toHaveLength(64);
     expect(runStructure).toMatchObject({
-      id: 'roguelike-run-structure',
+      id: 'procedural-run-structure',
       startYear: 1980,
-      name: 'Roguelike run-based 单局结构',
+      name: '程序生成与单局结构',
     });
     expect(runStructure?.searchText).toContain('roguelike evidence lens');
     expect(filterAtlasNodeIndex(indexed, '单局永久死亡').map(({ id }) => id)).toContain('rogue');

@@ -329,3 +329,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 发起人指出事实筛选独占大面板、搜索和资源表割裂，且访问版本浮层会透出后面的条目。主任务把搜索、事实筛选、总 Work Item 数和展开／收起操作移入资源表头：桌面同一工具栏横向排列，事实筛选折叠为可展开 details；初始无筛选时增强态收起，URL 带筛选时保留打开，移动端自然折行。访问版本详情使用 `surface-strong` 不透明表面和独立层级，移动端仍回到文档流。
 
 先以 2 条浏览器 RED 锁定表头归属与面板颜色，再 GREEN。最终 Resources／Playtest 桌面与移动 50/50，新增合同通过；fresh `npm run build` 保持 Astro check 0/0/0、Vitest 170/170、136 pages。本地预览继续为 `http://127.0.0.1:4321/Learn-About-Games/resources/`，仓库仍 Private、未 push。
+# 2026-08-15 checkpoint：事件优先 Atlas 与资源目录密度
+
+- 当前本地候选继续保持 Private；预览入口为 `http://127.0.0.1:4321/Learn-About-Games/`，不把 GitHub Pages 404 描述成部署失败。
+- Atlas 的主语改为“创新事件 → 承载作品”：64 nodes、46 relations、73 Evidence；新增五个事件节点（程序生成单局结构、第一人称射击视角、锁定目标空间战斗、角色成长与持续进展、开放世界非线性探索），事件卡先解释发生了什么，再链接承载作品。绝对首创与完整品类史继续排除。
+- 资源目录当前为 41 Sources、2120 Work Items、2134 Access Versions；此前英文优先的 1000 条 GDC Vault 会话与 10 条 Game Developer 复盘已入库，本轮不重复导入。资源表搜索、结果数、展开/收起与七项事实筛选共用紧凑表头，访问版本详情使用不透明背景。
+- 已验证：`npm run check` 0/0/0；Atlas unit 29/29；fresh Astro build 138 pages；资源 Chromium 20/20；Atlas event 单项 E2E 1/1。下一步继续按事件—承载作品—证据三元组扩展 Atlas，并按英文优先、中文补充的证据门槛继续扩充资源。

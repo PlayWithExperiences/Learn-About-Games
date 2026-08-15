@@ -203,5 +203,10 @@
     "id": "real-time-strategy-lens",
     "name": { "zh-CN": "即时战略开发谱系", "en": "Real-time strategy development lineage" },
     "summary": { "zh-CN": "只追踪有参与者或机构证据支持的 RTS 作品与开发响应关系。" }
+  },
+  {
+    "id": "innovation-event",
+    "name": { "zh-CN": "创新事件", "en": "Innovation event" },
+    "summary": { "zh-CN": "把某种玩法、空间或系统机制作为可核查的设计事件来记录，并连接到承载它的作品；不宣称唯一发明者。" }
   }
 ]

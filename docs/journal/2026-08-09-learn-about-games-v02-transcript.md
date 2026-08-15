@@ -508,3 +508,11 @@ Innovation Atlas 本轮只新增一个证据透镜“解谜冒险结构谱系”
 资源研究继续使用官方 Game Developer 页面，新增 10 条设计复盘，目录达到 41 Source／2120 Work Item／2134 Access Version。每条保存英文原始语言、免费访问、唯一主要资源主题、canonical URL 与检查日期；没有将标题或来源页推断为评分、排名或学习顺序。Atlas 当前 58 nodes／42 relations／69 Evidence，Roguelike Family 入口已验证可点击，空 Family 仍明确显示待研究。
 
 本段是脱敏 partial export，不声称覆盖聊天 UI 的完整逐字记录；未记录凭据、环境变量或其他秘密。提交前仍需以 fresh check、unit、build 与关键 Playwright 矩阵确认工作树状态。
+
+## 46. Innovation event Atlas 与资源密度收敛（partial export）
+
+发起人进一步明确，Innovation Atlas 的主语不应只是游戏标题，而应是“某种品类、视角、机制或空间结构何时出现，以及后来如何被作品承载”。主任务因此新增五个 `innovation-event` 节点：程序生成与单局结构、第一人称射击视角、锁定目标的空间战斗、角色成长与持续进展、开放世界与非线性探索；事件卡先呈现窄 claim 与承载作品，再进入同一张时间网络。总量变为 64 nodes / 46 relations / 73 Evidence，绝对首创与完整品类史仍被排除。
+
+资源目录此前已经完成英文优先的 1000 条 GDC Vault 批次与 10 条 Game Developer 复盘；本阶段不重复导入同一批 URL，当前目录仍为 41 Source / 2120 Work Item / 2134 Access Version。资源表继续把搜索、结果数、展开／收起和七项事实筛选放在表头，访问版本面板使用不透明背景；Work Item 展开态改为更紧凑的同一行流，窄屏再退化为单列。
+
+本阶段已运行 Astro check 0/0/0、Atlas unit 29/29、fresh build 138 pages、资源 Chromium 20/20 与创新事件 E2E 1/1。预览继续只在本机 `http://127.0.0.1:4321/Learn-About-Games/` 提供；本段是脱敏 partial export，不记录凭据、环境变量或其他秘密。
