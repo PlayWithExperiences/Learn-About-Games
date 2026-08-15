@@ -26971,22 +26971,22 @@
       "en": "A Contrarian Explains the Basics: How to Become a Game Developer"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《A Contrarian Explains the Basics: How to Become a Game Developer》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 官方会话《A Contrarian Explains the Basics: How to Become a Game Developer》围绕进入游戏开发行业的基础路径；不把单一案例外推为普遍结论。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "multimodal-presentation-integration",
-      "aesthetic-direction",
-      "game-feel-tuning"
+      "audience-positioning",
+      "cross-discipline-communication",
+      "iteration-planning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1012976/A-Contrarian-Explains-the-Basics",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《A Contrarian Explains the Basics: How to Become a Game Developer》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "标题明确以“如何成为游戏开发者”为主题，归入职业与行业实践；会话本身不构成统一职业标准。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -29346,22 +29346,22 @@
       "en": "Internships- Bridging the Gap from Education to Industry"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《Internships- Bridging the Gap from Education to Industry》的条目标题/简介将范围限定在制作、协作或项目复盘，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 官方会话《Internships- Bridging the Gap from Education to Industry》讨论教育到游戏行业的实习过渡；不把单一案例外推为普遍职业标准。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "task-breakdown",
-      "iteration-planning",
-      "cross-discipline-communication"
+      "cross-discipline-communication",
+      "design-specification-handoff",
+      "iteration-planning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1022090/Internships-Bridging-the-Gap-from",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《Internships- Bridging the Gap from Education to Industry》的条目标题/简介将范围限定在制作、协作或项目复盘，不把单一案例外推为普遍结论。"
+      "zh-CN": "标题直接指向教育到行业的实习过渡，归入职业与行业实践；生产方法仍需结合具体项目语境理解。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -29418,22 +29418,22 @@
       "en": "From Student To Designer/Writer: Real Talk"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《From Student To Designer/Writer: Real Talk》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 的 Game Career Seminar 讨论学生如何准备作品集、求职并进入设计或写作岗位；不把单个嘉宾经验外推为统一职业标准。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "multimodal-presentation-integration",
-      "aesthetic-direction",
-      "game-feel-tuning"
+      "audience-positioning",
+      "cross-discipline-communication",
+      "design-specification-handoff"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1021994/From-Student-To-Designer-Writer",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《From Student To Designer/Writer: Real Talk》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "官方简介明确面向想找设计岗位的学生，并讨论作品集、技能要求与“被录用并留下”；这是职业与行业实践，而非手感反馈。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -30781,22 +30781,22 @@
       "en": "Game Developer Harassment: How To Get Through"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《Game Developer Harassment: How To Get Through》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 官方会话《Game Developer Harassment: How To Get Through》讨论游戏开发工作环境中的骚扰与应对；不把单一会话外推为普遍结论。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "multimodal-presentation-integration",
-      "aesthetic-direction",
-      "game-feel-tuning"
+      "ethical-cultural-evaluation",
+      "cross-discipline-communication",
+      "alignment-facilitation"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1022004/Game-Developer-Harassment-How-To",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《Game Developer Harassment: How To Get Through》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "标题直接指向游戏行业工作环境中的骚扰问题，归入职业与行业实践；不把个案应对方式当作普遍保证。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -30889,22 +30889,22 @@
       "en": "Do Game Developers Want a Union?"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《Do Game Developers Want a Union?》的条目标题/简介将范围限定在关卡、空间或导航设计，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 官方会话《Do Game Developers Want a Union?》讨论游戏开发者的劳动组织与行业工作环境；不把单一会话外推为普遍结论。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "level-structure-design",
-      "spatial-flow-design",
-      "navigation-wayfinding-design"
+      "cross-discipline-communication",
+      "ethical-cultural-evaluation",
+      "constraint-aware-decision-making"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "level-spatial-design"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1021936/Do-Game-Developers-Want-a",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《Do Game Developers Want a Union?》的条目标题/简介将范围限定在关卡、空间或导航设计，不把单一案例外推为普遍结论。"
+      "zh-CN": "标题明确讨论开发者工会与行业工作条件，归入职业与行业实践；它不提供统一劳动关系结论。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -34163,22 +34163,22 @@
       "en": "First Steps: Starting as an Independent Game Developer"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《First Steps: Starting as an Independent Game Developer》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 官方会话《First Steps: Starting as an Independent Game Developer》讨论独立开发者进入行业时的起步与工作语境；不把单一案例外推为普遍结论。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "multimodal-presentation-integration",
-      "aesthetic-direction",
-      "game-feel-tuning"
+      "audience-positioning",
+      "scope-prioritization",
+      "iteration-planning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1017072/First-Steps-Starting-as-an",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《First Steps: Starting as an Independent Game Developer》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "标题明确面向独立游戏开发者的行业起步问题，归入职业与行业实践；不把会话经验当作唯一创业路径。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -34235,22 +34235,22 @@
       "en": "First Steps: Starting as an Independent Game Developer"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《First Steps: Starting as an Independent Game Developer》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 官方会话《First Steps: Starting as an Independent Game Developer》讨论独立开发者进入行业时的起步与工作语境；不把单一案例外推为普遍结论。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "multimodal-presentation-integration",
-      "aesthetic-direction",
-      "game-feel-tuning"
+      "audience-positioning",
+      "scope-prioritization",
+      "iteration-planning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1017073/First-Steps-Starting-as-an",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《First Steps: Starting as an Independent Game Developer》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "标题明确面向独立游戏开发者的行业起步问题，归入职业与行业实践；不把会话经验当作唯一创业路径。"
     },
     "originalLanguage": "en",
     "accessVersions": [
@@ -38120,22 +38120,22 @@
       "en": "Your Game Career – What You Need to Get Hired"
     },
     "summary": {
-      "zh-CN": "GDC Vault 官方会话《Your Game Career – What You Need to Get Hired》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "GDC Vault 的 Game Career Seminar 讨论求职准备、作品集与进入游戏行业的实践；页面将其标为 Game Career / Education，不把单个会话外推为统一职业标准。"
     },
     "sourceId": "gdc-vault",
     "capabilityIds": [
-      "multimodal-presentation-integration",
-      "aesthetic-direction",
-      "game-feel-tuning"
+      "audience-positioning",
+      "cross-discipline-communication",
+      "design-specification-handoff"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.gdcvault.com/play/1011932/Your-Game-Career-ndash-What",
     "whyRelevant": {
-      "zh-CN": "GDC Vault 官方会话《Your Game Career – What You Need to Get Hired》的条目标题/简介将范围限定在视听表现、交互反馈或临场感，不把单一案例外推为普遍结论。"
+      "zh-CN": "官方页面将其列为 Game Career Seminar，并标注 Game Career / Education；它适合放在职业与行业实践中，而不是手感与反馈。"
     },
     "originalLanguage": "en",
     "accessVersions": [

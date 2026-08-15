@@ -474,3 +474,11 @@ Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆�
 发起人查看资源目录后指出，标题、事实、打开原页和“查看访问版本”仍被拉成过宽的编辑行；访问版本入口没有必要独占下一行，希望一个页面能扫描更多条目。主任务保留事实字段、原生 `details`、访问版本顺序、搜索与七维筛选，只改变关闭态的排版：桌面新增独立的版本控制列，把摘要放回同一行末端；打开后，版本列表、关联说明与外部公开观察进入同一行下方的可滚动详情区。移动端仍切换为单列自然流，避免窄屏浮层遮挡和横向溢出。
 
 先新增桌面浏览器 RED：旧 DOM 中版本摘要相对 Work Item 行顶偏移超过 24px，且仍位于第二行。最小 GREEN 后，1440px 每个摘要都与首行对齐并位于访问区右侧；打开版本详情仍可见版本链接和检查日期。Fresh `npm run build` 为 Astro check 0 errors／warnings／hints、Vitest 169/169、135 pages；资源桌面／移动 E2E 34/34；截图检查确认默认与打开态均无页面横向溢出。仓库继续 Private，`127.0.0.1:4321/Learn-About-Games/resources/` 预览保持运行，本轮没有 push 或部署。
+
+## 42. 资源主题映射审计与职业条目修正（脱敏记录）
+
+发起人指出 `Your Game Career – What You Need to Get Hired` 被放在“手感与反馈”，要求整体检查错配。主任务先核对 GDC Vault 官方页面：该会话的 track 是 `Game Career Seminar`，标签包含 `Game Career / Education`，因此原有视听反馈摘要、能力和主题来自批量模板而非来源内容。
+
+审计没有仅按一个关键词大规模重排，而是把标题、摘要、来源与主题交叉核对，修正 8 条高置信职业／教育转行业／工作环境会话，新增 `career-industry-practice` 主题，并让每条只保留一个主要主题。营销、奖项、AI、社区等只凭标题无法确定的候选记录为待人工复核，未强行改类。同步更新 README、Roadmap、Changelog 的当前资源规模与 16 个主题文案，补充目录回归测试。
+
+验证：catalog 定向 73/73，Astro check 0/0/0，fresh build 为 170/170 tests、136 pages；相关桌面／移动 E2E 在安装本地 Chromium 后运行，公开 README 的旧 15 主题文案已同步。官方来源为 https://www.gdcvault.com/play/1011932/Your-Game-Career-ndash-What；未记录凭据、环境变量或其他秘密。

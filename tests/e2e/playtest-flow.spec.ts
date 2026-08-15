@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import resources from '../../src/data/resources.json' with { type: 'json' };
+import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
 
 const playtestingResources = resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes('playtesting'));
 
@@ -108,7 +109,7 @@ test('keeps all work items available without JavaScript', async ({ browser }) =>
   await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(resources.length);
   await expect(page.getByLabel('可消费语言')).toBeDisabled();
   await expect(page.locator('.script-required-note')).toContainText(
-    `当前可逐个展开 15 个资源主题，全部 ${resources.length} 条 Work Item 均可访问`,
+    `当前可逐个展开 ${resourceTopics.length} 个资源主题，全部 ${resources.length} 条 Work Item 均可访问`,
   );
 
   await context.close();

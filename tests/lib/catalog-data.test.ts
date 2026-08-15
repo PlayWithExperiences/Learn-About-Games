@@ -708,6 +708,30 @@ describe('raw product catalog data', () => {
     expect(batchCLanguages).toEqual(expect.arrayContaining(['en', 'zh-Hans', 'ja']));
   });
 
+  it('keeps explicit career and industry sessions out of Game Feel and Feedback', () => {
+    const careerTopic = resourceTopics.find(({ id }) => id === 'career-industry-practice');
+    expect(careerTopic).toMatchObject({
+      title: { 'zh-CN': '职业与行业实践' },
+    });
+
+    const careerResourceIds = [
+      'batch500-gdc-1011932',
+      'batch500-gdc-1012976',
+      'batch500-gdc-1021994',
+      'batch500-gdc-1017072',
+      'batch500-gdc-1017073',
+      'batch500-gdc-1022090',
+      'batch500-gdc-1021936',
+      'batch500-gdc-1022004',
+    ];
+    const careerResources = careerResourceIds.map((id) => resources.find((resource) => resource.id === id));
+
+    expect(careerResources.every(Boolean)).toBe(true);
+    expect(careerResources.every((resource) => resource?.resourceTopicIds.length === 1)).toBe(true);
+    expect(careerResources.every((resource) => resource?.resourceTopicIds[0] === 'career-industry-practice')).toBe(true);
+    expect(careerResources.every((resource) => !resource?.resourceTopicIds.includes('game-feel-feedback'))).toBe(true);
+  });
+
 
   it('normalizes a broad, unordered and evidence-backed resource catalog', () => {
     const acceptedIntake = resourceIntake.slice(

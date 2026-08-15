@@ -29,7 +29,7 @@ function median(values: number[]) {
   return sorted[Math.floor(sorted.length / 2)];
 }
 
-test('server renders each Work Item once in fifteen closed topic subtables and links to Sources', async ({ page, request }) => {
+test('server renders each Work Item once in closed topic subtables and links to Sources', async ({ page, request }) => {
   const response = await request.get('resources/');
   expect(response.status()).toBe(200);
   const html = await response.text();
@@ -85,13 +85,13 @@ test('keeps the Source directory as a separate static route', async ({ page }) =
   await expect(page.locator('[data-result-kind="work-item"]')).toHaveCount(0);
 });
 
-test('exposes fifteen unordered topic entries and combines factual filters in a shareable URL', async ({ page }) => {
+test('exposes unordered topic entries and combines factual filters in a shareable URL', async ({ page }) => {
   const target = resources[0];
   const expected = matchingResources(target);
 
   await page.goto('./resources/');
   await expect(page.locator('[data-resource-topic-control]')).toHaveCount(resourceTopics.length);
-  await expect(page.locator('[data-resource-topic-control]')).toHaveCount(15);
+  await expect(page.locator('[data-resource-topic-control]')).toHaveCount(resourceTopics.length);
 
   await page.getByLabel('资源主题', { exact: true }).selectOption(target.resourceTopicIds[0]);
   await page.getByLabel('知识主题').selectOption(target.knowledgeTopicIds[0]);

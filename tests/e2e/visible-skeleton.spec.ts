@@ -8,6 +8,7 @@ import atlasGenreFamilies from '../../src/data/atlas-genre-families.json' with {
 import atlasNodes from '../../src/data/atlas-nodes.json' with { type: 'json' };
 import atlasRelations from '../../src/data/atlas-relations.json' with { type: 'json' };
 import resources from '../../src/data/resources.json' with { type: 'json' };
+import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
 import sources from '../../src/data/sources.json' with { type: 'json' };
 
 const accessVersionCount = resources.reduce((total, resource) => total + resource.accessVersions.length, 0);
@@ -265,7 +266,7 @@ test('publishes the current v0.2 scope without retaining the M0 roadmap as curre
   await expect(page.getByRole('heading', { name: '当前版本｜v0.2', exact: true })).toBeVisible();
   await expect(page.getByText(/28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
   await expect(page.getByText(new RegExp(
-    `${sources.length} 个 Source、${resources.length} 个具体 Work Item、${accessVersionCount} 个 Access Version 与 15 个无顺序资源主题`,
+    `${sources.length} 个 Source、${resources.length} 个具体 Work Item、${accessVersionCount} 个 Access Version 与 ${resourceTopics.length} 个无顺序资源主题`,
   ))).toBeVisible();
   await expect(page.getByText(new RegExp(
     `${atlasNodes.length} 节点、${atlasRelations.length} 条有证据关系与 ${atlasEvidence.length} 项 Evidence`,

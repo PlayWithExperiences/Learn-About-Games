@@ -25,7 +25,7 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 当前正规化 catalog coverage
 
-- Work Item：1110；Source：41；Access Version：1124；Resource Topic：15。
+- Work Item：1110；Source：41；Access Version：1124；Resource Topic：16。
 - 原始语言：en 1055、ja 17、zh-Hans 38。
 - 可消费语言（Work Item 计，可重叠）：en 1056、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
 - Access Version 语言：en 1067、ja 17、zh-Hans 40。
@@ -38,18 +38,19 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | 设计基础与概念 | 123 |
 | 系统与机制 | 66 |
 | 平衡与经济 | 118 |
-| 手感与反馈 | 177 |
-| 关卡与空间 | 141 |
+| 手感与反馈 | 171 |
+| 关卡与空间 | 140 |
 | Playtest 主题资源集合 | 34 |
 | 叙事与表达 | 188 |
 | 原型与实验 | 35 |
-| 生产与迭代 | 100 |
+| 生产与迭代 | 99 |
 | 协作与团队 | 21 |
 | 领导与创意方向 | 14 |
 | 批判、价值观与历史语境 | 37 |
 | 研究方法与玩家体验 | 38 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 11 |
+| 职业与行业实践 | 8 |
 | 合计 | 1110 |
 
 ## 接受候选

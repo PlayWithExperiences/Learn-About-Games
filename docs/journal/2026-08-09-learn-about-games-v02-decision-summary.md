@@ -305,3 +305,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 发起人继续指出资源页的 Work Item 行仍然过宽、访问版本入口独占第二行，要求尽量在同一行看见更多事实。主任务保留原生 `details` 和无 JavaScript 可读性，只把“查看访问版本”移入桌面行末端；展开内容进入该行下方的独立详情区，不再把关闭态行撑成两行。移动端仍按标题、事实、访问和详情顺序自然堆叠。
 
 本次只改 `ResourceResults.astro`、资源页 scoped CSS 与资源 E2E。新增浏览器合同要求 1440px 下每个版本入口摘要距行顶不超过 24px、落在访问列右侧；详情顺序、搜索、筛选、Source 路由、无 JavaScript 与 320px 横向溢出合同保持不变。fresh 门禁为 Astro check 0/0/0、Vitest 169/169、135 pages；Resources Chromium／mobile 34/34。仓库仍 Private，本地预览固定为 `/Learn-About-Games/resources/`，未 push 或部署。
+
+## 42. 资源主题映射审计与职业条目修正
+
+发起人指出 `Your Game Career – What You Need to Get Hired` 被放进“手感与反馈”。核对 GDC Vault 官方页面后确认它属于 `Game Career Seminar`，并带有 `Game Career / Education` 标签；原条目的视听反馈摘要、能力映射与主题均是批量导入模板错配。主任务对 1110 条资源做标题、摘要、来源和现有主题的高置信冲突扫描，先修正 8 条明确的职业／教育转行业／工作环境会话，新增 `career-industry-practice`（职业与行业实践）主题；其余仅凭标题无法确定主主题的营销、奖项、AI、社区等候选保留待来源页复核，不做自动挪动。
+
+修正后目录仍为 41 Source／1110 Work Item／1124 Access Version，Resource Topic 为 16；新增回归测试确保 8 条职业会话各自只有该主题且不再落入 `game-feel-feedback`。定向 catalog 73/73、Astro check 0/0/0、fresh build 170/170（136 pages）通过；相关浏览器回归中同步了公开 README 的旧 15 主题文案。官方依据：[GDC Vault session page](https://www.gdcvault.com/play/1011932/Your-Game-Career-ndash-What)。本地预览保持在 `http://127.0.0.1:4321/Learn-About-Games/resources/`，仓库仍 Private、未 push。
