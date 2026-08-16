@@ -35,6 +35,37 @@ test('keeps each path stage readable without JavaScript and at mobile width', as
   await expect(firstStage).not.toHaveAttribute('open', '');
 });
 
+test('narrows the path with overlapping focus facets and restores the full route', async ({ page }) => {
+  await page.goto('./resources/paths/game-feel/');
+  await expect(page.locator('[data-learning-path-focus]')).toHaveCount(7);
+  await expect(page.locator('[data-learning-path-focus="all"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-learning-path-resource]:not([hidden])')).toHaveCount(100);
+
+  await page.locator('[data-learning-path-focus="narrative"]').click();
+  await expect(page.locator('[data-learning-path-focus="narrative"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-learning-path-focus-status]')).toContainText('叙事与表达');
+  const narrativeRows = page.locator('[data-learning-path-resource]:not([hidden])');
+  expect(await narrativeRows.count()).toBeGreaterThan(0);
+  expect(await narrativeRows.evaluateAll((rows) => rows.every((row) => (
+    row.getAttribute('data-learning-path-facets') ?? ''
+  ).split(' ').includes('narrative')))).toBe(true);
+
+  await page.locator('[data-learning-path-focus="all"]').click();
+  await expect(page.locator('[data-learning-path-resource]:not([hidden])')).toHaveCount(100);
+});
+
+test('keeps every path resource readable without JavaScript and explains the facet fallback', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 900 } });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4321/Learn-About-Games/resources/paths/game-feel/');
+  await expect(page.locator('[data-learning-path-focus]')).toHaveCount(7);
+  await expect(page.locator('[data-learning-path-focus]:disabled')).toHaveCount(7);
+  await expect(page.locator('[data-learning-path-focus-no-js-note]')).toContainText('全部资料仍可读');
+  await expect(page.locator('[data-learning-path-resource]')).toHaveCount(100);
+  expect(await page.locator('html').evaluate((element) => element.scrollWidth)).toBe(320);
+  await context.close();
+});
+
 test('links the resources navigation to the path without changing the resource table', async ({ page }) => {
   await page.goto('./resources/');
   await expect(page.getByRole('link', { name: '学习路径' })).toHaveAttribute('href', /resources\/paths\/game-feel\/$/);

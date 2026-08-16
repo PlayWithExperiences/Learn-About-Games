@@ -45,6 +45,42 @@ const fixtureResources = Array.from({ length: 140 }, (_, index) => makeResource(
 ));
 
 describe('game feel learning path', () => {
+  it('exposes overlapping pillar and supporting focus facets without changing the six-stage route', () => {
+    const path = buildGameFeelLearningPath([
+      ...fixtureResources.slice(0, 99),
+      makeResource('resource-multi-focus', {
+        capabilityIds: [
+          'game-feel-tuning',
+          'narrative-architecture',
+          'aesthetic-direction',
+          'learning-prototype-design',
+          'playtesting',
+        ],
+      }),
+    ]);
+    const selected = path.stages.flatMap(({ resources }) => resources);
+    const multiFocus = selected.find(({ id }) => id === 'resource-multi-focus');
+
+    expect(path.focuses.map(({ id }) => id)).toEqual([
+      'all',
+      'gameplay',
+      'narrative',
+      'aesthetics',
+      'implementation',
+      'research',
+      'integrated',
+    ]);
+    expect(selected.every(({ focusIds }) => focusIds.length > 0)).toBe(true);
+    expect(multiFocus?.focusIds).toEqual(expect.arrayContaining([
+      'gameplay',
+      'narrative',
+      'aesthetics',
+      'implementation',
+      'research',
+      'integrated',
+    ]));
+  });
+
   it('builds six ordered stages with the approved EGDS mapping and exactly 100 resources', () => {
     const path = buildGameFeelLearningPath(fixtureResources);
 

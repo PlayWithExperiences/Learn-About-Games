@@ -156,3 +156,10 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 每阶段有目标、练习、阶段产出与退出条件；使用原生 `details` 按需展开，资料链接回资源表搜索结果。路径是作者化推荐，不计算分数、证书或个人完成率，也不把顺序写成唯一答案。
 - RED/GREEN 与验证：路径单元 3/3；定向路径 E2E 6/6；全量 Vitest 183/183；Astro check 0 diagnostics；fresh build 143 pages；全站 Chromium + mobile 255 passed / 22 intentional skipped。全回归中两个并发敏感既有用例单独串行复跑均通过。
 - 本地预览为 `http://127.0.0.1:4321/Learn-About-Games/resources/paths/game-feel/`，本轮未推送、未部署；完整脱敏对话记录见同日 transcript 末尾的 partial export。
+
+### 2026-08-16：成长路径的重叠关注面（current）
+
+- 用户指出路径资料同时覆盖玩法／挑战、叙事、美学、技术实现与研究，单纯平铺 100 条会显得庞杂；三条核心支柱本来就彼此支撑，不应互斥。
+- 保留六阶段作为主线，在路径顶部增加 `全部`、玩法与挑战、叙事与表达、美学与表现、技术与实现、研究与验证、跨支柱七个关注面。资源按 capability／knowledge topic 映射，可同时拥有多个关注面；跨支柱仅表示同时命中三条核心支柱。
+- 筛选是展示投影，不改资源目录、阶段配额、EGDS 四层对应或作者化阅读顺序；无 JavaScript 时完整资料继续可读。定向路径 E2E 10/10、Vitest 184/184、Astro check 0/0/0、静态构建 143 pages。
+- 预览继续使用 `http://127.0.0.1:4321/Learn-About-Games/resources/paths/game-feel/`；本轮不推送、不部署。

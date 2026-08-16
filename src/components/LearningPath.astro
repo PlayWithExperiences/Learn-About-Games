@@ -12,13 +12,20 @@ interface Props {
 const { path, sources } = Astro.props;
 const sourceNameById = new Map(sources.map((source) => [source.id, source.name['zh-CN']]));
 const visibleResourceCount = 6;
+const pathResources = path.stages.flatMap(({ resources }) => resources);
+const focusCountById = new Map<string, number>([['all', path.totalResourceCount]]);
+path.focuses.forEach(({ id }) => {
+  if (id !== 'all') {
+    focusCountById.set(id, pathResources.filter((resource) => resource.focusIds.includes(id)).length);
+  }
+});
 
 function resourceSearchUrl(title: string) {
   return `${sitePath('resources/')}?q=${encodeURIComponent(title)}`;
 }
 ---
 
-<article class="learning-path" aria-labelledby="learning-path-title">
+<article class="learning-path" data-learning-path aria-labelledby="learning-path-title">
   <nav class="breadcrumb" aria-label="面包屑">
     <a href={sitePath('resources/')}>成长资源</a>
     <span aria-hidden="true">/</span>
@@ -56,6 +63,39 @@ function resourceSearchUrl(title: string) {
     </ol>
   </section>
 
+  <section class="learning-path__focus" aria-labelledby="learning-path-focus-title">
+    <header class="learning-path__focus-heading">
+      <div>
+        <p class="plain-label">关注面</p>
+        <h2 id="learning-path-focus-title">按支柱收窄当前路径</h2>
+      </div>
+      <p>三条支柱可以重叠；技术与研究是支持面，不会改变六阶段主线。</p>
+    </header>
+    <div class="learning-path__focus-controls" role="group" aria-label="路径关注面筛选">
+      {path.focuses.map((focus) => (
+        <button
+          type="button"
+          data-learning-path-focus={focus.id}
+          data-focus-kind={focus.kind}
+          aria-pressed={focus.id === 'all' ? 'true' : 'false'}
+          disabled
+          title={focus.description}
+        >
+          <span>{focus.label}</span>
+          <small>{focusCountById.get(focus.id) ?? 0}</small>
+        </button>
+      ))}
+    </div>
+    <p class="learning-path__focus-status" data-learning-path-focus-status role="status">
+      当前显示全部 {path.totalResourceCount} 条资料。
+    </p>
+    <noscript>
+      <p class="learning-path__focus-no-js" data-learning-path-focus-no-js-note>
+        启用 JavaScript 后可以按关注面筛选；全部资料仍可读。
+      </p>
+    </noscript>
+  </section>
+
   <section class="learning-path__stages" aria-labelledby="learning-path-stages-title">
     <header class="learning-path__stages-heading">
       <div>
@@ -83,7 +123,7 @@ function resourceSearchUrl(title: string) {
             ) : (
               <span class="learning-path__stage-egds">综合实践</span>
             )}
-            <span class="learning-path__stage-count">{stage.resources.length} 条资料</span>
+            <span class="learning-path__stage-count" data-learning-path-stage-count>{stage.resources.length} 条资料</span>
           </summary>
 
           <div class="learning-path__stage-body">
@@ -109,22 +149,22 @@ function resourceSearchUrl(title: string) {
             <div class="learning-path__resources">
               <div class="learning-path__resources-heading">
                 <h3>本阶段资料</h3>
-                <span>{stage.resources.length} 条，均可回到资源表</span>
+                <span data-learning-path-stage-meta>{stage.resources.length} 条，均可回到资源表</span>
               </div>
               <ul>
                 {visibleResources.map((resource) => (
-                  <li data-learning-path-resource={resource.id}>
+                  <li data-learning-path-resource={resource.id} data-learning-path-facets={resource.focusIds.join(' ')}>
                     <a href={resourceSearchUrl(resource.title['zh-CN'])}>{resource.title['zh-CN']}</a>
                     <span>{sourceNameById.get(resource.sourceId) ?? resource.sourceId} · {formatMediaType(resource.mediaType)}</span>
                   </li>
                 ))}
               </ul>
               {remainingResources.length > 0 && (
-                <details class="learning-path__more-resources">
-                  <summary>查看本阶段其余 {remainingResources.length} 条资料</summary>
+                <details class="learning-path__more-resources" data-learning-path-more>
+                  <summary data-learning-path-more-summary>查看本阶段其余 {remainingResources.length} 条资料</summary>
                   <ul>
                     {remainingResources.map((resource) => (
-                      <li data-learning-path-resource={resource.id}>
+                      <li data-learning-path-resource={resource.id} data-learning-path-facets={resource.focusIds.join(' ')}>
                         <a href={resourceSearchUrl(resource.title['zh-CN'])}>{resource.title['zh-CN']}</a>
                         <span>{sourceNameById.get(resource.sourceId) ?? resource.sourceId} · {formatMediaType(resource.mediaType)}</span>
                       </li>
@@ -144,3 +184,62 @@ function resourceSearchUrl(title: string) {
     <a class="button-link button-link--quiet" href={sitePath('egds/')}>阅读 EGDS 方法</a>
   </footer>
 </article>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-learning-path]').forEach((pathRoot) => {
+    if (pathRoot.dataset.learningPathEnhanced === 'true') return;
+    pathRoot.dataset.learningPathEnhanced = 'true';
+
+    const focusButtons = Array.from(pathRoot.querySelectorAll<HTMLButtonElement>('[data-learning-path-focus]'));
+    const rows = Array.from(pathRoot.querySelectorAll<HTMLElement>('[data-learning-path-resource]'));
+    const stages = Array.from(pathRoot.querySelectorAll<HTMLElement>('[data-learning-path-stage]'));
+    const status = pathRoot.querySelector<HTMLElement>('[data-learning-path-focus-status]');
+    const total = rows.length;
+
+    const update = (focusId: string) => {
+      focusButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.learningPathFocus === focusId));
+      });
+
+      rows.forEach((row) => {
+        const facets = row.dataset.learningPathFacets?.split(' ') ?? [];
+        row.hidden = focusId !== 'all' && !facets.includes(focusId);
+      });
+
+      let visibleTotal = 0;
+      stages.forEach((stage) => {
+        const stageRows = Array.from(stage.querySelectorAll<HTMLElement>('[data-learning-path-resource]'));
+        const visibleRows = stageRows.filter((row) => !row.hidden);
+        visibleTotal += visibleRows.length;
+        const count = stage.querySelector<HTMLElement>('[data-learning-path-stage-count]');
+        const meta = stage.querySelector<HTMLElement>('[data-learning-path-stage-meta]');
+        if (count) count.textContent = `${visibleRows.length} 条资料`;
+        if (meta) meta.textContent = `${visibleRows.length} 条匹配资料，均可回到资源表`;
+
+        const more = stage.querySelector<HTMLDetailsElement>('[data-learning-path-more]');
+        const moreRows = more
+          ? Array.from(more.querySelectorAll<HTMLElement>('[data-learning-path-resource]')).filter((row) => !row.hidden)
+          : [];
+        if (more) {
+          more.hidden = moreRows.length === 0;
+          if (moreRows.length === 0) more.open = false;
+          const moreSummary = more.querySelector<HTMLElement>('[data-learning-path-more-summary]');
+          if (moreSummary) moreSummary.textContent = `查看本阶段其余 ${moreRows.length} 条资料`;
+        }
+      });
+
+      const active = focusButtons.find((button) => button.dataset.learningPathFocus === focusId);
+      const label = active?.querySelector('span')?.textContent?.trim() ?? '全部';
+      if (status) status.textContent = focusId === 'all'
+        ? `当前显示全部 ${total} 条资料。`
+        : `当前显示 ${label}：${visibleTotal} 条资料；资源可以同时属于多个关注面。`;
+    };
+
+    focusButtons.forEach((button) => {
+      button.disabled = false;
+      button.addEventListener('click', () => update(button.dataset.learningPathFocus ?? 'all'));
+    });
+
+    update('all');
+  });
+</script>

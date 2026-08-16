@@ -2,6 +2,25 @@ import type { Catalog } from './catalog/validate';
 
 type Resource = Catalog['resources'][number];
 
+export type LearningPathFocusId =
+  | 'gameplay'
+  | 'narrative'
+  | 'aesthetics'
+  | 'implementation'
+  | 'research'
+  | 'integrated';
+
+export type LearningPathFocus = {
+  id: 'all' | LearningPathFocusId;
+  label: string;
+  description: string;
+  kind: 'all' | 'pillar' | 'support' | 'cross';
+};
+
+export type LearningPathResource = Resource & {
+  focusIds: LearningPathFocusId[];
+};
+
 export type LearningPathStageId =
   | 'observe'
   | 'understand'
@@ -19,7 +38,7 @@ export type LearningPathStage = {
   practice: string;
   deliverable: string;
   exitCriteria: string;
-  resources: Resource[];
+  resources: LearningPathResource[];
 };
 
 export type LearningPath = {
@@ -27,8 +46,137 @@ export type LearningPath = {
   title: string;
   summary: string;
   totalResourceCount: number;
+  focuses: LearningPathFocus[];
   stages: LearningPathStage[];
 };
+
+const learningPathFocuses: LearningPathFocus[] = [
+  {
+    id: 'all',
+    label: '全部',
+    description: '保留六阶段主线中的全部资料。',
+    kind: 'all',
+  },
+  {
+    id: 'gameplay',
+    label: '玩法与挑战',
+    description: '规则、动作、节奏、空间与挑战如何形成体验。',
+    kind: 'pillar',
+  },
+  {
+    id: 'narrative',
+    label: '叙事与表达',
+    description: '叙事结构、能动性、角色与世界如何承载感受。',
+    kind: 'pillar',
+  },
+  {
+    id: 'aesthetics',
+    label: '美学与表现',
+    description: '视觉、声音、动画、镜头与多模态线索如何放大体验。',
+    kind: 'pillar',
+  },
+  {
+    id: 'implementation',
+    label: '技术与实现',
+    description: '原型、制作、规格、迭代与交付约束。',
+    kind: 'support',
+  },
+  {
+    id: 'research',
+    label: '研究与验证',
+    description: '观察、玩家证据、测试、知觉与复盘方法。',
+    kind: 'support',
+  },
+  {
+    id: 'integrated',
+    label: '跨支柱',
+    description: '同时连接玩法、叙事与美学三条核心支柱的综合资料。',
+    kind: 'cross',
+  },
+];
+
+const focusCapabilityIds: Record<LearningPathFocusId, ReadonlySet<string>> = {
+  gameplay: new Set([
+    'game-feel-tuning',
+    'rules-system-modeling',
+    'challenge-difficulty-design',
+    'pacing-control',
+    'progression-economy-design',
+    'level-structure-design',
+    'spatial-flow-design',
+    'navigation-wayfinding-design',
+    'encounter-space-composition',
+    'blockout-spatial-validation',
+  ]),
+  narrative: new Set([
+    'narrative-architecture',
+    'interactive-narrative-design',
+    'narrative-exposition',
+    'world-character-coherence',
+    'choice-consequence-design',
+    'experience-framing',
+    'emotional-arc-shaping',
+    'player-perspective-taking',
+  ]),
+  aesthetics: new Set([
+    'aesthetic-direction',
+    'multimodal-presentation-integration',
+  ]),
+  implementation: new Set([
+    'learning-prototype-design',
+    'task-breakdown',
+    'scope-prioritization',
+    'iteration-planning',
+    'design-specification-handoff',
+    'experience-deconstruction',
+    'design-critique-feedback',
+    'constraint-aware-decision-making',
+    'cross-discipline-communication',
+  ]),
+  research: new Set([
+    'research-question-framing',
+    'playtesting',
+    'player-behavior-observation',
+    'qualitative-evidence-synthesis',
+    'telemetry-interpretation',
+  ]),
+  integrated: new Set(),
+};
+
+const focusKnowledgeTopicIds: Record<LearningPathFocusId, ReadonlySet<string>> = {
+  gameplay: new Set([
+    'emergence-complexity',
+    'probability-randomness-fairness',
+    'spatial-cognition-wayfinding',
+  ]),
+  narrative: new Set(['narratology-agency-authorship']),
+  aesthetics: new Set(['audiovisual-semiotics']),
+  implementation: new Set(['production-pipelines-constraints']),
+  research: new Set([
+    'perception-attention-emotion',
+    'research-ethics-bias',
+  ]),
+  integrated: new Set(),
+};
+
+const coreFocusIds: LearningPathFocusId[] = ['gameplay', 'narrative', 'aesthetics'];
+const supportingFocusIds: LearningPathFocusId[] = ['implementation', 'research'];
+
+function resourceMatchesFocus(resource: Resource, focusId: LearningPathFocusId) {
+  return resource.capabilityIds.some((id) => focusCapabilityIds[focusId].has(id))
+    || resource.knowledgeTopicIds.some((id) => focusKnowledgeTopicIds[focusId].has(id));
+}
+
+function classifyResourceFocusIds(resource: Resource): LearningPathFocusId[] {
+  const matchedCore = coreFocusIds.filter((focusId) => resourceMatchesFocus(resource, focusId));
+  const matchedSupporting = supportingFocusIds.filter((focusId) => resourceMatchesFocus(resource, focusId));
+  const focusIds = [...matchedCore, ...matchedSupporting];
+
+  if (matchedCore.length >= 3) focusIds.push('integrated');
+  if (focusIds.length === 0) focusIds.push('integrated');
+
+  return focusIds;
+}
 
 type StageDefinition = Omit<LearningPathStage, 'resources'> & {
   resourceCount: number;
@@ -180,7 +328,10 @@ export function buildGameFeelLearningPath(resources: Resource[]): LearningPath {
       practice: definition.practice,
       deliverable: definition.deliverable,
       exitCriteria: definition.exitCriteria,
-      resources: selected,
+      resources: selected.map((resource) => ({
+        ...resource,
+        focusIds: classifyResourceFocusIds(resource),
+      })),
     } satisfies LearningPathStage;
   });
 
@@ -189,6 +340,7 @@ export function buildGameFeelLearningPath(resources: Resource[]): LearningPath {
     title: '手感与反馈成长路径',
     summary: '把“好不好用”从模糊印象变成可观察、可解释、可试做和可复盘的设计过程。',
     totalResourceCount: requestedCount,
+    focuses: learningPathFocuses,
     stages,
   };
 }
