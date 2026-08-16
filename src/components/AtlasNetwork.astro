@@ -186,7 +186,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     <p class="atlas-event-index__empty" data-atlas-event-empty hidden>这个品类还没有达到证据门槛的创新事件；先保留空状态，不用游戏年代相邻关系代替证据。</p>
   </section>
 
-  <section data-atlas-global-network data-atlas-route-mode="full" aria-label="Game Innovation Atlas 全局时间网络">
+  <section data-atlas-global-network data-atlas-route-mode="full" data-atlas-perspective="works" aria-label="Game Innovation Atlas 全局时间网络">
     <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
       <legend>选择证据透镜</legend>
       <div class="atlas-lens-control__current">
@@ -268,6 +268,11 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     </fieldset>
     <div class="atlas-view-controls" data-atlas-view-controls>
       <strong class="atlas-view-controls__mode-title">Innovation Atlas 地图模式</strong>
+      <div class="atlas-perspective-controls" data-atlas-perspective-controls role="group" aria-label="地图视角">
+        <span>地图视角</span>
+        <button type="button" data-atlas-perspective="works" aria-pressed="true" disabled>代表作品</button>
+        <button type="button" data-atlas-perspective="category" aria-pressed="false" disabled>品类发展</button>
+      </div>
       <button type="button" data-atlas-map-mode aria-pressed="false" disabled>进入地图模式</button>
       <button type="button" data-atlas-fit disabled>适应全图</button>
       <button type="button" data-atlas-zoom-out aria-label="缩小" disabled>−</button>
@@ -279,7 +284,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
     </noscript>
     <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1958–2020</p>
-    <div data-atlas-primary-network data-atlas-route-mode="full">
+    <div data-atlas-primary-network data-atlas-route-mode="full" data-atlas-perspective="works">
     <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
       <div
         class="atlas-network__stage"
@@ -691,11 +696,13 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const relationCount = networkRelations.length;
     const globalCountMessage = `当前显示全部 ${nodeCount} 个节点与 ${relationCount} 条关系。`;
     let activeThemeId = 'all';
+    let perspectiveMode: 'works' | 'category' = 'works';
     let eventNetworkSnapshot: { left: number; top: number; scale: string | null } | null = null;
 
     const applyTheme = (themeId: string) => {
       activeThemeId = themeId;
       const match = themeId === 'all' ? null : themeMatches[themeId];
+      if (!match && perspectiveMode === 'category') perspectiveMode = 'works';
       const matchingNodeIds = new Set(match?.nodeIds ?? []);
       const matchingRelationIds = new Set(match?.relationIds ?? []);
       networkNodes.forEach((node) => {
@@ -727,9 +734,15 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       }
       if (primaryNetwork) {
         const keepMapInPlace = networkShell?.dataset.mapMode === 'true';
-        const routeMode = eventTheme && keepMapInPlace ? 'events' : 'full';
+        const routeMode = eventTheme && keepMapInPlace && perspectiveMode === 'category' ? 'category' : 'full';
         primaryNetwork.dataset.atlasRouteMode = routeMode;
+        primaryNetwork.dataset.atlasPerspective = perspectiveMode;
         if (networkShell) networkShell.dataset.atlasRouteMode = routeMode;
+        if (networkShell) networkShell.dataset.atlasPerspective = perspectiveMode;
+        perspectiveButtons.forEach((button) => {
+          button.disabled = networkShell?.dataset.mapMode !== 'true'
+            || (button.dataset.atlasPerspective === 'category' && !eventTheme);
+        });
         const shouldHideNetwork = eventTheme && !keepMapInPlace;
         const mapCanvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
         if (shouldHideNetwork && !primaryNetwork.hidden && mapCanvas) {
@@ -755,7 +768,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       if (status) {
         status.textContent = themeId === 'all'
           ? globalCountMessage
-          : `已切换为 ${activeButton?.textContent?.trim() ?? ''} 的创新事件路线；作品只作为承载证据。`;
+          : `已切换为 ${activeButton?.textContent?.trim() ?? ''}；地图模式可在代表作品与品类发展两种视角间切换。`;
       }
     };
 
@@ -820,6 +833,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const stage = explorer.querySelector<HTMLElement>('[data-atlas-stage]');
     const scene = explorer.querySelector<HTMLElement>('[data-atlas-scene]');
     const viewControls = explorer.querySelector<HTMLElement>('[data-atlas-view-controls]');
+    const perspectiveButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('button[data-atlas-perspective]'));
     const fitButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-fit]');
     const mapModeButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-map-mode]');
     const zoomOutButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-out]');
@@ -856,6 +870,33 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         inertElements: Array<{ element: HTMLElement; wasInert: boolean }>;
       } | null = null;
       const outlineBreakpoint = matchMedia('(max-width: 1150px)');
+
+      const syncPerspective = (nextPerspective: 'works' | 'category') => {
+        perspectiveMode = nextPerspective;
+        const hasSelectedTheme = activeThemeId !== 'all';
+        const routeMode = mapMode && hasSelectedTheme && nextPerspective === 'category' ? 'category' : 'full';
+        networkShell.dataset.atlasPerspective = nextPerspective;
+        networkShell.dataset.atlasRouteMode = routeMode;
+        if (primaryNetwork) {
+          primaryNetwork.dataset.atlasPerspective = nextPerspective;
+          primaryNetwork.dataset.atlasRouteMode = routeMode;
+        }
+        perspectiveButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.atlasPerspective === nextPerspective));
+          button.disabled = !mapMode || (button.dataset.atlasPerspective === 'category' && !hasSelectedTheme);
+        });
+        if (status && hasSelectedTheme) {
+          status.textContent = nextPerspective === 'category'
+            ? '品类发展视角：保留完整网络，突出选中品类的创新事件与跨品类关系。'
+            : '代表作品视角：显示完整网络，品类透镜只改变强调。';
+        }
+      };
+
+      perspectiveButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          syncPerspective(button.dataset.atlasPerspective === 'category' ? 'category' : 'works');
+        });
+      });
 
       const collectMapModeBackground = () => {
         const elements: Array<{ element: HTMLElement; wasInert: boolean }> = [];
@@ -956,15 +997,29 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
             element.inert = true;
           });
           networkShell.dataset.mapMode = 'true';
-          networkShell.dataset.atlasRouteMode = activeThemeId === 'all' ? 'full' : 'events';
-          if (primaryNetwork) primaryNetwork.dataset.atlasRouteMode = networkShell.dataset.atlasRouteMode;
+          networkShell.dataset.atlasRouteMode = activeThemeId !== 'all' && perspectiveMode === 'category' ? 'category' : 'full';
+          networkShell.dataset.atlasPerspective = perspectiveMode;
+          if (primaryNetwork) {
+            primaryNetwork.dataset.atlasRouteMode = networkShell.dataset.atlasRouteMode;
+            primaryNetwork.dataset.atlasPerspective = perspectiveMode;
+          }
+          perspectiveButtons.forEach((button) => {
+            button.disabled = button.dataset.atlasPerspective === 'category' && activeThemeId === 'all';
+          });
           networkShell.setAttribute('role', 'dialog');
           networkShell.setAttribute('aria-modal', 'true');
           if (primaryNetwork) primaryNetwork.hidden = false;
         } else {
           delete networkShell.dataset.mapMode;
           networkShell.dataset.atlasRouteMode = 'full';
-          if (primaryNetwork) primaryNetwork.dataset.atlasRouteMode = 'full';
+          networkShell.dataset.atlasPerspective = perspectiveMode;
+          if (primaryNetwork) {
+            primaryNetwork.dataset.atlasRouteMode = 'full';
+            primaryNetwork.dataset.atlasPerspective = perspectiveMode;
+          }
+          perspectiveButtons.forEach((button) => {
+            button.disabled = true;
+          });
           networkShell.removeAttribute('role');
           networkShell.removeAttribute('aria-modal');
           if (frame) cancelAnimationFrame(frame);

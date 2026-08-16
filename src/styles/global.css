@@ -3652,23 +3652,68 @@ h2 {
   flex: 1 1 auto;
 }
 
-/* A selected lens becomes an event route only while the map is open. Carrier
-   works remain available through each event detail, but do not compete with
-   the event nodes for the primary visual hierarchy. */
-[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
-  [data-atlas-primary-network] [data-atlas-node]:not([data-atlas-event]),
-[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
-  [data-atlas-primary-network] [data-atlas-node][data-atlas-event][data-theme-match='false'] {
-  visibility: hidden;
-  pointer-events: none;
+.atlas-perspective-controls {
+  display: none;
+  align-items: center;
+  gap: 0.3rem;
 }
 
-[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
-  [data-atlas-primary-network] [data-atlas-relation]:not([data-atlas-event-relation]),
-[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
-  [data-atlas-primary-network] [data-atlas-event-relation][data-theme-match='false'] {
-  visibility: hidden;
-  pointer-events: none;
+.atlas-perspective-controls > span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 720;
+  white-space: nowrap;
+}
+
+.atlas-perspective-controls button {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.74rem;
+}
+
+.atlas-perspective-controls button[aria-pressed='true'] {
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  color: var(--page);
+}
+
+[data-atlas-global-network][data-map-mode='true'] .atlas-perspective-controls {
+  display: flex;
+}
+
+/* The category-development view keeps the whole graph in place. It changes
+   emphasis only: matched events and their evolution edges lead, while
+   representative works and cross-category context remain discoverable. */
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
+  [data-atlas-primary-network] [data-atlas-node][data-theme-match='false'] {
+  opacity: 0.42;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
+  [data-atlas-primary-network] [data-atlas-relation][data-theme-match='false'] {
+  opacity: 0.24;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-event][data-theme-match='true'] {
+  z-index: 5;
+  opacity: 1;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-event][data-theme-match='true'] a {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 30%, transparent);
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-game-node][data-theme-match='true'] {
+  opacity: 0.72;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
+  [data-atlas-primary-network] [data-atlas-event-relation][data-theme-match='true'] .atlas-network__relation-path {
+  stroke: var(--focus);
+  stroke-width: 3.2;
 }
 
 .atlas-view-controls [data-atlas-map-mode][aria-pressed='true'] {

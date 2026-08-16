@@ -17,12 +17,12 @@
 
 ## 2026-08-16 当前里程碑
 
-- Innovation Atlas 的主语改为“品类创新事件路线”：选择 Genre Family 后，主阅读区只保留有证据的定义、机制、转译与扩散事件；游戏不再冒充创新本体，而是在事件详情中作为承载作品与原始证据入口。当前 Atlas 为 66 个节点、50 条关系、73 项 Evidence，其中 7 个节点是事件节点。
+- Innovation Atlas 的主语改为“品类创新事件路线”：选择 Genre Family 后，事件索引与事件详情优先讲定义、机制、转译与扩散，游戏不再冒充创新本体，而是在事件详情中作为承载作品与原始证据入口。地图模式同时保留完整网络，当前 Atlas 为 66 个节点、50 条关系、73 项 Evidence，其中 7 个节点是事件节点。
 - 第一人称射击样例已形成三段事件路线：第一人称视角定义 → 垂直空间战斗 → 网络化战斗空间；Doom、Quake、Half-Life 只作为 carrier closure 展示。没有用“第一款／唯一发明者”替代来源支持，也没有把年代相邻写成因果。
-- 普通页面选择品类后隐藏全局游戏网络，保留事件路线和可逆详情；地图模式仍保留完整网络、Family 透镜、缩放／平移与焦点恢复。无事件证据的品类显示明确空状态，不伪造路线。
+- 普通阅读流选择品类后仍以事件索引和可逆详情作为紧凑入口；进入地图模式后提供“代表作品／品类发展”两种视角，二者都保留完整网络、Family 透镜、缩放／平移与焦点恢复。无事件证据的品类显示明确空状态，不伪造路线。
 - 事件路线进一步收敛为“地图节点优先”：移除地图前的平铺事件卡，地图中的 7 个事件节点与 2 条演进关系成为唯一主叙事；页面只保留默认收起的紧凑事件索引，便于跳转而不与地图争夺视觉主次。事件节点使用更高层级和强调线，承载作品保持次级虚线样式。
 - 事件节点与关系新增构建期契约：事件必须有角色、主题与中文机制说明；事件关系必须明确为 evolution 或 carrier，并检查端点方向。纯测试覆盖事件路线排序、空状态、carrier closure 与关系角色。
-- 本轮 fresh 验证：`npm run check` 0 errors / warnings / hints，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 41 passed / 19 intentional skipped，base-path 2/2；完整 Chromium + mobile 251 passed / 21 intentional skipped。当前预览仍固定为 [http://127.0.0.1:4321/Learn-About-Games/](http://127.0.0.1:4321/Learn-About-Games/)，仓库保持 Private，未推送或部署。
+- 本轮 fresh 验证：`npm run check` 0 errors / warnings / hints，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 40 expected / 20 intentional skipped / 0 unexpected，base-path 2/2。当前预览仍固定为 [http://127.0.0.1:4321/Learn-About-Games/](http://127.0.0.1:4321/Learn-About-Games/)，仓库保持 Private，未推送或部署。
 
 ## 项目来源
 
@@ -135,3 +135,10 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 实现 `data-atlas-route-mode="events"`：选中品类的地图模式只显示匹配事件节点与 `evolution` 关系，非事件作品、硬件与实验节点在主画布隐藏但保留详情可达；切回“全部网络”恢复完整 66 节点／50 关系网络。
 - 新增 Atlas 浏览器合同：FPS 路线显示 3 个事件节点、2 条演进关系；点击“垂直空间与武器反馈”可打开 Doom 承载证据，返回后可切回完整网络。专项 JSON 回归为 40 expected、20 intentional skip、0 unexpected；fresh build 为 check 0 diagnostics、Vitest 178/178、140 pages。
 - 事故教训：地图路线视图必须明确是投影状态而不是数据删除；测试应区分 `data-atlas-event`、`data-atlas-game-node` 与可见性，避免把详情中保留的 carrier 误判为主图节点。
+
+## 2026-08-16：Atlas 改为全图双视角（current）
+
+- 用户确认品类之间会互相影响，不应把某个 Genre Family 显示成孤立网络；前一节记录的 `events` 隔离投影因此被视为过渡实现。
+- 地图模式现在提供“代表作品”和“品类发展”两个视角。两者共享同一张 66 节点／50 关系全图；代表作品视角保持全图，品类发展视角仅降低非匹配背景并强调匹配 Innovation Event 与 `evolution` 关系。
+- 事件仍是品类发展视角的主语，作品是点击事件后进入的 carrier evidence。切换视角不删除、重排或复制实体，也不改变缩放、平移、搜索和详情返回语义。
+- fresh `npm run build`：Astro check 0/0/0、Vitest 178/178、140 pages；Atlas 双视口 40 expected / 20 intentional skipped / 0 unexpected。最新实现详见 [Devlog 013](../devlog/2026-08-16-event-first-atlas-route.md)。

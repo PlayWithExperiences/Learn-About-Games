@@ -690,7 +690,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await openAtlasFamily(page, 'shooter');
   await visibleThemeButton(page, 'first-person-shooter-lineage').click();
 
-  await expect(page.locator('[data-atlas-lens-status]')).toContainText('创新事件路线');
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText('第一人称射击开发谱系');
   await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
   const timeline = page.locator('[data-atlas-event-timeline]');
   await expect(timeline).toBeVisible();
@@ -712,8 +712,8 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
 });
 
-test('map mode makes the selected innovation events primary and opens carrier evidence from an event', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'chromium', 'The event-route map mode is tested once at a desktop viewport.');
+test('Atlas offers representative-work and category-development map perspectives', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'The two map perspectives are tested once at a desktop viewport.');
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./atlas/');
   await openAtlasFamily(page, 'shooter');
@@ -722,13 +722,21 @@ test('map mode makes the selected innovation events primary and opens carrier ev
 
   const network = page.locator('[data-atlas-global-network][data-map-mode="true"]');
   const primary = network.locator('[data-atlas-primary-network]');
-  await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
-  await expect(primary).toHaveAttribute('data-atlas-route-mode', 'events');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(3);
+  const perspectives = network.locator('[data-atlas-perspective-controls]');
+  await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
+  await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
+  await expect(perspectives.locator('[data-atlas-perspective="works"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
+  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
+
+  await perspectives.locator('[data-atlas-perspective="category"]').click();
+  await expect(network).toHaveAttribute('data-atlas-perspective', 'category');
+  await expect(network).toHaveAttribute('data-atlas-route-mode', 'category');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
   await expect(primary.locator('[data-atlas-node][data-atlas-event][data-theme-match="true"]:visible')).toHaveCount(3);
-  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).toHaveCount(0);
-  await expect(primary.locator('[data-atlas-relation]:visible')).toHaveCount(2);
-  await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]:visible')).toHaveCount(2);
+  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
+  await expect(primary.locator('[data-atlas-relation]')).toHaveCount(50);
+  await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(2);
 
   await primary.locator('[data-atlas-node-id="fps-vertical-space-combat"] [data-atlas-node-link]').click();
   const dialog = page.locator('dialog[data-atlas-selected-detail]');
@@ -738,7 +746,8 @@ test('map mode makes the selected innovation events primary and opens carrier ev
   await dialog.getByRole('button', { name: '返回网络' }).click();
   await expect(dialog).toBeHidden();
 
-  await visibleThemeButton(page, 'all').click();
+  await perspectives.locator('[data-atlas-perspective="works"]').click();
+  await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
 });
@@ -1003,7 +1012,7 @@ test('theme controls only change emphasis without changing graph identity or geo
       controls.every((control) => control.getAttribute('aria-pressed') === 'true'),
     )).toBe(true);
     await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
-    await expect(page.locator('[data-atlas-lens-status]')).toContainText('创新事件路线');
+    await expect(page.locator('[data-atlas-lens-status]')).toContainText('地图模式可在代表作品与品类发展两种视角间切换');
     await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(66);
     await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(50);
     await expect(page.locator(`[data-atlas-global-network] [data-atlas-node][data-atlas-node-id="${matchingNode}"]`))

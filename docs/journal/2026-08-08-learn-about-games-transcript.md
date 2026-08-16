@@ -351,3 +351,11 @@ CSS 只新增 Atlas scoped 层级规则：事件节点置于承载作品之上�
 最小实现为一个可逆的投影状态：`地图模式 + 已选品类` 时，主画布只保留匹配的 Innovation Event 节点和 `evolution` 关系；作品、硬件、实验程序仍保留在服务端 DOM、节点详情和 carrier 链接中，但不再参与主画布可见层级。切换“全部网络”或退出地图模式会恢复 `full` 路线与完整 66 节点／50 关系网络。新增合同点击“垂直空间与武器反馈”事件，确认 Doom 作为承载证据可达，并验证返回网络与完整网络恢复。
 
 验证：fresh `npm run build` 为 Astro check 0 diagnostics、Vitest 178/178、140 pages；Atlas 双视口专项 JSON 为 40 expected、20 intentional skip、0 unexpected；运行时 FPS 路线可见 3 个事件节点、2 条演进关系，html/body 横溢出均为 0。代码与文档仍在本地 Private 工作树，未推送或部署。
+
+### 40. 2026-08-16：全图双视角修订（partial export）
+
+用户进一步澄清：Innovation Event 应该是品类发展视角的主节点，但不同品类不应被拆成互不相干的地图；各品类与代表作品仍应在同一张全图中互相影响。于是撤回上一节的“事件路线隔离”作为最终交互，改为地图模式内的两个视角：代表作品、品类发展。
+
+实现把 `data-atlas-perspective` 与 `data-atlas-route-mode` 分开表达。代表作品视角保持 `full` 网络；品类发展视角保留全图，只通过不透明度、层级和关系线强调匹配事件与演进关系。点击事件仍打开详情，Doom 等作品作为承载证据出现。新增 E2E 断言两种视角均保留 66 节点／50 关系、FPS 视角有 3 个匹配事件与 2 条匹配事件关系，回到代表作品视角和详情返回均可恢复。
+
+本轮 fresh 证据：`npm run check` 0/0/0，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 为 40 expected / 20 intentional skipped / 0 unexpected。预览继续保持在 `http://127.0.0.1:4321/Learn-About-Games/atlas/`，未推送或部署。
