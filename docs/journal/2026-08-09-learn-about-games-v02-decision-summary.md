@@ -1,7 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 2120 项资源目录（41 Source／2134 Access Version），尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 3120 项资源目录（41 Source／3134 Access Version），尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -335,3 +335,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - Atlas 的主语改为“创新事件 → 承载作品”：64 nodes、46 relations、73 Evidence；新增五个事件节点（程序生成单局结构、第一人称射击视角、锁定目标空间战斗、角色成长与持续进展、开放世界非线性探索），事件卡先解释发生了什么，再链接承载作品。绝对首创与完整品类史继续排除。
 - 资源目录当前为 41 Sources、2120 Work Items、2134 Access Versions；此前英文优先的 1000 条 GDC Vault 会话与 10 条 Game Developer 复盘已入库，本轮不重复导入。资源表搜索、结果数、展开/收起与七项事实筛选共用紧凑表头，访问版本详情使用不透明背景。
 - 已验证：`npm run check` 0/0/0；Atlas unit 29/29；fresh Astro build 138 pages；资源 Chromium 20/20；Atlas event 单项 E2E 1/1。下一步继续按事件—承载作品—证据三元组扩展 Atlas，并按英文优先、中文补充的证据门槛继续扩充资源。
+
+## 2026-08-16：Game Developer 千条资源与 RTS 创新事件
+
+- 资源批次使用 Agent Reach 与官方 Game Developer sitemap／文章页核验；新增 1000 条唯一英文 Work Item，均为可访问的官方文章，保留 canonical URL、单一主要 Resource Topic、能力映射、免费访问模型与 2026-08-16 检查日期。中文既有条目继续保留，未用弱证据凑中文数量。当前目录为 41 Source、3120 Work Item、3134 Access Version、16 Resource Topic。
+- Atlas 增加三枚以“事件”为主语的 RTS 节点：资源与基地生产、直接单位控制、非对称阵营设计；新增五条事件演进／事件—承载作品关系与三条 Evidence。全局网络为 69 nodes、55 relations、76 Evidence；分类视角为事件预留主带，承载作品下移，避免事件与作品重叠。
+- 本批修正了搜索测试对 URL 隐含文本的误判，并同步更新 README、Roadmap、Changelog 的公开规模事实。fresh `npm run check` 为 0/0/0，Vitest 180/180，Astro build 141 pages；Atlas／Resources／Playtest／visible-skeleton 定向 E2E 为 121 passed／21 intentional skipped；完整 E2E 为 252 passed／22 intentional skipped／0 failed。

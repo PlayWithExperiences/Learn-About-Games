@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import resourceIntake from '../../docs/research/2026-08-09-resource-intake.md?raw';
 import resourceExpansionIntake from '../../docs/research/2026-08-15-resource-300-intake.md?raw';
 import resourceGdc500Intake from '../../docs/research/2026-08-15-resource-500-gdc-intake.md?raw';
+import resourceGameDeveloper1000Intake from '../../docs/research/2026-08-16-resource-1000-gamedeveloper-intake.md?raw';
 import contentConfigSource from '../../src/content.config.ts?raw';
 
 import atlasEvidence from '../../src/data/atlas-evidence.json';
@@ -743,6 +744,8 @@ describe('raw product catalog data', () => {
     ) + resourceGdc500Intake.slice(
       resourceGdc500Intake.indexOf('## 已接受'),
       resourceGdc500Intake.indexOf('## 排除与限制'),
+    ) + resourceGameDeveloper1000Intake.slice(
+      resourceGameDeveloper1000Intake.indexOf('## 已接受'),
     );
     const intakeCanonicalUrls = new Set(
       [...acceptedIntake.matchAll(/canonicalUrl=([^<\n|]+)/g)].map((match) => match[1].trim()),

@@ -1,9 +1,9 @@
 # Learn About Games v0.2 — 成长资源证据 Intake
 
 - 研究日期：2026-08-09；扩展核验：2026-08-15
-- 状态：研究证据 notebook；Batch A–I 已正规化为 2120 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘
+- 状态：研究证据 notebook；Batch A–I 已正规化为 3120 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘
 - 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项、Batch I 16 项
-- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；正规化后为 **2120 个 Work Item**
+- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；正规化后为 **3120 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
@@ -25,33 +25,33 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 当前正规化 catalog coverage
 
-- Work Item：2120；Source：41；Access Version：2134；Resource Topic：16。
-- 原始语言：en 2065、ja 17、zh-Hans 38。
-- 可消费语言（Work Item 计，可重叠）：en 2066、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 2077、ja 17、zh-Hans 40。
-- 媒介：article 75、book 29、course 38、paper 34、podcast 11、talk 1835、video 15、website 83。
+- Work Item：3120；Source：41；Access Version：3134；Resource Topic：16。
+- 原始语言：en 3065、ja 17、zh-Hans 38。
+- 可消费语言（Work Item 计，可重叠）：en 3066、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 3077、ja 17、zh-Hans 40。
+- 媒介：article 1075、book 29、course 38、paper 34、podcast 11、talk 1835、video 15、website 83。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
 | 主主题 | Work Item |
 |---|---:|
-| 设计基础与概念 | 335 |
-| 系统与机制 | 115 |
-| 平衡与经济 | 138 |
-| 手感与反馈 | 288 |
-| 关卡与空间 | 187 |
-| Playtest 主题资源集合 | 35 |
-| 叙事与表达 | 262 |
-| 原型与实验 | 46 |
-| 生产与迭代 | 217 |
-| 协作与团队 | 98 |
+| 设计基础与概念 | 721 |
+| 系统与机制 | 157 |
+| 平衡与经济 | 146 |
+| 手感与反馈 | 480 |
+| 关卡与空间 | 201 |
+| Playtest 主题资源集合 | 44 |
+| 叙事与表达 | 300 |
+| 原型与实验 | 190 |
+| 生产与迭代 | 345 |
+| 协作与团队 | 137 |
 | 领导与创意方向 | 218 |
 | 批判、价值观与历史语境 | 60 |
 | 研究方法与玩家体验 | 74 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 11 |
 | 职业与行业实践 | 29 |
-| 合计 | 2120 |
+| 合计 | 3120 |
 
 ## 接受候选
 

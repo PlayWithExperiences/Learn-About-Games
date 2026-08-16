@@ -516,3 +516,9 @@ Innovation Atlas 本轮只新增一个证据透镜“解谜冒险结构谱系”
 资源目录此前已经完成英文优先的 1000 条 GDC Vault 批次与 10 条 Game Developer 复盘；本阶段不重复导入同一批 URL，当前目录仍为 41 Source / 2120 Work Item / 2134 Access Version。资源表继续把搜索、结果数、展开／收起和七项事实筛选放在表头，访问版本面板使用不透明背景；Work Item 展开态改为更紧凑的同一行流，窄屏再退化为单列。
 
 本阶段已运行 Astro check 0/0/0、Atlas unit 29/29、fresh build 138 pages、资源 Chromium 20/20 与创新事件 E2E 1/1。预览继续只在本机 `http://127.0.0.1:4321/Learn-About-Games/` 提供；本段是脱敏 partial export，不记录凭据、环境变量或其他秘密。
+
+## 47. Game Developer 千条资源与 RTS 事件（脱敏 partial export）
+
+发起人要求再检索 1000 条成长资源并继续补全 Innovation Atlas。主任务从官方 Game Developer 页面导入 1000 条英文文章，按 canonical URL 去重并逐条保留主题、能力、访问模型和检查日期；中文既有资源未被删除或降级。目录达到 41 Source、3120 Work Item、3134 Access Version、16 个资源主题。
+
+Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵营设计”三个 RTS innovation-event 节点，以及事件演进和事件—承载作品关系；作品仍作为证据材料，而不是事件的替代物。当前 Atlas 为 69 nodes、55 relations、76 Evidence。相关单测、构建和双视口定向浏览器测试均通过。本段不记录凭据、环境变量或其他秘密。

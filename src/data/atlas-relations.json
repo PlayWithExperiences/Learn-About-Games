@@ -478,5 +478,100 @@
     "tags": ["innovation-event", "first-person-shooter-lens"],
     "relationRole": "carrier",
     "summary": { "zh-CN": "Half-Life 承载了把第一人称空间、网络/引擎语境与情境叙事结合起来的后续转译。" }
+  },
+{
+  "id": "rts-resource-to-direct-control",
+  "fromId": "rts-resource-and-base-production",
+  "toId": "rts-direct-unit-control",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "patrick-wyatt-making-warcraft-control"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "evolution",
+  "summary": {
+    "zh-CN": "资源、基地与生产机制继续向可直接调度的战场操作层演进；这里记录机制路线，不把时间相邻当作唯一因果。"
   }
+},
+{
+  "id": "rts-direct-control-to-asymmetric-factions",
+  "fromId": "rts-direct-unit-control",
+  "toId": "rts-asymmetric-faction-design",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "blizzard-starcraft-faction-design"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "evolution",
+  "summary": {
+    "zh-CN": "实时调度进一步与差异化阵营和反制关系结合，形成更强的对抗表达。"
+  }
+},
+{
+  "id": "rts-resource-to-dune-ii",
+  "fromId": "rts-resource-and-base-production",
+  "toId": "dune-ii",
+  "type": "prototype-to-product",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "acmi-dune-ii-rts-mechanics"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "carrier",
+  "summary": {
+    "zh-CN": "Dune II 是资源、基地与实时生产事件的承载作品；作品用于观察机制如何落地。"
+  }
+},
+{
+  "id": "rts-direct-control-to-warcraft",
+  "fromId": "rts-direct-unit-control",
+  "toId": "warcraft-orcs-humans",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "patrick-wyatt-making-warcraft-control"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "carrier",
+  "summary": {
+    "zh-CN": "Warcraft 承载了实时单位控制与战场调度机制；它是事件的作品证据，不是事件本身。"
+  }
+},
+{
+  "id": "rts-asymmetric-factions-to-starcraft",
+  "fromId": "rts-asymmetric-faction-design",
+  "toId": "starcraft",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "blizzard-starcraft-faction-design"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "carrier",
+  "summary": {
+    "zh-CN": "StarCraft 承载了差异化阵营与反制关系的设计事件；Blizzard 回顾也记录了其技术重写语境。"
+  }
+}
 ]

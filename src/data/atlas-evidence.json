@@ -890,5 +890,69 @@
     "stableId": "Nintendo news 1206592",
     "locator": "Making-of discussion of open-air concept and large-scale exploration",
     "boundedClaim": { "zh-CN": "支持 Breath of the Wild 的 open-air 设计方向与非线性探索语境；不主张它是开放世界的唯一先驱。" }
+  },
+{
+  "id": "acmi-dune-ii-rts-mechanics",
+  "sourceTitle": "Dune II: The Building of a Dynasty",
+  "originalLanguage": "en",
+  "title": {
+    "zh-CN": "ACMI：Dune II 与实时战略设计",
+    "en": "ACMI: Dune II and real-time strategy design"
+  },
+  "url": "https://www.acmi.net.au/works/107341--dune-ii-the-building-of-a-dynasty/",
+  "summary": {
+    "zh-CN": "ACMI 馆藏记录 Dune II 的年代与实时战略语境；用于描述资源、基地和直接控制作为事件中的机制集合。"
+  },
+  "sourceKind": "museum-object",
+  "institutionOrAuthor": "Australian Centre for the Moving Image",
+  "checkedAt": "2026-08-16",
+  "stableId": "ACMI 107341",
+  "locator": "Object description and historical context",
+  "boundedClaim": {
+    "zh-CN": "支持 Dune II 作为资源、基地与实时生产机制组合的承载作品；不把它写成 RTS 的绝对第一款。"
   }
+},
+{
+  "id": "blizzard-starcraft-faction-design",
+  "sourceTitle": "Mike Morhaime on 20 Years of StarCraft Esports",
+  "originalLanguage": "en",
+  "title": {
+    "zh-CN": "Blizzard：StarCraft 二十年回顾",
+    "en": "Blizzard: Mike Morhaime on 20 Years of StarCraft"
+  },
+  "url": "https://news.blizzard.com/en-us/article/21574697/mike-morhaime-on-20-years-of-starcraft-esports",
+  "summary": {
+    "zh-CN": "Blizzard 回顾 StarCraft 的技术继承、重写与多阵营设计语境。"
+  },
+  "sourceKind": "official-statement",
+  "institutionOrAuthor": "Mike Morhaime / Blizzard Entertainment",
+  "publicationDate": "2018-03-31",
+  "checkedAt": "2026-08-16",
+  "stableId": "Blizzard article 21574697",
+  "locator": "Development history and faction discussion",
+  "boundedClaim": {
+    "zh-CN": "支持 StarCraft 将技术重写与具有差异的阵营设计结合为后续 RTS 事件；不主张它单独定义全部 RTS。"
+  }
+},
+{
+  "id": "patrick-wyatt-making-warcraft-control",
+  "sourceTitle": "The making of Warcraft part 1",
+  "originalLanguage": "en",
+  "title": {
+    "zh-CN": "Patrick Wyatt：Warcraft 制作回顾",
+    "en": "Patrick Wyatt: The making of Warcraft part 1"
+  },
+  "url": "https://www.codeofhonor.com/blog/the-making-of-warcraft-part-1/",
+  "summary": {
+    "zh-CN": "Warcraft 首席程序员回顾早期原型如何受到 Dune II 启发并形成可直接控制的实时结构。"
+  },
+  "sourceKind": "creator-account",
+  "institutionOrAuthor": "Patrick Wyatt",
+  "checkedAt": "2026-08-16",
+  "stableId": "Code of Honor Warcraft part 1",
+  "locator": "Early prototype and Dune II influence sections",
+  "boundedClaim": {
+    "zh-CN": "支持 Warcraft 作为资源、基地与直接单位控制机制的后续承载作品；不把两作描述为完全相同。"
+  }
+}
 ]

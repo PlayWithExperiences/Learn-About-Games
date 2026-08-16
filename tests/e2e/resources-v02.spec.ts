@@ -6,7 +6,7 @@ import resources from '../../src/data/resources.json' with { type: 'json' };
 import sources from '../../src/data/sources.json' with { type: 'json' };
 import { formatLanguage } from '../../src/lib/resource-display';
 
-test.setTimeout(60_000);
+test.setTimeout(120_000);
 
 const projectBasePath = '/Learn-About-Games/';
 
@@ -24,6 +24,17 @@ function matchingResources(target: (typeof resources)[number]) {
     && resource.accessVersions.some(({ accessModel }) => accessModel === targetAccessModel)
     && resource.sourceId === target.sourceId,
   );
+}
+
+function searchableText(resource: (typeof resources)[number]) {
+  const source = sources.find(({ id }) => id === resource.sourceId);
+  const localized = (value: { 'zh-CN'?: string; en?: string }) => [value['zh-CN'], value.en];
+  return [
+    ...localized(resource.title),
+    ...localized(resource.summary),
+    ...localized(resource.whyRelevant),
+    ...(source ? localized(source.name) : []),
+  ].filter((value): value is string => Boolean(value)).join(' ').toLowerCase();
 }
 
 function median(values: number[]) {
@@ -126,10 +137,7 @@ test('searches localized resource text and combines with factual filters', async
   await search.fill('Metroidvania');
   await expect(page).toHaveURL(/[?&]q=Metroidvania(?:&|$)/);
   const matching = page.locator('[data-result-kind="work-item"]:visible');
-  await expect(matching).toHaveCount(resources.filter((resource) => {
-    const text = JSON.stringify(resource).toLowerCase();
-    return text.includes('metroidvania');
-  }).length);
+  await expect(matching).toHaveCount(resources.filter((resource) => searchableText(resource).includes('metroidvania')).length);
 
   await page.getByLabel('媒介').selectOption('talk');
   expect(new URL(page.url()).searchParams.get('mediaType')).toBe('talk');

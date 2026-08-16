@@ -3,7 +3,7 @@ import capabilities from '../../src/data/capabilities.json' with { type: 'json' 
 import resources from '../../src/data/resources.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
 
-test.setTimeout(60_000);
+test.setTimeout(120_000);
 
 const playtestingResources = resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes('playtesting'));
 

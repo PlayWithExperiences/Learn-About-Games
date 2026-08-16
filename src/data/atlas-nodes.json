@@ -570,5 +570,86 @@
     "lane": 8,
     "tags": ["zelda-lineage", "nonlinear-world", "innovation-event"],
     "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
-  }
+  },
+  {
+    "id": "rts-resource-and-base-production",
+  "kind": "innovation",
+  "name": {
+    "zh-CN": "资源、基地与实时生产",
+    "en": "Resources, bases, and real-time production"
+  },
+  "summary": {
+    "zh-CN": "把资源采集、基地建设与持续生产组织成可观察的实时战略机制组合，而不是某一部作品的专利。"
+  },
+  "startYear": 1992,
+    "lane": 3,
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "eventRole": "definition",
+  "themeIds": [
+    "real-time-strategy-lineage"
+  ],
+  "mechanism": {
+    "zh-CN": "在持续运行的时间轴上安排资源流、基地空间与生产队列。"
+  },
+  "evidenceIds": [
+    "acmi-dune-ii-rts-mechanics"
+  ]
+},
+  {
+    "id": "rts-direct-unit-control",
+  "kind": "innovation",
+  "name": {
+    "zh-CN": "实时单位控制与战场调度",
+    "en": "Real-time unit control and battlefield dispatch"
+  },
+  "summary": {
+    "zh-CN": "把直接下达单位指令、空间调度和即时反馈组织成可读的战场操作层。"
+  },
+  "startYear": 1994,
+    "lane": 4,
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "eventRole": "mechanism",
+  "themeIds": [
+    "real-time-strategy-lineage"
+  ],
+  "mechanism": {
+    "zh-CN": "让玩家在资源生产持续进行时直接选择、移动并调度多个单位。"
+  },
+  "evidenceIds": [
+    "patrick-wyatt-making-warcraft-control"
+  ]
+},
+  {
+    "id": "rts-asymmetric-faction-design",
+  "kind": "innovation",
+  "name": {
+    "zh-CN": "差异化阵营与对抗关系",
+    "en": "Asymmetric factions and counterplay"
+  },
+  "summary": {
+    "zh-CN": "将不同阵营的能力、限制与反制关系变成实时战略的核心表达。"
+  },
+  "startYear": 1998,
+    "lane": 5,
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "eventRole": "transformation",
+  "themeIds": [
+    "real-time-strategy-lineage"
+  ],
+  "mechanism": {
+    "zh-CN": "用阵营差异制造选择、反制与长期学习，而不是只换一套美术主题。"
+  },
+  "evidenceIds": [
+    "blizzard-starcraft-faction-design"
+  ]
+}
 ]

@@ -152,13 +152,44 @@ describe('global Atlas graph contract', () => {
     }
   });
 
+  it('keeps RTS innovation mechanisms as first-class events with carrier works', () => {
+    const eventIds = [
+      'rts-resource-and-base-production',
+      'rts-direct-unit-control',
+      'rts-asymmetric-faction-design',
+    ];
+    const events = atlasNodes.filter(({ id }) => eventIds.includes(id));
+    const evolutionRelations = atlasRelations.filter(
+      ({ relationRole, fromId, toId }) =>
+        relationRole === 'evolution' && eventIds.includes(fromId) && eventIds.includes(toId),
+    );
+    const carrierRelations = atlasRelations.filter(
+      ({ relationRole, fromId, toId }) =>
+        relationRole === 'carrier' && eventIds.includes(fromId) && !eventIds.includes(toId),
+    );
+
+    expect(events.map(({ id }) => id)).toEqual(eventIds);
+    expect(events.every(({ eventRole, themeIds, mechanism, evidenceIds }) =>
+      eventRole && themeIds.includes('real-time-strategy-lineage') && mechanism && evidenceIds.length > 0,
+    )).toBe(true);
+    expect(evolutionRelations.map(({ id }) => id)).toEqual([
+      'rts-resource-to-direct-control',
+      'rts-direct-control-to-asymmetric-factions',
+    ]);
+    expect(carrierRelations.map(({ toId }) => toId)).toEqual([
+      'dune-ii',
+      'warcraft-orcs-humans',
+      'starcraft',
+    ]);
+  });
+
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(25);
     expect(atlasNodes.length).toBeLessThanOrEqual(70);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
-    expect(atlasRelations.length).toBeLessThanOrEqual(50);
-    expect(atlasNodes).toHaveLength(66);
-    expect(atlasRelations).toHaveLength(50);
+    expect(atlasRelations.length).toBeLessThanOrEqual(60);
+    expect(atlasNodes).toHaveLength(69);
+    expect(atlasRelations).toHaveLength(55);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -277,7 +308,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
 
-    expect(atlasEvidence).toHaveLength(73);
+    expect(atlasEvidence).toHaveLength(76);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -465,8 +496,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(66);
-    expect(relations).toHaveLength(50);
+    expect(nodes).toHaveLength(69);
+    expect(relations).toHaveLength(55);
   });
 });
 
@@ -662,9 +693,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(66);
-    expect(new Set(outlinedNodeIds).size).toBe(66);
-    expect(outlinedRelationIds.size).toBe(50);
+    expect(outlinedNodeIds).toHaveLength(69);
+    expect(new Set(outlinedNodeIds).size).toBe(69);
+    expect(outlinedRelationIds.size).toBe(55);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -753,7 +784,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(66);
+    expect(indexed).toHaveLength(69);
     expect(runStructure).toMatchObject({
       id: 'procedural-run-structure',
       startYear: 1980,

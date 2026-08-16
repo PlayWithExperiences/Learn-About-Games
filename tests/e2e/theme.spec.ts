@@ -92,6 +92,9 @@ test('keeps the appearance control and all four navigation destinations within 3
 });
 
 test('uses readable system colors and an honestly disabled control without JavaScript', async ({ browser }) => {
+  // The no-JS resources page intentionally renders every Work Item; keep this
+  // contract from timing out when the full browser matrix is under load.
+  test.setTimeout(120_000);
   for (const [colorScheme, expectedPage] of [['light', lightPage], ['dark', darkPage]] as const) {
     const context = await browser.newContext({ colorScheme, javaScriptEnabled: false });
     const page = await context.newPage();

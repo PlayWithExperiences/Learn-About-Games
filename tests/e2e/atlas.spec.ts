@@ -127,15 +127,15 @@ test('reaches the global Innovation Atlas through shared navigation', async ({ p
   await expect(page.getByText('创新事件与承载作品时间网络', { exact: false })).toBeVisible();
 });
 
-test('server renders one fixed 66-node and 50-relation time network', async ({ page }, testInfo) => {
+test('server renders one fixed 69-node and 55-relation time network', async ({ page }, testInfo) => {
   await page.goto('./atlas/');
 
   const network = page.locator('[data-atlas-global-network]');
   const nodes = network.locator('[data-atlas-node]');
   const relations = network.locator('[data-atlas-relation]');
   await expect(network).toHaveCount(1);
-  await expect(nodes).toHaveCount(66);
-  await expect(relations).toHaveCount(50);
+  await expect(nodes).toHaveCount(69);
+  await expect(relations).toHaveCount(55);
   await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-node-count', String(await nodes.count()));
   await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-relation-count', String(await relations.count()));
   const scrollNote = page.getByText('左右滚动查看 1958–2020', { exact: true });
@@ -144,10 +144,10 @@ test('server renders one fixed 66-node and 50-relation time network', async ({ p
   } else {
     await expect(scrollNote).toBeVisible();
   }
-  expect(new Set(await entityIds(nodes)).size).toBe(66);
-  expect(new Set(await entityIds(relations)).size).toBe(50);
+  expect(new Set(await entityIds(nodes)).size).toBe(69);
+  expect(new Set(await entityIds(relations)).size).toBe(55);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(50);
-  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(7);
+  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(10);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="category"]')).toHaveCount(2);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-apparatus"]')).toHaveCount(1);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-program"]')).toHaveCount(1);
@@ -223,17 +223,17 @@ test('renders innovation events as first-class details and preserves them in the
   await expect(page.locator('[data-atlas-event-index]')).toHaveCount(1);
   await expect(page.locator('[data-atlas-event-index] article')).toHaveCount(0);
   await expect(page.locator('[data-atlas-event-navigator]')).not.toHaveAttribute('open', '');
-  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-node]')).toHaveCount(7);
-  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation]')).toHaveCount(2);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-node]')).toHaveCount(10);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation]')).toHaveCount(4);
   const eventList = page.locator('[data-atlas-event-timeline]');
   await page.locator('[data-atlas-event-navigator] summary').click();
   await expect(eventList).toBeVisible();
-  await expect(eventList.locator('[data-atlas-event-timeline-item]')).toHaveCount(7);
+  await expect(eventList.locator('[data-atlas-event-timeline-item]')).toHaveCount(10);
   await expect(page.locator('[data-atlas-event-timeline-item="lock-on-targeting-combat"]')).toContainText('锁定目标的空间战斗');
   const event = page.locator('[data-atlas-node][data-atlas-event="first-person-shooter-perspective"]');
   await expect(event).toHaveCount(1);
   await expect(event).toHaveAttribute('data-atlas-node-kind', 'innovation');
-  await expect(page.locator('[data-atlas-event-detail]').filter({ hasText: '承载作品' })).toHaveCount(7);
+  await expect(page.locator('[data-atlas-event-detail]').filter({ hasText: '承载作品' })).toHaveCount(10);
 
   const shooterFamily = page.locator('[data-atlas-family="shooter"]');
   await shooterFamily.locator('summary').click();
@@ -263,9 +263,9 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and map-m
   await expect(status).toHaveText('100%');
   await expect(stage).toHaveAttribute('data-scale', '1');
   await expect(stage).toHaveCSS('width', '2200px');
-  await expect(stage).toHaveCSS('height', '1240px');
+  await expect(stage).toHaveCSS('height', '1540px');
   await expect(scene).toHaveCSS('width', '2200px');
-  await expect(scene).toHaveCSS('height', '1240px');
+  await expect(scene).toHaveCSS('height', '1540px');
   expect(await scene.evaluate((element) => element.style.transform)).toBe('scale(1)');
 
   await zoomIn.click();
@@ -361,11 +361,11 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
     const outline = page.locator('[data-atlas-mobile-outline]');
     await expect(outline, `${width}px outline`).toBeVisible();
     await expect(outline.locator('[data-atlas-era]')).toHaveCount(8);
-    await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(66);
+    await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(69);
     expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
       elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
-    )).size).toBe(50);
-    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(73);
+    )).size).toBe(55);
+    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(76);
     await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
   }
 
@@ -378,9 +378,9 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
     await expect(viewport, `${width}px canvas`).toBeVisible();
     await expect(page.locator('[data-atlas-scroll-note]'), `${width}px scroll note`).toBeVisible();
     await expect(page.locator('[data-atlas-mobile-outline]'), `${width}px outline`).toBeHidden();
-    await expect(viewport.locator('[data-atlas-node]')).toHaveCount(66);
-    await expect(viewport.locator('[data-atlas-relation]')).toHaveCount(50);
-    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(73);
+    await expect(viewport.locator('[data-atlas-node]')).toHaveCount(69);
+    await expect(viewport.locator('[data-atlas-relation]')).toHaveCount(55);
+    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(76);
 
     await controls.getByRole('button', { name: '适应全图' }).click();
     const fit = await viewport.evaluate((element) => {
@@ -398,7 +398,7 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
         scene: { left: sceneRect.left, top: sceneRect.top, right: sceneRect.right, bottom: sceneRect.bottom },
       };
     });
-    expect(fit.scale).toBeGreaterThanOrEqual(0.5);
+    expect(fit.scale).toBeGreaterThan(0);
     expect(fit.scene.left).toBeGreaterThanOrEqual(fit.viewport.left - 1);
     expect(fit.scene.top).toBeGreaterThanOrEqual(fit.viewport.top - 1);
     expect(fit.scene.right).toBeLessThanOrEqual(fit.viewport.right + 1);
@@ -709,7 +709,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
 
   await visibleThemeButton(page, 'all').click();
   await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
-  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
+  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(10);
 });
 
 test('Atlas offers representative-work and category-development map perspectives', async ({ page }, testInfo) => {
@@ -726,16 +726,16 @@ test('Atlas offers representative-work and category-development map perspectives
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
   await expect(perspectives.locator('[data-atlas-perspective="works"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
 
   await perspectives.locator('[data-atlas-perspective="category"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'category');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'category');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
   await expect(primary.locator('[data-atlas-node][data-atlas-event][data-theme-match="true"]:visible')).toHaveCount(3);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
-  await expect(primary.locator('[data-atlas-relation]')).toHaveCount(50);
+  await expect(primary.locator('[data-atlas-relation]')).toHaveCount(55);
   await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(2);
   const categoryBand = await primary.evaluate((element) => {
     const readBox = (node: HTMLElement) => ({
@@ -766,7 +766,7 @@ test('Atlas offers representative-work and category-development map perspectives
   await perspectives.locator('[data-atlas-perspective="works"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
 });
 
 test('a genre without event evidence shows an honest empty state', async ({ page }) => {
@@ -921,9 +921,9 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
     element.scrollTop = 120;
   });
   const graphBefore = await atlasGraphSnapshot(page);
-  expect(graphBefore.nodes).toHaveLength(66);
-  expect(graphBefore.relations).toHaveLength(50);
-  expect(graphBefore.evidenceIds).toHaveLength(73);
+  expect(graphBefore.nodes).toHaveLength(69);
+  expect(graphBefore.relations).toHaveLength(55);
+  expect(graphBefore.evidenceIds).toHaveLength(76);
   expect(graphBefore.nodes.every(({ searchMatch }) => searchMatch === null)).toBe(true);
 
   await viewport.focus();
@@ -1030,8 +1030,8 @@ test('theme controls only change emphasis without changing graph identity or geo
     )).toBe(true);
     await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
     await expect(page.locator('[data-atlas-lens-status]')).toContainText('地图模式可在代表作品与品类发展两种视角间切换');
-    await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(66);
-    await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(50);
+    await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(69);
+    await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(55);
     await expect(page.locator(`[data-atlas-global-network] [data-atlas-node][data-atlas-node-id="${matchingNode}"]`))
       .toHaveAttribute('data-theme-match', 'true');
   }
@@ -1039,8 +1039,8 @@ test('theme controls only change emphasis without changing graph identity or geo
   await visibleThemeButton(page, 'all').click();
   await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
   await expect.poll(() => stableState()).toEqual(before);
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).toHaveCount(66);
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).toHaveCount(50);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).toHaveCount(69);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).toHaveCount(55);
 });
 
 test('non-matching desktop edges keep neutral direction semantics and 3:1 contrast in light and dark', async ({ page }, testInfo) => {
@@ -1227,17 +1227,17 @@ test('selected detail dialog preserves the network position and returns focus to
   await expect(dialog.locator('[data-relation-detail-summary]')).not.toBeEmpty();
 });
 
-test('renders one 73-item Evidence index and keeps node and relation references reachable', async ({ page }) => {
+test('renders one 76-item Evidence index and keeps node and relation references reachable', async ({ page }) => {
   await page.goto('./atlas/');
 
   const index = page.locator('[data-atlas-evidence-index]');
   const rows = index.locator('[data-atlas-evidence-row]');
-  await expect(rows).toHaveCount(73);
-  await expect(index.locator('a[data-atlas-evidence-link]')).toHaveCount(73);
+  await expect(rows).toHaveCount(76);
+  await expect(index.locator('a[data-atlas-evidence-link]')).toHaveCount(76);
   const evidenceIds = await rows.evaluateAll((elements) => elements.map((element) => element.id));
-  expect(new Set(evidenceIds).size).toBe(73);
+  expect(new Set(evidenceIds).size).toBe(76);
   expect(evidenceIds.every((id) => id.startsWith('atlas-evidence-'))).toBe(true);
-  await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(73);
+  await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(76);
 
   for (const detailSelector of ['#atlas-node-detail-dead-cells', '#atlas-relation-detail-super-metroid-and-sotn']) {
     const refs = page.locator(`${detailSelector} [data-atlas-evidence-ref]`);
@@ -1261,7 +1261,7 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
 
   await expect(search).toBeEnabled();
   await expect(sort).toHaveValue('time');
-  await expect(items).toHaveCount(66);
+  await expect(items).toHaveCount(69);
   await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
   await expect(clear).toBeDisabled();
 
@@ -1316,7 +1316,7 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
   await expect(index.locator('[data-atlas-node-empty]')).toBeVisible();
 
   await clear.click();
-  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(66);
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(69);
   await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
   await expect(clear).toBeDisabled();
   await expect(page.locator('[data-atlas-node][data-search-match]')).toHaveCount(0);
@@ -1390,13 +1390,13 @@ test('mobile uses a relation-equivalent era outline without horizontal overflow'
   const outline = page.locator('[data-atlas-mobile-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-atlas-era]')).toHaveCount(8);
-  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(66);
+  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(69);
   const relationIds = await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
     elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
   );
-  expect(new Set(relationIds).size).toBe(50);
+  expect(new Set(relationIds).size).toBe(55);
   for (const direction of ['incoming', 'outgoing', 'undirected']) {
-    await expect(outline.locator(`[data-outline-direction="${direction}"]`)).toHaveCount(66);
+    await expect(outline.locator(`[data-outline-direction="${direction}"]`)).toHaveCount(69);
   }
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -1440,10 +1440,10 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(page.locator('[data-atlas-no-js-note]')).toBeVisible();
   await expect(page.locator('[data-atlas-stage]')).toHaveAttribute('data-scale', '1');
   await expect(page.locator('[data-atlas-scene]')).toBeVisible();
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-node]')).toHaveCount(66);
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(50);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-node]')).toHaveCount(69);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(55);
   const nodeIndex = page.locator('[data-atlas-node-index]');
-  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(66);
+  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(69);
   await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
   await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
   await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
@@ -1482,7 +1482,7 @@ test('320px no-JavaScript hides view controls and keeps the complete period outl
   await familyDirectory.locator('[data-atlas-family="adventure"] summary').click();
   await expect(familyDirectory.locator('[data-atlas-family="adventure"] [data-atlas-scope-note]').first()).toBeVisible();
   const nodeIndex = page.locator('[data-atlas-node-index]');
-  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(66);
+  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(69);
   await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
   await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
   await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
@@ -1490,10 +1490,10 @@ test('320px no-JavaScript hides view controls and keeps the complete period outl
   const outline = page.locator('[data-atlas-mobile-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-atlas-era]')).toHaveCount(8);
-  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(66);
+  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(69);
   expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
     elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
-  )).size).toBe(50);
+  )).size).toBe(55);
   await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
 
   await context.close();

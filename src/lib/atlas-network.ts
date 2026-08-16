@@ -366,6 +366,11 @@ export function buildAtlasLayout(
   options: { perspective?: AtlasLayoutPerspective } = {},
 ): AtlasLayout {
   const perspective = options.perspective ?? 'works';
+  const highestInnovationLane = Math.max(
+    -1,
+    ...nodes.filter(({ kind }) => kind === 'innovation').map(({ lane }) => lane),
+  );
+  const nonInnovationLaneOffset = Math.max(0, highestInnovationLane + 1 - 3);
   const categoryLaneById = new Map(
     nodes
       .filter(({ kind }) => kind === 'category')
@@ -385,15 +390,15 @@ export function buildAtlasLayout(
       : yearX;
     const displayLane = perspective === 'category'
       ? node.kind === 'innovation'
-        ? 5 + node.lane
+        ? 6 + node.lane
         : node.kind === 'category'
           ? (categoryLaneById.get(node.id) ?? 1)
-          : Math.max(3, node.lane + 1) + 5
+          : Math.max(3, node.lane + 1) + nonInnovationLaneOffset + 6
       : node.kind === 'innovation'
         ? node.lane
         : node.kind === 'category'
           ? (categoryLaneById.get(node.id) ?? 1)
-          : Math.max(3, node.lane + 1);
+          : Math.max(3, node.lane + 1) + nonInnovationLaneOffset;
     const width = hasRange
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'
