@@ -255,6 +255,7 @@ export type CatalogValidationCode =
   | 'RESOURCE_CANONICAL_URL_INVALID'
   | 'RESOURCE_URL_OWNERSHIP_CONFLICT'
   | 'RESOURCE_ACCESS_VERSION_REQUIRED'
+  | 'RESOURCE_ACCESS_VERSION_DUPLICATE'
   | 'RESOURCE_ACCESS_MODEL_INVALID'
   | 'RESOURCE_ACCESS_VERSION_URL_INVALID'
   | 'RESOURCE_ACCESS_VERSION_CHECKED_AT_INVALID'
@@ -436,6 +437,27 @@ export function normalizeCatalogUrl(value: string): string {
   url.searchParams.sort();
 
   return url.toString();
+}
+
+function accessVersionIdentity(
+  accessVersion: Catalog['resources'][number]['accessVersions'][number],
+): string {
+  const restrictions = (accessVersion.regionRestrictions ?? [])
+    .map((restriction) => ({
+      regions: [...restriction.regions].sort(),
+      note: restriction.note,
+    }))
+    .sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
+
+  return JSON.stringify({
+    url: isUrl(accessVersion.url) ? normalizeCatalogUrl(accessVersion.url) : accessVersion.url,
+    language: accessVersion.language,
+    accessModel: accessVersion.accessModel,
+    versionRelation: accessVersion.versionRelation,
+    presentationMode: accessVersion.presentationMode,
+    checkedAt: accessVersion.checkedAt,
+    regionRestrictions: restrictions,
+  });
 }
 
 function isRegionRestriction(value: unknown): boolean {
@@ -993,7 +1015,20 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
     if (resource.accessVersions.length === 0) {
       appendError(errors, 'RESOURCE_ACCESS_VERSION_REQUIRED', 'resources', resource.id, 'accessVersions', '');
     }
+    const accessVersionIdentities = new Set<string>();
     for (const accessVersion of resource.accessVersions) {
+      const identity = accessVersionIdentity(accessVersion);
+      if (accessVersionIdentities.has(identity)) {
+        appendError(
+          errors,
+          'RESOURCE_ACCESS_VERSION_DUPLICATE',
+          'resources',
+          resource.id,
+          'accessVersions',
+          isUrl(accessVersion.url) ? normalizeCatalogUrl(accessVersion.url) : accessVersion.url,
+        );
+      }
+      accessVersionIdentities.add(identity);
       if (!accessModels.has(accessVersion.accessModel)) {
         appendError(
           errors,

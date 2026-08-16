@@ -4,6 +4,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- 完成一次全局数据与运行态审计：3120 个 Work Item、41 个 Source、3134 个 Access Version、42 个 Capability、12 个 Knowledge Topic 与 69/55/76 的 Innovation Atlas 节点／关系／Evidence 均通过引用闭包、规范化 URL ownership、主题约束与页面回归；新增 `RESOURCE_ACCESS_VERSION_DUPLICATE` 构建期诊断，拒绝同一 Work Item 内完全重复的访问版本身份。审计同时明确：`capabilityIds` / `knowledgeTopicIds` 是可回溯的入库元数据，不声称已逐篇阅读全文；批量映射风险进入后续人工抽查队列，详见 [全局审计 Devlog](docs/devlog/2026-08-16-global-audit.md)。
 - 手感与反馈路径的关注面现在保留多标签，但每个标签都必须能回溯到该 Work Item 自己的 `capabilityIds` 或 `knowledgeTopicIds`；移除“没有命中就归入跨支柱”的不可审计回退，并将“玩家视角转换”从叙事证据改为研究与验证证据。首轮 100 条精选资料已完成运行时审计：无未分类项、无玩家视角误标叙事项；这是一轮映射校验，不代表 3120 条目录都已完成逐条人工语义复核。
 - 学习路径新增可重叠关注面：玩法与挑战、叙事与表达、美学与表现、技术与实现、研究与验证、跨支柱。每条资料可同时属于多个关注面，六阶段主线、EGDS 对应关系与 100 条精选资料保持不变；无 JavaScript 时完整资料仍可读。
 - 新增首条可复用的学习路径试验 `/resources/paths/game-feel/`：从真实资源目录中按“感受、理解、解构、重构、整合、练习”六阶段精选 100 条手感与反馈资料；前四阶段分别明确对应 EGDS 的情绪体验、主观感受、客观原因与设计杠杆，并为每阶段提供练习、产出和退出条件。路径是可回到资源库的策展建议，不计算分数、证书或完成率。

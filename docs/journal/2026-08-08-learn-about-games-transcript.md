@@ -284,6 +284,10 @@ Task 7 还记录了一次验收环境事故：fresh build 前启动的 preview �
 
 记录说明：以下为 final reviewer 与 handoff audit 转发给当前实现运行时的脱敏范围，是 partial export，不是原始聊天 UI 的完整逐字导出。缺失范围包括 reviewer 的完整审查过程、主 agent 私有推理与未转发消息；未获取的内容不声称完整，也未记录 token、凭据或环境变量值。
 
+## 2026-08-16：全局审计（partial export）
+
+用户要求对当前 Private v0.2 候选做全局审计，重点包括资源分类、页面运行态、EGDS 地图、Innovation Atlas 和资源目录的重复／引用问题。审计结论：结构引用、规范化 URL ownership、主题约束和页面回归通过；为 Access Version 增加同 Work Item 内完全重复身份的构建期诊断。审计没有把关键词启发式当成逐篇语义阅读，确认 `capabilityIds` 与 `knowledgeTopicIds` 的批量映射仍需按来源抽样复核。验证结果为 check 0/0/0、Vitest 188/188、145 pages、npm audit 0 vulnerabilities；并行 E2E 的 Atlas pageY 偶发偏移在单独和串行运行中通过，记录为时序波动。完整证据与截图见 [全局审计 Devlog](../devlog/2026-08-16-global-audit.md)。
+
 Final reviewer 指出首页“找位置”仍把职业与生产环境透镜整体写成未来能力，但 M0 已发布一个 `AAA / Game Designer` 参考画像。实现先在 `visible-skeleton.spec.ts` 加入当前态 exact-copy 断言；旧页面因找不到“已发布、只是一种生产语境参考、不作评分、更多画像后续扩展”的文案而取得有效 RED。最小运行时修复只替换首页这一句，没有增加画像、评分、账号或筛选功能。
 
 Handoff audit 同时指出产品设计的 localStorage 失败处理把多个阶段混在一起。规格现明确：M0 遇损坏或版本不兼容只回退安全空状态；迁移、导出、导入与手动清除是正式第一版按真实需求待评估的目标，不是 M0 已交付能力。

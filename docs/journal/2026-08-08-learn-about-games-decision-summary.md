@@ -170,3 +170,10 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 本轮先审计“手感与反馈”路径精选的 100 条，不把结果外推为全目录人工审校。路径模型新增 `focusEvidence`，记录每个关注面命中的直接 `capabilityIds` 与 `knowledgeTopicIds`；不继承资源主题的描述性标签，也不再把未命中项静默回退到“跨支柱”。
 - 语义校正：`player-perspective-taking` 归入研究与验证而非叙事；`experience-framing` 不再自动归入叙事。真实 100 条结果为玩法 98、叙事 3、美学 93、实现 6、研究 50、跨支柱 1；无未分类项、无玩家视角误标叙事项。
 - 这轮是可审计映射的第一步，不代表 3120 条资源均已逐条阅读全文复核。详见 [Devlog 016](../devlog/2026-08-16-learning-path-facet-audit.md)；后续继续抽查多标签、高风险和付费摘要型资源。
+
+### 2026-08-16：全局数据与运行态审计（current）
+
+- 当前 catalog 结构计数为 3120 Work Item、41 Source、3134 Access Version、42 Capability、12 Knowledge Topic、16 Resource Topic；Innovation Atlas 为 69 节点、55 关系、76 Evidence、10 个非排他 Genre Family。
+- 规范化 canonical URL 无重复，跨 Work URL ownership 与 Source homepage 冲突均为 0；所有引用闭合，每个 Work Item 恰有一个主要 Resource Topic。新增 `RESOURCE_ACCESS_VERSION_DUPLICATE` 诊断，拒绝同一 Work Item 内完全重复的 Access Version 身份，同时保留不同语言、访问模型、呈现方式、检查日期和地区限制的合法并存。
+- 资源的 `capabilityIds` / `knowledgeTopicIds` 是入库时可回溯的声明式元数据，不代表 3120 条已逐篇人工阅读全文。2539 条主题元数据不完全相交与 88 条完全不相交信号不自动判错；批量映射风险进入来源批次人工抽查队列。完整范围、截图与验证门禁见 [全局审计 Devlog](../devlog/2026-08-16-global-audit.md)。
+- Fresh 门禁：Astro check 0/0/0、Vitest 188/188、静态构建 145 pages、npm high-level audit 0 vulnerabilities；并行 E2E 的 Atlas 返回位置偶发偏移在单独／串行复测中通过，暂记为时序波动而非产品回归。

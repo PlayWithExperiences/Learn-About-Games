@@ -1232,6 +1232,22 @@ describe('validateCatalog', () => {
     });
   });
 
+  it('rejects an exact duplicate Access Version identity within one Work Item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const resource = validV02Resource('duplicate-access-version', 'https://example.com/duplicate-access');
+    resource.accessVersions.push(structuredClone(resource.accessVersions[0]));
+    catalog.resources.push(resource);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_ACCESS_VERSION_DUPLICATE',
+      collection: 'resources',
+      id: 'duplicate-access-version',
+      field: 'accessVersions',
+      targetId: 'https://example.com/duplicate-access',
+    });
+  });
+
   it('requires unique canonical identities, a checked access version, and factual external signals', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);

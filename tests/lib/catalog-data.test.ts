@@ -778,6 +778,26 @@ describe('raw product catalog data', () => {
       expect(intakeCanonicalUrls.has(resource.canonicalUrl), resource.canonicalUrl).toBe(true);
       expect(sourceIds.has(resource.sourceId), resource.sourceId).toBe(true);
       expect(resource.accessVersions.length).toBeGreaterThan(0);
+      const accessVersionIdentities = resource.accessVersions.map((version) => {
+        const regionRestrictions = (
+          version as unknown as { regionRestrictions?: Array<{ regions: string[]; note: unknown }> }
+        ).regionRestrictions ?? [];
+        return JSON.stringify({
+          url: normalizeCatalogUrl(version.url),
+          language: version.language,
+          accessModel: version.accessModel,
+          versionRelation: version.versionRelation,
+          presentationMode: version.presentationMode,
+          checkedAt: version.checkedAt,
+          regionRestrictions: regionRestrictions
+            .map((restriction) => ({
+              regions: [...restriction.regions].sort(),
+              note: restriction.note,
+            }))
+            .sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right))),
+        });
+      });
+      expect(new Set(accessVersionIdentities).size, resource.id).toBe(accessVersionIdentities.length);
       expect(
         resource.capabilityIds.length + resource.knowledgeTopicIds.length + resource.resourceTopicIds.length,
       ).toBeGreaterThan(0);
