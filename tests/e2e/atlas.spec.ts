@@ -712,6 +712,37 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
 });
 
+test('map mode makes the selected innovation events primary and opens carrier evidence from an event', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'chromium', 'The event-route map mode is tested once at a desktop viewport.');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('./atlas/');
+  await openAtlasFamily(page, 'shooter');
+  await visibleThemeButton(page, 'first-person-shooter-lineage').click();
+  await page.locator('[data-atlas-map-mode]').click();
+
+  const network = page.locator('[data-atlas-global-network][data-map-mode="true"]');
+  const primary = network.locator('[data-atlas-primary-network]');
+  await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
+  await expect(primary).toHaveAttribute('data-atlas-route-mode', 'events');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(3);
+  await expect(primary.locator('[data-atlas-node][data-atlas-event][data-theme-match="true"]:visible')).toHaveCount(3);
+  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).toHaveCount(0);
+  await expect(primary.locator('[data-atlas-relation]:visible')).toHaveCount(2);
+  await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]:visible')).toHaveCount(2);
+
+  await primary.locator('[data-atlas-node-id="fps-vertical-space-combat"] [data-atlas-node-link]').click();
+  const dialog = page.locator('dialog[data-atlas-selected-detail]');
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText('承载作品');
+  await expect(dialog.locator('a[href="#atlas-node-detail-doom"]')).toBeVisible();
+  await dialog.getByRole('button', { name: '返回网络' }).click();
+  await expect(dialog).toBeHidden();
+
+  await visibleThemeButton(page, 'all').click();
+  await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(66);
+});
+
 test('a genre without event evidence shows an honest empty state', async ({ page }) => {
   await page.goto('./atlas/');
   await page.locator('[data-atlas-foundation-lens] [data-atlas-theme-button="early-electronic-games"]').click();
@@ -854,6 +885,9 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
   const controls = page.locator('[data-atlas-view-controls]');
   const viewport = page.locator('[data-atlas-canvas]');
   await page.locator('[data-atlas-map-mode]').click();
+  // Carrier interaction is verified in the full network; a selected lens uses
+  // the event route and intentionally hides carrier works from the canvas.
+  await visibleThemeButton(page, 'all').click();
   await controls.getByRole('button', { name: '放大' }).click();
   await controls.getByRole('button', { name: '放大' }).click();
   await viewport.evaluate((element) => {

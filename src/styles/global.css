@@ -3652,6 +3652,25 @@ h2 {
   flex: 1 1 auto;
 }
 
+/* A selected lens becomes an event route only while the map is open. Carrier
+   works remain available through each event detail, but do not compete with
+   the event nodes for the primary visual hierarchy. */
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-node]:not([data-atlas-event]),
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-event][data-theme-match='false'] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-relation]:not([data-atlas-event-relation]),
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-event-relation][data-theme-match='false'] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .atlas-view-controls [data-atlas-map-mode][aria-pressed='true'] {
   border-color: var(--accent-strong);
   background: var(--accent-strong);

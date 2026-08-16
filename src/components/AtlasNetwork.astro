@@ -186,7 +186,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     <p class="atlas-event-index__empty" data-atlas-event-empty hidden>这个品类还没有达到证据门槛的创新事件；先保留空状态，不用游戏年代相邻关系代替证据。</p>
   </section>
 
-  <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
+  <section data-atlas-global-network data-atlas-route-mode="full" aria-label="Game Innovation Atlas 全局时间网络">
     <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
       <legend>选择证据透镜</legend>
       <div class="atlas-lens-control__current">
@@ -279,7 +279,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
     </noscript>
     <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1958–2020</p>
-    <div data-atlas-primary-network>
+    <div data-atlas-primary-network data-atlas-route-mode="full">
     <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
       <div
         class="atlas-network__stage"
@@ -727,6 +727,9 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       }
       if (primaryNetwork) {
         const keepMapInPlace = networkShell?.dataset.mapMode === 'true';
+        const routeMode = eventTheme && keepMapInPlace ? 'events' : 'full';
+        primaryNetwork.dataset.atlasRouteMode = routeMode;
+        if (networkShell) networkShell.dataset.atlasRouteMode = routeMode;
         const shouldHideNetwork = eventTheme && !keepMapInPlace;
         const mapCanvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
         if (shouldHideNetwork && !primaryNetwork.hidden && mapCanvas) {
@@ -953,11 +956,15 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
             element.inert = true;
           });
           networkShell.dataset.mapMode = 'true';
+          networkShell.dataset.atlasRouteMode = activeThemeId === 'all' ? 'full' : 'events';
+          if (primaryNetwork) primaryNetwork.dataset.atlasRouteMode = networkShell.dataset.atlasRouteMode;
           networkShell.setAttribute('role', 'dialog');
           networkShell.setAttribute('aria-modal', 'true');
           if (primaryNetwork) primaryNetwork.hidden = false;
         } else {
           delete networkShell.dataset.mapMode;
+          networkShell.dataset.atlasRouteMode = 'full';
+          if (primaryNetwork) primaryNetwork.dataset.atlasRouteMode = 'full';
           networkShell.removeAttribute('role');
           networkShell.removeAttribute('aria-modal');
           if (frame) cancelAnimationFrame(frame);
