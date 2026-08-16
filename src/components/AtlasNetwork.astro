@@ -710,7 +710,12 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     type AtlasIndexNode,
   } from '../lib/atlas-network';
 
-  type ThemeMatch = { nodeIds: string[]; relationIds: string[] };
+  type ThemeMatch = {
+    nodeIds: string[];
+    relationIds: string[];
+    globalNodeIds: string[];
+    globalRelationIds: string[];
+  };
 
   const explorer = document.querySelector<HTMLElement>('[data-atlas-explorer]');
   const payload = explorer?.querySelector<HTMLScriptElement>('[data-atlas-theme-data]');
@@ -735,7 +740,6 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const globalCountMessage = `当前显示全部 ${nodeCount} 个节点与 ${relationCount} 条关系。`;
     let activeThemeId = 'all';
     let perspectiveMode: 'works' | 'category' = 'works';
-    let eventNetworkSnapshot: { left: number; top: number; scale: string | null } | null = null;
     let syncPerspectiveGeometry: (nextPerspective: 'works' | 'category') => void = () => {};
 
     const applyTheme = (themeId: string) => {
@@ -783,23 +787,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           button.disabled = networkShell?.dataset.mapMode !== 'true'
             || (button.dataset.atlasPerspective === 'category' && !eventTheme);
         });
-        const shouldHideNetwork = eventTheme && !keepMapInPlace;
-        const mapCanvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
-        if (shouldHideNetwork && !primaryNetwork.hidden && mapCanvas) {
-          eventNetworkSnapshot = {
-            left: mapCanvas.scrollLeft,
-            top: mapCanvas.scrollTop,
-            scale: explorer.querySelector<HTMLElement>('[data-atlas-stage]')?.dataset.scale ?? null,
-          };
-        }
-        primaryNetwork.hidden = shouldHideNetwork;
-        if (!shouldHideNetwork && !eventTheme && eventNetworkSnapshot && mapCanvas) {
-          const snapshot = eventNetworkSnapshot;
-          requestAnimationFrame(() => {
-            mapCanvas.scrollLeft = snapshot.left;
-            mapCanvas.scrollTop = snapshot.top;
-          });
-        }
+        primaryNetwork.hidden = false;
       }
       buttons.forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.atlasThemeButton === themeId));
@@ -808,7 +796,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       if (status) {
         status.textContent = themeId === 'all'
           ? globalCountMessage
-          : `已切换为 ${activeButton?.textContent?.trim() ?? ''}；地图模式可在代表作品与品类发展两种视角间切换。`;
+          : `已高亮 ${activeButton?.textContent?.trim() ?? ''}；完整全局网络仍保留，地图模式可在代表作品与品类发展两种视角间切换。`;
       }
     };
 
@@ -1128,7 +1116,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           frame = 0;
           wheelAnchor = null;
           pendingPan = null;
-          if (activeThemeId !== 'all' && primaryNetwork) primaryNetwork.hidden = true;
+          if (primaryNetwork) primaryNetwork.hidden = false;
         }
         mapMode = active;
         mapModeButton.setAttribute('aria-pressed', String(active));

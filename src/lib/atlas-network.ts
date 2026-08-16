@@ -83,6 +83,8 @@ export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
 export type AtlasThemeMatch = {
   nodeIds: string[];
   relationIds: string[];
+  globalNodeIds: string[];
+  globalRelationIds: string[];
 };
 
 export function matchAtlasTheme(
@@ -96,6 +98,8 @@ export function matchAtlasTheme(
   return {
     nodeIds: nodes.filter(matchesTheme).map(({ id }) => id),
     relationIds: relations.filter(matchesTheme).map(({ id }) => id),
+    globalNodeIds: nodes.map(({ id }) => id),
+    globalRelationIds: relations.map(({ id }) => id),
   };
 }
 

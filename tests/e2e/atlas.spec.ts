@@ -217,7 +217,7 @@ test('server renders one fixed 69-node and 55-relation time network', async ({ p
   }
 });
 
-test('renders innovation events as first-class details and preserves them in theme emphasis', async ({ page }) => {
+test('renders innovation events as first-class details and preserves them in theme emphasis', async ({ page }, testInfo) => {
   await page.goto('./atlas/');
 
   await expect(page.locator('[data-atlas-event-index]')).toHaveCount(1);
@@ -240,7 +240,22 @@ test('renders innovation events as first-class details and preserves them in the
   const themeButton = shooterFamily.locator('[data-atlas-theme-button="first-person-shooter-lineage"]:visible').first();
   await themeButton.click();
   await expect(event).toHaveAttribute('data-theme-match', 'true');
-  await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
+  const primaryNetwork = page.locator('[data-atlas-primary-network]');
+  if (testInfo.project.name === 'mobile-chromium') {
+    await expect(primaryNetwork).toBeVisible();
+    await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(69);
+  } else {
+    await expect(primaryNetwork).toBeVisible();
+    await expect(primaryNetwork.locator('[data-atlas-node]:visible')).toHaveCount(69);
+  }
+  await expect(primaryNetwork.locator('[data-atlas-relation]')).toHaveCount(55);
+  const crossFamilyRelation = primaryNetwork.locator('[data-atlas-relation="spelunky-to-dead-cells"]');
+  await expect(crossFamilyRelation).toBeAttached();
+  await expect(crossFamilyRelation).toHaveAttribute('data-theme-match', 'false');
+  if (testInfo.project.name === 'mobile-chromium') {
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-relation-ref="spelunky-to-dead-cells"]')).toHaveCount(2);
+  }
   await expect(page.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(3);
 });
 
@@ -685,13 +700,22 @@ test('cross-Family lineages activate directly and fullscreen uses a compact lens
   await expect(page.locator('[data-atlas-canvas]')).toHaveAttribute('data-map-mode', 'true');
 });
 
-test('genre lenses promote innovation events and keep carrier games in reversible detail', async ({ page }) => {
+test('genre lenses promote innovation events and keep carrier games in reversible detail', async ({ page }, testInfo) => {
   await page.goto('./atlas/');
   await openAtlasFamily(page, 'shooter');
   await visibleThemeButton(page, 'first-person-shooter-lineage').click();
 
   await expect(page.locator('[data-atlas-lens-status]')).toContainText('第一人称射击开发谱系');
-  await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
+  const primaryNetwork = page.locator('[data-atlas-primary-network]');
+  await expect(primaryNetwork).toBeVisible();
+  if (testInfo.project.name === 'mobile-chromium') {
+    await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(69);
+  } else {
+    await expect(primaryNetwork.locator('[data-atlas-node]:visible')).toHaveCount(69);
+  }
+  await expect(primaryNetwork.locator('[data-atlas-relation]')).toHaveCount(55);
+  await expect(primaryNetwork.locator('[data-atlas-relation="spelunky-to-dead-cells"]')).toBeAttached();
   const timeline = page.locator('[data-atlas-event-timeline]');
   await expect(timeline).toBeVisible();
   await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(3);
@@ -769,11 +793,18 @@ test('Atlas offers representative-work and category-development map perspectives
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
 });
 
-test('a genre without event evidence shows an honest empty state', async ({ page }) => {
+test('a genre without event evidence shows an honest empty state', async ({ page }, testInfo) => {
   await page.goto('./atlas/');
   await page.locator('[data-atlas-foundation-lens] [data-atlas-theme-button="early-electronic-games"]').click();
 
-  await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
+  await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
+  if (testInfo.project.name === 'mobile-chromium') {
+    await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(69);
+  } else {
+    await expect(page.locator('[data-atlas-primary-network] [data-atlas-node]:visible')).toHaveCount(69);
+  }
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-relation]')).toHaveCount(55);
   await expect(page.locator('[data-atlas-event-empty]')).toBeVisible();
   await expect(page.locator('[data-atlas-event-index-status]')).toContainText('0 个创新事件');
 });
@@ -1028,7 +1059,9 @@ test('theme controls only change emphasis without changing graph identity or geo
     expect(await page.locator(`[data-atlas-theme-button="${lens}"]`).evaluateAll((controls) =>
       controls.every((control) => control.getAttribute('aria-pressed') === 'true'),
     )).toBe(true);
-    await expect(page.locator('[data-atlas-primary-network]')).toBeHidden();
+    await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
+    await expect(page.locator('[data-atlas-primary-network] [data-atlas-node]:visible')).toHaveCount(69);
+    await expect(page.locator('[data-atlas-primary-network] [data-atlas-relation]')).toHaveCount(55);
     await expect(page.locator('[data-atlas-lens-status]')).toContainText('地图模式可在代表作品与品类发展两种视角间切换');
     await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(69);
     await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(55);

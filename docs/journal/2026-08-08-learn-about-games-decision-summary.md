@@ -171,6 +171,16 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 语义校正：`player-perspective-taking` 归入研究与验证而非叙事；`experience-framing` 不再自动归入叙事。真实 100 条结果为玩法 98、叙事 3、美学 93、实现 6、研究 50、跨支柱 1；无未分类项、无玩家视角误标叙事项。
 - 这轮是可审计映射的第一步，不代表 3120 条资源均已逐条阅读全文复核。详见 [Devlog 016](../devlog/2026-08-16-learning-path-facet-audit.md)；后续继续抽查多标签、高风险和付费摘要型资源。
 
+### 2026-08-17：全图品类透镜与资源增量边界（partial export）
+
+本节为脱敏摘要，不是逐字聊天导出；省略完整工具输出和内部推理，没有写入凭据或环境变量。
+
+用户要求品类之间保持同一张相互影响的 Innovation Atlas 全图，并继续扩充英文优先的成长资源。Atlas 透镜现在保留全局节点／关系集合，只对匹配 Innovation Event、演进关系和承载作品做层级强调；移动端以同源文字大纲承载全图，不把品类拆成孤立网络。
+
+资源目录已有 3120 个 Work Item，其中包含已经核验并入库的 1000 条 GDC、1000 条 Game Developer 与 500 条 GDC 批次。本轮离线候选 402 条经 URL 去重后，严格复核发现 92 条非 200、22 条为登录页，未将它们伪装成可读资源；后续以逐条正文／metadata、canonical 和 capability/topic 映射为入库门槛。
+
+验证：Atlas Chromium + mobile 40/40；`npm run check`、Vitest 与 fresh build 在提交前复跑；预览继续使用 `http://127.0.0.1:4321/Learn-About-Games/`，未推送或部署。
+
 ### 2026-08-16：全局数据与运行态审计（current）
 
 - 当前 catalog 结构计数为 3120 Work Item、41 Source、3134 Access Version、42 Capability、12 Knowledge Topic、16 Resource Topic；Innovation Atlas 为 69 节点、55 关系、76 Evidence、10 个非排他 Genre Family。

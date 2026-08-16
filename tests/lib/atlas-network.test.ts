@@ -493,6 +493,9 @@ describe('global Atlas graph contract', () => {
         'maniac-mansion-to-secret-of-monkey-island',
       ]),
     );
+    expect(roguelikeMatches.globalNodeIds).toEqual(nodes.map(({ id }) => id));
+    expect(roguelikeMatches.globalRelationIds).toEqual(relations.map(({ id }) => id));
+    expect(roguelikeMatches.globalRelationIds).toContain('super-metroid-and-sotn');
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
@@ -616,6 +619,10 @@ describe('global Atlas presentation geometry', () => {
     const worksEvents = worksLayout.nodes.filter(({ id }) => eventIds.has(id));
     const categoryEvents = categoryLayout.nodes.filter(({ id }) => eventIds.has(id));
     const categoryWorks = categoryLayout.nodes.filter(({ kind }) => kind !== 'innovation' && kind !== 'category');
+
+    expect(categoryLayout.nodes.map(({ id }) => id)).toEqual(worksLayout.nodes.map(({ id }) => id));
+    expect(categoryLayout.relations.map(({ id }) => id)).toEqual(worksLayout.relations.map(({ id }) => id));
+    expect(categoryLayout.relations.map(({ id }) => id)).toContain('spelunky-to-dead-cells');
 
     expect(Math.min(...categoryEvents.map(({ top }) => top))).toBeGreaterThan(
       Math.max(...worksEvents.map(({ top }) => top)),
