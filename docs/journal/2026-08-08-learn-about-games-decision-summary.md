@@ -20,6 +20,7 @@
 - Innovation Atlas 的主语改为“品类创新事件路线”：选择 Genre Family 后，主阅读区只保留有证据的定义、机制、转译与扩散事件；游戏不再冒充创新本体，而是在事件详情中作为承载作品与原始证据入口。当前 Atlas 为 66 个节点、50 条关系、73 项 Evidence，其中 7 个节点是事件节点。
 - 第一人称射击样例已形成三段事件路线：第一人称视角定义 → 垂直空间战斗 → 网络化战斗空间；Doom、Quake、Half-Life 只作为 carrier closure 展示。没有用“第一款／唯一发明者”替代来源支持，也没有把年代相邻写成因果。
 - 普通页面选择品类后隐藏全局游戏网络，保留事件路线和可逆详情；地图模式仍保留完整网络、Family 透镜、缩放／平移与焦点恢复。无事件证据的品类显示明确空状态，不伪造路线。
+- 事件路线进一步收敛为“地图节点优先”：移除地图前的平铺事件卡，地图中的 7 个事件节点与 2 条演进关系成为唯一主叙事；页面只保留默认收起的紧凑事件索引，便于跳转而不与地图争夺视觉主次。事件节点使用更高层级和强调线，承载作品保持次级虚线样式。
 - 事件节点与关系新增构建期契约：事件必须有角色、主题与中文机制说明；事件关系必须明确为 evolution 或 carrier，并检查端点方向。纯测试覆盖事件路线排序、空状态、carrier closure 与关系角色。
 - 本轮 fresh 验证：`npm run check` 0 errors / warnings / hints，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 41 passed / 19 intentional skipped，base-path 2/2；完整 Chromium + mobile 251 passed / 21 intentional skipped。当前预览仍固定为 [http://127.0.0.1:4321/Learn-About-Games/](http://127.0.0.1:4321/Learn-About-Games/)，仓库保持 Private，未推送或部署。
 

@@ -337,3 +337,9 @@ Catalog schema 与 validator 现在要求带 `innovation-event` 标签的事件�
 本节记录事件优先路线的最终收尾。事件卡初版落在 Atlas 说明左侧的窄列，中文标题因此出现近似逐字竖排；桌面改为右侧双列，移动端恢复单列，事件列表不再挤压说明区域。专项截图确认桌面事件列表宽约 832px，FPS 选择后可见 3 个创新事件与 2 条事件演进关系，作品只在事件详情中作为承载证据出现。
 
 README 的 Atlas 当前计数同步为 66 nodes、50 relations、73 evidence。最终 fresh 门禁为 `npm run build`：Astro check 0/0/0、Vitest 178/178、静态构建 140 pages；Atlas 与 base-path 定向为 41 passed / 19 intentional skipped；完整 Chromium + mobile E2E 为 251 passed / 21 intentional skipped / 0 failed。4321 本地预览保持运行，仓库仍为 Private，未推送或部署。
+
+### 38. 2026-08-16：事件节点回到地图主叙事（partial export）
+
+本轮针对视觉反馈把事件路线进一步收敛。先在 Atlas E2E 中取得旧平铺事件卡仍为 7 个的 RED，再移除地图前的事件卡和独立演进列表，保留 7 个地图事件节点、2 条地图事件关系，以及一个默认收起的紧凑索引。筛选品类时索引按匹配事件自动展开，地图模式仍以事件节点和演进关系为主；承载游戏只在事件详情中出现。
+
+CSS 只新增 Atlas scoped 层级规则：事件节点置于承载作品之上并使用强调边框，事件演进线使用连续强调描边，非匹配路线回到中性色虚线；紧凑索引使用两列桌面／单列移动布局。验证为 `npm run check` 0 diagnostics、Vitest 178/178、静态构建 140 pages、Atlas 双端专项 39/39。一次完整 E2E 的移动 EGDS 滚轮断言出现并发时序波动（250 pass/21 skip/1 fail），隔离重跑该用例 1/1 通过；修复未触碰 EGDS 代码。4321 预览在最终提交后重新启动，仓库仍 Private，未推送或部署。

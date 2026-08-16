@@ -155,56 +155,34 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
   <section class="atlas-event-index" data-atlas-event-index aria-labelledby="atlas-event-index-title">
     <div class="atlas-event-index__intro">
       <p class="plain-label">Innovation events</p>
-      <h3 id="atlas-event-index-title">选择品类后，沿着创新事件看演进</h3>
-      <p>主线节点描述品类如何被定义、引入机制、发生转译与扩散；作品只作为承载证据。选择透镜后，这里会收敛为一条可逆的事件路线。</p>
+      <h3 id="atlas-event-index-title">创新事件是地图节点</h3>
+      <p>主图中的圆形节点描述品类如何被定义、引入机制、发生转译与扩散；作品只作为节点详情里的承载证据。选择透镜后，地图会强调对应的事件路线。</p>
     </div>
-    <p class="atlas-event-index__status" data-atlas-event-index-status aria-live="polite">当前展示全部 {eventTimeline.events.length} 个创新事件。</p>
-    <div class="atlas-event-index__list" data-atlas-event-timeline>
+    <div class="atlas-event-index__summary">
+      <p class="atlas-event-index__status" data-atlas-event-index-status aria-live="polite">当前地图包含 {eventTimeline.events.length} 个创新事件节点。</p>
+      <p class="atlas-event-index__map-note">点击地图中的事件节点查看引入方式、演进关系与承载作品；这里的索引只用于快速定位。</p>
+    </div>
+    <details class="atlas-event-index__navigator" data-atlas-event-navigator>
+      <summary>打开事件节点索引 <span>{eventTimeline.events.length}</span></summary>
+      <ol data-atlas-event-timeline>
       {eventTimeline.events.map((event) => {
-        const carriers = eventTimeline.carriersByEvent[event.id] ?? [];
         return (
-          <article
-            data-atlas-event-card={event.id}
+          <li
             data-atlas-event-timeline-item={event.id}
             data-atlas-event-role={event.eventRole}
             data-atlas-theme-ids={event.themeIds?.join(' ')}
             data-theme-tags={event.tags.join(' ')}
           >
-            <header>
-              <span>{eventRoleLabels[event.eventRole ?? 'mechanism']} · {event.startYear}</span>
-              <a href={`#atlas-node-detail-${event.id}`} data-atlas-event-link>{event.name['zh-CN']}</a>
-            </header>
-            <p>{event.summary['zh-CN']}</p>
-            {event.mechanism && <p class="atlas-event-index__mechanism"><strong>引入方式：</strong>{event.mechanism['zh-CN']}</p>}
-            <footer>
-              <span>承载作品</span>
-              {carriers.length > 0 ? (
-                <ul>
-                  {carriers.map((carrier) => <li><a href={`#atlas-node-detail-${carrier.id}`}>{carrier.name['zh-CN']}</a></li>)}
-                </ul>
-              ) : <span>当前发布集尚未记录</span>}
-            </footer>
-          </article>
+            <a href={`#atlas-node-detail-${event.id}`} data-atlas-event-link>
+              <time datetime={String(event.startYear)}>{event.startYear}</time>
+              <strong>{event.name['zh-CN']}</strong>
+              <span>{eventRoleLabels[event.eventRole ?? 'mechanism']}</span>
+            </a>
+          </li>
         );
       })}
-    </div>
-    <div class="atlas-event-index__evolution" data-atlas-event-evolution>
-      <h4>事件之间的演进关系</h4>
-      <ul>
-        {eventTimeline.evolutionRelations.map((relation) => {
-          const from = nodeById.get(relation.fromId);
-          const to = nodeById.get(relation.toId);
-          if (!from || !to) return null;
-          return (
-            <li data-atlas-event-evolution-item={relation.id} data-theme-tags={relation.tags?.join(' ') ?? ''}>
-              <a href={`#atlas-relation-detail-${relation.id}`} data-atlas-event-link>
-                {from.name['zh-CN']} → {to.name['zh-CN']}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+      </ol>
+    </details>
     <p class="atlas-event-index__empty" data-atlas-event-empty hidden>这个品类还没有达到证据门槛的创新事件；先保留空状态，不用游戏年代相邻关系代替证据。</p>
   </section>
 
@@ -705,7 +683,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const outlineRelations = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-outline-relation-ref]'));
     const eventIndex = explorer.querySelector<HTMLElement>('[data-atlas-event-index]');
     const eventItems = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-event-timeline-item]'));
-    const eventEvolutionItems = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-event-evolution-item]'));
+    const eventNavigator = eventIndex?.querySelector<HTMLDetailsElement>('[data-atlas-event-navigator]');
     const primaryNetwork = explorer.querySelector<HTMLElement>('[data-atlas-primary-network]');
     const eventIndexStatus = eventIndex?.querySelector<HTMLElement>('[data-atlas-event-index-status]');
     const eventEmpty = eventIndex?.querySelector<HTMLElement>('[data-atlas-event-empty]');
@@ -740,12 +718,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         item.dataset.themeMatch = String(matches);
         if (matches) visibleEventCount += 1;
       });
-      eventEvolutionItems.forEach((item) => {
-        const matches = !eventTheme || matchingRelationIds.has(item.dataset.atlasEventEvolutionItem ?? '');
-        item.hidden = !matches;
-        item.dataset.themeMatch = String(matches);
-      });
       if (eventEmpty) eventEmpty.hidden = !eventTheme || visibleEventCount > 0;
+      if (eventNavigator) eventNavigator.open = eventTheme && visibleEventCount > 0;
       if (eventIndexStatus) {
         eventIndexStatus.textContent = eventTheme
           ? `${visibleEventCount} 个创新事件；承载作品仅在事件详情中展开。`

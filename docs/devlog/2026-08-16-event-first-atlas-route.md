@@ -21,3 +21,7 @@ Atlas 的主线现在由 `Innovation Event` 组成，事件使用四种有限角
 事件元数据和事件关系由 catalog validator 检查；纯测试锁定稳定年份排序、空路线与 carrier closure。当前 Atlas 为 66 节点、50 条关系、73 项 Evidence；fresh build 为 140 pages，Atlas 双视口为 41 passed / 19 intentional skipped。完整 Chromium + mobile 回归为 251 passed / 21 intentional skipped。该结构仍是可修订的作者化研究视图，不是品类历史的唯一标准，也不把“第一”写进没有来源支持的标题。
 
 本地预览保持在 `http://127.0.0.1:4321/Learn-About-Games/atlas/`；仓库仍 Private，未推送或部署。
+
+## 后续收敛：节点优先，而不是卡片索引
+
+第一版事件路线把 7 个事件重复渲染成地图上方的平铺卡片，虽然信息完整，却让读者误以为卡片才是主图。现在事件节点和事件演进关系只在地图中承担主叙事；上方仅保留一个默认收起的事件节点索引，用于跳转、计数和筛选后的快速定位。事件节点提高边框和文字层级，演进关系使用连续强调线，承载作品仍以较弱的虚线节点表达。这样“事件如何演进”是视觉主线，“哪些游戏承载了它”只在详情中展开。

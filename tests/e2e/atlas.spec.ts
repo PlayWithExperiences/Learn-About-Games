@@ -221,17 +221,15 @@ test('renders innovation events as first-class details and preserves them in the
   await page.goto('./atlas/');
 
   await expect(page.locator('[data-atlas-event-index]')).toHaveCount(1);
-  await expect(page.locator('[data-atlas-event-card]')).toHaveCount(7);
+  await expect(page.locator('[data-atlas-event-index] article')).toHaveCount(0);
+  await expect(page.locator('[data-atlas-event-navigator]')).not.toHaveAttribute('open', '');
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-node]')).toHaveCount(7);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation]')).toHaveCount(2);
   const eventList = page.locator('[data-atlas-event-timeline]');
-  await expect(eventList).toHaveCSS(
-    'grid-column-start',
-    (await page.evaluate(() => window.innerWidth > 760)) ? '2' : '1',
-  );
-  if (await page.evaluate(() => window.innerWidth > 760)) {
-    const eventListBox = await eventList.boundingBox();
-    expect(eventListBox?.width ?? 0).toBeGreaterThan(600);
-  }
-  await expect(page.locator('[data-atlas-event-card="lock-on-targeting-combat"]')).toContainText('The Legend of Zelda: Ocarina of Time');
+  await page.locator('[data-atlas-event-navigator] summary').click();
+  await expect(eventList).toBeVisible();
+  await expect(eventList.locator('[data-atlas-event-timeline-item]')).toHaveCount(7);
+  await expect(page.locator('[data-atlas-event-timeline-item="lock-on-targeting-combat"]')).toContainText('锁定目标的空间战斗');
   const event = page.locator('[data-atlas-node][data-atlas-event="first-person-shooter-perspective"]');
   await expect(event).toHaveCount(1);
   await expect(event).toHaveAttribute('data-atlas-node-kind', 'innovation');
@@ -698,7 +696,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(timeline).toBeVisible();
   await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(3);
   await expect(timeline.locator('[data-atlas-event-timeline-item][data-atlas-event-role]:not([hidden])')).toHaveCount(3);
-  await expect(page.locator('[data-atlas-event-evolution-item]:not([hidden])')).toHaveCount(2);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(2);
 
   await timeline.locator('[data-atlas-event-timeline-item="fps-vertical-space-combat"] a[data-atlas-event-link]').click();
   const dialog = page.locator('dialog[data-atlas-selected-detail]');
