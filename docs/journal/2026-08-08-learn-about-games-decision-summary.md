@@ -148,3 +148,11 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 用户进一步确认：品类发展图的主要节点应是 Innovation Event，作品只是点开事件后看到的承载证据；事件不应被抬到地图上方形成第二条不自然的阅读路线。
 - 当前实现保留代表作品／品类发展两种完整全图视角。品类发展布局把事件放入中央主带，把游戏、硬件和实验程序放到下方承载层；节点、关系与详情闭包不变。
 - 最新门禁为 `npm run check` 0/0/0、Vitest 179/179、静态构建 140 pages、Atlas 双视口 40 passed / 20 intentional skipped；本地预览继续使用 `http://127.0.0.1:4321/Learn-About-Games/atlas/`，未推送或部署。
+
+### 2026-08-16：手感与反馈学习路径试验（partial export）
+
+- 用户希望把资源聚合进一步整理成可沿着能力阶段阅读的成长路径，而不是只提供数量很大的目录。第一条试验选择 `game-feel-feedback`，不改变资源表或 Work Item 数据。
+- 新增 `/resources/paths/game-feel/`，从真实相关资料中按稳定评分和 raw ID 总序精选 100 条，六阶段配额为感受 12、理解 18、解构 24、重构 24、整合 14、练习 8。前四阶段在页面上明确映射 EGDS：感受 → 情绪体验、理解 → 主观感受、解构 → 客观原因、重构 → 设计杠杆。
+- 每阶段有目标、练习、阶段产出与退出条件；使用原生 `details` 按需展开，资料链接回资源表搜索结果。路径是作者化推荐，不计算分数、证书或个人完成率，也不把顺序写成唯一答案。
+- RED/GREEN 与验证：路径单元 3/3；定向路径 E2E 6/6；全量 Vitest 183/183；Astro check 0 diagnostics；fresh build 143 pages；全站 Chromium + mobile 255 passed / 22 intentional skipped。全回归中两个并发敏感既有用例单独串行复跑均通过。
+- 本地预览为 `http://127.0.0.1:4321/Learn-About-Games/resources/paths/game-feel/`，本轮未推送、未部署；完整脱敏对话记录见同日 transcript 末尾的 partial export。

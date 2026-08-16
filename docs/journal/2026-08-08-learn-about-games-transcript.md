@@ -367,3 +367,15 @@ CSS 只新增 Atlas scoped 层级规则：事件节点置于承载作品之上�
 本轮在保持完整全图的前提下增加 `category` 几何投影。代表作品视角保持原布局；品类发展视角将 Innovation Event 放入中央主带，将 Game、Commercial Hardware、Experimental Apparatus 和 Experimental Program 放到下方承载层。视角切换只更新节点／关系几何、画布高度和 SVG viewBox，不复制数据、不隐藏全图实体，详情返回语义保持不变。
 
 验证记录：纯布局与关系端点测试 35/35；`npm run check` 0 diagnostics；Vitest 179/179；静态构建 140 pages；Atlas Chromium + mobile-chromium 40 passed / 20 intentional skipped / 0 failed。截图和运行时探针确认事件节点集中在中央主带、承载作品位于事件带下方，预览仍为 `http://127.0.0.1:4321/Learn-About-Games/atlas/`。本节为脱敏 partial export，未记录凭据、外部账户或未转发的内部推理。
+
+### 42. 2026-08-16：手感与反馈成长路径试验（partial export）
+
+记录说明：以下是本次路径化学习实现的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括完整工具输出和内部推理；没有写入凭据、环境变量或外部账户信息。
+
+用户确认可以先试做一条从资源聚合到成长路径的窄切片。目标不是重新定义资源目录，而是针对“手感与反馈”把已有资料按入门、理解、诊断、设计、整合和练习组织起来，使它们能和 EGDS 的方法层互相映照。
+
+实现前先写设计合同和测试：路径必须有六阶段，精确配额为 12/18/24/24/14/8，总计 100；前四阶段必须分别绑定 EGDS 的感受、理解、解构、重构，资源只来自 `game-feel-feedback`，不得重复，逆序输入不能改变选取结果，不足 100 条时明确报错。
+
+页面新增 `/resources/paths/game-feel/`。阶段使用原生 `details`，第一阶段默认打开，其余阶段和阶段内剩余资料按需展开。每个阶段公开目标、练习、阶段产出和退出条件；每条资源链接回 `/resources/?q=...`，不复制 Work Item、不新增评分、证书或个人进度语义。资源页导航只增加一个“学习路径”入口，原有主题表、事实筛选、搜索和来源目录不变。
+
+验证证据：`tests/lib/learning-path.test.ts` 3/3；路径桌面／移动／无 JavaScript E2E 6/6；`npm run check` 0/0/0；Vitest 183/183；fresh build 143 pages；完整 Chromium + mobile 回归 255 passed / 22 intentional skipped。全回归中的 Atlas 返回位置和 Career 对比度测试在并发下各出现一次既有时序波动，单独串行复跑分别通过，未修改相关实现。路径截图存于 `/tmp/learning-path-preview/1440.png` 与 `/tmp/learning-path-preview/320.png`，本地预览继续运行在 4321，未推送或部署。
