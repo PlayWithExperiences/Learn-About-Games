@@ -572,6 +572,49 @@ describe('global Atlas presentation geometry', () => {
     expect(pointOnAtlasNodeBoundary({ x: node.left + node.width + 1, y: node.top }, node)).toBe(false);
   });
 
+  it('centers Innovation Events as the main band in category-development layout', () => {
+    const worksLayout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations);
+    const categoryLayout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations, {
+      perspective: 'category',
+    });
+    const eventIds = new Set(
+      typedAtlasNodes
+        .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
+        .map(({ id }) => id),
+    );
+    const worksEvents = worksLayout.nodes.filter(({ id }) => eventIds.has(id));
+    const categoryEvents = categoryLayout.nodes.filter(({ id }) => eventIds.has(id));
+    const categoryWorks = categoryLayout.nodes.filter(({ kind }) => kind !== 'innovation' && kind !== 'category');
+
+    expect(Math.min(...categoryEvents.map(({ top }) => top))).toBeGreaterThan(
+      Math.max(...worksEvents.map(({ top }) => top)),
+    );
+    expect(Math.min(...categoryWorks.map(({ top }) => top))).toBeGreaterThan(
+      Math.max(...categoryEvents.map(({ top, height }) => top + height)),
+    );
+
+    for (let leftIndex = 0; leftIndex < categoryLayout.nodes.length; leftIndex += 1) {
+      const left = categoryLayout.nodes[leftIndex];
+      for (let rightIndex = leftIndex + 1; rightIndex < categoryLayout.nodes.length; rightIndex += 1) {
+        const right = categoryLayout.nodes[rightIndex];
+        const overlaps =
+          left.left < right.left + right.width &&
+          left.left + left.width > right.left &&
+          left.top < right.top + right.height &&
+          left.top + left.height > right.top;
+        expect(overlaps, `${left.id} overlaps ${right.id} in category view`).toBe(false);
+      }
+    }
+
+    const nodeById = new Map(categoryLayout.nodes.map((node) => [node.id, node]));
+    for (const relation of categoryLayout.relations) {
+      const from = nodeById.get(relation.fromId);
+      const to = nodeById.get(relation.toId);
+      expect(from && pointOnAtlasNodeBoundary(relation.start, from), `${relation.id} category start`).toBe(true);
+      expect(to && pointOnAtlasNodeBoundary(relation.end, to), `${relation.id} category end`).toBe(true);
+    }
+  });
+
   it('requires the companion coordinate to remain within the contacted node side', () => {
     const node = { left: 120, top: 80, width: 96, height: 86 };
 

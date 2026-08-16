@@ -34,12 +34,23 @@ const lineageThemes = themes.filter(({ id }) => id !== 'early-electronic-games')
 const nodeCount = nodes.length;
 const relationCount = relations.length;
 const layout = buildAtlasLayout(nodes, relations);
-const contentBottom = Math.max(...layout.nodes.map(({ top, height }) => top + height));
-const canvasHeight = Math.max(layout.height, Math.ceil((contentBottom + 40) / 20) * 20);
+const categoryLayout = buildAtlasLayout(nodes, relations, { perspective: 'category' });
+const workContentBottom = Math.max(...layout.nodes.map(({ top, height }) => top + height));
+const workCanvasHeight = Math.max(
+  layout.height,
+  Math.ceil((workContentBottom + 40) / 20) * 20,
+);
+const categoryContentBottom = Math.max(...categoryLayout.nodes.map(({ top, height }) => top + height));
+const categoryCanvasHeight = Math.max(
+  categoryLayout.height,
+  Math.ceil((categoryContentBottom + 40) / 20) * 20,
+);
 const eras = groupAtlasNodesByEra(nodes);
 const adjacency = indexAtlasRelations(nodes, relations);
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
 const placedNodeById = new Map(layout.nodes.map((node) => [node.id, node]));
+const categoryPlacedNodeById = new Map(categoryLayout.nodes.map((node) => [node.id, node]));
+const categoryPlacedRelationById = new Map(categoryLayout.relations.map((relation) => [relation.id, relation]));
 const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 const tagById = new Map(tags.map((tag) => [tag.id, tag]));
 const relationById = new Map(relations.map((relation) => [relation.id, relation]));
@@ -290,14 +301,17 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         class="atlas-network__stage"
         data-atlas-stage
         data-scale="1"
-        style={`width:${layout.width}px;height:${canvasHeight}px`}
+        style={`width:${layout.width}px;height:${workCanvasHeight}px`}
       >
         <div
           class="atlas-network__canvas"
           data-atlas-scene
+          data-atlas-perspective="works"
           data-scene-width={layout.width}
-          data-scene-height={canvasHeight}
-          style={`width:${layout.width}px;height:${canvasHeight}px;transform:scale(1)`}
+          data-scene-height={workCanvasHeight}
+          data-scene-work-height={workCanvasHeight}
+          data-scene-category-height={categoryCanvasHeight}
+          style={`width:${layout.width}px;height:${workCanvasHeight}px;transform:scale(1)`}
         >
           <div class="atlas-network__years" aria-hidden="true">
             {layout.yearTicks.map(({ year, x }) => (
@@ -307,7 +321,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
 
           <svg
             class="atlas-network__relations"
-            viewBox={`0 0 ${layout.width} ${canvasHeight}`}
+            viewBox={`0 0 ${layout.width} ${workCanvasHeight}`}
             role="img"
             aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
           >
@@ -320,9 +334,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           </defs>
           {layout.relations.map((placedRelation) => {
             const relation = relationById.get(placedRelation.id);
+            const categoryPlacedRelation = categoryPlacedRelationById.get(placedRelation.id);
             const from = nodeById.get(placedRelation.fromId);
             const to = nodeById.get(placedRelation.toId);
-            if (!relation || !from || !to) return null;
+            if (!relation || !from || !to || !categoryPlacedRelation) return null;
             return (
               <g
                 data-atlas-relation={relation.id}
@@ -337,6 +352,16 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                 data-start-y={placedRelation.start.y}
                 data-end-x={placedRelation.end.x}
                 data-end-y={placedRelation.end.y}
+                data-work-path={placedRelation.path}
+                data-category-path={categoryPlacedRelation.path}
+                data-work-start-x={placedRelation.start.x}
+                data-work-start-y={placedRelation.start.y}
+                data-work-end-x={placedRelation.end.x}
+                data-work-end-y={placedRelation.end.y}
+                data-category-start-x={categoryPlacedRelation.start.x}
+                data-category-start-y={categoryPlacedRelation.start.y}
+                data-category-end-x={categoryPlacedRelation.end.x}
+                data-category-end-y={categoryPlacedRelation.end.y}
                 data-theme-tags={relation.tags.join(' ')}
                 data-theme-match="true"
               >
@@ -371,7 +396,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           <div class="atlas-network__nodes">
             {nodes.map((node) => {
               const placed = placedNodeById.get(node.id);
-              if (!placed) return null;
+              const categoryPlaced = categoryPlacedNodeById.get(node.id);
+              if (!placed || !categoryPlaced) return null;
               return (
                 <article
                   class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
@@ -393,6 +419,18 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                   data-node-top={placed.top}
                   data-node-width={placed.width}
                   data-node-height={placed.height}
+                  data-work-left={placed.left}
+                  data-work-top={placed.top}
+                  data-work-width={placed.width}
+                  data-work-height={placed.height}
+                  data-work-center-x={placed.centerX}
+                  data-work-center-y={placed.centerY}
+                  data-category-left={categoryPlaced.left}
+                  data-category-top={categoryPlaced.top}
+                  data-category-width={categoryPlaced.width}
+                  data-category-height={categoryPlaced.height}
+                  data-category-center-x={categoryPlaced.centerX}
+                  data-category-center-y={categoryPlaced.centerY}
                   data-theme-tags={node.tags.join(' ')}
                   data-theme-match="true"
                   style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
@@ -698,11 +736,13 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     let activeThemeId = 'all';
     let perspectiveMode: 'works' | 'category' = 'works';
     let eventNetworkSnapshot: { left: number; top: number; scale: string | null } | null = null;
+    let syncPerspectiveGeometry: (nextPerspective: 'works' | 'category') => void = () => {};
 
     const applyTheme = (themeId: string) => {
       activeThemeId = themeId;
       const match = themeId === 'all' ? null : themeMatches[themeId];
       if (!match && perspectiveMode === 'category') perspectiveMode = 'works';
+      syncPerspectiveGeometry(perspectiveMode);
       const matchingNodeIds = new Set(match?.nodeIds ?? []);
       const matchingRelationIds = new Set(match?.relationIds ?? []);
       networkNodes.forEach((node) => {
@@ -833,6 +873,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const stage = explorer.querySelector<HTMLElement>('[data-atlas-stage]');
     const scene = explorer.querySelector<HTMLElement>('[data-atlas-scene]');
     const viewControls = explorer.querySelector<HTMLElement>('[data-atlas-view-controls]');
+    const relationsSvg = scene?.querySelector<SVGSVGElement>('.atlas-network__relations');
     const perspectiveButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('button[data-atlas-perspective]'));
     const fitButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-fit]');
     const mapModeButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-map-mode]');
@@ -853,7 +894,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
 
     if (canvas && networkShell && stage && scene && mapModeButton && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
       const sceneWidth = Number(scene.dataset.sceneWidth);
-      const sceneHeight = Number(scene.dataset.sceneHeight);
+      let sceneHeight = Number(scene.dataset.sceneHeight);
       let scale = 1;
       let targetScale = 1;
       let fitMode = false;
@@ -871,6 +912,66 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       } | null = null;
       const outlineBreakpoint = matchMedia('(max-width: 1150px)');
 
+      syncPerspectiveGeometry = (nextPerspective) => {
+        const prefix = nextPerspective === 'category' ? 'category' : 'work';
+        const nextSceneHeight = Number(
+          nextPerspective === 'category'
+            ? scene.dataset.sceneCategoryHeight
+            : scene.dataset.sceneWorkHeight,
+        );
+        if (Number.isFinite(nextSceneHeight) && nextSceneHeight > 0 && nextSceneHeight !== sceneHeight) {
+          sceneHeight = nextSceneHeight;
+          scene.dataset.sceneHeight = String(nextSceneHeight);
+          scene.style.height = `${nextSceneHeight}px`;
+          stage.style.height = `${nextSceneHeight * scale}px`;
+          relationsSvg?.setAttribute('viewBox', `0 0 ${sceneWidth} ${nextSceneHeight}`);
+        }
+        scene.dataset.atlasPerspective = nextPerspective;
+        networkNodes.forEach((node) => {
+          const geometry = {
+            left: node.dataset[`${prefix}Left`],
+            top: node.dataset[`${prefix}Top`],
+            width: node.dataset[`${prefix}Width`],
+            height: node.dataset[`${prefix}Height`],
+            centerX: node.dataset[`${prefix}CenterX`],
+            centerY: node.dataset[`${prefix}CenterY`],
+          };
+          if (Object.values(geometry).some((value) => value === undefined)) return;
+          node.style.setProperty('--atlas-node-left', `${geometry.left}px`);
+          node.style.setProperty('--atlas-node-top', `${geometry.top}px`);
+          node.style.setProperty('--atlas-node-width', `${geometry.width}px`);
+          node.style.setProperty('--atlas-node-height', `${geometry.height}px`);
+          node.dataset.nodeLeft = geometry.left;
+          node.dataset.nodeTop = geometry.top;
+          node.dataset.nodeWidth = geometry.width;
+          node.dataset.nodeHeight = geometry.height;
+          node.dataset.centerX = geometry.centerX;
+          node.dataset.centerY = geometry.centerY;
+        });
+        networkRelations.forEach((relation) => {
+          const path = relation.dataset[`${prefix}Path`];
+          const startX = relation.dataset[`${prefix}StartX`];
+          const startY = relation.dataset[`${prefix}StartY`];
+          const endX = relation.dataset[`${prefix}EndX`];
+          const endY = relation.dataset[`${prefix}EndY`];
+          if (!path || !startX || !startY || !endX || !endY) return;
+          relation.querySelectorAll<SVGPathElement>('[data-atlas-relation-path], .atlas-network__relation-hit')
+            .forEach((pathElement) => pathElement.setAttribute('d', path));
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="start"]')
+            ?.setAttribute('cx', startX);
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="start"]')
+            ?.setAttribute('cy', startY);
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="end"]')
+            ?.setAttribute('cx', endX);
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="end"]')
+            ?.setAttribute('cy', endY);
+          relation.dataset.startX = startX;
+          relation.dataset.startY = startY;
+          relation.dataset.endX = endX;
+          relation.dataset.endY = endY;
+        });
+      };
+
       const syncPerspective = (nextPerspective: 'works' | 'category') => {
         perspectiveMode = nextPerspective;
         const hasSelectedTheme = activeThemeId !== 'all';
@@ -881,6 +982,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           primaryNetwork.dataset.atlasPerspective = nextPerspective;
           primaryNetwork.dataset.atlasRouteMode = routeMode;
         }
+        syncPerspectiveGeometry(nextPerspective);
         perspectiveButtons.forEach((button) => {
           button.setAttribute('aria-pressed', String(button.dataset.atlasPerspective === nextPerspective));
           button.disabled = !mapMode || (button.dataset.atlasPerspective === 'category' && !hasSelectedTheme);

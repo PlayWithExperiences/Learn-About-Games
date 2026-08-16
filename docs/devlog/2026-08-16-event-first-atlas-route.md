@@ -40,3 +40,11 @@ Atlas 的主线现在由 `Innovation Event` 组成，事件使用四种有限角
 - **品类发展**：完整网络、跨品类关系和代表作品仍在原位，但匹配的 Innovation Event 节点与 `evolution` 关系使用更高对比度和层级，读者沿事件路线理解“定义、机制、转译、扩散”，点击事件后再查看承载作品。
 
 因此视角切换不会删节点、重排坐标或制造第二张孤立地图；它只改变阅读焦点。浏览器合同锁定两种视角都保留 66 节点／50 关系，FPS 品类发展视角突出 3 个事件节点与 2 条事件关系，并能打开 Doom 承载证据。
+
+## 事件居中：品类发展视角的主带（2026-08-16）
+
+进一步的运行时复核发现，仅提高事件的颜色和边框仍不足以表达“事件是主语、作品是证据”。因此品类发展视角现在使用独立但同源的几何投影：匹配的 Innovation Event 按时间进入地图中央主带；Game、Commercial Hardware、Experimental Apparatus 与 Experimental Program 退到下方承载层。关系、节点数量、Family 透镜和详情闭包保持不变，代表作品视角仍使用原来的作品优先布局。
+
+这不是把品类拆成独立网络，也不是删除游戏节点：两个视角都保留完整 66 节点／50 关系全图，只改变阅读层级和几何位置。事件详情仍可打开 Doom、Quake、Half-Life 等承载作品，返回后保留当前视角与地图状态。
+
+最新验证：`npm run check` 0 diagnostics、Vitest 179/179、静态构建 140 pages；Atlas Chromium 与 mobile-chromium 为 40 passed、20 intentional skipped、0 failed。品类视角截图中事件节点集中在主带，承载作品最小 y 坐标位于事件带之后，且无盒体碰撞或页面横溢出。

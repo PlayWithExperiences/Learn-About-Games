@@ -142,3 +142,9 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 地图模式现在提供“代表作品”和“品类发展”两个视角。两者共享同一张 66 节点／50 关系全图；代表作品视角保持全图，品类发展视角仅降低非匹配背景并强调匹配 Innovation Event 与 `evolution` 关系。
 - 事件仍是品类发展视角的主语，作品是点击事件后进入的 carrier evidence。切换视角不删除、重排或复制实体，也不改变缩放、平移、搜索和详情返回语义。
 - fresh `npm run build`：Astro check 0/0/0、Vitest 178/178、140 pages；Atlas 双视口 40 expected / 20 intentional skipped / 0 unexpected。最新实现详见 [Devlog 013](../devlog/2026-08-16-event-first-atlas-route.md)。
+
+### 2026-08-16：品类发展视角事件居中（current）
+
+- 用户进一步确认：品类发展图的主要节点应是 Innovation Event，作品只是点开事件后看到的承载证据；事件不应被抬到地图上方形成第二条不自然的阅读路线。
+- 当前实现保留代表作品／品类发展两种完整全图视角。品类发展布局把事件放入中央主带，把游戏、硬件和实验程序放到下方承载层；节点、关系与详情闭包不变。
+- 最新门禁为 `npm run check` 0/0/0、Vitest 179/179、静态构建 140 pages、Atlas 双视口 40 passed / 20 intentional skipped；本地预览继续使用 `http://127.0.0.1:4321/Learn-About-Games/atlas/`，未推送或部署。

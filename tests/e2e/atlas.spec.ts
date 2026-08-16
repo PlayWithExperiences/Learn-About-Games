@@ -737,6 +737,23 @@ test('Atlas offers representative-work and category-development map perspectives
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
   await expect(primary.locator('[data-atlas-relation]')).toHaveCount(50);
   await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(2);
+  const categoryBand = await primary.evaluate((element) => {
+    const readBox = (node: HTMLElement) => ({
+      top: Number(node.dataset.nodeTop),
+      bottom: Number(node.dataset.nodeTop) + Number(node.dataset.nodeHeight),
+    });
+    const events = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-event][data-theme-match="true"]'));
+    const carriers = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-game-node]'));
+    const eventBoxes = events.map(readBox);
+    const carrierBoxes = carriers.map(readBox);
+    return {
+      eventTop: Math.min(...eventBoxes.map(({ top }) => top)),
+      eventBottom: Math.max(...eventBoxes.map(({ bottom }) => bottom)),
+      carrierTop: Math.min(...carrierBoxes.map(({ top }) => top)),
+    };
+  });
+  expect(categoryBand.eventTop).toBeGreaterThanOrEqual(500);
+  expect(categoryBand.eventBottom).toBeLessThan(categoryBand.carrierTop);
 
   await primary.locator('[data-atlas-node-id="fps-vertical-space-combat"] [data-atlas-node-link]').click();
   const dialog = page.locator('dialog[data-atlas-selected-detail]');

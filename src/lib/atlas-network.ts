@@ -72,6 +72,8 @@ export type AtlasLayout = {
   relations: AtlasPlacedRelation[];
 };
 
+export type AtlasLayoutPerspective = 'works' | 'category';
+
 export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
   incoming: Relation[];
   outgoing: Relation[];
@@ -361,7 +363,9 @@ function nodeBoundaryAnchor(
 export function buildAtlasLayout(
   nodes: readonly AtlasNodeForLayout[],
   relations: readonly AtlasRelationForLayout[],
+  options: { perspective?: AtlasLayoutPerspective } = {},
 ): AtlasLayout {
+  const perspective = options.perspective ?? 'works';
   const categoryLaneById = new Map(
     nodes
       .filter(({ kind }) => kind === 'category')
@@ -379,11 +383,17 @@ export function buildAtlasLayout(
     const spanEndX = hasRange
       ? projectAtlasYear(rangeEndYear)
       : yearX;
-    const displayLane = node.kind === 'innovation'
-      ? node.lane
-      : node.kind === 'category'
-        ? (categoryLaneById.get(node.id) ?? 1)
-        : Math.max(3, node.lane + 1);
+    const displayLane = perspective === 'category'
+      ? node.kind === 'innovation'
+        ? 5 + node.lane
+        : node.kind === 'category'
+          ? (categoryLaneById.get(node.id) ?? 1)
+          : Math.max(3, node.lane + 1) + 5
+      : node.kind === 'innovation'
+        ? node.lane
+        : node.kind === 'category'
+          ? (categoryLaneById.get(node.id) ?? 1)
+          : Math.max(3, node.lane + 1);
     const width = hasRange
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'

@@ -359,3 +359,11 @@ CSS 只新增 Atlas scoped 层级规则：事件节点置于承载作品之上�
 实现把 `data-atlas-perspective` 与 `data-atlas-route-mode` 分开表达。代表作品视角保持 `full` 网络；品类发展视角保留全图，只通过不透明度、层级和关系线强调匹配事件与演进关系。点击事件仍打开详情，Doom 等作品作为承载证据出现。新增 E2E 断言两种视角均保留 66 节点／50 关系、FPS 视角有 3 个匹配事件与 2 条匹配事件关系，回到代表作品视角和详情返回均可恢复。
 
 本轮 fresh 证据：`npm run check` 0/0/0，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 为 40 expected / 20 intentional skipped / 0 unexpected。预览继续保持在 `http://127.0.0.1:4321/Learn-About-Games/atlas/`，未推送或部署。
+
+### 41. 2026-08-16：品类发展视角的事件主带（partial export）
+
+用户继续反馈：事件虽然已经进入地图，但仍位于上方，导致品类发展视角像“上方事件索引 + 下方作品地图”，阅读负担很大。用户要求事件节点直接成为时间线中央的主节点，点开后再看由哪一部作品承载该变化。
+
+本轮在保持完整全图的前提下增加 `category` 几何投影。代表作品视角保持原布局；品类发展视角将 Innovation Event 放入中央主带，将 Game、Commercial Hardware、Experimental Apparatus 和 Experimental Program 放到下方承载层。视角切换只更新节点／关系几何、画布高度和 SVG viewBox，不复制数据、不隐藏全图实体，详情返回语义保持不变。
+
+验证记录：纯布局与关系端点测试 35/35；`npm run check` 0 diagnostics；Vitest 179/179；静态构建 140 pages；Atlas Chromium + mobile-chromium 40 passed / 20 intentional skipped / 0 failed。截图和运行时探针确认事件节点集中在中央主带、承载作品位于事件带下方，预览仍为 `http://127.0.0.1:4321/Learn-About-Games/atlas/`。本节为脱敏 partial export，未记录凭据、外部账户或未转发的内部推理。
