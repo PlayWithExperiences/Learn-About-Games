@@ -163,3 +163,10 @@ M0 只处理当前引用完整性、Pages 子路径、筛选 history、localStor
 - 保留六阶段作为主线，在路径顶部增加 `全部`、玩法与挑战、叙事与表达、美学与表现、技术与实现、研究与验证、跨支柱七个关注面。资源按 capability／knowledge topic 映射，可同时拥有多个关注面；跨支柱仅表示同时命中三条核心支柱。
 - 筛选是展示投影，不改资源目录、阶段配额、EGDS 四层对应或作者化阅读顺序；无 JavaScript 时完整资料继续可读。定向路径 E2E 10/10、Vitest 184/184、Astro check 0/0/0、静态构建 143 pages。
 - 预览继续使用 `http://127.0.0.1:4321/Learn-About-Games/resources/paths/game-feel/`；本轮不推送、不部署。
+
+### 2026-08-16：成长路径关注面证据审计（current）
+
+- 用户确认资源可以拥有多个 capability/topic 关注面，但要求每个归类尽可能准确，避免把关键词相似误当作内容证据。
+- 本轮先审计“手感与反馈”路径精选的 100 条，不把结果外推为全目录人工审校。路径模型新增 `focusEvidence`，记录每个关注面命中的直接 `capabilityIds` 与 `knowledgeTopicIds`；不继承资源主题的描述性标签，也不再把未命中项静默回退到“跨支柱”。
+- 语义校正：`player-perspective-taking` 归入研究与验证而非叙事；`experience-framing` 不再自动归入叙事。真实 100 条结果为玩法 98、叙事 3、美学 93、实现 6、研究 50、跨支柱 1；无未分类项、无玩家视角误标叙事项。
+- 这轮是可审计映射的第一步，不代表 3120 条资源均已逐条阅读全文复核。详见 [Devlog 016](../devlog/2026-08-16-learning-path-facet-audit.md)；后续继续抽查多标签、高风险和付费摘要型资源。

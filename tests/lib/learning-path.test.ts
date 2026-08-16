@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Catalog } from '../../src/lib/catalog/validate';
+import resources from '../../src/data/resources.json';
 import { buildGameFeelLearningPath } from '../../src/lib/learning-paths';
 
 type Resource = Catalog['resources'][number];
@@ -56,6 +57,7 @@ describe('game feel learning path', () => {
           'learning-prototype-design',
           'playtesting',
         ],
+        knowledgeTopicIds: [],
       }),
     ]);
     const selected = path.stages.flatMap(({ resources }) => resources);
@@ -79,6 +81,70 @@ describe('game feel learning path', () => {
       'research',
       'integrated',
     ]));
+    expect(multiFocus?.focusEvidence).toEqual(expect.objectContaining({
+      gameplay: {
+        capabilityIds: ['game-feel-tuning'],
+        knowledgeTopicIds: [],
+      },
+      narrative: {
+        capabilityIds: ['narrative-architecture'],
+        knowledgeTopicIds: [],
+      },
+      aesthetics: {
+        capabilityIds: ['aesthetic-direction'],
+        knowledgeTopicIds: [],
+      },
+      implementation: {
+        capabilityIds: ['learning-prototype-design'],
+        knowledgeTopicIds: [],
+      },
+      research: {
+        capabilityIds: ['playtesting'],
+        knowledgeTopicIds: [],
+      },
+    }));
+  });
+
+  it('rejects a selected resource when no configured focus can explain it', () => {
+    expect(() => buildGameFeelLearningPath([
+      ...fixtureResources.slice(0, 99),
+      makeResource('resource-unclassified', {
+        capabilityIds: ['audience-positioning'],
+        knowledgeTopicIds: [],
+      }),
+    ])).toThrow('没有可审计的关注面标签');
+  });
+
+  it('does not mistake player perspective or experience framing for narrative evidence', () => {
+    const path = buildGameFeelLearningPath([
+      ...fixtureResources.slice(0, 98),
+      makeResource('resource-perspective', {
+        capabilityIds: ['game-feel-tuning', 'player-perspective-taking'],
+        knowledgeTopicIds: [],
+      }),
+      makeResource('resource-framing', {
+        capabilityIds: ['game-feel-tuning', 'experience-framing'],
+        knowledgeTopicIds: [],
+      }),
+    ]);
+    const selected = path.stages.flatMap(({ resources }) => resources);
+
+    expect(selected.find(({ id }) => id === 'resource-perspective')?.focusIds).toEqual(
+      expect.arrayContaining(['gameplay', 'research']),
+    );
+    expect(selected.find(({ id }) => id === 'resource-perspective')?.focusIds).not.toContain('narrative');
+    expect(selected.find(({ id }) => id === 'resource-framing')?.focusIds).toEqual(['gameplay']);
+  });
+
+  it('keeps the real selected catalog auditable without a fallback facet', () => {
+    const path = buildGameFeelLearningPath(resources as Resource[]);
+    const selected = path.stages.flatMap(({ resources: stageResources }) => stageResources);
+
+    expect(selected).toHaveLength(100);
+    expect(selected.every(({ focusIds, focusEvidence }) => (
+      focusIds.length > 0
+      && focusIds.every((focusId) => focusEvidence[focusId] !== undefined)
+    ))).toBe(true);
   });
 
   it('builds six ordered stages with the approved EGDS mapping and exactly 100 resources', () => {

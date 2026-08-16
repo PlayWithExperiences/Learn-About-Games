@@ -54,7 +54,7 @@ test('narrows the path with overlapping focus facets and restores the full route
   await expect(page.locator('[data-learning-path-resource]:not([hidden])')).toHaveCount(100);
 });
 
-test('keeps every path resource readable without JavaScript and explains the facet fallback', async ({ browser }) => {
+test('keeps every path resource readable without JavaScript and explains the facet controls', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 900 } });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4321/Learn-About-Games/resources/paths/game-feel/');

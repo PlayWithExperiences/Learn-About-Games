@@ -19,6 +19,12 @@ export type LearningPathFocus = {
 
 export type LearningPathResource = Resource & {
   focusIds: LearningPathFocusId[];
+  focusEvidence: Partial<Record<LearningPathFocusId, LearningPathFocusEvidence>>;
+};
+
+export type LearningPathFocusEvidence = {
+  capabilityIds: string[];
+  knowledgeTopicIds: string[];
 };
 
 export type LearningPathStageId =
@@ -114,9 +120,7 @@ const focusCapabilityIds: Record<LearningPathFocusId, ReadonlySet<string>> = {
     'narrative-exposition',
     'world-character-coherence',
     'choice-consequence-design',
-    'experience-framing',
     'emotional-arc-shaping',
-    'player-perspective-taking',
   ]),
   aesthetics: new Set([
     'aesthetic-direction',
@@ -137,6 +141,7 @@ const focusCapabilityIds: Record<LearningPathFocusId, ReadonlySet<string>> = {
     'research-question-framing',
     'playtesting',
     'player-behavior-observation',
+    'player-perspective-taking',
     'qualitative-evidence-synthesis',
     'telemetry-interpretation',
   ]),
@@ -162,20 +167,40 @@ const focusKnowledgeTopicIds: Record<LearningPathFocusId, ReadonlySet<string>> =
 const coreFocusIds: LearningPathFocusId[] = ['gameplay', 'narrative', 'aesthetics'];
 const supportingFocusIds: LearningPathFocusId[] = ['implementation', 'research'];
 
-function resourceMatchesFocus(resource: Resource, focusId: LearningPathFocusId) {
-  return resource.capabilityIds.some((id) => focusCapabilityIds[focusId].has(id))
-    || resource.knowledgeTopicIds.some((id) => focusKnowledgeTopicIds[focusId].has(id));
+// These mappings use direct resource evidence only. A resource topic's own
+// capability list is descriptive for the collection and is not inherited here.
+function getFocusEvidence(resource: Resource, focusId: LearningPathFocusId): LearningPathFocusEvidence {
+  return {
+    capabilityIds: resource.capabilityIds.filter((id) => focusCapabilityIds[focusId].has(id)),
+    knowledgeTopicIds: resource.knowledgeTopicIds.filter((id) => focusKnowledgeTopicIds[focusId].has(id)),
+  };
 }
 
-function classifyResourceFocusIds(resource: Resource): LearningPathFocusId[] {
-  const matchedCore = coreFocusIds.filter((focusId) => resourceMatchesFocus(resource, focusId));
-  const matchedSupporting = supportingFocusIds.filter((focusId) => resourceMatchesFocus(resource, focusId));
+function classifyResourceFocus(resource: Resource) {
+  const focusEvidence: Partial<Record<LearningPathFocusId, LearningPathFocusEvidence>> = {};
+  const matchedCore = coreFocusIds.filter((focusId) => {
+    const evidence = getFocusEvidence(resource, focusId);
+    if (evidence.capabilityIds.length === 0 && evidence.knowledgeTopicIds.length === 0) return false;
+    focusEvidence[focusId] = evidence;
+    return true;
+  });
+  const matchedSupporting = supportingFocusIds.filter((focusId) => {
+    const evidence = getFocusEvidence(resource, focusId);
+    if (evidence.capabilityIds.length === 0 && evidence.knowledgeTopicIds.length === 0) return false;
+    focusEvidence[focusId] = evidence;
+    return true;
+  });
   const focusIds = [...matchedCore, ...matchedSupporting];
 
-  if (matchedCore.length >= 3) focusIds.push('integrated');
-  if (focusIds.length === 0) focusIds.push('integrated');
+  if (matchedCore.length >= 3) {
+    focusIds.push('integrated');
+    focusEvidence.integrated = {
+      capabilityIds: [...new Set(matchedCore.flatMap((focusId) => focusEvidence[focusId]?.capabilityIds ?? []))],
+      knowledgeTopicIds: [...new Set(matchedCore.flatMap((focusId) => focusEvidence[focusId]?.knowledgeTopicIds ?? []))],
+    };
+  }
 
-  return focusIds;
+  return { focusIds, focusEvidence };
 }
 
 type StageDefinition = Omit<LearningPathStage, 'resources'> & {
@@ -328,10 +353,16 @@ export function buildGameFeelLearningPath(resources: Resource[]): LearningPath {
       practice: definition.practice,
       deliverable: definition.deliverable,
       exitCriteria: definition.exitCriteria,
-      resources: selected.map((resource) => ({
-        ...resource,
-        focusIds: classifyResourceFocusIds(resource),
-      })),
+      resources: selected.map((resource) => {
+        const classification = classifyResourceFocus(resource);
+        if (classification.focusIds.length === 0) {
+          throw new Error(`资源 ${resource.id} 没有可审计的关注面标签`);
+        }
+        return {
+          ...resource,
+          ...classification,
+        };
+      }),
     } satisfies LearningPathStage;
   });
 
