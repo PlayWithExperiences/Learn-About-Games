@@ -4052,9 +4052,14 @@ h2 {
   display: flex;
 }
 
-/* The category-development view keeps the whole graph in place. It changes
-   emphasis only: matched events and their evolution edges lead, while
-   representative works and cross-category context remain discoverable. */
+/* Each map perspective has one primary entity family. The complete graph
+   remains in the DOM for details, search and no-JS access, while the map
+   surface removes non-primary layers instead of reducing them to noise. */
+[data-atlas-global-network][data-map-mode='true']
+  [data-atlas-primary-network] [data-atlas-perspective-visible='false'] {
+  display: none !important;
+}
+
 [data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
   [data-atlas-primary-network] [data-atlas-node][data-theme-match='false'] {
   opacity: 0.42;
@@ -4077,23 +4082,12 @@ h2 {
 }
 
 [data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
-  [data-atlas-primary-network] [data-atlas-node][data-atlas-game-node][data-theme-match='true'] {
-  opacity: 0.72;
-}
-
-[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='category']
   [data-atlas-primary-network] [data-atlas-event-relation][data-theme-match='true'] .atlas-network__relation-path {
   stroke: var(--focus);
   stroke-width: 3.2;
 }
 
-/* Event history keeps the whole network visible, but gives the chronological
-   event band the visual authority. Works remain readable as evidence below. */
-[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
-  [data-atlas-primary-network] [data-atlas-node][data-atlas-game-node] {
-  opacity: 0.5;
-}
-
+/* Event history gives the chronological event band the visual authority. */
 [data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
   [data-atlas-primary-network] [data-atlas-node][data-atlas-event-node] {
   z-index: 6;

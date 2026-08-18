@@ -9,6 +9,7 @@ import atlasThemes from '../../src/data/atlas-themes.json';
 import type { Catalog } from '../../src/lib/catalog/validate';
 import {
   atlasScaleBounds,
+  atlasPerspectiveVisibleKinds,
   buildAtlasNodeIndex,
   buildAtlasLayout,
   buildAtlasEventPerspective,
@@ -47,6 +48,18 @@ type EventRelationContract = {
 };
 
 describe('global Atlas graph contract', () => {
+  it('assigns one primary entity family to each Atlas perspective', () => {
+    expect(atlasPerspectiveVisibleKinds('works')).toEqual([
+      'game',
+      'experimental-apparatus',
+      'experimental-program',
+      'system-prototype',
+      'commercial-hardware',
+    ]);
+    expect(atlasPerspectiveVisibleKinds('category')).toEqual(['category', 'innovation']);
+    expect(atlasPerspectiveVisibleKinds('events')).toEqual(['innovation']);
+  });
+
   it('innovation nodes expose bounded event roles and theme ids', () => {
     const innovationEvents = atlasNodes.filter(({ kind, tags }) =>
       kind === 'innovation' && tags.includes('innovation-event')) as EventNodeContract[];
@@ -716,6 +729,34 @@ describe('global Atlas presentation geometry', () => {
       expect(from && pointOnAtlasNodeBoundary(relation.start, from), `${relation.id} category start`).toBe(true);
       expect(to && pointOnAtlasNodeBoundary(relation.end, to), `${relation.id} category end`).toBe(true);
     }
+  });
+
+  it('keeps representative works in the first canvas band', () => {
+    const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations, { perspective: 'works' });
+    const primaryKinds = new Set(atlasPerspectiveVisibleKinds('works'));
+    const primaryWorks = layout.nodes.filter(({ kind }) => primaryKinds.has(kind));
+
+    expect(primaryWorks.length).toBeGreaterThan(0);
+    expect(Math.min(...primaryWorks.map(({ top }) => top))).toBeLessThan(120);
+    expect(Math.max(...primaryWorks.map(({ top, height }) => top + height))).toBeLessThan(1200);
+  });
+
+  it('keeps same-lane related works connected with a visible arch', () => {
+    const first = { ...typedAtlasNodes.find(({ id }) => id === 'super-metroid')!, id: 'arch-first', startYear: 1980, lane: 0 };
+    const second = { ...typedAtlasNodes.find(({ id }) => id === 'castlevania-symphony-of-the-night')!, id: 'arch-second', startYear: 1986, lane: 0 };
+    const layout = buildAtlasLayout(
+      [first, second],
+      [{ ...typedAtlasRelations.find(({ id }) => id === 'super-metroid-and-sotn')!, id: 'arch-relation', fromId: first.id, toId: second.id }],
+      { perspective: 'works' },
+    );
+    const relation = layout.relations[0];
+
+    expect(relation).toBeDefined();
+    expect(relation?.start.y).toBeCloseTo(relation?.end.y ?? Number.NaN, 5);
+    expect(relation?.path).toMatch(/C/);
+    const horizontalDistance = (relation?.end.x ?? 0) - (relation?.start.x ?? 0);
+    const oldFlatPath = `M ${relation?.start.x} ${relation?.start.y} C ${relation?.start.x! + horizontalDistance * 0.36} ${relation?.start.y}, ${relation?.end.x! - horizontalDistance * 0.36} ${relation?.end.y}, ${relation?.end.x} ${relation?.end.y}`;
+    expect(relation?.path).not.toBe(oldFlatPath);
   });
 
   it('keeps Innovation Events in a central primary band with works below as evidence', () => {

@@ -10,6 +10,7 @@ import {
   indexAtlasRelations,
   matchAtlasTheme,
   sortAtlasNodeIndex,
+  atlasPerspectiveVisibleKinds,
 } from '../lib/atlas-network';
 
 type AtlasEvidence = Catalog['atlasEvidence'][number];
@@ -36,19 +37,34 @@ const relationCount = relations.length;
 const layout = buildAtlasLayout(nodes, relations);
 const categoryLayout = buildAtlasLayout(nodes, relations, { perspective: 'category' });
 const eventLayout = buildAtlasLayout(nodes, relations, { perspective: 'events' });
-const workContentBottom = Math.max(...layout.nodes.map(({ top, height }) => top + height));
+const workVisibleKinds = new Set(atlasPerspectiveVisibleKinds('works'));
+const workContentBottom = Math.max(
+  ...layout.nodes
+    .filter(({ kind }) => workVisibleKinds.has(kind))
+    .map(({ top, height }) => top + height),
+);
 const workCanvasHeight = Math.max(
   layout.height,
   Math.ceil((workContentBottom + 40) / 20) * 20,
 );
-const categoryContentBottom = Math.max(...categoryLayout.nodes.map(({ top, height }) => top + height));
+const categoryVisibleKinds = new Set(atlasPerspectiveVisibleKinds('category'));
+const eventVisibleKinds = new Set(atlasPerspectiveVisibleKinds('events'));
+const categoryContentBottom = Math.max(
+  ...categoryLayout.nodes
+    .filter(({ kind }) => categoryVisibleKinds.has(kind))
+    .map(({ top, height }) => top + height),
+);
 const categoryCanvasHeight = Math.max(
-  categoryLayout.height,
+  720,
   Math.ceil((categoryContentBottom + 40) / 20) * 20,
 );
-const eventContentBottom = Math.max(...eventLayout.nodes.map(({ top, height }) => top + height));
+const eventContentBottom = Math.max(
+  ...eventLayout.nodes
+    .filter(({ kind }) => eventVisibleKinds.has(kind))
+    .map(({ top, height }) => top + height),
+);
 const eventCanvasHeight = Math.max(
-  eventLayout.height,
+  720,
   Math.ceil((eventContentBottom + 40) / 20) * 20,
 );
 const eras = groupAtlasNodesByEra(nodes);
@@ -380,6 +396,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                 data-event-end-y={eventPlacedRelation.end.y}
                 data-theme-tags={relation.tags.join(' ')}
                 data-theme-match="true"
+                data-atlas-perspective-visible="true"
               >
                 <a
                   href={`#atlas-relation-detail-${relation.id}`}
@@ -456,6 +473,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                   data-event-center-y={eventPlaced.centerY}
                   data-theme-tags={node.tags.join(' ')}
                   data-theme-match="true"
+                  data-atlas-perspective-visible="true"
                   style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
                 >
                   <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-link>
@@ -744,7 +762,9 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     scaleAtlasWheelTarget,
     sortAtlasNodeIndex,
     stepAtlasScale,
+    atlasPerspectiveVisibleKinds,
     type AtlasIndexNode,
+    type AtlasNodeKind,
   } from '../lib/atlas-network';
 
   type ThemeMatch = {
@@ -779,9 +799,33 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     let perspectiveMode: 'works' | 'category' | 'events' = 'works';
     let syncPerspectiveGeometry: (nextPerspective: 'works' | 'category' | 'events') => void = () => {};
 
+    const syncPerspectiveVisibility = (nextPerspective: 'works' | 'category' | 'events') => {
+      const visibleKinds = new Set(atlasPerspectiveVisibleKinds(nextPerspective));
+      const visibleNodeIds = new Set(
+        networkNodes
+          .filter((node) => visibleKinds.has(node.dataset.atlasNodeKind as AtlasNodeKind))
+          .map((node) => node.dataset.atlasNodeId ?? ''),
+      );
+      networkNodes.forEach((node) => {
+        node.dataset.atlasPerspectiveVisible = String(visibleNodeIds.has(node.dataset.atlasNodeId ?? ''));
+      });
+      networkRelations.forEach((relation) => {
+        const visible = visibleNodeIds.has(relation.dataset.fromId ?? '')
+          && visibleNodeIds.has(relation.dataset.toId ?? '');
+        relation.dataset.atlasPerspectiveVisible = String(visible);
+      });
+      return {
+        nodeCount: visibleNodeIds.size,
+        relationCount: networkRelations.filter((relation) => relation.dataset.atlasPerspectiveVisible === 'true').length,
+      };
+    };
+
+    syncPerspectiveVisibility('works');
+
     const applyTheme = (themeId: string) => {
       activeThemeId = themeId;
       const match = themeId === 'all' ? null : themeMatches[themeId];
+      syncPerspectiveVisibility(perspectiveMode);
       syncPerspectiveGeometry(perspectiveMode);
       const matchingNodeIds = new Set(match?.nodeIds ?? []);
       const matchingRelationIds = new Set(match?.relationIds ?? []);
@@ -1011,17 +1055,19 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           primaryNetwork.dataset.atlasPerspective = nextPerspective;
           primaryNetwork.dataset.atlasRouteMode = routeMode;
         }
+        const visibleCounts = syncPerspectiveVisibility(nextPerspective);
         syncPerspectiveGeometry(nextPerspective);
         perspectiveButtons.forEach((button) => {
           button.setAttribute('aria-pressed', String(button.dataset.atlasPerspective === nextPerspective));
           button.disabled = !mapMode;
         });
-        if (status && hasSelectedTheme) {
+        if (status) {
+          const lensNote = hasSelectedTheme ? '当前透镜只改变高亮。' : '';
           status.textContent = nextPerspective === 'category'
-            ? '品类发展视角：保留完整网络，突出选中品类的创新事件与跨品类关系。'
+            ? `品类发展视角：显示 ${visibleCounts.nodeCount} 个品类/事件节点与 ${visibleCounts.relationCount} 条关系；作品在节点详情中作为承载证据。${lensNote}`
             : nextPerspective === 'events'
-              ? '创新事件视角：事件主线居中，作品作为承载证据；完整网络与跨品类关系仍保留。'
-              : '代表作品视角：显示完整网络，品类透镜只改变强调。';
+              ? `创新事件视角：显示 ${visibleCounts.nodeCount} 个事件节点与 ${visibleCounts.relationCount} 条演进关系；承载作品在节点详情中展开。${lensNote}`
+              : `代表作品视角：显示 ${visibleCounts.nodeCount} 个作品/载体节点与 ${visibleCounts.relationCount} 条关系。${lensNote}`;
         }
       };
 
@@ -1138,7 +1184,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
             primaryNetwork.dataset.atlasPerspective = perspectiveMode;
           }
           perspectiveButtons.forEach((button) => {
-            button.disabled = button.dataset.atlasPerspective === 'category' && activeThemeId === 'all';
+            // Perspective is a map-level choice, not a genre-lens feature.
+            // Keep all three views available even when no lens is selected;
+            // a lens only changes emphasis inside the chosen primary layer.
+            button.disabled = false;
           });
           networkShell.setAttribute('role', 'dialog');
           networkShell.setAttribute('aria-modal', 'true');
@@ -1169,6 +1218,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         if (!active) delete canvas.dataset.dragging;
 
         if (active) {
+          // Entering map mode changes what is actually visible on the canvas;
+          // refresh the status text after mapMode flips so it does not still
+          // claim that the complete 84-node graph is on the surface.
+          syncPerspective(perspectiveMode);
           requestAnimationFrame(() => {
             if (!mapMode) return;
             if (fitMode) fitView();

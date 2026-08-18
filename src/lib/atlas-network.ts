@@ -7,7 +7,7 @@ type AtlasThemeLens = {
   tags: readonly string[];
 };
 
-type AtlasNodeKind = 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
+export type AtlasNodeKind = 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
 
 type AtlasNodeForLayout = {
   id: string;
@@ -74,6 +74,23 @@ export type AtlasLayout = {
 };
 
 export type AtlasLayoutPerspective = 'works' | 'category' | 'events';
+
+const atlasPerspectiveKinds: Record<AtlasLayoutPerspective, readonly AtlasNodeKind[]> = {
+  works: ['game', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware'],
+  category: ['category', 'innovation'],
+  events: ['innovation'],
+};
+
+/**
+ * Returns the entity kinds that are allowed to occupy the primary layer of a
+ * perspective. The underlying graph remains global; this is only a view
+ * contract for the main canvas.
+ */
+export function atlasPerspectiveVisibleKinds(
+  perspective: AtlasLayoutPerspective,
+): readonly AtlasNodeKind[] {
+  return atlasPerspectiveKinds[perspective];
+}
 
 export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
   incoming: Relation[];
@@ -437,6 +454,19 @@ function relationPath(
   end: AtlasPlacedRelation['end'],
 ): string {
   const horizontalDistance = end.x - start.x;
+  // Collision resolution can place two related works on the same horizontal
+  // lane.  Their boundary anchors may then be almost coincident, which used
+  // to collapse the SVG path into an invisible dot.  Keep the endpoints on
+  // the boxes, but route a small arch outside the lane so the relation remains
+  // visible and clickable.
+  if (Math.abs(end.y - start.y) < 1) {
+    const direction = start.y > 120 ? -1 : 1;
+    const arch = Math.max(96, Math.min(144, Math.abs(horizontalDistance) * 0.24));
+    const controlY = start.y + direction * arch;
+    const firstControlX = start.x + horizontalDistance * 0.28;
+    const secondControlX = end.x - horizontalDistance * 0.28;
+    return `M ${start.x} ${start.y} C ${firstControlX} ${controlY}, ${secondControlX} ${controlY}, ${end.x} ${end.y}`;
+  }
   const firstControlX = start.x + horizontalDistance * 0.36;
   const secondControlX = end.x - horizontalDistance * 0.36;
   return `M ${start.x} ${start.y} C ${firstControlX} ${start.y}, ${secondControlX} ${end.y}, ${end.x} ${end.y}`;
@@ -497,7 +527,13 @@ export function buildAtlasLayout(
     -1,
     ...nodes.filter(({ kind }) => kind === 'innovation').map(({ lane }) => lane),
   );
-  const nonInnovationLaneOffset = Math.max(0, highestInnovationLane + 1 - 3);
+  // The works perspective is a standalone reading of representative works.
+  // It must not inherit the old event-first vertical offset, otherwise all
+  // primary work nodes start below the first viewport while the hidden event
+  // band still reserves space. Category/events keep the event-first offset.
+  const nonInnovationLaneOffset = perspective === 'works'
+    ? 0
+    : Math.max(0, highestInnovationLane + 1 - 3);
   const categoryLaneById = new Map(
     nodes
       .filter(({ kind }) => kind === 'category')
@@ -555,7 +591,7 @@ export function buildAtlasLayout(
           ? node.lane
           : node.kind === 'category'
             ? (categoryLaneById.get(node.id) ?? 1)
-            : Math.max(3, node.lane + 1) + nonInnovationLaneOffset;
+            : Math.max(0, node.lane) + nonInnovationLaneOffset;
     const width = hasRange
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'

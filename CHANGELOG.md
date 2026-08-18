@@ -4,6 +4,7 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## [Unreleased]
 
+- Innovation Atlas 地图模式改为三个互斥的主视角：代表作品、品类发展、创新事件。作品视角只呈现游戏／硬件／实验程序主节点，品类发展只呈现品类与创新事件节点，创新事件视角只呈现事件节点；其他实体仍在详情、承载作品和索引中可达。三种视角共享同一全局节点与关系数据，Genre Family 只负责高亮，不制造孤立子图；当前基线为 84 个节点、86 条关系、25 个创新事件、20 条演进关系与 76 项 Evidence。
 - 完成一次全局数据与运行态审计：3120 个 Work Item、41 个 Source、3134 个 Access Version、42 个 Capability、12 个 Knowledge Topic 与 69/55/76 的 Innovation Atlas 节点／关系／Evidence 均通过引用闭包、规范化 URL ownership、主题约束与页面回归；新增 `RESOURCE_ACCESS_VERSION_DUPLICATE` 构建期诊断，拒绝同一 Work Item 内完全重复的访问版本身份。审计同时明确：`capabilityIds` / `knowledgeTopicIds` 是可回溯的入库元数据，不声称已逐篇阅读全文；批量映射风险进入后续人工抽查队列，详见 [全局审计 Devlog](docs/devlog/2026-08-16-global-audit.md)。
 - 手感与反馈路径的关注面现在保留多标签，但每个标签都必须能回溯到该 Work Item 自己的 `capabilityIds` 或 `knowledgeTopicIds`；移除“没有命中就归入跨支柱”的不可审计回退，并将“玩家视角转换”从叙事证据改为研究与验证证据。首轮 100 条精选资料已完成运行时审计：无未分类项、无玩家视角误标叙事项；这是一轮映射校验，不代表 3120 条目录都已完成逐条人工语义复核。
 - 学习路径新增可重叠关注面：玩法与挑战、叙事与表达、美学与表现、技术与实现、研究与验证、跨支柱。每条资料可同时属于多个关注面，六阶段主线、EGDS 对应关系与 100 条精选资料保持不变；无 JavaScript 时完整资料仍可读。

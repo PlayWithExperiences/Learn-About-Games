@@ -3,6 +3,14 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 const atlasUrl = 'http://127.0.0.1:4321/Learn-About-Games/atlas/';
 const ATLAS_NODE_COUNT = 84;
 const ATLAS_RELATION_COUNT = 86;
+const ATLAS_WORK_PRIMARY_NODE_COUNT = 57;
+const ATLAS_CATEGORY_PRIMARY_NODE_COUNT = 27;
+const ATLAS_EVENT_PRIMARY_NODE_COUNT = 25;
+const ATLAS_PRIMARY_RELATION_COUNTS = {
+  works: 38,
+  category: 20,
+  events: 20,
+} as const;
 const ATLAS_EVENT_COUNT = 25;
 const ATLAS_EVOLUTION_RELATION_COUNT = 20;
 const ATLAS_EVIDENCE_COUNT = 76;
@@ -752,6 +760,13 @@ test('Atlas offers representative-work, event-history, and category-development 
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./atlas/');
   await openAtlasFamily(page, 'shooter');
+  await page.locator('[data-atlas-map-mode]').click();
+  const noLensNetwork = page.locator('[data-atlas-global-network][data-map-mode="true"]');
+  await expect(noLensNetwork.locator('[data-atlas-perspective="category"]')).toBeEnabled();
+  await noLensNetwork.locator('[data-atlas-perspective="category"]').click();
+  await expect(noLensNetwork).toHaveAttribute('data-atlas-route-mode', 'category');
+  await noLensNetwork.locator('[data-atlas-perspective="works"]').click();
+  await page.locator('[data-atlas-map-mode]').click();
   await visibleThemeButton(page, 'first-person-shooter-lineage').click();
   await page.locator('[data-atlas-map-mode]').click();
 
@@ -760,17 +775,24 @@ test('Atlas offers representative-work, event-history, and category-development 
   const perspectives = network.locator('[data-atlas-perspective-controls]');
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText('代表作品视角：显示 57 个作品/载体节点与 38 条关系');
   await expect(perspectives.locator('[data-atlas-perspective="works"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_WORK_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
+  await expect(primary.locator('[data-atlas-node][data-atlas-event-node]:visible')).toHaveCount(0);
+  await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="category"]:visible')).toHaveCount(0);
+  await expect(primary.locator('[data-atlas-relation][data-atlas-perspective-visible="true"]')).toHaveCount(ATLAS_PRIMARY_RELATION_COUNTS.works);
 
   await perspectives.locator('[data-atlas-perspective="category"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'category');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'category');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText('品类发展视角：显示 27 个品类/事件节点与 20 条关系');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_CATEGORY_PRIMARY_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="innovation"]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="category"]:visible')).toHaveCount(2);
+  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).toHaveCount(0);
   await expect(primary.locator('[data-atlas-node][data-atlas-event][data-theme-match="true"]:visible')).toHaveCount(7);
-  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
-  await expect(primary.locator('[data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
+  await expect(primary.locator('[data-atlas-relation][data-atlas-perspective-visible="true"]')).toHaveCount(ATLAS_PRIMARY_RELATION_COUNTS.category);
   await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(7);
   const categoryBand = await primary.evaluate((element) => {
     const readBox = (node: HTMLElement) => ({
@@ -778,39 +800,38 @@ test('Atlas offers representative-work, event-history, and category-development 
       bottom: Number(node.dataset.nodeTop) + Number(node.dataset.nodeHeight),
     });
     const events = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-event][data-theme-match="true"]'));
-    const carriers = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-game-node]'));
     const eventBoxes = events.map(readBox);
-    const carrierBoxes = carriers.map(readBox);
     return {
       eventTop: Math.min(...eventBoxes.map(({ top }) => top)),
       eventBottom: Math.max(...eventBoxes.map(({ bottom }) => bottom)),
-      carrierTop: Math.min(...carrierBoxes.map(({ top }) => top)),
     };
   });
   expect(categoryBand.eventTop).toBeGreaterThanOrEqual(400);
-  expect(categoryBand.eventBottom).toBeLessThan(categoryBand.carrierTop);
+  expect(categoryBand.eventBottom).toBeGreaterThan(categoryBand.eventTop);
 
   await perspectives.locator('[data-atlas-perspective="events"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'events');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText('创新事件视角：显示 25 个事件节点与 20 条演进关系');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="innovation"]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).toHaveCount(0);
+  await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="category"]:visible')).toHaveCount(0);
+  await expect(primary.locator('[data-atlas-relation][data-atlas-perspective-visible="true"]')).toHaveCount(ATLAS_PRIMARY_RELATION_COUNTS.events);
   const eventBand = await primary.evaluate((element) => {
     const readBox = (node: HTMLElement) => ({
       top: Number(node.dataset.nodeTop),
       bottom: Number(node.dataset.nodeTop) + Number(node.dataset.nodeHeight),
     });
     const events = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-event]'));
-    const works = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-game-node]'));
     const eventBoxes = events.map(readBox);
-    const workBoxes = works.map(readBox);
     return {
       eventTop: Math.min(...eventBoxes.map(({ top }) => top)),
       eventBottom: Math.max(...eventBoxes.map(({ bottom }) => bottom)),
-      workTop: Math.min(...workBoxes.map(({ top }) => top)),
     };
   });
   expect(eventBand.eventTop).toBeGreaterThan(200);
-  expect(eventBand.workTop).toBeGreaterThan(eventBand.eventBottom);
+  expect(eventBand.eventBottom).toBeGreaterThan(eventBand.eventTop);
   await expect(primary.locator('[data-atlas-event-relation][data-relation-role="evolution"]')).toHaveCount(ATLAS_EVOLUTION_RELATION_COUNT);
 
   await primary.locator('[data-atlas-node-id="fps-vertical-space-combat"] [data-atlas-node-link]').click();
@@ -824,7 +845,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   await perspectives.locator('[data-atlas-perspective="works"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_WORK_PRIMARY_NODE_COUNT);
 });
 
 test('a genre without event evidence shows an honest empty state', async ({ page }, testInfo) => {
@@ -1002,9 +1023,12 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
   const viewportBox = await viewport.boundingBox();
   expect(viewportBox).not.toBeNull();
   const dragStart = await viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop }));
-  await page.mouse.move(viewportBox!.x + 32, viewportBox!.y + 42);
+  // The standalone works view now starts with real work nodes in the first
+  // viewport. Begin the drag in the intentionally empty gutter so the
+  // interactive-target guard does not treat it as a node click.
+  await page.mouse.move(viewportBox!.x + 10, viewportBox!.y + 10);
   await page.mouse.down();
-  await page.mouse.move(viewportBox!.x - 28, viewportBox!.y + 2, { steps: 4 });
+  await page.mouse.move(viewportBox!.x - 50, viewportBox!.y - 30, { steps: 4 });
   await page.mouse.up();
   await expect.poll(() => viewport.evaluate((element) => ({ left: element.scrollLeft, top: element.scrollTop })))
     .toEqual({ left: dragStart.left + 60, top: dragStart.top + 40 });
