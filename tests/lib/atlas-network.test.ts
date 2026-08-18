@@ -109,12 +109,21 @@ describe('global Atlas graph contract', () => {
 
     expect(timeline.emptyState).toBe(false);
     expect(timeline.events.map(({ id }) => id)).toEqual([
+      'fps-early-networked-space',
       'first-person-shooter-perspective',
+      'fps-texture-mapped-first-person',
+      'fps-fast-run-and-gun',
+      'fps-open-modding-and-deathmatch',
       'fps-vertical-space-combat',
       'fps-networked-combat-space',
     ]);
     expect(timeline.evolutionRelations.map(({ id }) => id)).toEqual([
+      'fps-early-space-to-perspective',
+      'fps-fast-to-vertical-space',
+      'fps-perspective-to-texture-space',
       'fps-perspective-to-vertical-space-combat',
+      'fps-texture-to-fast-run-and-gun',
+      'fps-vertical-to-open-modding',
       'vertical-space-combat-to-networked-space',
     ]);
     expect(timeline.carriersByEvent['fps-vertical-space-combat'].map(({ id }) => id)).toEqual(['doom']);
@@ -218,13 +227,30 @@ describe('global Atlas graph contract', () => {
     ]);
   });
 
+  it('keeps the event history broad enough to compare four development routes', () => {
+    const events = atlasNodes.filter(({ kind, tags }) =>
+      kind === 'innovation' && tags.includes('innovation-event'),
+    );
+    const evolutionRelations = atlasRelations.filter(({ relationRole }) => relationRole === 'evolution');
+    const routeThemes = new Set(events.flatMap(({ themeIds = [] }) => themeIds));
+
+    expect(events.length).toBeGreaterThanOrEqual(24);
+    expect(evolutionRelations.length).toBeGreaterThanOrEqual(16);
+    for (const route of [
+      'first-person-shooter-lineage',
+      'role-playing-lineage',
+      'real-time-strategy-lineage',
+      'open-world-lineage',
+    ]) {
+      expect(routeThemes.has(route), route).toBe(true);
+    }
+  });
+
   it('keeps the release-sized union graph within the approved bounds', () => {
-    expect(atlasNodes.length).toBeGreaterThanOrEqual(25);
-    expect(atlasNodes.length).toBeLessThanOrEqual(70);
-    expect(atlasRelations.length).toBeGreaterThanOrEqual(15);
-    expect(atlasRelations.length).toBeLessThanOrEqual(60);
-    expect(atlasNodes).toHaveLength(69);
-    expect(atlasRelations).toHaveLength(55);
+    expect(atlasNodes.length).toBeGreaterThanOrEqual(84);
+    expect(atlasRelations.length).toBeGreaterThanOrEqual(86);
+    expect(atlasNodes).toHaveLength(84);
+    expect(atlasRelations).toHaveLength(86);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -384,6 +410,8 @@ describe('global Atlas graph contract', () => {
       'first-person-shooter-lineage',
       'real-time-strategy-lineage',
       'puzzle-adventure-lineage',
+      'role-playing-lineage',
+      'open-world-lineage',
     ]);
     expect(
       atlasThemes.every((theme) => !('nodeIds' in theme) && !('relationIds' in theme)),
@@ -534,8 +562,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(69);
-    expect(relations).toHaveLength(55);
+    expect(nodes).toHaveLength(84);
+    expect(relations).toHaveLength(86);
   });
 });
 
@@ -651,16 +679,18 @@ describe('global Atlas presentation geometry', () => {
         .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
         .map(({ id }) => id),
     );
-    const worksEvents = worksLayout.nodes.filter(({ id }) => eventIds.has(id));
     const categoryEvents = categoryLayout.nodes.filter(({ id }) => eventIds.has(id));
     const categoryWorks = categoryLayout.nodes.filter(({ kind }) => kind !== 'innovation' && kind !== 'category');
 
     expect(categoryLayout.nodes.map(({ id }) => id)).toEqual(worksLayout.nodes.map(({ id }) => id));
-    expect(categoryLayout.relations.map(({ id }) => id)).toEqual(worksLayout.relations.map(({ id }) => id));
+    expect(new Set(categoryLayout.relations.map(({ id }) => id))).toEqual(
+      new Set(worksLayout.relations.map(({ id }) => id)),
+    );
     expect(categoryLayout.relations.map(({ id }) => id)).toContain('spelunky-to-dead-cells');
 
-    expect(Math.min(...categoryEvents.map(({ top }) => top))).toBeGreaterThan(
-      Math.max(...worksEvents.map(({ top }) => top)),
+    expect(Math.min(...categoryEvents.map(({ top }) => top))).toBeGreaterThan(400);
+    expect(Math.max(...categoryEvents.map(({ top, height }) => top + height))).toBeLessThan(
+      Math.min(...categoryWorks.map(({ top }) => top)),
     );
     expect(Math.min(...categoryWorks.map(({ top }) => top))).toBeGreaterThan(
       Math.max(...categoryEvents.map(({ top, height }) => top + height)),
@@ -774,9 +804,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(69);
-    expect(new Set(outlinedNodeIds).size).toBe(69);
-    expect(outlinedRelationIds.size).toBe(55);
+    expect(outlinedNodeIds).toHaveLength(84);
+    expect(new Set(outlinedNodeIds).size).toBe(84);
+    expect(outlinedRelationIds.size).toBe(86);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -865,7 +895,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(69);
+    expect(indexed).toHaveLength(84);
     expect(runStructure).toMatchObject({
       id: 'procedural-run-structure',
       startYear: 1980,

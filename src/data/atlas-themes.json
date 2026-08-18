@@ -62,5 +62,21 @@
     "familyIds": ["puzzle", "adventure"],
     "scopeNote": { "zh-CN": "当前沿用已核查的解析器到图形冒险证据，强调问题求解结构而非宣称一个唯一的益智游戏起点；后续继续补充纯益智谱系。" },
     "tags": ["parser-graphical-adventure-lens"]
+  },
+  {
+    "id": "role-playing-lineage",
+    "title": { "zh-CN": "角色扮演发展谱系", "en": "Role-playing development lineage" },
+    "summary": { "zh-CN": "把角色身份、成长、队伍与持续叙事作为一条可核查的角色扮演创新路线；Roguelike 仍保留为交叉透镜。" },
+    "familyIds": ["role-playing"],
+    "scopeNote": { "zh-CN": "这是选择性角色扮演发展路线，不主张单一作品发明 RPG，也不把所有带成长数值的作品视为同一类型。" },
+    "tags": ["role-playing-lineage"]
+  },
+  {
+    "id": "open-world-lineage",
+    "title": { "zh-CN": "开放世界发展谱系", "en": "Open-world development lineage" },
+    "summary": { "zh-CN": "把连接空间、非线性目标、系统规则与玩家自定路线作为开放世界创新事件来观察；作品只是承载证据。" },
+    "familyIds": ["adventure", "sandbox-survival"],
+    "scopeNote": { "zh-CN": "这是选择性开放世界路线，不把地图规模或时间相邻自动当作创新影响，也不主张某一作品是唯一绝对起点。" },
+    "tags": ["open-world-lineage"]
   }
 ]

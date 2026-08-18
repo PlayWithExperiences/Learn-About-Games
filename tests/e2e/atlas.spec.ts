@@ -1,6 +1,14 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const atlasUrl = 'http://127.0.0.1:4321/Learn-About-Games/atlas/';
+const ATLAS_NODE_COUNT = 84;
+const ATLAS_RELATION_COUNT = 86;
+const ATLAS_EVENT_COUNT = 25;
+const ATLAS_EVOLUTION_RELATION_COUNT = 20;
+const ATLAS_EVIDENCE_COUNT = 76;
+const ATLAS_THEME_BUTTON_COUNT = 26;
+const ATLAS_THEME_ID_COUNT = 11;
+const ATLAS_SCOPE_NOTE_COUNT = 14;
 
 const entityIds = async (locator: Locator) =>
   locator.evaluateAll((elements: Element[]) =>
@@ -127,15 +135,15 @@ test('reaches the global Innovation Atlas through shared navigation', async ({ p
   await expect(page.getByText('创新事件与承载作品时间网络', { exact: false })).toBeVisible();
 });
 
-test('server renders one fixed 69-node and 55-relation time network', async ({ page }, testInfo) => {
+test('server renders one fixed global event-and-carrier time network', async ({ page }, testInfo) => {
   await page.goto('./atlas/');
 
   const network = page.locator('[data-atlas-global-network]');
   const nodes = network.locator('[data-atlas-node]');
   const relations = network.locator('[data-atlas-relation]');
   await expect(network).toHaveCount(1);
-  await expect(nodes).toHaveCount(69);
-  await expect(relations).toHaveCount(55);
+  await expect(nodes).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(relations).toHaveCount(ATLAS_RELATION_COUNT);
   await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-node-count', String(await nodes.count()));
   await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-relation-count', String(await relations.count()));
   const scrollNote = page.getByText('左右滚动查看 1958–2020', { exact: true });
@@ -144,10 +152,10 @@ test('server renders one fixed 69-node and 55-relation time network', async ({ p
   } else {
     await expect(scrollNote).toBeVisible();
   }
-  expect(new Set(await entityIds(nodes)).size).toBe(69);
-  expect(new Set(await entityIds(relations)).size).toBe(55);
+  expect(new Set(await entityIds(nodes)).size).toBe(ATLAS_NODE_COUNT);
+  expect(new Set(await entityIds(relations)).size).toBe(ATLAS_RELATION_COUNT);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(50);
-  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(10);
+  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(ATLAS_EVENT_COUNT);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="category"]')).toHaveCount(2);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-apparatus"]')).toHaveCount(1);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-program"]')).toHaveCount(1);
@@ -223,17 +231,17 @@ test('renders innovation events as first-class details and preserves them in the
   await expect(page.locator('[data-atlas-event-index]')).toHaveCount(1);
   await expect(page.locator('[data-atlas-event-index] article')).toHaveCount(0);
   await expect(page.locator('[data-atlas-event-navigator]')).not.toHaveAttribute('open', '');
-  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-node]')).toHaveCount(10);
-  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation]')).toHaveCount(4);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-node]')).toHaveCount(ATLAS_EVENT_COUNT);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation]')).toHaveCount(ATLAS_EVOLUTION_RELATION_COUNT);
   const eventList = page.locator('[data-atlas-event-timeline]');
   await page.locator('[data-atlas-event-navigator] summary').click();
   await expect(eventList).toBeVisible();
-  await expect(eventList.locator('[data-atlas-event-timeline-item]')).toHaveCount(10);
+  await expect(eventList.locator('[data-atlas-event-timeline-item]')).toHaveCount(ATLAS_EVENT_COUNT);
   await expect(page.locator('[data-atlas-event-timeline-item="lock-on-targeting-combat"]')).toContainText('锁定目标的空间战斗');
   const event = page.locator('[data-atlas-node][data-atlas-event="first-person-shooter-perspective"]');
   await expect(event).toHaveCount(1);
   await expect(event).toHaveAttribute('data-atlas-node-kind', 'innovation');
-  await expect(page.locator('[data-atlas-event-detail]').filter({ hasText: '承载作品' })).toHaveCount(10);
+  await expect(page.locator('[data-atlas-event-detail]').filter({ hasText: '承载作品' })).toHaveCount(ATLAS_EVENT_COUNT);
 
   const shooterFamily = page.locator('[data-atlas-family="shooter"]');
   await shooterFamily.locator('summary').click();
@@ -244,19 +252,19 @@ test('renders innovation events as first-class details and preserves them in the
   if (testInfo.project.name === 'mobile-chromium') {
     await expect(primaryNetwork).toBeVisible();
     await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
-    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(69);
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(ATLAS_NODE_COUNT);
   } else {
     await expect(primaryNetwork).toBeVisible();
-    await expect(primaryNetwork.locator('[data-atlas-node]:visible')).toHaveCount(69);
+    await expect(primaryNetwork.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
   }
-  await expect(primaryNetwork.locator('[data-atlas-relation]')).toHaveCount(55);
+  await expect(primaryNetwork.locator('[data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
   const crossFamilyRelation = primaryNetwork.locator('[data-atlas-relation="spelunky-to-dead-cells"]');
   await expect(crossFamilyRelation).toBeAttached();
   await expect(crossFamilyRelation).toHaveAttribute('data-theme-match', 'false');
   if (testInfo.project.name === 'mobile-chromium') {
     await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-relation-ref="spelunky-to-dead-cells"]')).toHaveCount(2);
   }
-  await expect(page.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(3);
+  await expect(page.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
 });
 
 test('view controls provide bounded zoom, fit, center anchoring, reset and map-mode wheel zoom', async ({ page }, testInfo) => {
@@ -278,9 +286,11 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and map-m
   await expect(status).toHaveText('100%');
   await expect(stage).toHaveAttribute('data-scale', '1');
   await expect(stage).toHaveCSS('width', '2200px');
-  await expect(stage).toHaveCSS('height', '1540px');
+  const workSceneHeight = await scene.getAttribute('data-scene-work-height');
+  expect(workSceneHeight).toBeTruthy();
+  await expect(stage).toHaveCSS('height', `${workSceneHeight}px`);
   await expect(scene).toHaveCSS('width', '2200px');
-  await expect(scene).toHaveCSS('height', '1540px');
+  await expect(scene).toHaveCSS('height', `${workSceneHeight}px`);
   expect(await scene.evaluate((element) => element.style.transform)).toBe('scale(1)');
 
   await zoomIn.click();
@@ -376,11 +386,11 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
     const outline = page.locator('[data-atlas-mobile-outline]');
     await expect(outline, `${width}px outline`).toBeVisible();
     await expect(outline.locator('[data-atlas-era]')).toHaveCount(8);
-    await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(69);
+    await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(ATLAS_NODE_COUNT);
     expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
       elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
-    )).size).toBe(55);
-    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(76);
+    )).size).toBe(ATLAS_RELATION_COUNT);
+    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(ATLAS_EVIDENCE_COUNT);
     await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
   }
 
@@ -393,9 +403,9 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
     await expect(viewport, `${width}px canvas`).toBeVisible();
     await expect(page.locator('[data-atlas-scroll-note]'), `${width}px scroll note`).toBeVisible();
     await expect(page.locator('[data-atlas-mobile-outline]'), `${width}px outline`).toBeHidden();
-    await expect(viewport.locator('[data-atlas-node]')).toHaveCount(69);
-    await expect(viewport.locator('[data-atlas-relation]')).toHaveCount(55);
-    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(76);
+    await expect(viewport.locator('[data-atlas-node]')).toHaveCount(ATLAS_NODE_COUNT);
+    await expect(viewport.locator('[data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
+    await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(ATLAS_EVIDENCE_COUNT);
 
     await controls.getByRole('button', { name: '适应全图' }).click();
     const fit = await viewport.evaluate((element) => {
@@ -601,11 +611,11 @@ test('family directory and fullscreen theme controls stay synchronized and keybo
   await expect(familyDirectory).toHaveCount(1);
   await expect(familyDirectory.locator('[data-atlas-family]')).toHaveCount(10);
   await expect(familyDirectory.locator('[data-atlas-foundation-lens]')).toHaveCount(1);
-  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(21);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(ATLAS_THEME_BUTTON_COUNT);
   await expect(explorer.locator('[data-atlas-lens-status]')).toHaveCount(1);
   expect(new Set(await explorer.locator('[data-atlas-theme-button]').evaluateAll((buttons) =>
     buttons.map((button) => button.getAttribute('data-atlas-theme-button')),
-  )).size).toBe(9);
+  )).size).toBe(ATLAS_THEME_ID_COUNT);
   await openAtlasFamily(page, 'role-playing');
   await expect(familyDirectory.locator('[data-atlas-family="role-playing"] [data-atlas-theme-button="roguelike"]'))
     .toBeEnabled();
@@ -637,8 +647,8 @@ test('family directory and fullscreen theme controls stay synchronized and keybo
   const lensControl = network.locator('.atlas-lens-control');
   await expect(lensControl).toBeVisible();
   await expect(lensControl.locator('[data-atlas-family-directory]')).toBeHidden();
-  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(9);
-  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(21);
+  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(11);
+  await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(ATLAS_THEME_BUTTON_COUNT);
   await expect(explorer.locator('#atlas-lens-status')).toHaveCount(1);
 
   const metroidvania = lensControl.locator('[data-atlas-fullscreen-lenses]')
@@ -694,7 +704,7 @@ test('cross-Family lineages activate directly and fullscreen uses a compact lens
   const network = page.locator('[data-atlas-global-network][data-map-mode="true"]');
   const fullscreenLenses = network.locator('[data-atlas-fullscreen-lenses]');
   await expect(fullscreenLenses).toBeVisible();
-  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(9);
+  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(11);
   await expect(network.locator('[data-atlas-family-directory]')).toBeHidden();
   await expect(fullscreenLenses.locator('[data-atlas-theme-button="roguelike"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('[data-atlas-canvas]')).toHaveAttribute('data-map-mode', 'true');
@@ -710,17 +720,17 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(primaryNetwork).toBeVisible();
   if (testInfo.project.name === 'mobile-chromium') {
     await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
-    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(69);
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(ATLAS_NODE_COUNT);
   } else {
-    await expect(primaryNetwork.locator('[data-atlas-node]:visible')).toHaveCount(69);
+    await expect(primaryNetwork.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
   }
-  await expect(primaryNetwork.locator('[data-atlas-relation]')).toHaveCount(55);
+  await expect(primaryNetwork.locator('[data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
   await expect(primaryNetwork.locator('[data-atlas-relation="spelunky-to-dead-cells"]')).toBeAttached();
   const timeline = page.locator('[data-atlas-event-timeline]');
   await expect(timeline).toBeVisible();
-  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(3);
-  await expect(timeline.locator('[data-atlas-event-timeline-item][data-atlas-event-role]:not([hidden])')).toHaveCount(3);
-  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(2);
+  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
+  await expect(timeline.locator('[data-atlas-event-timeline-item][data-atlas-event-role]:not([hidden])')).toHaveCount(7);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(7);
 
   await timeline.locator('[data-atlas-event-timeline-item="fps-vertical-space-combat"] a[data-atlas-event-link]').click();
   const dialog = page.locator('dialog[data-atlas-selected-detail]');
@@ -734,7 +744,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
 
   await visibleThemeButton(page, 'all').click();
   await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
-  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(10);
+  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(ATLAS_EVENT_COUNT);
 });
 
 test('Atlas offers representative-work, event-history, and category-development map perspectives', async ({ page }, testInfo) => {
@@ -751,17 +761,17 @@ test('Atlas offers representative-work, event-history, and category-development 
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
   await expect(perspectives.locator('[data-atlas-perspective="works"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
 
   await perspectives.locator('[data-atlas-perspective="category"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'category');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'category');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
-  await expect(primary.locator('[data-atlas-node][data-atlas-event][data-theme-match="true"]:visible')).toHaveCount(3);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(primary.locator('[data-atlas-node][data-atlas-event][data-theme-match="true"]:visible')).toHaveCount(7);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
-  await expect(primary.locator('[data-atlas-relation]')).toHaveCount(55);
-  await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(2);
+  await expect(primary.locator('[data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
+  await expect(primary.locator('[data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(7);
   const categoryBand = await primary.evaluate((element) => {
     const readBox = (node: HTMLElement) => ({
       top: Number(node.dataset.nodeTop),
@@ -777,13 +787,13 @@ test('Atlas offers representative-work, event-history, and category-development 
       carrierTop: Math.min(...carrierBoxes.map(({ top }) => top)),
     };
   });
-  expect(categoryBand.eventTop).toBeGreaterThanOrEqual(500);
+  expect(categoryBand.eventTop).toBeGreaterThanOrEqual(400);
   expect(categoryBand.eventBottom).toBeLessThan(categoryBand.carrierTop);
 
   await perspectives.locator('[data-atlas-perspective="events"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'events');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
   const eventBand = await primary.evaluate((element) => {
     const readBox = (node: HTMLElement) => ({
       top: Number(node.dataset.nodeTop),
@@ -801,7 +811,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   });
   expect(eventBand.eventTop).toBeGreaterThan(200);
   expect(eventBand.workTop).toBeGreaterThan(eventBand.eventBottom);
-  await expect(primary.locator('[data-atlas-event-relation][data-relation-role="evolution"]')).toHaveCount(4);
+  await expect(primary.locator('[data-atlas-event-relation][data-relation-role="evolution"]')).toHaveCount(ATLAS_EVOLUTION_RELATION_COUNT);
 
   await primary.locator('[data-atlas-node-id="fps-vertical-space-combat"] [data-atlas-node-link]').click();
   const dialog = page.locator('dialog[data-atlas-selected-detail]');
@@ -814,7 +824,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   await perspectives.locator('[data-atlas-perspective="works"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
-  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
 });
 
 test('a genre without event evidence shows an honest empty state', async ({ page }, testInfo) => {
@@ -824,11 +834,11 @@ test('a genre without event evidence shows an honest empty state', async ({ page
   await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
   if (testInfo.project.name === 'mobile-chromium') {
     await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
-    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(69);
+    await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-node]')).toHaveCount(ATLAS_NODE_COUNT);
   } else {
-    await expect(page.locator('[data-atlas-primary-network] [data-atlas-node]:visible')).toHaveCount(69);
+    await expect(page.locator('[data-atlas-primary-network] [data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
   }
-  await expect(page.locator('[data-atlas-primary-network] [data-atlas-relation]')).toHaveCount(55);
+  await expect(page.locator('[data-atlas-primary-network] [data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
   await expect(page.locator('[data-atlas-event-empty]')).toBeVisible();
   await expect(page.locator('[data-atlas-event-index-status]')).toContainText('0 个创新事件');
 });
@@ -976,9 +986,9 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
     element.scrollTop = 120;
   });
   const graphBefore = await atlasGraphSnapshot(page);
-  expect(graphBefore.nodes).toHaveLength(69);
-  expect(graphBefore.relations).toHaveLength(55);
-  expect(graphBefore.evidenceIds).toHaveLength(76);
+  expect(graphBefore.nodes).toHaveLength(ATLAS_NODE_COUNT);
+  expect(graphBefore.relations).toHaveLength(ATLAS_RELATION_COUNT);
+  expect(graphBefore.evidenceIds).toHaveLength(ATLAS_EVIDENCE_COUNT);
   expect(graphBefore.nodes.every(({ searchMatch }) => searchMatch === null)).toBe(true);
 
   await viewport.focus();
@@ -1027,7 +1037,7 @@ test('theme controls only change emphasis without changing graph identity or geo
   const buttons = page.locator('[data-atlas-theme-button]');
   const viewport = page.locator('[data-atlas-canvas]');
   const search = page.getByRole('searchbox', { name: '搜索节点' });
-  await expect(buttons).toHaveCount(21);
+  await expect(buttons).toHaveCount(ATLAS_THEME_BUTTON_COUNT);
   for (const button of await buttons.all()) {
     await expect(button).toBeEnabled();
   }
@@ -1084,11 +1094,11 @@ test('theme controls only change emphasis without changing graph identity or geo
       controls.every((control) => control.getAttribute('aria-pressed') === 'true'),
     )).toBe(true);
     await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
-    await expect(page.locator('[data-atlas-primary-network] [data-atlas-node]:visible')).toHaveCount(69);
-    await expect(page.locator('[data-atlas-primary-network] [data-atlas-relation]')).toHaveCount(55);
+    await expect(page.locator('[data-atlas-primary-network] [data-atlas-node]:visible')).toHaveCount(ATLAS_NODE_COUNT);
+    await expect(page.locator('[data-atlas-primary-network] [data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
     await expect(page.locator('[data-atlas-lens-status]')).toContainText('地图模式可在代表作品与品类发展两种视角间切换');
-    await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(69);
-    await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(55);
+    await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).not.toHaveCount(ATLAS_NODE_COUNT);
+    await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).not.toHaveCount(ATLAS_RELATION_COUNT);
     await expect(page.locator(`[data-atlas-global-network] [data-atlas-node][data-atlas-node-id="${matchingNode}"]`))
       .toHaveAttribute('data-theme-match', 'true');
   }
@@ -1096,8 +1106,8 @@ test('theme controls only change emphasis without changing graph identity or geo
   await visibleThemeButton(page, 'all').click();
   await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
   await expect.poll(() => stableState()).toEqual(before);
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).toHaveCount(69);
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).toHaveCount(55);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-node][data-theme-match="true"]')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation][data-theme-match="true"]')).toHaveCount(ATLAS_RELATION_COUNT);
 });
 
 test('non-matching desktop edges keep neutral direction semantics and 3:1 contrast in light and dark', async ({ page }, testInfo) => {
@@ -1284,17 +1294,17 @@ test('selected detail dialog preserves the network position and returns focus to
   await expect(dialog.locator('[data-relation-detail-summary]')).not.toBeEmpty();
 });
 
-test('renders one 76-item Evidence index and keeps node and relation references reachable', async ({ page }) => {
+test('renders the Evidence index and keeps node and relation references reachable', async ({ page }) => {
   await page.goto('./atlas/');
 
   const index = page.locator('[data-atlas-evidence-index]');
   const rows = index.locator('[data-atlas-evidence-row]');
-  await expect(rows).toHaveCount(76);
-  await expect(index.locator('a[data-atlas-evidence-link]')).toHaveCount(76);
+  await expect(rows).toHaveCount(ATLAS_EVIDENCE_COUNT);
+  await expect(index.locator('a[data-atlas-evidence-link]')).toHaveCount(ATLAS_EVIDENCE_COUNT);
   const evidenceIds = await rows.evaluateAll((elements) => elements.map((element) => element.id));
-  expect(new Set(evidenceIds).size).toBe(76);
+  expect(new Set(evidenceIds).size).toBe(ATLAS_EVIDENCE_COUNT);
   expect(evidenceIds.every((id) => id.startsWith('atlas-evidence-'))).toBe(true);
-  await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(76);
+  await expect(page.locator('[data-atlas-evidence-row]')).toHaveCount(ATLAS_EVIDENCE_COUNT);
 
   for (const detailSelector of ['#atlas-node-detail-dead-cells', '#atlas-relation-detail-super-metroid-and-sotn']) {
     const refs = page.locator(`${detailSelector} [data-atlas-evidence-ref]`);
@@ -1318,7 +1328,7 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
 
   await expect(search).toBeEnabled();
   await expect(sort).toHaveValue('time');
-  await expect(items).toHaveCount(69);
+  await expect(items).toHaveCount(ATLAS_NODE_COUNT);
   await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
   await expect(clear).toBeDisabled();
 
@@ -1373,7 +1383,7 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
   await expect(index.locator('[data-atlas-node-empty]')).toBeVisible();
 
   await clear.click();
-  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(69);
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(ATLAS_NODE_COUNT);
   await expect(index.locator('[data-atlas-node-empty]')).toBeHidden();
   await expect(clear).toBeDisabled();
   await expect(page.locator('[data-atlas-node][data-search-match]')).toHaveCount(0);
@@ -1447,13 +1457,13 @@ test('mobile uses a relation-equivalent era outline without horizontal overflow'
   const outline = page.locator('[data-atlas-mobile-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-atlas-era]')).toHaveCount(8);
-  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(69);
+  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(ATLAS_NODE_COUNT);
   const relationIds = await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
     elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
   );
-  expect(new Set(relationIds).size).toBe(55);
+  expect(new Set(relationIds).size).toBe(ATLAS_RELATION_COUNT);
   for (const direction of ['incoming', 'outgoing', 'undirected']) {
-    await expect(outline.locator(`[data-outline-direction="${direction}"]`)).toHaveCount(69);
+    await expect(outline.locator(`[data-outline-direction="${direction}"]`)).toHaveCount(ATLAS_NODE_COUNT);
   }
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -1483,7 +1493,7 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(familyDirectory).toHaveCount(1);
   await expect(familyDirectory.locator('details[data-atlas-family]')).toHaveCount(10);
   await expect(familyDirectory.locator('[data-atlas-foundation-lens]')).toHaveCount(1);
-  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(11);
+  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(ATLAS_SCOPE_NOTE_COUNT);
   await familyDirectory.locator('[data-atlas-family="action"] summary').click();
   await expect(familyDirectory.locator('[data-atlas-family="action"] [data-atlas-scope-note]')).toHaveCount(3);
   await expect(familyDirectory.locator('[data-atlas-family="action"] [data-atlas-scope-note]').first()).toBeVisible();
@@ -1497,10 +1507,10 @@ test('without JavaScript the complete graph, native details and evidence remain 
   await expect(page.locator('[data-atlas-no-js-note]')).toBeVisible();
   await expect(page.locator('[data-atlas-stage]')).toHaveAttribute('data-scale', '1');
   await expect(page.locator('[data-atlas-scene]')).toBeVisible();
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-node]')).toHaveCount(69);
-  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(55);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-node]')).toHaveCount(ATLAS_NODE_COUNT);
+  await expect(page.locator('[data-atlas-global-network] [data-atlas-relation]')).toHaveCount(ATLAS_RELATION_COUNT);
   const nodeIndex = page.locator('[data-atlas-node-index]');
-  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(69);
+  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(ATLAS_NODE_COUNT);
   await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
   await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
   await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
@@ -1535,11 +1545,11 @@ test('320px no-JavaScript hides view controls and keeps the complete period outl
   await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
   const familyDirectory = page.locator('[data-atlas-family-directory]');
   await expect(familyDirectory.locator('details[data-atlas-family]')).toHaveCount(10);
-  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(11);
+  await expect(familyDirectory.locator('[data-atlas-scope-note]')).toHaveCount(ATLAS_SCOPE_NOTE_COUNT);
   await familyDirectory.locator('[data-atlas-family="adventure"] summary').click();
   await expect(familyDirectory.locator('[data-atlas-family="adventure"] [data-atlas-scope-note]').first()).toBeVisible();
   const nodeIndex = page.locator('[data-atlas-node-index]');
-  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(69);
+  await expect(nodeIndex.locator('[data-atlas-index-item]')).toHaveCount(ATLAS_NODE_COUNT);
   await expect(nodeIndex.getByRole('searchbox', { name: '搜索节点' })).toBeDisabled();
   await expect(nodeIndex.getByLabel('节点排序')).toBeDisabled();
   await expect(nodeIndex.getByRole('button', { name: '清除搜索' })).toBeDisabled();
@@ -1547,10 +1557,10 @@ test('320px no-JavaScript hides view controls and keeps the complete period outl
   const outline = page.locator('[data-atlas-mobile-outline]');
   await expect(outline).toBeVisible();
   await expect(outline.locator('[data-atlas-era]')).toHaveCount(8);
-  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(69);
+  await expect(outline.locator('[data-atlas-outline-node]')).toHaveCount(ATLAS_NODE_COUNT);
   expect(new Set(await outline.locator('[data-atlas-outline-relation-ref]').evaluateAll((elements) =>
     elements.map((element) => element.getAttribute('data-atlas-outline-relation-ref')),
-  )).size).toBe(55);
+  )).size).toBe(ATLAS_RELATION_COUNT);
   await expect(page.locator('html').evaluate((element) => element.scrollWidth === element.clientWidth)).resolves.toBe(true);
 
   await context.close();

@@ -3932,7 +3932,7 @@ h2 {
   width: auto;
   height: 100dvh;
   margin: 0;
-  padding: 0.5rem clamp(0.75rem, 1.5vw, 1.25rem);
+  padding: 0.25rem clamp(0.75rem, 1.5vw, 1.25rem);
   overflow: hidden;
   background: var(--page);
   flex-direction: column;
@@ -3996,8 +3996,11 @@ h2 {
   min-width: 0;
   align-items: center;
   flex: 1 1 auto;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.35rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
 }
 
 [data-atlas-global-network][data-map-mode='true'] .atlas-fullscreen-lenses button {
@@ -4298,22 +4301,22 @@ h2 {
 .atlas-network-node[data-theme-match='false'] a {
   border-color: var(--line);
   background: var(--surface);
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .atlas-network-node[data-theme-match='false'] .atlas-network-node__type {
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .atlas-network-node[data-search-match='false'] a {
   border-color: var(--line);
   border-style: dashed;
   background: var(--surface);
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .atlas-network-node[data-search-match='false'] .atlas-network-node__type {
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .atlas-network-node[data-search-match='true'] a {
@@ -4959,11 +4962,11 @@ h2 {
   }
 
   .atlas-outline-node[data-theme-match='false'] > header {
-    color: var(--muted);
+    color: var(--ink);
   }
 
   .atlas-outline-node[data-search-match='false'] > header {
-    color: var(--muted);
+    color: var(--ink);
   }
 
   .atlas-outline-node[data-search-match='true'] > header {

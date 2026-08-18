@@ -461,6 +461,32 @@ function nodeBoundaryAnchor(
   };
 }
 
+function resolveAtlasLaneCollisions(nodes: AtlasPlacedNode[]): AtlasPlacedNode[] {
+  const occupiedByLane = new Map<number, Array<{ left: number; right: number }>>();
+
+  return nodes.map((node) => {
+    let displayLane = node.displayLane;
+    const left = node.left;
+    const right = node.left + node.width;
+    const overlaps = (candidateLane: number) => (occupiedByLane.get(candidateLane) ?? [])
+      .some((interval) => left < interval.right && right > interval.left);
+
+    while (overlaps(displayLane)) displayLane += 1;
+
+    const intervals = occupiedByLane.get(displayLane) ?? [];
+    intervals.push({ left, right });
+    occupiedByLane.set(displayLane, intervals);
+
+    const centerY = atlasLayoutDefaults.firstLaneY + displayLane * atlasLayoutDefaults.laneGap;
+    return {
+      ...node,
+      displayLane,
+      centerY,
+      top: centerY - node.height / 2,
+    };
+  });
+}
+
 export function buildAtlasLayout(
   nodes: readonly AtlasNodeForLayout[],
   relations: readonly AtlasRelationForLayout[],
@@ -494,8 +520,15 @@ export function buildAtlasLayout(
     eventLaneById.set(node.id, displayLane);
     eventPlacements.push({ lane: displayLane, yearX });
   }
+  // Category development is an event-first reading: keep the event band
+  // compact and central, then place carrier works below it as evidence.
+  // The events perspective keeps its own chronology and uses the wide lower
+  // carrier band, so the two views remain visually distinct without splitting
+  // the graph into separate networks.
+  const categoryEventBase = 4;
+  const categoryWorkBase = categoryEventBase + Math.max(0, highestInnovationLane) + 2;
 
-  const placedNodes = nodes.map((node): AtlasPlacedNode => {
+  const placedNodes = resolveAtlasLaneCollisions(nodes.map((node): AtlasPlacedNode => {
     if (node.kind === 'game' && node.endYear !== undefined) {
       throw new Error(`Atlas Game ${node.id} cannot define a time range.`);
     }
@@ -511,13 +544,13 @@ export function buildAtlasLayout(
         ? (eventLaneById.get(node.id) ?? 3)
         : node.kind === 'category'
           ? (categoryLaneById.get(node.id) ?? 1)
-          : 10 + node.lane
+          : 40 + node.lane
       : perspective === 'category'
         ? node.kind === 'innovation'
-          ? 6 + node.lane
+          ? categoryEventBase + node.lane
           : node.kind === 'category'
             ? (categoryLaneById.get(node.id) ?? 1)
-            : Math.max(3, node.lane + 1) + nonInnovationLaneOffset + 6
+            : categoryWorkBase + node.lane
         : node.kind === 'innovation'
           ? node.lane
           : node.kind === 'category'
@@ -545,7 +578,7 @@ export function buildAtlasLayout(
       centerY,
       displayLane,
     };
-  });
+  }));
 
   const nodeById = new Map(placedNodes.map((node) => [node.id, node]));
   const placedRelations = relations

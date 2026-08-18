@@ -208,5 +208,15 @@
     "id": "innovation-event",
     "name": { "zh-CN": "创新事件", "en": "Innovation event" },
     "summary": { "zh-CN": "把某种玩法、空间或系统机制作为可核查的设计事件来记录，并连接到承载它的作品；不宣称唯一发明者。" }
+  },
+  {
+    "id": "role-playing-lineage",
+    "name": { "zh-CN": "角色扮演发展谱系", "en": "Role-playing development lineage" },
+    "summary": { "zh-CN": "追踪角色身份、成长、队伍与持续叙事如何在不同角色扮演作品中被引入与转译。" }
+  },
+  {
+    "id": "open-world-lineage",
+    "name": { "zh-CN": "开放世界发展谱系", "en": "Open-world development lineage" },
+    "summary": { "zh-CN": "追踪大尺度连接空间、非线性目标、系统规则与玩家自定路线的有证据设计事件。" }
   }
 ]
