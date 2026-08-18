@@ -131,6 +131,102 @@ export type AtlasEventTimeline = {
   emptyState: boolean;
 };
 
+export type AtlasEventPerspective = {
+  /** The complete graph remains present in every perspective. */
+  globalNodeIds: string[];
+  globalRelationIds: string[];
+  /** Innovation events are the primary chronological layer. */
+  eventIds: string[];
+  evolutionRelationIds: string[];
+  highlightedNodeIds: string[];
+  highlightedRelationIds: string[];
+  carriersByEvent: Record<string, string[]>;
+  emptyState: boolean;
+};
+
+type AtlasEventPerspectiveNode = {
+  id: string;
+  kind: AtlasNodeKind;
+  startYear: number;
+  tags: readonly string[];
+  themeIds?: readonly string[];
+};
+
+type AtlasEventPerspectiveRelation = {
+  id: string;
+  fromId: string;
+  toId: string;
+  relationRole?: 'evolution' | 'carrier';
+  tags: readonly string[];
+};
+
+/**
+ * Projects a genre lens onto one global innovation history.  The lens only
+ * controls emphasis; it never removes nodes or relations from the graph.
+ */
+export function buildAtlasEventPerspective(
+  nodes: readonly AtlasEventPerspectiveNode[],
+  relations: readonly AtlasEventPerspectiveRelation[],
+  options: { themeId?: string; themeTags?: readonly string[] } = {},
+): AtlasEventPerspective {
+  const themeTokens = new Set(options.themeTags ?? []);
+  if (options.themeId) {
+    themeTokens.add(options.themeId);
+    themeTokens.add(`${options.themeId}-lens`);
+    if (options.themeId.endsWith('-lineage')) {
+      themeTokens.add(options.themeId.replace(/-lineage$/, '-lens'));
+    }
+  }
+  const hasTheme = themeTokens.size > 0;
+  const matchesTheme = (node: AtlasEventPerspectiveNode) => !hasTheme ||
+    node.themeIds?.some((themeId) => themeTokens.has(themeId)) ||
+    node.tags.some((tag) => themeTokens.has(tag));
+  const matchesRelationTheme = (relation: AtlasEventPerspectiveRelation) =>
+    !hasTheme || relation.tags.some((tag) => themeTokens.has(tag));
+  const sortedNodes = [...nodes].sort((left, right) => left.id.localeCompare(right.id));
+  const sortedRelations = [...relations].sort((left, right) => left.id.localeCompare(right.id));
+  const eventNodes = sortedNodes
+    .filter((node) => node.kind === 'innovation' && node.tags.includes('innovation-event'))
+    .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
+  const eventIds = new Set(eventNodes.map(({ id }) => id));
+  const selectedEventIds = new Set(eventNodes.filter(matchesTheme).map(({ id }) => id));
+  const highlightedNodeIds = sortedNodes
+    .filter(matchesTheme)
+    .map(({ id }) => id);
+  const highlightedNodeIdSet = new Set(highlightedNodeIds);
+  const highlightedRelationIds = sortedRelations
+    .filter((relation) => matchesRelationTheme(relation) ||
+      highlightedNodeIdSet.has(relation.fromId) || highlightedNodeIdSet.has(relation.toId))
+    .map(({ id }) => id);
+  const evolutionRelationIds = sortedRelations
+    .filter(({ relationRole, fromId, toId }) =>
+      relationRole === 'evolution' && eventIds.has(fromId) && eventIds.has(toId),
+    )
+    .map(({ id }) => id);
+  const nodeById = new Map(sortedNodes.map((node) => [node.id, node]));
+  const carriersByEvent: Record<string, string[]> = {};
+
+  for (const event of eventNodes) {
+    carriersByEvent[event.id] = sortedRelations
+      .filter(({ relationRole, fromId }) => relationRole === 'carrier' && fromId === event.id)
+      .map(({ toId }) => nodeById.get(toId))
+      .filter((node): node is AtlasEventPerspectiveNode => node?.kind === 'game')
+      .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
+      .map(({ id }) => id);
+  }
+
+  return {
+    globalNodeIds: sortedNodes.map(({ id }) => id),
+    globalRelationIds: sortedRelations.map(({ id }) => id),
+    eventIds: eventNodes.map(({ id }) => id),
+    evolutionRelationIds,
+    highlightedNodeIds,
+    highlightedRelationIds,
+    carriersByEvent,
+    emptyState: selectedEventIds.size === 0,
+  };
+}
+
 export function buildAtlasEventTimeline(
   nodes: readonly AtlasEventTimelineNode[],
   relations: readonly AtlasEventTimelineRelation[],

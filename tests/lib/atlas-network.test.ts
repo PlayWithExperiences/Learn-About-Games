@@ -11,6 +11,7 @@ import {
   atlasScaleBounds,
   buildAtlasNodeIndex,
   buildAtlasLayout,
+  buildAtlasEventPerspective,
   buildAtlasEventTimeline,
   clampAtlasScale,
   filterAtlasNodeIndex,
@@ -127,6 +128,40 @@ describe('global Atlas graph contract', () => {
     expect(timeline.evolutionRelations).toEqual([]);
     expect(timeline.carriersByEvent).toEqual({});
     expect(timeline.emptyState).toBe(true);
+  });
+
+  it('projects a genre lens onto the complete event-first graph', () => {
+    const projection = buildAtlasEventPerspective(typedAtlasNodes, typedAtlasRelations, {
+      themeId: 'first-person-shooter-lineage',
+    });
+    const expectedEventIds = typedAtlasNodes
+      .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
+      .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
+      .map(({ id }) => id);
+
+    expect(projection.globalNodeIds).toEqual(typedAtlasNodes.map(({ id }) => id).sort());
+    expect(projection.globalRelationIds).toEqual(typedAtlasRelations.map(({ id }) => id).sort());
+    expect(projection.eventIds).toEqual(expectedEventIds);
+    expect(projection.evolutionRelationIds).toEqual(
+      typedAtlasRelations
+        .filter(({ relationRole }) => relationRole === 'evolution')
+        .map(({ id }) => id)
+        .sort(),
+    );
+    expect(projection.highlightedNodeIds).toEqual(expect.arrayContaining([
+      'first-person-shooter-perspective',
+      'fps-vertical-space-combat',
+      'fps-networked-combat-space',
+    ]));
+    expect(projection.highlightedRelationIds).toEqual(expect.arrayContaining([
+      'fps-perspective-to-vertical-space-combat',
+      'vertical-space-combat-to-networked-space',
+    ]));
+    expect(projection.carriersByEvent['fps-vertical-space-combat']).toEqual(['doom']);
+    expect(projection.emptyState).toBe(false);
+    expect(buildAtlasEventPerspective([...typedAtlasNodes].reverse(), [...typedAtlasRelations].reverse(), {
+      themeId: 'first-person-shooter-lineage',
+    })).toEqual(projection);
   });
 
   it('publishes the EGDS-aligned innovation events as first-class, evidenced nodes', () => {
