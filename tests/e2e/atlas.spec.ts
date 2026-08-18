@@ -736,7 +736,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(10);
 });
 
-test('Atlas offers representative-work and category-development map perspectives', async ({ page }, testInfo) => {
+test('Atlas offers representative-work, event-history, and category-development map perspectives', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'The two map perspectives are tested once at a desktop viewport.');
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('./atlas/');
@@ -778,6 +778,29 @@ test('Atlas offers representative-work and category-development map perspectives
   });
   expect(categoryBand.eventTop).toBeGreaterThanOrEqual(500);
   expect(categoryBand.eventBottom).toBeLessThan(categoryBand.carrierTop);
+
+  await perspectives.locator('[data-atlas-perspective="events"]').click();
+  await expect(network).toHaveAttribute('data-atlas-perspective', 'events');
+  await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
+  await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(69);
+  const eventBand = await primary.evaluate((element) => {
+    const readBox = (node: HTMLElement) => ({
+      top: Number(node.dataset.nodeTop),
+      bottom: Number(node.dataset.nodeTop) + Number(node.dataset.nodeHeight),
+    });
+    const events = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-event]'));
+    const works = Array.from(element.querySelectorAll<HTMLElement>('[data-atlas-node][data-atlas-game-node]'));
+    const eventBoxes = events.map(readBox);
+    const workBoxes = works.map(readBox);
+    return {
+      eventTop: Math.min(...eventBoxes.map(({ top }) => top)),
+      eventBottom: Math.max(...eventBoxes.map(({ bottom }) => bottom)),
+      workTop: Math.min(...workBoxes.map(({ top }) => top)),
+    };
+  });
+  expect(eventBand.eventTop).toBeGreaterThan(200);
+  expect(eventBand.workTop).toBeGreaterThan(eventBand.eventBottom);
+  await expect(primary.locator('[data-atlas-event-relation][data-relation-role="evolution"]')).toHaveCount(4);
 
   await primary.locator('[data-atlas-node-id="fps-vertical-space-combat"] [data-atlas-node-link]').click();
   const dialog = page.locator('dialog[data-atlas-selected-detail]');

@@ -35,6 +35,7 @@ const nodeCount = nodes.length;
 const relationCount = relations.length;
 const layout = buildAtlasLayout(nodes, relations);
 const categoryLayout = buildAtlasLayout(nodes, relations, { perspective: 'category' });
+const eventLayout = buildAtlasLayout(nodes, relations, { perspective: 'events' });
 const workContentBottom = Math.max(...layout.nodes.map(({ top, height }) => top + height));
 const workCanvasHeight = Math.max(
   layout.height,
@@ -45,12 +46,19 @@ const categoryCanvasHeight = Math.max(
   categoryLayout.height,
   Math.ceil((categoryContentBottom + 40) / 20) * 20,
 );
+const eventContentBottom = Math.max(...eventLayout.nodes.map(({ top, height }) => top + height));
+const eventCanvasHeight = Math.max(
+  eventLayout.height,
+  Math.ceil((eventContentBottom + 40) / 20) * 20,
+);
 const eras = groupAtlasNodesByEra(nodes);
 const adjacency = indexAtlasRelations(nodes, relations);
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
 const placedNodeById = new Map(layout.nodes.map((node) => [node.id, node]));
 const categoryPlacedNodeById = new Map(categoryLayout.nodes.map((node) => [node.id, node]));
 const categoryPlacedRelationById = new Map(categoryLayout.relations.map((relation) => [relation.id, relation]));
+const eventPlacedNodeById = new Map(eventLayout.nodes.map((node) => [node.id, node]));
+const eventPlacedRelationById = new Map(eventLayout.relations.map((relation) => [relation.id, relation]));
 const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 const tagById = new Map(tags.map((tag) => [tag.id, tag]));
 const relationById = new Map(relations.map((relation) => [relation.id, relation]));
@@ -283,6 +291,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         <span>地图视角</span>
         <button type="button" data-atlas-perspective="works" aria-pressed="true" disabled>代表作品</button>
         <button type="button" data-atlas-perspective="category" aria-pressed="false" disabled>品类发展</button>
+        <button type="button" data-atlas-perspective="events" aria-pressed="false" disabled>创新事件</button>
       </div>
       <button type="button" data-atlas-map-mode aria-pressed="false" disabled>进入地图模式</button>
       <button type="button" data-atlas-fit disabled>适应全图</button>
@@ -311,6 +320,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           data-scene-height={workCanvasHeight}
           data-scene-work-height={workCanvasHeight}
           data-scene-category-height={categoryCanvasHeight}
+          data-scene-event-height={eventCanvasHeight}
           style={`width:${layout.width}px;height:${workCanvasHeight}px;transform:scale(1)`}
         >
           <div class="atlas-network__years" aria-hidden="true">
@@ -335,9 +345,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           {layout.relations.map((placedRelation) => {
             const relation = relationById.get(placedRelation.id);
             const categoryPlacedRelation = categoryPlacedRelationById.get(placedRelation.id);
+            const eventPlacedRelation = eventPlacedRelationById.get(placedRelation.id);
             const from = nodeById.get(placedRelation.fromId);
             const to = nodeById.get(placedRelation.toId);
-            if (!relation || !from || !to || !categoryPlacedRelation) return null;
+            if (!relation || !from || !to || !categoryPlacedRelation || !eventPlacedRelation) return null;
             return (
               <g
                 data-atlas-relation={relation.id}
@@ -362,6 +373,11 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                 data-category-start-y={categoryPlacedRelation.start.y}
                 data-category-end-x={categoryPlacedRelation.end.x}
                 data-category-end-y={categoryPlacedRelation.end.y}
+                data-event-path={eventPlacedRelation.path}
+                data-event-start-x={eventPlacedRelation.start.x}
+                data-event-start-y={eventPlacedRelation.start.y}
+                data-event-end-x={eventPlacedRelation.end.x}
+                data-event-end-y={eventPlacedRelation.end.y}
                 data-theme-tags={relation.tags.join(' ')}
                 data-theme-match="true"
               >
@@ -397,7 +413,8 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
             {nodes.map((node) => {
               const placed = placedNodeById.get(node.id);
               const categoryPlaced = categoryPlacedNodeById.get(node.id);
-              if (!placed || !categoryPlaced) return null;
+              const eventPlaced = eventPlacedNodeById.get(node.id);
+              if (!placed || !categoryPlaced || !eventPlaced) return null;
               return (
                 <article
                   class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
@@ -431,6 +448,12 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                   data-category-height={categoryPlaced.height}
                   data-category-center-x={categoryPlaced.centerX}
                   data-category-center-y={categoryPlaced.centerY}
+                  data-event-left={eventPlaced.left}
+                  data-event-top={eventPlaced.top}
+                  data-event-width={eventPlaced.width}
+                  data-event-height={eventPlaced.height}
+                  data-event-center-x={eventPlaced.centerX}
+                  data-event-center-y={eventPlaced.centerY}
                   data-theme-tags={node.tags.join(' ')}
                   data-theme-match="true"
                   style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
@@ -739,13 +762,12 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     const relationCount = networkRelations.length;
     const globalCountMessage = `当前显示全部 ${nodeCount} 个节点与 ${relationCount} 条关系。`;
     let activeThemeId = 'all';
-    let perspectiveMode: 'works' | 'category' = 'works';
-    let syncPerspectiveGeometry: (nextPerspective: 'works' | 'category') => void = () => {};
+    let perspectiveMode: 'works' | 'category' | 'events' = 'works';
+    let syncPerspectiveGeometry: (nextPerspective: 'works' | 'category' | 'events') => void = () => {};
 
     const applyTheme = (themeId: string) => {
       activeThemeId = themeId;
       const match = themeId === 'all' ? null : themeMatches[themeId];
-      if (!match && perspectiveMode === 'category') perspectiveMode = 'works';
       syncPerspectiveGeometry(perspectiveMode);
       const matchingNodeIds = new Set(match?.nodeIds ?? []);
       const matchingRelationIds = new Set(match?.relationIds ?? []);
@@ -778,14 +800,13 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       }
       if (primaryNetwork) {
         const keepMapInPlace = networkShell?.dataset.mapMode === 'true';
-        const routeMode = eventTheme && keepMapInPlace && perspectiveMode === 'category' ? 'category' : 'full';
+        const routeMode = keepMapInPlace && perspectiveMode !== 'works' ? perspectiveMode : 'full';
         primaryNetwork.dataset.atlasRouteMode = routeMode;
         primaryNetwork.dataset.atlasPerspective = perspectiveMode;
         if (networkShell) networkShell.dataset.atlasRouteMode = routeMode;
         if (networkShell) networkShell.dataset.atlasPerspective = perspectiveMode;
         perspectiveButtons.forEach((button) => {
-          button.disabled = networkShell?.dataset.mapMode !== 'true'
-            || (button.dataset.atlasPerspective === 'category' && !eventTheme);
+          button.disabled = networkShell?.dataset.mapMode !== 'true';
         });
         primaryNetwork.hidden = false;
       }
@@ -901,11 +922,17 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
       const outlineBreakpoint = matchMedia('(max-width: 1150px)');
 
       syncPerspectiveGeometry = (nextPerspective) => {
-        const prefix = nextPerspective === 'category' ? 'category' : 'work';
+        const prefix = nextPerspective === 'category'
+          ? 'category'
+          : nextPerspective === 'events'
+            ? 'event'
+            : 'work';
         const nextSceneHeight = Number(
           nextPerspective === 'category'
             ? scene.dataset.sceneCategoryHeight
-            : scene.dataset.sceneWorkHeight,
+            : nextPerspective === 'events'
+              ? scene.dataset.sceneEventHeight
+              : scene.dataset.sceneWorkHeight,
         );
         if (Number.isFinite(nextSceneHeight) && nextSceneHeight > 0 && nextSceneHeight !== sceneHeight) {
           sceneHeight = nextSceneHeight;
@@ -960,10 +987,10 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         });
       };
 
-      const syncPerspective = (nextPerspective: 'works' | 'category') => {
+      const syncPerspective = (nextPerspective: 'works' | 'category' | 'events') => {
         perspectiveMode = nextPerspective;
         const hasSelectedTheme = activeThemeId !== 'all';
-        const routeMode = mapMode && hasSelectedTheme && nextPerspective === 'category' ? 'category' : 'full';
+        const routeMode = mapMode && nextPerspective !== 'works' ? nextPerspective : 'full';
         networkShell.dataset.atlasPerspective = nextPerspective;
         networkShell.dataset.atlasRouteMode = routeMode;
         if (primaryNetwork) {
@@ -973,18 +1000,21 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         syncPerspectiveGeometry(nextPerspective);
         perspectiveButtons.forEach((button) => {
           button.setAttribute('aria-pressed', String(button.dataset.atlasPerspective === nextPerspective));
-          button.disabled = !mapMode || (button.dataset.atlasPerspective === 'category' && !hasSelectedTheme);
+          button.disabled = !mapMode;
         });
         if (status && hasSelectedTheme) {
           status.textContent = nextPerspective === 'category'
             ? '品类发展视角：保留完整网络，突出选中品类的创新事件与跨品类关系。'
-            : '代表作品视角：显示完整网络，品类透镜只改变强调。';
+            : nextPerspective === 'events'
+              ? '创新事件视角：事件主线居中，作品作为承载证据；完整网络与跨品类关系仍保留。'
+              : '代表作品视角：显示完整网络，品类透镜只改变强调。';
         }
       };
 
       perspectiveButtons.forEach((button) => {
         button.addEventListener('click', () => {
-          syncPerspective(button.dataset.atlasPerspective === 'category' ? 'category' : 'works');
+          const nextPerspective = button.dataset.atlasPerspective;
+          syncPerspective(nextPerspective === 'category' || nextPerspective === 'events' ? nextPerspective : 'works');
         });
       });
 
@@ -1087,7 +1117,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
             element.inert = true;
           });
           networkShell.dataset.mapMode = 'true';
-          networkShell.dataset.atlasRouteMode = activeThemeId !== 'all' && perspectiveMode === 'category' ? 'category' : 'full';
+          networkShell.dataset.atlasRouteMode = perspectiveMode !== 'works' ? perspectiveMode : 'full';
           networkShell.dataset.atlasPerspective = perspectiveMode;
           if (primaryNetwork) {
             primaryNetwork.dataset.atlasRouteMode = networkShell.dataset.atlasRouteMode;

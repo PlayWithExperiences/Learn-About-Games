@@ -4084,6 +4084,31 @@ h2 {
   stroke-width: 3.2;
 }
 
+/* Event history keeps the whole network visible, but gives the chronological
+   event band the visual authority. Works remain readable as evidence below. */
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-game-node] {
+  opacity: 0.5;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-event-node] {
+  z-index: 6;
+  opacity: 1;
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-node][data-atlas-event-node] a {
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 28%, transparent);
+}
+
+[data-atlas-global-network][data-map-mode='true'][data-atlas-route-mode='events']
+  [data-atlas-primary-network] [data-atlas-event-relation][data-relation-role='evolution'] .atlas-network__relation-path {
+  stroke: var(--accent-strong);
+  stroke-width: 3.4;
+}
+
 .atlas-view-controls [data-atlas-map-mode][aria-pressed='true'] {
   border-color: var(--accent-strong);
   background: var(--accent-strong);

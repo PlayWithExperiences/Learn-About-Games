@@ -15,6 +15,7 @@ type AtlasNodeForLayout = {
   startYear: number;
   endYear?: number;
   lane: number;
+  tags?: readonly string[];
 };
 
 type AtlasRelationForLayout = {
@@ -72,7 +73,7 @@ export type AtlasLayout = {
   relations: AtlasPlacedRelation[];
 };
 
-export type AtlasLayoutPerspective = 'works' | 'category';
+export type AtlasLayoutPerspective = 'works' | 'category' | 'events';
 
 export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
   incoming: Relation[];
@@ -477,6 +478,22 @@ export function buildAtlasLayout(
       .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
       .map(({ id }, index) => [id, index + 1]),
   );
+  const eventNodes = nodes
+    .filter(({ kind, tags }) => kind === 'innovation' && (!tags || tags.includes('innovation-event')))
+    .sort((left, right) => left.startYear - right.startYear || left.lane - right.lane || left.id.localeCompare(right.id));
+  const eventLaneById = new Map<string, number>();
+  const eventPlacements: Array<{ lane: number; yearX: number }> = [];
+  for (const node of eventNodes) {
+    let displayLane = 3 + Math.max(0, node.lane);
+    const yearX = projectAtlasYear(node.startYear);
+    while (eventPlacements.some((placed) =>
+      placed.lane === displayLane && Math.abs(placed.yearX - yearX) < 200,
+    )) {
+      displayLane += 1;
+    }
+    eventLaneById.set(node.id, displayLane);
+    eventPlacements.push({ lane: displayLane, yearX });
+  }
 
   const placedNodes = nodes.map((node): AtlasPlacedNode => {
     if (node.kind === 'game' && node.endYear !== undefined) {
@@ -488,17 +505,24 @@ export function buildAtlasLayout(
     const spanEndX = hasRange
       ? projectAtlasYear(rangeEndYear)
       : yearX;
-    const displayLane = perspective === 'category'
-      ? node.kind === 'innovation'
-        ? 6 + node.lane
+    const isEventNode = node.kind === 'innovation' && (!node.tags || node.tags.includes('innovation-event'));
+    const displayLane = perspective === 'events'
+      ? isEventNode
+        ? (eventLaneById.get(node.id) ?? 3)
         : node.kind === 'category'
           ? (categoryLaneById.get(node.id) ?? 1)
-          : Math.max(3, node.lane + 1) + nonInnovationLaneOffset + 6
-      : node.kind === 'innovation'
-        ? node.lane
-        : node.kind === 'category'
-          ? (categoryLaneById.get(node.id) ?? 1)
-          : Math.max(3, node.lane + 1) + nonInnovationLaneOffset;
+          : 10 + node.lane
+      : perspective === 'category'
+        ? node.kind === 'innovation'
+          ? 6 + node.lane
+          : node.kind === 'category'
+            ? (categoryLaneById.get(node.id) ?? 1)
+            : Math.max(3, node.lane + 1) + nonInnovationLaneOffset + 6
+        : node.kind === 'innovation'
+          ? node.lane
+          : node.kind === 'category'
+            ? (categoryLaneById.get(node.id) ?? 1)
+            : Math.max(3, node.lane + 1) + nonInnovationLaneOffset;
     const width = hasRange
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'

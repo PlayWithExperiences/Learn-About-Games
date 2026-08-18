@@ -688,6 +688,45 @@ describe('global Atlas presentation geometry', () => {
     }
   });
 
+  it('keeps Innovation Events in a central primary band with works below as evidence', () => {
+    const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations, { perspective: 'events' });
+    const eventIds = new Set(
+      typedAtlasNodes
+        .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
+        .map(({ id }) => id),
+    );
+    const events = layout.nodes.filter(({ id }) => eventIds.has(id));
+    const works = layout.nodes.filter(({ id }) => !eventIds.has(id) && id !== 'metroidvania-term-category-formation' && id !== 'indie-metroidvania-expansion');
+
+    expect(Math.min(...events.map(({ top }) => top))).toBeGreaterThan(200);
+    expect(Math.min(...works.map(({ top }) => top))).toBeGreaterThan(
+      Math.max(...events.map(({ top, height }) => top + height)),
+    );
+    expect(new Set(layout.nodes.map(({ id }) => id))).toEqual(new Set(typedAtlasNodes.map(({ id }) => id)));
+    expect(new Set(layout.relations.map(({ id }) => id))).toEqual(new Set(typedAtlasRelations.map(({ id }) => id)));
+
+    for (let leftIndex = 0; leftIndex < layout.nodes.length; leftIndex += 1) {
+      const left = layout.nodes[leftIndex];
+      for (let rightIndex = leftIndex + 1; rightIndex < layout.nodes.length; rightIndex += 1) {
+        const right = layout.nodes[rightIndex];
+        const overlaps =
+          left.left < right.left + right.width &&
+          left.left + left.width > right.left &&
+          left.top < right.top + right.height &&
+          left.top + left.height > right.top;
+        expect(overlaps, `${left.id} overlaps in event view with ${right.id}`).toBe(false);
+      }
+    }
+
+    const nodeById = new Map(layout.nodes.map((node) => [node.id, node]));
+    for (const relation of layout.relations) {
+      const from = nodeById.get(relation.fromId);
+      const to = nodeById.get(relation.toId);
+      expect(from && pointOnAtlasNodeBoundary(relation.start, from), `${relation.id} event start`).toBe(true);
+      expect(to && pointOnAtlasNodeBoundary(relation.end, to), `${relation.id} event end`).toBe(true);
+    }
+  });
+
   it('requires the companion coordinate to remain within the contacted node side', () => {
     const node = { left: 120, top: 80, width: 96, height: 86 };
 
