@@ -595,6 +595,20 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                     {node.mechanism && <div><dt>引入方式</dt><dd>{node.mechanism['zh-CN']}</dd></div>}
                   </dl>
                   <p>这个节点记录的是可讨论、可核查的设计事件；游戏是它在时间线上可观察的承载作品。</p>
+                  <h5>演进关系</h5>
+                  {relatedRelations.filter(({ relationRole }) => relationRole === 'evolution').length > 0 ? (
+                    <ul data-atlas-event-evolution-links>
+                      {relatedRelations
+                        .filter(({ relationRole }) => relationRole === 'evolution')
+                        .map((relation) => (
+                          <li>
+                            <a href={`#atlas-relation-detail-${relation.id}`}>
+                              {relationLabels[relation.type]}：{otherEndpoint(relation, node.id)?.name['zh-CN']}
+                            </a>
+                          </li>
+                        ))}
+                    </ul>
+                  ) : <p>当前事件尚未记录前后演进关系。</p>}
                   <h5>承载作品</h5>
                   {carriersFor(node.id).length > 0 ? (
                     <ul>

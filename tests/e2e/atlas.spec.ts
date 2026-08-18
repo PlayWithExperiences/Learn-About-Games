@@ -727,6 +727,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(dialog).toBeVisible();
   await expect(dialog).toContainText('引入方式');
   await expect(dialog).toContainText('承载作品');
+  await expect(dialog.locator('[data-atlas-event-evolution-links]')).toBeVisible();
   await expect(dialog.locator('a[href="#atlas-node-detail-doom"]')).toBeVisible();
   await dialog.getByRole('button', { name: '返回网络' }).click();
   await expect(dialog).toBeHidden();
