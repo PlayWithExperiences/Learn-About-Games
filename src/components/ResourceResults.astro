@@ -6,6 +6,7 @@ import {
   formatMediaType,
   formatPresentationMode,
   formatRegionRestriction,
+  getResourceRelevanceDisplay,
   formatSourceKind,
   formatVersionRelation,
 } from '../lib/resource-display';
@@ -73,6 +74,10 @@ const workCountBySource = new Map(
   <div class="work-item-result-list">
     {resources.map((resource) => {
       const source = sources.find(({ id }) => id === resource.sourceId);
+      const relevanceDisplay = getResourceRelevanceDisplay(
+        resource.summary['zh-CN'],
+        resource.whyRelevant['zh-CN'],
+      );
       const searchText = [
         resource.title['zh-CN'],
         resource.title.en,
@@ -137,7 +142,10 @@ const workCountBySource = new Map(
                   </li>
                 ))}
               </ul>
-              <p class="work-item-result__relevance">{resource.whyRelevant['zh-CN']}</p>
+              <p class="work-item-result__relevance">
+                {relevanceDisplay.label && <strong>{relevanceDisplay.label}：</strong>}
+                {relevanceDisplay.text}
+              </p>
               {resource.externalSignals && resource.externalSignals.length > 0 && (
                 <section class="external-observations" aria-label={`${resource.title['zh-CN']} 的外部观察`}>
                   <h4>外部公开观察</h4>

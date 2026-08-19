@@ -46,10 +46,17 @@ test('server renders each Work Item once in closed topic subtables and links to 
   const response = await request.get('resources/');
   expect(response.status()).toBe(200);
   const html = await response.text();
+  const chineseVersionResourceCount = resources.filter((resource) =>
+    resource.accessVersions.some(({ language }) => language === 'zh-Hans'),
+  ).length;
 
   expect(html.match(/<article[^>]+data-result-kind="work-item"/g) ?? []).toHaveLength(resources.length);
 
   await page.goto('./resources/');
+  await expect(page.getByText(
+    `当前目录以英文资料为主；${chineseVersionResourceCount} / ${resources.length} 个 Work Item 提供中文可消费版本。`,
+    { exact: true },
+  )).toBeVisible();
   await expect(page.locator('[data-resource-group]')).toHaveCount(resourceTopics.length);
   await expect(page.locator('[data-resource-group][open]')).toHaveCount(0);
   await expect(page.locator('[data-resource-group] [data-result-kind="work-item"]')).toHaveCount(resources.length);

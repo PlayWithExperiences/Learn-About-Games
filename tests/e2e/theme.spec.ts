@@ -16,12 +16,12 @@ async function seedTheme(page: import('@playwright/test').Page, value: string | 
   await page.reload();
 }
 
-test('offers a disabled-until-bound System, Light, Dark appearance control', async ({ page }) => {
+test('offers a disabled-until-bound 系统、浅色、深色外观控件', async ({ page }) => {
   await page.goto('./');
 
-  const control = page.getByLabel('Appearance');
+  const control = page.getByLabel('外观');
   await expect(control).toBeEnabled();
-  await expect(control.locator('option')).toHaveText(['System', 'Light', 'Dark']);
+  await expect(control.locator('option')).toHaveText(['系统', '浅色', '深色']);
   expect(await control.locator('option').evaluateAll((options) => options.map((option) => option.getAttribute('value')))).toEqual([
     'system',
     'light',
@@ -45,7 +45,7 @@ test('overrides an opposing system preference and persists after reload', async 
   await seedTheme(page, null);
   await page.emulateMedia({ colorScheme: 'dark' });
 
-  const control = page.getByLabel('Appearance');
+  const control = page.getByLabel('外观');
   await control.selectOption('light');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await expect(page.locator('body')).toHaveCSS('background-color', lightPage);
@@ -66,7 +66,7 @@ test('falls back safely from corrupt storage and reapplies state on pageshow', a
   await seedTheme(page, '{"theme":"dark"}');
   await page.emulateMedia({ colorScheme: 'dark' });
 
-  const control = page.getByLabel('Appearance');
+  const control = page.getByLabel('外观');
   await expect(control).toHaveValue('system');
   await expect(page.locator('html')).not.toHaveAttribute('data-theme');
   await expect(page.locator('body')).toHaveCSS('background-color', darkPage);
@@ -83,7 +83,7 @@ test('keeps the appearance control and all four navigation destinations within 3
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('./');
 
-  await expect(page.getByLabel('Appearance')).toBeInViewport();
+  await expect(page.getByLabel('外观')).toBeInViewport();
   const compactMenu = page.locator('details.site-nav__compact');
   await compactMenu.locator('summary').click();
   await expect(compactMenu.getByRole('link')).toHaveCount(4);
@@ -109,7 +109,7 @@ test('uses readable system colors and an honestly disabled control without JavaS
       await expect(page.getByRole('navigation', { name: '主导航' })).toBeVisible();
       await expect(page.getByRole('link', { name: '成长资源', exact: true })).toBeVisible();
     }
-    await expect(page.getByLabel('Appearance')).toBeDisabled();
+    await expect(page.getByLabel('外观')).toBeDisabled();
     await expect(page.getByText('启用 JavaScript 后可以保存外观偏好。', { exact: true })).toBeVisible();
     await context.close();
   }

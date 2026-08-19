@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
-import { formatMediaType } from '../../lib/resource-display';
+import { formatMediaType, getResourceRelevanceDisplay } from '../../lib/resource-display';
 import { sitePath } from '../../lib/site-path';
 
 export async function getStaticPaths() {
@@ -59,11 +59,18 @@ const resources = catalog.resources.filter((resource) => resource.knowledgeTopic
           <ul class="compact-resource-list">
             {resources.map((resource) => {
               const source = catalog.sources.find(({ id }) => id === resource.sourceId);
+              const relevanceDisplay = getResourceRelevanceDisplay(
+                resource.summary['zh-CN'],
+                resource.whyRelevant['zh-CN'],
+              );
               return (
                 <li data-node-resource-id={resource.id}>
                   <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
                   <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
-                  <p>{resource.whyRelevant['zh-CN']}</p>
+                  <p>
+                    {relevanceDisplay.label && <strong>{relevanceDisplay.label}：</strong>}
+                    {relevanceDisplay.text}
+                  </p>
                 </li>
               );
             })}

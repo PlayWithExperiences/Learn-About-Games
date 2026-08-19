@@ -8,6 +8,7 @@ import {
   formatMediaType,
   formatPresentationMode,
   formatRegionRestriction,
+  getResourceRelevanceDisplay,
   formatSourceKind,
   formatVersionRelation,
 } from '../../src/lib/resource-display';
@@ -61,5 +62,19 @@ describe('resource factual display', () => {
         observedAt: '2026-08-09',
       }),
     ).toBe('Example Index · 公开计数：12,000 · 样本：24 条评论 · 观察于 2026-08-09');
+  });
+
+  it('renders one source description when summary and whyRelevant only differ in whitespace', () => {
+    expect(getResourceRelevanceDisplay('  来源页面描述。  ', '来源页面描述。')).toEqual({
+      text: '来源页面描述。',
+      label: '来自来源页面的描述',
+    });
+  });
+
+  it('keeps the independent whyRelevant text when summary and whyRelevant differ', () => {
+    expect(getResourceRelevanceDisplay('来源页面描述。', '它直接讨论如何把反馈转成设计判断。')).toEqual({
+      text: '它直接讨论如何把反馈转成设计判断。',
+      label: undefined,
+    });
   });
 });

@@ -23,6 +23,9 @@ const {
   lede = '先选主题，再用能力、语言、媒介、访问方式或 Source 缩小范围。',
 } = Astro.props;
 
+const chineseVersionResourceCount = resources.filter((resource) =>
+  resource.accessVersions.some(({ language }) => language === 'zh-Hans'),
+).length;
 ---
 
 <section class="resource-explorer" aria-labelledby="resource-list-title">
@@ -30,6 +33,9 @@ const {
     <p class="plain-label">资源导航</p>
     <h1 id="resource-list-title">{title}</h1>
     <p class="lede">{lede}</p>
+    <p class="resource-language-note">
+      当前目录以英文资料为主；{chineseVersionResourceCount} / {resources.length} 个 Work Item 提供中文可消费版本。
+    </p>
   </header>
 
   <nav class="resource-subnav" aria-label="成长资源入口">

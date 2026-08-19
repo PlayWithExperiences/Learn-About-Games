@@ -1139,7 +1139,7 @@ test('non-matching desktop edges keep neutral direction semantics and 3:1 contra
 
   for (const appearance of ['light', 'dark']) {
     await page.goto('./atlas/');
-    await page.getByLabel('Appearance').selectOption(appearance);
+    await page.getByLabel('外观').selectOption(appearance);
     await openAtlasFamily(page, 'action');
     await visibleThemeButton(page, 'metroidvania').click();
 
@@ -1175,7 +1175,7 @@ test('mobile relation references participate in theme emphasis with readable non
 
   for (const appearance of ['light', 'dark']) {
     await page.goto('./atlas/');
-    await page.getByLabel('Appearance').selectOption(appearance);
+    await page.getByLabel('外观').selectOption(appearance);
     await openAtlasFamily(page, 'action');
     await visibleThemeButton(page, 'metroidvania').click();
     const relationRef = page.locator('[data-atlas-outline-relation-ref="rogue-to-hack"]').first();

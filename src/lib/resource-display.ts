@@ -72,6 +72,23 @@ export function formatPresentationMode(presentationMode: AccessVersion['presenta
   return presentationModeLabels[presentationMode];
 }
 
+export function getResourceRelevanceDisplay(
+  summary: string,
+  whyRelevant: string,
+): Readonly<{ text: string; label: string | undefined }> {
+  if (summary.trim() === whyRelevant.trim()) {
+    return {
+      text: summary.trim(),
+      label: '来自来源页面的描述',
+    };
+  }
+
+  return {
+    text: whyRelevant,
+    label: undefined,
+  };
+}
+
 export function formatAccessVersion(
   version: Pick<AccessVersion, 'language' | 'accessModel' | 'versionRelation' | 'presentationMode' | 'checkedAt'>,
 ) {
