@@ -1313,7 +1313,7 @@ describe('raw product catalog data', () => {
     expect(expansion.filter(({ sourceId }) => sourceId === 'how-to-market-a-game')).toHaveLength(5);
     expect(expansion.filter(({ mediaType }) => mediaType === 'talk')).toHaveLength(20);
     expect(expansion.filter(({ mediaType }) => mediaType === 'article')).toHaveLength(10);
-    expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(30);
+    expect(expansion.flatMap(({ accessVersions }) => accessVersions)).toHaveLength(31);
   });
 
   it('merges known language versions and applies conservative access facts', () => {
@@ -1348,11 +1348,25 @@ describe('raw product catalog data', () => {
     );
     expect(appleLocalizedUi?.accessVersions.map(({ language }) => language)).toEqual(['en']);
 
-    for (const resource of resources.filter(({ canonicalUrl }) =>
-      canonicalUrl.includes('gdcvault.com/play/'),
-    )) {
-      expect(resource.accessVersions.every(({ accessModel }) => accessModel === 'subscription')).toBe(true);
+    const gdcVaultResources = resources.filter(({ canonicalUrl }) => canonicalUrl.includes('gdcvault.com/play/'));
+    for (const resource of gdcVaultResources) {
+      expect(resource.accessVersions.every(({ accessModel, url }) =>
+        url.startsWith('https://www.youtube.com/watch?v=')
+          ? accessModel === 'free'
+          : accessModel === 'subscription',
+      )).toBe(true);
     }
+    const officialGdcYoutubeVersions = gdcVaultResources.flatMap(({ accessVersions }) =>
+      accessVersions.filter(({ url }) => url.startsWith('https://www.youtube.com/watch?v=')),
+    );
+    expect(officialGdcYoutubeVersions).toHaveLength(139);
+    expect(officialGdcYoutubeVersions.every(({ language, accessModel, versionRelation, presentationMode, checkedAt }) =>
+      language === 'en'
+      && accessModel === 'free'
+      && versionRelation === 'official'
+      && presentationMode === 'original'
+      && checkedAt === '2026-08-20',
+    )).toBe(true);
 
     const eaSession = resources.filter(({ canonicalUrl, accessVersions }) =>
       [canonicalUrl, ...accessVersions.map(({ url }) => url)].some((url) =>

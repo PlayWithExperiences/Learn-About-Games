@@ -25,13 +25,19 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 当前正规化 catalog coverage
 
-- Work Item：3120；Source：41；Access Version：3134；Resource Topic：16。
+- Work Item：3120；Source：41；Access Version：3273；Resource Topic：16。
 - 原始语言：en 3065、ja 17、zh-Hans 38。
 - 可消费语言（Work Item 计，可重叠）：en 3066、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 3077、ja 17、zh-Hans 40。
+- Access Version 语言：en 3216、ja 17、zh-Hans 40。
 - 媒介：article 1075、book 29、course 38、paper 34、podcast 11、talk 1835、video 15、website 83。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
+
+### 官方 GDC YouTube 镜像回填（2026-08-20）
+
+- 从官方 [GDC Festival of Gaming](https://www.youtube.com/@GDCFestivalofGaming/videos) 频道一次性取得 1914 条视频 metadata；只做本地标题匹配，不把第三方搬运作为候选。
+- 对 1820 个 GDC Vault Work Item，确定性匹配后追加 139 个 `en` / `free` / `official` / `original` Access Version；模糊命中与多年份歧义候选不入库。实际覆盖为 139 / 1820。
+- 每条镜像的 `checkedAt` 为 2026-08-20；频道清单保存在本机 `/tmp/gdc-channel.jsonl`，不作为站内资源实体。
 
 | 主主题 | Work Item |
 |---|---:|
