@@ -341,3 +341,12 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 资源批次使用 Agent Reach 与官方 Game Developer sitemap／文章页核验；新增 1000 条唯一英文 Work Item，均为可访问的官方文章，保留 canonical URL、单一主要 Resource Topic、能力映射、免费访问模型与 2026-08-16 检查日期。中文既有条目继续保留，未用弱证据凑中文数量。当前目录为 41 Source、3120 Work Item、3134 Access Version、16 Resource Topic。
 - Atlas 增加三枚以“事件”为主语的 RTS 节点：资源与基地生产、直接单位控制、非对称阵营设计；新增五条事件演进／事件—承载作品关系与三条 Evidence。全局网络为 69 nodes、55 relations、76 Evidence；分类视角为事件预留主带，承载作品下移，避免事件与作品重叠。
 - 本批修正了搜索测试对 URL 隐含文本的误判，并同步更新 README、Roadmap、Changelog 的公开规模事实。fresh `npm run check` 为 0/0/0，Vitest 180/180，Astro build 141 pages；Atlas／Resources／Playtest／visible-skeleton 定向 E2E 为 121 passed／21 intentional skipped；完整 E2E 为 252 passed／22 intentional skipped／0 failed。
+
+## 48. 上线前内容补全与呈现修正（2026-08-20）
+
+- 决策：無涘 ｜ 记录：AI。只接入官方 GDC Festival of Gaming YouTube 频道的免费镜像，不接入第三方搬运；对 1820 个 GDC Vault Work Item 做一次性频道清单与本地确定性标题匹配。
+- 频道 dump 为 1914 条视频。原始候选为 exact 128、contains 36、模糊 7、歧义 contains 3；保守接受 exact 128 与 contains 15，因跨 Work Item URL ownership 跳过 4 条，最终追加 139 条 `en` / `free` / `official` / `original` Access Version。目录保持 3120 Work Item，Access Version 从 3134 增至 3273。
+- `whyRelevant` 与 `summary` 相同的 2650 条不再以独立相关性判断呈现，统一显示一次并标注“来自来源页面的描述”；不同的 470 条保持原有相关性文案。逻辑集中在 `src/lib/resource-display.ts`，资源表、知识议题页和能力页共用。
+- 外观控件与三个选项改为“外观／系统／浅色／深色”。资源页动态显示“当前目录以英文资料为主；40 / 3120 个 Work Item 提供中文可消费版本。”
+- 独立 clone fresh gate：Astro check 73 files、0 errors／warnings／hints；Vitest 196/196；静态构建 146 pages。仓库继续 Private，Pages workflow 继续禁用；本轮无 push、无部署。
+- 未决风险：标题无法确定的 1646 条未命中、7 条模糊候选和 3 组多年份歧义仍未回填；上述官方频道清单保存在本机 `/tmp/gdc-channel.jsonl`，不作为仓库文件。

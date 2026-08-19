@@ -522,3 +522,19 @@ Innovation Atlas 本轮只新增一个证据透镜“解谜冒险结构谱系”
 发起人要求再检索 1000 条成长资源并继续补全 Innovation Atlas。主任务从官方 Game Developer 页面导入 1000 条英文文章，按 canonical URL 去重并逐条保留主题、能力、访问模型和检查日期；中文既有资源未被删除或降级。目录达到 41 Source、3120 Work Item、3134 Access Version、16 个资源主题。
 
 Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵营设计”三个 RTS innovation-event 节点，以及事件演进和事件—承载作品关系；作品仍作为证据材料，而不是事件的替代物。当前 Atlas 为 69 nodes、55 relations、76 Evidence。相关单测、构建和双视口定向浏览器测试均通过。本段不记录凭据、环境变量或其他秘密。
+
+## 0111 上线前内容补全与呈现修正（2026-08-20，partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
+
+发起人给出无头运行方案：不提问、不启动浏览器伴侣、不 push；目标是上线前补全官方 GDC YouTube 免费镜像、修正 `whyRelevant` 的诚信呈现、中文化外观控件并客观提示中文资源覆盖。主任务读取项目设计、路线和视觉规范后执行；缺少独立的 ProjectVision/ProjectProgress 文件未擅自补建。
+
+通过 Agent Reach doctor 确认 YouTube backend 原先因缺少 yt-dlp 未启用；在 `/tmp/lag-yt-dlp-env` 隔离环境安装 yt-dlp 2026.07.04，一次性 dump `@GDCFestivalofGaming/videos` 得到 1914 条视频。标题归一化后 raw exact 128、contains 36、fuzzy 7、ambiguous-contains 3；保守复核仅接受 128 exact 与 15 contains。最终追加 139 条官方免费 Access Version，4 条因跨 Work Item URL ownership 跳过；模糊与歧义候选未入库。
+
+`getResourceRelevanceDisplay` 先以单元测试取得缺少 helper 的 RED，再实现为 GREEN；它按中文 `summary` 与 `whyRelevant` 去首尾空白比较。相同项只显示一次并标记“来自来源页面的描述”，不同项继续显示 `whyRelevant`。资源结果、知识议题和能力页均调用同一 helper。Appearance 控件改为“外观／系统／浅色／深色”；资源页从 catalog 动态计算并呈现 40 / 3120 的中文可消费版本覆盖。
+
+首次独立 clone 的 Astro check 通过，但旧 catalog 测试仍假定 Access Version 为 3134、扩展批次只有 30 条，并假定所有 GDC 版本均为 subscription。该失败被保留为可辨认的真实回归，随后仅更新对应数据合同与 research coverage，明确区分 GDC 原页 subscription 和官方 YouTube free 镜像。
+
+最终 fresh clone 验证：Astro check 73 files、0 errors／warnings／hints；Vitest 196/196；Astro build 146 pages。已提交 `299b1ed`（实现）与 `8d8df00`（测试合同与研究记录）；本地 `codex/v02` 继续未 push、未部署。
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
