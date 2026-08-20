@@ -116747,11 +116747,9 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "rules-system-modeling",
-    "leadership-management"
+    "rules-system-modeling"
   ],
   "knowledgeTopicIds": [
-    "organizational-dynamics-power",
     "game-industry-platform-economics"
   ],
   "resourceTopicIds": [
@@ -117752,7 +117750,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -118047,9 +118045,7 @@
   "capabilityIds": [
     "cross-discipline-communication"
   ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "collaboration-teams"
   ],
@@ -118426,7 +118422,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -118524,7 +118520,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -120756,7 +120752,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -120854,7 +120850,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -123003,7 +122999,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -123920,7 +123916,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management",
+    "alignment-facilitation",
     "ethical-cultural-evaluation"
   ],
   "knowledgeTopicIds": [
@@ -124209,9 +124205,7 @@
   "capabilityIds": [
     "cross-discipline-communication"
   ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "collaboration-teams"
   ],
@@ -124764,7 +124758,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management",
+    "alignment-facilitation",
     "ethical-cultural-evaluation"
   ],
   "knowledgeTopicIds": [
@@ -124998,9 +124992,7 @@
   "capabilityIds": [
     "ethical-cultural-evaluation"
   ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "collaboration-teams"
   ],
@@ -125309,7 +125301,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -127132,7 +127124,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "game-industry-platform-economics"
@@ -129018,7 +129010,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -130167,12 +130159,8 @@
     "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “30 Minute Steam Page Makeovers”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "gdc-festival-of-gaming",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -131389,9 +131377,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "design-fundamentals"
   ],
@@ -132977,7 +132963,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "audiovisual-semiotics",
@@ -134100,7 +134086,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "audiovisual-semiotics",
@@ -134426,7 +134412,7 @@
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
     "playtesting",
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -136029,7 +136015,7 @@
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
     "game-feel-tuning",
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "audiovisual-semiotics",
@@ -136128,7 +136114,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -136468,7 +136454,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -136532,7 +136518,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -136923,7 +136909,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -136987,7 +136973,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -137021,9 +137007,7 @@
   "capabilityIds": [
     "cross-discipline-communication"
   ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "narrative-expression"
   ],
@@ -137053,7 +137037,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -138338,7 +138322,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "production-pipelines-constraints",
@@ -139228,7 +139212,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -140325,7 +140309,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "production-pipelines-constraints"
@@ -140358,12 +140342,8 @@
     "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Empathizing with Steam: How People Shop for Your Game”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "gdc-festival-of-gaming",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -141158,7 +141138,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management",
+    "alignment-facilitation",
     "market-reference-analysis"
   ],
   "knowledgeTopicIds": [
@@ -142343,7 +142323,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -142563,7 +142543,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -143343,7 +143323,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -144098,7 +144078,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -144903,7 +144883,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -145161,7 +145141,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -146289,12 +146269,8 @@
     "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Thriving in Steam Early Access: Turning 20XX's Slow Launch into Success”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "gdc-festival-of-gaming",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -149802,7 +149778,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -150114,7 +150090,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -151208,9 +151184,7 @@
   "capabilityIds": [
     "cross-discipline-communication"
   ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "collaboration-teams"
   ],
@@ -154020,7 +153994,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -154054,7 +154028,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -154302,12 +154276,8 @@
     "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Evolving Plague Inc: Taking a Top Mobile Game to Steam”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "gdc-festival-of-gaming",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -154398,12 +154368,8 @@
     "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Let's Be Realistic: A Deep Dive into How Games Are Selling on Steam”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "gdc-festival-of-gaming",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -155940,7 +155906,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -156806,7 +156772,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "audiovisual-semiotics",
@@ -158769,7 +158735,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -160938,7 +160904,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -161286,7 +161252,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -162011,8 +161977,7 @@
     "learning-prototype-design"
   ],
   "knowledgeTopicIds": [
-    "production-pipelines-constraints",
-    "organizational-dynamics-power"
+    "production-pipelines-constraints"
   ],
   "resourceTopicIds": [
     "level-spatial-design"
@@ -162109,7 +162074,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power",
@@ -162397,7 +162362,7 @@
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
     "iteration-planning",
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "production-pipelines-constraints",
@@ -162655,7 +162620,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [],
   "resourceTopicIds": [
@@ -163636,7 +163601,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -165314,7 +165279,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -166710,7 +166675,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -166775,7 +166740,7 @@
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
     "narrative-architecture",
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "narratology-agency-authorship",
@@ -167899,7 +167864,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -169364,7 +169329,7 @@
   },
   "sourceId": "gdc-festival-of-gaming",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "audiovisual-semiotics",
@@ -169747,12 +169712,8 @@
     "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “GDC 2017 Flash Forward: How We Tapped a Non-Game Community to Build Support for Our Release on Steam”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "gdc-festival-of-gaming",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -172819,12 +172780,9 @@
     "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “100 Steam Games that started life during GMTK Game Jam”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "game-makers-toolkit",
-  "capabilityIds": [
-    "leadership-management"
-  ],
+  "capabilityIds": [],
   "knowledgeTopicIds": [
-    "audiovisual-semiotics",
-    "organizational-dynamics-power"
+    "audiovisual-semiotics"
   ],
   "resourceTopicIds": [
     "production-iteration"
@@ -173216,12 +173174,8 @@
     "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “How I got my demo ready for Steam Next Fest”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "game-makers-toolkit",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -173492,12 +173446,8 @@
     "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “What it's like to release a game on Steam”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "game-makers-toolkit",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -173680,12 +173630,8 @@
     "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “Was Steam Next Fest worth it? (Developing 14)”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "game-makers-toolkit",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -173834,12 +173780,8 @@
     "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “Get Mind Over Magnet on Steam!”. The catalog records the channel title and public watch page without making claims about unwatched content."
   },
   "sourceId": "game-makers-toolkit",
-  "capabilityIds": [
-    "leadership-management"
-  ],
-  "knowledgeTopicIds": [
-    "organizational-dynamics-power"
-  ],
+  "capabilityIds": [],
+  "knowledgeTopicIds": [],
   "resourceTopicIds": [
     "production-iteration"
   ],
@@ -180636,7 +180578,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -181034,7 +180976,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -181411,7 +181353,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -181883,7 +181825,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -182357,7 +182299,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -182391,7 +182333,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -182791,7 +182733,7 @@
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
     "rules-system-modeling",
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -183383,7 +183325,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -183823,7 +183765,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -184288,7 +184230,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "audiovisual-semiotics",
@@ -185092,7 +185034,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -185216,7 +185158,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -185500,7 +185442,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -185785,7 +185727,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -186593,7 +186535,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -187461,7 +187403,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -187525,7 +187467,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"
@@ -187773,7 +187715,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "production-pipelines-constraints",
@@ -187993,7 +187935,7 @@
   },
   "sourceId": "masahiro-sakurai-on-creating-games-en",
   "capabilityIds": [
-    "leadership-management"
+    "alignment-facilitation"
   ],
   "knowledgeTopicIds": [
     "organizational-dynamics-power"

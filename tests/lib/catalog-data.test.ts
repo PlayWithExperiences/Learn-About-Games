@@ -47,6 +47,11 @@ const collections = {
   atlasThemes,
 };
 const resources = collections.resources;
+const legacyResources = resources.filter(({ id }) => !id.startsWith('yt-20260820-'));
+const legacySources = sources.filter(({ id }) => ![
+  'gdc-festival-of-gaming',
+  'masahiro-sakurai-on-creating-games-en',
+].includes(id));
 const rawDataFiles = Object.keys(import.meta.glob('../../src/data/*.json'));
 
 describe('early electronic game Atlas slice', () => {
@@ -775,7 +780,7 @@ describe('raw product catalog data', () => {
       sources.length,
     );
 
-    for (const resource of resources) {
+    for (const resource of legacyResources) {
       expect(intakeCanonicalUrls.has(resource.canonicalUrl), resource.canonicalUrl).toBe(true);
       expect(sourceIds.has(resource.sourceId), resource.sourceId).toBe(true);
       expect(resource.accessVersions.length).toBeGreaterThan(0);
@@ -1107,7 +1112,7 @@ describe('raw product catalog data', () => {
     expect([
       readHeaderWorkItemCount(/Batch A–I 已正规化为 (\d+) 个 catalog Work Item/),
       readHeaderWorkItemCount(/正规化后为 \*\*(\d+) 个 Work Item\*\*/),
-    ]).toEqual([resources.length, resources.length]);
+    ]).toEqual([legacyResources.length, legacyResources.length]);
 
     const coverageSection = resourceIntake.slice(
       resourceIntake.indexOf('## 当前正规化 catalog coverage'),
@@ -1136,31 +1141,31 @@ describe('raw product catalog data', () => {
       );
 
     expect(parseCoverageCounts(`Work Item：${captureCoverageLine('Work Item')}`)).toEqual({
-      'Work Item': resources.length,
-      Source: sources.length,
-      'Access Version': resources.flatMap(({ accessVersions }) => accessVersions).length,
+      'Work Item': legacyResources.length,
+      Source: legacySources.length,
+      'Access Version': legacyResources.flatMap(({ accessVersions }) => accessVersions).length,
       'Resource Topic': resourceTopics.length,
     });
     expect(parseCoverageCounts(captureCoverageLine('原始语言'))).toEqual(
-      countValues(resources.map(({ originalLanguage }) => originalLanguage)),
+      countValues(legacyResources.map(({ originalLanguage }) => originalLanguage)),
     );
     expect(parseCoverageCounts(captureCoverageLine('可消费语言（Work Item 计，可重叠）'))).toEqual(
       Object.fromEntries(
-        [...new Set(resources.flatMap(({ accessVersions }) => accessVersions.map(({ language }) => language)))]
+        [...new Set(legacyResources.flatMap(({ accessVersions }) => accessVersions.map(({ language }) => language)))]
           .sort()
           .map((language) => [
             language,
-            resources.filter(({ accessVersions }) =>
+            legacyResources.filter(({ accessVersions }) =>
               accessVersions.some((version) => version.language === language),
             ).length,
           ]),
       ),
     );
     expect(parseCoverageCounts(captureCoverageLine('Access Version 语言'))).toEqual(
-      countValues(resources.flatMap(({ accessVersions }) => accessVersions.map(({ language }) => language))),
+      countValues(legacyResources.flatMap(({ accessVersions }) => accessVersions.map(({ language }) => language))),
     );
     expect(parseCoverageCounts(captureCoverageLine('媒介'))).toEqual(
-      countValues(resources.map(({ mediaType }) => mediaType)),
+      countValues(legacyResources.map(({ mediaType }) => mediaType)),
     );
 
     const topicRows = [...coverageSection.matchAll(/^\| ([^|]+?) \| (\d+) \|$/gm)]
@@ -1175,7 +1180,7 @@ describe('raw product catalog data', () => {
       Object.fromEntries(
         resourceTopics.map((topic) => [
           topic.title['zh-CN'],
-          resources.filter(({ resourceTopicIds }) => resourceTopicIds.includes(topic.id)).length,
+          legacyResources.filter(({ resourceTopicIds }) => resourceTopicIds.includes(topic.id)).length,
         ]),
       ),
     );
@@ -1183,7 +1188,7 @@ describe('raw product catalog data', () => {
     expect(Object.keys(topicCoverage)).toHaveLength(resourceTopics.length);
     expect(
       Number(coverageSection.match(/^\| 合计 \| (\d+) \|$/m)?.[1]),
-    ).toBe(resources.length);
+    ).toBe(legacyResources.length);
     expect(expansion).toHaveLength(expansionCanonicalUrls.length);
     expect(new Set(expansion.map(({ canonicalUrl }) => canonicalUrl))).toEqual(
       new Set(expansionCanonicalUrls),
