@@ -227,10 +227,14 @@ def apply_model_result(item: dict[str, Any], result: dict[str, Any]) -> dict[str
     updated = copy.deepcopy(item)
     updated["summary"] = result["summary"]
     updated["capabilityIds"] = list(result["capabilityIds"])
-    topics = list(result["resourceTopicIds"])
+    # 目录合同要求「每个 Work Item 恰属一个主要资源主题」
+    # （src/lib/catalog/validate.ts 的 RESOURCE_PRIMARY_TOPIC_MULTIPLE）。
+    # 2026-08-21 踩过：施工图误写成「可多个」，导致 36 条违规、构建期校验直接挂。
+    # 模型通常把最贴切的排在首位，故取第一个。
+    topics = list(result["resourceTopicIds"])[:1]
     if not topics:
         old_topics = list(item.get("resourceTopicIds") or [])
-        topics = old_topics or ["design-fundamentals"]
+        topics = old_topics[:1] or ["design-fundamentals"]
     updated["resourceTopicIds"] = topics
     updated.pop("whyRelevant", None)
     if result.get("whyRelevant"):
@@ -355,7 +359,7 @@ def build_prompt(
 
 要求：
 1. summary.zh-CN 必须是 170-205 个中文字符（以字符数计，写完后自行数一遍并删减到范围内）。只写四句，每句约 30-45 个汉字，分别覆盖核心论点、具体例子/方法、设计含义和字幕中的限制或结论；不要复述标题，不要写“这是一个关于……的视频”，不要补写字幕没有的事实。
-2. resourceTopicIds 选择最贴切的一个或多个主题。若没有足够依据，返回空数组；脚本会保留原有保守主题。
+2. resourceTopicIds **只选最贴切的那一个**主题（数组里恰好一个元素）。目录规定每条资料只属一个主题。若没有足够依据，返回空数组；脚本会保留原有保守主题。
 3. capabilityIds 只选择字幕明确支持的能力，没有明确支持就返回空数组，不要凑数。
 4. 只有字幕支持一句有价值的相关性判断时才填 whyRelevant.zh-CN；写不出就省略。它不能与 summary.zh-CN 相同。
 5. 只输出 JSON，不要 Markdown：{{"summary":{{"zh-CN":"..."}},"resourceTopicIds":[],"capabilityIds":[],"whyRelevant":{{"zh-CN":"..."}}}}
