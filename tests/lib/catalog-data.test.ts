@@ -18,7 +18,7 @@ import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
 import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
 import knowledgeTopics from '../../src/data/knowledge-topics.json';
 import resourceTopics from '../../src/data/resource-topics.json';
-import resources from '../../src/data/resources.json';
+import rawResources from '../../src/data/resources.json';
 import roleProfiles from '../../src/data/role-profiles.json';
 import sources from '../../src/data/sources.json';
 import catalogLoadSource from '../../src/lib/catalog/load.ts?raw';
@@ -37,7 +37,7 @@ const collections = {
   capabilityRelations,
   resourceTopics,
   sources,
-  resources,
+  resources: rawResources as Catalog['resources'],
   roleProfiles,
   atlasGenreFamilies,
   atlasTags,
@@ -46,6 +46,7 @@ const collections = {
   atlasRelations,
   atlasThemes,
 };
+const resources = collections.resources;
 const rawDataFiles = Object.keys(import.meta.glob('../../src/data/*.json'));
 
 describe('early electronic game Atlas slice', () => {

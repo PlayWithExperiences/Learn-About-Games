@@ -1,14 +1,16 @@
 import { expect, test } from '@playwright/test';
+import type { Catalog } from '../../src/lib/catalog/validate';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
-import resources from '../../src/data/resources.json' with { type: 'json' };
+import rawResources from '../../src/data/resources.json' with { type: 'json' };
 import sources from '../../src/data/sources.json' with { type: 'json' };
 import { formatLanguage } from '../../src/lib/resource-display';
 
 test.setTimeout(120_000);
 
 const projectBasePath = '/Learn-About-Games/';
+const resources = rawResources as Catalog['resources'];
 
 function matchingResources(target: (typeof resources)[number]) {
   const targetAccessModel = target.accessVersions[0].accessModel;

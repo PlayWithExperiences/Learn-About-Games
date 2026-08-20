@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
+import type { Catalog } from '../../src/lib/catalog/validate';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
-import resources from '../../src/data/resources.json' with { type: 'json' };
+import rawResources from '../../src/data/resources.json' with { type: 'json' };
 import roleProfiles from '../../src/data/role-profiles.json' with { type: 'json' };
 
+const resources = rawResources as Catalog['resources'];
 const progressStorageKey = 'learn-about-games:progress:v1';
 const savedProgress = JSON.stringify({
   version: 1,

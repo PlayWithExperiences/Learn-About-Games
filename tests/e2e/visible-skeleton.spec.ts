@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import type { Catalog } from '../../src/lib/catalog/validate';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
 import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
@@ -7,10 +8,11 @@ import atlasEvidence from '../../src/data/atlas-evidence.json' with { type: 'jso
 import atlasGenreFamilies from '../../src/data/atlas-genre-families.json' with { type: 'json' };
 import atlasNodes from '../../src/data/atlas-nodes.json' with { type: 'json' };
 import atlasRelations from '../../src/data/atlas-relations.json' with { type: 'json' };
-import resources from '../../src/data/resources.json' with { type: 'json' };
+import rawResources from '../../src/data/resources.json' with { type: 'json' };
 import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
 import sources from '../../src/data/sources.json' with { type: 'json' };
 
+const resources = rawResources as Catalog['resources'];
 const accessVersionCount = resources.reduce((total, resource) => total + resource.accessVersions.length, 0);
 
 test('focuses desktop navigation on exactly four Chinese user tasks', async ({ page }, testInfo) => {

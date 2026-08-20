@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
-import resources from '../../src/data/resources.json' with { type: 'json' };
+import type { Catalog } from '../../src/lib/catalog/validate';
+import rawResources from '../../src/data/resources.json' with { type: 'json' };
 
+const resources = rawResources as Catalog['resources'];
 const homeMapDescription = '从 PlayWithExperiences 的 EGDS 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
 const mapDescription = '以 PlayWithExperiences 的 EGDS 作为可讨论、可修订的设计视角，理解设计如何成为结果。';
 const misleadingEgdsClaimPatterns = [
