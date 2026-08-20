@@ -177,7 +177,7 @@ const resources = defineCollection({
       resourceTopicIds: z.array(z.string().trim().min(1)),
       mediaType: z.enum(['article', 'book', 'course', 'paper', 'podcast', 'talk', 'video', 'website']),
       canonicalUrl: httpUrl,
-      whyRelevant: localizedText,
+      whyRelevant: localizedText.optional(),
       originalLanguage: z.string().trim().min(1),
       externalSignals: z.array(externalSignal).optional(),
       accessVersions: z.array(accessVersion).min(1),

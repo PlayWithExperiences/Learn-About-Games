@@ -127,16 +127,18 @@ const complements = catalog.capabilityRelations.filter(
               const source = catalog.sources.find(({ id }) => id === resource.sourceId);
               const relevanceDisplay = getResourceRelevanceDisplay(
                 resource.summary['zh-CN'],
-                resource.whyRelevant['zh-CN'],
+                resource.whyRelevant?.['zh-CN'],
               );
               return (
                 <li data-node-resource-id={resource.id}>
                   <a href={resource.canonicalUrl}><strong>{resource.title['zh-CN']}</strong></a>
                   <span>{source?.name['zh-CN']} · {formatMediaType(resource.mediaType)}</span>
-                  <p>
-                    {relevanceDisplay.label && <strong>{relevanceDisplay.label}：</strong>}
-                    {relevanceDisplay.text}
-                  </p>
+                  {relevanceDisplay.text && (
+                    <p>
+                      {relevanceDisplay.label && <strong>{relevanceDisplay.label}：</strong>}
+                      {relevanceDisplay.text}
+                    </p>
+                  )}
                 </li>
               );
             })}

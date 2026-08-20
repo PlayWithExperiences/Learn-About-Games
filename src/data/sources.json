@@ -618,5 +618,35 @@
     "languages": [
       "en"
     ]
+  },
+  {
+    "id": "gdc-festival-of-gaming",
+    "name": {
+      "zh-CN": "GDC Festival of Gaming",
+      "en": "GDC Festival of Gaming"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "Game Developers Conference 官方 YouTube 频道，公开发布会议演讲与游戏开发相关视频。"
+    },
+    "homepage": "https://www.youtube.com/@GDCFestivalofGaming",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "masahiro-sakurai-on-creating-games-en",
+    "name": {
+      "zh-CN": "Masahiro Sakurai on Creating Games",
+      "en": "Masahiro Sakurai on Creating Games"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "樱井政博以英文公开讲解游戏制作的官方 YouTube 频道。"
+    },
+    "homepage": "https://www.youtube.com/@sora_sakurai_en",
+    "languages": [
+      "en"
+    ]
   }
 ]

@@ -125,7 +125,7 @@ export type Catalog = {
     resourceTopicIds: string[];
     mediaType: 'article' | 'book' | 'course' | 'paper' | 'podcast' | 'talk' | 'video' | 'website';
     canonicalUrl: string;
-    whyRelevant: LocalizedText;
+    whyRelevant?: LocalizedText;
     originalLanguage: string;
     externalSignals?: ExternalSignal[];
     accessVersions: Array<{

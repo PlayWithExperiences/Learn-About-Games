@@ -76,15 +76,15 @@ const workCountBySource = new Map(
       const source = sources.find(({ id }) => id === resource.sourceId);
       const relevanceDisplay = getResourceRelevanceDisplay(
         resource.summary['zh-CN'],
-        resource.whyRelevant['zh-CN'],
+        resource.whyRelevant?.['zh-CN'],
       );
       const searchText = [
         resource.title['zh-CN'],
         resource.title.en,
         resource.summary['zh-CN'],
         resource.summary.en,
-        resource.whyRelevant['zh-CN'],
-        resource.whyRelevant.en,
+        resource.whyRelevant?.['zh-CN'],
+        resource.whyRelevant?.en,
         source?.name['zh-CN'],
         source?.name.en,
       ].filter((value): value is string => Boolean(value)).join(' ');
@@ -142,10 +142,12 @@ const workCountBySource = new Map(
                   </li>
                 ))}
               </ul>
-              <p class="work-item-result__relevance">
-                {relevanceDisplay.label && <strong>{relevanceDisplay.label}：</strong>}
-                {relevanceDisplay.text}
-              </p>
+              {relevanceDisplay.text && (
+                <p class="work-item-result__relevance">
+                  {relevanceDisplay.label && <strong>{relevanceDisplay.label}：</strong>}
+                  {relevanceDisplay.text}
+                </p>
+              )}
               {resource.externalSignals && resource.externalSignals.length > 0 && (
                 <section class="external-observations" aria-label={`${resource.title['zh-CN']} 的外部观察`}>
                   <h4>外部公开观察</h4>

@@ -23,8 +23,8 @@ function resourceSearchText(resource: Resource): string {
     resource.title.en,
     resource.summary['zh-CN'],
     resource.summary.en,
-    resource.whyRelevant['zh-CN'],
-    resource.whyRelevant.en,
+    resource.whyRelevant?.['zh-CN'],
+    resource.whyRelevant?.en,
   ].filter((value): value is string => Boolean(value)).join(' '));
 }
 

@@ -28,7 +28,7 @@ function matchingResources(target: (typeof resources)[number]) {
 
 function searchableText(resource: (typeof resources)[number]) {
   const source = sources.find(({ id }) => id === resource.sourceId);
-  const localized = (value: { 'zh-CN'?: string; en?: string }) => [value['zh-CN'], value.en];
+  const localized = (value?: { 'zh-CN'?: string; en?: string }) => [value?.['zh-CN'], value?.en];
   return [
     ...localized(resource.title),
     ...localized(resource.summary),

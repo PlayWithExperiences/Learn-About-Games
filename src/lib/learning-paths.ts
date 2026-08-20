@@ -310,8 +310,8 @@ function scoreResource(resource: Resource, definition: StageDefinition) {
     resource.title.en,
     resource.summary['zh-CN'],
     resource.summary.en,
-    resource.whyRelevant['zh-CN'],
-    resource.whyRelevant.en,
+    resource.whyRelevant?.['zh-CN'],
+    resource.whyRelevant?.en,
   ].filter(Boolean).join(' ').toLocaleLowerCase();
 
   return (

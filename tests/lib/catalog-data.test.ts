@@ -810,7 +810,9 @@ describe('raw product catalog data', () => {
       expect(resource).not.toHaveProperty('rank');
       expect(resource).not.toHaveProperty('featured');
       expect(resource).toHaveProperty('canonicalUrl');
-      expect(resource).toHaveProperty('whyRelevant');
+      if (resource.whyRelevant) {
+        expect(resource.whyRelevant).toHaveProperty('zh-CN');
+      }
       expect(resource).toHaveProperty('originalLanguage');
       for (const version of resource.accessVersions) {
         expect(version).toHaveProperty('accessModel');
@@ -858,6 +860,20 @@ describe('raw product catalog data', () => {
       ),
     };
     console.info('Resource catalog coverage', coverage);
+  });
+
+  it('contains the complete, conservatively annotated YouTube channel intake', () => {
+    const imported = resources.filter(({ id }) => id.startsWith('yt-20260820-'));
+
+    expect(imported).toHaveLength(2310);
+    expect(imported.filter(({ sourceId }) => sourceId === 'gdc-festival-of-gaming')).toHaveLength(1775);
+    expect(imported.filter(({ sourceId }) => sourceId === 'game-makers-toolkit')).toHaveLength(236);
+    expect(imported.filter(({ sourceId }) => sourceId === 'masahiro-sakurai-on-creating-games-en')).toHaveLength(299);
+    expect(imported.every(({ whyRelevant }) => whyRelevant === undefined)).toBe(true);
+    expect(imported.every(({ summary, title }) => summary['zh-CN'].includes(title['zh-CN']))).toBe(true);
+    expect(imported.every(({ accessVersions }) => accessVersions.length === 1)).toBe(true);
+    expect(imported.every(({ accessVersions }) => accessVersions[0]?.accessModel === 'free')).toBe(true);
+    expect(imported.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
   });
 
   it('adds a bounded evidence-backed resource expansion to low-coverage areas', () => {

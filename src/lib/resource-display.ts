@@ -74,8 +74,15 @@ export function formatPresentationMode(presentationMode: AccessVersion['presenta
 
 export function getResourceRelevanceDisplay(
   summary: string,
-  whyRelevant: string,
-): Readonly<{ text: string; label: string | undefined }> {
+  whyRelevant?: string,
+): Readonly<{ text: string | undefined; label: string | undefined }> {
+  if (!whyRelevant?.trim()) {
+    return {
+      text: undefined,
+      label: undefined,
+    };
+  }
+
   if (summary.trim() === whyRelevant.trim()) {
     return {
       text: summary.trim(),

@@ -77,4 +77,11 @@ describe('resource factual display', () => {
       label: undefined,
     });
   });
+
+  it('does not invent relevance text when no independent basis was recorded', () => {
+    expect(getResourceRelevanceDisplay('只记录标题和来源。', undefined)).toEqual({
+      text: undefined,
+      label: undefined,
+    });
+  });
 });

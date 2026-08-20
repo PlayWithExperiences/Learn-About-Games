@@ -1,7 +1,9 @@
 # Learn About Games v0.2 决策摘要
 
+更新于 2026-08-20 · 记录者 AI
+
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 3120 项资源目录（41 Source／3134 Access Version），尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 5430 项资源目录（43 Source／5583 Access Version），尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -350,3 +352,11 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 外观控件与三个选项改为“外观／系统／浅色／深色”。资源页动态显示“当前目录以英文资料为主；40 / 3120 个 Work Item 提供中文可消费版本。”
 - 独立 clone fresh gate：Astro check 73 files、0 errors／warnings／hints；Vitest 196/196；静态构建 146 pages。仓库继续 Private，Pages workflow 继续禁用；本轮无 push、无部署。
 - 未决风险：标题无法确定的 1646 条未命中、7 条模糊候选和 3 组多年份歧义仍未回填；上述官方频道清单保存在本机 `/tmp/gdc-channel.jsonl`，不作为仓库文件。
+
+## 49. 三个官方 YouTube 频道完整收录（2026-08-20）
+
+- 决策：無涘 ｜ 记录：AI。只接入 GDC Festival of Gaming、Game Maker's Toolkit 与 Masahiro Sakurai on Creating Games 英文频道的官方公开视频；第三方搬运和本轮调研的其他频道不进入 catalog。
+- 三个 `/videos` flat 清单完整取得 1914、237、300 条 unique 视频；streams / playlists 也分别探测并记录。按 video id 跳过既有 139、1、1 条，新增 1775、236、299 条，共 2310 个 Work Item、2310 个 `en` / `free` Access Version；复用 GMTK Source，新建 GDC 与樱井英文 Source。目录达到 43 Source、5430 Work Item、5583 Access Version。
+- 决策：無涘 ｜ 记录：AI。新条目不写没有独立依据的 `whyRelevant`；2310 条中 `whyRelevant` 与 `summary` 相同为 0 条（0%）。标题明确支持的主题为 1129 条，schema 所需的保守 `design-fundamentals` 兜底为 1181 条；不凭标题之外的内容扩写摘要。
+- 公开证据足够的其他频道只列为候选，不擅自导入；候选与订阅数、视频数、代表视频、字幕观察和证据链接见 [YouTube 频道收录与字幕获取记录](../research/2026-08-20-youtube-channel-intake.md)。该记录也说明 flat 输出对全部 2451 条没有提供 `upload_date`，没有伪造或静默截断。
+- 为支持缺少 `whyRelevant` 的诚实呈现，schema、validator、资源过滤与三处资源相关性渲染改为可选字段；已有条目保留原样。字幕正文获取方式只记录 `youtube-transcript-api`，没有在本仓库实现转录管线。

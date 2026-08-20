@@ -538,3 +538,17 @@ Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵�
 最终 fresh clone 验证：Astro check 73 files、0 errors／warnings／hints；Vitest 196/196；Astro build 146 pages。已提交 `299b1ed`（实现）与 `8d8df00`（测试合同与研究记录）；本地 `codex/v02` 继续未 push、未部署。
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
+
+## 2301 三个官方 YouTube 频道完整收录与字幕研究（2026-08-20，partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
+
+发起人要求无人值守完成 PLAN：不提问、不启动浏览器伴侣、不 push；只收录官方 YouTube 上传，不能用标题批量伪造 `whyRelevant`、摘要或精确主题。主任务通过命令行完成三个频道的 flat dump，并额外探测 streams 与 playlists：GDC Festival of Gaming 1914、Game Maker's Toolkit 237、Masahiro Sakurai on Creating Games 英文频道 300，三组视频 id 均无重复；streams 分别为 4、0、0，playlists 分别为 11、27、19。
+
+按既有 YouTube video id 跳过 139、1、1 条，新增 1775、236、299 条，共 2310 个 Work Item 和 2310 个英文免费 Access Version；新建 GDC 与樱井英文 Source，GMTK 复用既有 Source。新条目分别使用 `talk`、`video`、`talk`，不写 `whyRelevant`，只保留标题、官方频道、公开播放页、访问事实和一个主题。标题明确支持主题的 1129 条之外，1181 条使用 schema 所需的保守 `design-fundamentals` 兜底；新条目相关性文案重复率为 0/2310。目录达到 43 Source、5430 Work Item、5583 Access Version。
+
+flat 输出完整提供了 id/title/duration，但三个频道的全部 2451 行都没有 `upload_date`；没有静默截断、猜测日期或把未建模字段塞入摘要。其他候选频道 Adam Millard、Noclip、Extra Credits、Game Dev Guide、Unreal Engine 与 Unity 只进入研究报告，保持“仅提议”。字幕记录写入 `docs/research/2026-08-20-youtube-channel-intake.md`：不使用滚动重复的 auto-VTT，正文取料建议使用 `jdepoix/youtube-transcript-api`；本仓库不实现转录管线。
+
+为允许新条目诚实省略 `whyRelevant`，schema、validator、搜索和资源相关性展示改为可选字段；既有 Work Item 与 Access Version 未改写或删除。当前工作树尚待提交后执行仓库外独立 clone 门禁；本段不把本地嵌套 worktree 的假失败当作产品测试结果。
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
