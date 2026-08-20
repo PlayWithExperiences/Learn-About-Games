@@ -360,3 +360,4 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。新条目不写没有独立依据的 `whyRelevant`；2310 条中 `whyRelevant` 与 `summary` 相同为 0 条（0%）。标题明确支持的主题为 1129 条，schema 所需的保守 `design-fundamentals` 兜底为 1181 条；不凭标题之外的内容扩写摘要。
 - 公开证据足够的其他频道只列为候选，不擅自导入；候选与订阅数、视频数、代表视频、字幕观察和证据链接见 [YouTube 频道收录与字幕获取记录](../research/2026-08-20-youtube-channel-intake.md)。该记录也说明 flat 输出对全部 2451 条没有提供 `upload_date`，没有伪造或静默截断。
 - 为支持缺少 `whyRelevant` 的诚实呈现，schema、validator、资源过滤与三处资源相关性渲染改为可选字段；已有条目保留原样。字幕正文获取方式只记录 `youtube-transcript-api`，没有在本仓库实现转录管线。
+- 最终提交后的仓库外独立 clone 已通过 `npm ci`、Astro check 0 errors／warnings／hints、Vitest 198/198 与静态构建 149 pages；本地嵌套 worktree 的已知 tsconfig 假失败没有被修复或混入产品结论。分支保持 `codex/v02`，未 push、未部署。

@@ -549,6 +549,6 @@ Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵�
 
 flat 输出完整提供了 id/title/duration，但三个频道的全部 2451 行都没有 `upload_date`；没有静默截断、猜测日期或把未建模字段塞入摘要。其他候选频道 Adam Millard、Noclip、Extra Credits、Game Dev Guide、Unreal Engine 与 Unity 只进入研究报告，保持“仅提议”。字幕记录写入 `docs/research/2026-08-20-youtube-channel-intake.md`：不使用滚动重复的 auto-VTT，正文取料建议使用 `jdepoix/youtube-transcript-api`；本仓库不实现转录管线。
 
-为允许新条目诚实省略 `whyRelevant`，schema、validator、搜索和资源相关性展示改为可选字段；既有 Work Item 与 Access Version 未改写或删除。当前工作树尚待提交后执行仓库外独立 clone 门禁；本段不把本地嵌套 worktree 的假失败当作产品测试结果。
+为允许新条目诚实省略 `whyRelevant`，schema、validator、搜索和资源相关性展示改为可选字段；既有 Work Item 与 Access Version 未改写或删除。独立 clone 首次暴露 Devlog 缺少 frontmatter、超大 JSON 直接导入导致测试类型退化为 `any[]`、以及旧 intake 快照和一个错误能力 id；分别以补 frontmatter、在测试边界使用 `Catalog['resources']`、区分历史快照与新批次、移除“Steam”子串误触映射的最小修复解决。最后一次提交后的独立 clone 已通过 `npm ci`、Astro check 0 errors／warnings／hints、Vitest 198/198 与静态构建 149 pages；本地嵌套 worktree 的假失败未被修复或混入产品结论。
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
