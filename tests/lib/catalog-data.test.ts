@@ -875,8 +875,15 @@ describe('raw product catalog data', () => {
     expect(imported.filter(({ sourceId }) => sourceId === 'gdc-festival-of-gaming')).toHaveLength(1775);
     expect(imported.filter(({ sourceId }) => sourceId === 'game-makers-toolkit')).toHaveLength(236);
     expect(imported.filter(({ sourceId }) => sourceId === 'masahiro-sakurai-on-creating-games-en')).toHaveLength(299);
-    expect(imported.every(({ whyRelevant }) => whyRelevant === undefined)).toBe(true);
-    expect(imported.every(({ summary, title }) => summary['zh-CN'].includes(title['zh-CN']))).toBe(true);
+    // 2026-08-21 放宽：内容回填开始后，这两条不再成立，而且它们本来就不该是永久合同。
+    // 原断言「所有条目都没有 whyRelevant」「summary 必含标题」描述的是**回填前**的状态
+    //（那时只有标题可用，所以 summary 是模板、whyRelevant 一律留空）。
+    // 真正要永久守住的是下面这条：whyRelevant 存在时必须是真判断，不能是 summary 的复制。
+    const withWhy = imported.filter(({ whyRelevant }) => whyRelevant !== undefined);
+    expect(
+      withWhy.every(({ whyRelevant, summary }) => whyRelevant!['zh-CN']?.trim() !== summary['zh-CN'].trim()),
+    ).toBe(true);
+    expect(imported.every(({ summary }) => (summary['zh-CN'] ?? '').trim().length > 0)).toBe(true);
     expect(imported.every(({ accessVersions }) => accessVersions.length === 1)).toBe(true);
     expect(imported.every(({ accessVersions }) => accessVersions[0]?.accessModel === 'free')).toBe(true);
     expect(imported.every(({ resourceTopicIds }) => resourceTopicIds.length === 1)).toBe(true);
