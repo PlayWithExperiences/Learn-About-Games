@@ -17,6 +17,14 @@
 #   日志      ~/.cache/lag-video-content/trickle.log
 #   冷却标记  ~/.cache/lag-video-content/cooldown_until
 #   进度      ~/.cache/lag-video-content/state.json
+# ⚠️ 部署位置：launchd 实际执行的是 ~/.cache/lag-video-content/trickle.sh 的副本，不是本文件。
+#    原因是 macOS TCC：launchd 拉起的 /bin/bash 没有 ~/Documents 访问权，
+#    直接指向仓库内路径会得到 "Operation not permitted"（退出码 126，一行日志都写不出来）。
+#    本文件是**唯一真源**，改完必须同步：
+#        cp scripts/trickle-video-content.sh ~/.cache/lag-video-content/trickle.sh
+#    （2026-08-22 实测：移出 Documents 后 launchd 可正常执行。但冷却检查在 cd 进仓库之前，
+#      所以「从 launchd 读仓库数据文件」这一步尚未被真实验证，等首次真跑才知道。）
+
 set -uo pipefail
 
 REPO="$HOME/Documents/GitHub/Learn-About-Games/.worktrees/v02"
