@@ -97,6 +97,13 @@ describe('auditAtlasRoutes', () => {
     expect(result[0].missingCarrierEventIds).toEqual(['event-b']);
   });
 
+  it('reports an evidence gap instead of treating an unreadable evidence set as empty proof', () => {
+    const result = auditAtlasRoutes(fixtureNodes, fixtureRelations, [], ['route']);
+
+    expect(result[0].complete).toBe(false);
+    expect(result[0].missingEvidenceIds).toEqual(['evidence']);
+  });
+
   it('keeps an empty theme distinct from an unreadable audit input', () => {
     expect(auditAtlasRoutes(fixtureNodes, fixtureRelations, ['evidence'], ['missing'])[0])
       .toMatchObject({ themeId: 'missing', complete: false, eventIds: [], chain: [] });
