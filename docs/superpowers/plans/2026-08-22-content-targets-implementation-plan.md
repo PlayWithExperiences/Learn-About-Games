@@ -153,7 +153,7 @@
 - [ ] **Step 4: Run the script and save its output outside the repository.**
 
   ```bash
-  node scripts/audit-content-targets.mjs > /tmp/learn-about-games-content-targets.json
+  node --experimental-strip-types scripts/audit-content-targets.mjs > /tmp/learn-about-games-content-targets.json
   node -e "const r=require('/tmp/learn-about-games-content-targets.json'); console.log(JSON.stringify(r,null,2))"
   ```
 
