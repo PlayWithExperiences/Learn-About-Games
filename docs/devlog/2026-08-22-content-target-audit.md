@@ -6,7 +6,7 @@ title: Devlog 016：成长资源与 Innovation Atlas 目标审计
 
 2026-08-22
 
-本轮没有继续为了“1000 条”盲目扩充目录，而是把数量基准转成可观察合同。当前 `codex/v02` 目录包含 43 个 Source、5437 个 Work Item、5590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence；5437 个 Work Item 的规范化 canonical URL 为 5437 个唯一值。每条资源都有至少一个 Access Version 和一个 Resource Topic，目录没有引入评分、排名、精选或强制学习顺序。
+本轮没有继续为了“1000 条”盲目扩充目录，而是把数量基准转成可观察合同。当前 `codex/v02` 目录包含 44 个 Source、5437 个 Work Item、5590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence；5437 个 Work Item 的规范化 canonical URL 为 5437 个唯一值。每条资源都有至少一个 Access Version 和一个 Resource Topic，目录没有引入评分、排名、精选或强制学习顺序。
 
 新增 `auditAtlasRoutes()` 纯函数与 `scripts/audit-content-targets.mjs` 只读报告。路线完整性要求事件节点、相邻有向演进关系、每个链上事件的承载作品、事件／关系 Evidence 闭包，以及合法的起始／结束事件角色；报告遇到文件读取或 JSON 解析失败时退出非零，不把问不到伪装成空结果。
 
