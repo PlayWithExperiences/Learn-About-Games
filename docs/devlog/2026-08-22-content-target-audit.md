@@ -19,7 +19,7 @@ title: Devlog 016：成长资源与 Innovation Atlas 目标审计
 
 早期电子游戏、冒险、益智冒险没有事件节点；Metroidvania 与 Platform 当前只有单个事件；Roguelike 虽有事件节点，但当前最长候选链没有同时满足合法起始／结束角色。它们保持明确未闭合状态，不因年代相邻、共同标签或名称相似补关系。没有新的来源证据支持本轮修复，因此没有改写 Atlas 数据。
 
-验证结果：独立 clone 的 `npm run check` 为 0 errors／warnings／hints；目标路线、资源契约与 catalog validator 58/58 通过；全量 Vitest 203/203；静态构建生成 150 pages。完整 Playwright 为 255 passed、7 failed、22 skipped。7 项失败集中在既有 Career Lens 交互稳定性、Playtest 大目录浏览器会话，以及 README 统计文案过期；README 的 5430/5583 已同步为真实 5437/5590，前两类未在本轮扩大成 UI 重构，等待单独归因。
+验证结果：独立 clone 的 `npm run check` 为 0 errors／warnings／hints；目标路线、资源契约与 catalog validator 59/59 通过；全量 Vitest 204/204；静态构建生成 151 pages。初轮完整 Playwright 暴露了过期 Source／资源统计文案与两个既有交互稳定性问题；同步 44 Source／5437 Work Item／5590 Access Version 后，最终完整 Playwright 为 262 passed、0 failed、22 skipped。README 的统计漂移已修复，当前没有构建或页面回归。
 
 视频涓流任务本轮按冷却规则执行一次，留下 `SKIP` 日志；当前外部状态为 48 completed、4 no_transcript、44 retryable，累计 channel_failure 42、model_failure 2，剩余 2215 条，冷却至 2026-08-23 00:50。该状态不表示 2311 条字幕补全已完成；字幕与凭据仍不进入仓库。
 

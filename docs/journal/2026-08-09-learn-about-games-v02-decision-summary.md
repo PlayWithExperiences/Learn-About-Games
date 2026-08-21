@@ -367,6 +367,6 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。用户把本轮基准定为至少 1000 条成长资源和至少 3 条完整 Innovation Atlas 路线；审计沿用最新 `codex/v02`，不把旧 `main` 的 128 条目录与 v02 内容线混合。
 - 当前资源为 44 Source／5437 Work Item／5590 Access Version；规范化 canonical URL 5437/5437 唯一，每条 Work Item 至少有一个 Access Version 与一个 Resource Topic。数量被作为容量下限，不作为质量分、排名或学习顺序。
 - 新增 `auditAtlasRoutes()` 与只读 `scripts/audit-content-targets.mjs`。按事件、相邻演进、承载作品、起止事件角色和 Evidence 闭包判定，FPS、RPG、RTS、Open World 四条路线完整；早期电子游戏、冒险、益智冒险为空，Metroidvania／Platform 只有单事件，Roguelike 当前没有合法起止角色链，均保持未闭合，不用时间或标签造边。
-- 独立 clone 验证：Astro check 0/0/0；新增路线／资源／目录合同 58/58；全量 Vitest 203/203；静态构建 150 pages。完整 Playwright 为 255 passed／7 failed／22 skipped；失败集中在既有 Career Lens 交互稳定性、Playtest 大目录浏览器会话和过期 README 统计文案。README 已同步为 5437／5590，Career／Playtest 稳定性留作下一独立切片，不在本轮扩大范围。
+- 独立 clone 验证：Astro check 0/0/0；新增路线／资源／目录合同 59/59；全量 Vitest 204/204；静态构建 151 pages。初轮 Playwright 暴露过期 Source／资源统计文案与交互稳定性问题；同步为 44／5437／5590 后最终完整 Playwright 为 262 passed／0 failed／22 skipped。当前没有构建或页面回归，视频冷却和 Private 发布状态仍按原边界保留。
 - 视频涓流只执行一次，因外部通道冷却留下可观察的 `SKIP`；当前累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条，冷却至 2026-08-23 00:50。未把该状态写成字幕补全完成，字幕与凭据没有进入仓库。
 - 本轮提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。下一步先独立修复职业探索／Playtest 的浏览器稳定性和大目录渲染成本，再决定是否继续视频通道或为未闭合透镜补充一手证据。

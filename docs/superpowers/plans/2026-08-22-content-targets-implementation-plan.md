@@ -265,7 +265,7 @@
 
 - [x] **Step 3: Run the full gate in separate commands.**
 
-  Independent clone: check 0/0/0, full Vitest 203/203, build 150 pages; Playwright 255 passed / 7 failed / 22 skipped. The E2E failures remain explicit and are not converted into a content pass.
+  Independent clone final gate: check 0/0/0, full Vitest 204/204, build 151 pages; Playwright 262 passed / 0 failed / 22 skipped. An earlier run exposed stale Source/resource copy, which was corrected and re-run in the final gate.
 
   ```bash
   npm run check

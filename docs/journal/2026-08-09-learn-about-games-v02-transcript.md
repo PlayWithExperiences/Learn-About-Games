@@ -549,7 +549,7 @@ Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵�
 
 资源报告确认 5437 Work Item、5437 个唯一规范化 canonical URL、5590 Access Version；每条资源至少有 Access Version 和 Resource Topic。README、Roadmap、Changelog、决策摘要与 Devlog 已同步当前事实。视频涓流按既有 24 小时冷却规则执行一次，留下 `SKIP`；外部状态为 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure、剩余 2215 条，未宣称字幕批处理完成。
 
-验证记录：嵌套 worktree 的 Vitest 只触发已知 `astro/tsconfigs/strict` 解析假失败；仓库外独立 clone 的 Astro check 0/0/0、目标合同 58/58、全量 Vitest 203/203、静态构建 150 pages。完整 Playwright 为 255 passed、7 failed、22 skipped；失败集中在既有 Career Lens 交互稳定性、Playtest 大目录会话和过期 README 文案，统计文案已修复，前两类留给下一独立切片。所有提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。
+验证记录：嵌套 worktree 的 Vitest 只触发已知 `astro/tsconfigs/strict` 解析假失败；仓库外独立 clone 的 Astro check 0/0/0、目标合同 59/59、全量 Vitest 204/204、静态构建 151 pages。初轮 Playwright 发现 Source／资源统计文案漂移；同步后最终完整 Playwright 为 262 passed、0 failed、22 skipped。所有提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
 
