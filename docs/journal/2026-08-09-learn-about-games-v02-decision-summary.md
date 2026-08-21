@@ -1,9 +1,9 @@
 # Learn About Games v0.2 决策摘要
 
-更新于 2026-08-20 · 记录者 AI
+更新于 2026-08-22 · 记录者 AI
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 5430 项资源目录（43 Source／5583 Access Version），尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 5437 项资源目录（43 Source／5590 Access Version），并已通过至少三条完整创新路线的闭包审计；尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -361,3 +361,12 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 公开证据足够的其他频道只列为候选，不擅自导入；候选与订阅数、视频数、代表视频、字幕观察和证据链接见 [YouTube 频道收录与字幕获取记录](../research/2026-08-20-youtube-channel-intake.md)。该记录也说明 flat 输出对全部 2451 条没有提供 `upload_date`，没有伪造或静默截断。
 - 为支持缺少 `whyRelevant` 的诚实呈现，schema、validator、资源过滤与三处资源相关性渲染改为可选字段；已有条目保留原样。字幕正文获取方式只记录 `youtube-transcript-api`，没有在本仓库实现转录管线。
 - 最终提交后的仓库外独立 clone 已通过 `npm ci`、Astro check 0 errors／warnings／hints、Vitest 198/198 与静态构建 149 pages；本地嵌套 worktree 的已知 tsconfig 假失败没有被修复或混入产品结论。分支保持 `codex/v02`，未 push、未部署。
+
+## 50. 成长资源与创新路线目标审计（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。用户把本轮基准定为至少 1000 条成长资源和至少 3 条完整 Innovation Atlas 路线；审计沿用最新 `codex/v02`，不把旧 `main` 的 128 条目录与 v02 内容线混合。
+- 当前资源为 43 Source／5437 Work Item／5590 Access Version；规范化 canonical URL 5437/5437 唯一，每条 Work Item 至少有一个 Access Version 与一个 Resource Topic。数量被作为容量下限，不作为质量分、排名或学习顺序。
+- 新增 `auditAtlasRoutes()` 与只读 `scripts/audit-content-targets.mjs`。按事件、相邻演进、承载作品、起止事件角色和 Evidence 闭包判定，FPS、RPG、RTS、Open World 四条路线完整；早期电子游戏、冒险、益智冒险为空，Metroidvania／Platform 只有单事件，Roguelike 当前没有合法起止角色链，均保持未闭合，不用时间或标签造边。
+- 独立 clone 验证：Astro check 0/0/0；新增路线／资源／目录合同 58/58；全量 Vitest 203/203；静态构建 150 pages。完整 Playwright 为 255 passed／7 failed／22 skipped；失败集中在既有 Career Lens 交互稳定性、Playtest 大目录浏览器会话和过期 README 统计文案。README 已同步为 5437／5590，Career／Playtest 稳定性留作下一独立切片，不在本轮扩大范围。
+- 视频涓流只执行一次，因外部通道冷却留下可观察的 `SKIP`；当前累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条，冷却至 2026-08-23 00:50。未把该状态写成字幕补全完成，字幕与凭据没有进入仓库。
+- 本轮提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。下一步先独立修复职业探索／Playtest 的浏览器稳定性和大目录渲染成本，再决定是否继续视频通道或为未闭合透镜补充一手证据。

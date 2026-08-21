@@ -539,6 +539,20 @@ Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵�
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
 
+## 0208 成长资源与创新路线目标审计（2026-08-22，partial export）
+
+记录说明：以下是当前会话的脱敏补记，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
+
+发起人要求继续补全成长资源与创新地图，先选择内容证据线，随后明确授权无人值守执行，并把基准提高为至少 1000 条成长资源和至少 3 条完整创新地图路线。主任务确认最新 `codex/v02` 执行线已有 5437 个 Work Item、84 个 Atlas 节点、86 条关系和 76 项 Evidence，因此没有从旧 `main` 的 128 条目录重复堆量，而是先建立审计合同。
+
+本轮新增 `src/lib/atlas-route-audit.ts`、对应路线闭包测试、资源目标测试和只读 `scripts/audit-content-targets.mjs`。路线判定要求事件节点有合法角色和主题、演进关系相邻且有向、每个链上事件有非事件承载作品、事件／关系 Evidence 可解析；审计输出把空主题、缺载体、证据缺口和读取／解析失败分开。当前报告确认 FPS、RPG、RTS、Open World 四条完整路线；早期电子游戏、冒险、益智冒险为空，Metroidvania／Platform 只有一个事件，Roguelike 当前最长链没有合法起止角色，因此未凭时间或标签补边。
+
+资源报告确认 5437 Work Item、5437 个唯一规范化 canonical URL、5590 Access Version；每条资源至少有 Access Version 和 Resource Topic。README、Roadmap、Changelog、决策摘要与 Devlog 已同步当前事实。视频涓流按既有 24 小时冷却规则执行一次，留下 `SKIP`；外部状态为 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure、剩余 2215 条，未宣称字幕批处理完成。
+
+验证记录：嵌套 worktree 的 Vitest 只触发已知 `astro/tsconfigs/strict` 解析假失败；仓库外独立 clone 的 Astro check 0/0/0、目标合同 58/58、全量 Vitest 203/203、静态构建 150 pages。完整 Playwright 为 255 passed、7 failed、22 skipped；失败集中在既有 Career Lens 交互稳定性、Playtest 大目录会话和过期 README 文案，统计文案已修复，前两类留给下一独立切片。所有提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
+
 ## 2301 三个官方 YouTube 频道完整收录与字幕研究（2026-08-20，partial export）
 
 记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
