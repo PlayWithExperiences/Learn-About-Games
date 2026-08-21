@@ -1,9 +1,9 @@
 # Learn About Games v0.2 — 成长资源证据 Intake
 
 - 研究日期：2026-08-09；扩展核验：2026-08-15
-- 状态：研究证据 notebook；Batch A–I 已正规化为 3120 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘
+- 状态：研究证据 notebook；Batch A–I 已正规化为 3127 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘，Batch L 新增 7 条 Values at Play 研究与课程资料
 - 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项、Batch I 16 项
-- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；正规化后为 **3120 个 Work Item**
+- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；正规化后为 **3127 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
@@ -25,11 +25,11 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 当前正规化 catalog coverage
 
-- Work Item：3120；Source：41；Access Version：3273；Resource Topic：16。
-- 原始语言：en 3065、ja 17、zh-Hans 38。
-- 可消费语言（Work Item 计，可重叠）：en 3066、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 3216、ja 17、zh-Hans 40。
-- 媒介：article 1075、book 29、course 38、paper 34、podcast 11、talk 1835、video 15、website 83。
+- Work Item：3127；Source：42；Access Version：3280；Resource Topic：16。
+- 原始语言：en 3072、ja 17、zh-Hans 38。
+- 可消费语言（Work Item 计，可重叠）：en 3073、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 3223、ja 17、zh-Hans 40。
+- 媒介：article 1076、book 29、course 39、paper 38、podcast 11、talk 1835、video 15、website 84。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
@@ -41,23 +41,23 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 | 主主题 | Work Item |
 |---|---:|
-| 设计基础与概念 | 721 |
+| 设计基础与概念 | 722 |
 | 系统与机制 | 157 |
 | 平衡与经济 | 146 |
 | 手感与反馈 | 480 |
 | 关卡与空间 | 201 |
 | Playtest 主题资源集合 | 44 |
 | 叙事与表达 | 300 |
-| 原型与实验 | 190 |
+| 原型与实验 | 192 |
 | 生产与迭代 | 345 |
 | 协作与团队 | 137 |
 | 领导与创意方向 | 218 |
-| 批判、价值观与历史语境 | 60 |
+| 批判、价值观与历史语境 | 64 |
 | 研究方法与玩家体验 | 74 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 11 |
 | 职业与行业实践 | 29 |
-| 合计 | 3120 |
+| 合计 | 3127 |
 
 ## 接受候选
 
@@ -1450,6 +1450,22 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | K-008<br>canonicalUrl=https://www.gamedeveloper.com/design/stealth-in-2d-design-lessons-from-i-mark-of-the-ninja-i- | Stealth in 2D: Design Lessons from Mark of the Ninja | article / en | 关卡与空间；潜行反馈、可读性与空间引导。 |
 | K-009<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-i-thief-the-dark-project-i- | Postmortem: Thief: The Dark Project | article / en | 叙事与表达；沉浸式空间、声音与玩家行为。 |
 | K-010<br>canonicalUrl=https://www.gamedeveloper.com/design/postmortem-how-empires-of-the-undergrowth-came-together-in-over-7-years-of-early-access | Postmortem: How Empires of the Undergrowth Came Together in Over 7 Years of Early Access | article / en | 生产与迭代；Early Access 节奏、反馈与持续交付。 |
+
+### Batch L — Values at Play（2026-08-22，無涘 指定来源）
+
+来源：https://www.valuesatplay.org/ 。Mary Flanagan 与 Helen Nissenbaum 主持、NSF CNS 0613893 资助的研究项目。全部条目为免费公开 PDF 或页面，逐条 HTTP 核验为 200，摘要基于抓取到的文档正文撰写。
+
+排除：`digra.org:8080` 两篇（HTTP 522 已失效）、NYU *Values in Design*（403）、First Monday 的 Bogost *Playing Politics*（404）；`canjournalgamestudies2009.pdf` 站点标题与 PDF 内页标题冲突，与 L-004 同名，依据不一致故不收。
+
+| 记录 | 标题 | 媒介 / 语言 | 建议主题 |
+| --- | --- | --- | --- |
+| L-001<br>canonicalUrl=https://www.valuesatplay.org/wp-content/uploads/2009/03/flanaganetaldigra.pdf | A Method for Discovering Values in Digital Games | paper / en | 批判、价值观与历史语境 |
+| L-002<br>canonicalUrl=https://www.tiltfactor.org/wp-content/uploads2/cog-tech-si-g4g-article-1-belman-and-flanagan-designing-games-to-foster-empathy.pdf | Designing Games to Foster Empathy | paper / en | 批判、价值观与历史语境 |
+| L-003<br>canonicalUrl=http://www.tiltfactor.org/wp-content/uploads2/Digra2011-GrowAGameTool-BelmanNissenbaumFlanaganDiamond.pdf | Grow-A-Game: A Tool for Values Conscious Design and Analysis of Digital Games | paper / en | 原型与实验 |
+| L-004<br>canonicalUrl=http://journals.sfu.ca/loading/index.php/loading/article/view/60 | Instructional Methods and Curricula for Values Conscious Design | paper / en | 批判、价值观与历史语境 |
+| L-005<br>canonicalUrl=https://www.valuesatplay.org/wp-content/uploads/2007/09/Values-at-Play_Curriculum_2014.pdf | Values at Play: Curriculum & Teaching Guide (4-week version) | course / en | 批判、价值观与历史语境 |
+| L-006<br>canonicalUrl=https://www.valuesatplay.org/wp-content/uploads/2007/09/vapquickref.pdf | The Values at Play Framework: A (Semi-) Quick Reference | article / en | 设计基础与概念 |
+| L-007<br>canonicalUrl=https://www.valuesatplay.org/grow-a-game-overview | Grow-A-Game Cards — Overview | website / en | 原型与实验 |
 
 ## 拒绝与待核证据
 

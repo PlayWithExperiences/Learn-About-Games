@@ -572,8 +572,7 @@
     "languages": [
       "en"
     ]
-  }
-,
+  },
   {
     "id": "game-ai-pro",
     "name": {
@@ -645,6 +644,21 @@
       "zh-CN": "樱井政博以英文公开讲解游戏制作的官方 YouTube 频道。"
     },
     "homepage": "https://www.youtube.com/@sora_sakurai_en",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "values-at-play",
+    "name": {
+      "zh-CN": "Values at Play",
+      "en": "Values at Play"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Mary Flanagan 与 Helen Nissenbaum 主持、美国国家科学基金会资助的研究项目，研究设计师如何有意与无意地把社会、道德与政治价值观嵌入游戏的机制与叙事，并给出可操作的方法、课程与设计工具。论文、课程包与方法卡全部免费公开。"
+    },
+    "homepage": "https://www.valuesatplay.org/",
     "languages": [
       "en"
     ]

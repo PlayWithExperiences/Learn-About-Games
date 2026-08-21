@@ -189629,5 +189629,233 @@
         "checkedAt": "2026-08-20"
       }
     ]
+  },
+  {
+    "id": "vap-method-discovering-values",
+    "title": {
+      "zh-CN": "A Method for Discovering Values in Digital Games",
+      "en": "A Method for Discovering Values in Digital Games"
+    },
+    "summary": {
+      "zh-CN": "Flanagan、Nissenbaum 与 Belman 在 DiGRA 2007「Situated Play」上发表的 9 页论文，提出把「发现价值观」当作一个可执行步骤而非事后反思：从系统的功能定义、设计特征的具体规格、以及设计者未言明的默认假设三处，系统性地把隐含价值观显性化，供后续设计决策讨论。这是 Values at Play 方法论的奠基文本。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "ethical-cultural-evaluation",
+      "experience-framing",
+      "research-question-framing"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.valuesatplay.org/wp-content/uploads/2009/03/flanaganetaldigra.pdf",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.valuesatplay.org/wp-content/uploads/2009/03/flanaganetaldigra.pdf",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
+  },
+  {
+    "id": "vap-designing-games-foster-empathy",
+    "title": {
+      "zh-CN": "Designing Games to Foster Empathy",
+      "en": "Designing Games to Foster Empathy"
+    },
+    "summary": {
+      "zh-CN": "Belman 与 Flanagan 发表于《Cognitive Technology》14(2)（2009）的 11 页论文。作者指出游戏常被当作纯娱乐媒介，但用于促进亲社会目标的兴趣正在增长；文章检视教育与行动主义项目中培养同理心的做法，讨论游戏如何设计才能真正引发同理而非流于说教。关键词为 Video Games、Empathy、Conflict Resolution、Activism。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "player-perspective-taking",
+      "ethical-cultural-evaluation",
+      "emotional-arc-shaping"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "https://www.tiltfactor.org/wp-content/uploads2/cog-tech-si-g4g-article-1-belman-and-flanagan-designing-games-to-foster-empathy.pdf",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.tiltfactor.org/wp-content/uploads2/cog-tech-si-g4g-article-1-belman-and-flanagan-designing-games-to-foster-empathy.pdf",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
+  },
+  {
+    "id": "vap-grow-a-game-tool",
+    "title": {
+      "zh-CN": "Grow-A-Game: A Tool for Values Conscious Design and Analysis of Digital Games",
+      "en": "Grow-A-Game: A Tool for Values Conscious Design and Analysis of Digital Games"
+    },
+    "summary": {
+      "zh-CN": "Belman、Nissenbaum、Flanagan 与 Diamond 在 DiGRA 2011「Think Design Play」上发表的 15 页论文，介绍 Grow-A-Game 这套卡牌工具：参与者抽取「价值观 / 既有游戏 / 动词」等牌面组合，在约束下快速生成以人类价值观为优先的新游戏构想，同时也可反过来用于分析既有游戏承载了什么价值。论文给出工具设计依据与课堂使用情况。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "ethical-cultural-evaluation",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "http://www.tiltfactor.org/wp-content/uploads2/Digra2011-GrowAGameTool-BelmanNissenbaumFlanaganDiamond.pdf",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "http://www.tiltfactor.org/wp-content/uploads2/Digra2011-GrowAGameTool-BelmanNissenbaumFlanaganDiamond.pdf",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
+  },
+  {
+    "id": "vap-instructional-methods-curricula",
+    "title": {
+      "zh-CN": "Instructional Methods and Curricula for Values Conscious Design",
+      "en": "Instructional Methods and Curricula for Values Conscious Design"
+    },
+    "summary": {
+      "zh-CN": "Belman、Flanagan 与 Nissenbaum 发表于《Loading: The Official Journal of the Canadian Games Studies Association》3(4)（2009-12-10）的论文。摘要说明 Values at Play 项目旨在考察社会、道德与政治价值观在数字游戏中的作用，本文聚焦于如何把这套研究转化为可教学的教学法与课程设计。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "ethical-cultural-evaluation",
+      "qualitative-evidence-synthesis"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "paper",
+    "canonicalUrl": "http://journals.sfu.ca/loading/index.php/loading/article/view/60",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "http://journals.sfu.ca/loading/index.php/loading/article/view/60",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
+  },
+  {
+    "id": "vap-curriculum-teaching-guide",
+    "title": {
+      "zh-CN": "Values at Play: Curriculum & Teaching Guide (4-week version)",
+      "en": "Values at Play: Curriculum & Teaching Guide (4-week version)"
+    },
+    "summary": {
+      "zh-CN": "Values at Play 的 39 页课程与教学指南（2014 版，由美国国家科学基金会 CNS 0613893 资助）。面向游戏设计课程，按四周拆成若干节课，覆盖 VAP 方法论的三个环节，目标是让设计师与设计学生把「价值观在设计中扮演什么角色」变成课堂上可讨论、可练习的具体内容，并为价值观自觉的设计者提供资源与社群。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "ethical-cultural-evaluation",
+      "design-critique-feedback"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "criticism-values-history"
+    ],
+    "mediaType": "course",
+    "canonicalUrl": "https://www.valuesatplay.org/wp-content/uploads/2007/09/Values-at-Play_Curriculum_2014.pdf",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.valuesatplay.org/wp-content/uploads/2007/09/Values-at-Play_Curriculum_2014.pdf",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
+  },
+  {
+    "id": "vap-framework-quick-reference",
+    "title": {
+      "zh-CN": "The Values at Play Framework: A (Semi-) Quick Reference",
+      "en": "The Values at Play Framework: A (Semi-) Quick Reference"
+    },
+    "summary": {
+      "zh-CN": "VAP 方法论的 4 页速查手册。把整套方法拆成三个分析上互相独立的活动，其中 Discovery 环节要回答的问题是「哪些价值观与这次设计相关、启发或塑造了它」，产出是一份价值观清单；手册区分了价值观出现的两个位置——系统的功能定义（你在做的到底是什么），以及设计特征的具体规格。适合作为方法论的随手参照。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "ethical-cultural-evaluation",
+      "experience-framing",
+      "design-specification-handoff"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "design-fundamentals"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://www.valuesatplay.org/wp-content/uploads/2007/09/vapquickref.pdf",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.valuesatplay.org/wp-content/uploads/2007/09/vapquickref.pdf",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
+  },
+  {
+    "id": "vap-grow-a-game-overview",
+    "title": {
+      "zh-CN": "Grow-A-Game Cards — Overview",
+      "en": "Grow-A-Game Cards — Overview"
+    },
+    "summary": {
+      "zh-CN": "Grow-A-Game 卡牌的官方说明页。Tiltfactor 把这套源自 Values at Play 的设计方法公开分享，已在 K-12 与大学课堂广泛使用：一组人用卡牌头脑风暴，产出优先考虑人类价值观的新游戏构想；无需游戏设计经验也能参与。页面另列出 Apprentice / Classic / Expert / Digital 等版本入口。"
+    },
+    "sourceId": "values-at-play",
+    "capabilityIds": [
+      "learning-prototype-design",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "prototyping-experimentation"
+    ],
+    "mediaType": "website",
+    "canonicalUrl": "https://www.valuesatplay.org/grow-a-game-overview",
+    "originalLanguage": "en",
+    "accessVersions": [
+      {
+        "language": "en",
+        "url": "https://www.valuesatplay.org/grow-a-game-overview",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-08-22"
+      }
+    ]
   }
 ]

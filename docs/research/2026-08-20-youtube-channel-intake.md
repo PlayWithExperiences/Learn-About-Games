@@ -20,7 +20,7 @@ GDC 的 streams 清单确实返回了 4 行；GMTK 与樱井英文频道的 stre
 
 新增 2310 个 Work Item，各有一个 `en` / `free` / `original` / `original` Access Version，URL 为对应的 `youtube.com/watch?v=`，检查日期为 `2026-08-20`。现有条目与已有 Access Version 没有改写或删除。
 
-合并后精确计数：**43 个 Source、5430 个 Work Item、5583 个 Access Version**（原有 41 / 3120 / 3273，加上本轮 2 / 2310 / 2310）。
+合并后精确计数：**44 个 Source、5437 个 Work Item、5590 个 Access Version**（YouTube 导入前为 41 / 3120 / 3273，本轮导入 2 / 2310 / 2310；2026-08-22 另收录 Values at Play 1 个 Source / 7 个 Work Item / 7 个 Access Version）。
 
 ### 保守标注
 
