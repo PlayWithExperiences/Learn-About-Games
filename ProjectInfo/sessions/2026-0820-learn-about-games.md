@@ -60,34 +60,20 @@
 
 原始对话：dialogues/2026-0822.md「1314 合并后 Playwright 归因」
 
-## 0133 资源补全至5千条与YouTube通道实验
+## 0133 资源达标审计与YouTube只读接入
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-按用户要求将内容补全目标提升至1000条资源和3条完整Atlas创新路线。经审计，.worktrees/v02分支已有5437条资源、84个Atlas节点、86条关系，4条路线（FPS、RPG、RTS、开放世界）满足完整闭环。在独立clone中通过类型检查、单测（204项）和构建（151页），全量E2E出现3个失败，归因为大目录渲染性能问题，非本次改动引入。将codex/v02合并到main并打回滚标签，删除旧worktree。完成YouTube通道实验：官方API无Key时403，公开RSS返回404，yt-dlp与youtube-transcript-api单视频请求成功，证明下载链路可行但批量触发限流。字幕分析链路成立。当前阻塞为YouTube API凭据缺失及资源页渲染性能。下一步需人工配置YouTube API Key或OAuth权限以稳定获取元数据与字幕，并修复资源页性能后公开站点。
+本轮先在 .worktrees/v02 内容线完成达标审计：资源 5,437 条且 canonical URL 唯一，Atlas 4 条完整创新路线（FPS、RPG、RTS、开放世界）满足事件、演化、载体与证据闭包；未闭合透镜继续标记为缺口。独立 clone 验证通过类型检查、204/204 单测、构建及最终 E2E 262 passed/0 failed。同步修正 README、Roadmap、Changelog 中资源数及 Source 数 43→44 等漂移，提交审计与路线闭包脚本/测试（7999fa6）。视频字幕涓流任务仍处冷却，累计 48 completed、44 retryable，剩余 2,215 条。随后用户在 Google Cloud 启用 Agent Platform API，核查明确它不提供 YouTube 数据；组织禁用 API Key，改为用户数据 OAuth+ADC。YouTube Data API v3 已启用，当前确认 youtube.readonly 范围，未保存凭据。下一步创建 Desktop OAuth client、仓库外保存 JSON、执行 gcloud ADC 登录，再只读测试 channels.list/videos.list；Agent Platform 仅保留用于后续分析。
 
 原始对话：dialogues/2026-0822.md
 
-## 1323 YouTube 通道人工配置清单
+## 1404 OAuth/ADC 命令与组织受众错误定位
 
-决策：無涘（待执行人工配置） ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+决策：無涘（待执行 OAuth 受众修复） ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-本次把打通内容通道所需的人工动作收束为最小清单。必做项只有：在 Google Cloud Console 选择或新建项目，启用 YouTube Data API v3，创建 API Key，并至少限制到 YouTube Data API v3；再把值放入本地运行环境的 `YOUTUBE_API_KEY`，只回复“已配置”，不把密钥发到对话、仓库、前端或日志。默认配额先按官方规则使用上传播放列表与 `videos.list`，不申请额外配额，也不使用个人 YouTube 密码或 Cookie。
+用户第一次执行 ADC 命令时只请求 `youtube.readonly`，gcloud 返回 `cloud-platform scope is required but not requested`；这是 ADC 默认要求，不是 YouTube API 失败。补上 `cloud-platform` 后，浏览器实际进入 Google OAuth，但返回 `403 org_internal`。当前 OAuth client 被限制为 Internal，而授权账号不在该 Cloud Organization 的父组织内；项目所有者身份不等于组织成员身份。
 
-OAuth 仅作为可选项：若要读取無涘本人或其有权限管理的视频的官方字幕，需要创建 OAuth 2.0 客户端并在浏览器完成一次授权，凭据与 token 只保存在本机；官方 `captions.list`/`captions.download` 不是任意第三方公开视频字幕的通用下载入口。对于公共第三方频道，AI 继续使用 API 元数据发现、低频公开字幕/自动字幕、描述/章节、创作者提供文本和文章等分层入口；能拿到就做带证据的摘要与能力/主题分析，拿不到就保留来源入口并标明缺失，不伪造分析。文章的公开页面不需要人工凭据，付费或登录内容由無涘自行提供可分析文本或文件，不提供密码和 Cookie。
+正确命令格式为：`gcloud auth application-default login --client-id-file="/本地路径/youtube-oauth-client.json" --scopes="https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/youtube.readonly"`。路径末尾不能有空格，scope 必须是纯 URL，不要包含 Markdown 链接语法。修复 OAuth Audience 为 External、加入当前账号为 Test user 后再重试；未记录 client ID、state、code challenge、token 或 OAuth JSON。
 
-人工动作之外的 API 探针、频道上传列表同步、去重、低频退避、字幕获取、摘要/分析、证据回写、失败留痕和测试均由 AI 处理。当前仍保持仓库私有；公开前另有资源页性能门禁待修复。
-
-原始对话：dialogues/2026-0822.md「1323 YouTube 通道人工配置清单」
-
-## 1336 Agent Platform 与 YouTube OAuth/ADC 分流
-
-决策：無涘（待执行人工配置） ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-無涘在 Google Cloud 新建 `YouTube knowledge` 项目并启用 Agent Platform API，界面提示组织策略禁止 API Key、推荐 ADC。核查官方文档后确认：Agent Platform API 的服务名是 `aiplatform.googleapis.com`，权限范围是 Agent Platform/Gemini 资源；它不会自动获得 YouTube 频道、视频或字幕权限。ADC 是凭据承载方式，不是跨服务授权本身。
-
-因组织策略禁止 API Key，YouTube 入口改为同一项目单独启用 `youtube.googleapis.com`（YouTube Data API v3），创建桌面 OAuth 2.0 客户端，由用户在浏览器授权后用带 YouTube scope 的用户 OAuth/ADC 访问。按官方文档组合推断，`gcloud auth application-default login` 可通过 `--client-id-file` 与显式 scope 承载外部 Google API 的用户授权；下一步必须做一个只读 `channels.list`/`videos.list` 探针验证，不能把 Agent Platform 的默认 `cloud-platform` ADC 直接当成 YouTube 权限。YouTube Data API 不支持 service account 作为 YouTube 用户身份；字幕接口仍受视频权限约束，不能用来解锁任意第三方频道字幕。
-
-人工下一步：在 `YouTube knowledge` 项目中从 API Library 直接找到并启用 YouTube Data API v3；配置 OAuth consent screen 与桌面 OAuth 客户端；将 OAuth JSON 保存在仓库外，并运行一次带 YouTube 只读 scope 的 ADC 登录。AI 负责验证 token、同步公开元数据、继续低频字幕入口和内容分析；Agent Platform 可作为后续摘要模型入口，但不替代 YouTube 内容获取。未写入项目 ID、OAuth JSON、token 或任何秘密。
-
-原始对话：dialogues/2026-0822.md「1336 Agent Platform 与 YouTube OAuth/ADC 分流」
+原始对话：dialogues/2026-0822.md「1404 OAuth/ADC 命令与组织受众错误定位」

@@ -17,6 +17,7 @@
 
 - Career Lens 与统计文案已修正；当前新增的 Playtest 失败不是数据缺失，而是 5437 条资源的初始 DOM／客户端筛选性能瓶颈。公开前需要单独做资源筛选切片，避免用延长 timeout 掩盖页面成本。
 - YouTube 涓流通道仍处于 24 小时冷却：累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条；本轮单视频探测证明 `yt-dlp` 与 `youtube-transcript-api` 均可成功取得一条字幕，但不能把单条成功或冷却状态写成批量补全成功；公开频道 RSS 对 GMTK 返回 404。無涘新建的 `YouTube knowledge` 项目已启用 Agent Platform API，但该服务（`aiplatform.googleapis.com`）只负责 Agent/Gemini 资源与模型调用，不是 YouTube 数据入口。由于组织策略禁止 Agent Platform API Key，新的人工路径改为：在同一项目另外启用 `youtube.googleapis.com`（YouTube Data API v3），创建桌面 OAuth 客户端，并以带 YouTube scope 的用户 OAuth/ADC 进行只读探针；Agent Platform ADC 本身不等于 YouTube 权限。官方 YouTube API 不支持 service account 作为 YouTube 用户身份，任意第三方视频字幕仍不能靠 OAuth 通用解锁。凭据不得进入仓库、前端或对话。
+- OAuth/ADC 第一次命令因未显式包含 ADC 必需的 `cloud-platform` scope 被 gcloud 拦截；补上后进入 Google 授权页，但实际返回 `403 org_internal`。这说明 OAuth 应用 Audience 为 Internal，而当前授权账号不属于该 Cloud Organization 的父组织；不是 YouTube scope 错误。下一步应将 OAuth 应用改为 External、保留 Testing，并把实际登录账号加入 Test users；重试命令需同时包含 `cloud-platform` 与 `youtube.readonly`，scope 用纯 URL，不要带 Markdown 链接或路径尾随空格。
 - 仓库仍为 Private、Pages workflow 仍手动停用；恢复公开需要先修复资源筛选性能，再完成桌面／移动、双主题、无 JS 与线上验收。
 
 ## 阻塞 / 待定
