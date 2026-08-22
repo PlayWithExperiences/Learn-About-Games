@@ -1,0 +1,590 @@
+<meta charset="utf-8">
+<title>主观感受三层对表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --ink:#15171C;
+  --ink-2:#3E4450;
+  --ink-3:#6B7280;
+  --paper:#F6F7F9;
+  --surface:#FFFFFF;
+  --rule:#DFE3E9;
+  --rule-soft:#EDF0F4;
+
+  --layer-a:#B23C0B;   /* 玩家：口语、热 */
+  --layer-b:#0B6B62;   /* 设计者：工坊 */
+  --layer-c:#3B33B8;   /* 学界：制度 */
+  --layer-a-bg:#FBEDE6;
+  --layer-b-bg:#E4F1EF;
+  --layer-c-bg:#EAE9FA;
+
+  --warn:#8A5A00;
+  --warn-bg:#FBF1DC;
+
+  --shadow:0 1px 2px rgba(21,23,28,.04), 0 8px 24px -16px rgba(21,23,28,.18);
+  --mark-fg:#FFFFFF;
+
+  --sans:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader","Noto Serif SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#E8EAEE;
+    --ink-2:#B0B7C3;
+    --ink-3:#828A98;
+    --paper:#0F1116;
+    --surface:#171A21;
+    --rule:#2A2F3A;
+    --rule-soft:#212630;
+
+    --layer-a:#F0916A;
+    --layer-b:#5CC7BA;
+    --layer-c:#9E97F5;
+    --layer-a-bg:#2A1A12;
+    --layer-b-bg:#0F2724;
+    --layer-c-bg:#1C1A33;
+
+    --warn:#E0B457;
+    --warn-bg:#2A2312;
+
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+    --mark-fg:#0F1116;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#E8EAEE;
+  --ink-2:#B0B7C3;
+  --ink-3:#828A98;
+  --paper:#0F1116;
+  --surface:#171A21;
+  --rule:#2A2F3A;
+  --rule-soft:#212630;
+
+  --layer-a:#F0916A;
+  --layer-b:#5CC7BA;
+  --layer-c:#9E97F5;
+  --layer-a-bg:#2A1A12;
+  --layer-b-bg:#0F2724;
+  --layer-c-bg:#1C1A33;
+
+  --warn:#E0B457;
+  --warn-bg:#2A2312;
+
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  --mark-fg:#0F1116;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:400;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px 96px}
+.prose{max-width:68ch}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--rule);
+  padding:56px 0 28px;
+  margin-bottom:40px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+}
+h1{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(30px,4.4vw,46px);
+  line-height:1.15;
+  letter-spacing:-.01em;
+  margin:0;
+  text-wrap:balance;
+}
+.standfirst{
+  font-size:16.5px;
+  color:var(--ink-2);
+  max-width:64ch;
+  margin:0;
+}
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  color:var(--ink-3);
+  padding-top:6px;
+}
+
+/* ---------- sections ---------- */
+section{margin-top:64px}
+h2{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(21px,2.4vw,27px);
+  line-height:1.25;
+  margin:0 0 6px;
+  letter-spacing:-.005em;
+  text-wrap:balance;
+}
+h3{
+  font-size:15px;
+  font-weight:700;
+  margin:0 0 8px;
+  letter-spacing:.005em;
+}
+.sec-note{color:var(--ink-3);font-size:14px;margin:0 0 24px;max-width:68ch}
+p{margin:0 0 14px}
+a{color:inherit;text-underline-offset:2px;text-decoration-color:var(--rule)}
+a:hover{text-decoration-color:currentColor}
+a:focus-visible,button:focus-visible{outline:2px solid var(--layer-c);outline-offset:2px;border-radius:3px}
+
+/* ---------- layer legend ---------- */
+.legend{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin:0 0 22px;
+}
+.lchip{
+  display:inline-flex;align-items:baseline;gap:8px;
+  padding:7px 13px;border-radius:2px;
+  font-size:13px;
+  border:1px solid var(--rule);
+  background:var(--surface);
+}
+.lchip b{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.lchip.a b{color:var(--layer-a)} .lchip.a{background:var(--layer-a-bg);border-color:transparent}
+.lchip.b b{color:var(--layer-b)} .lchip.b{background:var(--layer-b-bg);border-color:transparent}
+.lchip.c b{color:var(--layer-c)} .lchip.c{background:var(--layer-c-bg);border-color:transparent}
+.lchip span{color:var(--ink-2)}
+
+/* ---------- filters ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 16px}
+.fbtn{
+  font-family:var(--sans);font-size:13px;
+  padding:6px 13px;border-radius:2px;cursor:pointer;
+  border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink-2);
+  transition:border-color .12s,color .12s;
+}
+.fbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fbtn .n{font-family:var(--mono);font-size:11px;opacity:.6;margin-left:6px}
+
+/* ---------- matrix ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:13.5px}
+thead th{
+  position:sticky;top:0;z-index:2;
+  background:var(--surface);
+  border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;
+  padding:12px 10px;text-align:center;white-space:nowrap;
+}
+thead th.left{text-align:left;padding-left:18px}
+tbody td{border-bottom:1px solid var(--rule-soft);padding:11px 10px;text-align:center;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--rule-soft)}
+td.term{text-align:left;padding-left:18px;min-width:190px}
+td.term .t{font-weight:500}
+td.term .g{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.03em;margin-top:1px}
+td.note{text-align:left;color:var(--ink-2);font-size:12.5px;line-height:1.55;min-width:270px;max-width:360px}
+
+.mark{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:50%;
+  font-family:var(--mono);font-size:12px;font-weight:500;
+}
+.mark.yes{color:var(--mark-fg);background:var(--m)}
+.mark.near{color:var(--m);background:var(--mbg)}
+.mark.none{color:var(--ink-3);background:transparent}
+.ca{--m:var(--layer-a);--mbg:var(--layer-a-bg)}
+.cb{--m:var(--layer-b);--mbg:var(--layer-b-bg)}
+.cc{--m:var(--layer-c);--mbg:var(--layer-c-bg)}
+.own{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.own.no{color:var(--rule)}
+
+.same{font-family:var(--mono);font-size:11px;letter-spacing:.04em;white-space:nowrap}
+.same.q{color:var(--warn);background:var(--warn-bg);padding:3px 7px;border-radius:2px}
+.same.n{color:var(--ink-3)}
+
+/* ---------- cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{
+  background:var(--surface);border:1px solid var(--rule);
+  padding:20px 20px 18px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:10px;
+}
+.card .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.card ul{margin:0;padding-left:1.05em;font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:7px}
+.card li strong{color:var(--ink);font-weight:500}
+.card .why{font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule-soft);padding-top:11px;margin-top:auto}
+
+/* ---------- split blocks ---------- */
+.splits{display:flex;flex-direction:column;gap:18px}
+.split{background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow)}
+.split-h{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;
+  padding:16px 20px;border-bottom:1px solid var(--rule-soft);
+}
+.split-h .w{font-family:var(--serif);font-size:20px;font-weight:600}
+.split-h .verdict{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--layer-b)}
+.split-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.half{padding:16px 20px 18px}
+.half + .half{border-left:1px solid var(--rule-soft)}
+.half .name{font-size:14px;font-weight:700;margin-bottom:9px}
+.half dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:13px}
+.half dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-3);white-space:nowrap;padding-top:3px}
+.half dd{margin:0;color:var(--ink-2)}
+@media(max-width:720px){.split-body{grid-template-columns:1fr}.half + .half{border-left:0;border-top:1px solid var(--rule-soft)}}
+
+/* ---------- asymmetry ---------- */
+.asym{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);box-shadow:var(--shadow)}
+.asym table{min-width:660px}
+.asym td{text-align:left;padding:12px 16px}
+.asym td.cn{font-weight:500;white-space:nowrap;color:var(--layer-b)}
+.asym td.en{color:var(--ink-2);font-size:13px}
+.asym td.v{white-space:nowrap;font-family:var(--mono);font-size:11px;letter-spacing:.05em}
+.v.no{color:var(--layer-a)} .v.part{color:var(--warn)} .v.q{color:var(--ink-3)}
+.asym th{text-align:left;padding-left:16px}
+
+/* ---------- gaps ---------- */
+.gaps{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);box-shadow:var(--shadow)}
+.gap{background:var(--surface);padding:14px 18px;display:grid;grid-template-columns:220px 1fr;gap:16px;font-size:13.5px}
+.gap .src{font-weight:500}
+.gap .st{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;display:block;margin-top:2px}
+.st.fail{color:var(--layer-a)} .st.limit{color:var(--warn)} .st.ok{color:var(--ink-3)}
+.gap .read{color:var(--ink-2)}
+@media(max-width:640px){.gap{grid-template-columns:1fr;gap:6px}}
+
+/* ---------- callout ---------- */
+.callout{
+  border-left:3px solid var(--warn);
+  background:var(--warn-bg);
+  padding:16px 20px;
+  font-size:14px;
+  color:var(--ink-2);
+}
+.callout strong{color:var(--ink)}
+.verdict-box{
+  border:1px solid var(--rule);background:var(--surface);
+  padding:22px 24px;box-shadow:var(--shadow);
+}
+.verdict-box .lede{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink);margin:0 0 12px;text-wrap:balance}
+.verdict-box p:last-child{margin-bottom:0}
+
+footer{margin-top:80px;padding-top:22px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 20px}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Learn About Games · 语料调研 · 2026-08-22</div>
+  <h1>同一个词，三个人群，说的不是同一件事</h1>
+  <p class="standfirst">把 28 个候选「主观感受」拿到玩家评论、设计者行话、学界构念三层公开语料里各查一遍，看谁支撑得住、谁其实是三个词、谁根本没人提。这不是频率普查，是定向取样与对表——最终选哪些，不在这份报告里。</p>
+  <div class="meta">
+    <span>取样 2026-08-22 CST</span>
+    <span>28 个基线词形</span>
+    <span>执行 Codex（medium）· 审查 Claude</span>
+    <span>链接抽检 21/24 可达</span>
+  </div>
+</header>
+
+<div class="callout">
+  <strong>审查发现的一处缺陷（未修正，看表时请扣除）：</strong>下方「语料高频但没选」一节里，<span style="font-family:var(--mono);font-size:12.5px">爽感</span>（304 万播放）与 <span style="font-family:var(--mono);font-size:12.5px">沉浸感</span>（100 万播放）引用的两条 B 站视频，播放量数字属实，但标题分别是「感谢这游戏，让我知道啥叫从头爽到屁股！」和「沉浸感好像有点太足了」——<strong>这是玩家娱乐向内容，属 A 层，被错标成了 B 层设计者证据</strong>。结论方向不变（它们确实是玩家高频词），但证据类别要降级。
+</div>
+
+<section>
+  <h2>三层对表</h2>
+  <p class="sec-note">
+    <b>●</b> = 本次取样找到直接或稳定邻近证据；<b>◐</b> = 有现象或邻近构念，但词形、对象或粒度不完全相同；<b>—</b> = 本次样本未形成可核验证据，<b>不等于不存在</b>。
+  </p>
+
+  <div class="legend">
+    <span class="lchip a"><b>A</b><span>玩家语言 · Steam / Reddit / TapTap / B站</span></span>
+    <span class="lchip b"><b>B</b><span>设计者语域 · GDC / Game Developer / 中文设计内容</span></span>
+    <span class="lchip c"><b>C</b><span>学界构念 · PLEX / GEQ / PXI / PENS / GameFlow</span></span>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="tablewrap">
+    <table id="matrix">
+      <thead>
+        <tr>
+          <th class="left">候选感受</th>
+          <th>無涘</th>
+          <th>Claude</th>
+          <th>A 玩家</th>
+          <th>B 设计者</th>
+          <th>C 学界</th>
+          <th>三层同名同物</th>
+          <th class="left" style="padding-left:14px">备注</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>三段结论</h2>
+  <p class="sec-note">「三层都有」只表示可以开始拆原因与杠杆，不表示已入选最终清单；「不高频」也不表示应该删除。</p>
+  <div class="cards">
+
+    <div class="card">
+      <div class="k">他选了，但语料不高频</div>
+      <ul>
+        <li><strong>宏观感</strong>（Strategy）— 玩家层零命中，设计/研究材料说的是 strategic decision-making 与可预测的 mental model</li>
+        <li><strong>博弈感</strong>（ACT）— 中文有直接命中但热度低；英文拆成 reads / pattern learning / commitment / counterplay</li>
+        <li><strong>陪伴感</strong>（JRPG 中文词形）— 英文 companionship / camaraderie 叙述清楚，中文精确搭配未被证实</li>
+        <li><strong>世界观</strong>（Open World）— 通常指设定内容而非感受；玩家与设计者说的是 living / breathing world</li>
+      </ul>
+      <div class="why">这些可能正是设计师替玩家说出了尚未被名词化的体验——不高频不等于不真实。</div>
+    </div>
+
+    <div class="card">
+      <div class="k">语料高频，但他没选</div>
+      <ul>
+        <li><strong>爽感</strong> — satisfaction / power fantasy / catharsis / juiciness</li>
+        <li><strong>沉浸感</strong> — 民间上位词，学界又把它拆成多个构念</li>
+        <li><strong>重量感 / weight</strong> — heavy 与 floaty 是玩家解释身体感觉的主力词</li>
+        <li><strong>心流 / flow</strong> — GEQ 与 GameFlow 都纳入体系</li>
+        <li><strong>敬畏 / being moved</strong> — 已有 awe 实验与 eudaimonic 情绪综述</li>
+      </ul>
+      <div class="why">盲区候选，不是增补建议。注意：这几个在抽象度上明显高于打击感一类，可能是层级差而非遗漏。</div>
+    </div>
+
+    <div class="card">
+      <div class="k">三层都有 · 证据足以开工</div>
+      <ul>
+        <li><strong>操控 / 掌控（身体型）</strong> — smooth / responsive / floaty ↔ input & precision ↔ PXI / PENS / GameFlow</li>
+        <li><strong>打击感</strong> — 中文准术语 ↔ impact / weight / hit feedback ↔ Game Feel 邻近结构</li>
+        <li><strong>自由感 / agency</strong> — 玩家的选择诉求 ↔ meaningful action ↔ PXI/PENS Autonomy</li>
+        <li><strong>陪伴 / 关系联结</strong> — 共同旅程叙述 ↔ PLEX Fellowship / PENS Relatedness</li>
+        <li><strong>cozy 体验簇</strong> — warm-blanket 语言 ↔ safety / abundance / softness</li>
+        <li><strong>成长</strong> — satisfying progression ↔ power curve ↔ QF / PXI / PENS</li>
+      </ul>
+      <div class="why">三层都有 ≠ 三层同名同物。多数仍需先做概念切片，否则一个中文「感」会吞掉两套测量对象。</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>同名不同物：三个必须先拆义的词</h2>
+  <p class="sec-note">判据不是字面能否归入同一上位词，而是：体验主体在预测什么、闭环时间尺度多长、失败时玩家抱怨什么、设计杠杆是否相同。这四轴系统性不同，就得拆。</p>
+  <div class="splits">
+
+    <div class="split">
+      <div class="split-h"><span class="w">掌控感</span><span class="verdict">判定 · 拆成两条，共挂上位 Control</span></div>
+      <div class="split-body">
+        <div class="half">
+          <div class="name">身体操控感 <span style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">sensorimotor</span></div>
+          <dl>
+            <dt>掌控对象</dt><dd>自己的角色、速度、跳跃弧线、落点</dd>
+            <dt>闭环尺度</dt><dd>毫秒到秒：按下—运动—修正</dd>
+            <dt>正面词</dt><dd>responsive, precise, smooth</dd>
+            <dt>典型失败</dt><dd>input lag、floaty、rigid、惯性不合预期</dd>
+          </dl>
+        </div>
+        <div class="half">
+          <div class="name">系统掌控感 <span style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">systemic / epistemic</span></div>
+          <dl>
+            <dt>掌控对象</dt><dd>多单位、资源、规则、对手与长期后果</dd>
+            <dt>闭环尺度</dt><dd>秒到多回合：判断—部署—反馈—更新模型</dd>
+            <dt>正面词</dt><dd>predictable, legible, informed</dd>
+            <dt>典型失败</dt><dd>信息不透明、反馈迟滞、规则例外、结果不可解释</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="split-h"><span class="w">真实感</span><span class="verdict">判定 · 拆成两条，共享「预期一致性」父类</span></div>
+      <div class="split-body">
+        <div class="half">
+          <div class="name">物理真实 / 重量可信</div>
+          <dl>
+            <dt>被判断的</dt><dd>车辆质量、抓地、加速、碰撞、驾驶反馈</dd>
+            <dt>核心预期</dt><dd>「车应当这样动、这样重」</dd>
+            <dt>近词</dt><dd>weight, grip, inertia, simulation</dd>
+            <dt>杠杆</dt><dd>物理参数、轮胎模型、动画 / 相机 / 音频反馈</dd>
+          </dl>
+        </div>
+        <div class="half">
+          <div class="name">世界真实 / 自治可信</div>
+          <dl>
+            <dt>被判断的</dt><dd>NPC、生态、社会是否持续自洽，不只围着玩家启动</dd>
+            <dt>核心预期</dt><dd>「世界没有我也会这样活」</dd>
+            <dt>近词</dt><dd>living world, persistence, reactivity, autonomy</dd>
+            <dt>杠杆</dt><dd>AI 日程、系统互作、状态持久、事件独立性</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="split-h"><span class="w">博弈感</span><span class="verdict">判定 · 拆成两条，父类「预测—承诺—反制」</span></div>
+      <div class="split-body">
+        <div class="half">
+          <div class="name">系统博弈 <span style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">对 AI / 模式</span></div>
+          <dl>
+            <dt>读取对象</dt><dd>招式前摇、AI 状态机、资源窗口、关卡脚本</dd>
+            <dt>不确定性</dt><dd>设计好的模式、随机性、执行压力</dd>
+            <dt>学习终点</dt><dd>识别规律并稳定解题，可能趋于「破解」</dd>
+            <dt>邻近词</dt><dd>pattern recognition, punish window, counterplay</dd>
+          </dl>
+        </div>
+        <div class="half">
+          <div class="name">人际博弈 <span style="font-family:var(--mono);font-size:11px;color:var(--ink-3)">对人 / yomi</span></div>
+          <dl>
+            <dt>读取对象</dt><dd>会适应、欺骗、反向预测的另一名玩家</dd>
+            <dt>不确定性</dt><dd>对手意图与双方共同学习</dd>
+            <dt>学习终点</dt><dd>多层 yomi 持续循环，答案随对手更新</dd>
+            <dt>邻近词</dt><dd>reads, mind games, conditioning, adaptation</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>中英不对称</h2>
+  <p class="sec-note">调研自评为「本次最重要的观察」：中文设计语域把一整簇机制压进一个三字词，英文则把它摊成多个维度。对表必须先对<b>所指机制</b>，不能对词典翻译。</p>
+  <div class="asym">
+    <table>
+      <thead><tr><th>中文压缩词</th><th>英文语料的常见展开</th><th style="padding-left:16px">可直译</th></tr></thead>
+      <tbody>
+        <tr><td class="cn">打击感</td><td class="en">impact · hit feedback · hit-stop · weight · punch · enemy reaction</td><td class="v no">否</td></tr>
+        <tr><td class="cn">枪感</td><td class="en">gun feel / gunplay + recoil · kick · snap · accuracy · perceived latency</td><td class="v part">部分</td></tr>
+        <tr><td class="cn">手感</td><td class="en">controls feel · responsiveness · precision · weight · game feel</td><td class="v no">否</td></tr>
+        <tr><td class="cn">爽感</td><td class="en">satisfaction · power fantasy · catharsis · exhilaration · juiciness</td><td class="v no">否</td></tr>
+        <tr><td class="cn">代入感 / 沉浸感</td><td class="en">identification · absorption · presence · immersion</td><td class="v no">否</td></tr>
+        <tr><td class="cn">博弈感</td><td class="en">mind games · yomi · reads · counterplay · pattern learning</td><td class="v no">否</td></tr>
+        <tr><td class="cn">同步感</td><td class="en">in sync · entrainment · sensorimotor synchronization · flow</td><td class="v q">存疑</td></tr>
+        <tr><td class="cn">后果感</td><td class="en">meaningful consequence · agency · reactivity · choice impact</td><td class="v part">部分</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sec-note" style="margin-top:16px">反方向同样不对称：<b>readability</b>、<b>agency</b>、<b>presence</b>、<b>juiciness</b> 在中文没有一个稳定单词能无损对应。</p>
+</section>
+
+<section>
+  <h2>既有轮子：PLEX 与 Quantic Foundry</h2>
+  <p class="sec-note">两个已经存在的同量级框架。PLEX 22 个类目，QF 12 个动机（因子分析，14 万+ 玩家，跨地区结构一致）。</p>
+
+  <div class="verdict-box">
+    <p class="lede">「PLEX 只负责玩家体验到什么，EGDS 才负责设计师要做出什么」——这个说法不成立。</p>
+    <p>PLEX 作者页明确写卡片面向 <i>designers and researchers</i>，用于 communicating、designing、evaluating，并配有 PLEX Design Patterns 与专家启发式评估论文。它早就在服务设计。</p>
+    <p style="margin-top:18px;padding-top:16px;border-top:1px solid var(--rule-soft)"><b>证据支持的真实差异：</b>① <b>粒度</b>——PLEX 用 Sensation / Control / Simulation 这类跨场景复用的宽类别，無涘用打击感、build 成型这类可拿具体作品来比的复合靶子；② <b>语言入口</b>——PLEX 的英文类目无损容纳不了「手感 / 枪感 / 爽感」的压缩语义；③ <b>因果位置</b>——EGDS 承诺每个靶子向下连到客观原因与设计杠杆，<b>但这一条尚未被验证</b>；④ <b>取舍面</b>——PLEX 主动容纳 Cruelty / Eroticism / Submission / Subversion / Suffering，無涘在战斗与操作上的分辨率高得多；⑤ <b>规模不是差异</b>——20 与 22、12 同一数量级，短清单本身不构成新颖性。</p>
+    <p style="margin-top:18px;padding-top:16px;border-top:1px solid var(--rule-soft)"><b>最短回答：</b>最可信的差异化，不是「第一次给体验分类」，也不是「第一次把框架给设计师用」，而是——<b>以中文设计者已经实际在用的、品类特异的复合感觉为靶子，并计划把每个靶子向下连到客观原因和设计杠杆</b>。前半句已有语料支持；后半句仍是待兑现的承诺。PLEX 的正确位置是<b>上位覆盖检查与漏项报警器</b>，不是要被重造的旧轮子。</p>
+  </div>
+</section>
+
+<section>
+  <h2>查不动的地方</h2>
+  <p class="sec-note">「没有」和「问不到」必须用不同的值表示。以下每一条都写明是查询失败、能力缺失，还是确实稀少。</p>
+  <div class="gaps">
+    <div class="gap"><div class="src">B 站评论区正文<span class="st fail">能力受限 / 查询失败</span></div><div class="read">检索后端稳定返回视频标题、链接与播放量，未稳定返回评论正文。本报告的 B 站证据主要是标题与元数据——不等于评论区没有相关词。</div></div>
+    <div class="gap"><div class="src">小黑盒<span class="st fail">站点限定查询零结果</span></div><div class="read"><span style="font-family:var(--mono);font-size:12px">site:xiaoheihe.cn</span> 未返回可核验页面。零结果可能来自索引覆盖或查询式，不据此声称该站没有语料。</div></div>
+    <div class="gap"><div class="src">YouTube 字幕<span class="st limit">工具能力缺失（已可修）</span></div><div class="read">诊断显示 yt-dlp 后端未安装，整条线未跑。<b>复核后更正：yt-dlp 2026.08.19 装在本仓库隔离 venv 里，youtube-transcript-api 也实测可用</b>——这条线可以补跑，不需要新装什么。</div></div>
+    <div class="gap"><div class="src">X 复合查询<span class="st fail">查询语义失败</span></div><div class="read">单词 <span style="font-family:var(--mono);font-size:12px">gamefeel</span> 有效；<span style="font-family:var(--mono);font-size:12px">game feel juice weight readability</span> 大量返回无关内容。是查询式坏了，不是话题不存在。</div></div>
+    <div class="gap"><div class="src">顿悟感（B 站精确搭配）<span class="st ok">查询成功 · 结果极少</span></div><div class="read">只有一个低播放直接命中。本次样本中该<b>词形</b>不高频，不能说玩家没有顿悟体验。<b>补注：</b>心理学里 insight / Aha! experience 有成熟范式（Metcalfe &amp; Wiebe 的 feeling-of-warmth 实验），缺的是游戏语境的应用。</div></div>
+    <div class="gap"><div class="src">陪伴感 JRPG（中文）<span class="st ok">查询成功 · 未见直接命中</span></div><div class="read">英文 Reddit 可见 companionship / camaraderie 叙述。标为「中文未查证」，不是「不存在」——更像跨语言不对称。</div></div>
+    <div class="gap"><div class="src">kama muta + game<span class="st ok">查询成功 · 未找到直接框架</span></div><div class="read">找到一般心理学定义，也找到游戏中的 being moved 文献，但未验证两者被研究者直接等同。记「未查证」。</div></div>
+  </div>
+</section>
+
+<footer>
+  <span>docs/research/subjective-feelings-corpus/</span>
+  <span>README · layer-a · layer-b · layer-c · crosswalk · same-name-different-thing · existing-wheels</span>
+  <span>codex resume 01a0286c-4cce-76a3-b4d9-bfa44a19af4c</span>
+</footer>
+
+</div>
+
+<script>
+const D=[
+ ["枪感","FPS",1,0,"y","y","n","否","玩家与设计者都有「枪感 / gunplay feels」；C 层只有 Game Feel、Sensation、Control 等下位构成，没有单构念。",[]],
+ ["博弈感","ACT · 对系统 / AI",1,0,"n","n","n","存疑","玩家更常说 pattern learning、commitment / counter；中文 B 层直接命中热度低。",["low","split"]],
+ ["打击感","ACT",1,0,"y","y","n","否","中文三字准术语成熟；英文拆成 impact / weight / punch / hit feedback。",["ready"]],
+ ["代入感","ARPG / RPG",1,0,"n","y","y","存疑","C 层区分 immersion、presence、identification；中文「代入」可能指角色认同，也可能泛指沉浸。",[]],
+ ["成长感","ARPG / RPG",1,0,"y","n","y","否","玩家常说 satisfying progression；C 层 Mastery、Competence、Power、Completion 分属不同框架。",["ready"]],
+ ["陪伴感","JRPG",1,0,"y","n","y","否","英文玩家明确说 companionship / camaraderie / surrogate family；中文精确搭配本次未查证。",["ready","low"]],
+ ["操控感","Platformer / 操作类",1,0,"y","y","y","否","A / B 说 responsive / precise / smooth；C 层 Control、Ease of Control 覆盖但量表粒度不同。",["ready"]],
+ ["掌控感","Platformer / 操作类",1,0,"y","y","y","否","此处是身体—输入闭环，不能与策略的系统可预测性合并。",["ready","split"]],
+ ["真实感","Racing / 写实拟真",1,0,"y","y","n","否","玩家把车辆重量、动力、抓地说成 heavy / weighty；C 层 Simulation 仅部分覆盖。",["split"]],
+ ["自由感","Open World",1,0,"n","y","y","否","B / C 常写 agency / autonomy：行动可选且结果可见；玩家也用 freedom，但无可靠词频。",["ready"]],
+ ["世界观","Open World",1,0,"n","n","n","否","通常指内容 / 设定，不天然是主观感受。若指「真实的世界」，应转到下一行。",["low"]],
+ ["「真实的世界」","Open World",1,0,"y","y","n","否","玩家与设计者都强调世界在玩家不在场时仍运转；这与赛车物理真实不同。",["split"]],
+ ["恐怖","Horror · 無涘原注问号",1,0,"y","y","y","存疑","fear 有跨层证据，但「恐怖」同时是类型、总体情绪和多种状态之和。",[]],
+ ["社交感","MMO",1,0,"n","n","y","否","C 层拆成 Fellowship、Community、Relatedness、Social Presence；「社交感」过宽。",[]],
+ ["掌控感","Strategy",1,0,"n","y","y","否","重点是 mental model 的预测 / 解释能力与决策反馈，而非手—角色低延迟。",["split"]],
+ ["宏观感","Strategy",1,0,"x","n","n","存疑","本次没有玩家把策略体验稳定名词化为「宏观感」；B / C 有邻近概念但非同名。",["low"]],
+ ["cozy","慢节奏",1,0,"y","y","y","否","玩家指出 cozy 可含挑战，不等于慢 / 简单；学界视作 safety、softness、comfort 体验簇。",["ready"]],
+ ["舒适感","慢节奏",1,0,"y","n","y","否","PLEX Relaxation 与 cozy 研究支持，但 cozy 的安全、熟悉、丰足比「舒适」更宽。",[]],
+ ["顿悟感","Puzzle",0,1,"y","n","n","否","英文玩家稳定说 aha moment；中文精确词形样本弱。心理学有 insight 范式，游戏语境缺。",[]],
+ ["同步感","音游",0,1,"y","n","y","否","玩家说 in sync / flow；sensorimotor synchronization 与 flow 不是一物。",[]],
+ ["秩序感","模拟建造 / 工厂",0,1,"y","n","n","存疑","玩家用 organized / satisfying；视觉整齐与系统可预测还需拆。",[]],
+ ["滚雪球 / build 成型","Roguelite",0,1,"y","y","y","否","A / B 常说 synergy、power spike、build comes online；「滚雪球」本身是过程结构。",[]],
+ ["读心","格斗 PvP",0,1,"y","y","n","否","B 层有明确 yomi / reads；C 层 Competition / Strategy 邻近但不专测读心。",["split"]],
+ ["表达感","沙盒 / 创造",0,1,"y","y","y","否","A 层 creative expression，PLEX 有 Expression，QF 有 Design / Creativity。",[]],
+ ["匮乏 → 稳定的翻转","生存",0,1,"y","n","n","否","玩家清楚描述危险外界—安全家园反差；完整翻转尚非标准构念。",[]],
+ ["后果感","叙事 / VN",0,1,"y","y","y","否","A / B 常说 meaningful consequence / agency；「后果被看见」需单独保留。",[]],
+ ["在场感","走路模拟 / 氛围探索",0,1,"n","y","y","存疑","C 层 presence / immersion 较成熟；A 层常以 immersed / being there 叙述。",[]],
+ ["孤独","走路模拟 / 氛围探索",0,1,"y","y","n","否","玩家直接且高赞地说 lonely / serene / melancholy；C 层 Negative Affect 过粗，孤独也可非负面。",[]]
+];
+
+const MK={y:['mark yes','●'],n:['mark near','◐'],x:['mark none','—']};
+const CLS=['ca','cb','cc'];
+
+function cell(v,i){const[c,g]=MK[v];return `<td class="${CLS[i]}"><span class="${c}">${g}</span></td>`}
+
+function render(f){
+  document.getElementById('rows').innerHTML=D.filter(r=>f==='all'||r[9].includes(f)).map(r=>`
+    <tr>
+      <td class="term"><span class="t">${r[0]}</span><span class="g">${r[1]}</span></td>
+      <td><span class="own${r[2]?'':' no'}">${r[2]?'●':'·'}</span></td>
+      <td><span class="own${r[3]?'':' no'}">${r[3]?'●':'·'}</span></td>
+      ${cell(r[4],0)}${cell(r[5],1)}${cell(r[6],2)}
+      <td><span class="same ${r[7]==='存疑'?'q':'n'}">${r[7]}</span></td>
+      <td class="note">${r[8]}</td>
+    </tr>`).join('');
+}
+
+const F=[
+  ['all','全部',D.length],
+  ['ready','三层都有 · 可开工',D.filter(r=>r[9].includes('ready')).length],
+  ['low','他选了但不高频',D.filter(r=>r[9].includes('low')).length],
+  ['split','同名不同物 · 须拆',D.filter(r=>r[9].includes('split')).length]
+];
+document.getElementById('filters').innerHTML=F.map(([k,l,n],i)=>
+  `<button class="fbtn" data-f="${k}" aria-pressed="${i===0}">${l}<span class="n">${n}</span></button>`).join('');
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('.fbtn'); if(!b)return;
+  document.querySelectorAll('.fbtn').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  render(b.dataset.f);
+});
+render('all');
+</script>
