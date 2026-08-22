@@ -129,6 +129,12 @@
 
 原始对话：dialogues/2026-0822.md「2038 第十轮描述回写续」
 
+## 2108 第十一轮描述百条回写与页脚误判修正
+
+决策：無涘 ｜ 记录：AI。第十一轮首次 `description-only` 处理 100 条时 99 条成功、1 条因模型将 GDC 频道统一页脚 `visual-arts` 误判为资源主题而失败；核对官方描述确认它不是视频证据，错误结果未写回。新增窄规则仅忽略已观察的 GDC 页脚标签 `visual-arts` 与 `business-management`，其它未知 ID 仍硬失败；回归测试 17/17。第三次定向重试成功，最终 100/100 完成。当前为 1,227 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；完成入口为 1,176 `description`、1 `transcript`、1 `audio`，另有 49 条历史回写。真正未完成 1,084 条，其中 1,037 条尚未分类，47 条已尝试但仍未完成。端到端约 28.1 分钟，下一步跑门禁并提交后继续下一轮。
+
+原始对话：dialogues/2026-0822.md「2108 第十一轮描述回写与页脚误判修正」
+
 ## 0133 资源回填与三条创新路线闭环
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8

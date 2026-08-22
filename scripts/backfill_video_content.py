@@ -59,6 +59,11 @@ DEFAULT_MODELS = [
     "deepseek/deepseek-v3.2",
     "deepseek/deepseek-v4-pro",
 ]
+# GDC's standard channel footer lists broad categories（例如 visual arts and business
+# management）after the actual video description. They are not catalog IDs or
+# evidence for the individual video; ignore only these observed boilerplate
+# labels and preserve the item's existing conservative topic.
+IGNORED_CHANNEL_BOILERPLATE_TOPIC_IDS = {"visual-arts", "business-management"}
 NO_TRANSCRIPT_NAMES = {"TranscriptsDisabled", "NoTranscriptFound"}
 CHANNEL_PATTERNS = re.compile(
     r"(?:\b429\b|\b5(?:00|02|03|04)\b|too many requests|rate.?limit|ip.?blocked|"
@@ -498,10 +503,13 @@ def parse_model_payload(
         unknown = sorted(set(values) - allowed)
         if name == "resourceTopicIds":
             # 模型偶尔把合法 capability ID 放进主题字段。丢弃这类跨字段误放，
-            # 让 apply_model_result 保留原主题；其它未知 ID 仍必须失败并留痕。
-            misplaced_capabilities = set(unknown) & allowed_capabilities
-            if misplaced_capabilities:
-                values = [value for value in values if value not in misplaced_capabilities]
+            # 或把 GDC 统一页脚的栏目名当成主题。两类都让
+            # apply_model_result 保留原主题；其它未知 ID 仍必须失败并留痕。
+            ignored_values = (set(unknown) & allowed_capabilities) | (
+                set(unknown) & IGNORED_CHANNEL_BOILERPLATE_TOPIC_IDS
+            )
+            if ignored_values:
+                values = [value for value in values if value not in ignored_values]
                 unknown = sorted(set(values) - allowed)
         if unknown:
             raise ModelOutputError(f"{name} 含未知 ID：{unknown}")
@@ -778,6 +786,7 @@ def build_text_prompt(
 {json.dumps(capability_catalog, ensure_ascii=False)}
 
 注意：上面两组是不同字段的 ID。`resourceTopicIds` 只能从“可选资源主题”列表选择，`capabilityIds` 只能从“可选能力”列表选择；例如 `aesthetic-direction` 如果出现在能力列表中，也绝不能放进 `resourceTopicIds`。拿不准时请返回空数组，让脚本保留原有主题。
+官方描述可能带有频道统一页脚或宣传文案（例如 GDC 列举 visual arts、business management 等栏目）；这些不是本视频的内容证据，也不是可选主题，必须忽略。
 
 要求：
 1. summary.zh-CN 必须是 180-205 个中文字符（以字符数计，写完后自行数一遍）。只写四句，每句约 45-50 个汉字，分别覆盖核心论点、具体例子/方法、设计含义和证据文本中的限制或结论；不要复述标题，不要写“这是一个关于……的视频”，不要补写证据文本没有的事实。少于 180 个字符的结果视为失败。

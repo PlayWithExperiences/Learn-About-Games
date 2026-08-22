@@ -85,6 +85,7 @@ The next point
         )
         self.assertIn("aesthetic-direction", prompt)
         self.assertIn("绝不能放进 `resourceTopicIds`", prompt)
+        self.assertIn("频道统一页脚", prompt)
 
     def test_audio_prompt_keeps_audio_as_the_only_evidence(self):
         prompt = build_audio_prompt(
@@ -206,6 +207,19 @@ The next point
         )
         self.assertEqual(result["resourceTopicIds"], [])
         self.assertEqual(result["capabilityIds"], ["aesthetic-direction"])
+
+    def test_drops_observed_gdc_boilerplate_topic_id(self):
+        summary = "摘要内容" * 50
+        result = parse_model_payload(
+            {
+                "summary": {"zh-CN": summary},
+                "resourceTopicIds": ["visual-arts"],
+                "capabilityIds": [],
+            },
+            {"systems-mechanics"},
+            set(),
+        )
+        self.assertEqual(result["resourceTopicIds"], [])
 
     def test_replaces_fallback_topic_and_drops_duplicate_why_relevant(self):
         summary = "摘要内容" * 50

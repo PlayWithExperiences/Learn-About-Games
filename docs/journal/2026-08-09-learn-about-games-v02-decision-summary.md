@@ -464,3 +464,10 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。第十轮 `description-only` 100/100 完成，未请求字幕、未下载音频，也未增加模型或通道失败；运行约 17.6 分钟。
 - 决策：無涘 ｜ 记录：AI。当前状态为 1,127 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 0。完成入口为 1,076 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 1,184 条，其中 1,137 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。若 1,137 条尚未分类条目都能走合格描述路线，按每 4 小时最多 20 条理论约 9–10 天；字幕/音频失败条目仍需独立处理。
+
+## 66. 官方描述第十一轮与 GDC 页脚误判修正（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。第十一轮初次 100 条中 99 条成功、1 条因模型把 GDC 频道统一页脚的 `visual-arts` 当成主题而失败；核对该视频官方描述后确认它不是视频证据，错误结果未写回。
+- 决策：無涘 ｜ 记录：AI。新增窄白名单外标签忽略规则，仅处理已观察的 GDC 通用页脚 `visual-arts`／`business-management`，其它未知主题仍失败。新增合同测试后为 17/17；第三次定向重试成功，最终本轮 100/100，model failure 0。
+- 决策：無涘 ｜ 记录：AI。当前状态为 1,227 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure；完成入口为 1,176 description、1 transcript、1 audio，另有 49 条历史回写。真正未完成 1,084 条，其中 1,037 条尚未分类，47 条已尝试但仍未完成。
+- 时间估算：AI 推断。含两次失败重试、证据核对和修复后的最终收尾约 28.1 分钟；若 1,037 条尚未分类条目都能走合格描述路线，按每 4 小时最多 20 条理论约 8–9 天。
