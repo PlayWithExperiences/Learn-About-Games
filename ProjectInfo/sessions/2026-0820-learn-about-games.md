@@ -51,3 +51,11 @@
 本场围绕成长资源与创新地图补全。确认以 .worktrees/v02 执行线为基线：已有成长资源 5,437 条（规范 URL 唯一 5,437）、Access Version 5,590 条、44 个来源、16 个资源主题；Atlas 路线审计得到 FPS、RPG、RTS、开放世界 4 条完整证据路线，超过 3 条目标。新增 atlas-route-audit.ts 与 audit-content-targets.mjs，并修复 README/Roadmap 等统计漂移（Source 43→44）。独立 clone 验证：类型检查通过、单测 204/204、构建 151 页、E2E 262 通过、22 跳过、0 失败。视频字幕任务因冷却未完成，保留 SKIP/retryable 状态。用户询问合并与公开，AI 未执行合并；本地验证 main 与 codex/v02 合并无冲突，建议先提交 main 未提交的 Director 留痕再 --no-ff 合并，公开前完成线上 smoke test。风险：YouTube 自动抓取受 IP 限流与条款/开发者政策限制，不应依赖个人账号 Cookie。下一步改为优先对文章、论文、官方文档做证据摘要与分析，YouTube 先做元数据，仅有创作者文本时才做深度摘要。
 
 原始对话：dialogues/2026-0822.md
+
+## 1252 合并与 YouTube 内容通道探测
+
+决策：無涘 ｜ 记录：AI。按用户后续指示，先提交 main 的 Director 留痕，再以非 fast-forward 方式合并 `codex/v02`。合并提交为 `cdca3be`，随后把涓流脚本从旧 `.worktrees/v02` 切到主工作树并提交 `8c1b67f`；本地回滚锚点为 `v0.2-content-baseline`。确认 v02 worktree 干净且已被 main 吸收后，移除本地 `codex/v02` 分支和 worktree，远端分支未改。
+
+通道探测结果：官方 Data API 无凭据请求返回 403，需要 API Key 或其他 consumer identity；未在环境中发现 YouTube API key。GMTK 频道页可读，但公开 RSS endpoint 返回 404。隔离安装的 `yt-dlp 2026.08.19` 对单条 GMTK 视频成功发现英文／简体中文字幕并取得英文 VTT；项目原有 `youtube-transcript-api` 对同一视频单请求也成功。字幕与凭据仍在仓库外，未改写大目录；现有 Work Item `a-022-why-does-celeste-feel-so-good-to-play` 的摘要与字幕抽样一致。涓流冷却没有被强制清除，实际副本已切换到 main。
+
+原始对话：dialogues/2026-0822.md「1252 合并与 YouTube 内容通道探测」

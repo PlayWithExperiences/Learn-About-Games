@@ -539,6 +539,18 @@ Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵�
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
 
+## 1252 合并与 YouTube 内容通道探测（partial export）
+
+记录说明：以下是当前会话的脱敏补记，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量、字幕全文或其他秘密。
+
+发起人明确要求先合并 v02，并按“能拿到就分析，拿不到就保留入口”的原则继续尝试 YouTube 内容通道。主任务先提交 main 的 Director 留痕，随后以非 fast-forward 方式把 `codex/v02` 合并进 `main`，创建 `v0.2-content-baseline` 本地 tag；确认旧 worktree 干净且已被 main 吸收后，删除本地 `codex/v02` 分支和 worktree，远端分支保持不变。涓流脚本也从旧 v02 worktree 切换至 main。
+
+通道探测区分了不同失败类型：官方 Data API 无凭据请求返回 HTTP 403，需要 API Key 或其他 consumer identity；当前环境没有 `YOUTUBE_API_KEY`。GMTK 频道页可读，但公开 RSS endpoint 返回 404。隔离环境中的 `yt-dlp 2026.08.19` 对 GMTK 视频 `yorTG9at90g` 成功发现英文／简体中文字幕并取得英文 VTT；项目已有的 `youtube-transcript-api` 对同一视频单请求也成功。现有 Work Item `a-022-why-does-celeste-feel-so-good-to-play` 的摘要与字幕抽样一致，证明“拿到文字后做摘要和分析”的最小链路成立。
+
+冷却没有被强制清除，批量队列继续按低频与退避规则运行；字幕正文、临时缓存和凭据均未进入仓库。详细研究记录见 [YouTube 内容通道探测](../research/2026-08-22-youtube-content-channel-probe.md)。
+
+原始对话：dialogues/2026-0822.md「1252 合并与 YouTube 内容通道探测」
+
 ## 0208 成长资源与创新路线目标审计（2026-08-22，partial export）
 
 记录说明：以下是当前会话的脱敏补记，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。

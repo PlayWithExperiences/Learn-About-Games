@@ -3,7 +3,7 @@
 更新于 2026-08-22 · 记录者 AI
 
 - 日期：2026-08-09
-- 状态：仓库保持 Private、Pages 保持禁用；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 5437 项资源目录（44 Source／5590 Access Version），并已通过至少三条完整创新路线的闭包审计；尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
+- 状态：仓库保持 Private、Pages 保持禁用；`codex/v02` 已合并进 `main`（merge `cdca3be`），本地 tag `v0.2-content-baseline` 保留回滚锚点；当前本地候选包含可逆展开的左→右 EGDS 层级、10 个 Atlas Genre Family／8 条可直接选择的证据谱系与 5437 项资源目录（44 Source／5590 Access Version），并已通过至少三条完整创新路线的闭包审计；尚未推送或部署；本机以 `/Learn-About-Games/` 子路径预览
 - 历史 v0.2 URL：https://playwithexperiences.github.io/Learn-About-Games/（当前 404）
 - v0.2 产品设计：[2026-08-09-learn-about-games-v02-design.md](../superpowers/specs/2026-08-09-learn-about-games-v02-design.md)
 - 私有完善设计：[2026-08-09-private-refinement-design.md](../superpowers/specs/2026-08-09-private-refinement-design.md)
@@ -369,4 +369,11 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 新增 `auditAtlasRoutes()` 与只读 `scripts/audit-content-targets.mjs`。按事件、相邻演进、承载作品、起止事件角色和 Evidence 闭包判定，FPS、RPG、RTS、Open World 四条路线完整；早期电子游戏、冒险、益智冒险为空，Metroidvania／Platform 只有单事件，Roguelike 当前没有合法起止角色链，均保持未闭合，不用时间或标签造边。
 - 独立 clone 验证：Astro check 0/0/0；新增路线／资源／目录合同 59/59；全量 Vitest 204/204；静态构建 151 pages。初轮 Playwright 暴露过期 Source／资源统计文案与交互稳定性问题；同步为 44／5437／5590 后最终完整 Playwright 为 262 passed／0 failed／22 skipped。当前没有构建或页面回归，视频冷却和 Private 发布状态仍按原边界保留。
 - 视频涓流只执行一次，因外部通道冷却留下可观察的 `SKIP`；当前累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条，冷却至 2026-08-23 00:50。未把该状态写成字幕补全完成，字幕与凭据没有进入仓库。
-- 本轮提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。下一步先独立修复职业探索／Playtest 的浏览器稳定性和大目录渲染成本，再决定是否继续视频通道或为未闭合透镜补充一手证据。
+- 本轮审计最初在 `codex/v02` 完成，随后已合并至本地 `main`；未 push、未恢复 Public、未启用 Pages。下一步先独立修复职业探索／Playtest 的浏览器稳定性和大目录渲染成本，再继续低频视频通道或为未闭合透镜补充一手证据。
+
+## 51. 合并与 YouTube 内容通道探测（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。按用户指示，先提交 main 的 Director 留痕（`bddce37`），再将 `codex/v02` 无冲突合并进 `main`（`cdca3be`），创建本地回滚 tag `v0.2-content-baseline`，并把涓流脚本从旧 v02 worktree 切换到 main（`8c1b67f`）。确认 v02 已被吸收后删除本地分支和 worktree，远端分支不动。
+- 官方 Data API 无凭据请求返回 HTTP 403，需要 API Key 或其他 consumer identity；当前环境没有 `YOUTUBE_API_KEY`。GMTK 频道页可读，公开 RSS endpoint 返回 404，因此 RSS 暂不作为主通道。
+- 隔离安装 `yt-dlp 2026.08.19` 后，单条 GMTK 视频 `yorTG9at90g` 成功发现英文／简体中文字幕并取得英文自动字幕；项目既有 `youtube-transcript-api` 对同一视频单请求也成功。现有 Work Item `a-022-why-does-celeste-feel-so-good-to-play` 的中文摘要与字幕抽样一致，确认“取得文字后做证据摘要与分析”的最小链路成立。
+- 冷却状态没有被强制清除，失败仍保留为失败、`SKIP` 仍保留为 `SKIP`。新增通道结果详见 [YouTube 内容通道探测](../research/2026-08-22-youtube-content-channel-probe.md)。
