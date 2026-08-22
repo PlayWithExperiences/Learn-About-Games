@@ -74,6 +74,10 @@ class TranscriptRetryableError(RuntimeError):
     """An unclassified transcript failure that must not become a terminal skip."""
 
 
+class TranscriptInsufficientError(RuntimeError):
+    """The transcript exists but is too short or mostly audio markers to analyze."""
+
+
 class ModelChannelError(RuntimeError):
     """Every configured model failed through a channel error."""
 
@@ -146,6 +150,14 @@ def extract_video_id(url: str) -> str:
     return video_id
 
 
+def validate_transcript_text(text: str) -> str:
+    normalized = " ".join(text.split())
+    without_markers = re.sub(r"\[[^\]]+\]", "", normalized)
+    if len(normalized) < 80 or len(without_markers.strip()) < 80:
+        raise TranscriptInsufficientError("字幕正文过短或只有音频标记")
+    return normalized
+
+
 def fetch_transcript(video_id: str, api_factory: Callable[[], Any] | None = None, timeout: int = 45) -> str:
     if api_factory is None:
         try:
@@ -168,7 +180,7 @@ def fetch_transcript(video_id: str, api_factory: Callable[[], Any] | None = None
         raise TranscriptRetryableError(f"字幕请求可重试失败：{type(exc).__name__}: {exc}") from exc
     if not text:
         raise type("NoTranscriptFound", (RuntimeError,), {})("字幕返回为空")
-    return text
+    return validate_transcript_text(text)
 
 
 def parse_json_object(text: str) -> dict[str, Any]:
@@ -437,6 +449,7 @@ def status_totals(state: dict[str, Any], target_ids: set[str]) -> dict[str, int]
     return {
         "completed": sum(record.get("status") == "completed" for record in records),
         "no_transcript": sum(record.get("status") == "no_transcript" for record in records),
+        "transcript_insufficient": sum(record.get("status") == "transcript_insufficient" for record in records),
         "channel_failure": sum(record.get("failureClass") in {"transcript_channel", "model_channel"} for record in records),
         "model_failure": sum(record.get("failureClass") == "model_output" for record in records),
         "retryable_other": sum(record.get("status") == "retryable" and record.get("failureClass") not in {"transcript_channel", "model_channel", "model_output"} for record in records),
@@ -485,7 +498,7 @@ def select_candidates(
             continue
         record = state.get("items", {}).get(item["id"], {})
         status = record.get("status")
-        if status in {"completed", "no_transcript"}:
+        if status in {"completed", "no_transcript", "transcript_insufficient"}:
             continue
         if status == "retryable" and not retryable:
             continue
@@ -569,6 +582,8 @@ def process(args: argparse.Namespace) -> int:
             if transcript is None:
                 transcript = fetch_transcript(video_id, timeout=args.transcript_timeout)
                 atomic_write_text(args.cache_dir / f"{video_id}.txt", transcript + "\n")
+            else:
+                transcript = validate_transcript_text(transcript)
             prompt = build_prompt(item, source_names.get(item["sourceId"], item["sourceId"]), transcript, topics, capabilities)
             model_result = generate_model_result(
                 item,
@@ -602,6 +617,9 @@ def process(args: argparse.Namespace) -> int:
                 failure_class = "transcript_channel"
                 status = "retryable"
                 kind = "channel_error"
+            elif isinstance(exc, TranscriptInsufficientError):
+                failure_class = "transcript_insufficient"
+                status = "transcript_insufficient"
             elif isinstance(exc, TranscriptRetryableError):
                 failure_class = "transcript_retryable"
                 status = "retryable"

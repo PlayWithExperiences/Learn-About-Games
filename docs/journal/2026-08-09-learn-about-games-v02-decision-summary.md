@@ -383,3 +383,10 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。合并后的 `main` 通过 Astro check 0/0/0、Vitest 204/204、静态构建 151 页和内容目标审计；全量 Playwright 为 259 passed、3 failed、22 skipped。
 - Atlas 失败的 23px 位置差异在单独重跑中通过，属于运行时位置测量波动。两个 Playtest 失败在串行重跑中都触发 120 秒 timeout，且每次卡在不同 Work Item。
 - 根因证据：`dist/resources/index.html` 约 12.7MB，全部 5437 个 Work Item 先 server-render，Playtest 查询实际只需要 61 条，之后才由客户端隐藏其余 DOM。该问题是资源筛选的初始渲染性能瓶颈，不是合并冲突或数据缺失；未用延长 timeout 伪装通过。公开前需另开性能切片。
+
+## 53. YouTube 元数据全量校验与内容回写边界（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。用户授权以 2,311 条现有 YouTube Work Item 为全量内容补全目标；本轮用 ADC 调用官方 YouTube Data API v3，仓库外缓存得到 2,534 条频道视频元数据，现有目标 2,311/2,311 全部映射，额外 223 条后来上传的视频不自动扩目录。目标元数据中 271 条标记有字幕、2,040 条没有。
+- 决策：無涘 ｜ 记录：AI。确认官方元数据同步与正文分析／回写是两条独立通道：能取得正文且通过摘要长度、主题 ID、能力 ID 校验的派生字段可以写回资源目录；原始字幕、凭据、失败日志和中间缓存留在仓库外。临时目录实测一条完整字幕条目经过 `pending_write`、原子写入和 `completed` 状态闭环，生产目录仍只保留此前真实验证的 48 条。
+- 决策：無涘 ｜ 记录：AI。本轮发现两个缓存只有 `[Music]` 等音频标记，新增 `transcript_insufficient` 分类，避免调用模型或生成猜测摘要；生产状态为 48 completed、4 no_transcript、2 transcript_insufficient、42 transcript_channel，剩余 2,215 条。官方 Captions API 需要更高 YouTube scope 且下载要求视频编辑权限，不能作为三个第三方频道的通用正文入口。
+- 时间估算：AI 推断。当前涓流每约 4 小时尝试 1 条，通道失败触发 24 小时冷却；按约 6 条／天计算，剩余条目仅排队就至少约 369 天，且不含字幕不可用、音频转写、通道重试和模型失败。官方 Data API 配额不是当前主瓶颈，正文获取和分析通道才是。

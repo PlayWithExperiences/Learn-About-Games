@@ -4,6 +4,7 @@ from scripts.backfill_video_content import (
     ModelOutputError,
     apply_model_result,
     classify_transcript_exception,
+    fetch_transcript,
     parse_model_payload,
 )
 
@@ -16,6 +17,12 @@ class NoTranscriptFound(Exception):
     pass
 
 
+class FakeTranscriptApi:
+    def fetch(self, _video_id, languages=None):
+        del languages
+        return [type("Segment", (), {"text": "[Music] [Music] got you [Music]"})()]
+
+
 class TestBackfillContracts(unittest.TestCase):
     def test_classifies_missing_transcript_as_terminal(self):
         self.assertEqual(classify_transcript_exception(TranscriptsDisabled()), "no_transcript")
@@ -24,6 +31,10 @@ class TestBackfillContracts(unittest.TestCase):
     def test_classifies_rate_limit_as_channel_failure(self):
         error = RuntimeError("YouTube returned HTTP 429: too many requests")
         self.assertEqual(classify_transcript_exception(error), "channel_error")
+
+    def test_rejects_transcript_that_is_only_audio_markers(self):
+        with self.assertRaisesRegex(RuntimeError, "字幕正文过短或只有音频标记"):
+            fetch_transcript("video-1", api_factory=lambda: FakeTranscriptApi())
 
     def test_rejects_unknown_ids_and_short_summary(self):
         with self.assertRaises(ModelOutputError):

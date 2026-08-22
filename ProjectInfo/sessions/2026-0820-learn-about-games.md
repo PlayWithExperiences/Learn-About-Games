@@ -60,28 +60,10 @@
 
 原始对话：dialogues/2026-0822.md「1314 合并后 Playwright 归因」
 
-## 0133 完成资源审计并打通 YouTube 认证
+## 0133 完成ADC接入、内容补全规划
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-会话始于继续补全成长资源和创新地图的目标。AI 在独立工作树 v02 上完成审计，确认已有 5,437 条资源和 4 条完整创新路线，满足至少 1000 条资源与 3 条路线基准，并更新文档。随后重点转向 YouTube Data API 的 OAuth 只读授权配置。用户执行 gcloud 命令时先后遇到缺少 cloud-platform 范围和 403 org_internal 错误，AI 诊断出 OAuth 应用受众设为 Internal 且当前账号不在测试用户列表中。指导将受众改为 External、添加测试用户后，成功通过 ADC 令牌验证并读取公开频道数据，认证链路打通。视频字幕批处理因 IP 封锁仍不可用，后续将以新认证方式分阶段获取。下一步计划将 YouTube 只读 API 接入项目频道同步。所有诊断和修复已记录到项目进度与会话档案中。
+本场会话完成了三阶段实质性推进。第一阶段：以v02工作树基线（5,437条Work Item、84个Atlas节点）验证资源与创新路线闭包，确认4条完整创新路线（FPS、RPG、RTS、开放世界），独立clone全量测试通过（262 passed、0 failed）。第二阶段：打通Google ADC认证与YouTube Data API v3链路，新建youtube_metadata_sync脚本，实现频道handle到视频元数据的同步通道，GMTK公开频道探针成功，写入仓库外缓存而非直接篡改资源目录；本轮全量缓存获得2,534条元数据，现有2,311条目标100%映射，额外223条不自动导入。第三阶段：确认可验证派生字段能通过pending_write与原子写回进入资源目录；生产状态为48 completed、4 no_transcript、2 transcript_insufficient、42 transcript_channel，剩余2,215条。新增正文质量分类以排除只有音频标记的伪字幕，Python 12/12、Vitest 204/204、Astro check 0/0/0通过。当前瓶颈不是官方元数据配额，而是第三方字幕通道、音频转写和模型分析；按现有低频涓流粗估至少369天，仍需后续稳定正文入口才能完成全量。
 
 原始对话：dialogues/2026-0822.md
-
-## 1412 YouTube OAuth/ADC 只读探针通过
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-用户完成 OAuth/ADC 授权。AI 在不打印 token 的前提下调用 YouTube Data API v3 的 `channels.list`，HTTP 200，返回 1 条公开频道记录：Game Maker's Toolkit。ADC token 未写入仓库，临时响应只留在仓库外探针路径。认证链路已打通；下一步由 AI 接入官方 API 元数据发现／同步，字幕仍按低频公开入口与失败退避处理。
-
-原始对话：dialogues/2026-0822.md「1412 YouTube OAuth/ADC 只读探针通过」
-
-## 1433 YouTube 官方元数据同步入口合并
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-用户确认继续推进。AI 先把范围收敛为只读元数据垂直切片：新增 scripts/sync_youtube_metadata.py，从 src/data/sources.json 的 YouTube @handle 解析频道，经过 channels.list、uploads playlist 的 playlistItems.list 与批量 videos.list 获取事实元数据；默认原子写入仓库外缓存，不自动修改 5,437 条目录。新增 7 个 Python 合同／CLI 测试，真实 ADC GMTK 探针返回 3 条视频；默认 4 个 YouTube channel Source 各取 1 条的 dry-run 全部成功。Python 回归 11/11、Astro check 0/0/0、Vitest 204/204。实现提交 37f97e1，已本地合并进 main；token、OAuth JSON 与本机缓存均未进入仓库。
-
-下一步是从外部元数据缓存中做保守 intake：先按 canonical URL 去重并与现有 Source／Work Item 对账，再单独获取字幕、做可追溯摘要和主题／能力映射；失败继续保持可辨认，不把元数据发现成功写成内容分析完成。
-
-原始对话：dialogues/2026-0822.md「1433 YouTube 官方元数据同步入口合并」
