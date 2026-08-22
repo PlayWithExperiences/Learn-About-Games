@@ -652,3 +652,15 @@ ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用�
 本轮同时修正报告口径：2,311 条目标中真正未完成为 1,784 条；旧 `remainingAfterRun=1,737` 表示尚未进入已分类状态，新增 `uncompletedAfterRun` 表示未完成总数。代码测试已覆盖二者差异，避免把已尝试失败条目误写成未尝试。
 
 原始对话：dialogues/2026-0822.md「1809 第四轮收尾与报告口径修正」
+
+## 1844 第五轮描述百条回写与提示修正（partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文、音频文件或环境变量。
+
+第五轮 `description-only` 批次最终 100/100 完成。首轮有 1 条模型输出失败，原因不是内容通道，而是模型将能力 ID `aesthetic-direction` 放进 `resourceTopicIds`；白名单拒绝该结果，未写回错误字段。提示增加资源主题与能力两组 ID 的边界说明，并补充回归测试后，定向重试成功。
+
+最终状态为 627 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；完成入口为 576 条 `inputMode=description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写无入口字段。2,311 条目标中真正未完成 1,684 条，其中 1,637 条尚未分类，47 条已尝试但仍未完成。
+
+抽查重试条目确认资源主题为合法的 `narrative-expression`，能力为 `aesthetic-direction`；没有把未知 ID 静默映射到错误主题。
+
+原始对话：dialogues/2026-0822.md「1844 第五轮描述回写与 ID 边界修正」

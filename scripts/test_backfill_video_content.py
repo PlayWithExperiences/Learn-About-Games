@@ -75,6 +75,17 @@ The next point
         self.assertIn("180-205", prompt)
         self.assertIn("每句约 45-50 个汉字", prompt)
 
+    def test_prompt_separates_topic_ids_from_capability_ids(self):
+        prompt = backfill.build_prompt(
+            {"title": {"en": "Test video"}},
+            "Test source",
+            "Evidence text",
+            [{"id": "design-fundamentals", "title": {"zh-CN": "设计基础"}, "summary": {"zh-CN": ""}}],
+            [{"id": "aesthetic-direction", "name": {"zh-CN": "审美方向"}, "summary": {"zh-CN": ""}}],
+        )
+        self.assertIn("aesthetic-direction", prompt)
+        self.assertIn("绝不能放进 `resourceTopicIds`", prompt)
+
     def test_audio_prompt_keeps_audio_as_the_only_evidence(self):
         prompt = build_audio_prompt(
             {"title": {"en": "Test video"}},

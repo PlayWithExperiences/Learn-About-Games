@@ -40,3 +40,10 @@
 - 决策：無涘 ｜ 记录：AI。第四轮 `description-only` 最终 100/100 完成：首轮 98 条成功、2 条因模型输出校验失败而显式留痕，随后两条定向重试均成功。批次没有请求字幕、下载音频或新增 YouTube 通道失败；当前累计 527 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0。
 - 决策：無涘 ｜ 记录：AI。当前完成入口为 476 条 `description`、1 条 `transcript`、1 条 `audio` 和 49 条历史回写；真正未完成为 1,784 条，其中 1,737 条尚未分类，47 条已经尝试但仍处于显式非完成状态。回填报告新增 `uncompletedAfterRun`，与保留兼容性的 `remainingAfterRun`（尚未分类）分开，避免把已失败条目误算成未尝试。
 - 时间估算：AI 推断。本轮从 17:36 左右运行至 18:04 左右，约 27.7 分钟；描述路线继续按每 4 小时最多 20 条运行。若 1,737 条尚未分类条目都具备合格官方描述，理论约 14–15 天；其余 47 条不能按描述吞吐估算。
+
+## 2026-08-22：官方描述第五轮百条回写与主题/能力提示修正
+
+- 决策：無涘 ｜ 记录：AI。第五轮 `description-only` 最终 100/100 完成，未请求字幕、未下载音频，也未增加 YouTube 通道失败。首轮有 1 条模型输出失败，原因是模型把能力 ID `aesthetic-direction` 放进资源主题字段；该条未写入错误结果，修正提示后定向重试成功。
+- 决策：無涘 ｜ 记录：AI。当前累计 627 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；完成入口为 576 条 `description`、1 条 `transcript`、1 条 `audio` 和 49 条历史回写。真正未完成 1,684 条，其中 1,637 条尚未分类，47 条已尝试但仍是显式非完成状态。
+- 决策：無涘 ｜ 记录：AI。回填提示已明确区分 `resourceTopicIds` 与 `capabilityIds`，并加入回归测试；未知主题不自动映射到看似相近的能力，拿不准时保留原有主题。报告继续同时暴露 `remainingAfterRun`（尚未分类）和 `uncompletedAfterRun`（未完成总数）。
+- 时间估算：AI 推断。第五轮从 18:15 左右运行至 18:40 左右，约 24.9 分钟；若 1,637 条尚未分类条目都能使用合格官方描述，按每 4 小时最多 20 条理论约 13–14 天，其余 47 条仍不适用该估算。
