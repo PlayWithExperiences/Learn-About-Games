@@ -115,3 +115,9 @@
 - 决策：無涘 ｜ 记录：AI。新增 `call_vertex_text` 与 `--vertex-text`，复用 ADC、`gemini-2.5-flash`、结构化 JSON、摘要长度和主题/能力白名单校验。两条 402 条目经 Vertex 文本定向重试均成功，`inputMode=description`、模型为 `vertex/gemini-2.5-flash`；Python 合同测试增至 18/18。
 - 决策：無涘 ｜ 记录：AI。描述涓流和外部 launchd 副本已切换为 `--vertex-text`；以后描述/字幕文本分析不再依赖 OpenRouter，音频路线本来就使用 Vertex。当前累计 1,692 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；真正未完成 619 条，其中 572 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。Vertex 文本只有 2 条生产样本，不能假定与 OpenRouter 吞吐相同；若仍按每 4 小时最多 20 条，572 条尚未分类条目理论约 4–5 天，需用后续批次重新测量。
+
+## 2026-08-22：Vertex 文本批次完成与音频回退修复
+
+- 决策：無涘 ｜ 记录：AI。Vertex 描述批次最终 100/100 完成：首轮 63 条直接成功，37 条因摘要长度校验失败，经过保留原始 JSON、最多三次修复和定向重试全部完成。当前累计 1,792 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；真正未完成 519 条，其中 472 条尚未分类、47 条为显式非完成状态。
+- 决策：無涘 ｜ 记录：AI。新增 Vertex 文本修复的多轮草稿传递、音频首轮草稿修复、第三方字幕异常统一转换为本地 `NoTranscriptFound`；合同测试增至 24/24。音频回退成功验证并完成 1 条资源，完成入口现为 1,740 description、1 transcript、2 audio、49 条历史回写无入口字段。所有未通过校验的模型结果均未写入资源库。
+- 时间估算：AI 推断。本轮 Vertex 初次 100 条约 8 分钟，含修复与音频回退的端到端收尾约 26 分钟；按当前手动吞吐，472 条未分类候选约需 2–3 小时模型运行时间，若受 launchd 每 4 小时最多 20 条限制则约 4–5 天。41 条字幕通道失败仍需单独走可用入口或保持显式失败。

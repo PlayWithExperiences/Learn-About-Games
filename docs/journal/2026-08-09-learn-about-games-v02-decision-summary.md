@@ -502,3 +502,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。接入 `call_vertex_text` 和 `--vertex-text`，用用户 ADC 项目的 `gemini-2.5-flash` 复用既有结构化校验。两条 402 条目 Vertex 定向重试均成功；`scripts/trickle-video-content.sh` 与 launchd 副本已切换到 Vertex 文本，测试 18/18。
 - 决策：無涘 ｜ 记录：AI。当前状态为 1,692 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0。完成入口为 1,641 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 619 条，其中 572 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。Vertex 文本暂只有 2 条生产样本；若按每 4 小时最多 20 条，572 条尚未分类条目理论约 4–5 天，后续批次需重新校准。
+
+## 72. Vertex 文本批次完成与音频回退修复（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。Vertex 描述批次 100/100 完成：首轮 63 条直接成功，37 条因摘要长度校验失败，均通过保留原始 JSON、修复提示和定向重试完成。当前累计 1,792 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；真正未完成 519 条，其中 472 条尚未分类、47 条显式非完成。
+- 决策：無涘 ｜ 记录：AI。补齐 Vertex 文本多轮修复、音频结果保留 invalid payload 后转文本修复、以及第三方 `NoTranscriptFound` 异常归一化；合同测试 24/24。验证了一条仅有日语自动字幕且英语可翻译但字幕通道受阻的视频，转入外部音频缓存与 Vertex 音频分析后完成写回。资源目录只接受通过摘要长度、主题/能力白名单校验的派生字段。
+- 推断：AI。当前完成入口为 1,740 description、1 transcript、2 audio，另有 49 条历史回写无入口字段；472 条未分类候选按手动 Vertex 吞吐约需 2–3 小时模型运行时间，launchd 每 4 小时 20 条的保守上限则约 4–5 天。字幕通道失败仍不可按描述吞吐估算。

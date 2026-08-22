@@ -329,7 +329,10 @@ def fetch_transcript(video_id: str, api_factory: Callable[[], Any] | None = None
     except Exception as exc:  # classification below deliberately preserves the distinction
         kind = classify_transcript_exception(exc)
         if kind == "no_transcript":
-            raise
+            # Normalize third-party NoTranscriptFound variants so the caller can
+            # still enter the audio fallback when a translated track exists or
+            # the secondary subtitle route reports no direct English track.
+            raise NoTranscriptFound(str(exc)) from exc
         if kind == "channel_error":
             raise TranscriptChannelError(f"字幕通道失败：{type(exc).__name__}: {exc}") from exc
         raise TranscriptRetryableError(f"字幕请求可重试失败：{type(exc).__name__}: {exc}") from exc
@@ -663,16 +666,21 @@ def call_vertex_audio(
         raise VertexChannelError(f"Vertex 请求失败：{type(exc).__name__}") from exc
     if status != 200:
         raise VertexChannelError(f"Vertex HTTP {status}")
+    invalid_payloads: list[dict[str, Any]] = []
     try:
         response_json = json.loads(raw)
         text = parse_vertex_response(response_json)
         payload = parse_json_object(text)
         if validator is not None:
-            payload = validator(payload)
+            try:
+                payload = validator(payload)
+            except ModelOutputError:
+                invalid_payloads.append(payload)
+                raise
     except (json.JSONDecodeError, ModelOutputError, KeyError, TypeError) as exc:
         if isinstance(exc, VertexOutputError):
             raise
-        raise VertexOutputError(f"Vertex 输出不可解析：{exc}") from exc
+        raise VertexOutputError(f"Vertex 输出不可解析：{exc}", invalid_payloads=invalid_payloads) from exc
     return {"model": f"vertex/{model}", "payload": payload}
 
 
@@ -687,6 +695,7 @@ def call_vertex_text(
     validator: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Send text evidence to Vertex and validate its catalog result."""
+    invalid_payloads: list[dict[str, Any]] = []
     body = json.dumps(
         {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
@@ -719,11 +728,15 @@ def call_vertex_text(
         text = parse_vertex_response(response_json)
         payload = parse_json_object(text)
         if validator is not None:
-            payload = validator(payload)
+            try:
+                payload = validator(payload)
+            except ModelOutputError:
+                invalid_payloads.append(payload)
+                raise
     except (json.JSONDecodeError, ModelOutputError, KeyError, TypeError) as exc:
         if isinstance(exc, VertexOutputError):
             raise
-        raise VertexOutputError(f"Vertex 输出不可解析：{exc}") from exc
+        raise VertexOutputError(f"Vertex 输出不可解析：{exc}", invalid_payloads=invalid_payloads) from exc
     return {"model": f"vertex/{model}", "payload": payload}
 
 
@@ -900,14 +913,24 @@ def build_audio_prompt(
 
 def build_repair_prompt(item: dict[str, Any], draft: dict[str, Any]) -> str:
     current_length = len(str(draft.get("summary", {}).get("zh-CN", "")))
-    minimum_addition = max(0, 180 - current_length)
-    return f"""你是 JSON 输出修复器。下面是根据视频字幕生成的目录结果，事实和映射已经由上一轮模型确定。
+    minimum_addition = max(0, 200 - current_length)
+    if current_length > 220:
+        length_instruction = (
+            f"当前 summary.zh-CN 过长（{current_length} 个字符），请适度删去重复语句，"
+            "不要过度压缩，至少保留原结果中的六个事实信息点，输出 220-240 个中文字符。"
+        )
+    else:
+        length_instruction = (
+            f"当前 summary.zh-CN 过短（{current_length} 个字符），至少还需要增加 {minimum_addition} 个字符，"
+            "输出 200-220 个中文字符。"
+        )
+    return f"""你是 JSON 输出修复器。下面是根据视频正文证据生成的目录结果，事实和映射已经由上一轮模型确定。
 
 标题：{item['title'].get('en') or item['title'].get('zh-CN')}
 原始结果：
 {json.dumps(draft, ensure_ascii=False)}
 
-当前 summary.zh-CN 长度为 {current_length}，至少还需要增加 {minimum_addition} 个字符。只修复 summary.zh-CN 的长度和表达，不新增事实，不改变 resourceTopicIds、capabilityIds，也不要新增 whyRelevant。summary.zh-CN 必须是 180-205 个中文字符；只写四句，每句约 45-50 个汉字。只输出同样结构的 JSON，不要 Markdown：
+{length_instruction} 只修复 summary.zh-CN 的长度和表达，不新增事实，不改变 resourceTopicIds、capabilityIds，也不要新增 whyRelevant。只写六句，每句约 32-38 个汉字。只输出同样结构的 JSON，不要 Markdown：
 {{"summary":{{"zh-CN":"..."}},"resourceTopicIds":[],"capabilityIds":[]}}
 """
 
@@ -961,20 +984,39 @@ def generate_vertex_audio_result(
     project, token = load_vertex_credentials()
     prompt = build_audio_prompt(item, source_name, topics, capabilities)
     validator = lambda payload: parse_model_payload(payload, allowed_topics, allowed_capabilities)
-    return call_vertex_audio(
-        audio_path,
-        prompt,
-        project,
-        token,
-        model=model,
-        max_tokens=max_tokens,
-        timeout=timeout,
-        max_audio_bytes=max_audio_bytes,
-        validator=validator,
-    )
+    try:
+        return call_vertex_audio(
+            audio_path,
+            prompt,
+            project,
+            token,
+            model=model,
+            max_tokens=max_tokens,
+            timeout=timeout,
+            max_audio_bytes=max_audio_bytes,
+            validator=validator,
+        )
+    except VertexOutputError as exc:
+        # Audio establishes the evidence; once the catalog draft is available,
+        # repair only its length through the cheaper text endpoint.
+        for draft in exc.invalid_payloads[:1]:
+            try:
+                return generate_vertex_text_result(
+                    item,
+                    build_repair_prompt(item, draft),
+                    allowed_topics,
+                    allowed_capabilities,
+                    model,
+                    max_tokens,
+                    timeout,
+                )
+            except VertexOutputError:
+                continue
+        raise
 
 
 def generate_vertex_text_result(
+    item: dict[str, Any],
     prompt: str,
     allowed_topics: set[str],
     allowed_capabilities: set[str],
@@ -984,15 +1026,38 @@ def generate_vertex_text_result(
 ) -> dict[str, Any]:
     project, token = load_vertex_credentials()
     validator = lambda payload: parse_model_payload(payload, allowed_topics, allowed_capabilities)
-    return call_vertex_text(
-        prompt,
-        project,
-        token,
-        model=model,
-        max_tokens=max_tokens,
-        timeout=timeout,
-        validator=validator,
-    )
+    try:
+        return call_vertex_text(
+            prompt,
+            project,
+            token,
+            model=model,
+            max_tokens=max_tokens,
+            timeout=timeout,
+            validator=validator,
+        )
+    except VertexOutputError as exc:
+        last_error: VertexOutputError = exc
+        drafts = exc.invalid_payloads[:1]
+        for _attempt in range(3):
+            if not drafts:
+                break
+            draft = drafts[0]
+            repair_prompt = build_repair_prompt(item, draft)
+            try:
+                return call_vertex_text(
+                    repair_prompt,
+                    project,
+                    token,
+                    model=model,
+                    max_tokens=max_tokens,
+                    timeout=timeout,
+                    validator=validator,
+                )
+            except VertexOutputError as repair_error:
+                last_error = repair_error
+                drafts = repair_error.invalid_payloads[:1]
+        raise last_error
 
 
 def write_failure_log(path: Path, item_id: str, failure_class: str, detail: str) -> None:
@@ -1210,6 +1275,7 @@ def process(args: argparse.Namespace) -> int:
                 prompt = build_description_prompt(item, source_name, description, topics, capabilities)
                 if args.vertex_text:
                     model_result = generate_vertex_text_result(
+                        item,
                         prompt,
                         allowed_topics,
                         allowed_capabilities,
@@ -1244,6 +1310,7 @@ def process(args: argparse.Namespace) -> int:
                         prompt = build_description_prompt(item, source_name, description, topics, capabilities)
                         if args.vertex_text:
                             model_result = generate_vertex_text_result(
+                                item,
                                 prompt,
                                 allowed_topics,
                                 allowed_capabilities,
@@ -1296,6 +1363,7 @@ def process(args: argparse.Namespace) -> int:
                     prompt = build_prompt(item, source_name, transcript, topics, capabilities)
                     if args.vertex_text:
                         model_result = generate_vertex_text_result(
+                            item,
                             prompt,
                             allowed_topics,
                             allowed_capabilities,

@@ -17,9 +17,9 @@
 
 - 官方 API 元数据入口已合并进 main：新增 scripts/sync_youtube_metadata.py，从 sources.json 的 YouTube @handle 发现频道，依次读取 uploads playlist、视频列表与标题／描述／发布时间／时长／字幕可用性等事实字段，默认原子写入仓库外 ~/.cache/lag-youtube/metadata.json；本轮 ADC 全量同步得到 2,534 条频道元数据，现有 2,311 条目标 Work Item 100% 映射，另有 223 条频道后来新增视频暂不自动扩目录；目标中 271 条标记有字幕、2,040 条没有。同步不写 token、不写目录、不生成排名。
 - Career Lens 与统计文案已修正；当前新增的 Playtest 失败不是数据缺失，而是 5437 条资源的初始 DOM／客户端筛选性能瓶颈。公开前需要单独做资源筛选切片，避免用延长 timeout 掩盖页面成本。
-- YouTube 内容补全当前累计 1,692 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure；真正未完成 619 条，其中 572 条尚未进入已分类状态，47 条已经尝试但仍是显式非完成状态。完成入口为 1,641 条 `inputMode=description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写没有入口字段。最近十五轮完整的 100 条官方描述批次最终均 100/100 完成；第十六轮初次处理到 63/100 时遭遇两条 OpenRouter HTTP 402，未写入错误结果，随后用已验证的 Google ADC/Vertex 文本入口定向完成。原始音频、字幕、官方元数据和状态仍在仓库外缓存。缓存审计显示目标中约 2,096 条描述达到 240 字符门槛，公开频道 RSS 对 GMTK 返回 404。
+- YouTube 内容补全当前累计 1,792 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure；真正未完成 519 条，其中 472 条尚未进入已分类状态，47 条已经尝试但仍是显式非完成状态。完成入口为 1,740 条 `inputMode=description`、1 条 `transcript`、2 条 `audio`，另有 49 条历史回写没有入口字段。第十六轮 Vertex 文本批次处理 100/100，首轮 63 条直接完成，37 条经过保留草稿与修复提示后全部完成；过程中验证了音频回退、外部字幕异常归一化和 Vertex 音频草稿修复。原始音频、字幕、官方元数据和状态仍在仓库外缓存。缓存审计显示目标中约 2,096 条描述达到 240 字符门槛，公开频道 RSS 对 GMTK 返回 404。
 - OAuth/ADC 与官方 API 边界已确认：Agent Platform API（`aiplatform.googleapis.com`）负责 Agent/Gemini 资源与模型调用，不是 YouTube 数据入口；本轮探针发现项目服务尚未实际启用，已在用户项目范围内启用并用 ADC 成功调用 `gemini-2.5-flash` 文本和音频输入。YouTube Data API v3 桌面 OAuth/ADC 认证成功。`youtube.readonly` 足够读取公开频道／视频元数据，但官方 `captions.list`／`captions.download` 需要更高 YouTube scope，且下载字幕还要求用户拥有视频编辑权限，因此不能用它通用解锁这三个第三方频道的字幕正文。官方 Data API 配额默认每日 10,000 units，本轮读取远低于额度；真正瓶颈仍是 YouTube 通道速率、24 小时冷却、音频下载和模型分析。凭据不得进入仓库、前端或对话。
-- 时间估算（AI 推断）：描述路线不受 YouTube 请求冷却影响；最近十五轮 100 条约 17.6–28.1 分钟，最终均 100/100 成功。第十六轮改走 Vertex 文本后目前只有 2 条生产样本，吞吐仍需继续观察。涓流现已改为每 4 小时优先批量处理最多 20 条描述；若当前 572 条尚未分类条目都能走描述路线，按该上限理论约 4–5 天；另外 47 条显式非完成条目仍受字幕／音频通道和冷却约束，不能用描述吞吐估算。
+- 时间估算（AI 推断）：描述路线不受 YouTube 请求冷却影响；本轮 Vertex 初次 100 条约 8 分钟完成，含定向修复和 1 条音频回退的全流程约 26 分钟。若继续手动按当前吞吐推进，472 条尚未分类条目约需 2–3 小时模型运行时间；若受涓流脚本每 4 小时最多 20 条的上限约束，则理论约 4–5 天。另外 47 条显式非完成条目仍受字幕／音频通道和冷却约束，不能用描述吞吐估算。
 - 涓流队列已修正为：先消化仓库外 priority 文件中的 GMTK／樱井条目，优先队列没有可处理候选后自动放开到全部 2,311 条；已有通道失败仍保持 retryable，不因切换队列被当作完成。当前 priority 文件剩余 532 个可处理候选。
 - 仓库仍为 Private、Pages workflow 仍手动停用；恢复公开需要先修复资源筛选性能，再完成桌面／移动、双主题、无 JS 与线上验收。
 

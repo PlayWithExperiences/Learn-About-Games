@@ -184430,14 +184430,16 @@
       "en": "M: Grab Bag 4 (Category Compilation) #18～#24"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《M: Grab Bag 4 (Category Compilation) #18～#24》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “M: Grab Bag 4 (Category Compilation) #18～#24”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本合集探讨了游戏开发中一些难以归类的多元话题，从《任天堂明星大乱斗X》的幕后团队构成，到游戏设计中的指导原则与稀有收藏品的展示。视频还涉及Game & Watch的设计理念、创作者的成长变化，以及早期像素艺术的数字绘制方法。最后，它将送礼行为转化为一种游戏体验，揭示了游戏设计如何触及广泛的领域与思考维度。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "practitioner-interviews-podcasts"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=mQ00_aOCvX4",
@@ -184451,7 +184453,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过樱井政博的视角，分享了游戏开发中团队协作、设计理念、历史演变及创意实践等多个维度的经验，为从业者提供了宝贵的洞察。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-u_LHFSxrKAA",
@@ -184460,11 +184465,14 @@
       "en": "C: Planning & Game Design 4 (Category Compilation) #27～#30"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《C: Planning & Game Design 4 (Category Compilation) #27～#30》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “C: Planning & Game Design 4 (Category Compilation) #27～#30”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了游戏策划与设计中的关键考量，旨在帮助设计师构思新颖的游戏理念和机制。樱井政博分享了如何通过游戏内过场动画、从高潮开始设计、对新手玩家的友好度，以及尊重玩家时间等角度，来优化游戏体验。这些原则强调了以玩家为中心的设计思维，确保游戏既具吸引力又易于上手，并能有效管理玩家的投入。视频内容为游戏概念开发提供了实用的指导，有助于创造更具沉浸感和用户友好的作品。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "player-perspective-taking",
+      "pacing-control",
+      "challenge-difficulty-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184481,7 +184489,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接讨论了在游戏概念阶段需要考虑的多个设计维度，包括叙事呈现、体验节奏、用户友好性和玩家投入管理，这些都是设计基础的重要组成部分。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-qQUWE5zSJIQ",
@@ -184490,14 +184501,17 @@
       "en": "B: Game Essence 4 (Category Compilation) #24～#29"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《B: Game Essence 4 (Category Compilation) #24～#29》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “B: Game Essence 4 (Category Compilation) #24～#29”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频将“游戏精髓”定义为风险与回报的权衡，并探讨其如何驱动游戏核心的推拉机制。它讨论了强制策略与战略平衡，以及在策略游戏中如何体现游戏精髓。视频还分析了玩家行动的有效性，并提出通过放大优势与劣势来平衡游戏。最后，它建议设计师在平衡游戏时，可主动给自己设置限制以更好地理解挑战，从而创造出更具深度和吸引力的游戏体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "choice-consequence-design",
+      "challenge-difficulty-design",
+      "constraint-aware-decision-making"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "balance-economy"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=qQUWE5zSJIQ",
@@ -184520,11 +184534,13 @@
       "en": "N: Game Concepts 3 (Category Compilation) #10～#12"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《N: Game Concepts 3 (Category Compilation) #10～#12》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “N: Game Concepts 3 (Category Compilation) #10～#12”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博回顾了《新光神话：帕鲁迪娜之镜》、《任天堂明星大乱斗3DS/Wii U》和《任天堂明星大乱斗特别版》的构思过程。他聚焦于这些游戏创作背后的灵感来源与思维模式，而非开发轶事，深入探讨了游戏概念的形成。视频详细阐述了如何将初步想法转化为具体设计，并展示了游戏设计早期阶段的创意决策。这为理解知名游戏设计师的创作思路和方法提供了宝贵视角。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "experience-framing"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184550,14 +184566,13 @@
       "en": "M: Grab Bag 3 (Category Compilation) #15～#17"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《M: Grab Bag 3 (Category Compilation) #15～#17》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “M: Grab Bag 3 (Category Compilation) #15～#17”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频探讨了三个不拘一格的游戏话题，包括被取消的游戏项目，以及樱井政博在童年时期接触的游戏。这些内容揭示了游戏开发中可能面临的挑战与变数，并从个人经历角度展现了游戏对设计师的深远影响。通过这些案例，我们可以思考游戏设计决策的复杂性，以及不同时代背景下游戏体验的塑造。视频内容虽杂，但核心仍围绕游戏展开，为理解游戏产业与个人成长提供了独特视角。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=K2G-MOEDlxk",
@@ -184571,7 +184586,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容涵盖了被取消的游戏项目和设计师童年游戏经历，为理解游戏产业的历史变迁、项目风险以及个人成长与游戏设计的关联提供了独特的视角。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-aapNzQq4yyo",
@@ -184580,18 +184598,18 @@
       "en": "L: Marketing 2 (Category Compilation) #08～#09"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《L: Marketing 2 (Category Compilation) #08～#09》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “L: Marketing 2 (Category Compilation) #08～#09”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了游戏营销策略，强调即使游戏品质卓越，若无人知晓，其价值亦无法体现。樱井政博深入分析了目标受众定位与市场调研的重要性，并以《任天堂明星大乱斗DX》的DOJO!!网站为例，阐释了如何有效推广游戏。他指出，成功的营销能让游戏触达更广泛的玩家群体，从而实现其潜在价值。视频内容聚焦于游戏发布前的宣传规划与执行，为游戏开发者提供了实用的营销洞察。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "audience-positioning",
       "market-reference-analysis"
     ],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "leadership-creative-direction"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=aapNzQq4yyo",
@@ -184605,7 +184623,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接讨论了游戏营销的策略和重要性，这对于理解游戏从开发到市场发布的完整流程至关重要，尤其强调了市场调研和目标受众定位在游戏推广中的核心作用。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-cKf-XVXleK8",
@@ -184614,11 +184635,14 @@
       "en": "F: Graphics 3 (Category Compilation) #14～#20"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《F: Graphics 3 (Category Compilation) #14～#20》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “F: Graphics 3 (Category Compilation) #14～#20”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏美术创作的实用考量，而非工具教学，旨在帮助创作者理解如何通过视觉元素有效传达游戏体验。内容涵盖了运动模糊的运用、如何让虚构世界显得真实可信，以及最终输出的视觉效果如何影响玩家感知。视频还讨论了漫画风格的视觉呈现、通过角色设计塑造其形象，并分享了监督美术工作的具体经验，强调了视觉设计在游戏中的核心作用。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "multimodal-presentation-integration",
+      "world-character-coherence"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184635,7 +184659,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频从实际操作层面探讨了游戏视觉设计如何服务于整体体验，而非单纯的技术展示，对理解美术在游戏中的功能性作用有启发。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-7IH__SM1BDM",
@@ -184644,11 +184671,15 @@
       "en": "C: Planning & Game Design 3 (Category Compilation) #19～#26"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《C: Planning & Game Design 3 (Category Compilation) #19～#26》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “C: Planning & Game Design 3 (Category Compilation) #19～#26”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了游戏概念与机制构思中的关键考量，包括如何制作续作以利用玩家既有认知，以及通过定制化设计激发玩家想象力。它还讨论了如何巧妙地制作“相似”游戏，以及呈现分数、利用参数塑造角色和通过色彩限制创造独特世界观的方法。最后，视频触及了电脑控制玩家的设计，为游戏开发者提供了在规划与设计阶段的实用思考框架和具体策略。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction",
+      "player-perspective-taking",
+      "world-character-coherence",
+      "rules-system-modeling"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184665,7 +184696,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过一系列具体的设计案例，展示了如何从玩家认知、系统构成和表现手法等多个维度，系统性地思考游戏概念和机制的构建，对于理解游戏设计的基础原则具有启发性。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-8NhmhM546HQ",
@@ -184674,14 +184708,16 @@
       "en": "A: Work Ethic 3 (Category Compilation) #21～#23"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《A: Work Ethic 3 (Category Compilation) #21～#23》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “A: Work Ethic 3 (Category Compilation) #21～#23”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博探讨了在游戏开发中如何应对创意枯竭，强调了在工作过程中保持积极心态的重要性。他建议设计师在遇到瓶颈时，应避免与同事发生冲突，并以开放的心态接受不同的观点。视频内容超越了游戏开发领域，为所有职业提供了通用的工作伦理指导，鼓励以灵活思维应对挑战。这些原则有助于提升团队协作效率，并促进个人职业成长，确保项目顺利推进。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "alignment-facilitation"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=8NhmhM546HQ",
@@ -184695,7 +184731,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接讨论了在工作中如何处理创意瓶颈和人际冲突，这些是职业生涯中常见的挑战，对游戏开发者的职业发展和团队协作能力培养具有直接指导意义。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-zEAuQZq14xE",
@@ -184704,11 +184743,15 @@
       "en": "B: Game Essence 3 (Category Compilation) #16～#23"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《B: Game Essence 3 (Category Compilation) #16～#23》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “B: Game Essence 3 (Category Compilation) #16～#23”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博将“游戏精髓”定义为风险与回报，并探讨其如何影响游戏核心的推拉机制。他通过射击游戏、格斗指令、排行榜等具体案例，阐释了游戏精髓的体现与权衡。视频还深入探讨了“玩”的本质、授权游戏的忠实度，以及如何将“工作”型游戏变得有趣。这些讨论揭示了游戏设计中体验深度与大众吸引力之间的复杂关系，强调了理解玩家行为与系统反馈的重要性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction",
+      "player-perspective-taking",
+      "challenge-difficulty-design",
+      "rules-system-modeling"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184725,7 +184768,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过对“游戏精髓”的定义和多角度案例分析，为理解游戏核心吸引力与设计权衡提供了基础框架，有助于设计师在不同游戏类型中应用这些概念。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-f-O_sdH6CUo",
@@ -184734,11 +184780,13 @@
       "en": "N: Game Concepts 2 (Category Compilation) #06～#09"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《N: Game Concepts 2 (Category Compilation) #06～#09》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “N: Game Concepts 2 (Category Compilation) #06～#09”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频回顾了樱井政博在不同游戏项目中的概念构思过程，重点探讨了每款游戏背后的灵感来源与思维模式。他以发布顺序逐一审视了《星之卡比：飞天赛车》、《陨石方块》、《甲虫王者》和《任天堂明星大乱斗X》等作品，揭示了设计决策的深层逻辑。视频强调了从创意萌芽到具体实现的设计路径，而非开发轶事，为理解游戏概念的形成提供了独特视角。这种对游戏核心理念的剖析，有助于设计师洞察不同类型游戏的创意起点与演变。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184755,7 +184803,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过回顾具体游戏的创作历程，展示了设计师如何从最初的灵感出发，逐步构建并完善游戏概念，这对于理解设计思维的演进过程至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-0Fuo0S3g-XY",
@@ -184764,14 +184815,13 @@
       "en": "M: Grab Bag 2 (Category Compilation) #10～#14"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《M: Grab Bag 2 (Category Compilation) #10～#14》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “M: Grab Bag 2 (Category Compilation) #10～#14”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期探讨了游戏设计中如何超越前作的挑战，以及在创作过程中如何平衡创新与玩家的既有期待。视频还深入分析了长时间游戏对玩家视力的影响，并提出了缓解眼部疲劳的设计考量。此外，它分享了任天堂红白机（Family Computer）的诞生故事，揭示了其对游戏产业的深远影响与技术细节。最后，樱井政博揭秘了初代《星之卡比》开发期间的幕后故事，包括其独特机制的形成与开发团队的决策过程。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=0Fuo0S3g-XY",
@@ -184785,7 +184835,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过多个独立主题，探讨了游戏开发中的历史背景、设计挑战、玩家体验考量以及具体项目的开发历程，为理解游戏产业的演变和设计决策提供了多维度视角。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-2wdHc1_-OF0",
@@ -184794,11 +184847,12 @@
       "en": "K: Programming & Tech 2 (Category Compilation) #06～#09"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《K: Programming & Tech 2 (Category Compilation) #06～#09》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “K: Programming & Tech 2 (Category Compilation) #06～#09”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频集锦探讨了游戏编程与数据处理，旨在以简明方式向大众普及相关知识。樱井政博通过《任天堂明星大乱斗》中的击飞机制，展示了编程如何实现核心玩法体验。视频还涵盖了多人协作开发文件、调试模式的应用，以及透明度功能在游戏中的实现细节。这些内容揭示了技术决策如何直接影响游戏设计与开发效率，强调了编程在塑造玩家体验中的基础作用。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184815,7 +184869,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频将复杂的编程与技术概念简化，使其对非技术背景的普通观众和游戏设计师更易理解，促进了跨职能的知识共享。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-O8b0I6r8p5I",
@@ -184824,14 +184881,16 @@
       "en": "J: UI 2 (Category Compilation) #09～#15"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《J: UI 2 (Category Compilation) #09～#15》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “J: UI 2 (Category Compilation) #09～#15”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏用户界面（UI）的设计原则，强调了如何通过优化菜单、信息显示和交互元素来提升玩家体验。它通过具体案例，如快速选择、跳过/暂停功能、按键设置和文本推进，展示了UI设计如何直接影响游戏的易用性和沉浸感。视频还讨论了在菜单中添加帮助文本的重要性，以及如何在没有文字的情况下清晰传达信息，最终聚焦于HUD（抬头显示）的设计考量。这些实践旨在确保玩家能够直观地理解和操作游戏，从而获得更流畅、更愉快的互动体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "player-perspective-taking",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=O8b0I6r8p5I",
@@ -184845,7 +184904,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频从玩家视角出发，详细阐述了UI设计如何通过优化信息呈现和交互方式，直接影响玩家对游戏操作的感知和整体体验，是理解游戏反馈机制的重要参考。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-sSF1e1nKNFE",
@@ -184854,11 +184916,11 @@
       "en": "I: Audio 2 (Category Compilation) #08～#14"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《I: Audio 2 (Category Compilation) #08～#14》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “I: Audio 2 (Category Compilation) #08～#14”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏音频设计，强调原创音乐的不可替代性，并建议通过混响等手段强化打击感，提升玩家的沉浸感。它还讨论了如何平衡环境音效，以及利用其他歌曲作为音频参考，以提升整体听觉体验和游戏氛围。视频特别提及了红白机时代的音频限制与创新，展现了在技术局限下的巧妙设计。最终指出所有杰作都拥有出色的音频设计，强调了声音在游戏中的关键作用和其对玩家情感的影响。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "game-feel-tuning",
       "multimodal-presentation-integration"
     ],
     "knowledgeTopicIds": [
@@ -184879,7 +184941,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接讨论了游戏中的音乐、音效和语音如何共同塑造玩家的即时反馈和整体体验，并提供了具体的设计考量和方法。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-tNRGqvCck6M",
@@ -184888,14 +184953,16 @@
       "en": "H: Effects 2 (Category Compilation) #07～#11"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《H: Effects 2 (Category Compilation) #07～#11》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “H: Effects 2 (Category Compilation) #07～#11”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏特效的多种表现形式，强调其在动态呈现中才能展现的真实价值与魅力。内容涵盖了广告牌、刀光拖影等具体特效的制作技巧，以及如何确保特效尺寸的恰当性，以达到最佳视觉效果。视频还讨论了闪烁效果的巧妙应用，并分析了粒子特效在游戏设计中的局限性及其优化策略。这些讨论旨在帮助设计师更好地理解和运用视觉效果，从而显著提升游戏的整体表现力与玩家沉浸感。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "game-feel-tuning",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=tNRGqvCck6M",
@@ -184909,7 +184976,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频详细拆解了多种视觉特效的制作与应用，直接关联到游戏手感的调校和多模态表现的整合，为设计师提供了具体的实践指导。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-vj-PewTwDV0",
@@ -184918,8 +184988,7 @@
       "en": "G: Animation 2 (Category Compilation) #10～#18"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《G: Animation 2 (Category Compilation) #10～#18》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “G: Animation 2 (Category Compilation) #10～#18”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏角色动画的多种技巧与挑战，从基础的受击动画到复杂的面部表情，揭示了如何通过动画细节增强游戏体验。它详细讲解了插值、翻转动画、动画混合等技术，以及在表现手指动作和处理骨骼局限性时的考量。视频强调了动画设计中需始终兼顾攻击判定，并探讨了双轴旋转在动画中的应用，为动画师提供了实用的设计思路与技术指导。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -184942,7 +185011,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过具体动画技巧的讲解，展示了如何通过视觉反馈直接影响玩家对游戏操作的感知和理解，是提升游戏手感的重要组成部分。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-ShB7mKj6Mag",
@@ -184951,11 +185023,13 @@
       "en": "F: Graphics 2 (Category Compilation) #07～#13"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《F: Graphics 2 (Category Compilation) #07～#13》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “F: Graphics 2 (Category Compilation) #07～#13”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本系列视频深入探讨游戏美术制作的实用考量，而非侧重于工具教学，旨在为游戏开发者提供创建引人入胜视觉效果的实战指导。内容涵盖像素艺术的基础知识、如何统一游戏整体的视觉风格，以及真人和动画元素在视觉呈现上的冲突与融合。视频还详细讨论了图形设计如何深刻影响游戏的乐趣和玩家体验，并分享了监督美术工作的宝贵经验。此外，系列中还包括了微缩效果的巧妙呈现技巧，以及处理色彩差异以达到和谐视觉效果的实用方法。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -184972,7 +185046,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本系列视频从游戏视觉艺术的实际制作角度出发，探讨了美术风格统一、像素艺术基础、图形对乐趣的影响等多个维度，为游戏设计师提供了理解和指导美术方向的实用框架。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-dZ0NgG-h_uQ",
@@ -184981,18 +185058,22 @@
       "en": "E: Team Management 2 (Category Compilation) #08～#15"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《E: Team Management 2 (Category Compilation) #08～#15》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “E: Team Management 2 (Category Compilation) #08～#15”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了游戏开发团队管理策略，强调了作为公司一员制作游戏、当日事当日毕以及及时决策的重要性。它还详细介绍了 Bug 测试系统、持续的 Play Testing，以及总监和制作人的职责，包括如何通过精简来优化工作流程。视频特别提及了小学 Play Testers 的作用，并强调了总监在项目中的关键取舍职能，以确保开发过程的顺畅与高效。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "alignment-facilitation"
+      "playtesting",
+      "task-breakdown",
+      "scope-prioritization",
+      "cross-discipline-communication",
+      "alignment-facilitation",
+      "constraint-aware-decision-making"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=dZ0NgG-h_uQ",
@@ -185006,7 +185087,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频提供了团队管理和开发流程优化的实用策略，对于理解游戏开发中跨职能协作、决策制定和测试环节的关键作用具有指导意义。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-AhD9HhmZ8wY",
@@ -185015,14 +185099,20 @@
       "en": "D: Design Specifics 2 (Category Compilation) #09～#18"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《D: Design Specifics 2 (Category Compilation) #09～#18》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “D: Design Specifics 2 (Category Compilation) #09～#18”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨游戏系统与机制，涵盖地图设计、意外结果、输入方式、教学引导等多个方面，强调设计细节对玩家体验的影响。樱井政博通过具体案例分析，揭示随机性、难度平衡、在线更新和屏幕切换等如何塑造游戏节奏与沉浸感。视频内容侧重于游戏内部运作原理，旨在帮助设计师理解如何精细打磨游戏的核心交互与反馈。它提供了从宏观系统到微观操作层面的设计洞察，对提升游戏品质具有指导意义。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "rules-system-modeling",
+      "game-feel-tuning",
+      "challenge-difficulty-design",
+      "pacing-control",
+      "navigation-wayfinding-design",
+      "design-specification-handoff"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=AhD9HhmZ8wY",
@@ -185036,7 +185126,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接聚焦于游戏系统与机制的深入探讨，涵盖了从地图作为游戏屏幕到重力转移等多个具体设计细节，与“系统与机制”主题高度契合，并提供了大量可供学习和借鉴的实践案例。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-QeR6ysgzTBU",
@@ -185045,11 +185138,17 @@
       "en": "C: Planning & Game Design 2 (Category Compilation) #10～#18"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《C: Planning & Game Design 2 (Category Compilation) #10～#18》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “C: Planning & Game Design 2 (Category Compilation) #10～#18”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏设计中教程的自然融入方式，并通过奖励机制有效激励玩家，同时强调了游戏写作的独特艺术性。它还细致分析了3D游戏中的晕动症问题，并提出了通过层级大纲保持项目组织性的有效策略。视频详细阐述了规划游戏奖励的多种策略，以及避免盲目比较的重要性，为游戏概念构思提供了实用指导。这些内容共同为游戏开发者提供了宝贵的洞察，帮助他们创造更具吸引力和沉浸感的游戏体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-framing",
+      "player-perspective-taking",
+      "emotional-arc-shaping",
+      "progression-economy-design",
+      "narrative-exposition",
+      "scope-prioritization"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -185075,11 +185174,15 @@
       "en": "B: Game Essence 2 (Category Compilation) #07～#15"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《B: Game Essence 2 (Category Compilation) #07～#15》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “B: Game Essence 2 (Category Compilation) #07～#15”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频将“游戏精髓”定义为风险与回报，并探讨其如何影响游戏核心的推拉机制，通过具体案例分析了坠落感、敌人设计、奖励考量等多个方面。樱井政博强调了游戏设计中对玩家体验的细致洞察，例如死亡作为一种解脱、登山的深层意义，以及快速重试的重要性。他指出，设计师应优先考虑奖励机制，并确保游戏具有足够的吸引力以促使玩家反复尝试，从而深化游戏的核心体验。视频还探讨了方块消除游戏中的精髓，并质疑了竞技游戏是否必须复杂化，为游戏设计提供了多维度思考。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction",
+      "choice-consequence-design",
+      "challenge-difficulty-design",
+      "core-loop-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -185096,7 +185199,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过对“游戏精髓”的深入剖析，为理解游戏核心机制提供了框架，并结合具体游戏场景阐述了风险与回报在塑造玩家体验中的关键作用。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-K5TgnMM2kuk",
@@ -185105,14 +185211,17 @@
       "en": "A: Work Ethic 2 (Category Compilation) #11～#20"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《A: Work Ethic 2 (Category Compilation) #11～#20》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “A: Work Ethic 2 (Category Compilation) #11～#20”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频集结了樱井政博关于工作伦理的十个观点，强调在工作中不依赖备选方案，并拓宽兴趣范围以促进产出。他提出要保持高昂的内在压力，警示多数意见并非总是正确，同时探讨了暗示的力量与忠于概念的重要性。视频还触及竞争、丰裕性、言语的力量以及回音室效应，这些原则不仅适用于游戏开发，也适用于所有职业领域。这些深刻见解为个人职业发展提供了宝贵的指导，帮助人们在复杂环境中做出明智决策。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "constraint-aware-decision-making",
+      "cross-discipline-communication"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=K5TgnMM2kuk",
@@ -185126,7 +185235,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容虽不局限于游戏开发，但其探讨的工作方法、职业心态和决策原则，对游戏设计从业者在面对创意、团队协作和市场竞争时的挑战，提供了宝贵的通用指导。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-sI39RMvlQT0",
@@ -185135,18 +185247,18 @@
       "en": "L: Marketing 1 (Category Compilation) #01～#07"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《L: Marketing 1 (Category Compilation) #01～#07》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “L: Marketing 1 (Category Compilation) #01～#07”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了游戏营销策略，强调无论游戏品质如何，若无人知晓便形同虚设。樱井政博提出营销具有乘数效应，并建议通过准确描绘游戏、提供试玩版、建立官网等方式进行推广。他特别指出，展示实际游戏画面和进行现场演示，是吸引玩家关注的关键。这些方法旨在确保游戏信息有效触达潜在受众，从而提升游戏的市场可见度和影响力。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "market-reference-analysis"
+      "audience-positioning",
+      "value-proposition-framing"
     ],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "leadership-creative-direction"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=sI39RMvlQT0",
@@ -185160,7 +185272,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接聚焦于游戏发布后的市场推广环节，提供了多种具体策略以确保游戏能被目标玩家群体发现并理解其价值。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-YYN22v4NjF4",
@@ -185169,11 +185284,13 @@
       "en": "N: Game Concepts 1 (Category Compilation) #01～#05"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《N: Game Concepts 1 (Category Compilation) #01～#05》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “N: Game Concepts 1 (Category Compilation) #01～#05”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频回顾了樱井政博在创作游戏时的灵感来源与思考过程，按发布顺序探讨了《星之卡比》系列和《任天堂明星大乱斗》系列等作品。它侧重于游戏概念的形成，而非开发轶事，揭示了设计决策背后的心路历程。通过分析这些经典游戏的早期构想，视频为理解游戏设计的起点和演变提供了宝贵的视角。内容强调了从无到有构建游戏核心理念的重要性，并展示了如何将抽象想法转化为具体游戏体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -185190,7 +185307,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过回顾知名游戏系列的设计起源，展示了设计师如何从最初的灵感出发，逐步构建和完善游戏的核心概念，这对于理解设计过程中的愿景维护和体验解构至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-_qPqBilhEtI",
@@ -185199,8 +185319,7 @@
       "en": "Masahiro Sakurai on Creating Games: Finale Special"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Masahiro Sakurai on Creating Games: Finale Special》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Masahiro Sakurai on Creating Games: Finale Special”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博在特别完结篇中，深入探讨了其YouTube频道从构思到收尾的幕后历程，并分享了创建此频道的初衷与结束原因。他将本集归类为“游戏概念”范畴，强调该类别不仅限于实际游戏，也涵盖项目构想。视频虽是终章，但频道将作为行业学习指南继续存在，未来可能用于发布公告或轻松内容。他期待与观众再次相遇，共同探索游戏设计的更多可能性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
@@ -185220,7 +185339,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容聚焦于频道创建的理念与过程，而非具体游戏设计方法，因此更侧重于项目构想和设计理念的探讨，而非特定设计能力。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-TOkKlFOkYjk",
@@ -185229,14 +185351,16 @@
       "en": "M: Grab Bag 1 (Category Compilation) #01～#09"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《M: Grab Bag 1 (Category Compilation) #01～#09》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “M: Grab Bag 1 (Category Compilation) #01～#09”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频集锦深入探讨了游戏设计中不拘一格的多元话题，从技术优化到个人生活感悟，内容丰富。它涵盖了如何有效应对游戏延迟、游戏奖项的深层意义，以及在长时间游戏过程中保持身体活力的实用建议。视频还触及了游戏定价策略的制定、高效团队协作模式的构建，以及远程工作对游戏开发流程的深远影响。这些内容共同展现了游戏制作领域广阔而复杂的视角，为从业者提供了全面的行业实践洞察。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "constraint-aware-decision-making"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=TOkKlFOkYjk",
@@ -185259,14 +185383,17 @@
       "en": "K: Programming & Tech 1 (Category Compilation) #01～#05"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《K: Programming & Tech 1 (Category Compilation) #01～#05》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “K: Programming & Tech 1 (Category Compilation) #01～#05”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏开发中编程与技术相关的核心议题，旨在帮助开发者构建灵活高效的游戏系统。它强调了逻辑命名文件、易于调整的参数化设计，以及利用票据系统进行任务管理的重要性。视频内容详细阐述了如何通过这些实践，确保项目管理与技术实现能够紧密协同工作。最终目标是简化开发流程，提升游戏品质，并有效应对大型项目和团队协作的挑战。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "rules-system-modeling",
+      "task-breakdown",
+      "design-specification-handoff"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=dyqKV_oZFMo",
@@ -185289,14 +185416,17 @@
       "en": "J: UI 1 (Category Compilation) #01～#08"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《J: UI 1 (Category Compilation) #01～#08》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “J: UI 1 (Category Compilation) #01～#08”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏用户界面（UI）的设计原则，强调清晰度与风格的平衡，以及文本大小对可读性的影响，旨在优化玩家体验。它通过现代QoL功能、加载画面处理和文本强调技巧，展示了如何有效提升玩家的沉浸感与操作效率。视频还阐述了菜单如何定义游戏世界，以及色彩编码在信息传达中的关键作用，确保信息准确传达。最终，它强调了放大重要元素以提升可见性与交互效率，从而全面提升游戏的整体品质。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration",
+      "aesthetic-direction",
+      "narrative-exposition"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=9LKqeXQl31U",
@@ -185310,7 +185440,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频详细讨论了UI设计中信息呈现的多种策略，包括文本、色彩和布局，这些都直接影响玩家对游戏世界的理解和操作反馈，是塑造整体游戏体验的关键环节。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-r8ZZlnvNvBY",
@@ -185319,14 +185452,13 @@
       "en": "Up is Down, and Down is Up [Work Ethic]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Up is Down, and Down is Up [Work Ethic]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Up is Down, and Down is Up [Work Ethic]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频探讨了职业生涯中的工作伦理，强调了如何以最佳方式应对专业生活中的挑战与机遇。它分享了作者在游戏开发领域积累的经验与思考，旨在帮助观众建立积极的工作态度和职业发展路径。视频内容涵盖了个人成长与职业规划的多个方面，为观众提供了宝贵的指导。作者也借此机会宣布本系列内容已完结，并期待未来与观众在特别节目中再会。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=r8ZZlnvNvBY",
@@ -185340,7 +185472,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频直接讨论了职业生涯中的工作伦理和专业方法，与“职业与行业实践”主题高度契合，为观众提供了关于如何应对职业挑战的实用建议。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-o2wYKkqhkG0",
@@ -185379,18 +185514,18 @@
       "en": "A Director’s Job is to Trim [Team Management]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《A Director’s Job is to Trim [Team Management]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “A Director’s Job is to Trim [Team Management]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "游戏总监的核心职责在于进行取舍和解决问题，这远比单纯的创造更为关键。视频深入探讨了在项目管理过程中，妥协与问题解决如何成为推动游戏开发进程的关键环节。它详细揭示了总监在团队协作中，如何通过权衡利弊和果断决策来确保项目顺利进行并达成目标。本视频作为团队管理系列内容的最终章，为该主题提供了全面的总结和深刻的见解。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "constraint-aware-decision-making",
       "alignment-facilitation"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=MS2Tf3nXhZE",
@@ -185447,11 +185582,11 @@
       "en": "Give Yourself a Handicap When Balancing Your Game [Game Essence]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Give Yourself a Handicap When Balancing Your Game [Game Essence]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Give Yourself a Handicap When Balancing Your Game [Game Essence]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "开发者因过于熟悉游戏，常忽略新玩家可能遇到的困难，导致平衡性问题。樱井政博建议通过给自己设置障碍来模拟新手体验，从而更客观地评估游戏难度。这种方法有助于发现并解决潜在的设计盲点，确保游戏对初次接触的玩家也能提供良好体验。视频强调了在游戏开发中，从玩家视角出发进行平衡调整的重要性，以避免因内部视角而产生的偏差。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "player-perspective-taking",
       "challenge-difficulty-design"
     ],
     "knowledgeTopicIds": [],
@@ -185470,7 +185605,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频强调了开发者在平衡游戏时，需要克服自身对游戏的熟悉度，主动采取措施模拟新玩家的体验，以确保游戏难度和可玩性对所有玩家都公平合理。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-jeA-m-Bzs04",
@@ -185479,11 +185617,12 @@
       "en": "What Happens When You Shift the Center of Gravity? [Design Specifics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《What Happens When You Shift the Center of Gravity? [Design Specifics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “What Happens When You Shift the Center of Gravity? [Design Specifics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了在游戏设计中，即使是简单的对象移动，也应思考如何通过改变重心等方式来增加趣味性。它强调了在基础功能实现后，通过创新思维来提升玩家体验的重要性，鼓励设计师不应满足于基础实现。视频内容提示设计师应持续探索变化以丰富游戏性，从而为玩家带来更深层次的乐趣。这是“设计细节”系列视频的最终章，总结了该类别对设计深度的关注和启发。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -185509,11 +185648,11 @@
       "en": "I: Audio 1 (Category Compilation) #01～#07"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《I: Audio 1 (Category Compilation) #01～#07》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “I: Audio 1 (Category Compilation) #01～#07”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏音频设计的多个关键方面，强调声音如何与游戏体验深度融合。它涵盖了从音乐节奏与游戏进程的匹配，到音效与背景音乐的平衡策略，以及在不同环境下测试音频的重要性。视频还讨论了游戏音乐与环境音的相互作用，区分了音频作为虚构与非虚构元素的运用，并提供了录音和音乐编排的实践建议，旨在提升整体沉浸感和玩家反馈。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "game-feel-tuning",
       "multimodal-presentation-integration"
     ],
     "knowledgeTopicIds": [
@@ -185534,7 +185673,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频详细阐述了音频在塑造游戏手感和提供反馈中的核心作用，通过具体案例指导如何调整和整合声音元素以优化玩家体验。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-a_HB81ujHHE",
@@ -185543,14 +185685,17 @@
       "en": "HUDs [UI]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《HUDs [UI]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “HUDs [UI]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "平视显示器（HUD）是游戏屏幕上叠加信息的重要组成部分，它能有效传达关键数据，是游戏体验不可或缺的要素。视频强调HUD作为UI设计核心，其重要性不言而喻，是玩家理解游戏状态、做出决策的直接窗口。本期视频作为UI系列内容的收官之作，总结了该类别下的设计原则与实践，为游戏界面设计提供了全面视角。它不仅提升了玩家的沉浸感，也确保了游戏信息的清晰传达，是游戏设计中不可或缺的一环。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration",
+      "narrative-exposition",
+      "aesthetic-direction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=a_HB81ujHHE",
@@ -185573,14 +185718,16 @@
       "en": "Odds and Ends of Supervising: Sora Edition [Graphics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Odds and Ends of Supervising: Sora Edition [Graphics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Odds and Ends of Supervising: Sora Edition [Graphics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博分享了他在游戏打磨阶段，如何对每个细节进行彻底检查的经验。他以监督《王国之心》系列角色索拉的开发为例，展示了其反馈过程中的具体环节。本视频是“图形”类别下的最终内容，也是该频道最后一次探讨监督者角色。这揭示了游戏开发后期，细节把控对最终品质的关键作用，强调了监督者在确保游戏符合其愿景方面的重要性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "design-critique-feedback",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=qqjXBzWX3_A",
@@ -185633,14 +185780,16 @@
       "en": "H: Effects 1 (Category Compilation) #01～#06"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《H: Effects 1 (Category Compilation) #01～#06》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “H: Effects 1 (Category Compilation) #01～#06”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本系列探讨游戏中各种特殊效果的运用，强调其在动态呈现中才能展现的真正价值。视频细致分析了如何通过“爆点”效果、角色高光、闪光爆炸与烟雾等视觉元素，增强游戏体验的冲击力。同时，它也深入讲解了慢动作视觉效果、屏幕震动及命中标记等反馈机制，以提升玩家的沉浸感与操作手感。这些效果共同作用，旨在让玩家在游玩过程中获得更清晰、更具表现力的即时反馈，从而优化整体的游戏感受。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "game-feel-tuning",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=w8iJGj9n2uA",
@@ -185654,7 +185803,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频详细拆解了多种视觉效果如何通过动态呈现，直接影响玩家对游戏动作、打击感和整体体验的感知，是理解游戏即时反馈设计的重要参考。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-Mh7nTn9_r40",
@@ -185790,8 +185942,7 @@
       "en": "G: Animation 1 (Category Compilation) #01～#09"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《G: Animation 1 (Category Compilation) #01～#09》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “G: Animation 1 (Category Compilation) #01～#09”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏动画的设计技巧，强调通过夸张和细节来提升视觉表现力，确保玩家能清晰感知角色动作。它详细介绍了如何分配动画、运用“过犹不及”原则，以及拆解攻击动画的构成要素。视频还涵盖了如何制作即时且有冲击力的起手动作，以及通过姿势、跟随动作和形变来增强打击感和信息传达。这些方法旨在弥补信息损失，让动画更具表现力，从而优化玩家的体验反馈。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -185814,7 +185965,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频系统性地介绍了动画在游戏手感和反馈中的核心作用，通过具体技巧展示了如何利用动画细节来增强玩家对游戏行为的感知和理解。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-fc-hOvTBTCc",
@@ -185883,12 +186037,12 @@
       "en": "Smash Bros. DOJO!! [Marketing]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Smash Bros. DOJO!! [Marketing]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Smash Bros. DOJO!! [Marketing]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博回顾了《任天堂明星大乱斗DOJO!!》网站的创建历程，该网站在互联网初期以其独特形式脱颖而出，成为游戏营销的典范。他强调了在技术受限环境下，如何通过创新方式进行游戏营销和信息发布，有效吸引玩家关注。视频揭示了早期游戏宣传策略的演变，以及官方网站在玩家沟通中的重要作用和独特价值。这是“营销”系列视频的最后一集，总结了相关经验与洞察，为后来的游戏宣传提供了宝贵借鉴。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "market-reference-analysis"
+      "audience-positioning",
+      "value-proposition-framing"
     ],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
@@ -185908,7 +186062,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频展示了在特定技术和市场环境下，如何通过创新的官方网站设计来有效进行游戏营销和玩家沟通，这对于理解早期游戏宣传策略的演变具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-jAQv4PTQvQE",
@@ -185979,11 +186136,12 @@
       "en": "Being Kind to Beginners [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Being Kind to Beginners [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Being Kind to Beginners [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博强调在与新手玩家互动时，应尽可能友善，而非刻意保留实力，这并非不礼貌。他指出，这种友善态度能促进更积极的游戏体验，并反驳了某些关于《任天堂明星大乱斗》起源的传闻。他明确表示，个人经历与《大乱斗》的创作理念无关，该游戏并非因此而生。视频探讨了游戏设计中对新手玩家的包容性，以及如何正确理解设计灵感的来源与影响。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "player-perspective-taking"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -186000,7 +186158,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接讨论了游戏设计中如何考虑不同水平玩家的体验，特别是对新手玩家的引导和包容，这对于理解游戏设计的基础原则至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-B2z5xpvtcRw",
@@ -186069,13 +186230,10 @@
       "en": "Famicom and NES Audio [Audio]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Famicom and NES Audio [Audio]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Famicom and NES Audio [Audio]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本集探讨了 Famicom 游戏机在音频技术上的创新与演进，它在发布之初便能发出前所未有的声音，并在十年间持续发展。视频深入分析了这一简单游戏系统如何通过其音频输出，为玩家带来独特的听觉体验。内容聚焦于游戏声音设计如何随硬件迭代而进步，以及其对游戏沉浸感和表现力的影响。通过回顾 Famicom 的音频发展，揭示了技术限制下创意表达的可能性与重要性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [
-      "multimodal-presentation-integration"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
@@ -186094,7 +186252,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频详细阐述了 Famicom 游戏机音频输出的演变，这对于理解游戏声音设计如何影响玩家体验和游戏整体手感具有重要参考价值。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-IGpEp0R1_xY",
@@ -186196,11 +186357,13 @@
       "en": "Start with the Climax [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Start with the Climax [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Start with the Climax [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "在游戏设计中，让玩家从一开始就获得掌控感极具挑战性，但如今这种做法更受青睐。尽管缓慢铺陈故事有其价值，但直接切入核心行动能更好地适应现代玩家的期待。这种设计策略强调即时参与和高潮体验，而非冗长的背景铺垫，能迅速抓住玩家注意力。它要求设计师重新思考传统叙事结构，以更高效的方式提供即时满足感，从而提升整体游戏体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "pacing-control",
+      "emotional-arc-shaping"
+    ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
@@ -186262,14 +186425,16 @@
       "en": "F: Graphics 1 (Category Compilation) #01～#06"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《F: Graphics 1 (Category Compilation) #01～#06》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “F: Graphics 1 (Category Compilation) #01～#06”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博在“图形”系列中，强调游戏美术应以传达信息为核心，而非单纯追求视觉效果。他通过“绘制光线而非资产”等原则，指导设计师如何利用光影、碰撞体和元素区分来强化视觉表达，确保玩家能准确理解游戏世界。视频还探讨了如何通过艺术监督和修饰，以及对《任天堂明星大乱斗》关卡的近距离分析，来优化美术表现，以实现清晰的视觉沟通和正确的尺度感，最终服务于游戏体验的整体目标。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=pwbfnlZegNs",
@@ -186283,7 +186448,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本系列视频从游戏美术的实际应用出发，提供了如何通过视觉设计来引导玩家注意力、传达游戏信息和强化体验的具体方法，对理解游戏视觉反馈的深层逻辑极具参考价值。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-VZRh0P40RAM",
@@ -186736,18 +186904,19 @@
       "en": "E: Team Management 1 (Category Compilation) #01～#07"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《E: Team Management 1 (Category Compilation) #01～#07》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “E: Team Management 1 (Category Compilation) #01～#07”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本系列视频探讨了游戏开发团队管理策略，强调团队协作对项目成功的关键作用。内容涵盖团队内部信息共享、明确岗位职责、鼓励成员积极表达意见，以及如何有效组织工作以提升效率。视频还讨论了集中解释设计理念、日常报告的重要性，并指出测试工作是持续且不可或缺的环节。这些方法旨在优化开发流程，确保团队顺畅运作，共同交付高质量的游戏产品。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "alignment-facilitation"
+      "cross-discipline-communication",
+      "alignment-facilitation",
+      "task-breakdown"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=LV1RH28X1wU",
@@ -186761,7 +186930,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接聚焦于游戏开发中的团队管理与协作，提供了从沟通到任务分配的实用策略，对于理解如何构建高效开发团队具有直接指导意义。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-U1b2OXdNcUY",
@@ -186832,8 +187004,7 @@
       "en": "Transparency Features [Programming & Tech]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Transparency Features [Programming & Tech]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Transparency Features [Programming & Tech]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频介绍游戏开发中用于调试的透明度功能，展示了如何利用这类工具来观察游戏内部状态与数据，从而辅助开发人员进行问题排查和性能优化。它不仅涉及编程技术细节，也触及了图形渲染与游戏体验的调试方法，强调了在开发过程中，调试工具对于理解游戏运行机制的重要性。视频还提及了其内容涵盖了编程、技术、杂谈乃至图形学等多个方面，是编程与技术分类下的最后一个视频，具有一定的总结性意义。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
@@ -186853,7 +187024,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频展示了调试工具在游戏开发中的实际应用，这对于理解如何通过技术手段提升开发效率和游戏质量具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-3tpttuaYiPI",
@@ -186952,14 +187126,17 @@
       "en": "D: Design Specifics 1 (Category Compilation) #01～#08"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《D: Design Specifics 1 (Category Compilation) #01～#08》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “D: Design Specifics 1 (Category Compilation) #01～#08”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本系列深入探讨游戏系统与机制，聚焦于如何通过精细设计提升玩家体验，旨在通过具体技术细节优化游戏手感与反馈。内容涵盖了赋予按键“重量感”的实现方法，以及跳跃物理的精妙设计，确保操作流畅自然。视频还详细介绍了八种不同的打击停顿技术，以增强战斗的冲击力与反馈感。此外，还讨论了中心点锚定、速度单位设定与边缘行为处理，全面提升游戏交互的深度与真实性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "rules-system-modeling",
+      "game-feel-tuning",
+      "pacing-control"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=5MBxBsF6-vg",
@@ -186973,7 +187150,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本系列视频详细分析了游戏中的核心系统与机制，提供了大量关于如何通过具体设计选择来塑造玩家体验的实用案例和技术细节。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-G3eacnEqdV0",
@@ -187042,14 +187222,16 @@
       "en": "Advancing Text [UI]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Advancing Text [UI]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Advancing Text [UI]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "视频探讨了在全配音游戏日益普及的背景下，如何优化文本呈现以提升玩家体验。它聚焦于赋予玩家快速推进对话的自由，避免因配音而拖慢游戏节奏。这要求设计者平衡叙事沉浸感与玩家对信息获取效率的需求，通过机制确保玩家能自主控制对话流程。核心在于理解玩家对游戏节奏的偏好，并提供灵活的交互选项，以适应不同玩家的阅读习惯和游玩步调。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "pacing-control",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=CkXSIUX5l_s",
@@ -187063,7 +187245,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频讨论了全配音游戏在文本呈现上可能带来的节奏问题，这与游戏手感和反馈中的“节奏控制”能力直接相关，即如何调整信息密度和交互速度以优化玩家体验。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-nCvdmQKrjf8",
@@ -187331,16 +187516,15 @@
       "en": "Handicap Systems [Design Specifics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Handicap Systems [Design Specifics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Handicap Systems [Design Specifics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "在竞技游戏中，玩家技能通常直接反映胜负，但并非所有游戏都需要如此高强度。对于更广泛受众的休闲游戏，设计者需要一套有效的系统来实施难度调整。这包括考虑如何平衡不同水平玩家的体验，确保游戏既有挑战性又具包容性。通过引入障碍或辅助机制，游戏可以适应不同玩家的需求，从而提升整体乐趣和可玩性，避免因技能差距过大而流失玩家。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "rules-system-modeling"
+      "challenge-difficulty-design"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "systems-mechanics"
+      "balance-economy"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=-aA_mjpCPMg",
@@ -187354,7 +187538,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频讨论了如何通过障碍系统来平衡竞技性与休闲性，以适应更广泛的玩家群体，这对于理解游戏受众定位和难度设计策略至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-EehkCHMll2o",
@@ -187363,11 +187550,14 @@
       "en": "B: Game Essence 1 (Category Compilation) #01～#06"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《B: Game Essence 1 (Category Compilation) #01～#06》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “B: Game Essence 1 (Category Compilation) #01～#06”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频将游戏本质定义为风险与回报，并深入探讨其如何驱动游戏核心的推拉机制。它通过角色扮演游戏中的具体应用，阐释了游戏本质的体现与超越，并分析了乐趣的来源。视频还探讨了“恶魔的坩埚”概念，以及如何允许玩家巧妙地利用系统，以增强游戏体验和玩家参与感。这些讨论揭示了设计者如何通过精妙的机制安排，激发玩家的策略思考与情感投入。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction",
+      "choice-consequence-design",
+      "core-loop-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -187384,7 +187574,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过“风险与回报”这一核心概念，为理解游戏内在驱动力提供了基础框架，并结合具体游戏类型阐释了其应用，有助于设计者从本质层面思考游戏乐趣的来源。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-rXwo0qcKJDk",
@@ -187638,14 +187831,21 @@
       "en": "A: Work Ethic 1 (Category Compilation) #01～#10"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《A: Work Ethic 1 (Category Compilation) #01～#10》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “A: Work Ethic 1 (Category Compilation) #01～#10”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频集锦深入探讨了游戏开发中的职业道德与工作方法，强调游戏开发并非儿戏，需要从业者以严肃认真的态度对待。内容涵盖了提案撰写、高效演示技巧、灵活处理需求变更以及如何坚持长期项目，并指出导演需具备独特性和远见。这些原则不仅适用于游戏开发，也适用于其他行业，旨在帮助从业者以更专业和高效的态度面对工作挑战，最终交付经久不衰的优秀作品。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "task-breakdown",
+      "scope-prioritization",
+      "design-specification-handoff",
+      "cross-discipline-communication",
+      "alignment-facilitation",
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=ZTK6RJWQd6k",
@@ -187659,7 +187859,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频集锦从工作伦理和职业态度的角度，为游戏开发者提供了宝贵的经验和建议，强调了专业精神在项目成功中的关键作用。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-EzwCc2_8OzU",
@@ -188045,8 +188248,7 @@
       "en": "Flipped Animation [Animation]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Flipped Animation [Animation]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Flipped Animation [Animation]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博揭示了游戏中角色面向翻转动画的实现原理，例如《任天堂明星大乱斗》中两个卡比对峙时都能看到脸，以及马力欧无论朝向何方都能看到肚子。这种技术旨在确保玩家始终能清晰识别角色特征，提升视觉反馈与操作直观性。视频深入讲解了如何通过巧妙的动画处理，克服角色模型在不同视角下可能出现的显示问题，从而优化玩家对角色状态的感知。这对于维持游戏世界的视觉一致性与玩家沉浸感至关重要，是游戏手感调校中的一个精妙细节。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -188069,7 +188271,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过具体案例展示了动画细节如何直接影响玩家对角色状态的理解和游戏的整体手感，强调了视觉呈现对游戏体验的深远影响。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-Y4-eS6Ezui8",
@@ -188168,18 +188373,18 @@
       "en": "Finish Everything Within the Day [Team Management]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Finish Everything Within the Day [Team Management]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Finish Everything Within the Day [Team Management]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博强调当日事当日毕的工作原则，认为及时处理邮件不仅能提升个人感受，更能改善所有相关人员的工作体验。他以监督美术修饰工作为例，阐述了在图形制作中，如何通过细致的反馈与调整，确保项目进度与质量。这种高效的团队管理与沟通方式，对于游戏开发流程的顺畅至关重要，能有效避免延误。他指出，尽管存在例外情况，但坚持这一原则能显著提升整体效率与协作质量。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "alignment-facilitation"
+      "cross-discipline-communication",
+      "design-critique-feedback"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=j1qLM0yfOuY",
@@ -188193,7 +188398,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容强调了及时沟通和反馈在团队协作中的核心作用，尤其是在跨职能（如美术监督）场景下，这直接影响项目效率和成员体验。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-pb4MCvedyOg",
@@ -188292,11 +188500,12 @@
       "en": "Teaching Players How to Play [Design Specifics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Teaching Players How to Play [Design Specifics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Teaching Players How to Play [Design Specifics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "随着游戏复杂性日益增加，内置教学变得至关重要，本视频探讨了如何有效引导玩家掌握游戏规则与操作。它强调了游戏本身应承担起教学职责，而非依赖传统说明书，通过设计巧妙的机制来自然地传达信息。视频提供了多种教学方法，旨在帮助玩家在游玩过程中逐步理解游戏系统，从而提升整体体验。这些策略确保了即使是复杂的游戏，新玩家也能快速上手并享受乐趣，避免因学习曲线陡峭而流失。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "player-perspective-taking"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -188313,7 +188522,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频直接讨论了游戏设计中如何通过内置机制来引导玩家学习，这对于理解设计基础中“用户友好”和“可玩性”的核心概念至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-s5u7VqDl-1I",
@@ -188539,14 +188751,17 @@
       "en": "Odds and Ends of Supervising [Graphics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Odds and Ends of Supervising [Graphics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Odds and Ends of Supervising [Graphics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频揭示了游戏总监在监督游戏开发过程中的具体工作，特别是如何通过细致的调整来提升游戏内容。樱井政博以“已完成”的图形内容为例，展示了他在交付前如何提出额外修改意见，以确保最终品质。这体现了总监在艺术指导和细节把控上的关键作用，确保游戏视觉效果达到预期标准。视频强调了监督工作并非简单验收，而是通过反复审视与微调，将作品打磨至更高水平。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "design-critique-feedback",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=wKQ2v9kno9I",
@@ -188560,7 +188775,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过具体案例展示了总监如何通过对“已完成”内容的细致反馈和调整，来维护和提升游戏的艺术品质与创意愿景。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-plPR6-Gqemc",
@@ -188569,11 +188787,12 @@
       "en": "Making Sequels [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Making Sequels [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Making Sequels [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "在游戏行业中，续作和系列扩展是普遍现象，尤其大型公司更倾向于采用此策略。制作续作能够有效利用现有系统和资产，避免从零开始构建一切，从而显著降低开发成本和风险。这种方法不仅能加快游戏推向市场的速度，还能利用玩家对前作的熟悉度，降低市场推广的难度。因此，在游戏开发中，对现有资产和经验的复用是重要的规划与设计考量，有助于实现更高效的开发流程和商业成功。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "scope-prioritization"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "production-iteration"
@@ -188668,11 +188887,12 @@
       "en": "Avoiding Comparison [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Avoiding Comparison [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Avoiding Comparison [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了在创意工作中追求独特性与新颖性的重要性，但指出人类在构思新事物时，往往难以摆脱既有参照物的比较。它强调了完全原创的挑战，因为我们的大脑习惯于通过已知经验来理解和构建概念。因此，设计者需要审视如何在现有框架内创造出令人耳目一新的内容，而非盲目追求绝对的“前所未有”。视频提示我们，即使是看似全新的想法，也可能在潜意识中受到过往经验的影响。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "market-reference-analysis"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -188689,7 +188909,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频讨论了创意工作中“独特性”的挑战，指出人类难以在没有参照物的情况下构思，这与市场分析中区分模仿与创新的边界有共通之处。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-RDrNWAHaKfI",
@@ -188788,14 +189011,13 @@
       "en": "Special Crossover! #3 [Special]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Special Crossover! #3 [Special]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Special Crossover! #3 [Special]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频是与《游戏中心CX》的特别联动最终回，樱井政博回顾了此次跨界合作，并表达了对共同游玩多款游戏的喜悦。他强调了这次合作的独特意义，并对能与有野课长一同体验游戏感到非常开心，认为这是难得的经历。樱井政博鼓励观众前往《游戏中心CX》20周年频道观看更多挑战内容，以深入了解他们的游戏过程。但他明确指出这些额外内容仅提供日语版本，希望观众能理解并享受这次特别的跨界合作。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "practitioner-interviews-podcasts"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=zfh0oq-_nJQ",
@@ -188818,14 +189040,13 @@
       "en": "Special Crossover! #2 [Special]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Special Crossover! #2 [Special]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Special Crossover! #2 [Special]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频回顾了街机游戏在短短四年内的显著演变，通过与传奇玩家有野课长一同体验经典街机游戏，展示了游戏设计与技术进步的紧密结合。视频探讨了游戏如何从基础玩法发展出更复杂的机制，并强调了早期游戏在有限技术下实现创新体验的历程。它揭示了游戏设计者在技术约束下，如何通过创意和迭代推动游戏体验的边界，为现代游戏设计提供了历史视角与启发。这段历史也反映了玩家与游戏互动方式的变迁，以及游戏作为文化现象的持续进化。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=ll01fYUI_iQ",
@@ -188839,7 +189060,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过回顾街机游戏在短时间内的快速演变，为理解游戏设计在技术限制下的创新与发展提供了具体的历史案例。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-6QH1cQWmXlY",
@@ -188848,14 +189072,15 @@
       "en": "Special Crossover! #1 [Special]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Special Crossover! #1 [Special]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Special Crossover! #1 [Special]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频回顾了1978至1987年间街机游戏的发展历程，聚焦于“太空入侵者十年”的经典作品。通过对这些早期游戏的深入剖析，它展示了视频游戏如何从简单概念演变为复杂系统，揭示了设计理念的演进与技术限制下的创意突破。视频强调了历史语境对游戏设计的影响，并提供了一个独特的视角来理解游戏产业的早期形态与核心乐趣。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=6QH1cQWmXlY",
@@ -188869,7 +189094,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过回顾早期街机游戏，展示了游戏设计在历史语境下的演变，这对于理解当前设计选择的根源和未来发展方向至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-ChNceKFm2kI",
@@ -188968,8 +189196,7 @@
       "en": "Planning Your Game’s Rewards [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Planning Your Game’s Rewards [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Planning Your Game’s Rewards [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了在《任天堂明星大乱斗》这类不设升级或新装备的游戏中，如何巧妙设计非传统奖励机制，以持续激发玩家的参与热情并维持其满意度。它强调即使游戏缺乏典型的成长系统，也必须通过其他创新方式来有效补偿玩家，从而避免游戏体验变得空虚和乏味。这提示游戏设计师们需要超越传统的奖励模式，积极探索并引入多样化的激励机制，以确保玩家能够长期保持高度的投入感。通过这种方式，即使没有数值增长，玩家也能感受到持续的进步和成就。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -188977,7 +189204,7 @@
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "balance-economy"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=44ONFHla-sw",
@@ -189093,14 +189320,15 @@
       "en": "Make Important Elements Bigger [UI]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Make Important Elements Bigger [UI]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Make Important Elements Bigger [UI]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了菜单布局中列表格式的替代方案，强调UI设计应根据游戏目标和玩家体验而异。作者偏好玩家熟悉后无需阅读文字即可导航的菜单，通过视觉提示而非纯文本引导操作。这要求UI设计超越传统模式，注重直观性和可识别性，以显著提升用户体验。最终，一个优秀的UI能让玩家在不依赖文字的情况下，快速理解并高效操作游戏界面，实现无缝交互。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=va8wt2yGviY",
@@ -189251,8 +189479,7 @@
       "en": "Damage Animations [Animation]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Damage Animations [Animation]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Damage Animations [Animation]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "伤害动画作为游戏反馈的关键组成部分，对玩家体验至关重要，能直观传达受击信息。樱井政博指出，在《任天堂明星大乱斗》这类拥有多样体型的游戏中，为每个角色制作独特的伤害动画是一项艰巨任务。这不仅涉及技术挑战，也关乎如何通过视觉细节强化游戏手感与沉浸感。因此，设计者需在工作量与反馈质量间权衡，确保动画既能有效传达信息，又符合角色特性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -189275,7 +189502,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频探讨了伤害动画作为游戏反馈机制的重要性，以及在多角色游戏中实现其多样性所面临的制作挑战，强调了动画在塑造游戏手感中的核心作用。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-6P8zwwQ9OhU",
@@ -189407,14 +189637,16 @@
       "en": "Staying Organized with Hierarchical Outlines [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Staying Organized with Hierarchical Outlines [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Staying Organized with Hierarchical Outlines [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频介绍了一种通过层级大纲来组织复杂想法和文档的实用方法，强调其在游戏设计规划中的有效性。樱井政博分享了他如何利用这种结构化思维，将提案、规范文档和故事内容清晰地组织起来。这种方法不仅能提升工作效率，还能确保设计思路的连贯性与完整性，避免信息混乱。它对于撰写提案和规划视频内容都非常有用，是保持项目有序推进的关键工具。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "task-breakdown",
+      "design-specification-handoff"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=ZzCfzwe23kw",
@@ -189428,7 +189660,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频中介绍的层级大纲组织方法，直接对应了游戏设计中对复杂信息进行结构化管理的需求，尤其在撰写设计文档和规划项目时，能有效提升效率和清晰度。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-yIXB0vGJBuw",
@@ -189689,11 +189924,13 @@
       "en": "Is Your Game Appealing Enough to Start Over? [Game Essence]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Is Your Game Appealing Enough to Start Over? [Game Essence]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Is Your Game Appealing Enough to Start Over? [Game Essence]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "视频探讨了惩罚性游戏机制，特别是Roguelike类型，如何影响玩家的重复游玩意愿。尽管这类游戏旨在让玩家反复体验，但其吸引力才是决定玩家是否愿意重头再来的关键。设计者需审视高失败成本对玩家心理的影响，确保游戏核心乐趣足以抵消挫败感。最终，游戏能否持续吸引玩家，取决于其内在的魅力而非单纯的机制设定。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "player-perspective-taking",
+      "challenge-difficulty-design"
+    ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
@@ -189712,7 +189949,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频讨论了高失败惩罚机制对玩家重复游玩意愿的影响，强调了从玩家视角审视游戏吸引力的重要性，这对于理解玩家动机和设计挑战性系统至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-qahwb7_67f0",
@@ -189721,8 +189961,7 @@
       "en": "Arranging Music [Audio]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Arranging Music [Audio]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Arranging Music [Audio]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博在《任天堂明星大乱斗》系列中，探讨了如何编排游戏音乐，使其既能保持原作辨识度，又能展现独特的魅力。他强调了在改编曲目时，需兼顾原曲精髓与新编排的吸引力，以满足玩家对熟悉感和新鲜感的双重期待。这不仅是技术层面的挑战，更关乎如何通过音乐设计，有效塑造游戏整体的听觉体验与情感共鸣。视频揭示了音乐改编在游戏设计中，对作品整体艺术性和玩家沉浸感的重要影响。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -189746,7 +189985,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接阐述了声音设计中音乐编排的考量，这与游戏手感和反馈主题紧密相关，因为音乐是塑造玩家体验的重要组成部分。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-VGsxpvJ4IfM",
@@ -189785,8 +190027,7 @@
       "en": "Kid Icarus: Uprising [Game Concepts]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Kid Icarus: Uprising [Game Concepts]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Kid Icarus: Uprising [Game Concepts]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了《新光神话：帕鲁特娜之镜》这款3DS早期第三人称射击游戏的创作理念，揭示了其设计背后的核心构思。主创人员分享了游戏开发过程中的关键决策与思考，强调了概念如何转化为实际游戏体验。视频内容不仅展现了游戏设计的复杂性，也传达了团队对最终成果的满意与自豪。通过对具体案例的剖析，为游戏开发者提供了宝贵的经验与启示。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
@@ -189806,7 +190047,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频直接阐述了游戏创作背后的概念，这对于理解设计决策的源头和游戏如何从理念走向实现至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-mDVaOyzO5pY",
@@ -189815,14 +190059,13 @@
       "en": "Games During My Childhood [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Games During My Childhood [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Games During My Childhood [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博回顾童年时期接触电子游戏的经历，彼时正值游戏产业的萌芽阶段，他分享了自己作为早期玩家的独特体验。视频探讨了游戏如何塑造个人成长与认知，以及早期游戏设计对玩家的影响，展现了游戏历史的演变。他通过个人视角展现了游戏历史的演变，并强调了童年游戏记忆对设计师的深远意义。这些早期体验不仅是娱乐，更是他职业生涯中创新灵感的源泉。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=mDVaOyzO5pY",
@@ -189836,7 +190079,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过回顾早期游戏体验，为理解游戏作为文化现象的演变提供了个人化的历史视角，并探讨了其对设计师个人成长的影响。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-T6XgiBzYbzs",
@@ -190006,14 +190252,13 @@
       "en": "Family BASIC [Programming & Tech]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Family BASIC [Programming & Tech]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Family BASIC [Programming & Tech]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博深入回顾了1984年的Family BASIC，强调其对《星之卡比》和《任天堂明星大乱斗》等经典作品的深远影响。他通过实际操作展示了这款特殊外设，重温了早年编程的乐趣与独特体验。视频揭示了早期编程工具如何激发创意思维，并为后来的游戏开发奠定了坚实基础。这充分表明了在技术限制下，创造性工具对游戏设计演进的关键作用和深远意义。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=89_FhHQ5n-g",
@@ -190027,7 +190272,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过回顾早期编程工具，展示了技术平台如何塑造游戏设计思维，并影响后续作品的诞生与发展。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-oSi0wEJHLuA",
@@ -190066,8 +190314,7 @@
       "en": "♪ PRESS START [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《♪ PRESS START [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “♪ PRESS START [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频经相关方许可，分享了游戏音乐会系列“PRESS START”的录音片段，展示了游戏音乐在塑造体验中的重要作用。视频强调了游戏音乐作为一种艺术形式，如何通过旋律和节奏激发玩家情感，并深化游戏世界的沉浸感。它揭示了音乐设计如何与游戏内容紧密结合，共同构建独特的氛围与叙事，为玩家带来难忘的听觉盛宴。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
@@ -190075,7 +190322,7 @@
       "audiovisual-semiotics"
     ],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "practitioner-interviews-podcasts"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=zJcPrrjFNFw",
@@ -190089,7 +190336,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过分享游戏音乐会内容，展示了游戏音乐作为设计元素如何影响玩家体验，并由创作者亲自介绍，为从业者提供了观察游戏设计判断的视角。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-NDno0U5UxSI",
@@ -190130,18 +190380,18 @@
       "en": "Explain Ideas to Everyone at Once [Team Management]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Explain Ideas to Everyone at Once [Team Management]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Explain Ideas to Everyone at Once [Team Management]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频介绍了一种团队沟通系统，它通过延长会议时间来确保所有成员对项目理念保持一致。这种方法虽然增加了会议时长，但其带来的益处远超这一缺点，有效降低了团队成员间信息不同步的成本。实践证明，该系统获得了团队成员的普遍认可，有助于提升整体协作效率和项目理解深度。它强调了在团队管理中，确保信息共享和共识达成的重要性，即使这意味着需要投入更多时间进行沟通。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "cross-discipline-communication",
       "alignment-facilitation"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=CafmzxRBo4Y",
@@ -190155,7 +190405,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频提供了一种具体的团队管理方法，旨在解决大型团队中常见的沟通不畅和信息不对称问题，对于提升跨职能协作效率具有直接指导意义。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-ssvIEm_2mYM",
@@ -190194,16 +190447,15 @@
       "en": "Branching Tastes [Work Ethic]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Branching Tastes [Work Ethic]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Branching Tastes [Work Ethic]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博探讨了玩家在成长过程中，其价值观如何受早期游戏和媒体影响，形成独特的品味分支。他强调在设计游戏时，应深入思考如何选择目标受众，以适应这些多元化的玩家价值观。视频旨在引导设计师理解玩家群体的多样性，并据此调整设计策略，确保作品能有效触达并满足特定受众的需求。这对于游戏产品定位和市场策略的制定至关重要，避免盲目追求普适性而失去特色。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "interactive-narrative-design"
+      "audience-positioning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "narrative-expression"
+      "design-fundamentals"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=50Khnf80P7M",
@@ -190217,7 +190469,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接讨论了如何根据玩家价值观的多元性来选择和定位目标受众，这对于游戏设计初期确定产品方向至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-pivfg2DrFfY",
@@ -190226,11 +190481,14 @@
       "en": "Menus Define Your World [UI]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Menus Define Your World [UI]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Menus Define Your World [UI]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "游戏沉浸感不仅依赖精细的角色与背景，UI设计同样能深刻反映游戏世界观，是构建沉浸体验的关键。在投入大量美术工作前，应优先思考UI如何与游戏世界融为一体，通过界面元素传达氛围与设定。这有助于玩家在操作时持续感受游戏世界的独特魅力，而非仅仅将其视为功能性工具。一个与世界观高度契合的UI，能有效增强玩家的代入感与整体体验，让玩家更深入地融入游戏世界。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "world-character-coherence",
+      "aesthetic-direction",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -190316,11 +190574,16 @@
       "en": "Super Smash Bros. Brawl [Game Concepts]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Super Smash Bros. Brawl [Game Concepts]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Super Smash Bros. Brawl [Game Concepts]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频聚焦于《任天堂明星大乱斗X》的规划与核心游戏概念，探讨了在独立开发背景下，如何从零开始构建游戏设计。樱井政博分享了他在资源有限的情况下，如何构思并实现游戏的核心玩法与创新机制。视频深入分析了设计决策背后的思考过程，以及这些概念如何塑造了最终的游戏体验。它揭示了在复杂项目中，将抽象想法转化为具体游戏元素的实践路径。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-framing",
+      "core-loop-design",
+      "rules-system-modeling",
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -190337,7 +190600,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频直接讨论了游戏规划与概念构建，这对于理解如何将初步想法转化为可执行的设计方案至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-C3ANiCI1Em4",
@@ -190599,14 +190865,16 @@
       "en": "An Up-Close Look at Smash Bros. Stages [Graphics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《An Up-Close Look at Smash Bros. Stages [Graphics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “An Up-Close Look at Smash Bros. Stages [Graphics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了《任天堂明星大乱斗 特别版》中多个对战舞台的设计细节，通过检视游戏内实际资产来阐释其构成。樱井政博认为，直接分析这些已实装的视觉元素，比任何口头讲解都能更清晰地揭示设计理念。他强调了视觉效果在慢动作回放中的重要性，并以此作为理解舞台设计的关键视角。这种方法有助于玩家和开发者理解游戏如何通过视觉呈现来构建体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "level-spatial-design"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=lvYN7JciOdk",
@@ -190620,7 +190888,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过具体游戏案例，展示了如何从视觉资产层面分析关卡设计，并强调了视觉效果在游戏体验中的核心作用。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-ff7HadWHTJo",
@@ -191184,12 +191455,12 @@
       "en": "Marketing is Multiplicative [Marketing]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Marketing is Multiplicative [Marketing]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Marketing is Multiplicative [Marketing]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频强调了游戏营销的重要性，指出无论游戏品质多高，若无人知晓便形同虚设。仅投入开发特殊内容是不够的，还需要积极传播信息，让潜在玩家了解游戏的存在。营销是游戏成功的关键乘数，它能放大开发投入的价值，确保优秀作品被市场发现。因此，游戏开发者必须将营销视为与开发同等重要的环节，投入精力进行推广与宣传，才能实现游戏的商业成功。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "market-reference-analysis"
+      "audience-positioning",
+      "value-proposition-framing"
     ],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
@@ -191209,7 +191480,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频从游戏营销的视角，强调了产品传播在游戏成功中的关键作用，为理解游戏设计如何与市场策略结合提供了基础。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-353K_6kPqeE",
@@ -191218,12 +191492,12 @@
       "en": "Visual Effects in Slow Motion [Effects]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Visual Effects in Slow Motion [Effects]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Visual Effects in Slow Motion [Effects]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏中的视觉特效，强调其在游戏体验中的重要性，通过放慢速度仔细观察，我们可以学习到特效如何被设计和呈现。即使没有额外解释，这些视觉元素也能清晰传达其作用，有效引导玩家的感知和反馈。视频分析了特效如何通过视觉元素传达信息和情感，揭示了它们在塑造玩家体验方面的关键作用。这种细致的分析有助于我们理解多模态呈现的整合，对提升游戏手感至关重要。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "aesthetic-direction"
+      "multimodal-presentation-integration",
+      "experience-deconstruction"
     ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
@@ -191243,7 +191517,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过慢动作分析视觉特效，直接展示了游戏反馈如何通过视觉元素塑造玩家体验，并强调了多模态呈现的整合对游戏手感的重要性。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-JKV-30FD6NY",
@@ -191252,14 +191529,17 @@
       "en": "Loading Screens [UI]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Loading Screens [UI]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Loading Screens [UI]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "视频探讨了游戏加载时间虽无法完全消除，但可通过多种设计策略进行优化。例如，可以巧妙地掩盖加载过程，或清晰地标注加载状态，让玩家有喘息之机。同时，加载时间也是向玩家介绍游戏世界观或操作教学的宝贵时机。这些方法旨在提升玩家体验，将潜在的等待转化为有意义的互动或信息传递，从而将技术限制转化为设计优势，有效管理玩家的感知时间。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration",
+      "pacing-control",
+      "narrative-exposition"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=JKV-30FD6NY",
@@ -191273,7 +191553,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过加载屏幕这一常见但常被忽视的环节，展示了如何将技术限制转化为提升玩家体验和进行游戏教学的设计机会，强调了对玩家时间感知的管理。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-cIB0BUe6Ihk",
@@ -191315,14 +191598,16 @@
       "en": "Learn to Count Frames! [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Learn to Count Frames! [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Learn to Count Frames! [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "视频探讨了在游戏开发中估算帧数的重要性，这能有效控制游戏时间流逝，是项非同寻常但实用的技能。樱井政博分享了数个技巧，帮助开发者掌握帧数计算，从而更好地规划和实现游戏动画效果。理解帧数如何影响游戏节奏与玩家体验，对于精细化设计至关重要。掌握此技能有助于提升游戏手感与反馈的精准度，确保游戏动作流畅自然。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "game-feel-tuning",
+      "pacing-control"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=JZ1Jd0u3b6U",
@@ -191336,7 +191621,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频直接讨论了帧数与游戏时间流逝的关系，这与游戏手感、动画表现和节奏控制紧密相关，是提升玩家体验的关键细节。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-SpwQkNzNsXk",
@@ -191377,11 +191665,13 @@
       "en": "Meteos [Game Concepts]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Meteos [Game Concepts]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Meteos [Game Concepts]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博在视频中分享了《Meteos》这款游戏的早期概念提案，旨在创造一款兼具风险与回报的创新益智游戏。他通过精心制作的动画形式，生动地阐释了游戏的核心设计理念和机制构思过程。视频清晰展示了如何将抽象的游戏想法具象化，以便高效地传达给开发团队。这揭示了游戏设计初期，通过具体化方案来验证和沟通创意的实践方法，对项目推进至关重要。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-framing",
+      "learning-prototype-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -191437,14 +191727,16 @@
       "en": "Competing with the Past [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Competing with the Past [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Competing with the Past [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "在订阅服务普及的当下，创作者不仅要与新发布的作品竞争，更要面对海量历史作品的挑战。消费者拥有前所未有的媒体选择，这使得任何新内容都必须在庞大的内容库中脱颖而出。这种竞争格局要求设计者深入思考作品的独特价值与长久吸引力，以应对过去作品带来的持续影响力。创作者需在内容爆炸时代，重新审视作品的生命周期与市场定位策略。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "market-reference-analysis",
+      "audience-positioning"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=EhcitspNMuI",
@@ -191458,7 +191750,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频探讨了在内容过载时代，游戏作为一种媒体形式，如何与过去的海量作品竞争，这对于理解游戏在更广阔文化语境中的定位至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-atqS7SImuBc",
@@ -191527,8 +191822,7 @@
       "en": "Game Music and Ambient Sounds [Audio]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Game Music and Ambient Sounds [Audio]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Game Music and Ambient Sounds [Audio]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了游戏音乐如何与游戏体验紧密结合，强调配乐需与游戏内容相符，才能给玩家留下深刻印象。它通过 NES 游戏音乐的案例，挑战观众辨识不同游戏的配乐，以此说明音乐在塑造游戏氛围和记忆中的关键作用。视频指出，大型游戏配乐若未能与体验融合，便难以被玩家记住，提示设计师需重视音乐与游戏整体的协调性。这表明成功的游戏音乐设计，在于其能否有效服务于游戏的核心体验，而非独立存在。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -191552,7 +191846,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过具体案例，阐释了游戏音乐作为多模态表现的一部分，如何影响玩家的沉浸感和记忆，强调了声音设计在整体游戏体验中的重要性。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-v6ozfbqNa54",
@@ -191621,14 +191918,16 @@
       "en": "Sora's Work-From-Home Strategies [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Sora's Work-From-Home Strategies [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Sora's Work-From-Home Strategies [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "新冠疫情曾被认为对游戏业影响较小，但它迫使工作方式彻底改变。本期视频中，樱井政博分享了Sora工作室如何应对疫情挑战，详细阐述了远程办公的策略与实践。他探讨了疫情期间团队协作的调整，以及这些变化对游戏开发流程的具体影响。视频总结了Sora在特殊时期维持高效运作的经验，为行业提供了宝贵的参考，展示了其灵活应变的能力。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "alignment-facilitation"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=YXudgEHF78M",
@@ -191651,16 +191950,17 @@
       "en": "Falling Sells the Feeling of Flight [Game Essence]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Falling Sells the Feeling of Flight [Game Essence]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Falling Sells the Feeling of Flight [Game Essence]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了如何通过引入负面体验来增强游戏中的正面感受，指出若要玩家真正体验飞行的刺激，就必须包含坠落等不那么令人愉悦的元素。设计者应巧妙运用对立元素，以正确的方式实施，从而放大游戏中最精彩的部分。这种对比能有效提升玩家的沉浸感和情感投入，使核心体验更加深刻。通过平衡好坏体验，游戏能创造出更丰富、更具冲击力的感受。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "emotional-arc-shaping"
+    ],
     "knowledgeTopicIds": [
       "perception-attention-emotion"
     ],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=j45EIuChfqs",
@@ -191674,7 +191974,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频强调了通过对立元素来塑造玩家情感体验的重要性，这对于理解如何设计有冲击力的游戏感受至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-IM9P9NIKo10",
@@ -191713,14 +192016,16 @@
       "en": "Get the Sense of Scale Right [Graphics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Get the Sense of Scale Right [Graphics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Get the Sense of Scale Right [Graphics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "游戏中的CG模型本身不具备固有的尺度感，无论其大小，若形状相同则被视为同一物体。因此，设计师需主动采取措施，让这些模型在游戏世界中显得恰如其分，以建立正确的空间感知。这要求通过环境参照物、交互反馈或视觉提示来暗示其真实体量，确保玩家能直观理解对象的大小。通过精细化处理，使虚拟对象在玩家感知中获得合理的物理存在感，从而增强沉浸体验。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=A6Rbb5sK4nI",
@@ -191734,7 +192039,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频强调了在游戏设计中，视觉呈现如何影响玩家对虚拟世界中物体大小的感知，这对于构建沉浸感和空间连贯性至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-99gdMDF7V2E",
@@ -191743,8 +192051,7 @@
       "en": "Attack Poses [Animation]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Attack Poses [Animation]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Attack Poses [Animation]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "攻击姿势在游戏中至关重要，其表现好坏直接影响整体游戏体验。樱井政博分享了在《任天堂明星大乱斗》系列开发过程中，他如何精心设计这些姿势的考量与方法。他强调，即使是短暂的攻击动作，也需清晰传达意图与力量感，以确保玩家能准确理解并享受战斗。若姿势未能有效传达信息，将严重损害游戏的整体品质和玩家的沉浸感，甚至影响玩家对游戏操作的反馈感知。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
@@ -191767,7 +192074,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过具体案例，阐释了动画细节如何直接影响玩家对游戏操作的感知和整体战斗体验，是理解“手感”构成要素的绝佳材料。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-kLmd2F8LaLk",
@@ -191806,18 +192116,18 @@
       "en": "Don't Wait to Speak Your Mind [Team Management]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Don't Wait to Speak Your Mind [Team Management]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Don't Wait to Speak Your Mind [Team Management]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本集强调开发团队成员应积极表达想法，不应等待或保持沉默，因为每个成员都有改变项目的潜力。视频鼓励主动采取行动，与他人沟通，以促进团队内部的有效协作与问题解决。这种积极参与不仅是团队管理的关键，也体现了重要的职业道德，适用于游戏开发及其他多种工作场景。它促使团队成员认识到自身影响力，并勇于承担责任，共同塑造项目成果。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "alignment-facilitation"
+      "cross-discipline-communication",
+      "design-critique-feedback"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=f3UjN6cCBYY",
@@ -191831,7 +192141,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接探讨了团队成员在项目开发中主动沟通和表达意见的重要性，这对于建立高效的跨职能协作和提供建设性设计反馈至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-bRDAYgRns4E",
@@ -191840,14 +192153,16 @@
       "en": "Kirby Air Ride [Game Concepts]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Kirby Air Ride [Game Concepts]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Kirby Air Ride [Game Concepts]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博回顾了《星之卡比：飞天赛车》的开发历程，这是他首次在同一主机上连续制作游戏，并探讨了回归总监岗位的缘由。他详细阐述了游戏背后的核心概念，以及团队在开发过程中所面临的诸多挑战与困境。视频还提及了他在完成《星之卡比：飞天赛车》后选择独立发展的职业转折点。这段经历揭示了游戏制作人如何平衡多项目监督与核心创作，并为理解游戏开发中的决策与取舍提供了宝贵视角。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=bRDAYgRns4E",
@@ -191861,7 +192176,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频通过樱井政博的个人经历，展示了游戏总监在多项目管理、概念确立与团队挑战中如何维护创意方向并做出关键决策。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-ynBcgPh8xV4",
@@ -191904,14 +192222,15 @@
       "en": "Deconstruct, Analyze, and Rebuild [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Deconstruct, Analyze, and Rebuild [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Deconstruct, Analyze, and Rebuild [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博分享了他构思新游戏时常用的方法，即对现有游戏进行解构、分析，并在此基础上进行创新重组。他强调通过分解关键点、深入思考，并尝试提出更优或更具创新性的方案。这种方法论的有效性，很大程度上依赖于日常持续的游戏研究与积累。这表明设计创新并非凭空而来，而是建立在对现有作品的深刻理解与批判性反思之上。该过程凸显了系统性分析与持续学习在游戏设计中的核心作用，为设计师提供了可操作的思维框架。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "design-fundamentals"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=7VD0K1Sr5u0",
@@ -191925,7 +192244,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频描述了通过解构现有游戏来激发新想法和创新的方法，这对于理解游戏设计的基础工作方法至关重要。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-ZDopYzDX-Jg",
@@ -192028,14 +192350,13 @@
       "en": "Sora Ltd. [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Sora Ltd. [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Sora Ltd. [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频中，樱井政博首次揭秘其个人公司Sora Ltd.的运营模式与核心理念，阐释了公司如何作为其独立创作生涯的基石。他强调了独立运作对个人创作自由的重要性，并指出若非如此，当前分享游戏开发经验的YouTube频道可能无法存在。视频内容深入探讨了独立游戏开发者的公司结构与决策过程，为理解其独特的游戏设计视角提供了背景。这不仅是公司介绍，更是对独立创作价值与个人品牌塑造的有力证明。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=VVhGCtCNGHg",
@@ -192049,7 +192370,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过介绍Sora Ltd.的运作模式，揭示了独立游戏开发者如何构建其职业生涯与创作平台，对于理解个人工作室的建立与运营具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-1cFrEoiziDA",
@@ -192088,11 +192412,13 @@
       "en": "The Potential of One Button [Planning & Game Design]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《The Potential of One Button [Planning & Game Design]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “The Potential of One Button [Planning & Game Design]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨了仅用一个按钮进行游戏操作的潜力，强调了在简化控制的同时，区分不同游戏风格的重要性。它提醒设计师，即便控制极简，也应避免设计上的草率，确保游戏深度。视频特别指出，讨论仅限于字面上只使用一个按钮的游戏，不包括结合方向键或摇杆的案例。这种设计方法挑战了传统认知，鼓励在极简约束下探索丰富的交互可能性。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction",
+      "rules-system-modeling"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -192109,7 +192435,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过分析“一键操作”这一极端简化控制方式，深入探讨了游戏设计中如何平衡简洁性与游戏深度，为设计师提供了在严格限制下进行创新的视角。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-Hk2npGxEQRo",
@@ -192186,12 +192515,12 @@
       "en": "Let Players Cheat the System [Game Essence]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Let Players Cheat the System [Game Essence]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Let Players Cheat the System [Game Essence]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频探讨游戏开发者在规则制定上应有的宽容度，指出允许玩家巧妙地利用系统漏洞，有时能带来更丰富的游戏乐趣。樱井政博强调，尽管游戏设计涉及严格的规则构建，但适度放宽限制，让玩家找到意想不到的玩法，能显著提升体验。这种设计理念鼓励开发者思考规则的弹性，而非一味追求绝对的严谨性，从而在玩家与系统之间创造更多互动空间。当然，这种灵活性不适用于竞技类游戏，其中作弊行为是不可接受的。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "rules-system-modeling"
+      "rules-system-modeling",
+      "player-perspective-taking"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -192209,7 +192538,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频从玩家行为角度探讨了游戏规则设计的弹性，为理解系统与机制如何影响玩家体验提供了独特视角。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-tycbMSjDDLg",
@@ -192218,14 +192550,15 @@
       "en": "Eight Hit Stop Techniques [Design Specifics]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Eight Hit Stop Techniques [Design Specifics]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Eight Hit Stop Techniques [Design Specifics]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了《任天堂明星大乱斗 特别版》中使用的八种击中停顿技术，揭示了其具体实现细节。这些技术通过精确控制游戏时间流逝，增强了打击感和玩家反馈。视频内容旨在分享游戏设计中的“秘密配方”，帮助理解如何通过微调提升游戏体验。它强调了设计细节在塑造游戏手感和沉浸感方面的重要性，为开发者提供了实用的参考。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "game-feel-tuning"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=tycbMSjDDLg",
@@ -192239,7 +192572,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频详细拆解了《任天堂明星大乱斗 特别版》中击中停顿的具体技术，这直接关联到如何通过调整游戏参数来优化操作手感和即时反馈。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-nGaajB8m5Q0",
@@ -192248,14 +192584,15 @@
       "en": "Making Your Game Easy to Tune [Programming & Tech]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Making Your Game Easy to Tune [Programming & Tech]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Making Your Game Easy to Tune [Programming & Tech]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "在现代游戏开发中，平衡调整涉及众多人员，因此能够即时修改参数至关重要。视频强调了在开发过程中，快速迭代和调整数值的能力，对于确保游戏平衡性与可玩性不可或缺。尽管难以直观展示所用工具，但核心理念在于简化调整流程，以适应复杂的游戏开发需求。这种灵活性是实现高质量游戏体验的关键，并能有效应对多方参与的平衡工作。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "iteration-planning"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "balance-economy"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=nGaajB8m5Q0",
@@ -192269,7 +192606,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频强调了在游戏开发中，即时调整参数对于平衡性至关重要，这直接关联到数值、概率和持续平衡方法的实践。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-CVQ4PuihnTk",
@@ -192278,14 +192618,13 @@
       "en": "That Was Then, This Is Now [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《That Was Then, This Is Now [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “That Was Then, This Is Now [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博回顾了自己长期沉浸于游戏领域的经历，强调了对过去与现在游戏形态的熟悉，并指出单纯沉湎于旧日时光并无意义。他同时强调，若无昔日成就的积累与铺垫，我们便无法抵达今日的游戏发展水平。这段论述揭示了游戏设计中历史传承与创新发展之间的辩证关系，提示设计师应在理解历史的基础上展望未来。它提醒我们，游戏行业的发展是连续的，既要尊重过往，也要勇于突破，才能持续进步。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=CVQ4PuihnTk",
@@ -192299,7 +192638,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频探讨了游戏设计中历史与当下之间的关系，强调了理解游戏发展历程对当前设计实践的重要性，并指出不能脱离历史背景孤立地看待游戏。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-NBXt-Uq7dHg",
@@ -192338,18 +192680,18 @@
       "en": "Sharing Info Within a Team [Team Management]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Sharing Info Within a Team [Team Management]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Sharing Info Within a Team [Team Management]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频探讨了团队管理中的信息共享，强调了在游戏开发过程中保持团队成员之间信息透明的重要性。 Sakurai 讨论了如何通过有效沟通策略，确保所有成员都能及时获取关键信息，从而促进开发流程的顺畅进行。他指出，清晰的信息流有助于避免误解和重复工作，提升团队整体的协作效率。视频旨在帮助开发者建立高效的信息共享机制，以应对复杂项目中的挑战。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
+      "cross-discipline-communication",
       "alignment-facilitation"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=40ryMOr36fw",
@@ -192363,7 +192705,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频聚焦于团队内部信息共享的实践，这对于理解如何构建高效协作环境至关重要，直接影响项目管理和开发效率。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-DGIJk0Uh8jU",
@@ -192492,14 +192837,16 @@
       "en": "Writing Game Proposals [Work Ethic]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Writing Game Proposals [Work Ethic]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Writing Game Proposals [Work Ethic]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏提案的撰写方法，旨在高效传达游戏核心理念，帮助他人快速理解设计意图。樱井政博分享了他如何通过精炼的提案，清晰地概述新游戏的愿景与关键要素，确保团队对项目有共同认知。他强调提案不仅限于游戏领域，其沟通方法在其他工作场景中也同样适用，提升了跨部门协作效率。这种能力对于将复杂构想转化为可执行计划至关重要，是项目成功的基石。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "design-specification-handoff",
+      "cross-discipline-communication"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "narrative-expression"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=2Iiu1k16Ukc",
@@ -192513,7 +192860,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容聚焦于如何撰写游戏提案，这是一种将游戏构想转化为可理解、可执行文档的关键实践，直接支持生产与迭代过程中的沟通与对齐。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-noKsDZ-UPq8",
@@ -192772,14 +193122,19 @@
       "en": "Spec Changes [Work Ethic]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Spec Changes [Work Ethic]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Spec Changes [Work Ethic]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "游戏开发中修改规格是常事，应尽量避免，但有时也是必要的灵活应对。修改规格可能导致前期工作白费、开发路径变长，增加成本并打击士气。再周密的计划也可能在实际制作中发现问题，为了让游戏能被展示，必须完成它。过度准备资料，可能导致制作资料本身就相当于开发一款游戏。团队成员发现问题时应立即告知，越早沟通越能减少损失。面对不讲道理的电脑，集体智慧的决策至关重要，需摆出所有方案，选择当前最优解，兼顾短期与长期考量。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "scope-prioritization",
+      "iteration-planning",
+      "cross-discipline-communication",
+      "alignment-facilitation",
+      "constraint-aware-decision-making"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=bzWibA7izF8",
@@ -192865,11 +193220,12 @@
       "en": "Fun Beyond Game Essence [Game Essence]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Fun Beyond Game Essence [Game Essence]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Fun Beyond Game Essence [Game Essence]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本期视频深入探讨了游戏乐趣的多元来源，指出“游戏本质”并非唯一要素，许多游戏通过其他方式提供乐趣。樱井政博将分享不依赖游戏本质的游戏类型，展示游戏乐趣的无限可能性，拓宽了我们对游戏体验的认知。视频还提及了制作上的改进，包括片头音乐音量调整和开发者游戏名称的屏幕显示，提升了观看体验。为本集内容收集了大量素材，以丰富讨论，确保了内容的深度与广度。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -192895,18 +193251,19 @@
       "en": "Make the Tempo Match the Game [Audio]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Make the Tempo Match the Game [Audio]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Make the Tempo Match the Game [Audio]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频深入探讨了游戏节奏在整体体验中的核心作用，尤其强调了在游戏音乐创作过程中的重要性。导演经常需要积极介入，确保作曲家能够深刻理解游戏进程，并据此精准调整音乐的节奏与情绪。这凸显了跨职能沟通在游戏开发中的关键作用，旨在使所有团队成员对游戏体验保持高度一致的理解。最终，通过协调音乐与游戏节奏的完美融合，共同塑造玩家的沉浸感与整体体验，从而达到最佳效果。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [
-      "multimodal-presentation-integration"
+      "pacing-control",
+      "cross-discipline-communication",
+      "alignment-facilitation"
     ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=hGp2Jw5dLH8",
@@ -192929,14 +193286,13 @@
       "en": "Exercise While You Game! [Grab Bag]"
     },
     "summary": {
-      "zh-CN": "Masahiro Sakurai on Creating Games 官方 YouTube 频道公开的免费英文视频《Exercise While You Game! [Grab Bag]》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Masahiro Sakurai on Creating Games YouTube channel: “Exercise While You Game! [Grab Bag]”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "樱井政博强调身体健康对游戏开发工作和日常专注力的重要性，认为适度运动能带来显著益处。他分享了如何将运动融入生活，使其变得更有趣，以维持良好的身心状态。视频探讨了将个人健康管理与高强度创意工作相结合的策略，为游戏开发者提供了实用的自我关怀视角。这表明设计师的个人状态直接影响其创作效率与作品质量，健康是持续产出的基石。"
     },
     "sourceId": "masahiro-sakurai-on-creating-games-en",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=ysaNUatLMn0",
@@ -192950,7 +193306,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "本视频从游戏创作者的个人健康角度切入，探讨了身体状况对游戏开发效率和专注力的影响，为理解行业实践中的非技术性挑战提供了独特视角。"
+    }
   },
   {
     "id": "yt-20260820-sakurai-en-KePsEzN-IAM",
