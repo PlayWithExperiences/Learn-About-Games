@@ -684,3 +684,13 @@ ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用�
 2,311 条目标中真正未完成 1,484 条，其中 1,437 条尚未分类，47 条已尝试但仍未完成。
 
 原始对话：dialogues/2026-0822.md「1931 第七轮描述回写」
+
+## 1957 第八轮描述百条回写与归一化（partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文、音频文件或环境变量。
+
+第八轮 `description-only` 批次最终 100/100 完成。首轮 1 条模型输出因把合法能力 ID `aesthetic-direction` 放进 `resourceTopicIds` 而被拒绝；新增确定性归一化规则，仅丢弃主题字段中同时属于能力白名单的误放，并保留原有主题。其它未知 ID 继续触发显式失败。该条定向重试成功。
+
+最终状态为 927 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；完成入口为 876 条 `inputMode=description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写无入口字段。真正未完成 1,384 条，其中 1,337 条尚未分类，47 条已尝试但仍未完成。
+
+原始对话：dialogues/2026-0822.md「1957 第八轮描述回写与跨字段归一化」

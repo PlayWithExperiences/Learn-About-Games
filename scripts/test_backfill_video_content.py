@@ -193,6 +193,20 @@ The next point
                 {"game-feel-tuning"},
             )
 
+    def test_drops_capability_id_misplaced_as_topic(self):
+        summary = "摘要内容" * 50
+        result = parse_model_payload(
+            {
+                "summary": {"zh-CN": summary},
+                "resourceTopicIds": ["aesthetic-direction"],
+                "capabilityIds": ["aesthetic-direction"],
+            },
+            {"systems-mechanics"},
+            {"aesthetic-direction"},
+        )
+        self.assertEqual(result["resourceTopicIds"], [])
+        self.assertEqual(result["capabilityIds"], ["aesthetic-direction"])
+
     def test_replaces_fallback_topic_and_drops_duplicate_why_relevant(self):
         summary = "摘要内容" * 50
         item = {

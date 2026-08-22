@@ -496,6 +496,13 @@ def parse_model_payload(
         if len(set(values)) != len(values):
             raise ModelOutputError(f"{name} 含重复 ID")
         unknown = sorted(set(values) - allowed)
+        if name == "resourceTopicIds":
+            # 模型偶尔把合法 capability ID 放进主题字段。丢弃这类跨字段误放，
+            # 让 apply_model_result 保留原主题；其它未知 ID 仍必须失败并留痕。
+            misplaced_capabilities = set(unknown) & allowed_capabilities
+            if misplaced_capabilities:
+                values = [value for value in values if value not in misplaced_capabilities]
+                unknown = sorted(set(values) - allowed)
         if unknown:
             raise ModelOutputError(f"{name} 含未知 ID：{unknown}")
         return values
