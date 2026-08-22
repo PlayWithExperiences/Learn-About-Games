@@ -60,10 +60,10 @@
 
 原始对话：dialogues/2026-0822.md「1314 合并后 Playwright 归因」
 
-## 0133 完成ADC接入、内容补全规划
+## 0133 完成资源补全与YouTube内容闭环
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-本场会话完成了三阶段实质性推进。第一阶段：以v02工作树基线（5,437条Work Item、84个Atlas节点）验证资源与创新路线闭包，确认4条完整创新路线（FPS、RPG、RTS、开放世界），独立clone全量测试通过（262 passed、0 failed）。第二阶段：打通Google ADC认证与YouTube Data API v3链路，新建youtube_metadata_sync脚本，实现频道handle到视频元数据的同步通道，GMTK公开频道探针成功，写入仓库外缓存而非直接篡改资源目录；本轮全量缓存获得2,534条元数据，现有2,311条目标100%映射，额外223条不自动导入。第三阶段：确认可验证派生字段能通过pending_write与原子写回进入资源目录；接入仓库外yt-dlp字幕、VTT清洗和更严格的180-205字符摘要提示，生产首条已完成。当前状态为49 completed、4 no_transcript、2 transcript_insufficient、41 transcript_channel，剩余2,215条；元数据中约240条有字幕标记且未完成，按6条／天粗估约40天，其余约2,022条需要音频转写。新增正文质量分类与替代字幕入口后，Python 14/14、Vitest 204/204、Astro build 151 pages通过。当前瓶颈不是官方元数据配额，而是通道速率、无字幕音频转写和模型分析。
+会话基于v02分支已有的5437条资源和84个Atlas节点，按扩展目标审计创新地图，确认FPS、RPG、RTS、开放世界4条完整证据路线，修复README等文档的统计漂移，并通过独立环境全量测试（262 passed, 0 failed）。随后打通YouTube官方API元数据同步，实现基于yt-dlp的字幕获取、VTT清洗和模型摘要生成，建立“下载→分析→pending_write→原子写入”的完整回写闭环；再启用用户项目的 Agent/Vertex API，接入 ADC 音频 fallback，成功将一条字幕不可分析的视频通过“下载音频→Gemini→校验→回写”写入资源目录。当前为51 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余2213条；239条有字幕标记未完成，2021条尚未完成音频或其他正文路线。产出包括官方同步脚本、契约测试、VTT与音频入口、Vertex 响应校验和低频涓流副本，并更新了进度快照、路线记录与时间估算。下一步为在现有24小时冷却后继续逐条运行、累计一小批音频样本并做最终内容对账。
 
 原始对话：dialogues/2026-0822.md

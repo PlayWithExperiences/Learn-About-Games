@@ -596,3 +596,17 @@ flat 输出完整提供了 id/title/duration，但三个频道的全部 2451 行
 原始对话：dialogues/2026-0822.md「1452 YouTube 元数据校验、回写验证与全量时间估算」
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
+
+## 1545 Vertex 音频路线首条生产验证（2026-08-22，partial export）
+
+记录说明：以下是本轮后续执行的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文或音频文件。
+
+ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用户项目范围内启用服务后，`gemini-2.5-flash` 文本调用成功。随后选取 `chWr87u3Gdc`：字幕双通道均只有不可分析内容，回填器改走仓库外 `yt-dlp` 音频下载和 Vertex 结构化分析。实际生产结果为 `completed`、`inputMode=audio`、`vertex/gemini-2.5-flash`、摘要 209 字，并将摘要、`systems-mechanics` 主题和 3 个能力 ID 原子写回 `src/data/resources.json`。
+
+回填器新增音频 fallback、外部 `~/.cache/lag-audio/` 缓存、ADC credential 读取、Vertex 响应非空检查和独立 `audio_channel`／`audio_input_limit`／`vertex_channel`／`vertex_output` 失败分类；`scripts/trickle-video-content.sh` 与 launchd 外部副本已带 `--audio-fallback`。原有 YouTube 24 小时冷却未被强制解除，触发涓流时明确留下 `SKIP`。
+
+当前状态为 51 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,213 条。验证为 Python 17/17、Astro check 0/0/0、Vitest 204/204、静态构建 151 页和 `git diff --check` 通过。音频路线目前只有 1 条生产样本；按约 6 条／天的保守速率，全量理论上约 369 天，实际日期仍取决于 YouTube 通道冷却和音频成功率。
+
+原始对话：dialogues/2026-0822.md「1452 YouTube 元数据校验与音频路线」
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。

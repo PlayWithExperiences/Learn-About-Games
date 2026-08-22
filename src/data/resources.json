@@ -173134,14 +173134,16 @@
       "en": "Word Play is now available on iOS!"
     },
     "summary": {
-      "zh-CN": "Game Maker's Toolkit 官方 YouTube 频道公开的免费英文视频《Word Play is now available on iOS!》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “Word Play is now available on iOS!”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "视频介绍了词汇类Roguelike游戏《Word Play》登陆iOS平台的消息，采用免费试玩+5美元完整版的无广告付费模式。游戏核心玩法类似拼字游戏，但通过每轮结束后三选一的特殊能力系统（如改变计分规则或升级字母牌面）增强策略深度。开发者提到移动端适配优化了碎片化体验，同时透露基于Unity的跨平台移植可能性取决于测试设备获取。最后强调Steam版本仍保持更新，特别适配了Steam Deck掌机操作。"
     },
     "sourceId": "game-makers-toolkit",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "core-loop-design",
+      "progression-economy-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "video",
     "canonicalUrl": "https://www.youtube.com/watch?v=JFG0GMCMLgs",
@@ -173155,7 +173157,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "展示了如何通过简单规则组合（拼字+能力选择）创造复杂策略空间，同时验证了付费模式与核心玩法体验的兼容性设计。"
+    }
   },
   {
     "id": "yt-20260820-gmtk-usF4cpcxbZc",
@@ -173528,14 +173533,17 @@
       "en": "Word Play Trailer - Out Now!"
     },
     "summary": {
-      "zh-CN": "Game Maker's Toolkit 官方 YouTube 频道公开的免费英文视频《Word Play Trailer - Out Now!》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “Word Play Trailer - Out Now!”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该视频展示了一款名为“Word Play”的文字解谜游戏，其核心玩法是利用字母方块组成单词，并以此推动游戏进程。玩家需要策略性地选择字母，通过组合单词来消除障碍、激活机关或解锁新的区域，每个单词的长度和字母组合都会影响其效果。游戏通过这种机制将文字的逻辑性与空间解谜相结合，创造出独特的互动体验，强调了语言在游戏设计中作为核心机制的可能性。视频还暗示了游戏在难度和创造性上的平衡，鼓励玩家探索不同的单词组合来解决谜题。"
     },
     "sourceId": "game-makers-toolkit",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "core-loop-design",
+      "rules-system-modeling",
+      "challenge-difficulty-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "video",
     "canonicalUrl": "https://www.youtube.com/watch?v=chWr87u3Gdc",
@@ -173549,7 +173557,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频展示了如何将文字作为核心机制融入到解谜游戏中，通过字母组合和单词构建来驱动玩家的行动和游戏世界的变化，为系统与机制设计提供了具体案例。"
+    }
   },
   {
     "id": "yt-20260820-gmtk-29kb8ouCGLA",

@@ -390,3 +390,11 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。确认官方元数据同步与正文分析／回写是两条独立通道：能取得正文且通过摘要长度、主题 ID、能力 ID 校验的派生字段可以写回资源目录；原始字幕、凭据、失败日志和中间缓存留在仓库外。临时目录实测一条完整字幕条目经过 `pending_write`、原子写入和 `completed` 状态闭环，生产目录仍只保留此前真实验证的 48 条。
 - 决策：無涘 ｜ 记录：AI。本轮发现两个缓存只有 `[Music]` 等音频标记，新增 `transcript_insufficient` 分类，避免调用模型或生成猜测摘要；随后接入仓库外 `yt-dlp` 获取英文 VTT，清洗重复 cue 后沿用严格摘要／主题／能力校验，第一条生产条目已完成回写。当前生产状态为 49 completed、4 no_transcript、2 transcript_insufficient、41 transcript_channel，剩余 2,215 条。官方 Captions API 需要更高 YouTube scope 且下载要求视频编辑权限，不能作为三个第三方频道的通用正文入口。
 - 时间估算：AI 推断。当前涓流每约 4 小时尝试 1 条，通道失败触发 24 小时冷却；元数据中仍有约 240 条有字幕标记且未完成，按约 6 条／天粗估约 40 天；其余约 2,022 条没有可用字幕标记或尚未完成字幕路线，必须另接音频转写，暂不能给出可信的全量完成日期。官方 Data API 配额不是当前主瓶颈，正文获取和分析通道才是。
+
+## 54. Vertex 音频路线接入与首条生产回写（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。ADC 文本探针第一次返回项目服务未启用；在用户项目范围启用 `aiplatform.googleapis.com` 后，`gemini-2.5-flash` 文本和短音频调用均返回 200。Agent/Vertex 仍被限定为“已取得内容后的理解/分析入口”，不被误写成 YouTube 数据入口。
+- 决策：無涘 ｜ 记录：AI。回填器新增可选音频 fallback：字幕正文不存在或只有音频标记时，才由仓库外 `yt-dlp` 下载 MP3，再调用 ADC/Vertex 生成结构化目录字段；下载、Vertex 通道、输入大小和输出解析分别有显式失败分类，原始音频继续不入仓库。
+- `yt-20260820-gmtk-chWr87u3Gdc` 实际验证了完整生产链路：字幕双通道不可分析，音频下载成功，Vertex 返回合法字段，摘要长度 209，状态为 `completed / inputMode=audio / vertex/gemini-2.5-flash`，主题和能力已写入 `src/data/resources.json`。当前状态为 51 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,213 条。
+- `scripts/trickle-video-content.sh` 及其 launchd 外部副本已加入 `--audio-fallback`；原有 24 小时冷却没有强制清除，当前仍以约 6 条／天作为保守吞吐。AI 推断：239 条有字幕未完成条目约 40 天；全剩余 2,213 条若均按同速成功，理论约 369 天，音频路线还需小批样本才能重新估算。
+- 验证：Python 17/17、Astro check 0/0/0、Vitest 204/204、静态构建 151 页、`git diff --check` 通过。

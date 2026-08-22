@@ -55,9 +55,42 @@ fi
 
 cd "$REPO" || { log "ABORT	进不去 $REPO"; exit 1; }
 
-# ── 优先级：先补 GMTK 与樱井（Daily 素材线真正需要的那 536 条），再补 GDC ──
-ARGS=(--limit 1)
-[ -s "$PRIORITY_IDS" ] && ARGS+=(--ids-file "$PRIORITY_IDS")
+# ── 优先级：先补 GMTK 与樱井（Daily 素材线），耗尽后自动放开到全量目标 ──
+ARGS=(--limit 1 --audio-fallback)
+if [ -s "$PRIORITY_IDS" ]; then
+  priority_remaining="$("$PY" - "$PRIORITY_IDS" "$REPO/src/data/resources.json" "$CACHE/state.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+priority_path, resources_path, state_path = map(Path, sys.argv[1:])
+priority_ids = [line.strip() for line in priority_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+resources = {item["id"] for item in json.loads(resources_path.read_text(encoding="utf-8"))}
+state = json.loads(state_path.read_text(encoding="utf-8")).get("items", {})
+remaining = 0
+for item_id in priority_ids:
+    if item_id not in resources:
+        continue
+    record = state.get(item_id, {})
+    status = record.get("status")
+    if status is None or (status in {"no_transcript", "transcript_insufficient"} and not record.get("audioAttempted")):
+        remaining += 1
+print(remaining)
+PY
+  )" || priority_remaining="unknown"
+  case "$priority_remaining" in
+    ''|*[!0-9]*)
+      log "WARN	无法判断 priority 队列剩余量，继续使用优先级过滤"
+      ARGS+=(--ids-file "$PRIORITY_IDS")
+      ;;
+    0)
+      log "INFO	priority 队列已耗尽，切换到全部 YouTube Work Item"
+      ;;
+    *)
+      ARGS+=(--ids-file "$PRIORITY_IDS")
+      ;;
+  esac
+fi
 
 count_cf() { "$PY" -c "
 import json,pathlib

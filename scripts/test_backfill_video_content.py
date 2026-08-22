@@ -1,13 +1,18 @@
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 import scripts.backfill_video_content as backfill
 
 from scripts.backfill_video_content import (
     ModelOutputError,
     apply_model_result,
+    build_audio_prompt,
     classify_transcript_exception,
     fetch_transcript,
     parse_model_payload,
+    parse_vertex_response,
 )
 
 
@@ -64,6 +69,61 @@ The next point
         )
         self.assertIn("180-205", prompt)
         self.assertIn("每句约 45-50 个汉字", prompt)
+
+    def test_audio_prompt_keeps_audio_as_the_only_evidence(self):
+        prompt = build_audio_prompt(
+            {"title": {"en": "Test video"}},
+            "Test source",
+            [],
+            [],
+        )
+        self.assertIn("音频是唯一内容证据", prompt)
+        self.assertIn("180-205", prompt)
+
+    def test_vertex_response_requires_text_candidate(self):
+        response = {
+            "candidates": [{"content": {"parts": [{"text": '{"ok":true}'}]}}]
+        }
+        self.assertEqual(parse_vertex_response(response), '{"ok":true}')
+        with self.assertRaises(ModelOutputError):
+            parse_vertex_response({"candidates": [{"content": {"role": "model"}}]})
+
+    def test_vertex_audio_call_sends_inline_audio_and_validates_response(self):
+        class FakeResponse:
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self):
+                return json.dumps(
+                    {"candidates": [{"content": {"parts": [{"text": '{"ok":true}'}]}}]}
+                ).encode("utf-8")
+
+        seen = {}
+
+        def opener(request, timeout):
+            del timeout
+            seen.update(json.loads(request.data.decode("utf-8")))
+            return FakeResponse()
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "sample.mp3"
+            path.write_bytes(b"audio")
+            result = backfill.call_vertex_audio(
+                path,
+                "prompt",
+                "project",
+                "token",
+                opener=opener,
+                validator=lambda payload: payload,
+            )
+        self.assertEqual(result["payload"], {"ok": True})
+        self.assertEqual(seen["contents"][0]["parts"][0]["inlineData"]["mimeType"], "audio/mpeg")
+        self.assertEqual(seen["generationConfig"]["thinkingConfig"]["thinkingBudget"], 0)
 
     def test_rejects_unknown_ids_and_short_summary(self):
         with self.assertRaises(ModelOutputError):
