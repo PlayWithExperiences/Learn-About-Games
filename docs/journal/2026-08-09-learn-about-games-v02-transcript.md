@@ -640,3 +640,15 @@ ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用�
 本轮约 20.5 分钟，快于第二轮约 26.5 分钟；仍保留多个模型 fallback 与摘要校验，失败逐条留痕，没有把暂时未处理的条目写成成功。
 
 原始对话：dialogues/2026-0822.md「1734 描述第三轮百条回写」
+
+## 1809 第四轮描述百条回写与重试（partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文、音频文件或环境变量。
+
+第四轮 `description-only` 批次最终处理 100/100 条。首轮 98 条完成，2 条因模型输出中的未知主题 ID 或摘要长度校验失败而进入显式 `model_output` 可重试状态；定向重试后两条均完成。批次未请求字幕、未下载音频，也未增加 YouTube 通道失败。
+
+重新读取外部 state、最新 report 与 `src/data/resources.json` 后，当前状态为 527 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0。完成入口为 476 条 `inputMode=description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写没有入口字段。
+
+本轮同时修正报告口径：2,311 条目标中真正未完成为 1,784 条；旧 `remainingAfterRun=1,737` 表示尚未进入已分类状态，新增 `uncompletedAfterRun` 表示未完成总数。代码测试已覆盖二者差异，避免把已尝试失败条目误写成未尝试。
+
+原始对话：dialogues/2026-0822.md「1809 第四轮收尾与报告口径修正」

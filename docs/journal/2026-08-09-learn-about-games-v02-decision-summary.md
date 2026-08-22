@@ -421,3 +421,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 
 - 决策：無涘 ｜ 记录：AI。第三轮 `description-only` 生产批次完整处理 100/100 条，未触发字幕、音频或 YouTube 请求；状态与资源目录最终对账一致，累计 427 completed、剩余 1,837 条，model failure 仍为 0。
 - 这批约 20.5 分钟完成，较第二轮快；仍保留多个模型 fallback 与摘要校验，未把暂时未处理的条目算作完成。
+
+## 59. 官方描述第四轮、定向重试与未完成口径（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。第四轮 `description-only` 批次最终 100/100 完成：98 条首轮成功，2 条因模型输出中的未知主题 ID／摘要长度校验失败而保留为可重试，之后定向重试全部成功。当前生产状态为 527 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0。
+- 决策：無涘 ｜ 记录：AI。完成入口为 476 条 `description`、1 条 `transcript`、1 条 `audio`，加上 49 条历史回写。2,311 条目标中真正未完成为 1,784 条；其中 1,737 条尚未进入任何已分类状态，47 条已经尝试但仍是显式非完成状态。回填器报告新增 `uncompletedAfterRun`，保留 `remainingAfterRun` 作为兼容字段并明确其含义。
+- 时间估算：AI 推断。第四轮约 27.7 分钟完成；描述路线不触碰 YouTube 请求，按每 4 小时最多 20 条运行。若 1,737 条尚未分类条目都能使用合格官方描述，理论约 14–15 天；描述不足、字幕通道失败和音频路线不纳入该乐观估算。

@@ -944,6 +944,16 @@ def status_totals(state: dict[str, Any], target_ids: set[str]) -> dict[str, int]
     }
 
 
+def update_report_totals(report: dict[str, Any], state: dict[str, Any], target_ids: set[str]) -> None:
+    """Keep classified and genuinely incomplete counts separate in reports."""
+    totals = status_totals(state, target_ids)
+    report["totals"] = totals
+    # remainingAfterRun is the historical "not yet classified" count. Keep it
+    # for existing consumers, but expose the user-relevant incomplete count too.
+    report["remainingAfterRun"] = len(target_ids) - sum(totals.values())
+    report["uncompletedAfterRun"] = len(target_ids) - totals["completed"]
+
+
 def update_record(state: dict[str, Any], item_id: str, record: dict[str, Any], path: Path) -> None:
     state.setdefault("items", {})[item_id] = {**record, "updatedAt": now_iso()}
     save_state(path, state)
@@ -1073,15 +1083,14 @@ def process(args: argparse.Namespace) -> int:
     }
     if args.dry_run:
         report["remainingBeforeRun"] = len(selected)
-        report["totals"] = status_totals(state, target_ids)
+        update_report_totals(report, state, target_ids)
         atomic_write_json(args.report, report)
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
 
     if not selected:
         report["remainingBeforeRun"] = 0
-        report["totals"] = status_totals(state, target_ids)
-        report["remainingAfterRun"] = len(target_ids) - sum(report["totals"].values())
+        update_report_totals(report, state, target_ids)
         report["finishedAt"] = now_iso()
         atomic_write_json(args.report, report)
         print(json.dumps(report, ensure_ascii=False, indent=2))
@@ -1276,12 +1285,10 @@ def process(args: argparse.Namespace) -> int:
                 consecutive_channel_failures = 0
         finally:
             report["processedThisRun"] += 1
-            report["totals"] = status_totals(state, target_ids)
-            report["remainingAfterRun"] = len(target_ids) - sum(report["totals"].values())
+            update_report_totals(report, state, target_ids)
             atomic_write_json(args.report, report)
     report["finishedAt"] = now_iso()
-    report["totals"] = status_totals(state, target_ids)
-    report["remainingAfterRun"] = len(target_ids) - sum(report["totals"].values())
+    update_report_totals(report, state, target_ids)
     atomic_write_json(args.report, report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0

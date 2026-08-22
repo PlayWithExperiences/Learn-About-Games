@@ -16,6 +16,7 @@ from scripts.backfill_video_content import (
     parse_model_payload,
     parse_vertex_response,
     select_candidates,
+    update_report_totals,
     validate_description_text,
 )
 
@@ -160,6 +161,18 @@ The next point
             description_only=True,
         )
         self.assertEqual([item["id"] for item in selected], ["description-item"])
+
+    def test_report_distinguishes_uncompleted_from_unclassified(self):
+        report = {}
+        state = {
+            "items": {
+                "done": {"status": "completed"},
+                "failed": {"status": "retryable", "failureClass": "transcript_channel"},
+            }
+        }
+        update_report_totals(report, state, {"done", "failed", "pending"})
+        self.assertEqual(report["remainingAfterRun"], 1)
+        self.assertEqual(report["uncompletedAfterRun"], 2)
 
     def test_rejects_unknown_ids_and_short_summary(self):
         with self.assertRaises(ModelOutputError):
