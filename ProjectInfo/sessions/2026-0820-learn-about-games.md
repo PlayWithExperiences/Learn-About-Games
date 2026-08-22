@@ -135,6 +135,12 @@
 
 原始对话：dialogues/2026-0822.md「2108 第十一轮描述回写与页脚误判修正」
 
+## 2134 第十二轮描述百条回写
+
+决策：無涘 ｜ 记录：AI。第十二轮 `description-only` 生产批次 100/100 完成，约 23.4 分钟；未请求字幕、未下载音频，也未新增模型或通道失败。最终状态为 1,327 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0。完成入口为 1,276 `description`、1 `transcript`、1 `audio`，另有 49 条历史回写没有入口字段。2,311 条目标中真正未完成 984 条，其中 937 条尚未分类，47 条已尝试但仍未完成。下一步完成门禁并继续第十三轮。
+
+原始对话：dialogues/2026-0822.md「2134 第十二轮描述回写」
+
 ## 0133 资源回填与三条创新路线闭环
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
