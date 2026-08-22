@@ -79,3 +79,15 @@ OAuth 仅作为可选项：若要读取無涘本人或其有权限管理的视�
 人工动作之外的 API 探针、频道上传列表同步、去重、低频退避、字幕获取、摘要/分析、证据回写、失败留痕和测试均由 AI 处理。当前仍保持仓库私有；公开前另有资源页性能门禁待修复。
 
 原始对话：dialogues/2026-0822.md「1323 YouTube 通道人工配置清单」
+
+## 1336 Agent Platform 与 YouTube OAuth/ADC 分流
+
+决策：無涘（待执行人工配置） ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+無涘在 Google Cloud 新建 `YouTube knowledge` 项目并启用 Agent Platform API，界面提示组织策略禁止 API Key、推荐 ADC。核查官方文档后确认：Agent Platform API 的服务名是 `aiplatform.googleapis.com`，权限范围是 Agent Platform/Gemini 资源；它不会自动获得 YouTube 频道、视频或字幕权限。ADC 是凭据承载方式，不是跨服务授权本身。
+
+因组织策略禁止 API Key，YouTube 入口改为同一项目单独启用 `youtube.googleapis.com`（YouTube Data API v3），创建桌面 OAuth 2.0 客户端，由用户在浏览器授权后用带 YouTube scope 的用户 OAuth/ADC 访问。按官方文档组合推断，`gcloud auth application-default login` 可通过 `--client-id-file` 与显式 scope 承载外部 Google API 的用户授权；下一步必须做一个只读 `channels.list`/`videos.list` 探针验证，不能把 Agent Platform 的默认 `cloud-platform` ADC 直接当成 YouTube 权限。YouTube Data API 不支持 service account 作为 YouTube 用户身份；字幕接口仍受视频权限约束，不能用来解锁任意第三方频道字幕。
+
+人工下一步：在 `YouTube knowledge` 项目中从 API Library 直接找到并启用 YouTube Data API v3；配置 OAuth consent screen 与桌面 OAuth 客户端；将 OAuth JSON 保存在仓库外，并运行一次带 YouTube 只读 scope 的 ADC 登录。AI 负责验证 token、同步公开元数据、继续低频字幕入口和内容分析；Agent Platform 可作为后续摘要模型入口，但不替代 YouTube 内容获取。未写入项目 ID、OAuth JSON、token 或任何秘密。
+
+原始对话：dialogues/2026-0822.md「1336 Agent Platform 与 YouTube OAuth/ADC 分流」
