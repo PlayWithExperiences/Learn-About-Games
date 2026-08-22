@@ -95,3 +95,13 @@
 本轮约 26.5 分钟完成；由于部分无效输出触发既有修复／fallback，吞吐比上一批慢。下一步继续由每 4 小时最多 20 条的 description-only 涓流处理，描述队列为空后才退回字幕／音频路线。
 
 原始对话：dialogues/2026-0822.md「1711 描述第二轮百条回写」
+
+## 1734 描述第三轮百条回写
+
+决策：無涘 ｜ 记录：AI（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+第三轮 `description-only` 批次 100/100 成功，未请求字幕、未下载音频，未新增模型或通道失败。进程结束后重新读取外部状态与目录确认 427 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、剩余 1,837 条；完成入口为 376 条 description、1 条 transcript、1 条 audio，49 条历史状态没有入口字段。
+
+本轮约 20.5 分钟完成，快于第二轮约 26.5 分钟。继续由每 4 小时最多 20 条的 description-only 涓流处理，描述队列为空后才退回字幕／音频路线。
+
+原始对话：dialogues/2026-0822.md「1734 描述第三轮百条回写」
