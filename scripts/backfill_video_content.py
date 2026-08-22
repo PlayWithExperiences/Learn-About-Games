@@ -676,6 +676,57 @@ def call_vertex_audio(
     return {"model": f"vertex/{model}", "payload": payload}
 
 
+def call_vertex_text(
+    prompt: str,
+    project: str,
+    token: str,
+    model: str = DEFAULT_VERTEX_MODEL,
+    max_tokens: int = 4000,
+    timeout: int = 120,
+    opener: Callable[..., Any] = urllib.request.urlopen,
+    validator: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Send text evidence to Vertex and validate its catalog result."""
+    body = json.dumps(
+        {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {
+                "temperature": 0,
+                "maxOutputTokens": max_tokens,
+                "responseMimeType": "application/json",
+                "thinkingConfig": {"thinkingBudget": 0},
+            },
+        }
+    ).encode("utf-8")
+    request = urllib.request.Request(
+        VERTEX_API_URL.format(project=urllib.parse.quote(project, safe=""), model=urllib.parse.quote(model, safe="")),
+        data=body,
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with opener(request, timeout=timeout) as response:
+            status = getattr(response, "status", 200)
+            raw = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        raise VertexChannelError(f"Vertex HTTP {exc.code}") from exc
+    except (urllib.error.URLError, TimeoutError, OSError) as exc:
+        raise VertexChannelError(f"Vertex 请求失败：{type(exc).__name__}") from exc
+    if status != 200:
+        raise VertexChannelError(f"Vertex HTTP {status}")
+    try:
+        response_json = json.loads(raw)
+        text = parse_vertex_response(response_json)
+        payload = parse_json_object(text)
+        if validator is not None:
+            payload = validator(payload)
+    except (json.JSONDecodeError, ModelOutputError, KeyError, TypeError) as exc:
+        if isinstance(exc, VertexOutputError):
+            raise
+        raise VertexOutputError(f"Vertex 输出不可解析：{exc}") from exc
+    return {"model": f"vertex/{model}", "payload": payload}
+
+
 def call_openrouter(
     prompt: str,
     api_key: str,
@@ -715,7 +766,7 @@ def call_openrouter(
         except urllib.error.HTTPError as exc:
             status = exc.code
             raw = ""
-            if status == 429 or status >= 500:
+            if status in (402, 429) or status >= 500:
                 channel_errors.append(f"{model}: HTTP {status}")
             else:
                 output_errors.append(f"{model}: HTTP {status}")
@@ -723,7 +774,7 @@ def call_openrouter(
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             channel_errors.append(f"{model}: {type(exc).__name__}")
             continue
-        if status == 429 or status >= 500:
+        if status in (402, 429) or status >= 500:
             channel_errors.append(f"{model}: HTTP {status}")
             continue
         if status != 200:
@@ -919,6 +970,27 @@ def generate_vertex_audio_result(
         max_tokens=max_tokens,
         timeout=timeout,
         max_audio_bytes=max_audio_bytes,
+        validator=validator,
+    )
+
+
+def generate_vertex_text_result(
+    prompt: str,
+    allowed_topics: set[str],
+    allowed_capabilities: set[str],
+    model: str,
+    max_tokens: int,
+    timeout: int,
+) -> dict[str, Any]:
+    project, token = load_vertex_credentials()
+    validator = lambda payload: parse_model_payload(payload, allowed_topics, allowed_capabilities)
+    return call_vertex_text(
+        prompt,
+        project,
+        token,
+        model=model,
+        max_tokens=max_tokens,
+        timeout=timeout,
         validator=validator,
     )
 
@@ -1135,19 +1207,29 @@ def process(args: argparse.Namespace) -> int:
             )
             if prefer_description:
                 input_mode = "description"
-                if api_key is None:
-                    api_key = load_api_key(args.key_file)
                 prompt = build_description_prompt(item, source_name, description, topics, capabilities)
-                model_result = generate_model_result(
-                    item,
-                    prompt,
-                    api_key,
-                    args.models,
-                    allowed_topics,
-                    allowed_capabilities,
-                    args.max_tokens,
-                    args.model_timeout,
-                )
+                if args.vertex_text:
+                    model_result = generate_vertex_text_result(
+                        prompt,
+                        allowed_topics,
+                        allowed_capabilities,
+                        args.vertex_model,
+                        args.max_tokens,
+                        args.vertex_timeout,
+                    )
+                else:
+                    if api_key is None:
+                        api_key = load_api_key(args.key_file)
+                    model_result = generate_model_result(
+                        item,
+                        prompt,
+                        api_key,
+                        args.models,
+                        allowed_topics,
+                        allowed_capabilities,
+                        args.max_tokens,
+                        args.model_timeout,
+                    )
             else:
                 try:
                     transcript = read_cache(args.cache_dir, video_id)
@@ -1159,19 +1241,29 @@ def process(args: argparse.Namespace) -> int:
                 except (NoTranscriptFound, TranscriptInsufficientError) as transcript_error:
                     if description is not None:
                         input_mode = "description"
-                        if api_key is None:
-                            api_key = load_api_key(args.key_file)
                         prompt = build_description_prompt(item, source_name, description, topics, capabilities)
-                        model_result = generate_model_result(
-                            item,
-                            prompt,
-                            api_key,
-                            args.models,
-                            allowed_topics,
-                            allowed_capabilities,
-                            args.max_tokens,
-                            args.model_timeout,
-                        )
+                        if args.vertex_text:
+                            model_result = generate_vertex_text_result(
+                                prompt,
+                                allowed_topics,
+                                allowed_capabilities,
+                                args.vertex_model,
+                                args.max_tokens,
+                                args.vertex_timeout,
+                            )
+                        else:
+                            if api_key is None:
+                                api_key = load_api_key(args.key_file)
+                            model_result = generate_model_result(
+                                item,
+                                prompt,
+                                api_key,
+                                args.models,
+                                allowed_topics,
+                                allowed_capabilities,
+                                args.max_tokens,
+                                args.model_timeout,
+                            )
                     elif not args.audio_fallback:
                         raise transcript_error
                     else:
@@ -1201,19 +1293,29 @@ def process(args: argparse.Namespace) -> int:
                             args.vertex_max_audio_bytes,
                         )
                 else:
-                    if api_key is None:
-                        api_key = load_api_key(args.key_file)
                     prompt = build_prompt(item, source_name, transcript, topics, capabilities)
-                    model_result = generate_model_result(
-                        item,
-                        prompt,
-                        api_key,
-                        args.models,
-                        allowed_topics,
-                        allowed_capabilities,
-                        args.max_tokens,
-                        args.model_timeout,
-                    )
+                    if args.vertex_text:
+                        model_result = generate_vertex_text_result(
+                            prompt,
+                            allowed_topics,
+                            allowed_capabilities,
+                            args.vertex_model,
+                            args.max_tokens,
+                            args.vertex_timeout,
+                        )
+                    else:
+                        if api_key is None:
+                            api_key = load_api_key(args.key_file)
+                        model_result = generate_model_result(
+                            item,
+                            prompt,
+                            api_key,
+                            args.models,
+                            allowed_topics,
+                            allowed_capabilities,
+                            args.max_tokens,
+                            args.model_timeout,
+                        )
                     input_mode = "transcript"
             result = model_result["payload"]
             updated = apply_model_result(item, result)
@@ -1324,6 +1426,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--model-timeout", type=int, default=60)
     parser.add_argument("--transcript-timeout", type=int, default=45)
     parser.add_argument("--audio-fallback", action="store_true", help="无可用字幕时下载音频并调用 Vertex ADC")
+    parser.add_argument("--vertex-text", action="store_true", help="用 Vertex ADC 分析文本证据，不依赖 OpenRouter")
     parser.add_argument("--description-fallback", action="store_true", help="优先使用官方 YouTube 描述作为正文证据")
     parser.add_argument("--description-only", action="store_true", help="只处理官方描述达标的条目，不请求字幕或音频")
     parser.add_argument("--audio-timeout", type=int, default=120)

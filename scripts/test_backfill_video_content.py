@@ -159,6 +159,39 @@ The next point
         self.assertEqual(seen["contents"][0]["parts"][0]["inlineData"]["mimeType"], "audio/mpeg")
         self.assertEqual(seen["generationConfig"]["thinkingConfig"]["thinkingBudget"], 0)
 
+    def test_vertex_text_call_sends_text_and_validates_response(self):
+        class FakeResponse:
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+            def read(self):
+                return json.dumps(
+                    {"candidates": [{"content": {"parts": [{"text": '{"ok":true}'}]}}]}
+                ).encode("utf-8")
+
+        seen = {}
+
+        def opener(request, timeout):
+            del timeout
+            seen.update(json.loads(request.data.decode("utf-8")))
+            return FakeResponse()
+
+        result = backfill.call_vertex_text(
+            "prompt",
+            "project",
+            "token",
+            opener=opener,
+            validator=lambda payload: payload,
+        )
+        self.assertEqual(result["payload"], {"ok": True})
+        self.assertEqual(seen["contents"][0]["parts"][0]["text"], "prompt")
+        self.assertEqual(seen["generationConfig"]["responseMimeType"], "application/json")
+
     def test_description_only_selection_does_not_include_other_items(self):
         resources = [
             {"id": "description-item", "sourceId": "game-makers-toolkit"},

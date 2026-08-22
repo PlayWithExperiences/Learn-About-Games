@@ -495,3 +495,10 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。第十五轮 `description-only` 100/100 完成，未请求字幕、未下载音频，也未增加模型或通道失败；运行约 20.4 分钟。
 - 决策：無涘 ｜ 记录：AI。当前状态为 1,627 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 0。完成入口为 1,576 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 684 条，其中 637 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。若 637 条尚未分类条目都能走合格描述路线，按每 4 小时最多 20 条理论约 5–6 天；字幕/音频失败条目仍需独立处理。
+
+## 71. 第十六轮 OpenRouter 402 与 Vertex 文本切换（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。第十六轮初次处理到 63/100，其中 61 条成功、2 条因 OpenRouter 全模型 HTTP 402 失败；402 被识别为通道/付款状态，不作为内容不可得，错误结果未写回。
+- 决策：無涘 ｜ 记录：AI。接入 `call_vertex_text` 和 `--vertex-text`，用用户 ADC 项目的 `gemini-2.5-flash` 复用既有结构化校验。两条 402 条目 Vertex 定向重试均成功；`scripts/trickle-video-content.sh` 与 launchd 副本已切换到 Vertex 文本，测试 18/18。
+- 决策：無涘 ｜ 记录：AI。当前状态为 1,692 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0。完成入口为 1,641 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 619 条，其中 572 条尚未分类，47 条已尝试但仍未完成。
+- 时间估算：AI 推断。Vertex 文本暂只有 2 条生产样本；若按每 4 小时最多 20 条，572 条尚未分类条目理论约 4–5 天，后续批次需重新校准。

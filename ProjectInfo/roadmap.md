@@ -108,3 +108,10 @@
 - 决策：無涘 ｜ 记录：AI。第十五轮 `description-only` 100/100 完成，未请求字幕、未下载音频，也未增加模型或通道失败；从 22:18:01 到 22:38:23，约 20.4 分钟。
 - 决策：無涘 ｜ 记录：AI。当前累计 1,627 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；完成入口为 1,576 条 `description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写无入口字段。真正未完成 684 条，其中 637 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。若 637 条尚未分类条目都能使用合格官方描述，按每 4 小时最多 20 条理论约 5–6 天；描述不足、字幕通道失败和音频路线仍需独立处理，不能把该乐观估算当作全量完成承诺。
+
+## 2026-08-22：第十六轮遇 OpenRouter 402，切换 Google ADC/Vertex 文本入口
+
+- 决策：無涘 ｜ 记录：AI。第十六轮描述批次初次启动后处理到 63/100；其中 61 条成功，2 条所有 OpenRouter 模型均返回 HTTP 402。402 是模型通道/付款状态，不是视频内容不可得；两条错误结果均未写回，批次在继续重复 402 后中止，保留已落盘状态。
+- 决策：無涘 ｜ 记录：AI。新增 `call_vertex_text` 与 `--vertex-text`，复用 ADC、`gemini-2.5-flash`、结构化 JSON、摘要长度和主题/能力白名单校验。两条 402 条目经 Vertex 文本定向重试均成功，`inputMode=description`、模型为 `vertex/gemini-2.5-flash`；Python 合同测试增至 18/18。
+- 决策：無涘 ｜ 记录：AI。描述涓流和外部 launchd 副本已切换为 `--vertex-text`；以后描述/字幕文本分析不再依赖 OpenRouter，音频路线本来就使用 Vertex。当前累计 1,692 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；真正未完成 619 条，其中 572 条尚未分类，47 条已尝试但仍未完成。
+- 时间估算：AI 推断。Vertex 文本只有 2 条生产样本，不能假定与 OpenRouter 吞吐相同；若仍按每 4 小时最多 20 条，572 条尚未分类条目理论约 4–5 天，需用后续批次重新测量。

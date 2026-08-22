@@ -57,7 +57,9 @@ fi
 cd "$REPO" || { log "ABORT	进不去 $REPO"; exit 1; }
 
 # ── 优先级：先补 GMTK 与樱井（Daily 素材线），耗尽后自动放开到全量目标 ──
-ARGS=(--limit 20 --description-fallback --description-only)
+# Official descriptions are analyzed through the user's ADC/Vertex project;
+# this keeps the text queue independent from OpenRouter billing state.
+ARGS=(--limit 20 --description-fallback --description-only --vertex-text)
 if [ -s "$PRIORITY_IDS" ]; then
   priority_remaining="$("$PY" - "$PRIORITY_IDS" "$REPO/src/data/resources.json" "$CACHE/state.json" <<'PY'
 import json
@@ -120,7 +122,7 @@ if [ "$rc" -eq 0 ]; then
   processed="$(count_processed)"
   if [ "$processed" = "0" ]; then
     log "INFO	描述队列本轮无候选，退回单条字幕/音频路线"
-    run_backfill --limit 1 --description-fallback --audio-fallback
+    run_backfill --limit 1 --description-fallback --audio-fallback --vertex-text
   elif [ "$processed" = "-1" ]; then
     log "WARN	无法读取描述批次报告，不自动退回 YouTube 路线"
   fi

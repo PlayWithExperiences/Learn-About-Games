@@ -159,6 +159,12 @@
 
 原始对话：dialogues/2026-0822.md「2239 第十五轮描述回写」
 
+## 2258 第十六轮通道切换与 Vertex 文本验证
+
+决策：無涘 ｜ 记录：AI。第十六轮初次描述批次处理到 63/100，其中 61 条成功，2 条因 OpenRouter 所有模型返回 HTTP 402 而失败；错误结果未写回，进程在重复相同通道失败后中止，已落盘状态可恢复。新增 `call_vertex_text`/`--vertex-text`，用用户 ADC 项目中的 `gemini-2.5-flash` 复用结构化结果校验；两条 402 条目定向重试成功，模型记录为 `vertex/gemini-2.5-flash`。描述涓流与 launchd 副本已切换到 Vertex 文本，合同测试 18/18。当前 1,692 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；真正未完成 619 条，其中 572 条尚未分类，47 条已尝试但仍未完成。
+
+原始对话：dialogues/2026-0822.md「2258 第十六轮通道切换与 Vertex 文本验证」
+
 ## 0133 资源回填与三条创新路线闭环
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
