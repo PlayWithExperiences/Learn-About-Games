@@ -398,3 +398,10 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - `yt-20260820-gmtk-chWr87u3Gdc` 实际验证了完整生产链路：字幕双通道不可分析，音频下载成功，Vertex 返回合法字段，摘要长度 209，状态为 `completed / inputMode=audio / vertex/gemini-2.5-flash`，主题和能力已写入 `src/data/resources.json`。当前状态为 51 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,213 条。
 - `scripts/trickle-video-content.sh` 及其 launchd 外部副本已加入 `--audio-fallback`；原有 24 小时冷却没有强制清除，当前仍以约 6 条／天作为保守吞吐。AI 推断：239 条有字幕未完成条目约 40 天；全剩余 2,213 条若均按同速成功，理论约 369 天，音频路线还需小批样本才能重新估算。
 - 验证：Python 17/17、Astro check 0/0/0、Vitest 204/204、静态构建 151 页、`git diff --check` 通过。
+
+## 55. 官方描述正文路线与首批批处理（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。官方 YouTube API 返回的公开视频描述属于可追溯内容证据，但不能与“已取得字幕”混为一类。审计目标 2,311 条后发现约 2,096 条描述去除 URL 后至少 240 个字符；新增 `inputMode=description`，只对描述足够具体的条目使用它，短广告／链接描述继续进入音频或失败路线。
+- 首条描述生产样本 `yt-20260820-gdc-s30pjYV8aBM` 完成写回；随后 5 条和 20 条批次均完成，最终再完成 50 条描述批次。新增 76 条 `completed / inputMode=description`，当前状态为 127 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,137 条；本批次没有新增失败。
+- 描述路线先检查官方元数据中的 `captionAvailability=false`，因此不发起字幕请求；描述模型结果仍经过摘要长度、主题／能力 ID 白名单、`pending_write` 和原子写回。`--description-fallback` 已加入涓流脚本，后续再按描述、字幕、音频三路的实际成功率继续分批。
+- 验证：描述专用单测加入后 Python 回填合同测试 12/12；之前的 Astro check 0/0/0、Vitest 204/204、静态构建 151 页仍为最近门禁证据。全量目标仍未完成，不能用描述覆盖审计或首批成功代替最终对账。

@@ -56,7 +56,7 @@ fi
 cd "$REPO" || { log "ABORT	进不去 $REPO"; exit 1; }
 
 # ── 优先级：先补 GMTK 与樱井（Daily 素材线），耗尽后自动放开到全量目标 ──
-ARGS=(--limit 1 --audio-fallback)
+ARGS=(--limit 1 --description-fallback --audio-fallback)
 if [ -s "$PRIORITY_IDS" ]; then
   priority_remaining="$("$PY" - "$PRIORITY_IDS" "$REPO/src/data/resources.json" "$CACHE/state.json" <<'PY'
 import json

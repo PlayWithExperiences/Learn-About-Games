@@ -7,12 +7,15 @@ import scripts.backfill_video_content as backfill
 
 from scripts.backfill_video_content import (
     ModelOutputError,
+    DescriptionInsufficientError,
     apply_model_result,
     build_audio_prompt,
+    build_description_prompt,
     classify_transcript_exception,
     fetch_transcript,
     parse_model_payload,
     parse_vertex_response,
+    validate_description_text,
 )
 
 
@@ -79,6 +82,23 @@ The next point
         )
         self.assertIn("音频是唯一内容证据", prompt)
         self.assertIn("180-205", prompt)
+
+    def test_description_prompt_marks_official_description_as_evidence(self):
+        prompt = build_description_prompt(
+            {"title": {"en": "Test video"}},
+            "Test source",
+            "The official description explains a game design method in enough detail. " * 8,
+            [],
+            [],
+        )
+        self.assertIn("YouTube 官方描述", prompt)
+        self.assertIn("只依据下方", prompt)
+
+    def test_description_validation_removes_urls_and_rejects_link_only_text(self):
+        with self.assertRaises(DescriptionInsufficientError):
+            validate_description_text("https://example.com/" * 100)
+        text = validate_description_text("A concrete design explanation. " * 12 + " https://example.com")
+        self.assertNotIn("https://", text)
 
     def test_vertex_response_requires_text_candidate(self):
         response = {

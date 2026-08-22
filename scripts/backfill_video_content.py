@@ -35,6 +35,7 @@ DEFAULT_CAPABILITIES = REPO_ROOT / "src/data/capabilities.json"
 DEFAULT_SOURCES = REPO_ROOT / "src/data/sources.json"
 DEFAULT_CACHE = Path.home() / ".cache" / "lag-transcripts"
 DEFAULT_AUDIO_CACHE = Path.home() / ".cache" / "lag-audio"
+DEFAULT_METADATA = Path.home() / ".cache" / "lag-youtube" / "metadata.json"
 DEFAULT_STATE = Path.home() / ".cache" / "lag-video-content" / "state.json"
 DEFAULT_REPORT = Path.home() / ".cache" / "lag-video-content" / "report.json"
 DEFAULT_LOG = Path.home() / ".cache" / "lag-video-content" / "failures.log"
@@ -86,6 +87,10 @@ class AudioChannelError(RuntimeError):
 
 class AudioInputLimitError(RuntimeError):
     """The downloaded audio needs a larger-file upload route than inline data."""
+
+
+class DescriptionInsufficientError(RuntimeError):
+    """The official description is too short or contains only links."""
 
 
 class VertexChannelError(RuntimeError):
@@ -396,6 +401,51 @@ def fetch_audio_via_ytdlp(
     return cached
 
 
+def validate_description_text(text: str, minimum_chars: int = 240) -> str:
+    """Keep only substantive official description text for model evidence."""
+    normalized = " ".join(text.split())
+    without_urls = re.sub(r"https?://\S+|www\.\S+", " ", normalized)
+    without_urls = " ".join(without_urls.split())
+    if len(without_urls) < minimum_chars:
+        raise DescriptionInsufficientError(
+            f"官方描述去除 URL 后只有 {len(without_urls)} 个字符，少于 {minimum_chars}"
+        )
+    return without_urls
+
+
+def load_youtube_metadata(path: Path) -> dict[str, dict[str, Any]]:
+    """Index the external official metadata cache by immutable YouTube video id."""
+    data = load_json(path, "YouTube 元数据缓存")
+    sources = data.get("sources") if isinstance(data, dict) else None
+    if not isinstance(sources, list):
+        raise ValueError(f"YouTube 元数据缓存缺少 sources 数组：{path}")
+    indexed: dict[str, dict[str, Any]] = {}
+    for source in sources:
+        if not isinstance(source, dict) or not isinstance(source.get("items"), list):
+            raise ValueError(f"YouTube 元数据缓存的 source 结构不正确：{path}")
+        for item in source["items"]:
+            if not isinstance(item, dict) or not isinstance(item.get("videoId"), str):
+                raise ValueError(f"YouTube 元数据缓存含无效视频记录：{path}")
+            video_id = item["videoId"]
+            if video_id in indexed:
+                raise ValueError(f"YouTube 元数据缓存含重复 videoId：{video_id}")
+            indexed[video_id] = item
+    return indexed
+
+
+def get_cached_description(metadata: dict[str, dict[str, Any]], video_id: str) -> str | None:
+    record = metadata.get(video_id)
+    if not record:
+        return None
+    raw = record.get("description")
+    if not isinstance(raw, str):
+        return None
+    try:
+        return validate_description_text(raw)
+    except DescriptionInsufficientError:
+        return None
+
+
 def parse_json_object(text: str) -> dict[str, Any]:
     candidate = text.strip()
     if candidate.startswith("```"):
@@ -688,8 +738,13 @@ def call_openrouter(
     )
 
 
-def build_prompt(
-    item: dict[str, Any], source_name: str, transcript: str, topics: list[dict[str, Any]], capabilities: list[dict[str, Any]]
+def build_text_prompt(
+    item: dict[str, Any],
+    source_name: str,
+    evidence_text: str,
+    evidence_label: str,
+    topics: list[dict[str, Any]],
+    capabilities: list[dict[str, Any]],
 ) -> str:
     topic_catalog = [
         {"id": topic["id"], "name": topic.get("title", {}).get("zh-CN", ""), "summary": topic.get("summary", {}).get("zh-CN", "")}
@@ -699,29 +754,45 @@ def build_prompt(
         {"id": capability["id"], "name": capability.get("name", {}).get("zh-CN", ""), "summary": capability.get("summary", {}).get("zh-CN", "")}
         for capability in capabilities
     ]
-    return f"""你是一个严格的游戏设计资料编目助手。请只依据下方英文 YouTube 字幕正文，生成该视频在 Learn About Games 目录中的派生字段。
+    return f"""你是一个严格的游戏设计资料编目助手。请只依据下方英文 YouTube {evidence_label}，生成该视频在 Learn About Games 目录中的派生字段。
 
 标题：{item['title'].get('en') or item['title'].get('zh-CN')}
 来源：{source_name}
 
-字幕正文（完整内容，不要依据标题猜测）：
+{evidence_label}（完整内容，不要依据标题猜测）：
 ---
-{transcript}
+{evidence_text}
 ---
 
 可选资源主题（只能使用这些 id）：
 {json.dumps(topic_catalog, ensure_ascii=False)}
 
-可选能力（只能使用这些 id；只有字幕明确支持时才选，宁可为空）：
+可选能力（只能使用这些 id；只有证据文本明确支持时才选，宁可为空）：
 {json.dumps(capability_catalog, ensure_ascii=False)}
 
 要求：
-1. summary.zh-CN 必须是 180-205 个中文字符（以字符数计，写完后自行数一遍）。只写四句，每句约 45-50 个汉字，分别覆盖核心论点、具体例子/方法、设计含义和字幕中的限制或结论；不要复述标题，不要写“这是一个关于……的视频”，不要补写字幕没有的事实。少于 180 个字符的结果视为失败。
+1. summary.zh-CN 必须是 180-205 个中文字符（以字符数计，写完后自行数一遍）。只写四句，每句约 45-50 个汉字，分别覆盖核心论点、具体例子/方法、设计含义和证据文本中的限制或结论；不要复述标题，不要写“这是一个关于……的视频”，不要补写证据文本没有的事实。少于 180 个字符的结果视为失败。
 2. resourceTopicIds **只选最贴切的那一个**主题（数组里恰好一个元素）。目录规定每条资料只属一个主题。若没有足够依据，返回空数组；脚本会保留原有保守主题。
-3. capabilityIds 只选择字幕明确支持的能力，没有明确支持就返回空数组，不要凑数。
-4. 只有字幕支持一句有价值的相关性判断时才填 whyRelevant.zh-CN；写不出就省略。它不能与 summary.zh-CN 相同。
+3. capabilityIds 只选择证据文本明确支持的能力，没有明确支持就返回空数组，不要凑数。
+4. 只有证据文本支持一句有价值的相关性判断时才填 whyRelevant.zh-CN；写不出就省略。它不能与 summary.zh-CN 相同。
 5. 只输出 JSON，不要 Markdown：{{"summary":{{"zh-CN":"..."}},"resourceTopicIds":[],"capabilityIds":[],"whyRelevant":{{"zh-CN":"..."}}}}
 """
+
+
+def build_prompt(
+    item: dict[str, Any], source_name: str, transcript: str, topics: list[dict[str, Any]], capabilities: list[dict[str, Any]]
+) -> str:
+    return build_text_prompt(item, source_name, transcript, "字幕正文", topics, capabilities)
+
+
+def build_description_prompt(
+    item: dict[str, Any],
+    source_name: str,
+    description: str,
+    topics: list[dict[str, Any]],
+    capabilities: list[dict[str, Any]],
+) -> str:
+    return build_text_prompt(item, source_name, description, "官方描述", topics, capabilities)
 
 
 def build_audio_prompt(
@@ -992,6 +1063,7 @@ def process(args: argparse.Namespace) -> int:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
     api_key: str | None = None
+    metadata_by_video = load_youtube_metadata(args.metadata) if args.description_fallback else {}
     allowed_topics = {topic["id"] for topic in topics}
     allowed_capabilities = {capability["id"] for capability in capabilities}
     source_names = {source["id"]: source.get("name", {}).get("en") or source.get("name", {}).get("zh-CN", source["id"]) for source in sources}
@@ -1000,47 +1072,21 @@ def process(args: argparse.Namespace) -> int:
         item_id = item["id"]
         video_id = extract_video_id(item["canonicalUrl"])
         audio_attempted = False
+        input_mode = "transcript"
         try:
             source_name = source_names.get(item["sourceId"], item["sourceId"])
             model_result: dict[str, Any]
-            try:
-                transcript = read_cache(args.cache_dir, video_id)
-                if transcript is None:
-                    transcript = fetch_transcript_with_fallback(video_id, timeout=args.transcript_timeout)
-                    atomic_write_text(args.cache_dir / f"{video_id}.txt", transcript + "\n")
-                else:
-                    transcript = validate_transcript_text(transcript)
-            except (NoTranscriptFound, TranscriptInsufficientError):
-                if not args.audio_fallback:
-                    raise
-                audio_attempted = True
-                binary = resolve_ytdlp_binary()
-                if not binary:
-                    raise AudioChannelError("找不到 yt-dlp，无法进入音频路线")
-                audio_path = fetch_audio_via_ytdlp(
-                    video_id,
-                    binary,
-                    args.audio_cache_dir,
-                    timeout=args.audio_timeout,
-                    max_bytes=args.vertex_max_audio_bytes,
-                )
-                model_result = generate_vertex_audio_result(
-                    item,
-                    source_name,
-                    audio_path,
-                    topics,
-                    capabilities,
-                    allowed_topics,
-                    allowed_capabilities,
-                    args.vertex_model,
-                    args.max_tokens,
-                    args.vertex_timeout,
-                    args.vertex_max_audio_bytes,
-                )
-            else:
+            metadata_record = metadata_by_video.get(video_id)
+            description = get_cached_description(metadata_by_video, video_id) if args.description_fallback else None
+            prefer_description = bool(
+                description
+                and metadata_record
+                and metadata_record.get("captionAvailability") == "false"
+            )
+            if prefer_description:
                 if api_key is None:
                     api_key = load_api_key(args.key_file)
-                prompt = build_prompt(item, source_name, transcript, topics, capabilities)
+                prompt = build_description_prompt(item, source_name, description, topics, capabilities)
                 model_result = generate_model_result(
                     item,
                     prompt,
@@ -1051,6 +1097,74 @@ def process(args: argparse.Namespace) -> int:
                     args.max_tokens,
                     args.model_timeout,
                 )
+                input_mode = "description"
+            else:
+                try:
+                    transcript = read_cache(args.cache_dir, video_id)
+                    if transcript is None:
+                        transcript = fetch_transcript_with_fallback(video_id, timeout=args.transcript_timeout)
+                        atomic_write_text(args.cache_dir / f"{video_id}.txt", transcript + "\n")
+                    else:
+                        transcript = validate_transcript_text(transcript)
+                except (NoTranscriptFound, TranscriptInsufficientError) as transcript_error:
+                    if description is not None:
+                        if api_key is None:
+                            api_key = load_api_key(args.key_file)
+                        prompt = build_description_prompt(item, source_name, description, topics, capabilities)
+                        model_result = generate_model_result(
+                            item,
+                            prompt,
+                            api_key,
+                            args.models,
+                            allowed_topics,
+                            allowed_capabilities,
+                            args.max_tokens,
+                            args.model_timeout,
+                        )
+                        input_mode = "description"
+                    elif not args.audio_fallback:
+                        raise transcript_error
+                    else:
+                        audio_attempted = True
+                        binary = resolve_ytdlp_binary()
+                        if not binary:
+                            raise AudioChannelError("找不到 yt-dlp，无法进入音频路线")
+                        audio_path = fetch_audio_via_ytdlp(
+                            video_id,
+                            binary,
+                            args.audio_cache_dir,
+                            timeout=args.audio_timeout,
+                            max_bytes=args.vertex_max_audio_bytes,
+                        )
+                        model_result = generate_vertex_audio_result(
+                            item,
+                            source_name,
+                            audio_path,
+                            topics,
+                            capabilities,
+                            allowed_topics,
+                            allowed_capabilities,
+                            args.vertex_model,
+                            args.max_tokens,
+                            args.vertex_timeout,
+                            args.vertex_max_audio_bytes,
+                        )
+                        input_mode = "audio"
+                else:
+                    if api_key is None:
+                        api_key = load_api_key(args.key_file)
+                    prompt = build_prompt(item, source_name, transcript, topics, capabilities)
+                    model_result = generate_model_result(
+                        item,
+                        prompt,
+                        api_key,
+                        args.models,
+                        allowed_topics,
+                        allowed_capabilities,
+                        args.max_tokens,
+                        args.model_timeout,
+                    )
+                    input_mode = "transcript"
             result = model_result["payload"]
             updated = apply_model_result(item, result)
             # State is written before and after catalog mutation so a killed process can recover the item.
@@ -1061,7 +1175,7 @@ def process(args: argparse.Namespace) -> int:
                     "status": "pending_write",
                     "result": result,
                     "model": model_result["model"],
-                    "inputMode": "audio" if audio_attempted else "transcript",
+                    "inputMode": input_mode,
                 },
                 args.state,
             )
@@ -1074,7 +1188,7 @@ def process(args: argparse.Namespace) -> int:
                 {
                     "status": "completed",
                     "model": model_result["model"],
-                    "inputMode": "audio" if audio_attempted else "transcript",
+                    "inputMode": input_mode,
                     "summaryLength": len(result["summary"]["zh-CN"]),
                 },
                 args.state,
@@ -1119,7 +1233,12 @@ def process(args: argparse.Namespace) -> int:
             else:
                 failure_class = "unclassified"
                 status = "retryable"
-            failure_record = {"status": status, "failureClass": failure_class, "retryable": status == "retryable"}
+            failure_record = {
+                "status": status,
+                "failureClass": failure_class,
+                "retryable": status == "retryable",
+                "inputMode": input_mode,
+            }
             if audio_attempted:
                 failure_record["audioAttempted"] = True
             update_record(state, item_id, failure_record, args.state)
@@ -1157,6 +1276,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--model-timeout", type=int, default=60)
     parser.add_argument("--transcript-timeout", type=int, default=45)
     parser.add_argument("--audio-fallback", action="store_true", help="无可用字幕时下载音频并调用 Vertex ADC")
+    parser.add_argument("--description-fallback", action="store_true", help="优先使用官方 YouTube 描述作为正文证据")
     parser.add_argument("--audio-timeout", type=int, default=120)
     parser.add_argument("--audio-cache-dir", type=Path, default=DEFAULT_AUDIO_CACHE)
     parser.add_argument("--vertex-model", default=os.environ.get("VERTEX_MODEL", DEFAULT_VERTEX_MODEL))
@@ -1168,6 +1288,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--capabilities", type=Path, default=DEFAULT_CAPABILITIES)
     parser.add_argument("--sources", type=Path, default=DEFAULT_SOURCES)
     parser.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE)
+    parser.add_argument("--metadata", type=Path, default=DEFAULT_METADATA)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--log", type=Path, default=DEFAULT_LOG)
