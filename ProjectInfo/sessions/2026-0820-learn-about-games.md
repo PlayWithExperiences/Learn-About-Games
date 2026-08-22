@@ -94,3 +94,12 @@
 - 下一步：提交第五批数据与提示修复后继续第六轮描述批次。
 
 原始对话：dialogues/2026-0822.md「1844 第五轮描述回写与 ID 边界修正」
+
+## 1909 第六轮描述回写与定向重试（2026-08-22）
+
+- 结论：第六轮 `description-only` 最终 100/100 完成；1 条模型输出因摘要过短和未知主题 ID 失败，定向重试成功。
+- 状态：当前 727 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；完成入口为 676 description、1 transcript、1 audio，另有 49 条历史回写无入口字段。
+- 口径：真正未完成 1,584 条，其中 1,537 条尚未分类，47 条已尝试但仍未完成；报告继续区分 `remainingAfterRun` 与 `uncompletedAfterRun`。
+- 下一步：跑门禁、提交第六批数据和留痕后继续第七轮描述批次。
+
+原始对话：dialogues/2026-0822.md「1909 第六轮描述回写与定向重试」

@@ -47,3 +47,9 @@
 - 决策：無涘 ｜ 记录：AI。当前累计 627 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；完成入口为 576 条 `description`、1 条 `transcript`、1 条 `audio` 和 49 条历史回写。真正未完成 1,684 条，其中 1,637 条尚未分类，47 条已尝试但仍是显式非完成状态。
 - 决策：無涘 ｜ 记录：AI。回填提示已明确区分 `resourceTopicIds` 与 `capabilityIds`，并加入回归测试；未知主题不自动映射到看似相近的能力，拿不准时保留原有主题。报告继续同时暴露 `remainingAfterRun`（尚未分类）和 `uncompletedAfterRun`（未完成总数）。
 - 时间估算：AI 推断。第五轮从 18:15 左右运行至 18:40 左右，约 24.9 分钟；若 1,637 条尚未分类条目都能使用合格官方描述，按每 4 小时最多 20 条理论约 13–14 天，其余 47 条仍不适用该估算。
+
+## 2026-08-22：官方描述第六轮百条回写与定向重试
+
+- 决策：無涘 ｜ 记录：AI。第六轮 `description-only` 最终 100/100 完成，未请求字幕、未下载音频，也未增加 YouTube 通道失败。首轮有 1 条模型输出失败，原因是摘要过短并混入未知主题 `business-management`；该结果未写回，定向重试成功。
+- 决策：無涘 ｜ 记录：AI。当前累计 727 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；完成入口为 676 条 `description`、1 条 `transcript`、1 条 `audio` 和 49 条历史回写。真正未完成 1,584 条，其中 1,537 条尚未分类，47 条已尝试但仍是显式非完成状态。
+- 时间估算：AI 推断。第六轮从 18:46 左右运行至 19:08 左右，约 21.6 分钟；若 1,537 条尚未分类条目都能使用合格官方描述，按每 4 小时最多 20 条理论约 12–13 天，其余 47 条仍不适用该估算。
