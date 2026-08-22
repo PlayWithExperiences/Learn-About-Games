@@ -75,3 +75,13 @@
 用户完成 OAuth/ADC 授权。AI 在不打印 token 的前提下调用 YouTube Data API v3 的 `channels.list`，HTTP 200，返回 1 条公开频道记录：Game Maker's Toolkit。ADC token 未写入仓库，临时响应只留在仓库外探针路径。认证链路已打通；下一步由 AI 接入官方 API 元数据发现／同步，字幕仍按低频公开入口与失败退避处理。
 
 原始对话：dialogues/2026-0822.md「1412 YouTube OAuth/ADC 只读探针通过」
+
+## 1433 YouTube 官方元数据同步入口合并
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+用户确认继续推进。AI 先把范围收敛为只读元数据垂直切片：新增 scripts/sync_youtube_metadata.py，从 src/data/sources.json 的 YouTube @handle 解析频道，经过 channels.list、uploads playlist 的 playlistItems.list 与批量 videos.list 获取事实元数据；默认原子写入仓库外缓存，不自动修改 5,437 条目录。新增 7 个 Python 合同／CLI 测试，真实 ADC GMTK 探针返回 3 条视频；默认 4 个 YouTube channel Source 各取 1 条的 dry-run 全部成功。Python 回归 11/11、Astro check 0/0/0、Vitest 204/204。实现提交 37f97e1，已本地合并进 main；token、OAuth JSON 与本机缓存均未进入仓库。
+
+下一步是从外部元数据缓存中做保守 intake：先按 canonical URL 去重并与现有 Source／Work Item 对账，再单独获取字幕、做可追溯摘要和主题／能力映射；失败继续保持可辨认，不把元数据发现成功写成内容分析完成。
+
+原始对话：dialogues/2026-0822.md「1433 YouTube 官方元数据同步入口合并」

@@ -15,6 +15,7 @@
 
 ## 下一步
 
+- 官方 API 元数据入口已合并进 main：新增 scripts/sync_youtube_metadata.py，从 sources.json 的 YouTube @handle 发现频道，依次读取 uploads playlist、视频列表与标题／描述／发布时间／时长／字幕可用性等事实字段，默认原子写入仓库外 ~/.cache/lag-youtube/metadata.json；不写 token、不写目录、不生成排名。真实 ADC 探针已验证 GMTK 3 条视频，默认 4 个 YouTube channel Source 各取 1 条的 dry-run 也全部成功；字幕仍保持低频、失败可辨认的补充路线，后续再做人工 intake 与内容分析。
 - Career Lens 与统计文案已修正；当前新增的 Playtest 失败不是数据缺失，而是 5437 条资源的初始 DOM／客户端筛选性能瓶颈。公开前需要单独做资源筛选切片，避免用延长 timeout 掩盖页面成本。
 - YouTube 涓流通道仍处于 24 小时冷却：累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条；本轮单视频探测证明 `yt-dlp` 与 `youtube-transcript-api` 均可成功取得一条字幕，但不能把单条成功或冷却状态写成批量补全成功；公开频道 RSS 对 GMTK 返回 404。無涘新建的 `YouTube knowledge` 项目已启用 Agent Platform API，但该服务（`aiplatform.googleapis.com`）只负责 Agent/Gemini 资源与模型调用，不是 YouTube 数据入口。由于组织策略禁止 Agent Platform API Key，新的人工路径改为：在同一项目另外启用 `youtube.googleapis.com`（YouTube Data API v3），创建桌面 OAuth 客户端，并以带 YouTube scope 的用户 OAuth/ADC 进行只读探针；Agent Platform ADC 本身不等于 YouTube 权限。官方 YouTube API 不支持 service account 作为 YouTube 用户身份，任意第三方视频字幕仍不能靠 OAuth 通用解锁。凭据不得进入仓库、前端或对话。
 - OAuth/ADC 排障已完成：第一次命令因未显式包含 ADC 必需的 `cloud-platform` scope 被 gcloud 拦截；补上后因 OAuth 应用 Audience 为 Internal 返回 `403 org_internal`。改为 External、保留 Testing 并加入实际登录账号后授权成功；AI 随后在不输出 token 的前提下用 ADC 调用 YouTube Data API v3 `channels.list`，获得 HTTP 200 和 1 条公开频道记录（Game Maker's Toolkit）。认证链路已打通；下一步接入官方 API 的频道／视频元数据同步，字幕仍保持低频、失败可辨认的补充路线。
