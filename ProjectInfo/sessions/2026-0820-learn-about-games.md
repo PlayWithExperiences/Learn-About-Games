@@ -44,14 +44,6 @@
 
 原始对话：dialogues/2026-0822.md「0208 内容目标审计」
 
-## 0133 成长资源与创新路线审计收口
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-本场围绕成长资源与创新地图补全。确认以 .worktrees/v02 执行线为基线：已有成长资源 5,437 条（规范 URL 唯一 5,437）、Access Version 5,590 条、44 个来源、16 个资源主题；Atlas 路线审计得到 FPS、RPG、RTS、开放世界 4 条完整证据路线，超过 3 条目标。新增 atlas-route-audit.ts 与 audit-content-targets.mjs，并修复 README/Roadmap 等统计漂移（Source 43→44）。独立 clone 验证：类型检查通过、单测 204/204、构建 151 页、E2E 262 通过、22 跳过、0 失败。视频字幕任务因冷却未完成，保留 SKIP/retryable 状态。用户询问合并与公开，AI 未执行合并；本地验证 main 与 codex/v02 合并无冲突，建议先提交 main 未提交的 Director 留痕再 --no-ff 合并，公开前完成线上 smoke test。风险：YouTube 自动抓取受 IP 限流与条款/开发者政策限制，不应依赖个人账号 Cookie。下一步改为优先对文章、论文、官方文档做证据摘要与分析，YouTube 先做元数据，仅有创作者文本时才做深度摘要。
-
-原始对话：dialogues/2026-0822.md
-
 ## 1252 合并与 YouTube 内容通道探测
 
 决策：無涘 ｜ 记录：AI。按用户后续指示，先提交 main 的 Director 留痕，再以非 fast-forward 方式合并 `codex/v02`。合并提交为 `cdca3be`，随后把涓流脚本从旧 `.worktrees/v02` 切到主工作树并提交 `8c1b67f`；本地回滚锚点为 `v0.2-content-baseline`。确认 v02 worktree 干净且已被 main 吸收后，移除本地 `codex/v02` 分支和 worktree，远端分支未改。
@@ -67,3 +59,23 @@
 根因证据是 `dist/resources/index.html` 约 12.7MB，并 server-render 约 5437 条 Work Item；Playtest 查询实际只需要 61 条，但当前仍由客户端在整页 DOM 上隐藏其余条目。该问题属于大目录筛选性能，不是合并冲突或资源缺失；未通过提高 timeout 掩盖，下一切片应优化过滤入口或初始渲染成本后再复跑浏览器门禁。
 
 原始对话：dialogues/2026-0822.md「1314 合并后 Playwright 归因」
+
+## 0133 资源补全至5千条与YouTube通道实验
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+按用户要求将内容补全目标提升至1000条资源和3条完整Atlas创新路线。经审计，.worktrees/v02分支已有5437条资源、84个Atlas节点、86条关系，4条路线（FPS、RPG、RTS、开放世界）满足完整闭环。在独立clone中通过类型检查、单测（204项）和构建（151页），全量E2E出现3个失败，归因为大目录渲染性能问题，非本次改动引入。将codex/v02合并到main并打回滚标签，删除旧worktree。完成YouTube通道实验：官方API无Key时403，公开RSS返回404，yt-dlp与youtube-transcript-api单视频请求成功，证明下载链路可行但批量触发限流。字幕分析链路成立。当前阻塞为YouTube API凭据缺失及资源页渲染性能。下一步需人工配置YouTube API Key或OAuth权限以稳定获取元数据与字幕，并修复资源页性能后公开站点。
+
+原始对话：dialogues/2026-0822.md
+
+## 1323 YouTube 通道人工配置清单
+
+决策：無涘（待执行人工配置） ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+本次把打通内容通道所需的人工动作收束为最小清单。必做项只有：在 Google Cloud Console 选择或新建项目，启用 YouTube Data API v3，创建 API Key，并至少限制到 YouTube Data API v3；再把值放入本地运行环境的 `YOUTUBE_API_KEY`，只回复“已配置”，不把密钥发到对话、仓库、前端或日志。默认配额先按官方规则使用上传播放列表与 `videos.list`，不申请额外配额，也不使用个人 YouTube 密码或 Cookie。
+
+OAuth 仅作为可选项：若要读取無涘本人或其有权限管理的视频的官方字幕，需要创建 OAuth 2.0 客户端并在浏览器完成一次授权，凭据与 token 只保存在本机；官方 `captions.list`/`captions.download` 不是任意第三方公开视频字幕的通用下载入口。对于公共第三方频道，AI 继续使用 API 元数据发现、低频公开字幕/自动字幕、描述/章节、创作者提供文本和文章等分层入口；能拿到就做带证据的摘要与能力/主题分析，拿不到就保留来源入口并标明缺失，不伪造分析。文章的公开页面不需要人工凭据，付费或登录内容由無涘自行提供可分析文本或文件，不提供密码和 Cookie。
+
+人工动作之外的 API 探针、频道上传列表同步、去重、低频退避、字幕获取、摘要/分析、证据回写、失败留痕和测试均由 AI 处理。当前仍保持仓库私有；公开前另有资源页性能门禁待修复。
+
+原始对话：dialogues/2026-0822.md「1323 YouTube 通道人工配置清单」

@@ -16,7 +16,7 @@
 ## 下一步
 
 - Career Lens 与统计文案已修正；当前新增的 Playtest 失败不是数据缺失，而是 5437 条资源的初始 DOM／客户端筛选性能瓶颈。公开前需要单独做资源筛选切片，避免用延长 timeout 掩盖页面成本。
-- YouTube 涓流通道仍处于 24 小时冷却：累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条；本轮单视频探测证明 `yt-dlp` 与 `youtube-transcript-api` 均可成功取得一条字幕，但不能把单条成功或冷却状态写成批量补全成功。官方 Data API 仍缺少 API 凭据；公开频道 RSS 对 GMTK 返回 404。
+- YouTube 涓流通道仍处于 24 小时冷却：累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条；本轮单视频探测证明 `yt-dlp` 与 `youtube-transcript-api` 均可成功取得一条字幕，但不能把单条成功或冷却状态写成批量补全成功。官方 Data API 仍缺少 API 凭据；公开频道 RSS 对 GMTK 返回 404。下一步唯一必要的人工动作是由無涘在本地 Google Cloud 项目启用 YouTube Data API v3、创建并限制 API Key，然后通过环境变量提供 `YOUTUBE_API_KEY`；API Key 只用于公开频道/视频元数据，字幕官方接口的 OAuth 仅适用于有相应视频权限的账号，不是任意第三方字幕的通用入口。密钥不得进入仓库、前端或对话。
 - 仓库仍为 Private、Pages workflow 仍手动停用；恢复公开需要先修复资源筛选性能，再完成桌面／移动、双主题、无 JS 与线上验收。
 
 ## 阻塞 / 待定
