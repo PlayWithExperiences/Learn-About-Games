@@ -27,7 +27,7 @@
 
 set -uo pipefail
 
-REPO="$HOME/Documents/GitHub/Learn-About-Games/.worktrees/v02"
+REPO="$HOME/Documents/GitHub/Learn-About-Games"
 CACHE="$HOME/.cache/lag-video-content"
 PY="$CACHE/venv/bin/python"
 LOG="$CACHE/trickle.log"
