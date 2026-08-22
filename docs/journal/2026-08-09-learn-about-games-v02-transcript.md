@@ -694,3 +694,13 @@ ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用�
 最终状态为 927 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；完成入口为 876 条 `inputMode=description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写无入口字段。真正未完成 1,384 条，其中 1,337 条尚未分类，47 条已尝试但仍未完成。
 
 原始对话：dialogues/2026-0822.md「1957 第八轮描述回写与跨字段归一化」
+
+## 2018 第九轮描述百条回写（partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文、音频文件或环境变量。
+
+第九轮 `description-only` 批次最终 100/100 完成，未请求字幕、未下载音频，也未增加模型或 YouTube 通道失败。最终状态为 1,027 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0；完成入口为 976 条 `inputMode=description`、1 条 `transcript`、1 条 `audio`，另有 49 条历史回写无入口字段。
+
+2,311 条目标中真正未完成 1,284 条，其中 1,237 条尚未分类，47 条已尝试但仍未完成。
+
+原始对话：dialogues/2026-0822.md「2018 第九轮描述回写」

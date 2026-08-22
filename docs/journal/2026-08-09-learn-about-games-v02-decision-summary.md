@@ -452,3 +452,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。第八轮 `description-only` 最终 100/100 完成；1 条模型输出把合法能力 ID `aesthetic-direction` 放进主题字段，白名单先拒绝，确定性归一化后重试成功。该规则只丢弃主题字段中的合法能力 ID，不把它映射成主题；其它未知 ID 仍失败并留痕。
 - 决策：無涘 ｜ 记录：AI。当前状态为 927 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0。完成入口为 876 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 1,384 条，其中 1,337 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。本轮约 20.3 分钟；若 1,337 条尚未分类条目都能走描述路线，按每 4 小时最多 20 条理论约 11–12 天，字幕/音频失败条目仍需独立处理。
+
+## 64. 官方描述第九轮百条回写（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。第九轮 `description-only` 100/100 完成，未请求字幕、未下载音频，也未增加模型或通道失败。当前状态为 1,027 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0。
+- 决策：無涘 ｜ 记录：AI。完成入口为 976 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 1,284 条，其中 1,237 条尚未分类，47 条已尝试但仍未完成。
+- 时间估算：AI 推断。本轮约 18.9 分钟；若 1,237 条尚未分类条目都能走描述路线，按每 4 小时最多 20 条理论约 10–11 天，字幕/音频失败条目仍需独立处理。
