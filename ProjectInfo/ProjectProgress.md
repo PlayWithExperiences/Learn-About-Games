@@ -2,12 +2,13 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md。
 
-*更新于 2026-08-22 · 记录者 AI*
+*更新于 2026-08-23 · 记录者 AI*
 
 ## 现在在哪
 
 - 现状（AI 会话 · codex，待無涘确认）：
   当前 v0.2 已形成可运行的 Astro/TypeScript 网站，包含 EGDS 能力地图、职业透镜、学习路径、资源主题筛选与搜索，以及保留全局关系的 Innovation Atlas。`codex/v02` 已合并进 `main`，并以本地 tag `v0.2-content-baseline` 保留回滚锚点；当前 main 有 5437 个 Work Item、5590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence。FPS、RPG、RTS、Open World 四条创新事件路线已满足完整闭包；其它低证据透镜仍明确未闭合。仓库继续保持 Private，尚未公开部署。
+- 外部旁证（2026-08-23，AI 调研，待無涘确认）：发现公开的[动作游戏设计知识库](https://jskyzero.github.io/ActionGameDesign.ByAI/)及其[知乎介绍](https://zhuanlan.zhihu.com/p/2074199959247836670)。实时首页显示 51 篇条目；它以“来源文章／演讲 → AI 一句话结论 → 标签 → 详情页”的内容模型组织 GDC、CEDEC、视频与原创方法论，仓库 schema 也围绕 `article`、`source`、`references` 三类字段展开。它与本项目重叠在资源发现和部分动作设计主题，不重叠于 EGDS Framework Node、Capability／Knowledge Topic、Career Lens、Access Version 或 Innovation Atlas 关系模型。推断：这是相邻的窄领域内容产品与可借鉴的资源入口旁证，不构成需要复制其站点结构或另立第二套知识地图的理由。已核查首页、README、内容 schema 与一篇完整条目；未核查其全部 51 篇的事实质量、实际读者数据与长期维护稳定性。
 
 ## 当前阶段
 
