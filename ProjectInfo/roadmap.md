@@ -53,3 +53,9 @@
 - 决策：無涘 ｜ 记录：AI。第六轮 `description-only` 最终 100/100 完成，未请求字幕、未下载音频，也未增加 YouTube 通道失败。首轮有 1 条模型输出失败，原因是摘要过短并混入未知主题 `business-management`；该结果未写回，定向重试成功。
 - 决策：無涘 ｜ 记录：AI。当前累计 727 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0；完成入口为 676 条 `description`、1 条 `transcript`、1 条 `audio` 和 49 条历史回写。真正未完成 1,584 条，其中 1,537 条尚未分类，47 条已尝试但仍是显式非完成状态。
 - 时间估算：AI 推断。第六轮从 18:46 左右运行至 19:08 左右，约 21.6 分钟；若 1,537 条尚未分类条目都能使用合格官方描述，按每 4 小时最多 20 条理论约 12–13 天，其余 47 条仍不适用该估算。
+
+## 2026-08-22：官方描述第七轮百条回写
+
+- 决策：無涘 ｜ 记录：AI。第七轮 `description-only` 最终 100/100 完成，未请求字幕、未下载音频，也未增加模型或 YouTube 通道失败。当前累计 827 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0。
+- 决策：無涘 ｜ 记录：AI。完成入口为 776 条 `description`、1 条 `transcript`、1 条 `audio` 和 49 条历史回写；真正未完成 1,484 条，其中 1,437 条尚未分类，47 条已尝试但仍是显式非完成状态。
+- 时间估算：AI 推断。本轮从 19:10 左右运行至 19:31 左右，约 20.3 分钟；若 1,437 条尚未分类条目都能使用合格官方描述，按每 4 小时最多 20 条理论约 12 天，其余 47 条仍不适用该估算。

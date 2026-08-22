@@ -440,3 +440,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 决策：無涘 ｜ 记录：AI。第六轮 `description-only` 最终 100/100 完成；首轮 1 条模型输出同时出现摘要过短和未知主题 `business-management`，白名单拒绝且未写回，定向重试后成功。当前 model failure 为 0。
 - 决策：無涘 ｜ 记录：AI。当前状态为 727 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure。完成入口为 676 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 1,584 条，其中 1,537 条尚未分类，47 条已尝试但仍未完成。
 - 时间估算：AI 推断。第六轮约 21.6 分钟；若 1,537 条尚未分类条目都能走描述路线，按每 4 小时最多 20 条理论约 12–13 天，字幕/音频失败条目仍需独立处理。
+
+## 62. 官方描述第七轮百条回写（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。第七轮 `description-only` 100/100 完成，未请求字幕、未下载音频，也未增加模型或通道失败。当前状态为 827 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，model failure 为 0。
+- 决策：無涘 ｜ 记录：AI。完成入口为 776 description、1 transcript、1 audio，另有 49 条历史回写；真正未完成 1,484 条，其中 1,437 条尚未分类，47 条已尝试但仍未完成。
+- 时间估算：AI 推断。本轮约 20.3 分钟；若 1,437 条尚未分类条目都能走描述路线，按每 4 小时最多 20 条理论约 12 天，字幕/音频失败条目仍需独立处理。
