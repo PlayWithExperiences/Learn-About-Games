@@ -1,5 +1,7 @@
 import unittest
 
+import scripts.backfill_video_content as backfill
+
 from scripts.backfill_video_content import (
     ModelOutputError,
     apply_model_result,
@@ -35,6 +37,33 @@ class TestBackfillContracts(unittest.TestCase):
     def test_rejects_transcript_that_is_only_audio_markers(self):
         with self.assertRaisesRegex(RuntimeError, "字幕正文过短或只有音频标记"):
             fetch_transcript("video-1", api_factory=lambda: FakeTranscriptApi())
+
+    def test_cleans_repeated_vtt_cues_before_analysis(self):
+        parser = getattr(backfill, "parse_vtt", None)
+        self.assertIsNotNone(parser)
+        vtt = """WEBVTT
+
+00:00.000 --> 00:01.000
+<c>Hello</c> world
+
+00:01.000 --> 00:02.000
+<c>Hello</c> world
+
+00:02.000 --> 00:03.000
+The next point
+        """
+        self.assertEqual(parser(vtt), "Hello world The next point")
+
+    def test_prompt_sets_a_strict_summary_length_contract(self):
+        prompt = backfill.build_prompt(
+            {"title": {"en": "Test video"}},
+            "Test source",
+            "The transcript contains enough detail to support a careful summary. " * 20,
+            [],
+            [],
+        )
+        self.assertIn("180-205", prompt)
+        self.assertIn("每句约 45-50 个汉字", prompt)
 
     def test_rejects_unknown_ids_and_short_summary(self):
         with self.assertRaises(ModelOutputError):

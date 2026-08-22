@@ -9,10 +9,13 @@ from __future__ import annotations
 
 import argparse
 import copy
+import html
 import json
 import os
 import re
+import shutil
 import signal
+import subprocess
 import sys
 import tempfile
 import urllib.error
@@ -33,6 +36,7 @@ DEFAULT_CACHE = Path.home() / ".cache" / "lag-transcripts"
 DEFAULT_STATE = Path.home() / ".cache" / "lag-video-content" / "state.json"
 DEFAULT_REPORT = Path.home() / ".cache" / "lag-video-content" / "report.json"
 DEFAULT_LOG = Path.home() / ".cache" / "lag-video-content" / "failures.log"
+DEFAULT_YTDLP = Path.home() / ".cache" / "lag-video-content" / "venv" / "bin" / "yt-dlp"
 DEFAULT_KEY_FILE = Path("/Users/haodong/Documents/GitHub/AI-Life-Mentor/.claude/openrouter-key")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 TARGET_SOURCE_IDS = {
@@ -76,6 +80,10 @@ class TranscriptRetryableError(RuntimeError):
 
 class TranscriptInsufficientError(RuntimeError):
     """The transcript exists but is too short or mostly audio markers to analyze."""
+
+
+class NoTranscriptFound(RuntimeError):
+    """The selected transcript source returned no usable caption track."""
 
 
 class ModelChannelError(RuntimeError):
@@ -150,12 +158,114 @@ def extract_video_id(url: str) -> str:
     return video_id
 
 
+def parse_vtt(text: str) -> str:
+    """Extract readable cue text and drop exact repeated auto-caption cues."""
+    cues: list[str] = []
+    previous = ""
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line == "WEBVTT" or "-->" in line or re.fullmatch(r"\d+", line):
+            continue
+        if line.startswith(("NOTE", "STYLE", "REGION")):
+            continue
+        line = re.sub(r"<[^>]+>", "", line)
+        line = re.sub(r"\s+", " ", html.unescape(line)).strip()
+        if not line or line == previous:
+            continue
+        cues.append(line)
+        previous = line
+    return " ".join(cues)
+
+
 def validate_transcript_text(text: str) -> str:
     normalized = " ".join(text.split())
     without_markers = re.sub(r"\[[^\]]+\]", "", normalized)
     if len(normalized) < 80 or len(without_markers.strip()) < 80:
         raise TranscriptInsufficientError("字幕正文过短或只有音频标记")
     return normalized
+
+
+def resolve_ytdlp_binary() -> str | None:
+    configured = os.environ.get("YTDLP_BIN", "").strip()
+    if configured:
+        if not Path(configured).is_file() or not os.access(configured, os.X_OK):
+            raise TranscriptChannelError(f"YTDLP_BIN 不可执行：{configured}")
+        return configured
+    discovered = shutil.which("yt-dlp")
+    if discovered:
+        return discovered
+    if DEFAULT_YTDLP.is_file() and os.access(DEFAULT_YTDLP, os.X_OK):
+        return str(DEFAULT_YTDLP)
+    return None
+
+
+def fetch_transcript_via_ytdlp(video_id: str, binary: str, timeout: int = 45) -> str:
+    """Fetch English manual/auto captions through yt-dlp into an external temp dir."""
+    with tempfile.TemporaryDirectory(prefix="lag-ytdlp-") as directory:
+        output_template = str(Path(directory) / "%(id)s")
+        command = [
+            binary,
+            "--no-playlist",
+            "--skip-download",
+            "--write-subs",
+            "--write-auto-subs",
+            "--sub-langs",
+            "en",
+            "--sub-format",
+            "vtt",
+            "--socket-timeout",
+            str(timeout),
+            "--retries",
+            "1",
+            "--fragment-retries",
+            "1",
+            "--no-warnings",
+            "--output",
+            output_template,
+            f"https://www.youtube.com/watch?v={video_id}",
+        ]
+        try:
+            result = subprocess.run(
+                command,
+                capture_output=True,
+                text=True,
+                timeout=timeout + 15,
+                check=False,
+            )
+        except (FileNotFoundError, OSError) as exc:
+            raise TranscriptChannelError(f"yt-dlp 通道启动失败：{type(exc).__name__}") from exc
+        except subprocess.TimeoutExpired as exc:
+            raise TranscriptChannelError(f"yt-dlp 字幕请求超过 {timeout + 15} 秒") from exc
+
+        paths = sorted(Path(directory).glob(f"{video_id}*.vtt"))
+        if not paths:
+            detail = (result.stderr or result.stdout or "").strip().splitlines()[-1:] or ["未生成 VTT"]
+            message = detail[0][:240]
+            if result.returncode == 0 or re.search(r"no subtitles|subtitles are not available|requested format is not available", message, re.IGNORECASE):
+                raise NoTranscriptFound(f"yt-dlp 未取得字幕：{message}")
+            raise TranscriptChannelError(f"yt-dlp 字幕通道失败：退出码 {result.returncode}：{message}")
+        transcript = parse_vtt(paths[0].read_text(encoding="utf-8"))
+        if not transcript:
+            raise NoTranscriptFound("yt-dlp 返回空字幕")
+        return validate_transcript_text(transcript)
+
+
+def fetch_transcript_with_fallback(video_id: str, timeout: int = 45) -> str:
+    """Prefer yt-dlp captions, then retain the transcript API as a visible fallback."""
+    binary = resolve_ytdlp_binary()
+    if not binary:
+        return fetch_transcript(video_id, timeout=timeout)
+    try:
+        return fetch_transcript_via_ytdlp(video_id, binary, timeout=timeout)
+    except (TranscriptChannelError, TranscriptRetryableError, TranscriptInsufficientError, NoTranscriptFound) as ytdlp_error:
+        try:
+            return fetch_transcript(video_id, timeout=timeout)
+        except Exception as transcript_error:
+            if classify_transcript_exception(transcript_error) == "no_transcript":
+                raise transcript_error
+            raise TranscriptChannelError(
+                f"字幕双通道失败：yt-dlp={type(ytdlp_error).__name__}; transcript-api={type(transcript_error).__name__}"
+            ) from transcript_error
 
 
 def fetch_transcript(video_id: str, api_factory: Callable[[], Any] | None = None, timeout: int = 45) -> str:
@@ -179,7 +289,7 @@ def fetch_transcript(video_id: str, api_factory: Callable[[], Any] | None = None
             raise TranscriptChannelError(f"字幕通道失败：{type(exc).__name__}: {exc}") from exc
         raise TranscriptRetryableError(f"字幕请求可重试失败：{type(exc).__name__}: {exc}") from exc
     if not text:
-        raise type("NoTranscriptFound", (RuntimeError,), {})("字幕返回为空")
+        raise NoTranscriptFound("字幕返回为空")
     return validate_transcript_text(text)
 
 
@@ -370,7 +480,7 @@ def build_prompt(
 {json.dumps(capability_catalog, ensure_ascii=False)}
 
 要求：
-1. summary.zh-CN 必须是 170-205 个中文字符（以字符数计，写完后自行数一遍并删减到范围内）。只写四句，每句约 30-45 个汉字，分别覆盖核心论点、具体例子/方法、设计含义和字幕中的限制或结论；不要复述标题，不要写“这是一个关于……的视频”，不要补写字幕没有的事实。
+1. summary.zh-CN 必须是 180-205 个中文字符（以字符数计，写完后自行数一遍）。只写四句，每句约 45-50 个汉字，分别覆盖核心论点、具体例子/方法、设计含义和字幕中的限制或结论；不要复述标题，不要写“这是一个关于……的视频”，不要补写字幕没有的事实。少于 180 个字符的结果视为失败。
 2. resourceTopicIds **只选最贴切的那一个**主题（数组里恰好一个元素）。目录规定每条资料只属一个主题。若没有足够依据，返回空数组；脚本会保留原有保守主题。
 3. capabilityIds 只选择字幕明确支持的能力，没有明确支持就返回空数组，不要凑数。
 4. 只有字幕支持一句有价值的相关性判断时才填 whyRelevant.zh-CN；写不出就省略。它不能与 summary.zh-CN 相同。
@@ -379,13 +489,15 @@ def build_prompt(
 
 
 def build_repair_prompt(item: dict[str, Any], draft: dict[str, Any]) -> str:
+    current_length = len(str(draft.get("summary", {}).get("zh-CN", "")))
+    minimum_addition = max(0, 180 - current_length)
     return f"""你是 JSON 输出修复器。下面是根据视频字幕生成的目录结果，事实和映射已经由上一轮模型确定。
 
 标题：{item['title'].get('en') or item['title'].get('zh-CN')}
 原始结果：
 {json.dumps(draft, ensure_ascii=False)}
 
-只修复 summary.zh-CN 的长度和表达，不新增事实，不改变 resourceTopicIds、capabilityIds，也不要新增 whyRelevant。summary.zh-CN 必须是 150-250 个中文字符，最好 170-205 个字符；只写四句，每句约 30-45 个汉字。只输出同样结构的 JSON，不要 Markdown：
+当前 summary.zh-CN 长度为 {current_length}，至少还需要增加 {minimum_addition} 个字符。只修复 summary.zh-CN 的长度和表达，不新增事实，不改变 resourceTopicIds、capabilityIds，也不要新增 whyRelevant。summary.zh-CN 必须是 180-205 个中文字符；只写四句，每句约 45-50 个汉字。只输出同样结构的 JSON，不要 Markdown：
 {{"summary":{{"zh-CN":"..."}},"resourceTopicIds":[],"capabilityIds":[]}}
 """
 
@@ -580,7 +692,7 @@ def process(args: argparse.Namespace) -> int:
         try:
             transcript = read_cache(args.cache_dir, video_id)
             if transcript is None:
-                transcript = fetch_transcript(video_id, timeout=args.transcript_timeout)
+                transcript = fetch_transcript_with_fallback(video_id, timeout=args.transcript_timeout)
                 atomic_write_text(args.cache_dir / f"{video_id}.txt", transcript + "\n")
             else:
                 transcript = validate_transcript_text(transcript)

@@ -173099,14 +173099,16 @@
       "en": "My Favourite Games From GMTK Game Jam 2026"
     },
     "summary": {
-      "zh-CN": "Game Maker's Toolkit 官方 YouTube 频道公开的免费英文视频《My Favourite Games From GMTK Game Jam 2026》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official Game Maker's Toolkit YouTube channel: “My Favourite Games From GMTK Game Jam 2026”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "视频展示了2026年GMTK游戏创作节中20款围绕‘倒数’主题的创意游戏，涵盖从面部表情匹配到时间管理解谜的多样化玩法。例如《Picture Day》通过键盘控制面部特征匹配目标表情，而《11:59》则模拟作业截止前的紧张冲刺，体现倒计时机制如何塑造独特体验。这些作品证明了简单主题能激发复杂设计，同时揭示了‘数字上升’机制在玩家动机中的普遍吸引力。最后，视频强调游戏创作节的庞大规模与社区评选机制，为独立开发者提供了展示创新的平台。"
     },
     "sourceId": "game-makers-toolkit",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "core-loop-design",
+      "challenge-difficulty-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "video",
     "canonicalUrl": "https://www.youtube.com/watch?v=awegilW3DTc",
@@ -173120,7 +173122,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "通过具体案例分析倒计时机制如何重构传统游戏循环，为系统设计提供逆向思维范例。"
+    }
   },
   {
     "id": "yt-20260820-gmtk-JFG0GMCMLgs",

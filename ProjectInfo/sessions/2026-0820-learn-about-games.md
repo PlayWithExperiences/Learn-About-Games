@@ -64,6 +64,6 @@
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-本场会话完成了三阶段实质性推进。第一阶段：以v02工作树基线（5,437条Work Item、84个Atlas节点）验证资源与创新路线闭包，确认4条完整创新路线（FPS、RPG、RTS、开放世界），独立clone全量测试通过（262 passed、0 failed）。第二阶段：打通Google ADC认证与YouTube Data API v3链路，新建youtube_metadata_sync脚本，实现频道handle到视频元数据的同步通道，GMTK公开频道探针成功，写入仓库外缓存而非直接篡改资源目录；本轮全量缓存获得2,534条元数据，现有2,311条目标100%映射，额外223条不自动导入。第三阶段：确认可验证派生字段能通过pending_write与原子写回进入资源目录；生产状态为48 completed、4 no_transcript、2 transcript_insufficient、42 transcript_channel，剩余2,215条。新增正文质量分类以排除只有音频标记的伪字幕，Python 12/12、Vitest 204/204、Astro check 0/0/0通过。当前瓶颈不是官方元数据配额，而是第三方字幕通道、音频转写和模型分析；按现有低频涓流粗估至少369天，仍需后续稳定正文入口才能完成全量。
+本场会话完成了三阶段实质性推进。第一阶段：以v02工作树基线（5,437条Work Item、84个Atlas节点）验证资源与创新路线闭包，确认4条完整创新路线（FPS、RPG、RTS、开放世界），独立clone全量测试通过（262 passed、0 failed）。第二阶段：打通Google ADC认证与YouTube Data API v3链路，新建youtube_metadata_sync脚本，实现频道handle到视频元数据的同步通道，GMTK公开频道探针成功，写入仓库外缓存而非直接篡改资源目录；本轮全量缓存获得2,534条元数据，现有2,311条目标100%映射，额外223条不自动导入。第三阶段：确认可验证派生字段能通过pending_write与原子写回进入资源目录；接入仓库外yt-dlp字幕、VTT清洗和更严格的180-205字符摘要提示，生产首条已完成。当前状态为49 completed、4 no_transcript、2 transcript_insufficient、41 transcript_channel，剩余2,215条；元数据中约240条有字幕标记且未完成，按6条／天粗估约40天，其余约2,022条需要音频转写。新增正文质量分类与替代字幕入口后，Python 14/14、Vitest 204/204、Astro build 151 pages通过。当前瓶颈不是官方元数据配额，而是通道速率、无字幕音频转写和模型分析。
 
 原始对话：dialogues/2026-0822.md
