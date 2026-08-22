@@ -60,20 +60,18 @@
 
 原始对话：dialogues/2026-0822.md「1314 合并后 Playwright 归因」
 
-## 0133 资源达标审计与YouTube只读接入
+## 0133 完成资源审计并打通 YouTube 认证
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-本轮先在 .worktrees/v02 内容线完成达标审计：资源 5,437 条且 canonical URL 唯一，Atlas 4 条完整创新路线（FPS、RPG、RTS、开放世界）满足事件、演化、载体与证据闭包；未闭合透镜继续标记为缺口。独立 clone 验证通过类型检查、204/204 单测、构建及最终 E2E 262 passed/0 failed。同步修正 README、Roadmap、Changelog 中资源数及 Source 数 43→44 等漂移，提交审计与路线闭包脚本/测试（7999fa6）。视频字幕涓流任务仍处冷却，累计 48 completed、44 retryable，剩余 2,215 条。随后用户在 Google Cloud 启用 Agent Platform API，核查明确它不提供 YouTube 数据；组织禁用 API Key，改为用户数据 OAuth+ADC。YouTube Data API v3 已启用，当前确认 youtube.readonly 范围，未保存凭据。下一步创建 Desktop OAuth client、仓库外保存 JSON、执行 gcloud ADC 登录，再只读测试 channels.list/videos.list；Agent Platform 仅保留用于后续分析。
+会话始于继续补全成长资源和创新地图的目标。AI 在独立工作树 v02 上完成审计，确认已有 5,437 条资源和 4 条完整创新路线，满足至少 1000 条资源与 3 条路线基准，并更新文档。随后重点转向 YouTube Data API 的 OAuth 只读授权配置。用户执行 gcloud 命令时先后遇到缺少 cloud-platform 范围和 403 org_internal 错误，AI 诊断出 OAuth 应用受众设为 Internal 且当前账号不在测试用户列表中。指导将受众改为 External、添加测试用户后，成功通过 ADC 令牌验证并读取公开频道数据，认证链路打通。视频字幕批处理因 IP 封锁仍不可用，后续将以新认证方式分阶段获取。下一步计划将 YouTube 只读 API 接入项目频道同步。所有诊断和修复已记录到项目进度与会话档案中。
 
 原始对话：dialogues/2026-0822.md
 
-## 1404 OAuth/ADC 命令与组织受众错误定位
+## 1412 YouTube OAuth/ADC 只读探针通过
 
-决策：無涘（待执行 OAuth 受众修复） ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-用户第一次执行 ADC 命令时只请求 `youtube.readonly`，gcloud 返回 `cloud-platform scope is required but not requested`；这是 ADC 默认要求，不是 YouTube API 失败。补上 `cloud-platform` 后，浏览器实际进入 Google OAuth，但返回 `403 org_internal`。当前 OAuth client 被限制为 Internal，而授权账号不在该 Cloud Organization 的父组织内；项目所有者身份不等于组织成员身份。
+用户完成 OAuth/ADC 授权。AI 在不打印 token 的前提下调用 YouTube Data API v3 的 `channels.list`，HTTP 200，返回 1 条公开频道记录：Game Maker's Toolkit。ADC token 未写入仓库，临时响应只留在仓库外探针路径。认证链路已打通；下一步由 AI 接入官方 API 元数据发现／同步，字幕仍按低频公开入口与失败退避处理。
 
-正确命令格式为：`gcloud auth application-default login --client-id-file="/本地路径/youtube-oauth-client.json" --scopes="https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/youtube.readonly"`。路径末尾不能有空格，scope 必须是纯 URL，不要包含 Markdown 链接语法。修复 OAuth Audience 为 External、加入当前账号为 Test user 后再重试；未记录 client ID、state、code challenge、token 或 OAuth JSON。
-
-原始对话：dialogues/2026-0822.md「1404 OAuth/ADC 命令与组织受众错误定位」
+原始对话：dialogues/2026-0822.md「1412 YouTube OAuth/ADC 只读探针通过」
