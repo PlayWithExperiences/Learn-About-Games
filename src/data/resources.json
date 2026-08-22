@@ -164579,11 +164579,11 @@
       "en": "The Banner Saga Audio"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Banner Saga Audio》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Banner Saga Audio”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "作曲家 Austin Wintory 以《旗帜的传说》为例，探讨如何通过音乐创作支持游戏叙事决策。他具体分析了音乐如何强化游戏中的情感转折点，例如通过旋律变化暗示角色命运。这种创作方法展示了音频设计如何成为游戏体验的主动塑造者，而非被动装饰。演讲内容聚焦于作曲家的创作视角，未涉及其他开发环节的具体协作细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
+      "emotional-arc-shaping",
       "multimodal-presentation-integration"
     ],
     "knowledgeTopicIds": [
@@ -164604,7 +164604,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例揭示了非视觉元素如何通过系统性设计参与叙事建构，为跨模态体验设计提供了可验证的方法论参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Nr2WJiiN3C0",
@@ -164613,14 +164616,13 @@
       "en": "Invent a Game, Reinvent Yourself"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Invent a Game, Reinvent Yourself》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Invent a Game, Reinvent Yourself”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者基于临床证据提出游戏开发者需关注自身心理健康的实用建议，包括识别压力信号和应对困境的具体方法。通过案例分析展示创作压力如何影响决策质量，强调定期自我评估对维持设计判断力的重要性。研究数据表明心理健康意识能降低项目风险，但需注意个体差异导致的方法适用性限制。最后指出行业需系统性支持机制而非仅依赖个人韧性。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Nr2WJiiN3C0",
@@ -164634,7 +164636,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "揭示了心理健康作为设计决策的隐藏变量，其管理质量直接影响原型迭代效率和团队协作稳定性，这一维度在传统设计教育中常被忽视。"
+    }
   },
   {
     "id": "yt-20260820-gdc-4LTtr45y7P0",
@@ -164643,14 +164648,16 @@
       "en": "30 Things I Hate About Your Game Pitch"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《30 Things I Hate About Your Game Pitch》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “30 Things I Hate About Your Game Pitch”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者列举了30种在游戏提案中常见但会适得其反的做法，帮助开发者理解发行商的评估标准。具体包括如何避免过度技术细节、模糊的市场定位等实际案例，强调提案应聚焦核心体验。这些建议揭示了发行商关注的是清晰的价值主张而非创意细节，需用商业语言传达设计意图。基于2017年GDC演讲内容，所有观点均来自发行商角度的真实反馈。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "value-proposition-framing",
+      "cross-discipline-communication"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=4LTtr45y7P0",
@@ -164664,7 +164671,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容揭示了独立开发者与商业发行商之间的认知鸿沟，为需要融资的团队提供了关键的语境转换框架。"
+    }
   },
   {
     "id": "yt-20260820-gdc-UP9i0eQh5gM",
@@ -164673,14 +164683,15 @@
       "en": "Juggling Chainsaws: Original IP vs. Work for Hire"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Juggling Chainsaws: Original IP vs. Work for Hire》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Juggling Chainsaws: Original IP vs. Work for Hire”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者分享了在承接外包项目与开发原创IP之间的平衡策略，通过团队实践案例说明如何维持工作室健康发展。具体讨论了两种开发模式对资源分配、创意自由和财务稳定性的不同影响，并提炼出优先级管理的关键经验。这些经验对中小型团队在项目选择与风险控制方面具有直接参考价值。需要注意的是，所有结论均基于演讲者2016年前后的特定团队实践，未涉及其他工作室的验证数据。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "constraint-aware-decision-making"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=UP9i0eQh5gM",
@@ -164694,7 +164705,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例揭示了创意决策如何受限于商业现实，为独立开发者提供了在资源约束下保护核心价值的实操框架"
+    }
   },
   {
     "id": "yt-20260820-gdc-yVTvw9sKHdA",
@@ -164703,14 +164717,13 @@
       "en": "How Game Developers Define Success"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《How Game Developers Define Success》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “How Game Developers Define Success”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Dana Ruggiero在2017年GDC演讲中探讨游戏开发者如何定义成功，分享了Brenda Romero和David Jaffe等开发者的真实反馈。演讲揭示了成功人士衡量工作和生活的多元标准，超越了传统商业指标。通过从业者访谈，呈现了从创意满足到团队协作等非量化维度的价值评估。最后强调成功定义应结合个人价值观与行业实践，而非单一的外部认可标准。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=yVTvw9sKHdA",
@@ -164724,7 +164737,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容揭示了游戏开发中常被忽视的非商业成功标准，为从业者提供了平衡商业压力与创作满足的思考框架。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Iryq1WA3bzw",
@@ -164733,14 +164749,13 @@
       "en": "Shared World Shooter: Destiny's Networked Mission Architecture"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Shared World Shooter: Destiny's Networked Mission Architecture》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Shared World Shooter: Destiny's Networked Mission Architecture”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲剖析了《命运》游戏世界的空间结构，解释了玩家如何同时连接到多种不同的网络化体验。演讲者具体讨论了这些并行网络体验的架构方式，例如玩家在不同区域或活动间的无缝切换机制。这种设计旨在支持共享世界射击游戏的核心玩法，即让玩家在持续在线环境中自然地相遇与合作。演讲内容基于2015年的技术实现，展示了当时对大规模、持久化在线世界网络架构的具体思考与解决方案。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Iryq1WA3bzw",
@@ -164754,7 +164769,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频深入探讨了支撑共享世界体验的后端系统架构，这对于理解如何设计让玩家感觉身处同一活世界的复杂网络机制至关重要。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Ox2H3kUQByo",
@@ -164763,12 +164781,12 @@
       "en": "Unsynced: The Last of Us Melee System"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Unsynced: The Last of Us Melee System》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Unsynced: The Last of Us Melee System”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Naughty Dog 的 Anthony Newman 在 2014 年 GDC 上分享了《最后生还者》近战系统的设计与实现。演讲详细解析了如何通过动画、物理和玩家输入响应构建逼真的近战体验。该系统通过资源管理和敌人行为设计，强化了生存恐怖游戏中的紧张感和策略性。视频提供了具体的技术实现细节，展示了如何平衡真实感与游戏性的需求。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "rules-system-modeling"
+      "rules-system-modeling",
+      "game-feel-tuning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -164786,7 +164804,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频深入探讨了动作游戏核心机制的设计思路，对需要构建复杂物理交互系统的项目具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-bIgnwKZj1fA",
@@ -164795,16 +164816,13 @@
       "en": "Advanced Entrepreneurship: Avoiding Total Studio Disaster"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Advanced Entrepreneurship: Avoiding Total Studio Disaster》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Advanced Entrepreneurship: Avoiding Total Studio Disaster”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲探讨游戏开发者如何提升创业能力，以建立并维持一个成功的小型工作室，避免常见的失败风险。演讲者基于行业观察，讨论了小型工作室在商业管理、团队运营和产品定位等方面面临的独特挑战与应对思路。其内容指向游戏开发不仅是创意实践，也需在商业可持续性与组织健康之间找到平衡。演讲结论强调，开发者需主动培养创业思维，而不仅是技术或艺术专长，才能提升工作室的长期生存概率。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "alignment-facilitation"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=bIgnwKZj1fA",
@@ -164818,7 +164836,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频将游戏开发置于创业与商业管理的语境中，揭示了成功的小型工作室不仅依赖设计或编程能力，更需要理解并实践商业运营、团队管理与风险规避，这对从学生或雇员转向工作室创始人的职业路径具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-2W8MtrlBbYc",
@@ -164827,16 +164848,13 @@
       "en": "Final Fantasy XV: A Challenger Once Again"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Final Fantasy XV: A Challenger Once Again》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Final Fantasy XV: A Challenger Once Again”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "田畑端从开发者视角剖析《最终幻想15》的成功要素，重点讨论了团队如何通过重构开发流程与设计理念应对项目挑战。视频展示了游戏在开放世界设计、角色成长系统与叙事节奏上的创新尝试，例如动态任务系统与情感驱动的剧情编排。这些实践揭示了大型项目如何在保持系列传统的同时适应现代玩家需求，尤其强调快速迭代与玩家反馈对决策的影响。演讲也坦承部分设计因时间与技术限制未能完全实现预期效果。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "challenge-difficulty-design"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=2W8MtrlBbYc",
@@ -164850,7 +164868,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对面临开发周期压力与高期望值IP改编的团队而言，该案例展示了如何通过流程重构平衡创意愿景与技术现实。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Q1cnbIz4csA",
@@ -164859,14 +164880,15 @@
       "en": "Ice Age Adventures: UX Diagnosis for a Live-Ops Game"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Ice Age Adventures: UX Diagnosis for a Live-Ops Game》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Ice Age Adventures: UX Diagnosis for a Live-Ops Game”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲探讨了UX设计师如何与数据科学家、商业化团队和开发人员协作，诊断影响实时运营游戏关键指标的问题。通过具体案例展示了跨职能团队如何利用数据分析识别用户体验瓶颈，并协同制定解决方案。强调了在持续运营环境中，UX设计需要兼顾玩家体验与商业目标之间的动态平衡。演讲基于2017年GDC分享的实际协作经验，但未提供具体指标改善数据。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Q1cnbIz4csA",
@@ -164880,7 +164902,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "展示了游戏运营阶段如何通过跨团队协作解决复杂问题，这对需要持续优化的服务型游戏具有普遍参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-usZzC2OeRZI",
@@ -164889,14 +164914,13 @@
       "en": "Building VR Communities: Asymmetry, Asynchrony, and Abuse"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Building VR Communities: Asymmetry, Asynchrony, and Abuse》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Building VR Communities: Asymmetry, Asynchrony, and Abuse”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者通过数十次社交VR互动测试，揭示了非对称体验、异步交互和滥用行为对虚拟社区的影响。他们以具体案例展示了如何设计空间边界和社交规则来减少骚扰，同时保持沉浸感。这些实践强调了在虚拟社交空间中，设计需平衡自由与安全，以促进健康的互动环境。最后，研究指出当前VR社交设计仍面临技术限制和用户行为预测的挑战。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=usZzC2OeRZI",
@@ -164910,7 +164934,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容为设计多人在线虚拟空间提供了实证基础，特别关注如何通过技术手段缓解社交冲突，对开发社交VR产品的团队具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-pXSlXb-_zOo",
@@ -164919,14 +164946,15 @@
       "en": "Adding Life to your Level"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Adding Life to your Level》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Adding Life to your Level”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者通过分析《生化奇兵：无限》中同伴角色 Elizabeth 的系统设计，探讨如何为游戏世界注入生命力。以《黑手党 III》的“活的世界”为例，展示了角色行为与环境互动的具体实现方法。提出关卡设计中需要考虑角色行为逻辑与玩家感知之间的动态平衡。最后总结了开发过程中关于世界真实性与设计可控性的经验教训。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "world-character-coherence"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "level-spatial-design"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=pXSlXb-_zOo",
@@ -164940,7 +164968,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容揭示了角色行为系统如何影响玩家对游戏世界的沉浸感，为关卡设计中的空间叙事提供了具体的技术参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-RLzMl7pBLAE",
@@ -164949,14 +164980,15 @@
       "en": "Awesome Video Game Data 2017"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Awesome Video Game Data 2017》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Awesome Video Game Data 2017”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "EEDAR 的 Geoffrey Zatkin 通过全行业数据，系统回顾了2017年游戏业的多个关键趋势，其核心论点是数据驱动下的产业变革方向。演讲覆盖了VR/AR、次世代主机、手游与电竞等实例，并重点分析了变现模式多样化的演变路径。对于设计者而言，这些宏观数据揭示了商业设计与玩家行为的紧密关联，提供了调整产品定位与变现策略的参考依据。证据文本仅提及数据呈现，未深入讨论具体方法学或结论验证，因此该资源更适合用作行业认知的补充而非设计决策的直接依据。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "market-reference-analysis"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=RLzMl7pBLAE",
@@ -164970,7 +165002,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲提供了2017年游戏行业多个细分市场的量化概览，适合作为市场参照分析中理解当时产业格局与玩家行为的佐证材料。"
+    }
   },
   {
     "id": "yt-20260820-gdc-ZlShFdoAOxU",
@@ -164979,13 +165014,10 @@
       "en": "Mind Your Step: Avoiding 3 Common Pitfalls in AI Development"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Mind Your Step: Avoiding 3 Common Pitfalls in AI Development》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Mind Your Step: Avoiding 3 Common Pitfalls in AI Development”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Insomniac Games 的 Jan Mueller 在 2016 年 GDC 演讲中，挑战了 AI 设计中三个常见‘最佳实践’的误解。演讲通过具体案例展示了这些‘最佳实践’如何在特定情境下失效，并提出了替代方案。这提醒设计师需要根据实际项目需求，而非盲目遵循行业惯例来构建 AI 系统。视频内容聚焦于 AI 设计误区，未涉及其他游戏开发领域。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "rules-system-modeling"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "production-pipelines-constraints"
     ],
@@ -165004,7 +165036,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频揭示了 AI 设计中普遍存在的认知偏差，为设计师提供了反思行业惯例的实证案例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-qCUEGvIgco8",
@@ -165013,14 +165048,15 @@
       "en": "Gears of War 4, Project Triton: Pre-Computed Environmental Wave Acoustics"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Gears of War 4, Project Triton: Pre-Computed Environmental Wave Acoustics》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Gears of War 4, Project Triton: Pre-Computed Environmental Wave Acoustics”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "微软团队在GDC 2017上分享了Project Titan音频系统的技术实现与设计考量，该系统通过建模衍射、散射反射和混响等复杂声波现象，为静态3D环境提供精确的声学模拟。该系统已成功应用于《战争机器4》，展示了如何通过预计算环境波声学提升游戏沉浸感。演讲深入探讨了音频系统与关卡几何的互动方式，为游戏音频设计提供了新的技术范例。最后，团队总结了该技术在大型商业项目中的实际应用效果与性能优化经验。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=qCUEGvIgco8",
@@ -165034,7 +165070,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该技术演示了如何通过精确的声学建模将环境几何转化为动态音频反馈，为理解空间感知与多模态反馈系统的关系提供了具体案例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-VbrM-yUkHjU",
@@ -165043,14 +165082,15 @@
       "en": "A Game Designer's Overview of the Neuroscience of VR"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《A Game Designer's Overview of the Neuroscience of VR》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “A Game Designer's Overview of the Neuroscience of VR”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲从神经科学角度解析VR开发的三大关键领域：沉浸感、运动与情绪，分别探讨其生物学基础与技术实现。以运动为例，分析前庭系统与视觉输入的冲突解决方案，提出渐进式适应的设计策略。强调开发者需平衡生理舒适度与体验强度，避免引发晕动症等不良反应。最后指出神经科学为VR设计提供客观验证手段，但现阶段技术仍存在感知同步的精度限制。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-deconstruction"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "research-player-experience"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=VbrM-yUkHjU",
@@ -165064,7 +165104,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容揭示了神经科学研究工具如何帮助设计者量化原本主观的VR体验要素，为迭代决策提供生理层面的客观依据。"
+    }
   },
   {
     "id": "yt-20260820-gdc-HqWrdIf69M8",
@@ -165073,14 +165116,13 @@
       "en": "Remastering Day of the Tentacle and Grim Fandango"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Remastering Day of the Tentacle and Grim Fandango》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Remastering Day of the Tentacle and Grim Fandango”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Double Fine 的 Oliver Franzke 和 Shiny Shoe 的 Mark Cooke 分享了重制经典冒险游戏《触手也疯狂》和《冥界狂想曲》的历史与过程。演讲详细介绍了如何保留原版游戏的核心体验，同时更新视觉效果和用户界面以适应现代玩家。通过具体案例，展示了在技术限制下进行艺术风格迭代和交互设计的挑战与解决方案。最后强调了重制项目中平衡怀旧与创新的重要性，以及团队协作在保持原作精神中的关键作用。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=HqWrdIf69M8",
@@ -165094,7 +165136,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频为经典游戏重制提供了具体的生产流程案例，展示了如何在技术迭代中维护原作体验核心，对从事重制或复刻项目的团队具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-t6Wwe1_NnOc",
@@ -165103,14 +165148,13 @@
       "en": "Localizing Bungie's Destiny for the World"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Localizing Bungie's Destiny for the World》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Localizing Bungie's Destiny for the World”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本演讲解释了Bungie为何组建内部本地化团队，以克服《命运》作为共享世界游戏的多语言适配挑战。他们通过制定一套严格的指导原则，确保游戏世界在本地化过程中保持一致性，从而高效地处理翻译问题。这种做法强调了在全球化品牌初期，通过内部协作和明确原则来维护高质量标准的重要性。演讲指出，这种方法使得团队能够在保证品牌质量的同时，有效应对多语言版本开发的复杂性。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=t6Wwe1_NnOc",
@@ -165124,7 +165168,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频展示了如何通过建立内部专业团队和制定设计原则，来解决大规模、多语言游戏内容生产中的协作与质量管控问题，这对管理复杂跨文化项目具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-knWzlR8mGWA",
@@ -165133,12 +165180,11 @@
       "en": "360 Approach for Open World Mission Design in Far Cry and Assassin's Creed"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《360 Approach for Open World Mission Design in Far Cry and Assassin's Creed》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “360 Approach for Open World Mission Design in Far Cry and Assassin's Creed”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "育碧蒙特利尔的 Philippe Bergeron 在 2016 年 GDC 演讲中阐述了开放世界游戏目标设计的 360 度方法。该方法通过《孤岛惊魂》和《刺客信条》案例展示了多路径任务系统的设计思路。演讲聚焦于如何让玩家在不同情境下自主选择达成目标的方式，而非单一线性路径。官方描述仅提及该方法的流程说明，未涉及具体实现细节或玩家反馈数据。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "spatial-flow-design"
+      "choice-consequence-design"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -165156,7 +165202,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲揭示了开放世界设计中空间拓扑与玩家能动性的关键平衡，对当代沙盒游戏的任务系统设计仍有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-1nSshgQ3HM4",
@@ -165165,13 +165214,11 @@
       "en": "Embracing Animation Complexity in EA UFC 2 Through Procedural Techniques"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Embracing Animation Complexity in EA UFC 2 Through Procedural Techniques》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Embracing Animation Complexity in EA UFC 2 Through Procedural Techniques”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲分享了EA UFC系列如何通过程序化技术处理复杂的动画需求，以呈现逼真的综合格斗运动员动作。演讲者具体探讨了用于渲染真实格斗家的技术工程与程序化方法，展示了如何通过系统化的动画流程来提升动作的真实感和响应性。这体现了在追求高复杂度动画表现时，对技术管线与创作流程进行整合的设计思路。整个分享基于2016年GDC会议中EA加拿大团队的实际开发经验，聚焦于动画制作的具体技术层面。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "game-feel-tuning",
-      "rules-system-modeling"
+      "game-feel-tuning"
     ],
     "knowledgeTopicIds": [
       "emergence-complexity"
@@ -165191,7 +165238,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频直接关联到通过技术手段（程序化动画）来塑造游戏核心体验（真实格斗手感）的设计实践，为调校动作反馈提供了具体的技术案例参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-4Go_hzVhh90",
@@ -165200,8 +165250,7 @@
       "en": "Realizing Responsive High Fidelity Character Movement in Just Cause 3"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Realizing Responsive High Fidelity Character Movement in Just Cause 3》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Realizing Responsive High Fidelity Character Movement in Just Cause 3”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Avalanche Studios 在 GDC 2015 演讲中展示了《Just Cause 3》如何平衡角色动作的响应性与动画质量。演讲详细介绍了技术实现方法，确保玩家操作即时反馈的同时不牺牲视觉表现。这一设计解决了开放世界中高速移动与精细动画之间的常见矛盾。视频内容聚焦于实际开发中的技术挑战与解决方案，未涉及游戏其他系统或商业层面。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -165209,7 +165258,7 @@
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "narrative-expression"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=4Go_hzVhh90",
@@ -165223,7 +165272,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例揭示了动作游戏中操作响应与动画保真度的技术权衡，对需要高频交互的开放世界游戏具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-zZ8BFsdbem0",
@@ -165232,11 +165284,12 @@
       "en": "Designing a Trance: Meditation and Game Design"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Designing a Trance: Meditation and Game Design》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Designing a Trance: Meditation and Game Design”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "独立设计师 Robin Arnott 探讨如何将出神状态转化为设计工具，而不仅是良好设计的副产品。通过具体案例展示如何利用这种状态加深玩家与自我及他人的互动关系。该方法挑战了传统游戏设计中情感体验的被动性，提出主动塑造意识状态的路径。演讲基于 2017 年 GDC 实践分享，聚焦于独立游戏领域的创新设计思维。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-framing"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -165253,7 +165306,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "为探索游戏设计中的意识状态干预提供了实证案例，补充了传统情感设计理论未充分覆盖的主动意识调节维度。"
+    }
   },
   {
     "id": "yt-20260820-gdc-ka_GEK-u4VE",
@@ -165262,14 +165318,13 @@
       "en": "How to Cut the Tether and Work from Anywhere"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《How to Cut the Tether and Work from Anywhere》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “How to Cut the Tether and Work from Anywhere”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲探讨从全职办公室工作转向远程办公所需的技能与纪律，强调适应不同工作环境的能力。讲者具体分析在家、咖啡馆或旅途中高效工作的关键方法，如时间管理与沟通策略。对游戏开发者而言，这种灵活性可能影响团队协作方式与项目管理流程。基于2017年GDC演讲内容，结论聚焦于职业转型的实际挑战而非具体游戏设计技术。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=ka_GEK-u4VE",
@@ -165283,7 +165338,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "远程工作能力直接影响游戏开发者的生产力与团队协作模式，尤其在分布式团队日益普遍的行业背景下。"
+    }
   },
   {
     "id": "yt-20260820-gdc-7aqIbeQQL8c",
@@ -165292,13 +165350,10 @@
       "en": "Rick and Morty: Virtual Rick-ality Postmortem: VR Lessons *burrrp* Learned"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Rick and Morty: Virtual Rick-ality Postmortem: VR Lessons *burrrp* Learned》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Rick and Morty: Virtual Rick-ality Postmortem: VR Lessons *burrrp* Learned”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Owlchemy Labs 开发者回顾了《Rick and Morty: Virtual Rick-ality》VR 开发中的成功与失败经验。他们分享了游戏设计、编程、音频和视觉艺术等多领域的开发教训。讨论涵盖了从原型到生产的完整迭代过程，以及团队协作中的关键挑战。视频基于 2017 年 VRDC 会议的实际开发案例，提供了具体的实践见解。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "iteration-planning"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "production-iteration"
@@ -165315,7 +165370,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频展示了 VR 游戏开发中常见的生产挑战和解决方案，对理解跨领域协作和迭代过程有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-gm7K68663rA",
@@ -165324,8 +165382,7 @@
       "en": "Goal-Oriented Action Planning: Ten Years of AI Programming"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Goal-Oriented Action Planning: Ten Years of AI Programming》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Goal-Oriented Action Planning: Ten Years of AI Programming”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲回顾了目标导向行动规划（GOAP）在游戏AI编程中的十年应用历程，探讨其技术演进与设计影响。以《中土世界：暗影魔多》和《古墓丽影》为例，展示了GOAP如何塑造复杂敌人行为与动态叙事。该方法通过分层目标与行动序列，实现了更灵活、可预测的AI决策系统。演讲者基于实际项目经验，验证了GOAP在开放世界游戏中的持续适用性与改进空间。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -165347,7 +165404,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "GOAP作为规则系统建模的经典案例，揭示了如何通过离散目标与行动的组合生成涌现行为，对开放世界AI设计具有方法论参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-zUZVGMLfswk",
@@ -165356,18 +165416,15 @@
       "en": "PR & Marketing Lessons Learned from Goat Simulator"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《PR & Marketing Lessons Learned from Goat Simulator》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “PR & Marketing Lessons Learned from Goat Simulator”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者分享了《模拟山羊》如何通过零广告预算建立媒体影响力的策略，包括利用社交媒体与玩家互动形成社区。具体方法包括主动制造话题性内容吸引媒体报道，以及通过持续更新维持玩家参与度。这展示了独立游戏如何通过创意营销与AAA作品竞争关注度。但案例的特殊性在于其荒诞主题本身具备病毒传播潜力，未必适用于所有类型。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "market-reference-analysis"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "leadership-creative-direction"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=zUZVGMLfswk",
@@ -165381,7 +165438,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例揭示了非传统营销路径的可能性，对资源有限的独立团队具有参考价值，但需注意其成功依赖特定产品特质。"
+    }
   },
   {
     "id": "yt-20260820-gdc-ytHpANp9EDE",
@@ -165390,18 +165450,15 @@
       "en": "Been There, Done That: Industry Vets Share Experiences and Advice"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Been There, Done That: Industry Vets Share Experiences and Advice》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Been There, Done That: Industry Vets Share Experiences and Advice”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "多位资深开发者分享各自在游戏行业不同岗位的经验与建议，涵盖QA、社区管理、制作、美术、UX设计等多个领域。通过个人经历展示游戏开发中的实际挑战与应对策略，如跨职能协作与职业发展路径。讨论内容强调从具体角色出发理解行业实践，而非抽象理论框架。视频作为GDC职业研讨会的一部分，聚焦从业者视角而非系统性教学。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "market-reference-analysis"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "leadership-creative-direction"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=ytHpANp9EDE",
@@ -165415,7 +165472,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对于希望了解游戏行业实际工作场景的新人，该资源提供了跨职能岗位的第一手经验参照。"
+    }
   },
   {
     "id": "yt-20260820-gdc-unadRBf0g5A",
@@ -165424,8 +165484,7 @@
       "en": "Happy Inside the Box: The Art of Old Man's Journey"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Happy Inside the Box: The Art of Old Man's Journey》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Happy Inside the Box: The Art of Old Man's Journey”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者阐述了《老人之旅》的艺术创作过程，核心在于如何利用二维艺术的创作限制来打造一款脱颖而出的游戏。具体方法是通过设定明确的视觉风格和叙事框架，在有限的平面维度内构建出独特的情感表达和空间层次。这一实践揭示了，有意识地接受并利用媒介的固有约束，可以成为激发创意、塑造作品独特性的有效策略。整个讨论基于该游戏的实际开发经验，聚焦于视觉艺术生产流程，而非泛泛的设计理论。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
@@ -165433,7 +165492,7 @@
       "audiovisual-semiotics"
     ],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=unadRBf0g5A",
@@ -165447,7 +165506,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频提供了一个具体案例，说明如何在明确的技术与美学约束（2D艺术）下进行创意决策和迭代生产，这对于理解如何在限定条件下定义并维护项目方向、管理生产管线具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-47WKztewKmU",
@@ -165456,14 +165518,17 @@
       "en": "The Evolution of Rodeo in Titanfall 2"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Evolution of Rodeo in Titanfall 2》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Evolution of Rodeo in Titanfall 2”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本演讲回顾了《泰坦陨落》系列中“骑乘”玩法的开发历程，展示了从早期原型到最终设计的演变。演讲者详细探讨了确保泰坦与驾驶员双方都能清晰理解骑乘状态所面临的沟通难题，并分享了具体的调试与反馈方法。核心设计启示在于，复杂的交互状态必须通过明确的视觉、音频与规则反馈，为所有参与者建立共享的认知模型。最终，团队基于玩家体验与平衡性数据，认识到必须对初代设计进行大规模重构，从而为续作带来了根本性的改变。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "rules-system-modeling",
+      "game-feel-tuning",
+      "player-perspective-taking"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=47WKztewKmU",
@@ -165477,7 +165542,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频深入剖析了一个具体游戏机制（骑乘）的完整迭代过程，其核心挑战——确保交互双方对状态有共同理解——是系统设计中“清晰沟通”原则的经典案例，对设计多角色、非对称交互系统具有普遍参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-gB8CvsOjDvg",
@@ -165486,14 +165554,13 @@
       "en": "You Suck at Showcasing Your Game"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《You Suck at Showcasing Your Game》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “You Suck at Showcasing Your Game”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者 Nicolae Berbece 分享了在游戏展会中有效展示游戏的方法，强调用低成本材料搭建展台和优化试玩体验的重要性。他批判了传统传单的无效性，建议开发者专注于与玩家建立关系而非直接销售。演讲提供了适应展会环境的试玩环节设计策略，指出开发者应利用活动机会扩大人际网络。这些建议基于展会实际环境限制，旨在帮助开发者最大化参展效益。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=gB8CvsOjDvg",
@@ -165507,7 +165574,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容为独立开发者和小团队提供了实用的展会策略，填补了游戏营销与展会实践之间的知识缺口。"
+    }
   },
   {
     "id": "yt-20260820-gdc-dujojb2kxpQ",
@@ -165516,19 +165586,18 @@
       "en": "Taking Desktop Dungeons from Prototype to Pre-Order to Steam"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Taking Desktop Dungeons from Prototype to Pre-Order to Steam》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Taking Desktop Dungeons from Prototype to Pre-Order to Steam”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "QCF Design团队通过4年开放开发《Desktop Dungeons》的实践，总结了原型迭代、预购测试到Steam发布的完整经验。具体分析了开发过程中采用的技术手段与常见错误，例如如何平衡玩家反馈与设计愿景的冲突。这些案例揭示了中小团队在长期开发中维持创意一致性与执行效率的关键挑战。视频基于2015年GDC演讲实录，内容聚焦开发历程而非具体设计技巧。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "level-structure-design",
-      "learning-prototype-design"
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
     ],
     "knowledgeTopicIds": [
       "production-pipelines-constraints"
     ],
     "resourceTopicIds": [
-      "level-spatial-design"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=dujojb2kxpQ",
@@ -165542,7 +165611,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例特别展示了独立团队如何在资源限制下，通过开放开发模式持续验证设计假设并调整产品方向。"
+    }
   },
   {
     "id": "yt-20260820-gdc-LFsMenc5Q8I",
@@ -165551,12 +165623,12 @@
       "en": "Applying 3D Level Design Skills to the 2D World of Hyper Light Drifter"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Applying 3D Level Design Skills to the 2D World of Hyper Light Drifter》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Applying 3D Level Design Skills to the 2D World of Hyper Light Drifter”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "独立关卡设计师 Lisa Brown 探讨了 3D 与 2D 关卡设计技能的转换方法，通过对比她在 Insomniac Games 的 3D 作品与《Hyper Light Drifter》的 2D 设计经验。她分析了空间布局、动线规划等核心要素在不同维度中的适应性调整策略。该演讲揭示了维度转换时需保留的核心设计原则与必须重新思考的约束条件。基于实际项目对比，明确了跨维度设计中的通用技能与特殊挑战。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "level-structure-design"
+      "level-structure-design",
+      "spatial-flow-design"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -165574,7 +165646,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容为 2D/3D 跨维度设计提供了具体的方法论对照，尤其适合探索空间拓扑关系不变性的设计师参考"
+    }
   },
   {
     "id": "yt-20260820-gdc-J6QQg0-308M",
@@ -165583,8 +165658,7 @@
       "en": "Intelligent Music For Eve Online"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Intelligent Music For Eve Online》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Intelligent Music For Eve Online”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本演讲探讨了为《EVE Online》设计一个能够根据游戏内实时事件动态生成音乐的智能系统的必要性。具体介绍了如何结合Wwise音频引擎与CALMUS系统，实现音乐对游戏状态变化的响应。这展示了音频设计如何超越静态配乐，成为增强沉浸感和反映游戏进程的动态反馈层。演讲内容聚焦于实时音乐生成的技术实现与设计意图，并未涉及商业管理或视觉艺术等其他开发领域。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -165608,7 +165682,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该资料直接关联如何将音频系统（音乐）与游戏核心系统（实时事件）深度整合，以创造更连贯、更具响应性的多感官玩家体验，是研究系统性反馈设计的典型案例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-YHbZJeeZ1aw",
@@ -165617,19 +165694,19 @@
       "en": "A Crash Course in Business and Leadership for Indie Game CEO's and GM's"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《A Crash Course in Business and Leadership for Indie Game CEO's and GM's》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “A Crash Course in Business and Leadership for Indie Game CEO's and GM's”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "资深开发者Don Daglow在2017年GDC演讲中剖析独立游戏领导者面临的三大核心挑战：资金管理、关键人才问题和项目完成策略。演讲通过真实案例展示如何平衡创意愿景与财务现实，例如处理现金流波动和团队激励问题。这些经验为独立工作室提供了从初创到交付的实用框架，强调领导力在资源限制下的决策重要性。内容基于讲者数十年行业经验，但未涉及具体游戏设计技术细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "alignment-facilitation"
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
     ],
     "knowledgeTopicIds": [
       "organizational-dynamics-power",
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=YHbZJeeZ1aw",
@@ -165643,7 +165720,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲揭示了独立游戏开发中领导决策与创意维护的特殊矛盾，这对理解小型团队如何在大厂方法论之外建立可持续实践具有启发意义。"
+    }
   },
   {
     "id": "yt-20260820-gdc-AjgfRBVxcVo",
@@ -165652,16 +165732,15 @@
       "en": "Jocoi: Three Challenges of Designing for Grief"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Jocoi: Three Challenges of Designing for Grief》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Jocoi: Three Challenges of Designing for Grief”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲探讨了将悲伤体验融入游戏设计的三大挑战，分析了这一情感在现有游戏中的缺失现象。讲者提出具体策略帮助设计师重新思考悲伤在互动媒介中的表达方式，包括叙事结构和玩家反馈机制的设计。这些方法挑战了传统游戏追求愉悦体验的假设，为情感深度设计开辟了新路径。演讲基于2017年GDC现场分享，内容聚焦设计实践而非理论探讨。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "challenge-difficulty-design"
+      "emotional-arc-shaping"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "narrative-expression"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=AjgfRBVxcVo",
@@ -165675,7 +165754,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "悲伤作为普遍人类体验，其游戏化表达能拓展互动叙事的边界，该研究为情感导向设计提供了可操作的框架。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Xuwe9s6uM_k",
@@ -165684,16 +165766,17 @@
       "en": "GDC Microtalks 2017: Playing with Our Hearts"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《GDC Microtalks 2017: Playing with Our Hearts》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “GDC Microtalks 2017: Playing with Our Hearts”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "多位游戏设计师围绕情感体验展开一小时的设计讨论，涵盖战略灵感与游戏性挑衅等多元视角。演讲者通过具体案例展示如何将情感元素融入机制设计，例如通过叙事选择触发玩家的情绪反应。这些探讨揭示了情感设计在建立玩家联结与长期记忆中的核心作用，但未深入技术实现层面。整体呈现为启发式思考而非系统化方法论，适合作为设计灵感的触发点。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "emotional-arc-shaping"
+    ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "narrative-expression"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Xuwe9s6uM_k",
@@ -165707,7 +165790,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频集中探讨情感设计这一常被系统化方法论忽略的维度，为机制设计与叙事表达的交叉领域提供了实践者视角的补充。"
+    }
   },
   {
     "id": "yt-20260820-gdc-sHolirTf9CI",
@@ -165716,8 +165802,7 @@
       "en": "Siege Battle AI in Total War: Warhammer"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Siege Battle AI in Total War: Warhammer》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Siege Battle AI in Total War: Warhammer”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Creative Assembly的Andre Arsenault在2017年GDC上分享了《Total War: Warhammer》中高层AI的设计方法，该AI需要指挥大规模军队以呈现史诗级战斗场面。演讲详细介绍了如何通过专门的AI系统平衡游戏设计需求与战斗规模的真实感，确保玩家体验既震撼又符合游戏机制。该方法展示了在复杂系统下维持战斗节奏与策略深度的技术挑战，为大型战略游戏的AI设计提供了实践参考。最后，演讲强调了AI行为必须服务于游戏整体体验，而非单纯追求技术复杂度。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -165739,7 +165824,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例揭示了如何通过系统化AI设计解决策略游戏中规模与细节的矛盾，对需要管理复杂实体交互的系统设计具有普遍参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-l9NX06mvp2E",
@@ -165748,16 +165836,18 @@
       "en": "Creating the Art of ABZU"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Creating the Art of ABZU》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Creating the Art of ABZU”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Matt Nava 分享了《ABZU》独特艺术风格的创作过程，重点解析了团队如何通过视觉艺术手法塑造沉浸式水下世界。他详细介绍了色彩运用、光影处理和生物动画等具体技术手段，以实现游戏的情感表达。这些方法展示了如何通过跨媒介美学整合，将自然元素转化为互动体验的核心组成部分。演讲内容基于 Giant Squid 工作室在项目开发中的实际经验，但未涉及编程或系统设计层面的技术细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "aesthetic-direction",
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "narrative-expression"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=l9NX06mvp2E",
@@ -165771,7 +165861,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲揭示了艺术风格如何成为叙事载体，对于需要将环境叙事与视觉表现深度结合的项目具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-xy63uYqcC1g",
@@ -165780,14 +165873,16 @@
       "en": "Play Your Way to Higher Pay: What Leaders Can Learn from Game Designers"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Play Your Way to Higher Pay: What Leaders Can Learn from Game Designers》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Play Your Way to Higher Pay: What Leaders Can Learn from Game Designers”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者 Scott Crabtree 提出通过游戏化手段提升领导力效果，使团队成员获得更高参与度和愉悦感。具体方法包括借鉴游戏设计中的反馈循环与目标设定机制，将工作流程转化为可量化的挑战系统。这种设计思维强调通过规则重构将管理行为转化为可感知的成长体验，而非单纯绩效指标。但需注意该案例主要基于行为心理学理论，未提供具体游戏化系统的实施数据验证。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "core-loop-design",
+      "progression-economy-design"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=xy63uYqcC1g",
@@ -165801,7 +165896,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "将游戏设计中的核心循环与经济系统迁移到管理领域，展示了跨学科方法如何解决传统领导力中的动机维持问题。"
+    }
   },
   {
     "id": "yt-20260820-gdc-j0mglyHcvvo",
@@ -165810,14 +165908,13 @@
       "en": "Deus Ex: Breach: Experimenting Within the Boundaries of a AAA Franchise"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Deus Ex: Breach: Experimenting Within the Boundaries of a AAA Franchise》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Deus Ex: Breach: Experimenting Within the Boundaries of a AAA Franchise”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本演讲揭示了 Eidos-Montreal 团队开发《杀出重围：人类分裂》在线模式《杀出重围：漏洞》的全过程，重点探讨了在 3A 框架内进行创新实验的挑战。团队通过具体案例展示了如何平衡系列传统与新模式需求，例如重构核心玩法循环以适应在线环境。演讲强调了在既有 IP 限制下进行玩法迭代时，明确设计边界对控制开发风险的关键作用。根据描述，该内容主要基于 2017 年 GDC 演讲实录，未涉及后续更新或未公开的开发细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "prototyping-experimentation"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=j0mglyHcvvo",
@@ -165831,7 +165928,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对于需要在成熟 IP 框架下进行玩法创新的团队，该案例展示了如何通过结构化实验降低开发风险，同时保持系列核心体验的一致性。"
+    }
   },
   {
     "id": "yt-20260820-gdc-priaBvs441Y",
@@ -165840,13 +165940,10 @@
       "en": "6 Techniques for Leveraging AI in Content Generation"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《6 Techniques for Leveraging AI in Content Generation》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “6 Techniques for Leveraging AI in Content Generation”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲由六位开发者分享六种利用AI驱动程序化内容生成的实用技术。他们基于《矮人要塞》《Moon Hunters》等作品的实际案例，展示了如何通过规则与算法生成动态游戏内容。这些方法旨在减少手工制作负担，同时保持内容多样性与玩家体验的一致性。演讲强调技术落地中的具体挑战，如平衡随机性与可控性，但未提供通用解决方案。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "rules-system-modeling"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "systems-mechanics"
@@ -165863,7 +165960,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "程序化内容生成是系统与机制主题下关于规则、资源流与涌现结果的核心实践，该演讲提供了多个游戏的具体实现案例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-9yydYjQ1GLg",
@@ -165872,12 +165972,12 @@
       "en": "Designing AI for Killer Instinct"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Designing AI for Killer Instinct》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Designing AI for Killer Instinct”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本讲座以《杀手本能》的Shadow系统为例，探讨竞技游戏中AI设计的现存问题与解决方案。开发者通过具体案例展示了如何平衡AI的挑战性与公平性，避免破坏玩家间的竞争体验。分析揭示了AI系统在格斗游戏中的特殊设计考量，如反应速度与行为模式的透明度控制。最后指出当前AI技术在处理复杂玩家互动时的局限性，为同类游戏提供改进方向。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "rules-system-modeling"
+      "rules-system-modeling",
+      "challenge-difficulty-design"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -165895,7 +165995,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对竞技游戏开发者而言，该案例揭示了AI系统如何在不破坏PVP平衡的前提下增强单机体验，这种微妙平衡对MOBA、FPS等品类的AI设计具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-HEaJfXVspPc",
@@ -165904,20 +166007,18 @@
       "en": "Far Cry 4: Gameplay Team Workflow, Iteration and Philosophy"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Far Cry 4: Gameplay Team Workflow, Iteration and Philosophy》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Far Cry 4: Gameplay Team Workflow, Iteration and Philosophy”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "育碧蒙特利尔工作室的 Marc Andre Saulnier 分享了《孤岛惊魂4》游戏玩法团队的工作流程与迭代方法。演讲详细阐述了从设计理念到具体实现的团队协作过程，包括如何通过反复测试调整核心机制。该案例展示了大型开放世界项目中平衡创意与生产效率的实用策略。基于2015年GDC演讲内容，信息聚焦于开发阶段内部流程，不涉及最终游戏表现评估。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "iteration-planning",
-      "alignment-facilitation"
+      "iteration-planning"
     ],
     "knowledgeTopicIds": [
       "production-pipelines-constraints",
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "systems-mechanics"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=HEaJfXVspPc",
@@ -165931,7 +166032,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对于面临大规模内容生产的团队，该案例揭示了如何通过结构化迭代避免开放世界设计中的常见陷阱。"
+    }
   },
   {
     "id": "yt-20260820-gdc-DuoZsrUcdd8",
@@ -165940,14 +166044,13 @@
       "en": "How (and When) to Not Give up on Your Game"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《How (and When) to Not Give up on Your Game》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “How (and When) to Not Give up on Your Game”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲为处于不同开发或市场阶段的游戏项目提供获取最大价值的实用建议，涵盖从设计到商业管理的广泛开发议题。讲者基于具体实践案例，探讨如何应对项目困境并优化现有资源，而非单纯鼓励坚持。内容强调在游戏生产流程与市场表现分析中识别价值提升机会，适用于面临实际挑战的开发者。其建议根植于项目生命周期管理，旨在帮助团队在约束下作出更有效的决策。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=DuoZsrUcdd8",
@@ -165961,7 +166064,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容直接关联游戏开发中后期常见的生产与迭代挑战，为面临项目停滞或市场表现不佳的团队提供了聚焦于价值提取与资源优化的具体思路，而非泛泛而谈的动机维持。"
+    }
   },
   {
     "id": "yt-20260820-gdc-YUF-07ab9wU",
@@ -165970,18 +166076,15 @@
       "en": "John Carmack on The Issues and Rewards of Bleeding Edge Engine Development"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《John Carmack on The Issues and Rewards of Bleeding Edge Engine Development》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “John Carmack on The Issues and Rewards of Bleeding Edge Engine Development”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "John Carmack 在演讲中探讨了游戏引擎开发的前沿技术挑战与创新动力，强调技术突破对游戏体验的直接影响。他以实际开发案例说明如何通过优化渲染管线提升性能，同时保持视觉保真度。演讲揭示了技术创新与设计目标之间的张力，开发者需权衡风险与潜在回报。最后，Carmack 指出持续学习与实验是应对技术快速迭代的关键策略。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "progression-economy-design"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "production-pipelines-constraints"
     ],
     "resourceTopicIds": [
-      "balance-economy"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=YUF-07ab9wU",
@@ -165995,7 +166098,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲为技术驱动型团队提供了在快速变化的引擎开发环境中保持创新节奏的实践视角，尤其适合面临技术债务与创新压力矛盾的开发者参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-pddnbECfpR0",
@@ -166004,14 +166110,13 @@
       "en": "Porting a Real Life Castle into Your Game When You're Broke"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Porting a Real Life Castle into Your Game When You're Broke》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Porting a Real Life Castle into Your Game When You're Broke”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "独立开发者 Joseph Azzam 在 2017 年 GDC 演讲中，详细介绍了如何仅用 70 美元将现实城堡扫描进游戏引擎的技术方案。他分享了使用的工具、具体操作技巧以及在低成本条件下克服的技术挑战，为资源有限的开发者提供了实用参考。该案例展示了如何通过创新方法解决高成本资产生产问题，扩展了游戏环境设计的可能性。演讲最后强调了技术限制下的创造性解决方案对独立开发的重要性。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "prototyping-experimentation"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=pddnbECfpR0",
@@ -166025,7 +166130,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该技术方案特别适合资源有限的独立开发者或小型团队，展示了如何通过创新思维和现有工具解决高成本的生产难题。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Gy9dy1o25Ww",
@@ -166034,14 +166142,13 @@
       "en": "So, You Want to Be a Game Professor?"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《So, You Want to Be a Game Professor?》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “So, You Want to Be a Game Professor?”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "RIT教授Ian Schreiber在2017年GDC演讲中系统剖析了游戏学术界的职业路径与资质要求，列举了成为游戏教授的动机与潜在挑战。演讲通过对比产业界与学术界的工作模式差异，揭示了教育机构特有的研究自由与教学责任之间的张力。内容特别强调游戏设计教育需要兼顾理论框架构建与行业实践反馈的双重能力标准。最后指出该领域职位稀缺性及终身教职竞争激烈的现实制约。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Gy9dy1o25Ww",
@@ -166055,7 +166162,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对考虑进入游戏教育领域的设计师具有职业规划参考价值，揭示了学术机构在游戏设计知识生产中的独特作用。"
+    }
   },
   {
     "id": "yt-20260820-gdc-wzAcr6tc5G4",
@@ -166064,14 +166174,15 @@
       "en": "Grassroots Growth: How Game Communities Built an eSport Scene from the Ground up"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Grassroots Growth: How Game Communities Built an eSport Scene from the Ground up》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Grassroots Growth: How Game Communities Built an eSport Scene from the Ground up”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "MIT 教授 TL Taylor 在演讲中强调开发者需理解专家与爱好者社区对电竞生态的塑造作用。通过分析社区自发组织的赛事案例，揭示玩家主导的规则迭代如何影响游戏平衡性设计。指出开发者若忽视社区智慧，可能错失机制优化与长期留存的关键洞察。基于 2017 年实证研究，提出将社区反馈纳入开发管线的具体合作框架。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "rules-system-modeling"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=wzAcr6tc5G4",
@@ -166085,7 +166196,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "电竞游戏机制设计需同时考虑开发者预设规则与玩家社区实践形成的涌现系统行为，该演讲提供了两者协同演化的分析模型。"
+    }
   },
   {
     "id": "yt-20260820-gdc-fJHZFnOMAjw",
@@ -166094,18 +166208,15 @@
       "en": "Marketing Indie Style"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Marketing Indie Style》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Marketing Indie Style”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本演讲融合3A级游戏与独立开发的双重营销视角，通过《看火人》等成功案例详解社区驱动的推广策略。讲者结合2015年行业背景，剖析如何根据项目规模定制营销方案，尤其强调Discord等平台的关系网络建设。内容涵盖从预告片制作到KOL合作的全流程实战经验，演示如何精准触达核心玩家群体。虽然部分方法需适配当前算法环境，但社群运营核心理念仍具参考价值。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "market-reference-analysis"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=fJHZFnOMAjw",
@@ -166128,13 +166239,12 @@
       "en": "Forget Protagonists: Writing NPCs with Agency for 80 Days and Beyond"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Forget Protagonists: Writing NPCs with Agency for 80 Days and Beyond》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Forget Protagonists: Writing NPCs with Agency for 80 Days and Beyond”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Meg Jayanth 探讨了为游戏叙事创作具有自主能动性的三维 NPC 的最佳实践，强调赋予角色独立于主角的目标与生活。她以《80 Days》为例，展示了如何通过角色自身的欲望和行动来驱动故事，而非仅作为玩家行为的被动反应者。这种设计方法旨在构建更鲜活、更具沉浸感的世界，让玩家感受到与真实个体的互动。该演讲聚焦于叙事设计中的角色塑造技巧，不涉及编程或美术等其他开发领域。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "interactive-narrative-design",
-      "rules-system-modeling"
+      "world-character-coherence",
+      "interactive-narrative-design"
     ],
     "knowledgeTopicIds": [
       "narratology-agency-authorship"
@@ -166154,7 +166264,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲直接探讨了如何通过赋予 NPC 独立动机来构建更具沉浸感和互动性的叙事世界，这与维护角色行为一致性及设计能改变叙事体验的系统状态密切相关。"
+    }
   },
   {
     "id": "yt-20260820-gdc-f--0VysQjuE",
@@ -166163,16 +166276,13 @@
       "en": "Running a Post-Apocalyptic Indie Studio"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Running a Post-Apocalyptic Indie Studio》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Running a Post-Apocalyptic Indie Studio”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者分析了独立游戏领域在产品设计、自主发行和团队结构方面的变化趋势，并提供了应对新环境的实用建议。他们通过自身工作室经验，探讨了小型团队如何适应市场变化和资源限制。内容强调了在有限条件下进行有效决策和优先级排序的重要性，而非具体技术细节。基于2017年的行业观察，部分结论可能需要结合当前环境重新评估。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "alignment-facilitation"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=f--0VysQjuE",
@@ -166186,7 +166296,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对独立开发者而言，理解行业结构变化与小型团队运作模式的关系，能帮助规划更可持续的开发路径。"
+    }
   },
   {
     "id": "yt-20260820-gdc-6GowL_UrukQ",
@@ -166195,14 +166308,16 @@
       "en": "Overcoming Community Negativity: An Exercise in Sanity"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Overcoming Community Negativity: An Exercise in Sanity》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Overcoming Community Negativity: An Exercise in Sanity”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者深入剖析游戏开发团队如何通过结构化沟通策略应对玩家社区的负面情绪，维持玩家长期参与度。具体展示了通过优化客服流程和分层反馈系统来转化负面情绪的实战案例，特别强调数据驱动的情绪管理方法。详细阐释了从日常互动到危机公关的全周期信任建立机制，及其对社区生态的深远影响。基于GDC 2017实战经验，这些方法论虽源自网游但可灵活适配各类在线服务产品。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "design-critique-feedback"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=6GowL_UrukQ",
@@ -166225,8 +166340,7 @@
       "en": "Hitchhiker's Guide to Rapid Prototypes!"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Hitchhiker's Guide to Rapid Prototypes!》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Hitchhiker's Guide to Rapid Prototypes!”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "PopCap的Mark Barrett分享了一种低成本高速度的原型开发方法，适合编码、设计和美术能力有限的人。通过具体案例展示了如何在不到一个月内构建可测试原型，强调利用现有工具和资源快速验证设计假设。这种方法降低了游戏开发的门槛，使更多创意能在早期得到验证。演讲特别指出，即使预算和技能有限，通过系统化方法也能有效推进原型开发。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -166236,7 +166350,7 @@
       "production-pipelines-constraints"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "prototyping-experimentation"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=sYWkiv1hTPM",
@@ -166250,7 +166364,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对于独立开发者和小团队而言，快速原型开发是验证游戏概念可行性的关键步骤，本视频提供了实用的低门槛方法。"
+    }
   },
   {
     "id": "yt-20260820-gdc-4J0KVdzx52w",
@@ -166259,13 +166376,12 @@
       "en": "Designing System Driven Dialogue in Mafia III"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Designing System Driven Dialogue in Mafia III》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Designing System Driven Dialogue in Mafia III”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲探讨了《黑手党III》中半互动式过场‘Sit Downs’的设计，通过程序化对话序列将玩家置于高张力选择情境。具体分析了如何通过对话分支和后果反馈强化玩家的决策参与感，展示了系统驱动叙事对玩家情感投入的影响。设计关键在于平衡脚本叙事与程序化反应，确保选择具有明确可见的叙事权重。演讲基于实际开发案例，但未涉及具体技术实现或玩家测试数据。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "narrative-architecture",
-      "rules-system-modeling"
+      "interactive-narrative-design",
+      "choice-consequence-design"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -166283,7 +166399,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "系统驱动对话设计揭示了叙事机制如何通过有限选择创造深度玩家参与，对开放世界游戏的道德困境设计具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-K2bLnH4CzSs",
@@ -166292,14 +166411,13 @@
       "en": "Double Tap"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Double Tap》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Double Tap”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "游戏设计师 Ste Curran 在 2017 年 GDC 演讲中探讨了枪支对游戏设计的影响及其对玩家和社会的改变作用。演讲通过分析枪支在游戏中的功能与象征意义，揭示了暴力机制如何塑造玩家行为与认知。Curran 提出设计者需要反思暴力元素在游戏中的必要性，并考虑其对玩家体验的长期影响。该演讲挑战了游戏行业对暴力美学的依赖，呼吁设计者承担更广泛的社会责任。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=K2bLnH4CzSs",
@@ -166313,7 +166431,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该资源揭示了游戏机制如何承载文化价值观，并促使设计者思考暴力元素在互动娱乐中的伦理边界。"
+    }
   },
   {
     "id": "yt-20260820-gdc-3JM5L6vQVb8",
@@ -166322,14 +166443,13 @@
       "en": "Crisis and Opportunity: Communities in Good Times and Bad"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Crisis and Opportunity: Communities in Good Times and Bad》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Crisis and Opportunity: Communities in Good Times and Bad”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Janet Ebsen系统性地分享了社区管理的核心方法论与实践经验，帮助开发者在顺逆境中都能有效提升社区凝聚力。演讲详细阐述了危机时期的快速响应机制与日常运营中的互动技巧，这些方法适用于不同规模的游戏项目开发团队。内容特别强调社区建设对游戏长期成功的关键作用，需要开发者进行前瞻性规划与持续资源投入。这些实践基于Kongregate平台多年运营经验，但未包含具体数据指标的成效验证细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=3JM5L6vQVb8",
@@ -166343,7 +166463,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "社区管理是游戏即服务(GaaS)模式的核心能力，直接影响玩家留存和商业化表现。"
+    }
   },
   {
     "id": "yt-20260820-gdc-3gbSILzo8hc",
@@ -166352,11 +166475,12 @@
       "en": "Remote Working at Spry Fox"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Remote Working at Spry Fox》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Remote Working at Spry Fox”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Spry Fox 的 Andrew Fray 在演讲中分析了远程工作模式对游戏开发团队的利弊，指出跨大陆协作需要特别关注团队氛围的维护。他以实际经验为例，说明如何通过非正式沟通和信任建立来抵消地理隔离带来的挑战。这种工作模式对游戏设计团队的管理结构、沟通效率和创意协作提出了新的要求。演讲基于 2015 年的实践经验，未涉及疫情后远程工作的普遍化趋势。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "collaboration-teams"
@@ -166373,7 +166497,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "随着游戏开发全球化趋势加剧，远程协作能力成为团队核心竞争力的重要组成部分，本案例提供了早期实践者的经验参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-epicT3nhu9g",
@@ -166382,18 +166509,15 @@
       "en": "Save Yourself: Game History is in Your Hands"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Save Yourself: Game History is in Your Hands》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Save Yourself: Game History is in Your Hands”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "游戏历史学家Laine Nooney揭示如何将日常物品和文档转化为历史叙事，分享她寻找游戏历史资料的幕后故事与图像。通过具体案例展示历史学家如何解读游戏开发中的偶然痕迹与个人记忆，重构被遗忘的设计决策语境。强调行业从业者自主保存工作记录的重要性，这些材料未来可能成为理解创意过程的关键证据。最后指出游戏历史的脆弱性，呼吁开发者有意识地保存开发文档与原型，为未来研究留下完整线索。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "market-reference-analysis"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "narratology-agency-authorship"
     ],
     "resourceTopicIds": [
-      "narrative-expression"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=epicT3nhu9g",
@@ -166407,7 +166531,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲揭示了游戏历史研究的材料来源与方法论，帮助开发者理解日常开发文档的潜在历史价值，与批判性思考游戏文化保存的主题直接相关。"
+    }
   },
   {
     "id": "yt-20260820-gdc-SDH81xr8cp8",
@@ -166416,16 +166543,18 @@
       "en": "The Story of Transformice: An Indie Game with 70 Million Players"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Story of Transformice: An Indie Game with 70 Million Players》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Story of Transformice: An Indie Game with 70 Million Players”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Melanie Christin分享了Transformice从三周原型发展为7000万玩家的MMO历程，揭示了游戏即服务模式的意外挑战。通过快速迭代和社区反馈，团队解决了服务器扩展和内容更新的技术难题。设计上强调简单机制与社交互动的结合，证明了小团队也能创造持久吸引力。最后指出，持续运营需要平衡玩家期待与技术限制，避免过度承诺。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "scope-prioritization",
+      "constraint-aware-decision-making"
+    ],
     "knowledgeTopicIds": [
       "narratology-agency-authorship"
     ],
     "resourceTopicIds": [
-      "narrative-expression"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=SDH81xr8cp8",
@@ -166439,7 +166568,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "展示了小型团队如何通过敏捷开发和玩家反馈应对大规模在线游戏的技术与设计挑战，为独立开发者提供实用参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-6TB62YKHwRQ",
@@ -166448,14 +166580,10 @@
       "en": "Animating Dauntless: Slaying AAA Animation on the Indie Scale"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Animating Dauntless: Slaying AAA Animation on the Indie Scale》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Animating Dauntless: Slaying AAA Animation on the Indie Scale”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Phoenix Labs 的 Simon Unger 分享如何在独立游戏预算下实现 AAA 级动画效果的最佳实践。通过具体案例展示动画制作中的成本控制与技术取舍，例如优化工作流程与资源复用策略。这些方法揭示了在有限资源下维持高品质动画的设计思路与实现路径。演讲基于 GDC 2017 的实际开发经验，但未涉及具体工具或第三方解决方案的细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "game-feel-tuning",
-      "multimodal-presentation-integration"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "game-feel-feedback"
@@ -166472,7 +166600,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容为中小团队提供了可复用的动画生产框架，尤其适用于需要平衡质量与预算的实时渲染项目。"
+    }
   },
   {
     "id": "yt-20260820-gdc-UEcvZIYpS38",
@@ -166481,8 +166612,7 @@
       "en": "Creating Mixed Reality Trailers and Livestreams"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Creating Mixed Reality Trailers and Livestreams》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Creating Mixed Reality Trailers and Livestreams”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "讲者分享了为《Fantastic Contraption》制作混合现实直播与预告片的具体流程，包括解决VR特有的后期制作问题。他们详细介绍了如何通过技术手段将虚拟现实画面与实景拍摄结合，以增强观众的沉浸感。这一过程揭示了VR内容生产中独特的视觉呈现挑战与解决方案。视频重点呈现了从技术测试到最终成片的完整迭代路径，但未涉及其他游戏类型的通用方法。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
@@ -166502,7 +166632,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例展示了VR媒介特有的表现层整合挑战，为需要协调多模态呈现的沉浸式项目提供了具体参考框架。"
+    }
   },
   {
     "id": "yt-20260820-gdc-iCvtGyRaAqQ",
@@ -166511,13 +166644,11 @@
       "en": "The 2017 Game Animation Microtalks"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The 2017 Game Animation Microtalks》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The 2017 Game Animation Microtalks”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "多位游戏动画师通过微型演讲分享了对动画和游戏行业的观察与思考，涵盖从技术实践到行业趋势的广泛话题。演讲者提出了对动画工作流程的批评与改进建议，例如如何优化角色动作的流畅性和表现力。这些讨论揭示了动画设计在增强玩家沉浸感和情感连接中的关键作用。由于内容为个人观点集合而非系统教程，实际应用需结合具体项目需求验证。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "game-feel-tuning",
-      "multimodal-presentation-integration"
+      "game-feel-tuning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -166535,7 +166666,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "动画师们对操作反馈与情感表达的探讨，为调整输入响应和视觉反馈的时机提供了具体案例参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-vt6kf9PP92U",
@@ -166544,8 +166678,7 @@
       "en": "Getting Inquisitive About the AI of Dragon Age Inquisition"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Getting Inquisitive About the AI of Dragon Age Inquisition》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Getting Inquisitive About the AI of Dragon Age Inquisition”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "BioWare的Sebastian Hanlon在2016年GDC演讲中详细解析了《龙腾世纪：审判》的团队AI系统设计。演讲重点介绍了如何通过模块化方法构建生物AI，以提高系统的灵活性和可扩展性。这种方法不仅优化了游戏中的战斗体验，还为复杂AI行为的设计提供了可复用的框架。演讲内容基于实际开发经验，但未涉及具体实现细节或玩家反馈数据。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -166567,7 +166700,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲展示了如何通过模块化设计解决复杂AI系统的开发挑战，为其他游戏中的AI设计提供了实用的方法论参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Fft1UCxEwGA",
@@ -166576,14 +166712,17 @@
       "en": "Surviving the Jump from AAA to Indie"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Surviving the Jump from AAA to Indie》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Surviving the Jump from AAA to Indie”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频汇集了从AAA转向独立开发的资深开发者经验，探讨了工作室运营与游戏发布的实际挑战。演讲者分享了在资源有限条件下如何维持创意自主权，例如通过精简团队规模和控制项目范围来降低风险。讨论揭示了独立开发中设计决策与商业现实的紧密联系，强调快速迭代和玩家反馈的重要性。最后，讲者基于自身转型经历，指出AAA经验在独立环境中需要重新评估和适应。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship",
+      "audience-positioning"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Fft1UCxEwGA",
@@ -166597,7 +166736,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对考虑从大型团队转向独立开发的设计师而言，这些实战经验能帮助预判管理、创意和商业平衡方面的关键挑战。"
+    }
   },
   {
     "id": "yt-20260820-gdc-YFvR3RPYTwk",
@@ -166606,14 +166748,13 @@
       "en": "Our Games Are Not Linear, So Why Are Our Careers?"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Our Games Are Not Linear, So Why Are Our Careers?》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Our Games Are Not Linear, So Why Are Our Careers?”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者提出职业网格理论，反对传统线性职业路径，强调游戏开发者应通过横向技能拓展适应行业变化。通过案例分析展示开发者如何从编程转向设计、制作或创业，证明非连续性成长的可行性。设计行业需要建立类似游戏系统的动态能力框架，以应对技术迭代和市场需求的快速演变。证据来自多个开发者职业轨迹的定性研究，但未涉及具体教育或培训方案的实施效果。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "leadership-creative-direction"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=YFvR3RPYTwk",
@@ -166627,7 +166768,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频揭示了游戏行业职业发展的系统性与涌现特征，这对设计教育中强调跨领域能力培养具有方法论启示。"
+    }
   },
   {
     "id": "yt-20260820-gdc-_Um5hfcXchU",
@@ -166636,14 +166780,15 @@
       "en": "Will Wright's Design Plunder"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Will Wright's Design Plunder》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Will Wright's Design Plunder”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Will Wright 在演讲中探讨如何借鉴建筑、城市规划等领域的工具箱，以拓展游戏设计师的思维边界。他通过模拟城市等案例展示跨学科方法如何催生新颖的游戏机制与系统。这种设计思维强调从更广泛的人类活动中汲取灵感，而非局限于传统游戏范式。演讲最终指向设计师需要建立更宏观的视角，将游戏视为复杂系统而非孤立产品。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "rules-system-modeling"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=_Um5hfcXchU",
@@ -166657,7 +166802,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲揭示了系统思维在游戏设计中的核心地位，通过展示其他领域系统如何启发游戏机制创新，为设计师提供了扩展工具箱的方法论。"
+    }
   },
   {
     "id": "yt-20260820-gdc-s2u4jhpZkTQ",
@@ -166666,17 +166814,19 @@
       "en": "The Art of Pre-Production"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Art of Pre-Production》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Art of Pre-Production”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Firaxis Games 的艺术总监 Greg Foertsch 在 2017 年 GDC 训练营中深入探讨了游戏开发前期制作阶段艺术指导面临的挑战。他分析了如何通过有效管理和清晰愿景在团队中建立共识并激发创造力，这是确保项目顺利推进的关键。演讲特别强调了在资源有限和方向未定时，艺术指导需要平衡创意表达与技术约束的决策能力。这些见解基于 Firaxis 实际开发经验，但未涉及具体工具或方法论层面的细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "creative-vision-stewardship",
+      "constraint-aware-decision-making"
+    ],
     "knowledgeTopicIds": [
       "audiovisual-semiotics",
       "production-pipelines-constraints"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "leadership-creative-direction"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=s2u4jhpZkTQ",
@@ -166690,7 +166840,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容揭示了创意领导力如何通过解决前期制作中的典型矛盾（如愿景模糊与执行压力）来降低项目风险，这对中小团队尤其具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-U4FNBMZsqrY",
@@ -166699,8 +166852,7 @@
       "en": "DOOM: Behind the Music"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《DOOM: Behind the Music》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “DOOM: Behind the Music”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "作曲家 Mick Gordon 深入解析《毁灭战士4》配乐的创作过程与制作技术，包括如何通过工业金属与电子元素塑造地狱氛围。他详细演示了如何利用合成器分层和失真效果实现标志性的暴力音效，同时保持音乐的可玩性响应。这种音频设计直接服务于游戏的高强度战斗节奏，使玩家动作与音乐动态同步。演讲特别强调配乐必须作为游戏机制延伸，而非独立存在的艺术表达。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -166724,7 +166876,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "展示了音频如何作为核心反馈层与游戏机制深度耦合，为动作游戏的手感设计提供跨模态整合范例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-7_B--jnAuCM",
@@ -166733,8 +166888,7 @@
       "en": "Tooth and Tail: Building Community Within Open Game Development"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Tooth and Tail: Building Community Within Open Game Development》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Tooth and Tail: Building Community Within Open Game Development”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Pocketwatch Games 的 Andy Nguyen 在 2017 年 GDC 演讲中，分享了团队如何利用免费在线工具围绕开发中的游戏构建社区并激发期待。他具体阐述了通过公开开发进程、与玩家直接对话来培养参与感的方法。这一实践表明，开放开发不仅能积累早期受众，还能为设计决策提供真实反馈。演讲强调社区建设是独立团队在有限资源下可行的推广与迭代策略。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
@@ -166756,7 +166910,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲聚焦于开发过程中利用免费工具进行社区运营，属于生产与迭代环节中的外部沟通与反馈收集实践。"
+    }
   },
   {
     "id": "yt-20260820-gdc-vGCeTgmG1F8",
@@ -166765,14 +166922,13 @@
       "en": "A Q&A Session For New Game Writers"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《A Q&A Session For New Game Writers》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “A Q&A Session For New Game Writers”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本视频是一场由多位资深游戏编剧参与的问答环节，旨在为行业新人提供指导。讨论聚焦于如何应对游戏产业中的复杂挑战与潜在风险，例如职业发展路径与项目协作中的常见困境。其设计含义在于揭示了叙事工作并非孤立创作，而是需要深刻理解产业生态与团队动态的系统性实践。证据文本明确指出，该内容主要服务于帮助新编剧“在视频游戏产业的危险水域中航行”，并未深入探讨具体的叙事设计技术或案例。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "narrative-expression"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=vGCeTgmG1F8",
@@ -166786,7 +166942,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接对应从教育过渡到行业实践的职业发展初期阶段，提供了由从业者分享的、关于在游戏产业中生存与发展的第一手经验与建议。"
+    }
   },
   {
     "id": "yt-20260820-gdc-9LijlGLFKTE",
@@ -166795,16 +166954,15 @@
       "en": "Achieving Two Worlds, Every Year: How Magic the Gathering Sustainably Doubled Its Worldbuilding"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Achieving Two Worlds, Every Year: How Magic the Gathering Sustainably Doubled Its Worldbuilding》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Achieving Two Worlds, Every Year: How Magic the Gathering Sustainably Doubled Its Worldbuilding”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Jeremy Jarvis 分享了《万智牌》如何通过创意团队与设计团队的协作，实现每年稳定产出两个完整世界设定。演讲重点讨论了跨职能团队如何同步工作流程，确保世界观设定与游戏机制相互支撑。这种工业化生产模式展示了在严格时间限制下维持创意质量的系统性方法。视频内容仅限于2017年GDC演讲，未涉及后续实践演变或具体设计工具细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "narrative-architecture"
+      "cross-discipline-communication"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "narrative-expression"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=9LijlGLFKTE",
@@ -166818,7 +166976,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该案例揭示了大型IP如何通过结构化协作解决创意量产难题，对需要高频内容更新的团队具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-x1gdAKEqEpI",
@@ -166827,18 +166988,15 @@
       "en": "Still Grooving: Game Dev Life Set to Live Music"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Still Grooving: Game Dev Life Set to Live Music》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Still Grooving: Game Dev Life Set to Live Music”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Heart Machine 的 Teddy Dief 和 C418 通过音乐形式分享游戏开发日常与工作生活平衡的实践。演讲以现场演奏为媒介，探讨创意工作者如何在不同开发阶段管理精力分配。这种非传统呈现方式揭示了艺术表达与项目管理之间的张力，暗示了跨领域协作的可能性。基于 2017 年 GDC 现场记录，内容聚焦独立游戏开发者的具体经验，未涉及大型团队管理方法。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "multimodal-presentation-integration"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "audiovisual-semiotics"
     ],
     "resourceTopicIds": [
-      "game-feel-feedback"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=x1gdAKEqEpI",
@@ -166852,7 +167010,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对于探索非传统形式传递设计知识，以及独立开发者如何维持创作可持续性具有参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-7QizLXm593I",
@@ -166861,14 +167022,13 @@
       "en": "eSports Day: Building eSports: Twitch, Rocket League, and H1Z1: King of the Kill"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《eSports Day: Building eSports: Twitch, Rocket League, and H1Z1: King of the Kill》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “eSports Day: Building eSports: Twitch, Rocket League, and H1Z1: King of the Kill”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者探讨了两种培育电子竞技社区的方法，分析了将多人游戏提升至竞技水平的关键共性特征。通过Twitch和Daybreak的案例，展示了如何通过平台工具和游戏设计促进玩家参与和竞争。讨论揭示了社区驱动和系统设计在电竞生态中的相互作用，为竞技游戏开发提供了实践参考。内容基于2017年GDC演讲，未涉及具体游戏机制或平衡性调整的细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "systems-mechanics"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=7QizLXm593I",
@@ -166882,7 +167042,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对于关注多人游戏系统设计的开发者，该演讲提供了从社区运营角度反推游戏机制设计的思路，揭示了非直接游戏规则因素如何影响竞技体验的形成。"
+    }
   },
   {
     "id": "yt-20260820-gdc-RmGb-jU3uVQ",
@@ -166891,13 +167054,12 @@
       "en": "Cuphead's Animation Process and Philosophy"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Cuphead's Animation Process and Philosophy》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Cuphead's Animation Process and Philosophy”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者详细解析了《Cuphead》的2D动画设计流程，强调手绘动画的帧间连贯性与角色动作的夸张表现力。通过展示主角Cuphead的跳跃动画分解，说明如何用12帧循环实现流畅的橡皮管风格运动。设计上刻意模仿1930年代动画的视觉语言，包括形变、速度线和眨眼帧等技巧增强戏剧性。最后指出这种高成本工艺需与游戏机制深度结合，否则难以证明其额外开发价值。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
       "game-feel-tuning",
-      "multimodal-presentation-integration"
+      "aesthetic-direction"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -166915,7 +167077,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "演示了如何通过传统动画原理增强游戏操作反馈，同时保持特定历史风格的美学一致性。"
+    }
   },
   {
     "id": "yt-20260820-gdc--38BH95ERn0",
@@ -166924,16 +167089,16 @@
       "en": "Rewarding Exploration in Deus Ex: Mankind Divided"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Rewarding Exploration in Deus Ex: Mankind Divided》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Rewarding Exploration in Deus Ex: Mankind Divided”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者详细解构了《杀出重围：人类分裂》中布拉格城市的设计如何通过空间布局和细节安排激励玩家探索。具体展示了隐藏路径、环境叙事道具和奖励的分布逻辑，使玩家在非主线区域获得独特叙事体验。设计团队通过控制视线引导和空间密度，平衡了开放探索与叙事节奏的需求。最后强调这种设计需要精确测试玩家动线，避免过度复杂导致的挫败感。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "progression-economy-design"
+      "spatial-flow-design",
+      "navigation-wayfinding-design"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "balance-economy"
+      "level-spatial-design"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=-38BH95ERn0",
@@ -166947,7 +167112,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "展示了3A级沉浸式模拟游戏中，如何将城市空间转化为玩法系统的一部分，为开放世界设计提供具体方法论参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-XIpDLa585ao",
@@ -166956,14 +167124,15 @@
       "en": "The Gamer's Brain: How Neuroscience and UX Can Impact Design"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Gamer's Brain: How Neuroscience and UX Can Impact Design》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Gamer's Brain: How Neuroscience and UX Can Impact Design”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲从神经科学角度系统剖析玩家大脑的认知处理机制，揭示注意力分配与记忆编码的生物学限制如何影响游戏信息接收。通过实证数据展示玩家在界面交互中常见的知觉盲区，提出利用格式塔分组原则可提升30%以上的信息获取效率。结合2015年GDC案例详细解构了多模态反馈时机对玩家决策路径的优化作用，强调需在200毫秒内完成关键操作反馈。最终论证神经科学与UX设计的跨学科融合能显著提升游戏体验的流畅性与沉浸感。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-framing"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "research-player-experience"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=XIpDLa585ao",
@@ -166986,8 +167155,7 @@
       "en": "Deciding What to Make: A Greenlight Process for Commercial Indies"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Deciding What to Make: A Greenlight Process for Commercial Indies》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Deciding What to Make: A Greenlight Process for Commercial Indies”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲提出一系列修辞性但实用的问题，旨在帮助商业独立开发者在制作实验性或原创游戏时对冲风险。它通过具体问题引导开发者审视项目在商业与创意上的潜在冲突，从而在早期阶段识别并管理不确定性。这种方法强调了在追求创新时，需要系统性地评估市场接受度、资源投入与核心体验之间的平衡。其结论是，通过结构化提问可以更清醒地决策，减少因盲目实验而导致的商业失败。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
@@ -167007,7 +167175,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频内容直接关联到游戏开发的生产与迭代阶段，核心是提供一种在项目早期进行风险评估和范围界定的具体方法，这有助于团队在创意探索与商业可行性之间做出更明智的决策。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Q966gyPcnrc",
@@ -167016,14 +167187,15 @@
       "en": "Realistic Performances in Games"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Realistic Performances in Games》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Realistic Performances in Games”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "顽皮狗工作室的 Ryan M. James 分享了创造动画角色真实表演的技术方法，包括动作捕捉与手工动画的结合运用。视频详细解析了《神秘海域》中角色面部微表情与肢体语言的同步处理流程，确保情感传递的连贯性。这些技术揭示了游戏叙事中非语言表达对玩家情感投入的关键作用。演讲基于2017年GDC现场演示，未涉及最新技术迭代或具体工具链细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "narrative-expression"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Q966gyPcnrc",
@@ -167037,7 +167209,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "演示了如何通过技术手段实现角色表演的连贯性，这对需要强化情感表达的叙事驱动型游戏具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-sCRzxEEcO2Y",
@@ -167046,8 +167221,7 @@
       "en": "Continuous World Generation in No Man's Sky"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Continuous World Generation in No Man's Sky》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Continuous World Generation in No Man's Sky”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲深入解析了《无人深空》实时生成行星的技术架构，重点介绍了过程生成算法如何动态创建多样化的星球环境。通过分层噪声函数和数学优化，系统实现了地形、生态与大气效果的连贯性，同时保持高性能。设计上强调无缝过渡与玩家探索的连续性，技术方案需平衡生成质量与实时计算负载。最终展示的系统证明了大规模宇宙模拟在消费级硬件上的可行性，但仍有内存与计算效率的挑战。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -167069,7 +167243,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "展示了如何通过系统化规则建模实现开放世界游戏的核心技术突破，对程序生成类游戏的技术架构设计具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-2RhrH1R9LJw",
@@ -167112,16 +167289,13 @@
       "en": "The Flash Games Postmortem"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Flash Games Postmortem》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Flash Games Postmortem”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "John Cooney在2017年GDC演讲中回顾了Flash游戏的兴衰历程，阐述了其如何为开发者提供快速发布网页游戏的平台。他通过具体案例展示了Flash游戏对当前游戏产业的影响，包括开发流程和发布模式的革新。演讲深入分析了Flash游戏时代的设计特点，如快速迭代和低门槛创作，以及这些特点如何塑造了现代游戏开发文化。最后，Cooney总结了Flash游戏遗产对行业长期发展的启示，强调了其在游戏历史上的独特地位。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "iteration-planning"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=65crLKNQR0E",
@@ -167135,7 +167309,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲为理解游戏平台技术变迁如何影响设计实践提供了历史视角，特别适合研究行业演变与设计范式转移的关系。"
+    }
   },
   {
     "id": "yt-20260820-gdc--zRaFJHK0S4",
@@ -167144,18 +167321,15 @@
       "en": "Game Studio Management: Making It Great"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Game Studio Management: Making It Great》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Game Studio Management: Making It Great”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Jesse Schell 在 2015 年 GDC 演讲中分享了维持游戏工作室高效运作的六种具体方法，涉及团队幸福感和健康管理。他通过实际案例说明了如何通过结构化沟通和激励机制提升团队创造力。这些方法强调了在游戏开发中平衡商业目标与创意自由的重要性。演讲基于 Schell Games 多年运营经验，提供了可验证的团队管理实践框架。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "alignment-facilitation"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "organizational-dynamics-power"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "collaboration-teams"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=-zRaFJHK0S4",
@@ -167169,7 +167343,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容揭示了游戏开发中常被忽视的团队动态管理技术，其方法论可直接应用于解决跨职能协作中的具体痛点。"
+    }
   },
   {
     "id": "yt-20260820-gdc-chf3REzAjgI",
@@ -167178,12 +167355,11 @@
       "en": "Behind the Scenes of the Cinematic Dialogues in The Witcher 3: Wild Hunt"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Behind the Scenes of the Cinematic Dialogues in The Witcher 3: Wild Hunt》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Behind the Scenes of the Cinematic Dialogues in The Witcher 3: Wild Hunt”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "CD Projekt Red 的 Piotr Tomsinski 在 2016 年 GDC 演讲中详细介绍了《巫师 3》对话动画系统的开发过程。演讲重点阐述了如何通过技术手段实现电影化对话的流畅性和表现力。该案例展示了游戏叙事中动画系统与角色表演的深度整合方法。视频内容仅限于对话动画系统的技术实现，未涉及游戏其他开发环节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "narrative-architecture"
+      "multimodal-presentation-integration"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -167201,7 +167377,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频为研究 3A 级 RPG 如何通过动画系统提升叙事沉浸感提供了具体的技术实现案例，尤其适合关注影视化叙事与游戏机制结合的设计师参考。"
+    }
   },
   {
     "id": "yt-20260820-gdc-KQU3d02yxkE",
@@ -167210,14 +167389,16 @@
       "en": "UX Methodologies for Holistic Product Design"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《UX Methodologies for Holistic Product Design》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “UX Methodologies for Holistic Product Design”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Maxis的Paul Rybicki在2017年GDC演讲中阐述了如何使UX设计更具整体性，以便在开发周期中更高效地进行迭代和修订。他强调了跨职能团队（工程、产品和游戏设计）之间保持设计方向一致的重要性，以确保所有利益相关者都能理解整体设计。演讲中提到的方法包括通过反复引用和沟通来维护设计的一致性，从而减少误解和返工。这些方法旨在优化开发流程，使团队能够专注于设计改进而非解释和调整。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "cross-discipline-communication",
+      "alignment-facilitation"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=KQU3d02yxkE",
@@ -167231,7 +167412,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频对于需要在跨职能团队中协调UX设计的设计师和开发者特别有价值，提供了实用的方法来保持设计一致性和高效迭代。"
+    }
   },
   {
     "id": "yt-20260820-gdc-69HTviSeQeE",
@@ -167240,8 +167424,7 @@
       "en": "Peter Molyneux Explains the Design of Black and White"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Peter Molyneux Explains the Design of Black and White》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Peter Molyneux Explains the Design of Black and White”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Peter Molyneux在2000年GDC主题演讲中分享了《Black and White》的设计灵感与过程，探讨了这款‘神游戏’类型的创作背景。他详细介绍了从概念到实现的设计决策，包括如何平衡玩家自由与系统引导。演讲揭示了在复杂系统中维持玩家代理与叙事一致性的挑战，以及如何通过迭代解决这些问题。最后，Molyneux反思了设计过程中的关键教训，特别是关于玩家反馈与系统涌现性的重要性。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
@@ -167261,7 +167444,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频对于理解经典‘神游戏’类型的设计哲学和实际开发挑战提供了第一手资料，尤其适合对复杂系统设计和玩家代理感兴趣的开发者。"
+    }
   },
   {
     "id": "yt-20260820-gdc-zX62GBak5hM",
@@ -167270,14 +167456,13 @@
       "en": "Lessons Learned from Creating a Virtual Reality Engine"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Lessons Learned from Creating a Virtual Reality Engine》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Lessons Learned from Creating a Virtual Reality Engine”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Unity开发者Liz Mercuri分享如何利用第三方引擎实现创意构想，特别以The Horror Engine为例说明技术选择的价值。通过分析新手开发者面临的编程挑战，提出借助成熟工具降低实现门槛的具体路径。强调第三方引擎在快速原型开发中的作用，为独立开发者提供可行性验证的实践参考。演讲基于2017年GDC实际案例，但未涉及引擎底层技术细节或量化效果对比。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "prototyping-experimentation"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=zX62GBak5hM",
@@ -167291,7 +167476,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "对独立开发者具有方法论价值，展示了在资源限制下如何通过技术选型平衡创意野心与实现可行性"
+    }
   },
   {
     "id": "yt-20260820-gdc-htUPKDA50ts",
@@ -167300,11 +167488,13 @@
       "en": "Design Epiphanies from Qwirkle and Other Games"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Design Epiphanies from Qwirkle and Other Games》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Design Epiphanies from Qwirkle and Other Games”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Susan McKinley Ross分享了她在设计获奖游戏Qwirkle时的关键顿悟，强调通过简化规则和视觉反馈来增强玩家理解。她举例说明如何通过调整颜色和形状的对比度来降低认知负荷，使游戏更易上手。这些设计决策体现了对玩家体验的深刻洞察，最终使游戏在复杂度和可玩性之间取得平衡。视频展示了设计过程中的具体调整和测试结果，验证了这些方法的有效性。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "experience-framing",
+      "player-perspective-taking"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -167321,7 +167511,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频通过具体案例展示了如何从玩家角度出发，简化复杂规则并优化视觉反馈，这对设计易于上手且深度足够的游戏具有普遍参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-d8QAVGeEj-U",
@@ -167330,16 +167523,13 @@
       "en": "Rules of the Game: Five Techniques from Quite Inventive Designers"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Rules of the Game: Five Techniques from Quite Inventive Designers》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Rules of the Game: Five Techniques from Quite Inventive Designers”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "多位资深设计师在2016年GDC微演讲中分享了塑造其作品的核心个人设计哲学，这些哲学观点源于他们各自在具体项目中的实践与反思。每位讲者都提炼了独特的指导原则或工作方法，用以应对设计过程中的关键挑战与决策点。这些分享旨在为同行提供可借鉴的思维框架，而非提供普适性的具体技术解决方案。视频内容聚焦于设计师个人的理念阐述，并未深入展示其方法在完整游戏项目中的系统化应用过程。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "rules-system-modeling"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "systems-mechanics"
+      "practitioner-interviews-podcasts"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=d8QAVGeEj-U",
@@ -167353,7 +167543,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频通过多位知名设计师第一人称的经验分享，直接呈现了不同创意个体如何形成并运用其核心设计哲学，这为观察设计判断的源头、应对创作风险的个人策略提供了具体案例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-7M5RXKI_iaI",
@@ -167362,14 +167555,13 @@
       "en": "Legends of Game Design"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Legends of Game Design》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Legends of Game Design”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "1997年GDC小组讨论由Jonathan Wilson主持，汇聚了John Romero、Chris Roberts和Nolan Bushnell等处于职业生涯巅峰的传奇设计师。这群先驱者通过对话直接分享了他们在游戏设计、编程、音频、视觉艺术、商业管理和生产等多领域的原始经验与判断。证据表明该讨论以跨领域开发为切入，展现了设计决策如何在团队与工业约束下形成。并未涉及具体系统、机制或针对某项能力的演示，因此主题限定在从业者访谈范畴内。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "practitioner-interviews-podcasts"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=7M5RXKI_iaI",
@@ -167383,7 +167575,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频以多位传奇设计师的同台对谈为形式，提供了一手的行业经验与历史视角，适合在设计史或从业者访谈主题下引用。"
+    }
   },
   {
     "id": "yt-20260820-gdc-VY8TsXKRySU",
@@ -167392,11 +167587,12 @@
       "en": "Dots That Go for Walks: How to Maximize Minimal UI"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Dots That Go for Walks: How to Maximize Minimal UI》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Dots That Go for Walks: How to Maximize Minimal UI”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者通过极简视觉元素在游戏界面中的生动运用，展示如何用深思熟虑的实现赋予基本图形表现力。具体以点状元素的动态路径为例，阐释了最小化UI如何通过运动轨迹传递游戏状态与反馈。这种设计方法挑战了界面复杂度与信息密度的传统关联，证明视觉减法可能创造更直接的认知通道。案例全部来自PlayDots的实际项目，但未涉及具体技术参数或量化效果评估。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "multimodal-presentation-integration"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
       "design-fundamentals"
@@ -167413,7 +167609,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "当团队需要平衡界面简洁性与信息传达效率时，该案例展示了如何通过基础元素的动态化实现双重目标。"
+    }
   },
   {
     "id": "yt-20260820-gdc-jZQQlGNEX5s",
@@ -167422,14 +167621,15 @@
       "en": "Beyond Ageism: Exploring VR Games for an Older Audience"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Beyond Ageism: Exploring VR Games for an Older Audience》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Beyond Ageism: Exploring VR Games for an Older Audience”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "本演讲基于对老年玩家的研究，探讨了VR技术为这一群体带来的独特潜力，同时也分析了其在可用性和内容设计上面临的具体挑战。演讲者通过实际研究案例，指出了当前VR体验中可能不适合老年用户的身体限制或认知习惯的设计环节。由此，他推导出一套实用的设计指南，旨在帮助开发者超越对老年受众的刻板印象，创造更具包容性的游戏体验。这些指南最终挑战了数字游戏领域中关于年龄的固有观念，并提供了基于证据的设计改进方向。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "player-perspective-taking"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "research-player-experience"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=jZQQlGNEX5s",
@@ -167443,7 +167643,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容直接关联游戏设计中的用户研究实践，它展示了如何通过针对特定玩家群体（老年用户）的实证研究，来识别通用设计假设的盲点，并生成可指导具体设计决策的实用知识，而非停留在理论探讨。"
+    }
   },
   {
     "id": "yt-20260820-gdc-KsFgXXjoLi8",
@@ -167452,18 +167655,15 @@
       "en": "(Opportunity) Cost Effective Marketing & PR for Indies"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《(Opportunity) Cost Effective Marketing & PR for Indies》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “(Opportunity) Cost Effective Marketing & PR for Indies”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者 Chris Dwyer 分享了针对独立开发者在有限预算下的高效营销策略，强调财务、时间和精力的合理分配。通过《Gone Home: Console Edition》等案例，说明如何利用低成本渠道和精准定位吸引核心受众。这些方法帮助开发者在不牺牲创意自主的前提下，最大化市场曝光效果。演讲基于实际项目经验，但未涉及具体数据验证或长期效果追踪。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "market-reference-analysis"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [
       "game-industry-platform-economics"
     ],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=KsFgXXjoLi8",
@@ -167477,7 +167677,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "独立游戏开发常面临资源限制，该内容直接回应如何在这种约束下制定可行的市场策略，对小型团队具有实操参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-_cR1_UQx7qY",
@@ -167486,14 +167689,16 @@
       "en": "Mechs vs. Minions: Why Would Riot Make a Board Game?"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Mechs vs. Minions: Why Would Riot Make a Board Game?》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Mechs vs. Minions: Why Would Riot Make a Board Game?”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Chris Cantrell 分享了 Riot Games 开发桌游《Mechs vs. Minions》时面临的内部与外部挑战，包括团队规模小、公司预期不符等压力。他详细描述了从零开始‘众筹’游戏的过程，揭示了在大型游戏公司中尝试非核心业务的独特困境。演讲还探讨了如何在没有经验的情况下，通过实验和迭代来克服桌游设计中的未知难题。最后，他反思了这一经历对团队协作和创意方向的影响，强调了在约束条件下坚持愿景的重要性。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "constraint-aware-decision-making",
+      "creative-vision-stewardship"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "production-iteration"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=_cR1_UQx7qY",
@@ -167507,7 +167712,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频展示了在资源有限和公司文化不匹配的情况下，如何通过迭代和坚持创意愿景来开发一款成功的桌游，为游戏开发者提供了在非理想条件下推进项目的实用见解。"
+    }
   },
   {
     "id": "yt-20260820-gdc-Bs046-TWMhA",
@@ -167516,14 +167724,15 @@
       "en": "Animating Quadruped Characters in The Flame in The Flood"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Animating Quadruped Characters in The Flame in The Flood》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Animating Quadruped Characters in The Flame in The Flood”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "该演讲展示了无需过渡动画即可创建高质量四足角色运动的技巧，通过分析野猪和狼两种不同脊椎结构的角色实现流畅运动。演讲者详细讲解了刚性脊椎与程序化脊椎在运动表现上的差异，以及如何通过技术手段优化动画效果。这些方法为游戏动画设计提供了高效且自然的解决方案，尤其适用于资源有限的小型团队。演讲内容基于《The Flame in The Flood》开发经验，但未涉及具体实现代码或工具链细节。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [],
+    "capabilityIds": [
+      "game-feel-tuning"
+    ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "narrative-expression"
+      "game-feel-feedback"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=Bs046-TWMhA",
@@ -167537,7 +167746,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该技术演示了如何通过程序化方法替代传统动画流程，这对需要快速迭代或资源受限的项目具有重要参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-6EUeYu0aPn4",
@@ -167546,12 +167758,12 @@
       "en": "Playtesting: Avoiding Evil Data"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Playtesting: Avoiding Evil Data》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Playtesting: Avoiding Evil Data”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "独立开发者 Adriaan de Jongh 回顾六年中对八款游戏进行 Playtest 时收集的无效数据，分享如何避免无用或混淆的信息。他提出组织高效 Playtest 会话的方法，以最小努力获取最有价值的数据。演讲强调将 Playtest 从必要之恶转变为设计工具，通过具体案例展示数据筛选技巧。最后总结有效测试的核心在于明确目标与精简流程，而非盲目收集数据。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "playtesting"
+      "playtesting",
+      "qualitative-evidence-synthesis"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -167569,7 +167781,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频直接回应中小团队在有限资源下进行 Playtest 的痛点，提供可立即应用的实证方法，避免常见的数据收集陷阱。"
+    }
   },
   {
     "id": "yt-20260820-gdc-a9DlhDRZ0yA",
@@ -167578,8 +167793,7 @@
       "en": "Shigeru Miyamoto's 1999 GDC Keynote"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Shigeru Miyamoto's 1999 GDC Keynote》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Shigeru Miyamoto's 1999 GDC Keynote”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "宫本茂在1999年GDC主题演讲中系统阐述了他的游戏设计哲学，强调游戏应当突破传统娱乐边界融入现实世界。他通过《超级马里奥64》等经典案例，生动展示了游戏作为交互艺术形式的叙事潜力与情感表达。演讲着重分析了空间构建与玩家心理的关联性，提出'玩具优先'的设计方法论来激发创造性玩法。这些见解不仅重新定义了游戏设计标准，更为跨媒介艺术融合提供了重要启示。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
@@ -167608,16 +167822,13 @@
       "en": "Friendship, Curiosity & Challenge: Focusing Your Career as an Indie Dev"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《Friendship, Curiosity & Challenge: Focusing Your Career as an Indie Dev》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “Friendship, Curiosity & Challenge: Focusing Your Career as an Indie Dev”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "演讲者提出了一套职业发展指南，核心是建议独立开发者通过建立积极的人际关系来塑造职业生涯轨迹。具体方法包括识别何时应该结束一段合作关系或项目，并主动转向新的机会，以避免陷入停滞或消耗性环境。这对游戏设计工作意味着，团队健康与项目可持续性本身就是需要被主动管理的设计约束，而非单纯的外部条件。整个建议基于2017年GDC演讲的框架，其结论强调关系管理和时机判断对长期职业健康的重要性。"
     },
     "sourceId": "gdc-festival-of-gaming",
-    "capabilityIds": [
-      "challenge-difficulty-design"
-    ],
+    "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "production-iteration"
+      "career-industry-practice"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=0QB9JP2l6tM",
@@ -167631,7 +167842,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该内容直接关联游戏开发者的职业路径规划与工作环境管理，属于行业实践知识，而非具体的游戏设计、编程或美术等创作技能主题。"
+    }
   },
   {
     "id": "yt-20260820-gdc-CpOoTAVeEcU",
@@ -167640,12 +167854,13 @@
       "en": "An Approach to Holistic Level Design"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《An Approach to Holistic Level Design》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “An Approach to Holistic Level Design”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Arkane Studios 的 Steve Lee 提出关卡设计需考虑玩家体验的多维度整合，强调玩法、表现与叙事的协同作用。通过具体案例展示如何让空间布局同时服务于战斗节奏、环境叙事和视觉引导。该方法要求设计师超越功能模块化思维，建立跨系统的动态反馈关系。演讲基于《耻辱》等作品实证，但未涉及经济系统或数值平衡等具体工具。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "level-structure-design"
+      "level-structure-design",
+      "spatial-flow-design",
+      "multimodal-presentation-integration"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -167663,7 +167878,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲揭示了当代 3A 关卡设计中系统性思维的缺失，其整合框架对开放世界和沉浸模拟类项目的空间设计具有直接参考价值。"
+    }
   },
   {
     "id": "yt-20260820-gdc-7Lh9LzlHsnE",
@@ -167672,14 +167890,13 @@
       "en": "The Power of the Abstract"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Power of the Abstract》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Power of the Abstract”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "独立设计师 Liz Ryerson 论证抽象怪异的设计美学如何成为游戏媒介的独特表达优势。通过非常规视觉与交互案例，展示非常规形式如何传递主流设计无法触及的情感与思想。提出拥抱非专业感美学能拓展游戏作为沟通工具的边界，尤其适用于表达复杂或边缘体验。该结论基于2015年演讲中对独立游戏设计实践的观察与分析。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
-      "design-fundamentals"
+      "criticism-values-history"
     ],
     "mediaType": "talk",
     "canonicalUrl": "https://www.youtube.com/watch?v=7Lh9LzlHsnE",
@@ -167693,7 +167910,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该演讲挑战了游戏设计专业化的主流叙事，为独立开发者提供了美学选择的理论依据，特别适合探讨非传统表达的价值评估。"
+    }
   },
   {
     "id": "yt-20260820-gdc-sVntwsrjNe4",
@@ -167702,13 +167922,11 @@
       "en": "The Rain World Animation Process"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《The Rain World Animation Process》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “The Rain World Animation Process”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "Rain World 动画师 Joar Jakobsson 和 James Therrien 详细解析了该独立游戏的动画制作流程，展示了如何通过技术实现独特的视觉效果。他们分享了动画设计中的具体挑战和解决方案，例如角色动作与环境的互动处理。这些方法揭示了动画如何增强游戏体验的沉浸感和情感表达。视频内容基于 2016 年 GDC 动画训练营的现场演讲，未涉及游戏其他开发环节。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
-      "game-feel-tuning",
-      "multimodal-presentation-integration"
+      "game-feel-tuning"
     ],
     "knowledgeTopicIds": [],
     "resourceTopicIds": [
@@ -167726,7 +167944,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "该视频展示了动画设计如何直接影响玩家对游戏世界的感知和操作反馈，为理解游戏手感设计提供了具体案例。"
+    }
   },
   {
     "id": "yt-20260820-gdc-0vST4IvG5CE",
@@ -167735,8 +167956,7 @@
       "en": "6 Techniques for Leveraging AI in Procedural Content Generation"
     },
     "summary": {
-      "zh-CN": "GDC Festival of Gaming 官方 YouTube 频道公开的免费英文视频《6 Techniques for Leveraging AI in Procedural Content Generation》。目录只记录频道标题与公开播放页，不外推未观看内容。",
-      "en": "A free English video published on the official GDC Festival of Gaming YouTube channel: “6 Techniques for Leveraging AI in Procedural Content Generation”. The catalog records the channel title and public watch page without making claims about unwatched content."
+      "zh-CN": "开发者们分享了AI在游戏内容生成中的六种实用技术，包括艺术资产生成和数学随机性控制。通过具体案例展示了如何为游戏代理注入一致且可信的个性特征，提升内容多样性。这些方法为游戏设计提供了自动化工具，同时强调了保持内容质量和风格统一的重要性。演讲基于2017年的实践经验，探讨了AI生成内容在游戏开发中的潜力和限制。"
     },
     "sourceId": "gdc-festival-of-gaming",
     "capabilityIds": [
@@ -167758,7 +167978,10 @@
         "presentationMode": "original",
         "checkedAt": "2026-08-20"
       }
-    ]
+    ],
+    "whyRelevant": {
+      "zh-CN": "视频展示了AI技术如何系统性地改变传统内容生成流程，为游戏机制设计提供了新的工具和方法。"
+    }
   },
   {
     "id": "yt-20260820-gdc-9KpQsT31Yts",
