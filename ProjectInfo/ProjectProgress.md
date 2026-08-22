@@ -11,13 +11,13 @@
 
 ## 当前阶段
 
-- 内容目标审计已完成；最终独立 clone 的完整 Playwright 为 262 passed / 0 failed / 22 skipped。合并后的 main 已把涓流脚本从旧 v02 worktree 切换到主工作树；下一阶段可继续低频视频字幕通道，或为未闭合 Atlas 透镜补充一手证据。
+- 内容目标审计已完成；合并后的 main 通过 Astro check 0/0/0、Vitest 204/204、静态构建 151 页和目标审计。合并后全量 Playwright 为 259 passed / 3 failed / 22 skipped：Atlas 位置断言单跑通过，两个 Playtest 失败根因是资源页仍把 5437 条 Work Item server-render 成约 12.7MB HTML，再由客户端筛到 61 条，120 秒内触发浏览器会话超时。合并后的 main 已把涓流脚本从旧 v02 worktree 切换到主工作树。
 
 ## 下一步
 
-- Career Lens 与 Playtest 的初轮失败来自过期 Source／资源统计文案与运行时波动；同步 44 Source／5437 Work Item／5590 Access Version 后，完整 Playwright 已复跑全绿。
+- Career Lens 与统计文案已修正；当前新增的 Playtest 失败不是数据缺失，而是 5437 条资源的初始 DOM／客户端筛选性能瓶颈。公开前需要单独做资源筛选切片，避免用延长 timeout 掩盖页面成本。
 - YouTube 涓流通道仍处于 24 小时冷却：累计 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure，剩余 2215 条；本轮单视频探测证明 `yt-dlp` 与 `youtube-transcript-api` 均可成功取得一条字幕，但不能把单条成功或冷却状态写成批量补全成功。官方 Data API 仍缺少 API 凭据；公开频道 RSS 对 GMTK 返回 404。
-- 仓库仍为 Private、Pages workflow 仍手动停用；恢复公开需要另行授权与线上验收。
+- 仓库仍为 Private、Pages workflow 仍手动停用；恢复公开需要先修复资源筛选性能，再完成桌面／移动、双主题、无 JS 与线上验收。
 
 ## 阻塞 / 待定
 

@@ -377,3 +377,9 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 官方 Data API 无凭据请求返回 HTTP 403，需要 API Key 或其他 consumer identity；当前环境没有 `YOUTUBE_API_KEY`。GMTK 频道页可读，公开 RSS endpoint 返回 404，因此 RSS 暂不作为主通道。
 - 隔离安装 `yt-dlp 2026.08.19` 后，单条 GMTK 视频 `yorTG9at90g` 成功发现英文／简体中文字幕并取得英文自动字幕；项目既有 `youtube-transcript-api` 对同一视频单请求也成功。现有 Work Item `a-022-why-does-celeste-feel-so-good-to-play` 的中文摘要与字幕抽样一致，确认“取得文字后做证据摘要与分析”的最小链路成立。
 - 冷却状态没有被强制清除，失败仍保留为失败、`SKIP` 仍保留为 `SKIP`。新增通道结果详见 [YouTube 内容通道探测](../research/2026-08-22-youtube-content-channel-probe.md)。
+
+## 52. 合并后浏览器门禁归因（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。合并后的 `main` 通过 Astro check 0/0/0、Vitest 204/204、静态构建 151 页和内容目标审计；全量 Playwright 为 259 passed、3 failed、22 skipped。
+- Atlas 失败的 23px 位置差异在单独重跑中通过，属于运行时位置测量波动。两个 Playtest 失败在串行重跑中都触发 120 秒 timeout，且每次卡在不同 Work Item。
+- 根因证据：`dist/resources/index.html` 约 12.7MB，全部 5437 个 Work Item 先 server-render，Playtest 查询实际只需要 61 条，之后才由客户端隐藏其余 DOM。该问题是资源筛选的初始渲染性能瓶颈，不是合并冲突或数据缺失；未用延长 timeout 伪装通过。公开前需另开性能切片。
