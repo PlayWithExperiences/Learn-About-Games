@@ -402,6 +402,12 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 ## 55. 官方描述正文路线与首批批处理（2026-08-22）
 
 - 决策：無涘 ｜ 记录：AI。官方 YouTube API 返回的公开视频描述属于可追溯内容证据，但不能与“已取得字幕”混为一类。审计目标 2,311 条后发现约 2,096 条描述去除 URL 后至少 240 个字符；新增 `inputMode=description`，只对描述足够具体的条目使用它，短广告／链接描述继续进入音频或失败路线。
-- 首条描述生产样本 `yt-20260820-gdc-s30pjYV8aBM` 完成写回；随后 5 条和 20 条批次均完成，最终再完成 50 条描述批次。新增 76 条 `completed / inputMode=description`，当前状态为 127 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,137 条；本批次没有新增失败。
-- 描述路线先检查官方元数据中的 `captionAvailability=false`，因此不发起字幕请求；描述模型结果仍经过摘要长度、主题／能力 ID 白名单、`pending_write` 和原子写回。`--description-fallback` 已加入涓流脚本，后续再按描述、字幕、音频三路的实际成功率继续分批。
-- 验证：描述专用单测加入后 Python 回填合同测试 12/12；之前的 Astro check 0/0/0、Vitest 204/204、静态构建 151 页仍为最近门禁证据。全量目标仍未完成，不能用描述覆盖审计或首批成功代替最终对账。
+- 首条描述生产样本 `yt-20260820-gdc-s30pjYV8aBM` 完成写回；随后 5、20、50 和 100 条描述批次完成，100 条中 99 条成功、1 条模型输出失败，失败在模式留痕修正后单独重试成功。累计新增 176 条 `completed / inputMode=description`，当前状态为 227 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,037 条。
+- 描述路线先检查官方元数据中的 `captionAvailability=false`，因此不发起字幕请求；描述模型结果仍经过摘要长度、主题／能力 ID 白名单、`pending_write` 和原子写回。`--description-only` 已加入涓流脚本：每 4 小时先取最多 20 条描述候选，描述队列为空才退回单条字幕／音频路线。
+- 验证：回填与元数据 Python 合同测试 20/20，shell 语法和 `git diff --check` 通过；全量 Astro/build 门禁仍需在本轮提交前复跑。全量目标仍未完成，不能用描述覆盖审计或当前样本代替最终对账。
+
+## 56. 描述批量模式与失败留痕修正（2026-08-22）
+
+- 决策：無涘 ｜ 记录：AI。发现 100 条描述批次中的模型失败记录把 `inputMode` 留成默认 `transcript`，原因是模式在模型调用后才赋值；已将 description/audio 模式提前到调用前，并成功重试该条，避免失败原因与实际入口错位。
+- 决策：無涘 ｜ 记录：AI。涓流现在先运行 `--description-only`，确保官方描述批量分析不触碰 YouTube；只有本轮描述候选为零时才退回单条字幕／音频路线。描述路线仍受模型输出校验、原子回写和显式失败分类约束。
+- 时间估算：AI 推断。最近 50 条约 10 分钟、100 条约 20 分钟；当前 176 条描述样本中仅 1 条模型输出失败且已重试成功。若剩余 2,037 条都能走描述路线，按每 4 小时最多 20 条理论约 17 天；不能据此承诺音频／字幕失败条目的最终日期。

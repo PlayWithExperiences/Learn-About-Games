@@ -978,12 +978,16 @@ def select_candidates(
     retryable: bool,
     candidate_ids: set[str] | None = None,
     audio_fallback: bool = False,
+    description_ids: set[str] | None = None,
+    description_only: bool = False,
 ) -> list[dict[str, Any]]:
     selected: list[dict[str, Any]] = []
     for item in resources:
         if item.get("sourceId") not in TARGET_SOURCE_IDS:
             continue
         if candidate_ids is not None and item["id"] not in candidate_ids:
+            continue
+        if description_only and (description_ids is None or item["id"] not in description_ids):
             continue
         record = state.get("items", {}).get(item["id"], {})
         status = record.get("status")
@@ -1036,7 +1040,27 @@ def process(args: argparse.Namespace) -> int:
     state = load_state(args.state)
     recover_pending(resources, state, args.resources, args.state)
     candidate_ids = load_candidate_ids(args.ids_file)
-    selected = select_candidates(resources, state, args.limit, args.retryable, candidate_ids, args.audio_fallback)
+    metadata_by_video = load_youtube_metadata(args.metadata) if args.description_fallback else {}
+    description_ids: set[str] | None = None
+    if args.description_only:
+        if not args.description_fallback:
+            raise ValueError("--description-only 必须同时启用 --description-fallback")
+        description_ids = set()
+        for item in target_items:
+            video_id = extract_video_id(item["canonicalUrl"])
+            metadata_record = metadata_by_video.get(video_id, {})
+            if metadata_record.get("captionAvailability") == "false" and get_cached_description(metadata_by_video, video_id):
+                description_ids.add(item["id"])
+    selected = select_candidates(
+        resources,
+        state,
+        args.limit,
+        args.retryable,
+        candidate_ids,
+        args.audio_fallback,
+        description_ids,
+        args.description_only,
+    )
     report: dict[str, Any] = {
         "startedAt": now_iso(),
         "sampleLabel": args.sample_label,
@@ -1063,7 +1087,6 @@ def process(args: argparse.Namespace) -> int:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
     api_key: str | None = None
-    metadata_by_video = load_youtube_metadata(args.metadata) if args.description_fallback else {}
     allowed_topics = {topic["id"] for topic in topics}
     allowed_capabilities = {capability["id"] for capability in capabilities}
     source_names = {source["id"]: source.get("name", {}).get("en") or source.get("name", {}).get("zh-CN", source["id"]) for source in sources}
@@ -1084,6 +1107,7 @@ def process(args: argparse.Namespace) -> int:
                 and metadata_record.get("captionAvailability") == "false"
             )
             if prefer_description:
+                input_mode = "description"
                 if api_key is None:
                     api_key = load_api_key(args.key_file)
                 prompt = build_description_prompt(item, source_name, description, topics, capabilities)
@@ -1097,7 +1121,6 @@ def process(args: argparse.Namespace) -> int:
                     args.max_tokens,
                     args.model_timeout,
                 )
-                input_mode = "description"
             else:
                 try:
                     transcript = read_cache(args.cache_dir, video_id)
@@ -1108,6 +1131,7 @@ def process(args: argparse.Namespace) -> int:
                         transcript = validate_transcript_text(transcript)
                 except (NoTranscriptFound, TranscriptInsufficientError) as transcript_error:
                     if description is not None:
+                        input_mode = "description"
                         if api_key is None:
                             api_key = load_api_key(args.key_file)
                         prompt = build_description_prompt(item, source_name, description, topics, capabilities)
@@ -1121,11 +1145,11 @@ def process(args: argparse.Namespace) -> int:
                             args.max_tokens,
                             args.model_timeout,
                         )
-                        input_mode = "description"
                     elif not args.audio_fallback:
                         raise transcript_error
                     else:
                         audio_attempted = True
+                        input_mode = "audio"
                         binary = resolve_ytdlp_binary()
                         if not binary:
                             raise AudioChannelError("找不到 yt-dlp，无法进入音频路线")
@@ -1149,7 +1173,6 @@ def process(args: argparse.Namespace) -> int:
                             args.vertex_timeout,
                             args.vertex_max_audio_bytes,
                         )
-                        input_mode = "audio"
                 else:
                     if api_key is None:
                         api_key = load_api_key(args.key_file)
@@ -1277,6 +1300,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--transcript-timeout", type=int, default=45)
     parser.add_argument("--audio-fallback", action="store_true", help="无可用字幕时下载音频并调用 Vertex ADC")
     parser.add_argument("--description-fallback", action="store_true", help="优先使用官方 YouTube 描述作为正文证据")
+    parser.add_argument("--description-only", action="store_true", help="只处理官方描述达标的条目，不请求字幕或音频")
     parser.add_argument("--audio-timeout", type=int, default=120)
     parser.add_argument("--audio-cache-dir", type=Path, default=DEFAULT_AUDIO_CACHE)
     parser.add_argument("--vertex-model", default=os.environ.get("VERTEX_MODEL", DEFAULT_VERTEX_MODEL))

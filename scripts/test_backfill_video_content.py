@@ -15,6 +15,7 @@ from scripts.backfill_video_content import (
     fetch_transcript,
     parse_model_payload,
     parse_vertex_response,
+    select_candidates,
     validate_description_text,
 )
 
@@ -144,6 +145,21 @@ The next point
         self.assertEqual(result["payload"], {"ok": True})
         self.assertEqual(seen["contents"][0]["parts"][0]["inlineData"]["mimeType"], "audio/mpeg")
         self.assertEqual(seen["generationConfig"]["thinkingConfig"]["thinkingBudget"], 0)
+
+    def test_description_only_selection_does_not_include_other_items(self):
+        resources = [
+            {"id": "description-item", "sourceId": "game-makers-toolkit"},
+            {"id": "other-item", "sourceId": "game-makers-toolkit"},
+        ]
+        selected = select_candidates(
+            resources,
+            {"items": {}},
+            limit=None,
+            retryable=False,
+            description_ids={"description-item"},
+            description_only=True,
+        )
+        self.assertEqual([item["id"] for item in selected], ["description-item"])
 
     def test_rejects_unknown_ids_and_short_summary(self):
         with self.assertRaises(ModelOutputError):

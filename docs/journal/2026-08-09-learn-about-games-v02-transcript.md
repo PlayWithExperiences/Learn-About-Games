@@ -610,3 +610,13 @@ ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用�
 原始对话：dialogues/2026-0822.md「1452 YouTube 元数据校验与音频路线」
 
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
+
+## 1639 描述批量回写与失败留痕修正（partial export）
+
+记录说明：以下是本轮后续执行的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文、音频文件或环境变量。
+
+本轮在已完成 5、20、50 条描述批次后继续完成 100 条描述批次。100 条中 99 条成功、1 条模型输出失败；审查发现失败状态的 `inputMode` 因模式在模型调用后才赋值而错误显示为 `transcript`。代码已把 description/audio 模式提前到调用前，并单独重试该条成功。当前外部状态为 227 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,037 条；其中 176 条为 `inputMode=description`，model failure 为 0。
+
+回填器新增 `--description-only`，涓流每 4 小时先处理最多 20 条官方描述，描述队列为空时才退回单条字幕／音频路线。描述路线不发起新的 YouTube 请求；所有模型结果仍经过摘要长度、主题／能力 ID 白名单、`pending_write` 和原子回写。回填与元数据 Python 合同测试 20/20，shell 语法与 `git diff --check` 通过；全量内容补全仍未完成。
+
+原始对话：dialogues/2026-0822.md「1639 描述批量回写与失败留痕修正」

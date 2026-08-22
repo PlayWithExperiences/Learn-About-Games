@@ -60,10 +60,28 @@
 
 原始对话：dialogues/2026-0822.md「1314 合并后 Playwright 归因」
 
-## 0133 完成资源补全与YouTube内容闭环
+## 1606 主观感受靶子清单三层调研
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0286c-4cce-76a3-b4d9-bfa44a19af4c
+
+按任务要求完成公开语料调研与文档化。在docs/research/subjective-feelings-corpus/下新增7个文件：README说明方法、检索边界（YouTube字幕后端不可用、小黑盒站点限定查询零结果）及能力限制；A层从Steam/TapTap/Reddit/B站评论区抓取玩家原话，区分感受词与品质词，并在复核时纠正了将创作者语料混入玩家层的错误；B层从GDC/设计博客/B站/知乎/X抓取设计者行话，重点标注了中英不对称（枪感/打击感/操控感等中文压缩词在英文中被拆分）；C层补齐PLEX/Quantic Foundry/GEQ/PXI/BrainHex/Lazzaro/GameFlow/Game Feel/cozy games/awe等学界框架的类目清单、测量目标与出处。crosswalk.md以無涘基线与Claude补充共28个词形建对表，逐行标注三层有无及同名同物判定，表后三段结论分别列举了语料低保有词、高频但未选词、三层共现词。same-name-different-thing.md基于语料证据判定掌控感、真实感、博弈感应拆分为子类。existing-wheels.md将PLEX 22类、Quantic Foundry 12动机等框架与清单逐条映射，结论为EGDS的差异化在于品类特异中文工艺词与向下扩展客观原因/设计杠杆的路径，而非重新发明体验分类。所有未能取到的来源均已标注失败/受限/不存在的原因。验收确认7文件非空、对表全覆盖、结论条目达标，git变更仅限目标目录。
+
+原始对话：dialogues/2026-0822.md
+
+## 0133 v02资源审计与三条回填路线推进
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
 
-会话基于v02分支已有的5437条资源和84个Atlas节点，按扩展目标审计创新地图，确认FPS、RPG、RTS、开放世界4条完整证据路线，修复README等文档的统计漂移，并通过独立环境全量测试（262 passed, 0 failed）。随后打通YouTube官方API元数据同步，实现基于yt-dlp的字幕获取、VTT清洗和模型摘要生成，建立“下载→分析→pending_write→原子写入”的完整回写闭环；再启用用户项目的 Agent/Vertex API，接入 ADC 音频 fallback，成功将一条字幕不可分析的视频通过“下载音频→Gemini→校验→回写”写入资源目录。当前为51 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余2213条；239条有字幕标记未完成，2021条尚未完成音频或其他正文路线。产出包括官方同步脚本、契约测试、VTT与音频入口、Vertex 响应校验和低频涓流副本，并更新了进度快照、路线记录与时间估算。下一步为在现有24小时冷却后继续逐条运行、累计一小批音频样本并做最终内容对账。
+会话在 Learn-About-Games 的 v02 worktree 推进。确认 main 仅 128 条资源，v02 已有 5,437 条资源、84 节点、86 关系，超过 1,000 条基线；路线审计得到 FPS、RPG、RTS、开放世界 4 条完整创新路线，资源 canonical URL 唯一。修复 README 与 Source 统计漂移后，独立 clone 类型检查 0 错误、单测 204/204、构建 151 页，端到端 262 通过、0 失败。视频资源全量目标 2,311 条，已完成 226 条。原字幕/YouTube 通道受 IP 冷却限制，启用 Vertex/Gemini 后打通无字幕音频回填（提交 20b4f48），随后利用已缓存官方描述作为独立输入批量处理，避免触发 YouTube 冷却（提交 5edcf02）。风险包括：YouTube 冷却、模型输出失败、音频路线仅 1 条生产样本不能外推、OAuth 刷新 7 天限制、嵌套 worktree 的 Astro 假失败需独立 clone 验证。下一步改用 description-only 涓流批量模式，描述队列空后再走单条字幕/音频并遵守 24 小时冷却，不把通道打通误报为全量完成。
 
 原始对话：dialogues/2026-0822.md
+
+## 1639 描述批量回写与失败留痕修正
+
+决策：無涘 ｜ 记录：AI（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+描述路线继续推进后，外部状态为 227 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure，剩余 2,037 条；176 条 completed 明确标记为 `inputMode=description`，另有 1 条字幕和 1 条音频生产回写。100 条描述批次中 1 条模型输出失败，审查发现失败记录的模式因赋值时机错误显示为 transcript；已将模式在模型调用前写入并成功重试，当前 model failure 为 0。
+
+回填合同测试为 20/20，新增 `--description-only` 选择器与涓流分层：每 4 小时优先消化最多 20 条官方描述，描述队列为空才退回单条字幕／音频路线，不提高 YouTube 请求速率。描述、字幕和音频仍分别计量，原始内容与凭据留在仓库外；全量 2,311 条尚未完成，不能用描述覆盖率代替最终对账。
+
+原始对话：dialogues/2026-0822.md「1639 描述批量回写与失败留痕修正」

@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# 低频涓流：每次只补 1 条视频内容，绝不批量。
+# 分层涓流：描述正文先批量补，触碰 YouTube 的字幕/音频路线仍每次只补 1 条。
 #
 # 为什么是这个形状（2026-08-21 無涘 拍板：宁可慢，不许冒封 IP 的风险）：
 #   Codex 一次性连发跑到第 95 条时被 YouTube 封 IP（41 次 IpBlocked）。
 #   出口是机场/数据中心 IP（AS134972 东京），正是 youtube-transcript-api 文档
 #   点名的第二类成因，阈值本就远低于住宅 IP。
 #   所以策略是「远低于观测到的失败点」+「一撞就长退避」：
-#     · 每次运行只取 1 条，脚本内不会有连续请求
-#     · launchd 每 4 小时触发一次 → 约 6 条/天
+#     · 描述路线每次最多取 20 条，不发 YouTube 请求
+#     · 描述路线没有可处理候选时，才退回 YouTube 路线且每次只取 1 条
+#     · launchd 每 4 小时触发一次；描述批次可达 120 条/天，YouTube fallback 仍约 6 条/天
 #     · 报告里出现任何通道类失败，立刻写 24 小时冷却，期间所有运行直接跳过
 #
 #   诚实说明：没有公开的「绝对安全速率」。这里能做的是把速率压到观测失败点的
@@ -56,7 +57,7 @@ fi
 cd "$REPO" || { log "ABORT	进不去 $REPO"; exit 1; }
 
 # ── 优先级：先补 GMTK 与樱井（Daily 素材线），耗尽后自动放开到全量目标 ──
-ARGS=(--limit 1 --description-fallback --audio-fallback)
+ARGS=(--limit 20 --description-fallback --description-only)
 if [ -s "$PRIORITY_IDS" ]; then
   priority_remaining="$("$PY" - "$PRIORITY_IDS" "$REPO/src/data/resources.json" "$CACHE/state.json" <<'PY'
 import json
@@ -100,9 +101,31 @@ try:
 except Exception:
     print(-1)" 2>/dev/null; }
 
+count_processed() { "$PY" -c "
+import json,pathlib
+try:
+    d=json.loads((pathlib.Path.home()/'.cache/lag-video-content/report.json').read_text())
+    print(d.get('processedThisRun', -1))
+except Exception:
+    print(-1)" 2>/dev/null; }
+
+run_backfill() {
+  out="$("$PY" scripts/backfill_video_content.py "$@" 2>&1)"
+  rc=$?
+}
+
 cf_before="$(count_cf)"
-out="$("$PY" scripts/backfill_video_content.py "${ARGS[@]}" 2>&1)"
-rc=$?
+run_backfill "${ARGS[@]}"
+if [ "$rc" -eq 0 ]; then
+  processed="$(count_processed)"
+  if [ "$processed" = "0" ]; then
+    log "INFO	描述队列本轮无候选，退回单条字幕/音频路线"
+    run_backfill --limit 1 --description-fallback --audio-fallback
+  elif [ "$processed" = "-1" ]; then
+    log "WARN	无法读取描述批次报告，不自动退回 YouTube 路线"
+  fi
+fi
+
 cf_after="$(count_cf)"
 [ "$rc" -ne 0 ] && log "ERROR	脚本退出码 $rc: $(printf '%s' "$out" | tail -1 | cut -c1-160)"
 
