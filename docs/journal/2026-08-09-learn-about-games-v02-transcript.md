@@ -620,3 +620,13 @@ ADC 文本探针第一次返回 `aiplatform.googleapis.com` 未启用；在用�
 回填器新增 `--description-only`，涓流每 4 小时先处理最多 20 条官方描述，描述队列为空时才退回单条字幕／音频路线。描述路线不发起新的 YouTube 请求；所有模型结果仍经过摘要长度、主题／能力 ID 白名单、`pending_write` 和原子回写。回填与元数据 Python 合同测试 20/20，shell 语法与 `git diff --check` 通过；全量内容补全仍未完成。
 
 原始对话：dialogues/2026-0822.md「1639 描述批量回写与失败留痕修正」
+
+## 1711 描述第二轮百条回写（partial export）
+
+记录说明：以下是本轮后续执行的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、ADC token、字幕全文、音频文件或环境变量。
+
+第二轮 `description-only` 批次完整处理 100/100 条，未请求字幕、未下载音频，也没有触碰 YouTube 冷却。进程结束后重新读取 state、report 与 `src/data/resources.json`，三者一致：327 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure、model failure 0，剩余 1,937 条；其中 276 条明确记录为 `inputMode=description`。
+
+本轮约 26.5 分钟，慢于前一批约 20 分钟；个别模型输出未通过摘要校验时进入既有修复／fallback。失败仍逐条留痕，没有把模型未调用、输出无效或暂时未处理的条目写成成功。
+
+原始对话：dialogues/2026-0822.md「1711 描述第二轮百条回写」
