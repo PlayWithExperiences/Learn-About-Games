@@ -10,13 +10,16 @@
     "evidenceIds": ["wichman-rogue-history"]
   },
   {
-    "id": "roguelike-run-structure",
+    "id": "procedural-run-structure",
     "kind": "innovation",
-    "name": { "zh-CN": "Roguelike run-based 单局结构", "en": "Roguelike run-based structure" },
+    "name": { "zh-CN": "程序生成与单局结构", "en": "Procedural run structure" },
     "summary": { "zh-CN": "把程序生成、单局失败与重新开始视为可跨类型转译的设计概念，而不是某一款游戏。" },
     "startYear": 1980,
     "lane": 0,
-    "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "tags": ["innovation-event", "roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
+    "eventRole": "definition",
+    "themeIds": ["roguelike"],
+    "mechanism": { "zh-CN": "把程序生成、单局失败与重新开始组织成可重复的运行结构。" },
     "evidenceIds": ["wichman-rogue-history"]
   },
   {
@@ -270,5 +273,578 @@
     "lane": 3,
     "tags": ["roguelike-lens", "run-based-structure", "real-time-action", "narrative-continuity"],
     "evidenceIds": ["gamedeveloper-kasavin-interview", "supergiant-hades-faq"]
-  }
+  },
+  { "id": "tennis-for-two", "kind": "experimental-apparatus", "name": { "zh-CN": "Tennis for Two", "en": "Tennis for Two" }, "summary": { "zh-CN": "1958 年 Brookhaven 为访客日制作的示波器互动装置；这里不建立它到 Pong 的因果边。" }, "startYear": 1958, "lane": 0, "tags": ["early-electronic-games-lens"], "evidenceIds": ["bnl-tennis-for-two"] },
+  { "id": "spacewar", "kind": "experimental-program", "name": { "zh-CN": "Spacewar!", "en": "Spacewar!" }, "summary": { "zh-CN": "1962 年 MIT PDP-1 程序，后来被分别改作投币系统。" }, "startYear": 1962, "lane": 1, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-spacewar"] },
+  { "id": "brown-box", "kind": "system-prototype", "name": { "zh-CN": "Brown Box / TV Game Unit #7", "en": "Brown Box / TV Game Unit #7" }, "summary": { "zh-CN": "Ralph Baer 团队的电视游戏系统原型，是 Magnavox Odyssey 产品链的一部分。" }, "startYear": 1968, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-brown-box"] },
+  { "id": "galaxy-game", "kind": "commercial-hardware", "name": { "zh-CN": "Galaxy Game", "en": "Galaxy Game" }, "summary": { "zh-CN": "1971 年在 Stanford 运行的投币式 Spacewar! 改作。" }, "startYear": 1971, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["stanford-galaxy-game"] },
+  { "id": "computer-space", "kind": "commercial-hardware", "name": { "zh-CN": "Computer Space", "en": "Computer Space" }, "summary": { "zh-CN": "1971 年面向商业街机环境的 Spacewar! 改作。" }, "startYear": 1971, "lane": 3, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-computer-space"] },
+  { "id": "magnavox-odyssey", "kind": "commercial-hardware", "name": { "zh-CN": "Magnavox Odyssey", "en": "Magnavox Odyssey" }, "summary": { "zh-CN": "1972 年商业化的家庭电视游戏硬件，源自 Baer 团队原型链。" }, "startYear": 1972, "lane": 4, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-odyssey"] },
+  { "id": "odyssey-table-tennis", "kind": "game", "name": { "zh-CN": "Odyssey Table Tennis", "en": "Odyssey Table Tennis" }, "summary": { "zh-CN": "Magnavox Odyssey 的桌上网球游戏；Alcorn 口述史把其演示置于 Pong 项目之前。" }, "startYear": 1972, "lane": 5, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-odyssey", "alcorn-oral-history"] },
+  { "id": "pong", "kind": "game", "name": { "zh-CN": "Pong", "en": "Pong" }, "summary": { "zh-CN": "1972 年由 Al Alcorn 制作的投币式网球游戏原型；本图不称它为第一款电子游戏。" }, "startYear": 1972, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-pong-prototype", "alcorn-oral-history"] },
+  { "id": "home-pong", "kind": "commercial-hardware", "name": { "zh-CN": "Home Pong", "en": "Home Pong" }, "summary": { "zh-CN": "1975 年面向家庭市场的 Pong 专用硬件版本。" }, "startYear": 1975, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-home-pong"] },
+  {
+    "id": "space-panic",
+    "kind": "game",
+    "name": { "zh-CN": "Space Panic", "en": "Space Panic" },
+    "summary": { "zh-CN": "1980 年 Universal 街机，以梯子连接多层平台，并通过挖洞困住敌人；本轮不建立它到 Donkey Kong 的直接影响边。" },
+    "startYear": 1980,
+    "lane": 6,
+    "tags": ["platform-jumping-lens", "fixed-screen-climbing"],
+    "evidenceIds": ["museum-of-game-space-panic"]
+  },
+  {
+    "id": "donkey-kong",
+    "kind": "game",
+    "name": { "zh-CN": "Donkey Kong", "en": "Donkey Kong" },
+    "summary": { "zh-CN": "1981 年 Nintendo 街机，以跳跃、梯子、斜坡与多场景组织救援故事。" },
+    "startYear": 1981,
+    "lane": 5,
+    "tags": ["platform-jumping-lens", "fixed-screen-climbing", "jump-action"],
+    "evidenceIds": ["strong-donkey-kong", "nintendo-original-super-mario-developers"]
+  },
+  {
+    "id": "mario-bros",
+    "kind": "game",
+    "name": { "zh-CN": "Mario Bros.", "en": "Mario Bros." },
+    "summary": { "zh-CN": "1983 年 Nintendo 街机，以固定画面平台、敌人移动与 POW Block 组织双人动作。" },
+    "startYear": 1983,
+    "lane": 6,
+    "tags": ["platform-jumping-lens", "fixed-screen-climbing", "jump-action"],
+    "evidenceIds": ["nintendo-original-super-mario-developers"]
+  },
+  {
+    "id": "super-mario-bros",
+    "kind": "game",
+    "name": { "zh-CN": "Super Mario Bros.", "en": "Super Mario Bros." },
+    "summary": { "zh-CN": "1985 年 Nintendo 横向卷轴平台游戏，开发者回顾明确说明它综合了此前多款作品的设计元素。" },
+    "startYear": 1985,
+    "lane": 8,
+    "tags": ["platform-jumping-lens", "jump-action", "side-scrolling-platform"],
+    "evidenceIds": ["nintendo-original-super-mario-developers"]
+  },
+  {
+    "id": "sonic-the-hedgehog",
+    "kind": "game",
+    "name": { "zh-CN": "Sonic the Hedgehog", "en": "Sonic the Hedgehog" },
+    "summary": { "zh-CN": "1991 年 Sega 平台游戏，以速度、坡面、弹簧与环形轨道组织移动，并被博物馆置于与 Mario 竞争的开发语境。" },
+    "startYear": 1991,
+    "lane": 6,
+    "tags": ["platform-jumping-lens", "side-scrolling-platform", "speed-platform"],
+    "evidenceIds": ["strong-sonic-the-hedgehog"]
+  },
+  {
+    "id": "celeste",
+    "kind": "game",
+    "name": { "zh-CN": "Celeste", "en": "Celeste" },
+    "summary": { "zh-CN": "2018 年手工制作的紧凑平台游戏，以攀登 Celeste Mountain 的精确移动挑战承载 Madeline 的旅程。" },
+    "startYear": 2018,
+    "lane": 5,
+    "tags": ["platform-jumping-lens", "jump-action", "precision-platform", "indie"],
+    "evidenceIds": ["celeste-official-site", "nintendo-celeste-release"]
+  },
+  {
+    "id": "colossal-cave-adventure",
+    "kind": "game",
+    "name": { "zh-CN": "Colossal Cave Adventure", "en": "Colossal Cave Adventure" },
+    "summary": { "zh-CN": "1976 年由 Will Crowther 完成并由 Don Woods 扩展的文本冒险，以文字命令构建洞穴探索与解谜。" },
+    "startYear": 1976,
+    "lane": 2,
+    "tags": ["parser-graphical-adventure-lens", "text-parser"],
+    "evidenceIds": ["strong-colossal-cave-adventure"]
+  },
+  {
+    "id": "zork",
+    "kind": "game",
+    "name": { "zh-CN": "Zork", "en": "Zork" },
+    "summary": { "zh-CN": "1977 年由 MIT 团队为 PDP-10 制作的文本冒险；成员后来成立 Infocom，并为家用电脑重新制作。" },
+    "startYear": 1977,
+    "lane": 3,
+    "tags": ["parser-graphical-adventure-lens", "text-parser"],
+    "evidenceIds": ["strong-colossal-cave-adventure", "acmi-zork"]
+  },
+  {
+    "id": "mystery-house",
+    "kind": "game",
+    "name": { "zh-CN": "Mystery House", "en": "Mystery House" },
+    "summary": { "zh-CN": "1980 年 On-Line Systems 的 Apple II 冒险，由 Roberta Williams 的叙事与 Ken Williams 的编程协作完成，并结合文字与图形。" },
+    "startYear": 1980,
+    "lane": 4,
+    "tags": ["parser-graphical-adventure-lens", "text-parser", "graphical-adventure"],
+    "evidenceIds": ["strong-colossal-cave-adventure", "strong-sierra-collection"]
+  },
+  {
+    "id": "kings-quest",
+    "kind": "game",
+    "name": { "zh-CN": "King's Quest", "en": "King's Quest" },
+    "summary": { "zh-CN": "1984 年为 IBM PCjr 推出的图形冒险，在文本解析器之外让玩家角色在伪三维场景中移动。" },
+    "startYear": 1984,
+    "lane": 5,
+    "tags": ["parser-graphical-adventure-lens", "text-parser", "graphical-adventure"],
+    "evidenceIds": ["strong-kings-quest", "gamedeveloper-maniac-mansion-gdc"]
+  },
+  {
+    "id": "maniac-mansion",
+    "kind": "game",
+    "name": { "zh-CN": "Maniac Mansion", "en": "Maniac Mansion" },
+    "summary": { "zh-CN": "1987 年 Lucasfilm Games 图形冒险，以屏幕上的动词和指针替代自由文本解析，并促成 SCUMM。" },
+    "startYear": 1987,
+    "lane": 7,
+    "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click", "scumm-lineage"],
+    "evidenceIds": ["gamedeveloper-maniac-mansion-gdc", "lucasfilm-scumm-history"]
+  },
+  {
+    "id": "secret-of-monkey-island",
+    "kind": "game",
+    "name": { "zh-CN": "The Secret of Monkey Island", "en": "The Secret of Monkey Island" },
+    "summary": { "zh-CN": "1990 年 Lucasfilm Games 图形冒险，使用从 Maniac Mansion 起持续修订的 SCUMM 系统。" },
+    "startYear": 1990,
+    "lane": 2,
+    "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click", "scumm-lineage"],
+    "evidenceIds": ["lucasfilm-scumm-history"]
+  },
+  {
+    "id": "maze-war", "kind": "game",
+    "name": { "zh-CN": "Maze War", "en": "Maze War" },
+    "summary": { "zh-CN": "1973 年的第一人称三维迷宫与网络游玩实验；作为早期语境节点，不据年代推断它直接影响后来的 FPS。" },
+    "startYear": 1973, "lane": 7,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["acmi-maze-war"]
+  },
+  {
+    "id": "catacomb-3d", "kind": "game",
+    "name": { "zh-CN": "Catacomb 3-D", "en": "Catacomb 3-D" },
+    "summary": { "zh-CN": "id Software 在 Wolfenstein 3D 之前发布的纹理映射第一人称射击作品。" },
+    "startYear": 1991, "lane": 7,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-wolfenstein-postmortem"]
+  },
+  {
+    "id": "wolfenstein-3d", "kind": "game",
+    "name": { "zh-CN": "Wolfenstein 3D", "en": "Wolfenstein 3D" },
+    "summary": { "zh-CN": "John Romero 的 GDC 回顾将其置于 Catacomb 3-D 之后的七个月开发过程。" },
+    "startYear": 1992, "lane": 8,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-wolfenstein-postmortem"]
+  },
+  {
+    "id": "doom", "kind": "game",
+    "name": { "zh-CN": "DOOM", "en": "DOOM" },
+    "summary": { "zh-CN": "id Software 在 Wolfenstein 3D 经验之后重新构建引擎与设计目标的作品。" },
+    "startYear": 1993, "lane": 3,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-doom-postmortem"]
+  },
+  {
+    "id": "quake", "kind": "game",
+    "name": { "zh-CN": "Quake", "en": "Quake" },
+    "summary": { "zh-CN": "John Romero 的 GDC 回顾把 Quake 放在 DOOM 与 DOOM II 后的 id Software 开发历程中。" },
+    "startYear": 1996, "lane": 5,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-quake-postmortem"]
+  },
+  {
+    "id": "half-life", "kind": "game",
+    "name": { "zh-CN": "Half-Life", "en": "Half-Life" },
+    "summary": { "zh-CN": "Valve 开发者回顾称最初目标本质上是精致的 Quake Total Conversion，随后推倒重做。" },
+    "startYear": 1998, "lane": 0,
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["valve-cabal-half-life"]
+  },
+  {
+    "id": "dune-ii", "kind": "game",
+    "name": { "zh-CN": "Dune II: The Building of a Dynasty", "en": "Dune II: The Building of a Dynasty" },
+    "summary": { "zh-CN": "1992 年的 RTS 作品；ACMI 记录其资源、建造、单位与阵营结构，但这里不主张无争议的绝对第一。" },
+    "startYear": 1992, "lane": 9,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["acmi-dune-ii"]
+  },
+  {
+    "id": "warcraft-orcs-humans", "kind": "game",
+    "name": { "zh-CN": "Warcraft: Orcs & Humans", "en": "Warcraft: Orcs & Humans" },
+    "summary": { "zh-CN": "Patrick Wyatt 的开发回顾明确记录 Warcraft 原型受到 Dune II 启发。" },
+    "startYear": 1994, "lane": 4,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["patrick-wyatt-making-warcraft"]
+  },
+  {
+    "id": "warcraft-ii", "kind": "game",
+    "name": { "zh-CN": "Warcraft II: Tides of Darkness", "en": "Warcraft II: Tides of Darkness" },
+    "summary": { "zh-CN": "Blizzard 在 StarCraft 回顾中将 Warcraft II 列为此前的 RTS 开发基础与早期引擎来源。" },
+    "startYear": 1995, "lane": 6,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20"]
+  },
+  {
+    "id": "starcraft", "kind": "game",
+    "name": { "zh-CN": "StarCraft", "en": "StarCraft" },
+    "summary": { "zh-CN": "Blizzard 回顾称早期版本使用 Warcraft II 引擎换皮，反响不佳后重写引擎并提高目标。" },
+    "startYear": 1998, "lane": 6,
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20"]
+  },
+  {
+    "id": "first-person-shooter-perspective",
+    "kind": "innovation",
+    "name": { "zh-CN": "第一人称射击视角", "en": "First-person shooter perspective" },
+    "summary": { "zh-CN": "把第一人称空间、连续移动与武器瞄准组合成可持续扩展的射击体验；这里记录设计事件，不宣称唯一发明者。" },
+    "startYear": 1991,
+    "lane": 0,
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "eventRole": "definition",
+    "themeIds": ["first-person-shooter-lineage"],
+    "mechanism": { "zh-CN": "把第一人称空间、连续移动与武器瞄准组织成可持续扩展的射击结构。" },
+    "evidenceIds": ["gdc-wolfenstein-postmortem", "gdc-doom-postmortem"]
+  },
+  {
+    "id": "lock-on-targeting-combat",
+    "kind": "innovation",
+    "name": { "zh-CN": "锁定目标的空间战斗", "en": "Lock-on targeting for spatial combat" },
+    "summary": { "zh-CN": "用目标锁定与镜头协同把一对多的空间战斗变得可读；Nintendo 的开发者回顾把它放在 Ocarina of Time 的设计问题中。" },
+    "startYear": 1998,
+    "lane": 0,
+    "tags": ["innovation-event", "zelda-lineage", "action-adventure"],
+    "eventRole": "mechanism",
+    "themeIds": ["platform-lineage"],
+    "mechanism": { "zh-CN": "用目标锁定与镜头协同，把一对多空间战斗转化为可读的交互机制。" },
+    "evidenceIds": ["nintendo-ocarina-z-targeting"]
+  },
+  {
+    "id": "fps-vertical-space-combat",
+    "kind": "innovation",
+    "name": { "zh-CN": "垂直空间与武器反馈", "en": "Vertical space and weapon feedback" },
+    "summary": { "zh-CN": "把高度差、武器反馈与更复杂的空间压迫组合成第一人称射击的后续设计事件；不把单一作品写成绝对起点。" },
+    "startYear": 1993,
+    "lane": 1,
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "eventRole": "mechanism",
+    "themeIds": ["first-person-shooter-lineage"],
+    "mechanism": { "zh-CN": "以高度差、速度与武器反馈扩展第一人称空间的可读性和压迫感。" },
+    "evidenceIds": ["gdc-doom-postmortem"]
+  },
+  {
+    "id": "fps-networked-combat-space",
+    "kind": "innovation",
+    "name": { "zh-CN": "网络化战斗空间与沉浸叙事", "en": "Networked combat space and situated narrative" },
+    "summary": { "zh-CN": "记录第一人称射击从纯竞技空间向网络化、可探索且承载叙事的场景转译；关系只表达有来源支持的响应。" },
+    "startYear": 1998,
+    "lane": 2,
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "eventRole": "transformation",
+    "themeIds": ["first-person-shooter-lineage"],
+    "mechanism": { "zh-CN": "将网络化对战、可探索场景与情境叙事编织到同一第一人称空间中。" },
+    "evidenceIds": ["gdc-quake-postmortem", "valve-cabal-half-life"]
+  },
+  {
+    "id": "rpg-character-progression",
+    "kind": "innovation",
+    "name": { "zh-CN": "角色成长与持续进展", "en": "Character progression and persistent growth" },
+    "summary": { "zh-CN": "把经验、等级、能力或装备的累积作为跨场景的持续反馈；它是 RPG 设计事件，不等于某个单一作品的发明。" },
+    "startYear": 1974,
+    "lane": 0,
+    "tags": ["innovation-event", "rpg-progression", "action-rpg"],
+    "eventRole": "mechanism",
+    "themeIds": ["roguelike"],
+    "mechanism": { "zh-CN": "把经验、等级、能力或装备的累积变成跨场景的持续反馈。" },
+    "evidenceIds": ["gamedeveloper-dd-rpg-history", "gamedeveloper-fundamentals-progression"]
+  },
+  {
+    "id": "open-world-nonlinear-exploration",
+    "kind": "innovation",
+    "name": { "zh-CN": "开放世界与非线性探索", "en": "Open-world nonlinear exploration" },
+    "summary": { "zh-CN": "让玩家在大尺度空间中自行决定路线、顺序与目标；Nintendo 对 Breath of the Wild 的幕后回顾将其称为 open-air 方向。" },
+    "startYear": 2017,
+    "lane": 0,
+    "tags": ["innovation-event", "nonlinear-world", "zelda-lineage"],
+    "eventRole": "transformation",
+    "themeIds": ["metroidvania"],
+    "mechanism": { "zh-CN": "让玩家在大尺度空间中自行决定路线、顺序与目标，并以系统交互维持探索动力。" },
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+  },
+  {
+    "id": "ocarina-of-time",
+    "kind": "game",
+    "name": { "zh-CN": "The Legend of Zelda: Ocarina of Time", "en": "The Legend of Zelda: Ocarina of Time" },
+    "summary": { "zh-CN": "Nintendo 开发者回顾中的 3D Zelda 作品；锁定目标的空间战斗事件在此成为可观察的承载作品。" },
+    "startYear": 1998,
+    "lane": 9,
+    "tags": ["zelda-lineage", "action-adventure", "innovation-event"],
+    "evidenceIds": ["nintendo-ocarina-z-targeting"]
+  },
+  {
+    "id": "breath-of-the-wild",
+    "kind": "game",
+    "name": { "zh-CN": "The Legend of Zelda: Breath of the Wild", "en": "The Legend of Zelda: Breath of the Wild" },
+    "summary": { "zh-CN": "Nintendo 幕后回顾中的 open-air 作品；开放世界与非线性探索事件在此成为可观察的承载作品。" },
+    "startYear": 2017,
+    "lane": 8,
+    "tags": ["zelda-lineage", "nonlinear-world", "innovation-event"],
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+  },
+  {
+    "id": "rts-resource-and-base-production",
+  "kind": "innovation",
+  "name": {
+    "zh-CN": "资源、基地与实时生产",
+    "en": "Resources, bases, and real-time production"
+  },
+  "summary": {
+    "zh-CN": "把资源采集、基地建设与持续生产组织成可观察的实时战略机制组合，而不是某一部作品的专利。"
+  },
+  "startYear": 1992,
+    "lane": 3,
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "eventRole": "definition",
+  "themeIds": [
+    "real-time-strategy-lineage"
+  ],
+  "mechanism": {
+    "zh-CN": "在持续运行的时间轴上安排资源流、基地空间与生产队列。"
+  },
+  "evidenceIds": [
+    "acmi-dune-ii-rts-mechanics"
+  ]
+},
+  {
+    "id": "rts-direct-unit-control",
+  "kind": "innovation",
+  "name": {
+    "zh-CN": "实时单位控制与战场调度",
+    "en": "Real-time unit control and battlefield dispatch"
+  },
+  "summary": {
+    "zh-CN": "把直接下达单位指令、空间调度和即时反馈组织成可读的战场操作层。"
+  },
+  "startYear": 1994,
+    "lane": 4,
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "eventRole": "mechanism",
+  "themeIds": [
+    "real-time-strategy-lineage"
+  ],
+  "mechanism": {
+    "zh-CN": "让玩家在资源生产持续进行时直接选择、移动并调度多个单位。"
+  },
+  "evidenceIds": [
+    "patrick-wyatt-making-warcraft-control"
+  ]
+},
+  {
+    "id": "rts-asymmetric-faction-design",
+  "kind": "innovation",
+  "name": {
+    "zh-CN": "差异化阵营与对抗关系",
+    "en": "Asymmetric factions and counterplay"
+  },
+  "summary": {
+    "zh-CN": "将不同阵营的能力、限制与反制关系变成实时战略的核心表达。"
+  },
+  "startYear": 1998,
+    "lane": 5,
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "eventRole": "transformation",
+  "themeIds": [
+    "real-time-strategy-lineage"
+  ],
+  "mechanism": {
+    "zh-CN": "用阵营差异制造选择、反制与长期学习，而不是只换一套美术主题。"
+  },
+  "evidenceIds": [
+    "blizzard-starcraft-faction-design"
+  ]
+},
+{
+  "id": "fps-early-networked-space",
+  "kind": "innovation",
+  "name": { "zh-CN": "第一人称空间与网络视角", "en": "First-person networked space" },
+  "summary": { "zh-CN": "把可共享的第一人称空间与对手位置作为一种可持续扩展的设计问题。" },
+  "startYear": 1973,
+  "lane": 0,
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "eventRole": "definition",
+  "themeIds": ["first-person-shooter-lineage"],
+  "mechanism": { "zh-CN": "让玩家通过第一人称视角在共享空间中追踪对手与位置。" },
+  "evidenceIds": ["acmi-maze-war"]
+},
+{
+  "id": "fps-texture-mapped-first-person",
+  "kind": "innovation",
+  "name": { "zh-CN": "纹理化第一人称空间", "en": "Texture-mapped first-person space" },
+  "summary": { "zh-CN": "将贴图、射线与连续空间结合，使第一人称场景从线框实验转为可辨认的空间。" },
+  "startYear": 1991,
+  "lane": 1,
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "eventRole": "mechanism",
+  "themeIds": ["first-person-shooter-lineage"],
+  "mechanism": { "zh-CN": "用纹理化墙面、连续视角和实时碰撞建立可读的第一人称空间。" },
+  "evidenceIds": ["gdc-wolfenstein-postmortem"]
+},
+{
+  "id": "fps-fast-run-and-gun",
+  "kind": "innovation",
+  "name": { "zh-CN": "高速移动与射击循环", "en": "Fast run-and-gun loop" },
+  "summary": { "zh-CN": "把速度、敌人密度与武器反馈组织成第一人称射击的连续行动循环。" },
+  "startYear": 1992,
+  "lane": 2,
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "eventRole": "transformation",
+  "themeIds": ["first-person-shooter-lineage"],
+  "mechanism": { "zh-CN": "让移动、瞄准、射击与路线选择在同一实时循环内互相反馈。" },
+  "evidenceIds": ["gdc-wolfenstein-postmortem"]
+},
+{
+  "id": "fps-open-modding-and-deathmatch",
+  "kind": "innovation",
+  "name": { "zh-CN": "开放改造与死亡竞赛", "en": "Open modding and deathmatch" },
+  "summary": { "zh-CN": "把多人对抗、关卡改造和玩家社群扩展为第一人称射击的传播机制。" },
+  "startYear": 1993,
+  "lane": 3,
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "eventRole": "diffusion",
+  "themeIds": ["first-person-shooter-lineage"],
+  "mechanism": { "zh-CN": "用网络对战、可改造内容与可复制的工具链把作品变成平台。" },
+  "evidenceIds": ["gdc-doom-postmortem"]
+},
+{
+  "id": "rpg-party-and-quest-identity",
+  "kind": "innovation",
+  "name": { "zh-CN": "队伍身份与任务结构", "en": "Party identity and quest structure" },
+  "summary": { "zh-CN": "将角色身份、队伍分工与任务推进组合成可持续的角色扮演体验。" },
+  "startYear": 1979,
+  "lane": 2,
+  "tags": ["innovation-event", "role-playing-lineage", "rpg-progression"],
+  "eventRole": "mechanism",
+  "themeIds": ["role-playing-lineage"],
+  "mechanism": { "zh-CN": "以角色身份、队伍互补与任务选择承载长期成长。" },
+  "evidenceIds": ["gamedeveloper-dd-rpg-history"]
+},
+{
+  "id": "rpg-procedural-character-risk",
+  "kind": "innovation",
+  "name": { "zh-CN": "程序生成的角色风险", "en": "Procedural character risk" },
+  "summary": { "zh-CN": "把程序生成、单局死亡与角色损失结合，让每次运行都产生不同的角色风险。" },
+  "startYear": 1980,
+  "lane": 3,
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "procedural-generation"],
+  "eventRole": "transformation",
+  "themeIds": ["role-playing-lineage", "roguelike"],
+  "mechanism": { "zh-CN": "通过程序生成与永久死亡把角色成长转化为每局都不同的风险。" },
+  "evidenceIds": ["nethack-license-history", "umoria-history"]
+},
+{
+  "id": "rpg-real-time-action-progression",
+  "kind": "innovation",
+  "name": { "zh-CN": "实时动作与成长循环", "en": "Real-time action progression" },
+  "summary": { "zh-CN": "将角色扮演的成长结构转译为持续的实时动作、掉落与构筑选择。" },
+  "startYear": 1996,
+  "lane": 4,
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "real-time-action"],
+  "eventRole": "transformation",
+  "themeIds": ["role-playing-lineage", "roguelike"],
+  "mechanism": { "zh-CN": "在实时战斗中保持角色成长、随机掉落与构筑决策的连续反馈。" },
+  "evidenceIds": ["rpgfan-brevik-interview", "gamedeveloper-fundamentals-progression"]
+},
+{
+  "id": "rpg-cross-run-narrative-continuity",
+  "kind": "innovation",
+  "name": { "zh-CN": "跨单局叙事连续性", "en": "Cross-run narrative continuity" },
+  "summary": { "zh-CN": "让失败与重新开始不再抹除角色记忆，而成为持续叙事的一部分。" },
+  "startYear": 2020,
+  "lane": 5,
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "narrative-continuity"],
+  "eventRole": "transformation",
+  "themeIds": ["role-playing-lineage", "roguelike"],
+  "mechanism": { "zh-CN": "以跨单局记忆、关系变化与对话回馈保持失败后的叙事连续性。" },
+  "evidenceIds": ["supergiant-hades-faq", "gamedeveloper-kasavin-interview"]
+},
+{
+  "id": "rts-fog-of-war-map-control",
+  "kind": "innovation",
+  "name": { "zh-CN": "战争迷雾与地图控制", "en": "Fog of war and map control" },
+  "summary": { "zh-CN": "把信息不完整、侦察与空间控制变成实时战略的核心决策层。" },
+  "startYear": 1992,
+  "lane": 6,
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "eventRole": "mechanism",
+  "themeIds": ["real-time-strategy-lineage"],
+  "mechanism": { "zh-CN": "用可见范围、侦察成本与地图位置制造持续的信息决策。" },
+  "evidenceIds": ["acmi-dune-ii", "acmi-dune-ii-rts-mechanics"]
+},
+{
+  "id": "rts-worker-economy-feedback",
+  "kind": "innovation",
+  "name": { "zh-CN": "工人经济与生产反馈", "en": "Worker economy and production feedback" },
+  "summary": { "zh-CN": "把资源采集、基地生产与单位调度连接成实时战略的经济循环。" },
+  "startYear": 1994,
+  "lane": 7,
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "eventRole": "mechanism",
+  "themeIds": ["real-time-strategy-lineage"],
+  "mechanism": { "zh-CN": "让工人、资源、建筑与军队在同一实时反馈回路中互相制约。" },
+  "evidenceIds": ["patrick-wyatt-making-warcraft", "patrick-wyatt-making-warcraft-control"]
+},
+{
+  "id": "rts-global-faction-counterplay",
+  "kind": "innovation",
+  "name": { "zh-CN": "全球阵营反制", "en": "Global faction counterplay" },
+  "summary": { "zh-CN": "把多个阵营的能力差异、限制与反制关系提升为长期学习结构。" },
+  "startYear": 1998,
+  "lane": 8,
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "eventRole": "transformation",
+  "themeIds": ["real-time-strategy-lineage"],
+  "mechanism": { "zh-CN": "用阵营差异与可学习的反制关系扩展实时战略的决策深度。" },
+  "evidenceIds": ["blizzard-starcraft-20", "blizzard-starcraft-faction-design"]
+},
+{
+  "id": "open-world-connected-expanse",
+  "kind": "innovation",
+  "name": { "zh-CN": "连接空间与自由路线", "en": "Connected expanse and free routes" },
+  "summary": { "zh-CN": "把连续空间、目标顺序与玩家自定路线组织为开放世界的设计问题。" },
+  "startYear": 1998,
+  "lane": 9,
+  "tags": ["innovation-event", "open-world-lineage", "zelda-lineage"],
+  "eventRole": "definition",
+  "themeIds": ["open-world-lineage"],
+  "mechanism": { "zh-CN": "通过连接区域、非线性目标与可回访空间让路线成为玩家选择。" },
+  "evidenceIds": ["nintendo-ocarina-z-targeting"]
+},
+{
+  "id": "open-world-systemic-rules",
+  "kind": "innovation",
+  "name": { "zh-CN": "系统规则驱动的开放世界", "en": "Systemic rules in an open world" },
+  "summary": { "zh-CN": "让天气、物理、材料与敌人行为在同一世界规则中相互作用。" },
+  "startYear": 2017,
+  "lane": 10,
+  "tags": ["innovation-event", "open-world-lineage"],
+  "eventRole": "mechanism",
+  "themeIds": ["open-world-lineage"],
+  "mechanism": { "zh-CN": "以一致的系统规则支持多种解法，而不是为每个任务单独写一条脚本。" },
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+},
+{
+  "id": "open-world-self-directed-goals",
+  "kind": "innovation",
+  "name": { "zh-CN": "自定目标与非线性探索", "en": "Self-directed goals and nonlinear exploration" },
+  "summary": { "zh-CN": "把玩家自己决定路线、顺序与目标作为开放世界的核心体验。" },
+  "startYear": 2017,
+  "lane": 11,
+  "tags": ["innovation-event", "open-world-lineage", "nonlinear-world"],
+  "eventRole": "transformation",
+  "themeIds": ["open-world-lineage"],
+  "mechanism": { "zh-CN": "让玩家在大尺度空间中自行决定先后顺序与行动目标。" },
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+},
+{
+  "id": "open-world-physics-and-climb",
+  "kind": "innovation",
+  "name": { "zh-CN": "物理规则与攀爬可达性", "en": "Physics rules and climbable reach" },
+  "summary": { "zh-CN": "将攀爬、滑翔、材料反应与物理规则结合，改变开放世界的可达性。" },
+  "startYear": 2017,
+  "lane": 12,
+  "tags": ["innovation-event", "open-world-lineage"],
+  "eventRole": "transformation",
+  "themeIds": ["open-world-lineage"],
+  "mechanism": { "zh-CN": "用统一的物理与地形规则扩展玩家可到达的路径和解题方式。" },
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+}
 ]

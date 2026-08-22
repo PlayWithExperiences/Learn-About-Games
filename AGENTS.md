@@ -8,16 +8,16 @@
 
 # Project entrypoint
 
-Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build. The user wants the repository and site to remain private until the core map, resource density, dark-theme emphasis, and Atlas exploration issues are resolved.
+Verified state: the repository `PlayWithExperiences/Learn-About-Games` is PRIVATE during product refinement. The previously public GitHub Pages site now returns 404, and workflow `.github/workflows/deploy.yml` is manually disabled; do not describe it as currently deployed or public. The local candidate through runtime `cc81bf8a1c7893df65a307c4bb2240401b87f881` merges Career Lenses into the EGDS map, groups Resources into expandable topic tables, and extends Atlas to 36 nodes / 30 relations / 49 Evidence with an explicit map mode; Atlas validation fix `209ae9c` follows. This candidate is not pushed or deployed. Do not restore Public, enable Pages or push automatically. v0.2 runtime HEAD `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` and Pages run `31282275108` remain historical evidence of the last verified public build.
 
 Before making substantive changes, read these files in order:
 
 1. [Latest decision summary](docs/journal/2026-08-09-learn-about-games-v02-decision-summary.md)
-2. [Current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
+2. [EGDS Expertise Map redesign](docs/superpowers/specs/2026-08-09-egds-expertise-map-design.md), its [implementation plan](docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md), [Private refinement design](docs/superpowers/specs/2026-08-09-private-refinement-design.md), [current v0.2 product design](docs/superpowers/specs/2026-08-09-learn-about-games-v02-design.md) and [visual system](DESIGN.md)
 3. [Public roadmap](ROADMAP.md) and [changelog](CHANGELOG.md)
 4. [Current conversation record](docs/journal/2026-08-09-learn-about-games-v02-transcript.md) only when exact v0.2 wording is needed; follow its link to the M0 record for older history
 
-Keep the decision summary and sanitized conversation record current at project milestones. Update the Roadmap when direction changes, the Changelog for every release, and `docs/devlog/` for material public decisions. Preserve the distinction between domains, knowledge topics, capabilities, practices, roles, production contexts, resource items, language versions, innovations, game artifacts, innovation relations and evidence.
+Keep the decision summary and sanitized conversation record current at project milestones. Update the Roadmap when direction changes, the Changelog for every release, and `docs/devlog/` for material public decisions. Preserve the distinction between EGDS framework nodes, knowledge topics, capabilities, practices, roles, production contexts, resource items, language versions, innovations, game artifacts, innovation relations and evidence. Do not restore the retired Domains / mapGroups ontology as a second map truth.
 
 Innovation Atlas remains a section inside Learn About Games, not a separate project, repository or product. v0.2 renders one global horizontal time network; Roguelike, Metroidvania and later topics are highlight lenses over the same network, not isolated subgraphs.
 

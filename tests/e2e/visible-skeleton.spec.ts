@@ -1,20 +1,30 @@
 import { expect, test } from '@playwright/test';
+import type { Catalog } from '../../src/lib/catalog/validate';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 import capabilityRelations from '../../src/data/capability-relations.json' with { type: 'json' };
-import domains from '../../src/data/domains.json' with { type: 'json' };
+import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json' with { type: 'json' };
 import knowledgeTopics from '../../src/data/knowledge-topics.json' with { type: 'json' };
+import atlasEvidence from '../../src/data/atlas-evidence.json' with { type: 'json' };
+import atlasGenreFamilies from '../../src/data/atlas-genre-families.json' with { type: 'json' };
+import atlasNodes from '../../src/data/atlas-nodes.json' with { type: 'json' };
+import atlasRelations from '../../src/data/atlas-relations.json' with { type: 'json' };
+import rawResources from '../../src/data/resources.json' with { type: 'json' };
+import resourceTopics from '../../src/data/resource-topics.json' with { type: 'json' };
+import sources from '../../src/data/sources.json' with { type: 'json' };
 
-test('focuses desktop navigation on exactly five Chinese user tasks', async ({ page }, testInfo) => {
+const resources = rawResources as Catalog['resources'];
+const accessVersionCount = resources.reduce((total, resource) => total + resource.accessVersions.length, 0);
+
+test('focuses desktop navigation on exactly four Chinese user tasks', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop navigation is intentionally replaced by the compact menu on mobile.');
   await page.goto('./');
 
   const navigation = page.getByRole('navigation', { name: '主导航' });
   const links = navigation.getByRole('link');
 
-  await expect(links).toHaveCount(5);
+  await expect(links).toHaveCount(4);
   await expect(links).toHaveText([
     '能力地图',
-    '职业方向',
     '成长资源',
     '创新变迁',
     '关于本项目',
@@ -22,7 +32,6 @@ test('focuses desktop navigation on exactly five Chinese user tasks', async ({ p
 
   for (const [name, href] of [
     ['能力地图', '/Learn-About-Games/map/'],
-    ['职业方向', '/Learn-About-Games/careers/'],
     ['成长资源', '/Learn-About-Games/resources/'],
     ['创新变迁', '/Learn-About-Games/atlas/'],
     ['关于本项目', '/Learn-About-Games/about/'],
@@ -30,32 +39,49 @@ test('focuses desktop navigation on exactly five Chinese user tasks', async ({ p
     await expect(navigation.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
 
+  await expect(navigation.getByRole('link', { name: '职业方向', exact: true })).toHaveCount(0);
+
   for (const oldItem of ['Roadmap', 'Changelog', 'Devlog', 'Methodology', 'Contributing']) {
     await expect(navigation.getByRole('link', { name: oldItem, exact: true })).toHaveCount(0);
   }
 });
 
-test('publishes the visible map skeleton and repository-backed project pages', async ({ page }) => {
+test('publishes the visible map skeleton and repository-backed project pages', async ({ page }, testInfo) => {
   await page.goto('./');
 
   await expect(page.getByRole('link', { name: '看全貌' })).toBeVisible();
 
   await page.getByRole('link', { name: '看全貌' }).click();
 
-  for (const heading of [
-    '体验与玩家',
-    '玩法、系统与手感',
-    '关卡与空间',
-    '叙事与表达',
-    '研究、验证与数据',
-    '原型、生产与迭代',
-    '协作、领导与方向',
-    '产品、市场与批判语境',
+  const map = page.locator('[data-egds-map]');
+  await expect(map.locator('[data-egds-framework-node]')).toHaveCount(egdsFrameworkNodes.length);
+  const visibleBranches = testInfo.project.name === 'mobile-chromium'
+    ? map.locator('[data-egds-outline] [data-outline-node-kind="branch"] > summary')
+    : map.locator('[data-capability-map-canvas] [data-egds-branch]');
+  await expect(visibleBranches).toHaveCount(5);
+
+  for (const branchName of [
+    '体验设计',
+    '从计划到落地',
+    '如果有团队',
+    '如果希望形成产品与盈利',
+    '如果讨论的不只是游戏',
   ]) {
-    await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+    await expect(visibleBranches.filter({ hasText: branchName })).toBeVisible();
   }
 
-  await expect(page.getByRole('link', { name: 'Playtest' })).toBeVisible();
+  if (testInfo.project.name === 'mobile-chromium') {
+    await map.locator('[data-outline-framework-node="from-plan-to-ship"] > summary').click();
+    await map.locator('[data-outline-framework-node="playtest-evidence-iteration"] > summary').click();
+    await expect(map.locator(
+      '[data-outline-framework-node="playtest-evidence-iteration"] [data-map-entity-detail][aria-label="打开 Playtest 详情"]',
+    )).toBeVisible();
+  } else {
+    await map.getByRole('button', { name: /Playtest、证据与迭代/ }).click();
+    await expect(map.locator(
+      '[data-capability-map-canvas] [data-map-entity-key="capability:playtesting"] [data-map-entity-detail]',
+    )).toBeVisible();
+  }
 
   const repositoryPages = [
     ['Roadmap', 'Learn About Games Roadmap'],
@@ -92,11 +118,32 @@ test('uses About as the project-materials entry point while preserving legacy do
   }
 });
 
-test('makes three career lenses useful without creating a separate map', async ({ page }) => {
-  await page.goto('./careers/');
+test('publishes the current EGDS entity semantics in the methodology', async ({ page }) => {
+  await page.goto('./project/methodology/');
+  const methodology = page.locator('article.prose');
 
-  await expect(page.getByRole('heading', { name: '把职业语境叠加到同一张地图。', exact: true })).toBeVisible();
+  await expect(methodology.getByText(
+    'EGDS Framework Node 承载 PlayWithExperiences 的作者方法结构；它不参与个人进度或 Career Lens。',
+    { exact: true },
+  )).toBeVisible();
+  await expect(methodology.getByText(
+    'Capability 描述可以通过实践逐步掌握的能力。',
+    { exact: true },
+  )).toBeVisible();
+  await expect(methodology.getByText(
+    'Knowledge Topic 描述用于理解背景、但不直接作为可实践能力的议题。',
+    { exact: true },
+  )).toBeVisible();
+  await expect(methodology).not.toContainText('Domain 组织');
+  await expect(methodology).toContainText('不是行业标准或资格认证');
+});
+
+test('makes three career lenses useful inside the map without creating a separate map', async ({ page }) => {
+  await page.goto('./map/#career-lenses');
+
+  await expect(page.getByRole('heading', { name: '用职业语境观察同一张地图。', exact: true })).toBeVisible();
   const explorer = page.locator('[data-career-explorer]');
+  await expect(page.locator('[data-egds-map]')).toHaveCount(1);
   await expect(explorer.locator('[data-career-lens-button]')).toHaveCount(3);
   await expect(explorer.locator('[data-career-node]')).toHaveCount(capabilities.length * 2);
 
@@ -108,31 +155,31 @@ test('makes three career lenses useful without creating a separate map', async (
   await expect(evidence.getByRole('link', { name: 'Ubisoft Massive：Senior AI Game Designer', exact: true })).toBeVisible();
 });
 
-test('sends the three home actions to map, careers, and resources', async ({ page }) => {
+test('sends the three home actions to map, career lenses, and resources', async ({ page }) => {
   await page.goto('./');
   const journeyIndex = page.getByLabel('三个入口');
 
   for (const [name, href] of [
     ['看全貌', '/Learn-About-Games/map/'],
-    ['职业方向', '/Learn-About-Games/careers/'],
+    ['职业方向', '/Learn-About-Games/map/#career-lenses'],
     ['成长资源', '/Learn-About-Games/resources/'],
   ] as const) {
     await expect(journeyIndex.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }
 });
 
-test('describes the shipped Playtest topic collection as available now', async ({ page }) => {
+test('describes the public map through its EGDS framework nodes', async ({ page }) => {
   await page.goto('./');
   await expect(
     page.getByText(
-      `当前公开 ${domains.length} 个领域、${capabilities.length} 个能力与 ${knowledgeTopics.length} 个知识议题，并用 ${capabilityRelations.length} 条有明确含义的关系连接全图。`,
+      `当前公开 ${egdsFrameworkNodes.length} 个 EGDS 方法节点、${capabilities.length} 个能力与 ${knowledgeTopics.length} 个知识议题，并用 ${capabilityRelations.length} 条有明确含义的关系连接全图。`,
       { exact: true },
     ),
   ).toBeVisible();
 
   await page.getByRole('link', { name: '打开能力地图' }).click();
   await expect(
-    page.getByText(/有向支持不表示必修或固定学习顺序/).first(),
+    page.getByText(/框架节点表达作者方法，能力与知识议题按需展开/).first(),
   ).toBeVisible();
 });
 
@@ -195,6 +242,7 @@ test('lists each Devlog entry with its own title', async ({ page }) => {
   await expect(page.getByRole('link', { name: /Devlog 001：Learn About Games 从哪里来/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Devlog 002：M0 为什么从纵向切片开始/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Devlog 003：v0.2 为什么改成知识网络/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Devlog 007：为什么 EGDS 需要独立的说明页/ })).toBeVisible();
 });
 
 test('maps non-public Markdown links to absolute repository URLs', async ({ page }) => {
@@ -218,11 +266,33 @@ test('publishes the current v0.2 scope without retaining the M0 roadmap as curre
   await page.goto('./project/readme/');
 
   await expect(page.getByRole('heading', { name: '当前版本｜v0.2', exact: true })).toBeVisible();
-  await expect(page.getByText(/8 个开放领域、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
-  await expect(page.getByText(/20 个 Source、128 个具体 Work Item 与 15 个无顺序资源主题/)).toBeVisible();
-  await expect(page.getByText(/27 节点、25 条有证据关系与 40 项文献/)).toBeVisible();
+  await expect(page.getByText(/28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条/)).toBeVisible();
+  await expect(page.getByText(new RegExp(
+    `${sources.length} 个 Source、${resources.length} 个具体 Work Item、${accessVersionCount} 个 Access Version 与 ${resourceTopics.length} 个无顺序资源主题`,
+  ))).toBeVisible();
+  await expect(page.getByText(new RegExp(
+    `${atlasNodes.length} 节点、${atlasRelations.length} 条有证据关系与 ${atlasEvidence.length} 项 Evidence`,
+  ))).toBeVisible();
+  await expect(page.getByText(new RegExp(`${atlasGenreFamilies.length} 个常见 Genre Family`))).toBeVisible();
+  await expect(page.locator('article.prose')).toContainText('从感受、理解、解构走向重构');
+  await expect(page.locator('article.prose')).not.toContainText('能力地图包含 8 个领域');
   await expect(page.locator('article.prose')).not.toContainText('v0.2 已进入实施');
   await expect(page.locator('article.prose')).not.toContainText('AAA / Game Designer');
+});
+
+test('records EGDS as the current private candidate rather than a future migration', async ({ page }) => {
+  await page.goto('./project/roadmap/');
+  const roadmap = page.locator('article.prose');
+
+  await expect(roadmap).toContainText('EGDS 能力地图已经在本地候选完成');
+  await expect(roadmap).toContainText('仓库仍保持 Private，Pages workflow 仍保持手动停用');
+  await expect(roadmap).not.toContainText('下一切片改为以 PlayWithExperiences / EGDS');
+  await expect(roadmap).not.toContainText('按 EGDS 实施计划');
+
+  await page.goto('./project/changelog/');
+  const changelog = page.locator('article.prose');
+  await expect(changelog).toContainText('EGDS 取代通用分组成为能力地图的唯一知识骨架');
+  await expect(changelog).toContainText('本轮尚未推送或部署');
 });
 
 test('records the verified deployment chain through the final-review fix', async ({ page }) => {

@@ -16,24 +16,6 @@ const bilingualText = z
   })
   .strict();
 
-const mapPosition = z
-  .object({
-    x: z.number().min(0).max(100),
-    y: z.number().min(0).max(100),
-  })
-  .strict();
-
-const mapBounds = z
-  .object({
-    x: z.number().min(0).max(100),
-    y: z.number().min(0).max(100),
-    width: z.number().positive().max(100),
-    height: z.number().positive().max(100),
-  })
-  .strict()
-  .refine(({ x, width }) => x + width <= 100, 'Domain bounds exceed the map width')
-  .refine(({ y, height }) => y + height <= 100, 'Domain bounds exceed the map height');
-
 const isoDate = z.iso.date();
 const httpUrl = z.url().refine((value) => {
   const protocol = new URL(value).protocol;
@@ -81,17 +63,40 @@ const basisLink = z
   })
   .strict();
 
-const domains = defineCollection({
-  loader: file('src/data/domains.json'),
+const egdsFrameworkNodes = defineCollection({
+  loader: file('src/data/egds-framework-nodes.json'),
   schema: z
     .object({
       id: z.string().trim().min(1),
-      name: localizedText,
+      kind: z.enum(['root', 'branch', 'entry', 'stage', 'lever', 'cluster', 'external-entry']),
+      name: bilingualText,
       summary: localizedText,
-      order: z.number().int(),
-      bounds: mapBounds,
+      order: z.number().int().positive(),
+      parentNodeId: z.string().trim().min(1).optional(),
     })
     .strict(),
+});
+
+const egdsFrameworkRelations = defineCollection({
+  loader: file('src/data/egds-framework-relations.json'),
+  schema: z.discriminatedUnion('type', [
+    z
+      .object({
+        id: z.string().trim().min(1),
+        type: z.literal('process-next'),
+        fromId: z.string().trim().min(1),
+        toId: z.string().trim().min(1),
+      })
+      .strict(),
+    z
+      .object({
+        id: z.string().trim().min(1),
+        type: z.literal('links-to'),
+        fromId: z.string().trim().min(1),
+        targetPath: z.literal('atlas/'),
+      })
+      .strict(),
+  ]),
 });
 
 const capabilities = defineCollection({
@@ -101,8 +106,7 @@ const capabilities = defineCollection({
       id: z.string().trim().min(1),
       name: localizedText,
       summary: localizedText,
-      domainId: z.string().trim().min(1),
-      position: mapPosition,
+      frameworkNodeId: z.string().trim().min(1),
     })
     .strict(),
 });
@@ -114,8 +118,7 @@ const knowledgeTopics = defineCollection({
       id: z.string().trim().min(1),
       name: localizedText,
       summary: localizedText,
-      domainId: z.string().trim().min(1),
-      position: mapPosition,
+      frameworkNodeId: z.string().trim().min(1),
     })
     .strict(),
 });
@@ -174,7 +177,7 @@ const resources = defineCollection({
       resourceTopicIds: z.array(z.string().trim().min(1)),
       mediaType: z.enum(['article', 'book', 'course', 'paper', 'podcast', 'talk', 'video', 'website']),
       canonicalUrl: httpUrl,
-      whyRelevant: localizedText,
+      whyRelevant: localizedText.optional(),
       originalLanguage: z.string().trim().min(1),
       externalSignals: z.array(externalSignal).optional(),
       accessVersions: z.array(accessVersion).min(1),
@@ -218,12 +221,24 @@ const atlasTags = defineCollection({
     .strict(),
 });
 
+const atlasGenreFamilies = defineCollection({
+  loader: file('src/data/atlas-genre-families.json'),
+  schema: z
+    .object({
+      id: z.string().trim().min(1),
+      title: localizedText,
+      summary: localizedText,
+      order: z.number().int().positive(),
+    })
+    .strict(),
+});
+
 const atlasNodes = defineCollection({
   loader: file('src/data/atlas-nodes.json'),
   schema: z
     .object({
       id: z.string().trim().min(1),
-      kind: z.enum(['game', 'innovation', 'category']),
+      kind: z.enum(['game', 'innovation', 'category', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware']),
       name: localizedText,
       summary: localizedText,
       startYear: z.number().int(),
@@ -231,6 +246,9 @@ const atlasNodes = defineCollection({
       lane: z.number().int().min(0),
       tags: z.array(z.string().trim().min(1)).min(1),
       evidenceIds: z.array(z.string().trim().min(1)).min(1),
+      eventRole: z.enum(['definition', 'mechanism', 'transformation', 'diffusion']).optional(),
+      themeIds: z.array(z.string().trim().min(1)).min(1).optional(),
+      mechanism: localizedText.optional(),
     })
     .strict(),
 });
@@ -245,8 +263,38 @@ const atlasEvidence = defineCollection({
       originalLanguage: z.enum(['en', 'ja', 'fr', 'es']),
       url: httpUrl,
       summary: localizedText,
+      sourceKind: z.enum([
+        'institutional-history',
+        'museum-object',
+        'patent',
+        'oral-history',
+        'creator-account',
+        'project-history',
+        'interview',
+        'official-statement',
+        'catalog-record',
+        'archival-record',
+        'historical-analysis',
+        'conference-talk',
+        'publisher-release',
+      ]),
+      institutionOrAuthor: z.string().trim().min(1),
+      publicationDate: z.string().trim().min(1).optional(),
+      checkedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      stableId: z.string().trim().min(1).optional(),
+      locator: z.string().trim().min(1),
+      boundedClaim: localizedText,
     })
-    .strict(),
+    .strict()
+    .superRefine((evidence, context) => {
+      if (!evidence.boundedClaim['zh-CN'].trim()) {
+        context.addIssue({
+          code: 'custom',
+          path: ['boundedClaim'],
+          message: 'Atlas evidence provenance requires a bounded claim',
+        });
+      }
+    }),
 });
 
 const atlasRelations = defineCollection({
@@ -263,6 +311,9 @@ const atlasRelations = defineCollection({
         'revival',
         'parallel-origin',
         'structural-similarity',
+        'prototype-to-product',
+        'commercialized-as',
+        'design-response',
         'disputed',
       ]),
       status: z.enum(['confirmed', 'credible', 'inferred', 'disputed']),
@@ -272,6 +323,7 @@ const atlasRelations = defineCollection({
       summary: localizedText,
       chronologyExplanation: localizedText.optional(),
       directionalityNote: localizedText.optional(),
+      relationRole: z.enum(['evolution', 'carrier']).optional(),
     })
     .strict()
     .superRefine((relation, context) => {
@@ -299,6 +351,8 @@ const atlasThemes = defineCollection({
       id: z.string().trim().min(1),
       title: localizedText,
       summary: localizedText,
+      familyIds: z.array(z.string().trim().min(1)),
+      scopeNote: localizedText,
       tags: z.array(z.string().trim().min(1)).min(1),
     })
     .strict(),
@@ -322,7 +376,8 @@ const devlog = defineCollection({
 });
 
 export const collections = {
-  domains,
+  egdsFrameworkNodes,
+  egdsFrameworkRelations,
   capabilities,
   knowledgeTopics,
   capabilityRelations,
@@ -330,6 +385,7 @@ export const collections = {
   sources,
   resources,
   roleProfiles,
+  atlasGenreFamilies,
   atlasTags,
   atlasNodes,
   atlasEvidence,

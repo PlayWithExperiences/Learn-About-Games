@@ -1,10 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
+
 import type { Catalog } from '../lib/catalog/validate';
 import {
+  buildAtlasEventTimeline,
   buildAtlasLayout,
+  buildAtlasNodeIndex,
   groupAtlasNodesByEra,
   indexAtlasRelations,
   matchAtlasTheme,
+  sortAtlasNodeIndex,
+  atlasPerspectiveVisibleKinds,
 } from '../lib/atlas-network';
 
 type AtlasEvidence = Catalog['atlasEvidence'][number];
@@ -20,21 +26,83 @@ interface Props {
 }
 
 const { evidence, nodes, relations, tags, themes } = Astro.props;
+const genreFamilies = (await getCollection('atlasGenreFamilies'))
+  .map(({ id, data }) => ({ ...data, id }))
+  .sort((left, right) => left.order - right.order);
+const themeById = new Map(themes.map((theme) => [theme.id, theme]));
+const foundationTheme = themeById.get('early-electronic-games');
+const lineageThemes = themes.filter(({ id }) => id !== 'early-electronic-games');
 const nodeCount = nodes.length;
 const relationCount = relations.length;
 const layout = buildAtlasLayout(nodes, relations);
+const categoryLayout = buildAtlasLayout(nodes, relations, { perspective: 'category' });
+const eventLayout = buildAtlasLayout(nodes, relations, { perspective: 'events' });
+const workVisibleKinds = new Set(atlasPerspectiveVisibleKinds('works'));
+const workContentBottom = Math.max(
+  ...layout.nodes
+    .filter(({ kind }) => workVisibleKinds.has(kind))
+    .map(({ top, height }) => top + height),
+);
+const workCanvasHeight = Math.max(
+  layout.height,
+  Math.ceil((workContentBottom + 40) / 20) * 20,
+);
+const categoryVisibleKinds = new Set(atlasPerspectiveVisibleKinds('category'));
+const eventVisibleKinds = new Set(atlasPerspectiveVisibleKinds('events'));
+const categoryContentBottom = Math.max(
+  ...categoryLayout.nodes
+    .filter(({ kind }) => categoryVisibleKinds.has(kind))
+    .map(({ top, height }) => top + height),
+);
+const categoryCanvasHeight = Math.max(
+  720,
+  Math.ceil((categoryContentBottom + 40) / 20) * 20,
+);
+const eventContentBottom = Math.max(
+  ...eventLayout.nodes
+    .filter(({ kind }) => eventVisibleKinds.has(kind))
+    .map(({ top, height }) => top + height),
+);
+const eventCanvasHeight = Math.max(
+  720,
+  Math.ceil((eventContentBottom + 40) / 20) * 20,
+);
 const eras = groupAtlasNodesByEra(nodes);
 const adjacency = indexAtlasRelations(nodes, relations);
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
 const placedNodeById = new Map(layout.nodes.map((node) => [node.id, node]));
+const categoryPlacedNodeById = new Map(categoryLayout.nodes.map((node) => [node.id, node]));
+const categoryPlacedRelationById = new Map(categoryLayout.relations.map((relation) => [relation.id, relation]));
+const eventPlacedNodeById = new Map(eventLayout.nodes.map((node) => [node.id, node]));
+const eventPlacedRelationById = new Map(eventLayout.relations.map((relation) => [relation.id, relation]));
 const evidenceById = new Map(evidence.map((item) => [item.id, item]));
 const tagById = new Map(tags.map((tag) => [tag.id, tag]));
 const relationById = new Map(relations.map((relation) => [relation.id, relation]));
+const nodeIndex = sortAtlasNodeIndex(buildAtlasNodeIndex(nodes, tags), 'time');
+const eventNodeIds = new Set(
+  nodes
+    .filter((node) => node.kind === 'innovation' && node.tags.includes('innovation-event'))
+    .map((node) => node.id),
+);
+const eventTimeline = buildAtlasEventTimeline(nodes, relations);
+const carrierNodeIds = new Set(
+  [...eventNodeIds].flatMap((eventId) => relations
+    .filter((relation) => relation.fromId === eventId)
+    .map((relation) => relation.toId)),
+);
+const carriersFor = (eventId: string) => relations
+  .filter((relation) => relation.fromId === eventId)
+  .map((relation) => nodeById.get(relation.toId))
+  .filter((node): node is AtlasNode => node?.kind === 'game');
 
 const kindLabels: Record<AtlasNode['kind'], string> = {
   game: 'Game',
   innovation: 'Innovation',
   category: 'Category Formation',
+  'experimental-apparatus': 'Experimental Apparatus',
+  'experimental-program': 'Experimental Program',
+  'system-prototype': 'System Prototype',
+  'commercial-hardware': 'Commercial Hardware',
 };
 
 const relationLabels: Record<AtlasRelation['type'], string> = {
@@ -44,6 +112,9 @@ const relationLabels: Record<AtlasRelation['type'], string> = {
   revival: '复兴或重新流行',
   'parallel-origin': '平行或独立产生',
   'structural-similarity': '结构相似，影响未知',
+  'prototype-to-product': '原型到产品',
+  'commercialized-as': '商业化改作',
+  'design-response': '设计回应',
   disputed: '存在争议',
 };
 
@@ -52,6 +123,13 @@ const statusLabels: Record<AtlasRelation['status'], string> = {
   credible: '可信历史综合',
   inferred: '推断',
   disputed: '有争议',
+};
+
+const eventRoleLabels: Record<NonNullable<AtlasNode['eventRole']>, string> = {
+  definition: '定义事件',
+  mechanism: '机制事件',
+  transformation: '转译事件',
+  diffusion: '扩散事件',
 };
 
 const languageLabels: Record<AtlasEvidence['originalLanguage'], string> = {
@@ -76,6 +154,7 @@ const themeMatches = Object.fromEntries(
   themes.map((theme) => [theme.id, matchAtlasTheme(nodes, relations, theme)]),
 );
 const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u003c');
+const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c');
 ---
 
 <section
@@ -86,25 +165,9 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
   aria-labelledby="atlas-network-title"
 >
   <header class="atlas-network__heading">
-    <h2 id="atlas-network-title">同一张全局时间网络</h2>
-    <p>横向位置只表示开始年份。纵向分道只避免碰撞并让实体类型相邻，不表示质量、重要性或固定演进顺序。</p>
+    <h2 id="atlas-network-title">创新事件与承载作品时间网络</h2>
+    <p>横向位置只表示开始年份。创新事件是主线，游戏、硬件与实验程序是承载它们的作品或历史对象；纵向分道只避免碰撞，不表示质量、重要性或固定演进顺序。</p>
   </header>
-
-  <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
-    <legend>选择证据透镜</legend>
-    <div class="atlas-lens-control__buttons">
-      <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
-      {themes.map((theme) => (
-        <button type="button" data-atlas-theme-button={theme.id} aria-pressed="false" disabled>
-          {theme.title['zh-CN']}
-        </button>
-      ))}
-    </div>
-    <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
-    <noscript>
-      <p class="script-required-note" data-atlas-no-js-note>启用 JavaScript 后可以切换强调。完整网络、关系详情与证据不依赖 JavaScript。</p>
-    </noscript>
-  </fieldset>
 
   <section class="atlas-legend" aria-labelledby="atlas-legend-title">
     <div>
@@ -112,33 +175,182 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       <p>Evidence 只出现在详情文献行，不作为网络节点。时间相邻也不会自动产生关系。</p>
     </div>
     <ul>
-      <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game</strong><span>单一发行年份</span></li>
-      <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation</strong><span>可讨论的设计结构</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game / Carrier</strong><span>承载创新事件的作品</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation event</strong><span>被证据支持的机制或结构事件</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--category" aria-hidden="true"></span><strong>Category Formation</strong><span>真实时间范围</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--apparatus" aria-hidden="true"></span><strong>Experimental Apparatus</strong><span>实验装置</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--program" aria-hidden="true"></span><strong>Experimental Program</strong><span>实验程序</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--prototype" aria-hidden="true"></span><strong>System Prototype</strong><span>系统原型</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--hardware" aria-hidden="true"></span><strong>Commercial Hardware</strong><span>商业硬件</span></li>
       <li><span class="atlas-legend__line atlas-legend__line--directed" aria-hidden="true"></span><strong>有向关系</strong><span>箭头只用于有证据的方向</span></li>
       <li><span class="atlas-legend__line atlas-legend__line--undirected" aria-hidden="true"></span><strong>无向关系</strong><span>结构对照不冒充影响</span></li>
     </ul>
   </section>
 
-  <section data-atlas-global-network aria-label="Game Innovation Atlas 全局时间网络">
-    <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1980–2020</p>
-    <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可横向浏览的全局时间网络">
-      <div
-        class="atlas-network__canvas"
-        style={`--atlas-canvas-width:${layout.width}px;--atlas-canvas-height:${layout.height}px`}
-      >
-        <div class="atlas-network__years" aria-hidden="true">
-          {layout.yearTicks.map(({ year, x }) => (
-            <span style={`--atlas-year-x:${x}px`}><b>{year}</b></span>
-          ))}
-        </div>
+  <section class="atlas-event-index" data-atlas-event-index aria-labelledby="atlas-event-index-title">
+    <div class="atlas-event-index__intro">
+      <p class="plain-label">Innovation events</p>
+      <h3 id="atlas-event-index-title">创新事件是地图节点</h3>
+      <p>主图中的圆形节点描述品类如何被定义、引入机制、发生转译与扩散；作品只作为节点详情里的承载证据。选择透镜后，地图会强调对应的事件路线。</p>
+    </div>
+    <div class="atlas-event-index__summary">
+      <p class="atlas-event-index__status" data-atlas-event-index-status aria-live="polite">当前地图包含 {eventTimeline.events.length} 个创新事件节点。</p>
+      <p class="atlas-event-index__map-note">点击地图中的事件节点查看引入方式、演进关系与承载作品；这里的索引只用于快速定位。</p>
+    </div>
+    <details class="atlas-event-index__navigator" data-atlas-event-navigator>
+      <summary>打开事件节点索引 <span>{eventTimeline.events.length}</span></summary>
+      <ol data-atlas-event-timeline>
+      {eventTimeline.events.map((event) => {
+        return (
+          <li
+            data-atlas-event-timeline-item={event.id}
+            data-atlas-event-role={event.eventRole}
+            data-atlas-theme-ids={event.themeIds?.join(' ')}
+            data-theme-tags={event.tags.join(' ')}
+          >
+            <a href={`#atlas-node-detail-${event.id}`} data-atlas-event-link>
+              <time datetime={String(event.startYear)}>{event.startYear}</time>
+              <strong>{event.name['zh-CN']}</strong>
+              <span>{eventRoleLabels[event.eventRole ?? 'mechanism']}</span>
+            </a>
+          </li>
+        );
+      })}
+      </ol>
+    </details>
+    <p class="atlas-event-index__empty" data-atlas-event-empty hidden>这个品类还没有达到证据门槛的创新事件；先保留空状态，不用游戏年代相邻关系代替证据。</p>
+  </section>
 
-        <svg
-          class="atlas-network__relations"
-          viewBox={`0 0 ${layout.width} ${layout.height}`}
-          role="img"
-          aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
+  <section data-atlas-global-network data-atlas-route-mode="full" data-atlas-perspective="works" aria-label="Game Innovation Atlas 全局时间网络">
+    <fieldset class="atlas-lens-control" aria-describedby="atlas-lens-status">
+      <legend>选择证据透镜</legend>
+      <div class="atlas-lens-control__current">
+        <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
+        <p id="atlas-lens-status" data-atlas-lens-status aria-live="polite">当前显示全部 {nodeCount} 个节点与 {relationCount} 条关系。</p>
+      </div>
+      <div class="atlas-fullscreen-lenses" data-atlas-fullscreen-lenses aria-label="地图模式证据透镜">
+        <button type="button" data-atlas-theme-button="all" aria-pressed="true" disabled>全部网络</button>
+        {themes.map((theme) => (
+          <button
+            type="button"
+            data-atlas-theme-button={theme.id}
+            aria-pressed="false"
+            disabled
+          >
+            {theme.title['zh-CN']}
+          </button>
+        ))}
+      </div>
+      <div class="atlas-family-directory" data-atlas-family-directory>
+        {foundationTheme && (
+          <section class="atlas-family-directory__foundation" data-atlas-foundation-lens aria-labelledby="atlas-foundation-title">
+            <div>
+              <h4 id="atlas-foundation-title">历史基础</h4>
+              <p>不归入单一类型家族</p>
+            </div>
+            <div class="atlas-family-directory__theme">
+              <button
+                type="button"
+                data-atlas-theme-button={foundationTheme.id}
+                aria-pressed="false"
+                disabled
+              >
+                {foundationTheme.title['zh-CN']}
+              </button>
+              <p data-atlas-scope-note>{foundationTheme.scopeNote['zh-CN']}</p>
+            </div>
+          </section>
+        )}
+        <div class="atlas-family-directory__families">
+          {genreFamilies.map((family) => {
+            const familyThemes = lineageThemes.filter(({ familyIds }) => familyIds.includes(family.id));
+            return (
+              <details id={`atlas-family-${family.id}`} name="atlas-genre-family" data-atlas-family={family.id}>
+                <summary>
+                  <span>{family.title['zh-CN']}</span>
+                  <small>{familyThemes.length > 0 ? `${familyThemes.length} 条已核查谱系` : '0 条已核查谱系，待研究'}</small>
+                </summary>
+                <div class="atlas-family-directory__body">
+                  <p>{family.summary['zh-CN']}</p>
+                  {familyThemes.length > 0 ? (
+                    <ul>
+                      {familyThemes.map((theme) => (
+                        <li class="atlas-family-directory__theme">
+                          <button
+                            type="button"
+                            data-atlas-theme-button={theme.id}
+                            aria-pressed="false"
+                            disabled
+                          >
+                            {theme.title['zh-CN']}
+                          </button>
+                          <p data-atlas-scope-note>{theme.scopeNote['zh-CN']}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p class="atlas-family-directory__empty">尚无达到证据门槛的谱系。Family 保留为研究入口，不冒充已经完成的演化关系。</p>
+                  )}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      </div>
+      <noscript>
+        <p class="script-required-note" data-atlas-no-js-note>启用 JavaScript 后可以切换强调。完整网络、关系详情与证据不依赖 JavaScript。</p>
+      </noscript>
+    </fieldset>
+    <div class="atlas-view-controls" data-atlas-view-controls>
+      <strong class="atlas-view-controls__mode-title">Innovation Atlas 地图模式</strong>
+      <div class="atlas-perspective-controls" data-atlas-perspective-controls role="group" aria-label="地图视角">
+        <span>地图视角</span>
+        <button type="button" data-atlas-perspective="works" aria-pressed="true" disabled>代表作品</button>
+        <button type="button" data-atlas-perspective="category" aria-pressed="false" disabled>品类发展</button>
+        <button type="button" data-atlas-perspective="events" aria-pressed="false" disabled>创新事件</button>
+      </div>
+      <button type="button" data-atlas-map-mode aria-pressed="false" disabled>进入地图模式</button>
+      <button type="button" data-atlas-fit disabled>适应全图</button>
+      <button type="button" data-atlas-zoom-out aria-label="缩小" disabled>−</button>
+      <output data-atlas-scale-status aria-live="polite">100%</output>
+      <button type="button" data-atlas-zoom-in aria-label="放大" disabled>＋</button>
+      <button type="button" data-atlas-reset disabled>重置 100%</button>
+    </div>
+    <noscript>
+      <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
+    </noscript>
+    <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1958–2020</p>
+    <div data-atlas-primary-network data-atlas-route-mode="full" data-atlas-perspective="works">
+    <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
+      <div
+        class="atlas-network__stage"
+        data-atlas-stage
+        data-scale="1"
+        style={`width:${layout.width}px;height:${workCanvasHeight}px`}
+      >
+        <div
+          class="atlas-network__canvas"
+          data-atlas-scene
+          data-atlas-perspective="works"
+          data-scene-width={layout.width}
+          data-scene-height={workCanvasHeight}
+          data-scene-work-height={workCanvasHeight}
+          data-scene-category-height={categoryCanvasHeight}
+          data-scene-event-height={eventCanvasHeight}
+          style={`width:${layout.width}px;height:${workCanvasHeight}px;transform:scale(1)`}
         >
+          <div class="atlas-network__years" aria-hidden="true">
+            {layout.yearTicks.map(({ year, x }) => (
+              <span style={`--atlas-year-x:${x}px`}><b>{year}</b></span>
+            ))}
+          </div>
+
+          <svg
+            class="atlas-network__relations"
+            viewBox={`0 0 ${layout.width} ${workCanvasHeight}`}
+            role="img"
+            aria-labelledby="atlas-relation-map-title atlas-relation-map-description"
+          >
           <title id="atlas-relation-map-title">有证据关系网络</title>
           <desc id="atlas-relation-map-description">有向关系使用箭头，无向关系使用对称实线。选择任一关系可进入详情与证据。</desc>
           <defs>
@@ -148,9 +360,11 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
           </defs>
           {layout.relations.map((placedRelation) => {
             const relation = relationById.get(placedRelation.id);
+            const categoryPlacedRelation = categoryPlacedRelationById.get(placedRelation.id);
+            const eventPlacedRelation = eventPlacedRelationById.get(placedRelation.id);
             const from = nodeById.get(placedRelation.fromId);
             const to = nodeById.get(placedRelation.toId);
-            if (!relation || !from || !to) return null;
+            if (!relation || !from || !to || !categoryPlacedRelation || !eventPlacedRelation) return null;
             return (
               <g
                 data-atlas-relation={relation.id}
@@ -159,12 +373,30 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
                 data-relation-type={relation.type}
                 data-relation-status={relation.status}
                 data-relation-directionality={relation.directionality}
+                data-relation-role={relation.relationRole}
+                data-atlas-event-relation={relation.relationRole === 'evolution' ? relation.id : undefined}
                 data-start-x={placedRelation.start.x}
                 data-start-y={placedRelation.start.y}
                 data-end-x={placedRelation.end.x}
                 data-end-y={placedRelation.end.y}
+                data-work-path={placedRelation.path}
+                data-category-path={categoryPlacedRelation.path}
+                data-work-start-x={placedRelation.start.x}
+                data-work-start-y={placedRelation.start.y}
+                data-work-end-x={placedRelation.end.x}
+                data-work-end-y={placedRelation.end.y}
+                data-category-start-x={categoryPlacedRelation.start.x}
+                data-category-start-y={categoryPlacedRelation.start.y}
+                data-category-end-x={categoryPlacedRelation.end.x}
+                data-category-end-y={categoryPlacedRelation.end.y}
+                data-event-path={eventPlacedRelation.path}
+                data-event-start-x={eventPlacedRelation.start.x}
+                data-event-start-y={eventPlacedRelation.start.y}
+                data-event-end-x={eventPlacedRelation.end.x}
+                data-event-end-y={eventPlacedRelation.end.y}
                 data-theme-tags={relation.tags.join(' ')}
                 data-theme-match="true"
+                data-atlas-perspective-visible="true"
               >
                 <a
                   href={`#atlas-relation-detail-${relation.id}`}
@@ -192,39 +424,67 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
               </g>
             );
           })}
-        </svg>
+          </svg>
 
-        <div class="atlas-network__nodes">
-          {nodes.map((node) => {
-            const placed = placedNodeById.get(node.id);
-            if (!placed) return null;
-            return (
-              <article
-                class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
-                data-atlas-node
-                data-atlas-node-id={node.id}
-                data-atlas-node-kind={node.kind}
-                data-start-year={node.startYear}
-                data-end-year={node.endYear}
-                data-year-x={placed.yearX}
-                data-center-x={placed.centerX}
-                data-center-y={placed.centerY}
-                data-node-left={placed.left}
-                data-node-top={placed.top}
-                data-node-width={placed.width}
-                data-node-height={placed.height}
-                data-theme-tags={node.tags.join(' ')}
-                data-theme-match="true"
-                style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
-              >
-                <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-link>
-                  <span class="atlas-network-node__type">{kindLabels[node.kind]}</span>
-                  <strong>{node.name['zh-CN']}</strong>
-                  <time datetime={String(node.startYear)}>{nodeTime(node)}</time>
-                </a>
-              </article>
-            );
-          })}
+          <div class="atlas-network__nodes">
+            {nodes.map((node) => {
+              const placed = placedNodeById.get(node.id);
+              const categoryPlaced = categoryPlacedNodeById.get(node.id);
+              const eventPlaced = eventPlacedNodeById.get(node.id);
+              if (!placed || !categoryPlaced || !eventPlaced) return null;
+              return (
+                <article
+                  class:list={['atlas-network-node', `atlas-network-node--${node.kind}`]}
+                  data-atlas-node
+                  data-atlas-node-id={node.id}
+                  data-atlas-node-kind={node.kind}
+                  data-atlas-event-node={eventNodeIds.has(node.id) ? node.id : undefined}
+                  data-atlas-game-node={node.kind === 'game' ? node.id : undefined}
+                  data-atlas-event-role={eventNodeIds.has(node.id) ? node.eventRole : undefined}
+                  data-atlas-theme-ids={eventNodeIds.has(node.id) ? node.themeIds?.join(' ') : undefined}
+                  data-atlas-carrier={carrierNodeIds.has(node.id) ? node.id : undefined}
+                  data-atlas-event={eventNodeIds.has(node.id) ? node.id : undefined}
+                  data-start-year={node.startYear}
+                  data-end-year={node.endYear}
+                  data-year-x={placed.yearX}
+                  data-center-x={placed.centerX}
+                  data-center-y={placed.centerY}
+                  data-node-left={placed.left}
+                  data-node-top={placed.top}
+                  data-node-width={placed.width}
+                  data-node-height={placed.height}
+                  data-work-left={placed.left}
+                  data-work-top={placed.top}
+                  data-work-width={placed.width}
+                  data-work-height={placed.height}
+                  data-work-center-x={placed.centerX}
+                  data-work-center-y={placed.centerY}
+                  data-category-left={categoryPlaced.left}
+                  data-category-top={categoryPlaced.top}
+                  data-category-width={categoryPlaced.width}
+                  data-category-height={categoryPlaced.height}
+                  data-category-center-x={categoryPlaced.centerX}
+                  data-category-center-y={categoryPlaced.centerY}
+                  data-event-left={eventPlaced.left}
+                  data-event-top={eventPlaced.top}
+                  data-event-width={eventPlaced.width}
+                  data-event-height={eventPlaced.height}
+                  data-event-center-x={eventPlaced.centerX}
+                  data-event-center-y={eventPlaced.centerY}
+                  data-theme-tags={node.tags.join(' ')}
+                  data-theme-match="true"
+                  data-atlas-perspective-visible="true"
+                  style={`--atlas-node-left:${placed.left}px;--atlas-node-top:${placed.top}px;--atlas-node-width:${placed.width}px;--atlas-node-height:${placed.height}px`}
+                >
+                  <a href={`#atlas-node-detail-${node.id}`} data-atlas-node-link>
+                    <span class="atlas-network-node__type">{kindLabels[node.kind]}</span>
+                    <strong>{node.name['zh-CN']}</strong>
+                    <time datetime={String(node.startYear)}>{nodeTime(node)}</time>
+                  </a>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
@@ -240,6 +500,8 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
               <article
                 class="atlas-outline-node"
                 data-atlas-outline-node={node.id}
+                data-atlas-carrier={carrierNodeIds.has(node.id) ? node.id : undefined}
+                data-atlas-event={eventNodeIds.has(node.id) ? node.id : undefined}
                 data-theme-tags={node.tags.join(' ')}
                 data-theme-match="true"
               >
@@ -285,6 +547,7 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
         </section>
       ))}
     </div>
+    </div>
   </section>
 
   <section class="atlas-details" aria-labelledby="atlas-details-title">
@@ -293,13 +556,45 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       <p>节点与关系只保存文献引用；完整原题、原始语言、中文说明与外部链接集中在页面底部的 Evidence 索引。</p>
     </header>
 
-    <section class="atlas-details__group" aria-labelledby="atlas-node-details-title">
+    <section class="atlas-details__group atlas-node-index" data-atlas-node-index aria-labelledby="atlas-node-details-title">
       <h3 id="atlas-node-details-title">节点详情</h3>
-      {nodes.map((node) => {
+      <div class="atlas-node-index__controls">
+        <label for="atlas-node-search">
+          <span>搜索节点</span>
+          <input id="atlas-node-search" type="search" data-atlas-node-search disabled />
+        </label>
+        <label for="atlas-node-sort">
+          <span>节点排序</span>
+          <select id="atlas-node-sort" data-atlas-node-sort disabled>
+            <option value="time">按时间</option>
+            <option value="name">按名称</option>
+          </select>
+        </label>
+        <output data-atlas-node-count>{nodeIndex.length} 个节点</output>
+        <button type="button" data-atlas-search-clear disabled>清除搜索</button>
+      </div>
+      <noscript>
+        <p class="script-required-note" data-atlas-node-index-no-js-note>启用 JavaScript 后可以搜索、排序和清除搜索；完整节点索引仍按时间列出。</p>
+      </noscript>
+      <p class="atlas-node-index__empty" data-atlas-node-empty hidden>
+        没有匹配节点。请清除搜索后查看全部节点。
+      </p>
+      {nodeIndex.map((indexItem) => {
+        const node = nodeById.get(indexItem.id);
+        if (!node) return null;
         const nodeAdjacency = adjacency.get(node.id) ?? { incoming: [], outgoing: [], undirected: [] };
         const relatedRelations = [...nodeAdjacency.incoming, ...nodeAdjacency.outgoing, ...nodeAdjacency.undirected];
         return (
-          <details id={`atlas-node-detail-${node.id}`} data-atlas-node-detail={node.id}>
+          <details
+            id={`atlas-node-detail-${node.id}`}
+            data-atlas-node-detail={node.id}
+            data-atlas-event-detail={eventNodeIds.has(node.id) ? node.id : undefined}
+            data-atlas-index-item={node.id}
+            data-index-id={node.id}
+            data-index-name={indexItem.name}
+            data-index-year={indexItem.startYear}
+            data-search-text={indexItem.searchText}
+          >
             <summary><span>{kindLabels[node.kind]}</span><strong>{node.name['zh-CN']}</strong><time>{nodeTime(node)}</time></summary>
             <div class="atlas-detail__body">
               <p>{node.summary['zh-CN']}</p>
@@ -310,6 +605,38 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
               <ul class="atlas-detail__tags" data-atlas-node-tags>
                 {tagsFor(node.tags).map((tag) => <li>{tag.name['zh-CN']}</li>)}
               </ul>
+              {eventNodeIds.has(node.id) && (
+                <section class="atlas-detail__event" data-atlas-event-detail-body>
+                  <h4>创新事件</h4>
+                  <dl class="atlas-detail__facts atlas-detail__event-facts">
+                    <div><dt>事件角色</dt><dd>{eventRoleLabels[node.eventRole ?? 'mechanism']}</dd></div>
+                    {node.mechanism && <div><dt>引入方式</dt><dd>{node.mechanism['zh-CN']}</dd></div>}
+                  </dl>
+                  <p>这个节点记录的是可讨论、可核查的设计事件；游戏是它在时间线上可观察的承载作品。</p>
+                  <h5>演进关系</h5>
+                  {relatedRelations.filter(({ relationRole }) => relationRole === 'evolution').length > 0 ? (
+                    <ul data-atlas-event-evolution-links>
+                      {relatedRelations
+                        .filter(({ relationRole }) => relationRole === 'evolution')
+                        .map((relation) => (
+                          <li>
+                            <a href={`#atlas-relation-detail-${relation.id}`}>
+                              {relationLabels[relation.type]}：{otherEndpoint(relation, node.id)?.name['zh-CN']}
+                            </a>
+                          </li>
+                        ))}
+                    </ul>
+                  ) : <p>当前事件尚未记录前后演进关系。</p>}
+                  <h5>承载作品</h5>
+                  {carriersFor(node.id).length > 0 ? (
+                    <ul>
+                      {carriersFor(node.id).map((carrier) => (
+                        <li><a href={`#atlas-node-detail-${carrier.id}`}>{carrier.name['zh-CN']}</a></li>
+                      ))}
+                    </ul>
+                  ) : <p>当前发布集尚未记录承载作品。</p>}
+                </section>
+              )}
               <section class="atlas-detail__relations">
                 <h4>关联关系</h4>
                 <ul>
@@ -422,15 +749,36 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
   </dialog>
 
   <script is:inline type="application/json" data-atlas-theme-data set:html={serializedThemeMatches}></script>
+  <script is:inline type="application/json" data-atlas-node-index-data set:html={serializedNodeIndex}></script>
 </section>
 
 <script>
-  type ThemeMatch = { nodeIds: string[]; relationIds: string[] };
+  import {
+    clampAtlasScale,
+    filterAtlasNodeIndex,
+    fitAtlasScale,
+    projectAtlasPointerAnchor,
+    projectAtlasScrollAnchor,
+    scaleAtlasWheelTarget,
+    sortAtlasNodeIndex,
+    stepAtlasScale,
+    atlasPerspectiveVisibleKinds,
+    type AtlasIndexNode,
+    type AtlasNodeKind,
+  } from '../lib/atlas-network';
+
+  type ThemeMatch = {
+    nodeIds: string[];
+    relationIds: string[];
+    globalNodeIds: string[];
+    globalRelationIds: string[];
+  };
 
   const explorer = document.querySelector<HTMLElement>('[data-atlas-explorer]');
   const payload = explorer?.querySelector<HTMLScriptElement>('[data-atlas-theme-data]');
 
-  if (explorer && payload) {
+  if (explorer && payload && explorer.dataset.atlasInitialized !== 'true') {
+    explorer.dataset.atlasInitialized = 'true';
     const themeMatches = JSON.parse(payload.textContent ?? '{}') as Record<string, ThemeMatch>;
     const buttons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-atlas-theme-button]'));
     const status = explorer.querySelector<HTMLElement>('[data-atlas-lens-status]');
@@ -438,12 +786,47 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
     const networkRelations = Array.from(explorer.querySelectorAll<SVGGElement>('[data-atlas-relation]'));
     const outlineNodes = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-outline-node]'));
     const outlineRelations = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-outline-relation-ref]'));
+    const eventIndex = explorer.querySelector<HTMLElement>('[data-atlas-event-index]');
+    const eventItems = Array.from(explorer.querySelectorAll<HTMLElement>('[data-atlas-event-timeline-item]'));
+    const eventNavigator = eventIndex?.querySelector<HTMLDetailsElement>('[data-atlas-event-navigator]');
+    const primaryNetwork = explorer.querySelector<HTMLElement>('[data-atlas-primary-network]');
+    const eventIndexStatus = eventIndex?.querySelector<HTMLElement>('[data-atlas-event-index-status]');
+    const eventEmpty = eventIndex?.querySelector<HTMLElement>('[data-atlas-event-empty]');
     const nodeCount = networkNodes.length;
     const relationCount = networkRelations.length;
     const globalCountMessage = `当前显示全部 ${nodeCount} 个节点与 ${relationCount} 条关系。`;
+    let activeThemeId = 'all';
+    let perspectiveMode: 'works' | 'category' | 'events' = 'works';
+    let syncPerspectiveGeometry: (nextPerspective: 'works' | 'category' | 'events') => void = () => {};
+
+    const syncPerspectiveVisibility = (nextPerspective: 'works' | 'category' | 'events') => {
+      const visibleKinds = new Set(atlasPerspectiveVisibleKinds(nextPerspective));
+      const visibleNodeIds = new Set(
+        networkNodes
+          .filter((node) => visibleKinds.has(node.dataset.atlasNodeKind as AtlasNodeKind))
+          .map((node) => node.dataset.atlasNodeId ?? ''),
+      );
+      networkNodes.forEach((node) => {
+        node.dataset.atlasPerspectiveVisible = String(visibleNodeIds.has(node.dataset.atlasNodeId ?? ''));
+      });
+      networkRelations.forEach((relation) => {
+        const visible = visibleNodeIds.has(relation.dataset.fromId ?? '')
+          && visibleNodeIds.has(relation.dataset.toId ?? '');
+        relation.dataset.atlasPerspectiveVisible = String(visible);
+      });
+      return {
+        nodeCount: visibleNodeIds.size,
+        relationCount: networkRelations.filter((relation) => relation.dataset.atlasPerspectiveVisible === 'true').length,
+      };
+    };
+
+    syncPerspectiveVisibility('works');
 
     const applyTheme = (themeId: string) => {
+      activeThemeId = themeId;
       const match = themeId === 'all' ? null : themeMatches[themeId];
+      syncPerspectiveVisibility(perspectiveMode);
+      syncPerspectiveGeometry(perspectiveMode);
       const matchingNodeIds = new Set(match?.nodeIds ?? []);
       const matchingRelationIds = new Set(match?.relationIds ?? []);
       networkNodes.forEach((node) => {
@@ -458,6 +841,33 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       outlineRelations.forEach((relation) => {
         relation.dataset.themeMatch = String(!match || matchingRelationIds.has(relation.dataset.atlasOutlineRelationRef ?? ''));
       });
+      const eventTheme = themeId !== 'all';
+      let visibleEventCount = 0;
+      eventItems.forEach((item) => {
+        const matches = !eventTheme || matchingNodeIds.has(item.dataset.atlasEventTimelineItem ?? '');
+        item.hidden = !matches;
+        item.dataset.themeMatch = String(matches);
+        if (matches) visibleEventCount += 1;
+      });
+      if (eventEmpty) eventEmpty.hidden = !eventTheme || visibleEventCount > 0;
+      if (eventNavigator) eventNavigator.open = eventTheme && visibleEventCount > 0;
+      if (eventIndexStatus) {
+        eventIndexStatus.textContent = eventTheme
+          ? `${visibleEventCount} 个创新事件；承载作品仅在事件详情中展开。`
+          : `当前展示全部 ${eventItems.length} 个创新事件。`;
+      }
+      if (primaryNetwork) {
+        const keepMapInPlace = networkShell?.dataset.mapMode === 'true';
+        const routeMode = keepMapInPlace && perspectiveMode !== 'works' ? perspectiveMode : 'full';
+        primaryNetwork.dataset.atlasRouteMode = routeMode;
+        primaryNetwork.dataset.atlasPerspective = perspectiveMode;
+        if (networkShell) networkShell.dataset.atlasRouteMode = routeMode;
+        if (networkShell) networkShell.dataset.atlasPerspective = perspectiveMode;
+        perspectiveButtons.forEach((button) => {
+          button.disabled = networkShell?.dataset.mapMode !== 'true';
+        });
+        primaryNetwork.hidden = false;
+      }
       buttons.forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.atlasThemeButton === themeId));
       });
@@ -465,7 +875,7 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       if (status) {
         status.textContent = themeId === 'all'
           ? globalCountMessage
-          : `已强调 ${activeButton?.textContent?.trim() ?? ''}，全局节点、关系与位置保持不变。`;
+          : `已高亮 ${activeButton?.textContent?.trim() ?? ''}；完整全局网络仍保留，地图模式可在代表作品与品类发展两种视角间切换。`;
       }
     };
 
@@ -474,14 +884,510 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       button.addEventListener('click', () => applyTheme(button.dataset.atlasThemeButton ?? 'all'));
     });
 
+    const nodeIndexElement = explorer.querySelector<HTMLElement>('[data-atlas-node-index]');
+    const nodeIndexPayload = explorer.querySelector<HTMLScriptElement>('[data-atlas-node-index-data]');
+    const nodeSearch = nodeIndexElement?.querySelector<HTMLInputElement>('[data-atlas-node-search]');
+    const nodeSort = nodeIndexElement?.querySelector<HTMLSelectElement>('[data-atlas-node-sort]');
+    const nodeCountStatus = nodeIndexElement?.querySelector<HTMLOutputElement>('[data-atlas-node-count]');
+    const nodeEmpty = nodeIndexElement?.querySelector<HTMLElement>('[data-atlas-node-empty]');
+    const searchClear = nodeIndexElement?.querySelector<HTMLButtonElement>('[data-atlas-search-clear]');
+
+    if (nodeIndexElement && nodeIndexPayload && nodeSearch && nodeSort && nodeCountStatus && nodeEmpty && searchClear) {
+      const indexedNodes = JSON.parse(nodeIndexPayload.textContent ?? '[]') as AtlasIndexNode[];
+      const indexItems = new Map(
+        Array.from(nodeIndexElement.querySelectorAll<HTMLElement>('[data-atlas-index-item]'))
+          .map((item) => [item.dataset.atlasIndexItem ?? '', item]),
+      );
+
+      const applyNodeIndex = () => {
+        const query = nodeSearch.value.trim();
+        const matchingIds = new Set(filterAtlasNodeIndex(indexedNodes, query).map(({ id }) => id));
+        const hasQuery = query.length > 0;
+        indexItems.forEach((item, id) => {
+          item.hidden = hasQuery && !matchingIds.has(id);
+        });
+        networkNodes.forEach((node) => {
+          if (hasQuery) node.dataset.searchMatch = String(matchingIds.has(node.dataset.atlasNodeId ?? ''));
+          else delete node.dataset.searchMatch;
+        });
+        outlineNodes.forEach((node) => {
+          if (hasQuery) node.dataset.searchMatch = String(matchingIds.has(node.dataset.atlasOutlineNode ?? ''));
+          else delete node.dataset.searchMatch;
+        });
+        sortAtlasNodeIndex(indexedNodes, nodeSort.value === 'name' ? 'name' : 'time').forEach(({ id }) => {
+          const item = indexItems.get(id);
+          if (item) nodeIndexElement.append(item);
+        });
+        const matchCount = hasQuery ? matchingIds.size : indexedNodes.length;
+        nodeCountStatus.textContent = `${matchCount} 个节点`;
+        nodeEmpty.hidden = matchCount !== 0;
+        searchClear.disabled = !hasQuery;
+      };
+
+      nodeSearch.disabled = false;
+      nodeSort.disabled = false;
+      nodeSearch.addEventListener('input', applyNodeIndex);
+      nodeSort.addEventListener('change', applyNodeIndex);
+      searchClear.addEventListener('click', () => {
+        nodeSearch.value = '';
+        applyNodeIndex();
+        nodeSearch.focus();
+      });
+    }
+
+    const canvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
+    const networkShell = explorer.querySelector<HTMLElement>('[data-atlas-global-network]');
+    const stage = explorer.querySelector<HTMLElement>('[data-atlas-stage]');
+    const scene = explorer.querySelector<HTMLElement>('[data-atlas-scene]');
+    const viewControls = explorer.querySelector<HTMLElement>('[data-atlas-view-controls]');
+    const relationsSvg = scene?.querySelector<SVGSVGElement>('.atlas-network__relations');
+    const perspectiveButtons = Array.from(explorer.querySelectorAll<HTMLButtonElement>('button[data-atlas-perspective]'));
+    const fitButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-fit]');
+    const mapModeButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-map-mode]');
+    const zoomOutButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-out]');
+    const zoomInButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-zoom-in]');
+    const resetButton = viewControls?.querySelector<HTMLButtonElement>('[data-atlas-reset]');
+    const scaleStatus = viewControls?.querySelector<HTMLOutputElement>('[data-atlas-scale-status]');
+
+    type AtlasMapModeController = {
+      isActive: () => boolean;
+      setActive: (active: boolean, options?: {
+        focusCanvas?: boolean;
+        preserveSnapshot?: boolean;
+        restoreFocus?: boolean;
+      }) => void;
+    };
+    let mapModeController: AtlasMapModeController | null = null;
+
+    if (canvas && networkShell && stage && scene && mapModeButton && fitButton && zoomOutButton && zoomInButton && resetButton && scaleStatus) {
+      const sceneWidth = Number(scene.dataset.sceneWidth);
+      let sceneHeight = Number(scene.dataset.sceneHeight);
+      let scale = 1;
+      let targetScale = 1;
+      let fitMode = false;
+      let mapMode = false;
+      let frame = 0;
+      let wheelAnchor: { x: number; y: number } | null = null;
+      let pendingPan: { left: number; top: number } | null = null;
+      let mapModeSnapshot: {
+        pageX: number;
+        pageY: number;
+        activeElement: HTMLElement | null;
+        documentOverflow: string;
+        bodyOverflow: string;
+        inertElements: Array<{ element: HTMLElement; wasInert: boolean }>;
+      } | null = null;
+      const outlineBreakpoint = matchMedia('(max-width: 1150px)');
+
+      syncPerspectiveGeometry = (nextPerspective) => {
+        const prefix = nextPerspective === 'category'
+          ? 'category'
+          : nextPerspective === 'events'
+            ? 'event'
+            : 'work';
+        const nextSceneHeight = Number(
+          nextPerspective === 'category'
+            ? scene.dataset.sceneCategoryHeight
+            : nextPerspective === 'events'
+              ? scene.dataset.sceneEventHeight
+              : scene.dataset.sceneWorkHeight,
+        );
+        if (Number.isFinite(nextSceneHeight) && nextSceneHeight > 0 && nextSceneHeight !== sceneHeight) {
+          sceneHeight = nextSceneHeight;
+          scene.dataset.sceneHeight = String(nextSceneHeight);
+          scene.style.height = `${nextSceneHeight}px`;
+          stage.style.height = `${nextSceneHeight * scale}px`;
+          relationsSvg?.setAttribute('viewBox', `0 0 ${sceneWidth} ${nextSceneHeight}`);
+        }
+        scene.dataset.atlasPerspective = nextPerspective;
+        networkNodes.forEach((node) => {
+          const geometry = {
+            left: node.dataset[`${prefix}Left`],
+            top: node.dataset[`${prefix}Top`],
+            width: node.dataset[`${prefix}Width`],
+            height: node.dataset[`${prefix}Height`],
+            centerX: node.dataset[`${prefix}CenterX`],
+            centerY: node.dataset[`${prefix}CenterY`],
+          };
+          if (Object.values(geometry).some((value) => value === undefined)) return;
+          node.style.setProperty('--atlas-node-left', `${geometry.left}px`);
+          node.style.setProperty('--atlas-node-top', `${geometry.top}px`);
+          node.style.setProperty('--atlas-node-width', `${geometry.width}px`);
+          node.style.setProperty('--atlas-node-height', `${geometry.height}px`);
+          node.dataset.nodeLeft = geometry.left;
+          node.dataset.nodeTop = geometry.top;
+          node.dataset.nodeWidth = geometry.width;
+          node.dataset.nodeHeight = geometry.height;
+          node.dataset.centerX = geometry.centerX;
+          node.dataset.centerY = geometry.centerY;
+        });
+        networkRelations.forEach((relation) => {
+          const path = relation.dataset[`${prefix}Path`];
+          const startX = relation.dataset[`${prefix}StartX`];
+          const startY = relation.dataset[`${prefix}StartY`];
+          const endX = relation.dataset[`${prefix}EndX`];
+          const endY = relation.dataset[`${prefix}EndY`];
+          if (!path || !startX || !startY || !endX || !endY) return;
+          relation.querySelectorAll<SVGPathElement>('[data-atlas-relation-path], .atlas-network__relation-hit')
+            .forEach((pathElement) => pathElement.setAttribute('d', path));
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="start"]')
+            ?.setAttribute('cx', startX);
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="start"]')
+            ?.setAttribute('cy', startY);
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="end"]')
+            ?.setAttribute('cx', endX);
+          relation.querySelector<SVGCircleElement>('[data-undirected-endpoint="end"]')
+            ?.setAttribute('cy', endY);
+          relation.dataset.startX = startX;
+          relation.dataset.startY = startY;
+          relation.dataset.endX = endX;
+          relation.dataset.endY = endY;
+        });
+      };
+
+      const syncPerspective = (nextPerspective: 'works' | 'category' | 'events') => {
+        perspectiveMode = nextPerspective;
+        const hasSelectedTheme = activeThemeId !== 'all';
+        const routeMode = mapMode && nextPerspective !== 'works' ? nextPerspective : 'full';
+        networkShell.dataset.atlasPerspective = nextPerspective;
+        networkShell.dataset.atlasRouteMode = routeMode;
+        if (primaryNetwork) {
+          primaryNetwork.dataset.atlasPerspective = nextPerspective;
+          primaryNetwork.dataset.atlasRouteMode = routeMode;
+        }
+        const visibleCounts = syncPerspectiveVisibility(nextPerspective);
+        syncPerspectiveGeometry(nextPerspective);
+        perspectiveButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.atlasPerspective === nextPerspective));
+          button.disabled = !mapMode;
+        });
+        if (status) {
+          const lensNote = hasSelectedTheme ? '当前透镜只改变高亮。' : '';
+          status.textContent = nextPerspective === 'category'
+            ? `品类发展视角：显示 ${visibleCounts.nodeCount} 个品类/事件节点与 ${visibleCounts.relationCount} 条关系；作品在节点详情中作为承载证据。${lensNote}`
+            : nextPerspective === 'events'
+              ? `创新事件视角：显示 ${visibleCounts.nodeCount} 个事件节点与 ${visibleCounts.relationCount} 条演进关系；承载作品在节点详情中展开。${lensNote}`
+              : `代表作品视角：显示 ${visibleCounts.nodeCount} 个作品/载体节点与 ${visibleCounts.relationCount} 条关系。${lensNote}`;
+        }
+      };
+
+      perspectiveButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const nextPerspective = button.dataset.atlasPerspective;
+          syncPerspective(nextPerspective === 'category' || nextPerspective === 'events' ? nextPerspective : 'works');
+        });
+      });
+
+      const collectMapModeBackground = () => {
+        const elements: Array<{ element: HTMLElement; wasInert: boolean }> = [];
+        let branch: HTMLElement = networkShell;
+        while (branch.parentElement) {
+          const parent = branch.parentElement;
+          Array.from(parent.children).forEach((sibling) => {
+            if (!(sibling instanceof HTMLElement) || sibling === branch) return;
+            if (sibling.matches('[data-atlas-selected-detail]')) return;
+            elements.push({ element: sibling, wasInert: sibling.inert });
+          });
+          if (parent === document.body) break;
+          branch = parent;
+        }
+        return elements;
+      };
+
+      const updateViewControls = () => {
+        scaleStatus.textContent = `${Math.round(scale * 100)}%`;
+        zoomOutButton.disabled = scale <= 0.5;
+        zoomInButton.disabled = scale >= 2;
+      };
+
+      const applyScale = (nextScale: number, resetOrigin = false, fitOverride = false) => {
+        const boundedScale = fitOverride
+          ? Math.min(2, Math.max(0.1, nextScale))
+          : clampAtlasScale(nextScale);
+        const nextScroll = resetOrigin
+          ? { scrollLeft: 0, scrollTop: 0 }
+          : projectAtlasScrollAnchor({
+              oldScale: scale,
+              newScale: boundedScale,
+              scrollLeft: canvas.scrollLeft,
+              scrollTop: canvas.scrollTop,
+              viewportWidth: canvas.clientWidth,
+              viewportHeight: canvas.clientHeight,
+            });
+        scale = boundedScale;
+        targetScale = boundedScale;
+        scene.style.transform = `scale(${scale})`;
+        stage.style.width = `${sceneWidth * scale}px`;
+        stage.style.height = `${sceneHeight * scale}px`;
+        stage.dataset.scale = String(scale);
+        canvas.scrollLeft = nextScroll.scrollLeft;
+        canvas.scrollTop = nextScroll.scrollTop;
+        updateViewControls();
+      };
+
+      const commitFrame = () => {
+        frame = 0;
+        if (wheelAnchor && targetScale !== scale) {
+          const nextScroll = projectAtlasPointerAnchor({
+            oldScale: scale,
+            newScale: targetScale,
+            scrollLeft: canvas.scrollLeft,
+            scrollTop: canvas.scrollTop,
+            pointerX: wheelAnchor.x,
+            pointerY: wheelAnchor.y,
+          });
+          scale = targetScale;
+          scene.style.transform = `scale(${scale})`;
+          stage.style.width = `${sceneWidth * scale}px`;
+          stage.style.height = `${sceneHeight * scale}px`;
+          stage.dataset.scale = String(scale);
+          canvas.scrollLeft = nextScroll.scrollLeft;
+          canvas.scrollTop = nextScroll.scrollTop;
+          updateViewControls();
+        }
+        if (pendingPan) {
+          canvas.scrollLeft = pendingPan.left;
+          canvas.scrollTop = pendingPan.top;
+        }
+        wheelAnchor = null;
+        pendingPan = null;
+      };
+
+      const scheduleFrame = () => {
+        if (!frame) frame = requestAnimationFrame(commitFrame);
+      };
+
+      const setMapMode = (
+        active: boolean,
+        options: { focusCanvas?: boolean; preserveSnapshot?: boolean; restoreFocus?: boolean } = {},
+      ) => {
+        if (active === mapMode || (active && outlineBreakpoint.matches)) return;
+        if (active) {
+          mapModeSnapshot ??= {
+            pageX: window.scrollX,
+            pageY: window.scrollY,
+            activeElement: document.activeElement instanceof HTMLElement ? document.activeElement : null,
+            documentOverflow: document.documentElement.style.overflow,
+            bodyOverflow: document.body.style.overflow,
+            inertElements: collectMapModeBackground(),
+          };
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+          mapModeSnapshot.inertElements.forEach(({ element }) => {
+            element.inert = true;
+          });
+          networkShell.dataset.mapMode = 'true';
+          networkShell.dataset.atlasRouteMode = perspectiveMode !== 'works' ? perspectiveMode : 'full';
+          networkShell.dataset.atlasPerspective = perspectiveMode;
+          if (primaryNetwork) {
+            primaryNetwork.dataset.atlasRouteMode = networkShell.dataset.atlasRouteMode;
+            primaryNetwork.dataset.atlasPerspective = perspectiveMode;
+          }
+          perspectiveButtons.forEach((button) => {
+            // Perspective is a map-level choice, not a genre-lens feature.
+            // Keep all three views available even when no lens is selected;
+            // a lens only changes emphasis inside the chosen primary layer.
+            button.disabled = false;
+          });
+          networkShell.setAttribute('role', 'dialog');
+          networkShell.setAttribute('aria-modal', 'true');
+          if (primaryNetwork) primaryNetwork.hidden = false;
+        } else {
+          delete networkShell.dataset.mapMode;
+          networkShell.dataset.atlasRouteMode = 'full';
+          networkShell.dataset.atlasPerspective = perspectiveMode;
+          if (primaryNetwork) {
+            primaryNetwork.dataset.atlasRouteMode = 'full';
+            primaryNetwork.dataset.atlasPerspective = perspectiveMode;
+          }
+          perspectiveButtons.forEach((button) => {
+            button.disabled = true;
+          });
+          networkShell.removeAttribute('role');
+          networkShell.removeAttribute('aria-modal');
+          if (frame) cancelAnimationFrame(frame);
+          frame = 0;
+          wheelAnchor = null;
+          pendingPan = null;
+          if (primaryNetwork) primaryNetwork.hidden = false;
+        }
+        mapMode = active;
+        mapModeButton.setAttribute('aria-pressed', String(active));
+        mapModeButton.textContent = active ? '退出地图模式' : '进入地图模式';
+        canvas.dataset.mapMode = String(active);
+        if (!active) delete canvas.dataset.dragging;
+
+        if (active) {
+          // Entering map mode changes what is actually visible on the canvas;
+          // refresh the status text after mapMode flips so it does not still
+          // claim that the complete 84-node graph is on the surface.
+          syncPerspective(perspectiveMode);
+          requestAnimationFrame(() => {
+            if (!mapMode) return;
+            if (fitMode) fitView();
+            if (options.focusCanvas !== false) canvas.focus({ preventScroll: true });
+          });
+          return;
+        }
+
+        if (!mapModeSnapshot) return;
+        const snapshot = mapModeSnapshot;
+        if (!options.preserveSnapshot) mapModeSnapshot = null;
+        document.documentElement.style.overflow = snapshot.documentOverflow;
+        document.body.style.overflow = snapshot.bodyOverflow;
+        snapshot.inertElements.forEach(({ element, wasInert }) => {
+          element.inert = wasInert;
+        });
+        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = 'auto';
+        if (options.restoreFocus !== false) {
+          const focusTarget = snapshot.activeElement?.isConnected ? snapshot.activeElement : mapModeButton;
+          focusTarget.focus({ preventScroll: true });
+        }
+        window.scrollTo(snapshot.pageX, snapshot.pageY);
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      };
+
+      mapModeController = {
+        isActive: () => mapMode,
+        setActive: setMapMode,
+      };
+
+      const fitView = () => {
+        fitMode = true;
+        applyScale(fitAtlasScale({
+          viewportWidth: canvas.clientWidth,
+          viewportHeight: canvas.clientHeight,
+          sceneWidth,
+          sceneHeight,
+        }), false, true);
+      };
+
+      const applyManualScale = (nextScale: number, resetOrigin = false) => {
+        fitMode = false;
+        applyScale(nextScale, resetOrigin);
+      };
+
+      fitButton.disabled = false;
+      mapModeButton.disabled = false;
+      resetButton.disabled = false;
+      updateViewControls();
+      fitButton.addEventListener('click', fitView);
+      zoomOutButton.addEventListener('click', () => applyManualScale(stepAtlasScale(scale, -1)));
+      zoomInButton.addEventListener('click', () => applyManualScale(stepAtlasScale(scale, 1)));
+      resetButton.addEventListener('click', () => applyManualScale(1, true));
+      mapModeButton.addEventListener('click', () => setMapMode(!mapMode));
+      document.addEventListener('keydown', (event) => {
+        if (!mapMode) return;
+        if (event.key === 'Escape') {
+          setMapMode(false);
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = Array.from(networkShell.querySelectorAll<HTMLElement>(
+          'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex]:not([tabindex="-1"])',
+        )).filter((element) => element.getClientRects().length > 0);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !networkShell.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus({ preventScroll: true });
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus({ preventScroll: true });
+        }
+      });
+      outlineBreakpoint.addEventListener('change', ({ matches }) => {
+        if (matches) setMapMode(false);
+      });
+
+      const resizeObserver = new ResizeObserver(() => {
+        if (fitMode) fitView();
+      });
+      resizeObserver.observe(canvas);
+
+      canvas.addEventListener('keydown', (event) => {
+        const offsets: Partial<Record<typeof event.key, [number, number]>> = {
+          ArrowLeft: [-80, 0],
+          ArrowRight: [80, 0],
+          ArrowUp: [0, -80],
+          ArrowDown: [0, 80],
+        };
+        const offset = offsets[event.key];
+        if (!offset) return;
+        event.preventDefault();
+        canvas.scrollLeft += offset[0];
+        canvas.scrollTop += offset[1];
+      });
+
+      canvas.addEventListener('wheel', (event) => {
+        if (!mapMode || event.deltaY === 0) return;
+        const nextScale = scaleAtlasWheelTarget({ currentScale: targetScale, deltaY: event.deltaY });
+        if (nextScale === targetScale) return;
+        event.preventDefault();
+        fitMode = false;
+        targetScale = nextScale;
+        const bounds = canvas.getBoundingClientRect();
+        wheelAnchor = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+        scheduleFrame();
+      }, { passive: false });
+
+      let drag: {
+        pointerId: number;
+        clientX: number;
+        clientY: number;
+        scrollLeft: number;
+        scrollTop: number;
+      } | null = null;
+      const interactiveSelector = 'a, button, input, select, summary, details';
+
+      canvas.addEventListener('pointerdown', (event) => {
+        if (!mapMode) return;
+        if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
+        drag = {
+          pointerId: event.pointerId,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          scrollLeft: canvas.scrollLeft,
+          scrollTop: canvas.scrollTop,
+        };
+        canvas.setPointerCapture(event.pointerId);
+        canvas.dataset.dragging = 'true';
+      });
+
+      canvas.addEventListener('pointermove', (event) => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+        event.preventDefault();
+        pendingPan = {
+          left: drag.scrollLeft + drag.clientX - event.clientX,
+          top: drag.scrollTop + drag.clientY - event.clientY,
+        };
+        scheduleFrame();
+      });
+
+      const finishDrag = (event: PointerEvent) => {
+        if (!drag || event.pointerId !== drag.pointerId) return;
+        drag = null;
+        delete canvas.dataset.dragging;
+        if (event.type !== 'lostpointercapture' && canvas.hasPointerCapture(event.pointerId)) {
+          canvas.releasePointerCapture(event.pointerId);
+        }
+      };
+      canvas.addEventListener('pointerup', finishDrag);
+      canvas.addEventListener('pointercancel', finishDrag);
+      canvas.addEventListener('lostpointercapture', finishDrag);
+    }
+
     const dialog = explorer.querySelector<HTMLDialogElement>('[data-atlas-selected-detail]');
     const dialogTitle = dialog?.querySelector<HTMLElement>('[data-atlas-dialog-title]');
     const dialogContent = dialog?.querySelector<HTMLElement>('[data-atlas-dialog-content]');
     const dialogClose = dialog?.querySelector<HTMLButtonElement>('[data-atlas-dialog-close]');
-    const canvas = explorer.querySelector<HTMLElement>('[data-atlas-canvas]');
     let detailOrigin: Element | null = null;
-    let savedPosition: { pageX: number; pageY: number; canvasX: number; url: string } | null = null;
+    let savedPosition: { pageX: number; pageY: number; canvasX: number; canvasY: number; url: string } | null = null;
     let evidenceDestination: HTMLElement | null = null;
+    let resumeMapModeAfterEvidence = false;
 
     const restoreNetworkPosition = () => {
       if (!savedPosition) return;
@@ -489,7 +1395,10 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
       document.documentElement.style.scrollBehavior = 'auto';
       window.history.replaceState(null, '', savedPosition.url);
       (detailOrigin as HTMLElement | null)?.focus({ preventScroll: true });
-      if (canvas) canvas.scrollLeft = savedPosition.canvasX;
+      if (canvas) {
+        canvas.scrollLeft = savedPosition.canvasX;
+        canvas.scrollTop = savedPosition.canvasY;
+      }
       window.scrollTo(savedPosition.pageX, savedPosition.pageY);
       document.documentElement.style.scrollBehavior = previousScrollBehavior;
       detailOrigin = null;
@@ -504,6 +1413,7 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
           pageX: window.scrollX,
           pageY: window.scrollY,
           canvasX: canvas?.scrollLeft ?? 0,
+          canvasY: canvas?.scrollTop ?? 0,
           url: window.location.href,
         };
       }
@@ -525,12 +1435,20 @@ const serializedThemeMatches = JSON.stringify(themeMatches).replaceAll('<', '\\u
         if (!target) return;
         event.preventDefault();
         evidenceDestination = target;
+        resumeMapModeAfterEvidence = mapModeController?.isActive() ?? false;
+        if (resumeMapModeAfterEvidence) {
+          mapModeController?.setActive(false, { preserveSnapshot: true, restoreFocus: false });
+        }
         dialog.close();
         return;
       }
       const evidenceReturn = event.target.closest<HTMLButtonElement>('[data-atlas-evidence-return]');
       if (evidenceReturn) {
         evidenceReturn.hidden = true;
+        if (resumeMapModeAfterEvidence) {
+          mapModeController?.setActive(true, { focusCanvas: false, restoreFocus: false });
+        }
+        resumeMapModeAfterEvidence = false;
         restoreNetworkPosition();
         return;
       }

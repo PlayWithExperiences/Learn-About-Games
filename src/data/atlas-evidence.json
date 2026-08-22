@@ -5,7 +5,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "A Brief History of Rogue", "en": "A Brief History of Rogue" },
     "url": "https://wichman.org/roguehistory.html",
-    "summary": { "zh-CN": "Rogue 联合作者 Glenn Wichman 的回顾，用于支持程序生成让每局不同，以及最早之一的谨慎边界。" }
+    "summary": { "zh-CN": "Rogue 联合作者 Glenn Wichman 的回顾，用于支持程序生成让每局不同，以及最早之一的谨慎边界。" },
+    "sourceKind": "creator-account",
+    "institutionOrAuthor": "Glenn Wichman",
+    "checkedAt": "2026-08-13",
+    "locator": "Author historical account",
+    "boundedClaim": {"zh-CN":"Rogue 联合作者 Glenn Wichman 的回顾，用于支持程序生成让每局不同，以及最早之一的谨慎边界。"}
   },
   {
     "id": "nethack-license-history",
@@ -13,7 +18,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "NetHack LICENSE_HISTORY", "en": "NetHack LICENSE_HISTORY" },
     "url": "https://www.nethack.org/download/LICENSE_HISTORY.html",
-    "summary": { "zh-CN": "NetHack 官方许可历史，说明 Hack 与 Rogue 的关系。" }
+    "summary": { "zh-CN": "NetHack 官方许可历史，说明 Hack 与 Rogue 的关系。" },
+    "sourceKind": "project-history",
+    "institutionOrAuthor": "NetHack DevTeam",
+    "checkedAt": "2026-08-13",
+    "locator": "LICENSE_HISTORY document",
+    "boundedClaim": {"zh-CN":"NetHack 官方许可历史，说明 Hack 与 Rogue 的关系。"}
   },
   {
     "id": "nethack-git-history",
@@ -21,7 +31,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "NetHack 项目历史文件", "en": "NetHack project history" },
     "url": "https://github.com/NetHack/NetHack/blob/NetHack-5.0.0_Released/dat/history",
-    "summary": { "zh-CN": "NetHack 官方仓库历史文件，记录多个 Hack 版本的合并。" }
+    "summary": { "zh-CN": "NetHack 官方仓库历史文件，记录多个 Hack 版本的合并。" },
+    "sourceKind": "project-history",
+    "institutionOrAuthor": "NetHack project maintainers",
+    "checkedAt": "2026-08-13",
+    "locator": "dat/history file",
+    "boundedClaim": {"zh-CN":"NetHack 官方仓库历史文件，记录多个 Hack 版本的合并。"}
   },
   {
     "id": "umoria-history",
@@ -29,7 +44,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "The Dungeons of Moria History", "en": "The Dungeons of Moria History" },
     "url": "https://umoria.org/history",
-    "summary": { "zh-CN": "Moria 作者 Robert Alan Koeneke 的回顾，说明 Rogue 的直接启发。" }
+    "summary": { "zh-CN": "Moria 作者 Robert Alan Koeneke 的回顾，说明 Rogue 的直接启发。" },
+    "sourceKind": "creator-account",
+    "institutionOrAuthor": "Robert Alan Koeneke",
+    "checkedAt": "2026-08-13",
+    "locator": "Author historical account",
+    "boundedClaim": {"zh-CN":"Moria 作者 Robert Alan Koeneke 的回顾，说明 Rogue 的直接启发。"}
   },
   {
     "id": "angband-version-history",
@@ -37,7 +57,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Angband Version History", "en": "Angband Version History" },
     "url": "https://raw.githubusercontent.com/angband/angband/master/docs/version.rst",
-    "summary": { "zh-CN": "Angband 官方版本史，说明 Angband 1.0 基于 Umoria 5.2.1。" }
+    "summary": { "zh-CN": "Angband 官方版本史，说明 Angband 1.0 基于 Umoria 5.2.1。" },
+    "sourceKind": "project-history",
+    "institutionOrAuthor": "Angband project maintainers",
+    "checkedAt": "2026-08-13",
+    "locator": "Version Information document",
+    "boundedClaim": {"zh-CN":"Angband 官方版本史，说明 Angband 1.0 基于 Umoria 5.2.1。"}
   },
   {
     "id": "rpgfan-brevik-interview",
@@ -45,7 +70,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "David Brevik Interview", "en": "David Brevik Interview" },
     "url": "https://www.rpgfan.com/feature/david-brevik-interview/",
-    "summary": { "zh-CN": "David Brevik 说明 Diablo 原型以 Angband 式 Roguelike 为模型，并从回合制转为实时。" }
+    "summary": { "zh-CN": "David Brevik 说明 Diablo 原型以 Angband 式 Roguelike 为模型，并从回合制转为实时。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "David Brevik / RPGFan",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"David Brevik 说明 Diablo 原型以 Angband 式 Roguelike 为模型，并从回合制转为实时。"}
   },
   {
     "id": "rps-spelunky-interview",
@@ -53,7 +83,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "IGF Factor 2012: Spelunky", "en": "IGF Factor 2012: Spelunky" },
     "url": "https://www.rockpapershotgun.com/igf-factor-2012-spelunky",
-    "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自两种原型的融合。" }
+    "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自两种原型的融合。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Derek Yu / Rock Paper Shotgun",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Derek Yu 说明 Roguelike 启发的平台游戏来自两种原型的融合。"}
   },
   {
     "id": "gamedeveloper-kasavin-interview",
@@ -61,7 +96,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Roguelikes and Narrative Design with Hades", "en": "Roguelikes and Narrative Design with Hades" },
     "url": "https://www.gamedeveloper.com/design/roguelikes-and-narrative-design-with-i-hades-i-creative-director-greg-kasavin",
-    "summary": { "zh-CN": "Greg Kasavin 说明团队从 Spelunky 已经推进的知识出发，并构思让角色记住每次死亡的叙事连续性。" }
+    "summary": { "zh-CN": "Greg Kasavin 说明团队从 Spelunky 已经推进的知识出发，并构思让角色记住每次死亡的叙事连续性。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Greg Kasavin / Game Developer",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Greg Kasavin 说明团队从 Spelunky 已经推进的知识出发，并构思让角色记住每次死亡的叙事连续性。"}
   },
   {
     "id": "supergiant-hades-faq",
@@ -69,7 +109,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Hades FAQ", "en": "Hades FAQ" },
     "url": "https://www.supergiantgames.com/blog/hades-faq/",
-    "summary": { "zh-CN": "Supergiant 官方 FAQ，用于区分传统回合制 Roguelike 与 Hades 的动作型跨类型变体。" }
+    "summary": { "zh-CN": "Supergiant 官方 FAQ，用于区分传统回合制 Roguelike 与 Hades 的动作型跨类型变体。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Supergiant Games",
+    "checkedAt": "2026-08-13",
+    "locator": "Hades FAQ",
+    "boundedClaim": {"zh-CN":"Supergiant 官方 FAQ，用于区分传统回合制 Roguelike 与 Hades 的动作型跨类型变体。"}
   },
   {
     "id": "nintendo-metroid-dread-report-vol-4",
@@ -77,7 +122,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Metroid Dread Report Vol. 4", "en": "Metroid Dread Report Vol. 4" },
     "url": "https://metroid.nintendo.com/dread/news/metroid-dread-report-vol-4/",
-    "summary": { "zh-CN": "Nintendo 官方回顾初代、Metroid II 与 Super Metroid 的系列位置、故事延续及基础探索结构。" }
+    "summary": { "zh-CN": "Nintendo 官方回顾初代、Metroid II 与 Super Metroid 的系列位置、故事延续及基础探索结构。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Nintendo",
+    "checkedAt": "2026-08-13",
+    "locator": "Metroid Dread Report vol. 4",
+    "boundedClaim": {"zh-CN":"Nintendo 官方回顾初代、Metroid II 与 Super Metroid 的系列位置、故事延续及基础探索结构。"}
   },
   {
     "id": "nintendo-super-metroid-interview",
@@ -85,7 +135,12 @@
     "originalLanguage": "es",
     "title": { "zh-CN": "Super Metroid 开发者访谈", "en": "Super Metroid developer interview" },
     "url": "https://www.nintendo.com/es-es/Noticias/2017/septiembre/Entrevista-con-desarrolladores-de-juegos-para-Nintendo-Classic-Mini-SNES-Parte-3-Super-Metroid-1285309.html",
-    "summary": { "zh-CN": "Nintendo 对 Super Metroid 开发者的官方访谈，补充系列次序与作品背景。" }
+    "summary": { "zh-CN": "Nintendo 对 Super Metroid 开发者的官方访谈，补充系列次序与作品背景。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Nintendo / Super Metroid developers",
+    "checkedAt": "2026-08-13",
+    "locator": "Developer interview",
+    "boundedClaim": {"zh-CN":"Nintendo 对 Super Metroid 开发者的官方访谈，补充系列次序与作品背景。"}
   },
   {
     "id": "konami-castlevania-ii-history",
@@ -93,7 +148,12 @@
     "originalLanguage": "ja",
     "title": { "zh-CN": "Castlevania II 官方历史", "en": "Castlevania II official history" },
     "url": "https://www.konami.com/games/castlevania/jp/ja/page/history_1987_fcd",
-    "summary": { "zh-CN": "Konami 官方记录其 1987 年发行，以及 RPG 式城镇、迷宫、道具与昼夜结构。" }
+    "summary": { "zh-CN": "Konami 官方记录其 1987 年发行，以及 RPG 式城镇、迷宫、道具与昼夜结构。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Konami",
+    "checkedAt": "2026-08-13",
+    "locator": "Castlevania history entry",
+    "boundedClaim": {"zh-CN":"Konami 官方记录其 1987 年发行，以及 RPG 式城镇、迷宫、道具与昼夜结构。"}
   },
   {
     "id": "nintendo-zelda-ii",
@@ -101,7 +161,12 @@
     "originalLanguage": "ja",
     "title": { "zh-CN": "Zelda II 官方页面", "en": "Zelda II official page" },
     "url": "https://www.nintendo.com/jp/software/zelda2/index.html",
-    "summary": { "zh-CN": "Nintendo 的 Zelda II 官方软件页面，用于作品与发行事实。" }
+    "summary": { "zh-CN": "Nintendo 的 Zelda II 官方软件页面，用于作品与发行事实。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Nintendo",
+    "checkedAt": "2026-08-13",
+    "locator": "Official game page",
+    "boundedClaim": {"zh-CN":"Nintendo 的 Zelda II 官方软件页面，用于作品与发行事实。"}
   },
   {
     "id": "nintendo-faxanadu",
@@ -109,7 +174,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Faxanadu 官方页面", "en": "Faxanadu official page" },
     "url": "https://www.nintendo.com/en-gb/Games/Virtual-Console-Wii-/Faxanadu-277259.html",
-    "summary": { "zh-CN": "Nintendo 将 Faxanadu 描述为 action RPG。" }
+    "summary": { "zh-CN": "Nintendo 将 Faxanadu 描述为 action RPG。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Nintendo",
+    "checkedAt": "2026-08-13",
+    "locator": "Official game page",
+    "boundedClaim": {"zh-CN":"Nintendo 将 Faxanadu 描述为 action RPG。"}
   },
   {
     "id": "mobygames-faxanadu-release",
@@ -117,7 +187,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Faxanadu 发行记录", "en": "Faxanadu release record" },
     "url": "https://www.mobygames.com/game/7331/faxanadu/",
-    "summary": { "zh-CN": "MobyGames 的发行记录，用于补足 1987 年年份；不承担影响关系。" }
+    "summary": { "zh-CN": "MobyGames 的发行记录，用于补足 1987 年年份；不承担影响关系。" },
+    "sourceKind": "catalog-record",
+    "institutionOrAuthor": "MobyGames",
+    "checkedAt": "2026-08-13",
+    "locator": "Release record",
+    "boundedClaim": {"zh-CN":"MobyGames 的发行记录，用于补足 1987 年年份；不承担影响关系。"}
   },
   {
     "id": "nintendo-link-to-past",
@@ -125,7 +200,12 @@
     "originalLanguage": "ja",
     "title": { "zh-CN": "A Link to the Past 官方页面", "en": "A Link to the Past official page" },
     "url": "https://www.nintendo.com/jp/titles/50010000039699.html",
-    "summary": { "zh-CN": "Nintendo 记录作品与 1991 年发行背景，并描述以道具解开场地和迷宫谜题。" }
+    "summary": { "zh-CN": "Nintendo 记录作品与 1991 年发行背景，并描述以道具解开场地和迷宫谜题。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Nintendo",
+    "checkedAt": "2026-08-13",
+    "locator": "Official game page",
+    "boundedClaim": {"zh-CN":"Nintendo 记录作品与 1991 年发行背景，并描述以道具解开场地和迷宫谜题。"}
   },
   {
     "id": "konami-sotn-history",
@@ -133,7 +213,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Symphony of the Night 官方历史", "en": "Symphony of the Night official history" },
     "url": "https://www.konami.com/games/castlevania/us/en-us/page/history_1997_ps",
-    "summary": { "zh-CN": "Konami 官方记录 SOTN 的 1997 年发行、隐藏武器、秘密与变身。" }
+    "summary": { "zh-CN": "Konami 官方记录 SOTN 的 1997 年发行、隐藏武器、秘密与变身。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Konami",
+    "checkedAt": "2026-08-13",
+    "locator": "Castlevania history entry",
+    "boundedClaim": {"zh-CN":"Konami 官方记录 SOTN 的 1997 年发行、隐藏武器、秘密与变身。"}
   },
   {
     "id": "igarashi-metroidvania-interview",
@@ -141,7 +226,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Igarashi 谈 Metroidvania 设计关系", "en": "Igarashi on Metroidvania design relations" },
     "url": "https://www.gamedeveloper.com/design/-i-castlevania-i-s-koji-igarashi-offers-advice-to-today-s-metroidvania-devs",
-    "summary": { "zh-CN": "Igarashi 说明 Zelda 对 SOTN 的直接启发，并区分与 Metroid 的结构相似。" }
+    "summary": { "zh-CN": "Igarashi 说明 Zelda 对 SOTN 的直接启发，并区分与 Metroid 的结构相似。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Koji Igarashi / Game Developer",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Igarashi 说明 Zelda 对 SOTN 的直接启发，并区分与 Metroid 的结构相似。"}
   },
   {
     "id": "gamespot-igarashi-zelda",
@@ -149,7 +239,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Igarashi 解释 Zelda 对 SOTN 的影响", "en": "Igarashi explains Zelda's influence on SOTN" },
     "url": "https://www.gamespot.com/articles/castlevanias-koji-igarashi-explains-the-influence-/1100-6481658/",
-    "summary": { "zh-CN": "对 Igarashi 录制访谈的报道，记录探索与取得物品后解锁下一区域的 Zelda 灵感。" }
+    "summary": { "zh-CN": "对 Igarashi 录制访谈的报道，记录探索与取得物品后解锁下一区域的 Zelda 灵感。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Koji Igarashi / GameSpot",
+    "checkedAt": "2026-08-13",
+    "locator": "Recorded interview report",
+    "boundedClaim": {"zh-CN":"对 Igarashi 录制访谈的报道，记录探索与取得物品后解锁下一区域的 Zelda 灵感。"}
   },
   {
     "id": "konami-circle-of-the-moon-history",
@@ -157,7 +252,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Circle of the Moon 官方历史", "en": "Circle of the Moon official history" },
     "url": "https://www.konami.com/games/castlevania/eu/en/page/history_2001_gba",
-    "summary": { "zh-CN": "Konami 官方记录其 2001 年发行、探索、DSS、地图完成度与收集。" }
+    "summary": { "zh-CN": "Konami 官方记录其 2001 年发行、探索、DSS、地图完成度与收集。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Konami",
+    "checkedAt": "2026-08-13",
+    "locator": "Castlevania history entry",
+    "boundedClaim": {"zh-CN":"Konami 官方记录其 2001 年发行、探索、DSS、地图完成度与收集。"}
   },
   {
     "id": "metroidvania-2001-usenet",
@@ -165,7 +265,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "2001 年 Metroidvania 用例存档", "en": "Archived 2001 Metroidvania usage" },
     "url": "https://groups.google.com/g/rec.games.video.nintendo/c/Iq7Q2fqdkIE/m/hOLAJKzHR8QJ",
-    "summary": { "zh-CN": "目前找到的 2001 年存档帖子把 Metroidvania 用于 Circle of the Moon；不用于宣称唯一首创者。" }
+    "summary": { "zh-CN": "目前找到的 2001 年存档帖子把 Metroidvania 用于 Circle of the Moon；不用于宣称唯一首创者。" },
+    "sourceKind": "archival-record",
+    "institutionOrAuthor": "Google Groups / rec.games.video.nintendo",
+    "checkedAt": "2026-08-13",
+    "locator": "Archived post body",
+    "boundedClaim": {"zh-CN":"目前找到的 2001 年存档帖子把 Metroidvania 用于 Circle of the Moon；不用于宣称唯一首创者。"}
   },
   {
     "id": "critical-hit-metroidvania-term-history",
@@ -173,7 +278,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Metroidvania 命名档案研究", "en": "Archival research on the Metroidvania term" },
     "url": "https://www.acriticalhit.com/exploring-metroidvania-meaning-history/",
-    "summary": { "zh-CN": "追踪 2001 年以后词语用法的历史研究，并明确保留遗失档案造成的起源不确定性。" }
+    "summary": { "zh-CN": "追踪 2001 年以后词语用法的历史研究，并明确保留遗失档案造成的起源不确定性。" },
+    "sourceKind": "historical-analysis",
+    "institutionOrAuthor": "A Critical Hit",
+    "checkedAt": "2026-08-13",
+    "locator": "Historical analysis",
+    "boundedClaim": {"zh-CN":"追踪 2001 年以后词语用法的历史研究，并明确保留遗失档案造成的起源不确定性。"}
   },
   {
     "id": "gamedeveloper-metroidvania-allure",
@@ -181,7 +291,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "The Undying Allure of the Metroidvania", "en": "The Undying Allure of the Metroidvania" },
     "url": "https://www.gamedeveloper.com/design/the-undying-allure-of-the-metroidvania",
-    "summary": { "zh-CN": "2015 年对类别形成、Cave Story 与 Shadow Complex 复兴语境的开发者和行业历史综合。" }
+    "summary": { "zh-CN": "2015 年对类别形成、Cave Story 与 Shadow Complex 复兴语境的开发者和行业历史综合。" },
+    "sourceKind": "historical-analysis",
+    "institutionOrAuthor": "Game Developer",
+    "checkedAt": "2026-08-13",
+    "locator": "Historical analysis",
+    "boundedClaim": {"zh-CN":"2015 年对类别形成、Cave Story 与 Shadow Complex 复兴语境的开发者和行业历史综合。"}
   },
   {
     "id": "cave-story-amaya-interview",
@@ -189,7 +304,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Daisuke Amaya 访谈存档", "en": "Daisuke Amaya interview archive" },
     "url": "https://archive.cavestory.org/onetwork/",
-    "summary": { "zh-CN": "Amaya 明确把 Metroid 与 Dragon Quest 说成 Cave Story 最强的两项灵感。" }
+    "summary": { "zh-CN": "Amaya 明确把 Metroid 与 Dragon Quest 说成 Cave Story 最强的两项灵感。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Daisuke Amaya / The-O Network",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Amaya 明确把 Metroid 与 Dragon Quest 说成 Cave Story 最强的两项灵感。"}
   },
   {
     "id": "gdc-cave-story",
@@ -197,7 +317,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "The Story of CAVE", "en": "The Story of CAVE" },
     "url": "https://gdcvault.com/play/1014621/The-Story-of-CAVE",
-    "summary": { "zh-CN": "GDC Vault 的 Cave Story 创作回顾，用于作品和独立开发背景。" }
+    "summary": { "zh-CN": "GDC Vault 的 Cave Story 创作回顾，用于作品和独立开发背景。" },
+    "sourceKind": "conference-talk",
+    "institutionOrAuthor": "Daisuke Amaya / Game Developers Conference",
+    "checkedAt": "2026-08-13",
+    "locator": "Talk page description",
+    "boundedClaim": {"zh-CN":"GDC Vault 的 Cave Story 创作回顾，用于作品和独立开发背景。"}
   },
   {
     "id": "mustard-shadow-complex-interview",
@@ -205,7 +330,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Donald Mustard 谈 Shadow Complex", "en": "Donald Mustard on Shadow Complex" },
     "url": "https://www.gamedeveloper.com/design/making-i-shadow-complex-i-donald-mustard-speaks",
-    "summary": { "zh-CN": "Mustard 明确称 Super Metroid 为个人最爱，并说明作品有意处理 Metroid 式非线性世界。" }
+    "summary": { "zh-CN": "Mustard 明确称 Super Metroid 为个人最爱，并说明作品有意处理 Metroid 式非线性世界。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Donald Mustard / Game Developer",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Mustard 明确称 Super Metroid 为个人最爱，并说明作品有意处理 Metroid 式非线性世界。"}
   },
   {
     "id": "xbox-shadow-complex-release",
@@ -213,7 +343,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Shadow Complex 发行公告", "en": "Shadow Complex release announcement" },
     "url": "https://news.xbox.com/en-us/2009/08/19/arcade-shadow-complex/",
-    "summary": { "zh-CN": "Xbox 官方 2009 年发行公告，用于作品年份。" }
+    "summary": { "zh-CN": "Xbox 官方 2009 年发行公告，用于作品年份。" },
+    "sourceKind": "publisher-release",
+    "institutionOrAuthor": "Xbox Wire",
+    "checkedAt": "2026-08-13",
+    "locator": "Release announcement",
+    "boundedClaim": {"zh-CN":"Xbox 官方 2009 年发行公告，用于作品年份。"}
   },
   {
     "id": "tom-happ-axiom-verge",
@@ -221,7 +356,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Tom Happ 介绍 Axiom Verge", "en": "Tom Happ introduces Axiom Verge" },
     "url": "https://blog.playstation.com/2014/04/30/axiom-verge-sci-fi-sidescroller-coming-to-ps4-vita/",
-    "summary": { "zh-CN": "创作者 Tom Happ 明确把 Metroid 列为 Axiom Verge 的多项灵感之一。" }
+    "summary": { "zh-CN": "创作者 Tom Happ 明确把 Metroid 列为 Axiom Verge 的多项灵感之一。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Tom Happ / PlayStation Blog",
+    "checkedAt": "2026-08-13",
+    "locator": "Creator statements",
+    "boundedClaim": {"zh-CN":"创作者 Tom Happ 明确把 Metroid 列为 Axiom Verge 的多项灵感之一。"}
   },
   {
     "id": "axiom-verge-release",
@@ -229,7 +369,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Axiom Verge 发行公告", "en": "Axiom Verge release announcement" },
     "url": "https://www.axiomverge.com/blog/axiom-verge-releases-march-31st-on-ps4",
-    "summary": { "zh-CN": "创作者官网的 2015 年 3 月 31 日发行公告。" }
+    "summary": { "zh-CN": "创作者官网的 2015 年 3 月 31 日发行公告。" },
+    "sourceKind": "publisher-release",
+    "institutionOrAuthor": "Tom Happ / Axiom Verge",
+    "checkedAt": "2026-08-13",
+    "locator": "Release announcement",
+    "boundedClaim": {"zh-CN":"创作者官网的 2015 年 3 月 31 日发行公告。"}
   },
   {
     "id": "moon-studios-ori-postmortem",
@@ -237,7 +382,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Ori and the Blind Forest Postmortem", "en": "Ori and the Blind Forest Postmortem" },
     "url": "https://www.gamedeveloper.com/audio/postmortem-moon-studios-heartfelt-i-ori-and-the-blind-forest-i-",
-    "summary": { "zh-CN": "Moon Studios 把原型描述为 Metroidvania 与 platformer 的混合，并明确列出 Super Metroid 与 SOTN。" }
+    "summary": { "zh-CN": "Moon Studios 把原型描述为 Metroidvania 与 platformer 的混合，并明确列出 Super Metroid 与 SOTN。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Moon Studios / Game Developer",
+    "checkedAt": "2026-08-13",
+    "locator": "Postmortem statements",
+    "boundedClaim": {"zh-CN":"Moon Studios 把原型描述为 Metroidvania 与 platformer 的混合，并明确列出 Super Metroid 与 SOTN。"}
   },
   {
     "id": "xbox-ori-release",
@@ -245,7 +395,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Ori and the Blind Forest 发行公告", "en": "Ori and the Blind Forest release announcement" },
     "url": "https://news.xbox.com/en-us/2015/03/10/ori-blind-forest-now-available-xbox/",
-    "summary": { "zh-CN": "Xbox 官方 2015 年发行公告，用于作品年份。" }
+    "summary": { "zh-CN": "Xbox 官方 2015 年发行公告，用于作品年份。" },
+    "sourceKind": "publisher-release",
+    "institutionOrAuthor": "Xbox Wire",
+    "checkedAt": "2026-08-13",
+    "locator": "Release announcement",
+    "boundedClaim": {"zh-CN":"Xbox 官方 2015 年发行公告，用于作品年份。"}
   },
   {
     "id": "team-cherry-nintendo-interview",
@@ -253,7 +408,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Nintendo 采访 Team Cherry", "en": "Nintendo interviews Team Cherry" },
     "url": "https://www.nintendo.com/au/news-and-articles/the-metamorphosis-of-hollow-knight-with-team-cherry-aussie-developer-interview/",
-    "summary": { "zh-CN": "Team Cherry 说明工作室围绕对 Zelda II 与 Faxanadu 等作品的共同喜爱形成。" }
+    "summary": { "zh-CN": "Team Cherry 说明工作室围绕对 Zelda II 与 Faxanadu 等作品的共同喜爱形成。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Team Cherry / Nintendo",
+    "checkedAt": "2026-08-13",
+    "locator": "Developer interview",
+    "boundedClaim": {"zh-CN":"Team Cherry 说明工作室围绕对 Zelda II 与 Faxanadu 等作品的共同喜爱形成。"}
   },
   {
     "id": "team-cherry-nintendolife-interview",
@@ -261,7 +421,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Team Cherry 谈 Hollow Knight 灵感", "en": "Team Cherry on Hollow Knight inspirations" },
     "url": "https://www.nintendolife.com/news/2018/01/feature_bugging_out_with_hollow_knights_team_cherry",
-    "summary": { "zh-CN": "Team Cherry 明确提到 Metroid、Faxanadu 与 Zelda II 带来的感受。" }
+    "summary": { "zh-CN": "Team Cherry 明确提到 Metroid、Faxanadu 与 Zelda II 带来的感受。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Team Cherry / Nintendo Life",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Team Cherry 明确提到 Metroid、Faxanadu 与 Zelda II 带来的感受。"}
   },
   {
     "id": "team-cherry-release",
@@ -269,7 +434,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Hollow Knight 发行公告", "en": "Hollow Knight release announcement" },
     "url": "https://www.teamcherry.com.au/blog/2017-begins-with-a-switch",
-    "summary": { "zh-CN": "Team Cherry 官方发布信息，用于 2017 年作品背景。" }
+    "summary": { "zh-CN": "Team Cherry 官方发布信息，用于 2017 年作品背景。" },
+    "sourceKind": "publisher-release",
+    "institutionOrAuthor": "Team Cherry",
+    "checkedAt": "2026-08-13",
+    "locator": "Release announcement",
+    "boundedClaim": {"zh-CN":"Team Cherry 官方发布信息，用于 2017 年作品背景。"}
   },
   {
     "id": "motion-twin-presskit",
@@ -277,7 +447,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Motion Twin 官方 Press Kit", "en": "Motion Twin official press kit" },
     "url": "https://motiontwin.com/presskit/",
-    "summary": { "zh-CN": "Motion Twin 把 Dead Cells 描述为现代 Roguelite 与旧式 MetroidVania 的融合，并列出 Spelunky、SOTN 等来源。" }
+    "summary": { "zh-CN": "Motion Twin 把 Dead Cells 描述为现代 Roguelite 与旧式 MetroidVania 的融合，并列出 Spelunky、SOTN 等来源。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Motion Twin",
+    "checkedAt": "2026-08-13",
+    "locator": "Press kit description",
+    "boundedClaim": {"zh-CN":"Motion Twin 把 Dead Cells 描述为现代 Roguelite 与旧式 MetroidVania 的融合，并列出 Spelunky、SOTN 等来源。"}
   },
   {
     "id": "motion-twin-xbox-interview",
@@ -285,7 +460,12 @@
     "originalLanguage": "fr",
     "title": { "zh-CN": "Motion Twin 访谈", "en": "Motion Twin interview" },
     "url": "https://news.xbox.com/fr-fr/2018/06/25/made-in-france-entretien-exclusif-avec-motion-twin/",
-    "summary": { "zh-CN": "Motion Twin 说明团队有意混合 Metroidvania 与 Roguelite。" }
+    "summary": { "zh-CN": "Motion Twin 说明团队有意混合 Metroidvania 与 Roguelite。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Motion Twin / Xbox Wire",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Motion Twin 说明团队有意混合 Metroidvania 与 Roguelite。"}
   },
   {
     "id": "dead-cells-products",
@@ -293,7 +473,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Dead Cells 官方产品页", "en": "Dead Cells official products page" },
     "url": "https://deadcells.com/products",
-    "summary": { "zh-CN": "Dead Cells 官方产品页，用于 2018 年发行与作品事实。" }
+    "summary": { "zh-CN": "Dead Cells 官方产品页，用于 2018 年发行与作品事实。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Motion Twin",
+    "checkedAt": "2026-08-13",
+    "locator": "Official product page",
+    "boundedClaim": {"zh-CN":"Dead Cells 官方产品页，用于 2018 年发行与作品事实。"}
   },
   {
     "id": "bloodstained-kickstarter",
@@ -301,7 +486,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Bloodstained Kickstarter", "en": "Bloodstained Kickstarter" },
     "url": "https://www.kickstarter.com/projects/iga/bloodstained-ritual-of-the-night",
-    "summary": { "zh-CN": "Igarashi 的官方众筹页面以 Igavania 和探索动作平台游戏描述项目。" }
+    "summary": { "zh-CN": "Igarashi 的官方众筹页面以 Igavania 和探索动作平台游戏描述项目。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Koji Igarashi / ArtPlay",
+    "checkedAt": "2026-08-13",
+    "locator": "Official Kickstarter project page",
+    "boundedClaim": {"zh-CN":"Igarashi 的官方众筹页面以 Igavania 和探索动作平台游戏描述项目。"}
   },
   {
     "id": "igarashi-bloodstained-interview",
@@ -309,7 +499,12 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Igarashi 谈 Bloodstained", "en": "Igarashi on Bloodstained" },
     "url": "https://www.gamedeveloper.com/business/koji-igarashi-on-the-power-and-responsibility-of-being-kickstarter-funded",
-    "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作。" }
+    "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Koji Igarashi / Game Developer",
+    "checkedAt": "2026-08-13",
+    "locator": "Interview statements",
+    "boundedClaim": {"zh-CN":"Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作。"}
   },
   {
     "id": "bloodstained-launch-trailer",
@@ -317,6 +512,447 @@
     "originalLanguage": "en",
     "title": { "zh-CN": "Bloodstained Launch Trailer", "en": "Bloodstained Launch Trailer" },
     "url": "https://www.youtube.com/watch?v=d79KArgmgcc",
-    "summary": { "zh-CN": "PlayStation 发行预告，用于 2019 年 6 月作品发行背景。" }
+    "summary": { "zh-CN": "PlayStation 发行预告，用于 2019 年 6 月作品发行背景。" },
+    "sourceKind": "publisher-release",
+    "institutionOrAuthor": "PlayStation",
+    "checkedAt": "2026-08-13",
+    "locator": "Official launch trailer",
+    "boundedClaim": {"zh-CN":"PlayStation 发行预告，用于 2019 年 6 月作品发行背景。"}
+  },
+  {
+    "id": "bnl-tennis-for-two", "sourceTitle": "The First Video Game?", "originalLanguage": "en",
+    "title": { "zh-CN": "Brookhaven: Tennis for Two", "en": "Brookhaven: Tennis for Two" },
+    "url": "https://www.bnl.gov/about/history/firstvideo.php", "summary": { "zh-CN": "Brookhaven 机构史记录 William Higinbotham 于 1958 年为访客日制作 Tennis for Two。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Brookhaven National Laboratory", "checkedAt": "2026-08-11", "stableId": "BNL firstvideo", "locator": "Opening history and 1958 visitor-day sections", "boundedClaim": { "zh-CN": "支持 1958 年实验装置与公开演示，不支持它影响 Pong。" }
+  },
+  {
+    "id": "chm-spacewar", "sourceTitle": "Spacewar!", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Spacewar!", "en": "Computer History Museum: Spacewar!" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/189", "summary": { "zh-CN": "CHM 记录 Spacewar! 于 1962 年在 MIT PDP-1 上完成并广泛传播。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM revolution 16/189", "locator": "Spacewar! exhibit text", "boundedClaim": { "zh-CN": "支持作品、年份与后续投币改作背景，不宣称唯一第一。" }
+  },
+  {
+    "id": "smithsonian-brown-box", "sourceTitle": "Brown Box prototype", "originalLanguage": "en",
+    "title": { "zh-CN": "Smithsonian: Brown Box", "en": "Smithsonian: Brown Box" },
+    "url": "https://americanhistory.si.edu/collections/object/nmah_1301997", "summary": { "zh-CN": "Smithsonian 馆藏记录 Ralph Baer 团队的 Brown Box 电视游戏原型。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Smithsonian National Museum of American History", "checkedAt": "2026-08-11", "stableId": "nmah_1301997", "locator": "Object description", "boundedClaim": { "zh-CN": "支持 Brown Box 是 Odyssey 开发链的原型。" }
+  },
+  {
+    "id": "stanford-galaxy-game", "sourceTitle": "The Galaxy Game", "originalLanguage": "en",
+    "title": { "zh-CN": "Stanford: Galaxy Game", "en": "Stanford: Galaxy Game" },
+    "url": "http://infolab.stanford.edu/pub/voy/museum/galaxy.html", "summary": { "zh-CN": "Stanford 资料记载 Galaxy Game 是 1971 年投入使用的投币式 Spacewar! 版本。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Stanford University", "checkedAt": "2026-08-11", "stableId": "Stanford Galaxy Game museum", "locator": "Introduction", "boundedClaim": { "zh-CN": "支持从 Spacewar! 到 Galaxy Game 的商业化改作。" }
+  },
+  {
+    "id": "chm-computer-space", "sourceTitle": "Computer Space", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Computer Space", "en": "Computer History Museum: Computer Space" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/210/874", "summary": { "zh-CN": "CHM 记录 1971 年 Computer Space 将 Spacewar! 改造成商业街机。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM 16/210/874", "locator": "Catalog description", "boundedClaim": { "zh-CN": "支持商业产品及 Spacewar! 来源，不扩大为全部街机史的唯一第一。" }
+  },
+  {
+    "id": "smithsonian-odyssey", "sourceTitle": "Magnavox Odyssey Video Game Unit, 1972", "originalLanguage": "en",
+    "title": { "zh-CN": "Smithsonian: Magnavox Odyssey", "en": "Smithsonian: Magnavox Odyssey" },
+    "url": "https://americanhistory.si.edu/collections/object/nmah_1302004", "summary": { "zh-CN": "Smithsonian 馆藏记录 1972 年 Magnavox Odyssey 及其 Ralph Baer 原型链。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Smithsonian National Museum of American History", "checkedAt": "2026-08-11", "stableId": "nmah_1302004", "locator": "Object description", "boundedClaim": { "zh-CN": "支持 Odyssey 商业硬件及其桌上网球游戏，不将其写成 Pong。" }
+  },
+  {
+    "id": "chm-pong-prototype", "sourceTitle": "Pong prototype", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Pong prototype", "en": "Computer History Museum: Pong prototype" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/183/746", "summary": { "zh-CN": "CHM 馆藏记录 Al Alcorn 于 1972 年制作的 Pong 原型。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM 16/183/746", "locator": "Catalog description", "boundedClaim": { "zh-CN": "支持 Pong 原型、作者与年份，不宣称 Pong 是第一款电子游戏。" }
+  },
+  {
+    "id": "alcorn-oral-history", "sourceTitle": "Oral History of Allan Alcorn", "originalLanguage": "en",
+    "title": { "zh-CN": "Allan Alcorn 口述史", "en": "Oral History of Allan Alcorn" },
+    "url": "https://archive.computerhistory.org/resources/access/text/2012/09/102658257-05-01-acc.pdf", "summary": { "zh-CN": "Alcorn 回忆 Bushnell 看过 Odyssey 的网球演示后交付 Pong 练习项目。" },
+    "sourceKind": "oral-history", "institutionOrAuthor": "Allan Alcorn / Computer History Museum", "checkedAt": "2026-08-11", "stableId": "102658257", "locator": "Odyssey and Pong development discussion", "boundedClaim": { "zh-CN": "支持 Odyssey Table Tennis 对 Pong 项目构成直接设计触发；这是参与者回忆。" }
+  },
+  {
+    "id": "chm-home-pong", "sourceTitle": "Pong", "originalLanguage": "en",
+    "title": { "zh-CN": "Computer History Museum: Pong history", "en": "Computer History Museum: Pong history" },
+    "url": "https://www.computerhistory.org/revolution/computer-games/16/183", "summary": { "zh-CN": "CHM 综述记录 Pong 从街机原型走向 1975 年家用版本。" },
+    "sourceKind": "institutional-history", "institutionOrAuthor": "Computer History Museum", "checkedAt": "2026-08-11", "stableId": "CHM revolution 16/183", "locator": "Pong exhibit narrative", "boundedClaim": { "zh-CN": "支持从 Pong 到 Home Pong 的商业产品演化。" }
+  },
+  {
+    "id": "museum-of-game-space-panic",
+    "sourceTitle": "Space Panic - Videogame by Universal",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Museum of the Game: Space Panic", "en": "Museum of the Game: Space Panic" },
+    "url": "https://www.arcade-museum.com/Videogame/space-panic",
+    "summary": { "zh-CN": "Museum of the Game 馆藏条目记录 Universal 于 1980 年推出 Space Panic，并描述其梯子、楼层与挖洞困敌玩法。" },
+    "sourceKind": "museum-object",
+    "institutionOrAuthor": "International Arcade Museum / Museum of the Game",
+    "publicationDate": "undated",
+    "checkedAt": "2026-08-11",
+    "stableId": "KLOV/MOG 9676",
+    "locator": "Description and Specs",
+    "boundedClaim": { "zh-CN": "支持 Space Panic 的年份、制作方与固定画面攀爬玩法；不支持它对 Donkey Kong 的直接影响。" }
+  },
+  {
+    "id": "strong-donkey-kong",
+    "sourceTitle": "Donkey Kong",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "The Strong: Donkey Kong", "en": "The Strong: Donkey Kong" },
+    "url": "https://www.museumofplay.org/games/donkey-kong/",
+    "summary": { "zh-CN": "The Strong 记录 Shigeru Miyamoto 在 1981 年创作 Donkey Kong，并描述跳跃、梯子、斜坡与四个场景。" },
+    "sourceKind": "museum-object",
+    "institutionOrAuthor": "The Strong National Museum of Play",
+    "publicationDate": "2021-08-20",
+    "checkedAt": "2026-08-11",
+    "stableId": "World Video Game Hall of Fame: Donkey Kong",
+    "locator": "Donkey Kong exhibit narrative, paragraphs 2-5",
+    "boundedClaim": { "zh-CN": "支持 Donkey Kong 的年份、作者与具体玩法，不支持 Space Panic 到 Donkey Kong 的因果关系。" }
+  },
+  {
+    "id": "nintendo-original-super-mario-developers",
+    "sourceTitle": "Iwata Asks: Original Super Mario Developers, The Grand Culmination",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Nintendo 开发者回顾：Super Mario Bros. 的综合来源", "en": "Nintendo developer history: the culmination behind Super Mario Bros." },
+    "url": "https://iwataasks.nintendo.com/interviews/wii/mario25th/4/2/",
+    "summary": { "zh-CN": "Miyamoto 与 Nakago 回顾 Super Mario Bros. 有意综合 Donkey Kong、Donkey Kong Jr.、Mario Bros. 与 Excitebike 的具体设计元素。" },
+    "sourceKind": "oral-history",
+    "institutionOrAuthor": "Satoru Iwata, Shigeru Miyamoto, Toshihiko Nakago / Nintendo",
+    "publicationDate": "2010",
+    "checkedAt": "2026-08-11",
+    "stableId": "Iwata Asks mario25th volume 5 page 3",
+    "locator": "The Grand Culmination, development specification discussion",
+    "boundedClaim": { "zh-CN": "支持 Donkey Kong 与 Mario Bros. 的具体设计元素被用于 Super Mario Bros.；不把这种综合写成单一起源。" }
+  },
+  {
+    "id": "strong-sonic-the-hedgehog",
+    "sourceTitle": "Sonic the Hedgehog",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "The Strong: Sonic the Hedgehog", "en": "The Strong: Sonic the Hedgehog" },
+    "url": "https://www.museumofplay.org/games/sonic-the-hedgehog/",
+    "summary": { "zh-CN": "The Strong 记录 Sega 为开发 Nintendo Mario 的竞争者举办内部设计竞赛，并描述 Sonic 的速度、坡面、弹簧与环形轨道。" },
+    "sourceKind": "museum-object",
+    "institutionOrAuthor": "The Strong National Museum of Play",
+    "publicationDate": "2021-08-20",
+    "checkedAt": "2026-08-11",
+    "stableId": "World Video Game Hall of Fame: Sonic the Hedgehog",
+    "locator": "Sonic the Hedgehog exhibit narrative, paragraphs 1-4",
+    "boundedClaim": { "zh-CN": "支持 Sonic 的节点事实与针对 Mario 的竞争设计语境；作为机构史，将关系标为 credible。" }
+  },
+  {
+    "id": "celeste-official-site",
+    "sourceTitle": "Celeste",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Celeste 官方网站", "en": "Celeste official site" },
+    "url": "https://www.celestegame.com/",
+    "summary": { "zh-CN": "开发团队官方网站将 Celeste 描述为围绕 Madeline 攀登 Celeste Mountain 的紧凑手工平台游戏。" },
+    "sourceKind": "institutional-history",
+    "institutionOrAuthor": "Maddy Makes Games / Extremely OK Games",
+    "publicationDate": "undated",
+    "checkedAt": "2026-08-11",
+    "stableId": "celestegame.com home",
+    "locator": "Homepage lead description and credits",
+    "boundedClaim": { "zh-CN": "仅支持 Celeste 的创作者自述、主角目标与平台玩法；未验证其与本批其他作品的直接影响关系。" }
+  },
+  {
+    "id": "strong-colossal-cave-adventure",
+    "sourceTitle": "Colossal Cave Adventure",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "The Strong: Colossal Cave Adventure", "en": "The Strong: Colossal Cave Adventure" },
+    "url": "https://www.museumofplay.org/games/colossal-cave-adventure/",
+    "summary": { "zh-CN": "The Strong 记录 Crowther 与 Woods 的作品史，并明确记载它启发 Zork 及 Roberta Williams 创作 Mystery House。" },
+    "sourceKind": "museum-object",
+    "institutionOrAuthor": "The Strong National Museum of Play",
+    "publicationDate": "2021-08-20",
+    "checkedAt": "2026-08-11",
+    "stableId": "World Video Game Hall of Fame: Colossal Cave Adventure",
+    "locator": "Exhibit narrative paragraphs 2-6 and Did You Know",
+    "boundedClaim": { "zh-CN": "支持 Colossal Cave、Zork、Mystery House 的节点事实及两条明确启发关系；机构史关系均标为 credible。" }
+  },
+  {
+    "id": "strong-kings-quest",
+    "sourceTitle": "King's Quest",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "The Strong: King's Quest", "en": "The Strong: King's Quest" },
+    "url": "https://www.museumofplay.org/games/kings-quest/",
+    "summary": { "zh-CN": "The Strong 记录 King's Quest 于 1984 年为 IBM PCjr 推出，并说明其文本解析器、角色移动与伪三维场景。" },
+    "sourceKind": "museum-object",
+    "institutionOrAuthor": "The Strong National Museum of Play",
+    "publicationDate": "2021-08-20",
+    "checkedAt": "2026-08-11",
+    "stableId": "World Video Game Hall of Fame: King's Quest",
+    "locator": "King's Quest exhibit narrative, paragraphs 1-4",
+    "boundedClaim": { "zh-CN": "支持 King's Quest 的年份、平台和界面结构；不单独证明其到 Maniac Mansion 的关系。" }
+  },
+  {
+    "id": "gamedeveloper-maniac-mansion-gdc",
+    "sourceTitle": "GDC 2011: Ron Gilbert's 'Odd Collection' Of Maniac Mansion Memories",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Ron Gilbert GDC 回顾 Maniac Mansion", "en": "Ron Gilbert recalls Maniac Mansion at GDC" },
+    "url": "https://www.gamedeveloper.com/game-platforms/gdc-2011-ron-gilbert-s-odd-collection-of-i-maniac-mansion-i-memories",
+    "summary": { "zh-CN": "GDC 现场报道引述 Ron Gilbert：观看表弟玩 King's Quest 让 Maniac Mansion 的形式成形，而对文本解析器的不满促成指向点击动词界面。" },
+    "sourceKind": "oral-history",
+    "institutionOrAuthor": "Ron Gilbert / Game Developers Conference; report by Game Developer",
+    "publicationDate": "2011-03-04",
+    "checkedAt": "2026-08-11",
+    "stableId": "GDC 2011 Maniac Mansion postmortem report",
+    "locator": "Paragraph beginning 'A Christmas trip home changed everything'",
+    "boundedClaim": { "zh-CN": "支持 King's Quest 对 Maniac Mansion 的直接设计响应及后者界面来源；这是参与者公开回顾。" }
+  },
+  {
+    "id": "lucasfilm-scumm-history",
+    "sourceTitle": "Lucasfilm Originals: SCUMM",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Lucasfilm 官方 SCUMM 历史", "en": "Lucasfilm Originals: SCUMM" },
+    "url": "https://www.lucasfilm.com/news/lucasfilm-originals-scumm/",
+    "summary": { "zh-CN": "Lucasfilm 记录 SCUMM 为实现 Maniac Mansion 而创建，随后持续修订并用于 The Secret of Monkey Island 等冒险游戏。" },
+    "sourceKind": "institutional-history",
+    "institutionOrAuthor": "Lucas O. Seastrom / Lucasfilm",
+    "publicationDate": "2021",
+    "checkedAt": "2026-08-11",
+    "stableId": "Lucasfilm Originals: SCUMM",
+    "locator": "Paragraphs 3-6, from SCUMM creation through later titles",
+    "boundedClaim": { "zh-CN": "支持 Maniac Mansion 到 The Secret of Monkey Island 的明确 SCUMM 技术沿用；不等同于全部叙事或谜题的直接继承。" }
+  },
+  {
+    "id": "nintendo-celeste-release",
+    "sourceTitle": "Celeste for Nintendo Switch - Nintendo Official Site",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Nintendo 官方 Celeste 商品页", "en": "Nintendo official Celeste product page" },
+    "url": "https://www.nintendo.com/us/store/products/celeste-switch/",
+    "summary": { "zh-CN": "Nintendo 官方商品页列出 Celeste 的发行日期为 2018 年 1 月 25 日，并将其描述为攀登 Celeste Mountain 的平台游戏。" },
+    "sourceKind": "institutional-history",
+    "institutionOrAuthor": "Nintendo",
+    "publicationDate": "undated",
+    "checkedAt": "2026-08-11",
+    "stableId": "Nintendo product slug: celeste-switch",
+    "locator": "About this item; Release date",
+    "boundedClaim": { "zh-CN": "支持 Celeste 的 2018 年时间坐标及 Nintendo Switch 发行日期；不证明其他平台的发行日期或历史影响关系。" }
+  },
+  {
+    "id": "acmi-zork",
+    "sourceTitle": "Zork",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "ACMI 馆藏：Zork", "en": "ACMI collection: Zork" },
+    "url": "https://www.acmi.net.au/works/125370--zork/",
+    "summary": { "zh-CN": "ACMI 记录 Zork 基于 1977 年 MIT 学生为 PDP-10 制作的早期版本；成员后来成立 Infocom，并为较小的家用电脑重新制作。" },
+    "sourceKind": "museum-object",
+    "institutionOrAuthor": "ACMI",
+    "publicationDate": "undated",
+    "checkedAt": "2026-08-11",
+    "stableId": "ACMI work 125370",
+    "locator": "Collection description, paragraphs 1-3",
+    "boundedClaim": { "zh-CN": "支持 Zork 的 1977 年时间坐标、MIT/PDP-10 制作背景及后来由 Infocom 面向家用电脑重制；不把商业版 1980 年误作最初起点。" }
+  },
+  {
+    "id": "strong-sierra-collection",
+    "sourceTitle": "Collection: Ken and Roberta Williams' Sierra On-Line collection",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "The Strong 档案：Ken 与 Roberta Williams 的 Sierra On-Line 馆藏", "en": "The Strong archive: Ken and Roberta Williams' Sierra On-Line collection" },
+    "url": "https://archives.museumofplay.org/repositories/3/resources/18",
+    "summary": { "zh-CN": "The Strong 馆藏说明记录 Ken 的编程与 Roberta 的叙事协作、Apple II 的图形能力，以及 On-Line Systems 于 1980 年推出结合文字与图形的 Mystery House。" },
+    "sourceKind": "institutional-history",
+    "institutionOrAuthor": "The Strong National Museum of Play",
+    "publicationDate": "2013-05-01",
+    "checkedAt": "2026-08-11",
+    "stableId": "Collection identifier 111.4936",
+    "locator": "Historical Note, paragraphs 1-2",
+    "boundedClaim": { "zh-CN": "支持 Mystery House 的 1980 年、Apple II、On-Line Systems、文字与图形结合及 Williams 夫妇的分工协作；不主张绝对第一。" }
+  },
+  {
+    "id": "acmi-maze-war", "sourceTitle": "Maze War", "originalLanguage": "en",
+    "title": { "zh-CN": "ACMI 馆藏：Maze War", "en": "ACMI collection: Maze War" },
+    "url": "https://www.acmi.net.au/works/60826--maze-war/",
+    "summary": { "zh-CN": "ACMI 将 1973 年 Maze War 描述为较早创建第一人称三维世界并支持网络游玩的电子游戏之一。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "ACMI",
+    "checkedAt": "2026-08-13", "stableId": "ACMI work 60826",
+    "locator": "Collection description and production date",
+    "boundedClaim": { "zh-CN": "仅支持 Maze War 的 1973 年时间坐标、第一人称三维迷宫与网络游玩语境；不证明它直接影响 1990 年代 FPS。" }
+  },
+  {
+    "id": "gdc-wolfenstein-postmortem", "sourceTitle": "Classic Game Postmortem: 'Wolfenstein 3D' (Achtung!)", "originalLanguage": "en",
+    "title": { "zh-CN": "John Romero：Wolfenstein 3D 经典游戏回顾", "en": "Classic Game Postmortem: Wolfenstein 3D" },
+    "url": "https://www.gdcvault.com/play/1027860/Classic-Game-Postmortem-Wolfenstein-3D",
+    "summary": { "zh-CN": "GDC 会话页由 John Romero 回顾 Catacomb 3-D 发布后，id Software 在七个月内开发 Wolfenstein 3D 的过程。" },
+    "sourceKind": "conference-talk", "institutionOrAuthor": "John Romero / Game Developers Conference",
+    "publicationDate": "2022", "checkedAt": "2026-08-13", "stableId": "GDC Vault 1027860",
+    "locator": "Session overview and speaker metadata",
+    "boundedClaim": { "zh-CN": "支持 Catacomb 3-D 与 Wolfenstein 3D 的节点事实及同团队连续开发关系；不主张类型唯一发明。" }
+  },
+  {
+    "id": "gdc-doom-postmortem", "sourceTitle": "Classic Game Postmortem - DOOM", "originalLanguage": "en",
+    "title": { "zh-CN": "John Romero 与 Tom Hall：DOOM 经典游戏回顾", "en": "Classic Game Postmortem: DOOM" },
+    "url": "https://www.gdcvault.com/play/1014627/",
+    "summary": { "zh-CN": "GDC 会话由 John Romero 与 Tom Hall 回顾 DOOM 的灵感、设计选择与开发挑战。" },
+    "sourceKind": "conference-talk", "institutionOrAuthor": "John Romero, Tom Hall / Game Developers Conference",
+    "publicationDate": "2011", "checkedAt": "2026-08-13", "stableId": "GDC Vault 1014627",
+    "locator": "Session title, speakers and overview",
+    "boundedClaim": { "zh-CN": "支持 DOOM 的开发者回顾及其位于 Wolfenstein 3D 之后的设计响应；不把新引擎描述为前作的简单派生。" }
+  },
+  {
+    "id": "gdc-quake-postmortem", "sourceTitle": "Classic Game Postmortem: 'Quake': The End of the Original Id", "originalLanguage": "en",
+    "title": { "zh-CN": "John Romero：Quake 经典游戏回顾", "en": "Classic Game Postmortem: Quake" },
+    "url": "https://www.gdcvault.com/play/1027152/Classic-Game-Postmortem-Quake-The",
+    "summary": { "zh-CN": "GDC 会话页由 John Romero 回顾 id Software 在 DOOM 与 DOOM II 成功之后制作 Quake 的过程。" },
+    "sourceKind": "conference-talk", "institutionOrAuthor": "John Romero / Game Developers Conference",
+    "publicationDate": "2021", "checkedAt": "2026-08-13", "stableId": "GDC Vault 1027152",
+    "locator": "Session overview and speaker metadata",
+    "boundedClaim": { "zh-CN": "支持 Quake 的节点事实以及它作为 DOOM 系列后续的同团队设计响应；不证明所有技术或玩法直接继承。" }
+  },
+  {
+    "id": "valve-cabal-half-life", "sourceTitle": "The Cabal: Valve’s Design Process For Creating Half-Life", "originalLanguage": "en",
+    "title": { "zh-CN": "Ken Birdwell：Half-Life 的 Cabal 设计过程", "en": "The Cabal: Valve’s Design Process For Creating Half-Life" },
+    "url": "https://www.gamedeveloper.com/design/the-cabal-valve-s-design-process-for-creating-i-half-life-i-",
+    "summary": { "zh-CN": "Valve 开发者 Ken Birdwell 记录 Half-Life 最初目标本质上是精致的 Quake TC，并在效果不佳后推倒重做。" },
+    "sourceKind": "creator-account", "institutionOrAuthor": "Ken Birdwell / Valve",
+    "publicationDate": "1999-12-10", "checkedAt": "2026-08-13", "stableId": "Game Developer article: The Cabal",
+    "locator": "Opening section, paragraph beginning 'Our initial target release date'",
+    "boundedClaim": { "zh-CN": "支持 Half-Life 的 1998 年项目语境、最初 Quake TC 目标及后续重构；关系类型为 design-response，而非完整派生。" }
+  },
+  {
+    "id": "acmi-dune-ii", "sourceTitle": "Dune II: The Building of a Dynasty", "originalLanguage": "en",
+    "title": { "zh-CN": "ACMI 馆藏：Dune II", "en": "ACMI collection: Dune II" },
+    "url": "https://www.acmi.net.au/works/107341--dune-ii-the-building-of-a-dynasty/",
+    "summary": { "zh-CN": "ACMI 记录 Dune II 的 1992 年时间、RTS 语境以及资源、建造、单位和阵营结构。" },
+    "sourceKind": "museum-object", "institutionOrAuthor": "ACMI",
+    "checkedAt": "2026-08-13", "stableId": "ACMI work 107341 / igdb-86",
+    "locator": "Collection description, production date and subject categories",
+    "boundedClaim": { "zh-CN": "支持 Dune II 的时间与 RTS 设计语境；不把馆藏的常见历史评价改写为无争议的绝对第一。" }
+  },
+  {
+    "id": "patrick-wyatt-making-warcraft", "sourceTitle": "The making of Warcraft part 1", "originalLanguage": "en",
+    "title": { "zh-CN": "Patrick Wyatt：Warcraft 的制作（第一部分）", "en": "The making of Warcraft part 1" },
+    "url": "https://www.codeofhonor.com/blog/the-making-of-warcraft-part-1/",
+    "summary": { "zh-CN": "Warcraft 首席程序员 Patrick Wyatt 回顾早期原型受到 Dune II 启发，并一度像其精简版本。" },
+    "sourceKind": "creator-account", "institutionOrAuthor": "Patrick Wyatt",
+    "publicationDate": "2012", "checkedAt": "2026-08-13", "stableId": "Code of Honor: making Warcraft part 1",
+    "locator": "Section describing the first multiplayer prototype and Dune 2 comparison",
+    "boundedClaim": { "zh-CN": "支持 Dune II 对 Warcraft 初期设计的直接影响；不主张两款作品结构完全相同。" }
+  },
+  {
+    "id": "blizzard-starcraft-20", "sourceTitle": "Mike Morhaime on 20 Years of StarCraft Esports", "originalLanguage": "en",
+    "title": { "zh-CN": "Mike Morhaime 回顾 StarCraft 二十年", "en": "Mike Morhaime on 20 Years of StarCraft Esports" },
+    "url": "https://news.blizzard.com/en-us/article/21574697/mike-morhaime-on-20-years-of-starcraft-esports",
+    "summary": { "zh-CN": "Blizzard 回顾称 StarCraft 初版使用 Warcraft II 引擎换皮，E3 反响促使 Bob Fitch 重写引擎并提高目标。" },
+    "sourceKind": "creator-account", "institutionOrAuthor": "Mike Morhaime / Blizzard Entertainment",
+    "publicationDate": "2018", "checkedAt": "2026-08-13", "stableId": "Blizzard article 21574697",
+    "locator": "Opening development recollection, paragraphs on the 1996 E3 alpha",
+    "boundedClaim": { "zh-CN": "支持 Warcraft II 作为 StarCraft 初版技术基础，以及外部反馈后重写引擎的设计响应；不主张最终作品只是换皮。" }
+  },
+  {
+    "id": "nintendo-ocarina-z-targeting",
+    "sourceTitle": "Iwata Asks: The Legend of Zelda: Ocarina of Time 3D",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Nintendo Iwata Asks：Ocarina of Time 的 Z-targeting", "en": "Nintendo Iwata Asks: Ocarina of Time Z-targeting" },
+    "url": "https://iwataasks.nintendo.com/interviews/3ds/zelda-ocarina-of-time/1/2/",
+    "summary": { "zh-CN": "Nintendo 开发者回顾 Z-targeting 如何通过锁定敌人与调整镜头解决一对多战斗的空间可读性问题。" },
+    "sourceKind": "interview",
+    "institutionOrAuthor": "Nintendo / Ocarina of Time developers",
+    "checkedAt": "2026-08-15",
+    "stableId": "Iwata Asks Ocarina of Time 3DS 1-2",
+    "locator": "Developer discussion of Z-targeting, camera and one-versus-many combat",
+    "boundedClaim": { "zh-CN": "支持 Ocarina of Time 中 Z-targeting 的设计问题与解决方向；不把它写成所有锁定系统的唯一发明。" }
+  },
+  {
+    "id": "gamedeveloper-dd-rpg-history",
+    "sourceTitle": "Dungeons & Dragons: The First Modern RPG? A History of Game Design",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Game Developer：Dungeons & Dragons 与现代 RPG 的形成", "en": "Dungeons & Dragons: The First Modern RPG?" },
+    "url": "https://www.gamedeveloper.com/design/dungeons-and-dragons-the-first-modern-rpg-history-of-game-design-",
+    "summary": { "zh-CN": "Game Developer 的历史回顾讨论角色职业、经验、等级与持续战役如何构成现代 RPG 的成长语法。" },
+    "sourceKind": "historical-analysis",
+    "institutionOrAuthor": "Game Developer",
+    "publicationDate": "2014",
+    "checkedAt": "2026-08-15",
+    "stableId": "Game Developer RPG history",
+    "locator": "Sections on character classes, experience and levels",
+    "boundedClaim": { "zh-CN": "支持 RPG 持续角色成长语法的历史形成语境；不将某个单一桌游或电子游戏写成唯一发明者。" }
+  },
+  {
+    "id": "gamedeveloper-fundamentals-progression",
+    "sourceTitle": "The Fundamentals of Game Progression",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Game Developer：游戏进展的基础", "en": "The Fundamentals of Game Progression" },
+    "url": "https://www.gamedeveloper.com/design/the-fundamentals-of-game-progression",
+    "summary": { "zh-CN": "Game Developer 从关卡、角色和能力变化讨论游戏进展如何把玩家行动转成持续反馈。" },
+    "sourceKind": "historical-analysis",
+    "institutionOrAuthor": "Game Developer",
+    "checkedAt": "2026-08-15",
+    "stableId": "Game Developer game progression fundamentals",
+    "locator": "Sections defining progression and character progression",
+    "boundedClaim": { "zh-CN": "支持持续进展作为跨作品设计概念的解释框架；不对作品质量或唯一来源作判断。" }
+  },
+  {
+    "id": "nintendo-breath-of-the-wild-behind-scenes",
+    "sourceTitle": "Go behind the scenes with the making of The Legend of Zelda: Breath of the Wild",
+    "originalLanguage": "en",
+    "title": { "zh-CN": "Nintendo：Breath of the Wild 制作幕后", "en": "Nintendo: Behind the scenes with Breath of the Wild" },
+    "url": "https://www.nintendo.com/en-gb/News/2017/March/Go-behind-the-scenes-with-the-making-of-The-Legend-of-Zelda-Breath-of-the-Wild-1206592.html",
+    "summary": { "zh-CN": "Nintendo 幕后材料讨论 open-air 方向、广阔空间、探索路线与系统交互如何共同塑造 Breath of the Wild。" },
+    "sourceKind": "official-statement",
+    "institutionOrAuthor": "Nintendo",
+    "publicationDate": "2017-03-01",
+    "checkedAt": "2026-08-15",
+    "stableId": "Nintendo news 1206592",
+    "locator": "Making-of discussion of open-air concept and large-scale exploration",
+    "boundedClaim": { "zh-CN": "支持 Breath of the Wild 的 open-air 设计方向与非线性探索语境；不主张它是开放世界的唯一先驱。" }
+  },
+{
+  "id": "acmi-dune-ii-rts-mechanics",
+  "sourceTitle": "Dune II: The Building of a Dynasty",
+  "originalLanguage": "en",
+  "title": {
+    "zh-CN": "ACMI：Dune II 与实时战略设计",
+    "en": "ACMI: Dune II and real-time strategy design"
+  },
+  "url": "https://www.acmi.net.au/works/107341--dune-ii-the-building-of-a-dynasty/",
+  "summary": {
+    "zh-CN": "ACMI 馆藏记录 Dune II 的年代与实时战略语境；用于描述资源、基地和直接控制作为事件中的机制集合。"
+  },
+  "sourceKind": "museum-object",
+  "institutionOrAuthor": "Australian Centre for the Moving Image",
+  "checkedAt": "2026-08-16",
+  "stableId": "ACMI 107341",
+  "locator": "Object description and historical context",
+  "boundedClaim": {
+    "zh-CN": "支持 Dune II 作为资源、基地与实时生产机制组合的承载作品；不把它写成 RTS 的绝对第一款。"
   }
+},
+{
+  "id": "blizzard-starcraft-faction-design",
+  "sourceTitle": "Mike Morhaime on 20 Years of StarCraft Esports",
+  "originalLanguage": "en",
+  "title": {
+    "zh-CN": "Blizzard：StarCraft 二十年回顾",
+    "en": "Blizzard: Mike Morhaime on 20 Years of StarCraft"
+  },
+  "url": "https://news.blizzard.com/en-us/article/21574697/mike-morhaime-on-20-years-of-starcraft-esports",
+  "summary": {
+    "zh-CN": "Blizzard 回顾 StarCraft 的技术继承、重写与多阵营设计语境。"
+  },
+  "sourceKind": "official-statement",
+  "institutionOrAuthor": "Mike Morhaime / Blizzard Entertainment",
+  "publicationDate": "2018-03-31",
+  "checkedAt": "2026-08-16",
+  "stableId": "Blizzard article 21574697",
+  "locator": "Development history and faction discussion",
+  "boundedClaim": {
+    "zh-CN": "支持 StarCraft 将技术重写与具有差异的阵营设计结合为后续 RTS 事件；不主张它单独定义全部 RTS。"
+  }
+},
+{
+  "id": "patrick-wyatt-making-warcraft-control",
+  "sourceTitle": "The making of Warcraft part 1",
+  "originalLanguage": "en",
+  "title": {
+    "zh-CN": "Patrick Wyatt：Warcraft 制作回顾",
+    "en": "Patrick Wyatt: The making of Warcraft part 1"
+  },
+  "url": "https://www.codeofhonor.com/blog/the-making-of-warcraft-part-1/",
+  "summary": {
+    "zh-CN": "Warcraft 首席程序员回顾早期原型如何受到 Dune II 启发并形成可直接控制的实时结构。"
+  },
+  "sourceKind": "creator-account",
+  "institutionOrAuthor": "Patrick Wyatt",
+  "checkedAt": "2026-08-16",
+  "stableId": "Code of Honor Warcraft part 1",
+  "locator": "Early prototype and Dune II influence sections",
+  "boundedClaim": {
+    "zh-CN": "支持 Warcraft 作为资源、基地与直接单位控制机制的后续承载作品；不把两作描述为完全相同。"
+  }
+}
 ]

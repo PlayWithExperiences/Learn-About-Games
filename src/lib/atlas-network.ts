@@ -7,7 +7,7 @@ type AtlasThemeLens = {
   tags: readonly string[];
 };
 
-type AtlasNodeKind = 'game' | 'innovation' | 'category';
+export type AtlasNodeKind = 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
 
 type AtlasNodeForLayout = {
   id: string;
@@ -15,6 +15,7 @@ type AtlasNodeForLayout = {
   startYear: number;
   endYear?: number;
   lane: number;
+  tags?: readonly string[];
 };
 
 type AtlasRelationForLayout = {
@@ -36,6 +37,26 @@ export type AtlasPlacedNode = AtlasNodeForLayout & {
   displayLane: number;
 };
 
+type AtlasNodeBox = Pick<AtlasPlacedNode, 'left' | 'top' | 'width' | 'height'>;
+
+export function pointOnAtlasNodeBoundary(
+  point: { x: number; y: number },
+  node: AtlasNodeBox,
+  tolerance = 0.001,
+): boolean {
+  const within = (value: number, start: number, end: number) =>
+    value >= start - tolerance && value <= end + tolerance;
+  const onVerticalSide = (
+    Math.abs(point.x - node.left) < tolerance ||
+    Math.abs(point.x - (node.left + node.width)) < tolerance
+  ) && within(point.y, node.top, node.top + node.height);
+  const onHorizontalSide = (
+    Math.abs(point.y - node.top) < tolerance ||
+    Math.abs(point.y - (node.top + node.height)) < tolerance
+  ) && within(point.x, node.left, node.left + node.width);
+  return onVerticalSide || onHorizontalSide;
+}
+
 export type AtlasPlacedRelation = AtlasRelationForLayout & {
   start: { x: number; y: number };
   end: { x: number; y: number };
@@ -52,6 +73,25 @@ export type AtlasLayout = {
   relations: AtlasPlacedRelation[];
 };
 
+export type AtlasLayoutPerspective = 'works' | 'category' | 'events';
+
+const atlasPerspectiveKinds: Record<AtlasLayoutPerspective, readonly AtlasNodeKind[]> = {
+  works: ['game', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware'],
+  category: ['category', 'innovation'],
+  events: ['innovation'],
+};
+
+/**
+ * Returns the entity kinds that are allowed to occupy the primary layer of a
+ * perspective. The underlying graph remains global; this is only a view
+ * contract for the main canvas.
+ */
+export function atlasPerspectiveVisibleKinds(
+  perspective: AtlasLayoutPerspective,
+): readonly AtlasNodeKind[] {
+  return atlasPerspectiveKinds[perspective];
+}
+
 export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
   incoming: Relation[];
   outgoing: Relation[];
@@ -61,6 +101,8 @@ export type AtlasRelationAdjacency<Relation extends AtlasRelationForLayout> = {
 export type AtlasThemeMatch = {
   nodeIds: string[];
   relationIds: string[];
+  globalNodeIds: string[];
+  globalRelationIds: string[];
 };
 
 export function matchAtlasTheme(
@@ -74,13 +116,327 @@ export function matchAtlasTheme(
   return {
     nodeIds: nodes.filter(matchesTheme).map(({ id }) => id),
     relationIds: relations.filter(matchesTheme).map(({ id }) => id),
+    globalNodeIds: nodes.map(({ id }) => id),
+    globalRelationIds: relations.map(({ id }) => id),
   };
+}
+
+export type AtlasEventTimelineNode = {
+  id: string;
+  kind: AtlasNodeKind;
+  name: AtlasLocalizedText;
+  summary: AtlasLocalizedText;
+  startYear: number;
+  tags: readonly string[];
+  evidenceIds: readonly string[];
+  eventRole?: 'definition' | 'mechanism' | 'transformation' | 'diffusion';
+  themeIds?: readonly string[];
+  mechanism?: AtlasLocalizedText;
+};
+
+export type AtlasEventTimelineRelation = {
+  id: string;
+  fromId: string;
+  toId: string;
+  relationRole?: 'evolution' | 'carrier';
+  tags?: readonly string[];
+};
+
+export type AtlasEventTimeline = {
+  events: AtlasEventTimelineNode[];
+  evolutionRelations: AtlasEventTimelineRelation[];
+  carriersByEvent: Record<string, AtlasEventTimelineNode[]>;
+  emptyState: boolean;
+};
+
+export type AtlasEventPerspective = {
+  /** The complete graph remains present in every perspective. */
+  globalNodeIds: string[];
+  globalRelationIds: string[];
+  /** Innovation events are the primary chronological layer. */
+  eventIds: string[];
+  evolutionRelationIds: string[];
+  highlightedNodeIds: string[];
+  highlightedRelationIds: string[];
+  carriersByEvent: Record<string, string[]>;
+  emptyState: boolean;
+};
+
+type AtlasEventPerspectiveNode = {
+  id: string;
+  kind: AtlasNodeKind;
+  startYear: number;
+  tags: readonly string[];
+  themeIds?: readonly string[];
+};
+
+type AtlasEventPerspectiveRelation = {
+  id: string;
+  fromId: string;
+  toId: string;
+  relationRole?: 'evolution' | 'carrier';
+  tags: readonly string[];
+};
+
+/**
+ * Projects a genre lens onto one global innovation history.  The lens only
+ * controls emphasis; it never removes nodes or relations from the graph.
+ */
+export function buildAtlasEventPerspective(
+  nodes: readonly AtlasEventPerspectiveNode[],
+  relations: readonly AtlasEventPerspectiveRelation[],
+  options: { themeId?: string; themeTags?: readonly string[] } = {},
+): AtlasEventPerspective {
+  const themeTokens = new Set(options.themeTags ?? []);
+  if (options.themeId) {
+    themeTokens.add(options.themeId);
+    themeTokens.add(`${options.themeId}-lens`);
+    if (options.themeId.endsWith('-lineage')) {
+      themeTokens.add(options.themeId.replace(/-lineage$/, '-lens'));
+    }
+  }
+  const hasTheme = themeTokens.size > 0;
+  const matchesTheme = (node: AtlasEventPerspectiveNode) => !hasTheme ||
+    node.themeIds?.some((themeId) => themeTokens.has(themeId)) ||
+    node.tags.some((tag) => themeTokens.has(tag));
+  const matchesRelationTheme = (relation: AtlasEventPerspectiveRelation) =>
+    !hasTheme || relation.tags.some((tag) => themeTokens.has(tag));
+  const sortedNodes = [...nodes].sort((left, right) => left.id.localeCompare(right.id));
+  const sortedRelations = [...relations].sort((left, right) => left.id.localeCompare(right.id));
+  const eventNodes = sortedNodes
+    .filter((node) => node.kind === 'innovation' && node.tags.includes('innovation-event'))
+    .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
+  const eventIds = new Set(eventNodes.map(({ id }) => id));
+  const selectedEventIds = new Set(eventNodes.filter(matchesTheme).map(({ id }) => id));
+  const highlightedNodeIds = sortedNodes
+    .filter(matchesTheme)
+    .map(({ id }) => id);
+  const highlightedNodeIdSet = new Set(highlightedNodeIds);
+  const highlightedRelationIds = sortedRelations
+    .filter((relation) => matchesRelationTheme(relation) ||
+      highlightedNodeIdSet.has(relation.fromId) || highlightedNodeIdSet.has(relation.toId))
+    .map(({ id }) => id);
+  const evolutionRelationIds = sortedRelations
+    .filter(({ relationRole, fromId, toId }) =>
+      relationRole === 'evolution' && eventIds.has(fromId) && eventIds.has(toId),
+    )
+    .map(({ id }) => id);
+  const nodeById = new Map(sortedNodes.map((node) => [node.id, node]));
+  const carriersByEvent: Record<string, string[]> = {};
+
+  for (const event of eventNodes) {
+    carriersByEvent[event.id] = sortedRelations
+      .filter(({ relationRole, fromId }) => relationRole === 'carrier' && fromId === event.id)
+      .map(({ toId }) => nodeById.get(toId))
+      .filter((node): node is AtlasEventPerspectiveNode => node?.kind === 'game')
+      .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
+      .map(({ id }) => id);
+  }
+
+  return {
+    globalNodeIds: sortedNodes.map(({ id }) => id),
+    globalRelationIds: sortedRelations.map(({ id }) => id),
+    eventIds: eventNodes.map(({ id }) => id),
+    evolutionRelationIds,
+    highlightedNodeIds,
+    highlightedRelationIds,
+    carriersByEvent,
+    emptyState: selectedEventIds.size === 0,
+  };
+}
+
+export function buildAtlasEventTimeline(
+  nodes: readonly AtlasEventTimelineNode[],
+  relations: readonly AtlasEventTimelineRelation[],
+  themeTags: readonly string[] = [],
+): AtlasEventTimeline {
+  const requestedTags = new Set(themeTags);
+  const allEvents = nodes.filter(
+    (node) => node.kind === 'innovation' && node.tags.includes('innovation-event'),
+  );
+  const events = allEvents
+    .filter((node) =>
+      requestedTags.size === 0 ||
+      node.themeIds?.some((themeId) => requestedTags.has(themeId)) ||
+      node.tags.some((tag) => requestedTags.has(tag)),
+    )
+    .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
+  const eventIds = new Set(events.map(({ id }) => id));
+  const nodeById = new Map(nodes.map((node) => [node.id, node]));
+  const evolutionRelations = relations
+    .filter(({ relationRole, fromId, toId }) =>
+      relationRole === 'evolution' && eventIds.has(fromId) && eventIds.has(toId),
+    )
+    .slice()
+    .sort((left, right) => left.id.localeCompare(right.id));
+  const carriersByEvent: Record<string, AtlasEventTimelineNode[]> = {};
+
+  for (const event of events) {
+    carriersByEvent[event.id] = relations
+      .filter(({ relationRole, fromId }) => relationRole === 'carrier' && fromId === event.id)
+      .map(({ toId }) => nodeById.get(toId))
+      .filter((node): node is AtlasEventTimelineNode => node?.kind === 'game')
+      .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
+  }
+
+  return {
+    events,
+    evolutionRelations,
+    carriersByEvent,
+    emptyState: events.length === 0,
+  };
+}
+
+export const atlasScaleBounds = { min: 0.5, max: 2, step: 0.25 } as const;
+
+export function clampAtlasScale(value: number): number {
+  return Math.min(atlasScaleBounds.max, Math.max(atlasScaleBounds.min, value));
+}
+
+export function stepAtlasScale(current: number, direction: -1 | 1): number {
+  return clampAtlasScale(current + atlasScaleBounds.step * direction);
+}
+
+export function scaleAtlasWheelTarget(input: { currentScale: number; deltaY: number }): number {
+  if (input.deltaY === 0) return clampAtlasScale(input.currentScale);
+  return clampAtlasScale(input.currentScale * Math.exp(-input.deltaY * 0.001));
+}
+
+export function projectAtlasPointerAnchor(input: {
+  oldScale: number;
+  newScale: number;
+  scrollLeft: number;
+  scrollTop: number;
+  pointerX: number;
+  pointerY: number;
+}) {
+  const logicalX = (input.scrollLeft + input.pointerX) / input.oldScale;
+  const logicalY = (input.scrollTop + input.pointerY) / input.oldScale;
+  return {
+    scrollLeft: Math.max(0, logicalX * input.newScale - input.pointerX),
+    scrollTop: Math.max(0, logicalY * input.newScale - input.pointerY),
+  };
+}
+
+export function fitAtlasScale(input: {
+  viewportWidth: number;
+  viewportHeight: number;
+  sceneWidth: number;
+  sceneHeight: number;
+}): number {
+  return Math.min(atlasScaleBounds.max, Math.max(0.1, Math.min(
+    input.viewportWidth / input.sceneWidth,
+    input.viewportHeight / input.sceneHeight,
+  )));
+}
+
+export function projectAtlasScrollAnchor(input: {
+  oldScale: number;
+  newScale: number;
+  scrollLeft: number;
+  scrollTop: number;
+  viewportWidth: number;
+  viewportHeight: number;
+}) {
+  const centerX = (input.scrollLeft + input.viewportWidth / 2) / input.oldScale;
+  const centerY = (input.scrollTop + input.viewportHeight / 2) / input.oldScale;
+  return {
+    scrollLeft: Math.max(0, centerX * input.newScale - input.viewportWidth / 2),
+    scrollTop: Math.max(0, centerY * input.newScale - input.viewportHeight / 2),
+  };
+}
+
+type AtlasLocalizedText = {
+  'zh-CN': string;
+  en?: string;
+};
+
+type AtlasNodeForIndex = {
+  id: string;
+  startYear: number;
+  name: AtlasLocalizedText;
+  summary: AtlasLocalizedText;
+  tags: readonly string[];
+};
+
+type AtlasTagForIndex = {
+  id: string;
+  name: AtlasLocalizedText;
+};
+
+export type AtlasIndexNode = {
+  id: string;
+  startYear: number;
+  name: string;
+  searchText: string;
+};
+
+function normalizeAtlasSearchText(parts: Array<string | undefined>): string {
+  return parts
+    .filter((part): part is string => typeof part === 'string')
+    .join(' ')
+    .normalize('NFKC')
+    .toLocaleLowerCase()
+    .trim();
+}
+
+export function buildAtlasNodeIndex(
+  nodes: readonly AtlasNodeForIndex[],
+  tags: readonly AtlasTagForIndex[],
+): AtlasIndexNode[] {
+  const tagById = new Map(tags.map((tag) => [tag.id, tag]));
+
+  return nodes.map((node) => ({
+    id: node.id,
+    startYear: node.startYear,
+    name: node.name['zh-CN'],
+    searchText: normalizeAtlasSearchText([
+      node.name['zh-CN'],
+      node.name.en,
+      node.summary['zh-CN'],
+      node.summary.en,
+      ...node.tags.flatMap((tagId) => {
+        const tag = tagById.get(tagId);
+        return [tagId, tag?.name['zh-CN'], tag?.name.en];
+      }),
+    ]),
+  }));
+}
+
+export function filterAtlasNodeIndex(
+  nodes: readonly AtlasIndexNode[],
+  query: string,
+): AtlasIndexNode[] {
+  const normalizedQuery = normalizeAtlasSearchText([query]);
+  return nodes.filter(({ searchText }) => searchText.includes(normalizedQuery));
+}
+
+const atlasNameCollator = new Intl.Collator(['zh-CN', 'en'], {
+  numeric: true,
+  sensitivity: 'base',
+});
+
+export function sortAtlasNodeIndex(
+  nodes: readonly AtlasIndexNode[],
+  order: 'time' | 'name',
+): AtlasIndexNode[] {
+  return [...nodes].sort((left, right) => {
+    if (order === 'time') {
+      return left.startYear - right.startYear
+        || atlasNameCollator.compare(left.name, right.name)
+        || left.id.localeCompare(right.id);
+    }
+
+    return atlasNameCollator.compare(left.name, right.name)
+      || left.startYear - right.startYear
+      || left.id.localeCompare(right.id);
+  });
 }
 
 const atlasLayoutDefaults = {
   width: 2200,
   height: 900,
-  minYear: 1980,
+  minYear: 1958,
   maxYear: 2020,
   horizontalInset: 100,
   firstLaneY: 100,
@@ -98,6 +454,19 @@ function relationPath(
   end: AtlasPlacedRelation['end'],
 ): string {
   const horizontalDistance = end.x - start.x;
+  // Collision resolution can place two related works on the same horizontal
+  // lane.  Their boundary anchors may then be almost coincident, which used
+  // to collapse the SVG path into an invisible dot.  Keep the endpoints on
+  // the boxes, but route a small arch outside the lane so the relation remains
+  // visible and clickable.
+  if (Math.abs(end.y - start.y) < 1) {
+    const direction = start.y > 120 ? -1 : 1;
+    const arch = Math.max(96, Math.min(144, Math.abs(horizontalDistance) * 0.24));
+    const controlY = start.y + direction * arch;
+    const firstControlX = start.x + horizontalDistance * 0.28;
+    const secondControlX = end.x - horizontalDistance * 0.28;
+    return `M ${start.x} ${start.y} C ${firstControlX} ${controlY}, ${secondControlX} ${controlY}, ${end.x} ${end.y}`;
+  }
   const firstControlX = start.x + horizontalDistance * 0.36;
   const secondControlX = end.x - horizontalDistance * 0.36;
   return `M ${start.x} ${start.y} C ${firstControlX} ${start.y}, ${secondControlX} ${end.y}, ${end.x} ${end.y}`;
@@ -122,18 +491,80 @@ function nodeBoundaryAnchor(
   };
 }
 
+function resolveAtlasLaneCollisions(nodes: AtlasPlacedNode[]): AtlasPlacedNode[] {
+  const occupiedByLane = new Map<number, Array<{ left: number; right: number }>>();
+
+  return nodes.map((node) => {
+    let displayLane = node.displayLane;
+    const left = node.left;
+    const right = node.left + node.width;
+    const overlaps = (candidateLane: number) => (occupiedByLane.get(candidateLane) ?? [])
+      .some((interval) => left < interval.right && right > interval.left);
+
+    while (overlaps(displayLane)) displayLane += 1;
+
+    const intervals = occupiedByLane.get(displayLane) ?? [];
+    intervals.push({ left, right });
+    occupiedByLane.set(displayLane, intervals);
+
+    const centerY = atlasLayoutDefaults.firstLaneY + displayLane * atlasLayoutDefaults.laneGap;
+    return {
+      ...node,
+      displayLane,
+      centerY,
+      top: centerY - node.height / 2,
+    };
+  });
+}
+
 export function buildAtlasLayout(
   nodes: readonly AtlasNodeForLayout[],
   relations: readonly AtlasRelationForLayout[],
+  options: { perspective?: AtlasLayoutPerspective } = {},
 ): AtlasLayout {
+  const perspective = options.perspective ?? 'works';
+  const highestInnovationLane = Math.max(
+    -1,
+    ...nodes.filter(({ kind }) => kind === 'innovation').map(({ lane }) => lane),
+  );
+  // The works perspective is a standalone reading of representative works.
+  // It must not inherit the old event-first vertical offset, otherwise all
+  // primary work nodes start below the first viewport while the hidden event
+  // band still reserves space. Category/events keep the event-first offset.
+  const nonInnovationLaneOffset = perspective === 'works'
+    ? 0
+    : Math.max(0, highestInnovationLane + 1 - 3);
   const categoryLaneById = new Map(
     nodes
       .filter(({ kind }) => kind === 'category')
       .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
       .map(({ id }, index) => [id, index + 1]),
   );
+  const eventNodes = nodes
+    .filter(({ kind, tags }) => kind === 'innovation' && (!tags || tags.includes('innovation-event')))
+    .sort((left, right) => left.startYear - right.startYear || left.lane - right.lane || left.id.localeCompare(right.id));
+  const eventLaneById = new Map<string, number>();
+  const eventPlacements: Array<{ lane: number; yearX: number }> = [];
+  for (const node of eventNodes) {
+    let displayLane = 3 + Math.max(0, node.lane);
+    const yearX = projectAtlasYear(node.startYear);
+    while (eventPlacements.some((placed) =>
+      placed.lane === displayLane && Math.abs(placed.yearX - yearX) < 200,
+    )) {
+      displayLane += 1;
+    }
+    eventLaneById.set(node.id, displayLane);
+    eventPlacements.push({ lane: displayLane, yearX });
+  }
+  // Category development is an event-first reading: keep the event band
+  // compact and central, then place carrier works below it as evidence.
+  // The events perspective keeps its own chronology and uses the wide lower
+  // carrier band, so the two views remain visually distinct without splitting
+  // the graph into separate networks.
+  const categoryEventBase = 4;
+  const categoryWorkBase = categoryEventBase + Math.max(0, highestInnovationLane) + 2;
 
-  const placedNodes = nodes.map((node): AtlasPlacedNode => {
+  const placedNodes = resolveAtlasLaneCollisions(nodes.map((node): AtlasPlacedNode => {
     if (node.kind === 'game' && node.endYear !== undefined) {
       throw new Error(`Atlas Game ${node.id} cannot define a time range.`);
     }
@@ -143,16 +574,29 @@ export function buildAtlasLayout(
     const spanEndX = hasRange
       ? projectAtlasYear(rangeEndYear)
       : yearX;
-    const displayLane = node.kind === 'innovation'
-      ? 0
-      : node.kind === 'category'
-        ? (categoryLaneById.get(node.id) ?? 1)
-        : Math.max(3, node.lane + 1);
+    const isEventNode = node.kind === 'innovation' && (!node.tags || node.tags.includes('innovation-event'));
+    const displayLane = perspective === 'events'
+      ? isEventNode
+        ? (eventLaneById.get(node.id) ?? 3)
+        : node.kind === 'category'
+          ? (categoryLaneById.get(node.id) ?? 1)
+          : 40 + node.lane
+      : perspective === 'category'
+        ? node.kind === 'innovation'
+          ? categoryEventBase + node.lane
+          : node.kind === 'category'
+            ? (categoryLaneById.get(node.id) ?? 1)
+            : categoryWorkBase + node.lane
+        : node.kind === 'innovation'
+          ? node.lane
+          : node.kind === 'category'
+            ? (categoryLaneById.get(node.id) ?? 1)
+            : Math.max(0, node.lane) + nonInnovationLaneOffset;
     const width = hasRange
       ? Math.max(200, spanEndX - yearX)
       : node.kind === 'innovation'
         ? 180
-        : 140;
+        : 96;
     const height = node.kind === 'category' ? 46 : node.kind === 'innovation' ? 84 : 86;
     const centerY = atlasLayoutDefaults.firstLaneY + displayLane * atlasLayoutDefaults.laneGap;
     const left = hasRange ? yearX : yearX - width / 2;
@@ -170,7 +614,7 @@ export function buildAtlasLayout(
       centerY,
       displayLane,
     };
-  });
+  }));
 
   const nodeById = new Map(placedNodes.map((node) => [node.id, node]));
   const placedRelations = relations
@@ -205,7 +649,7 @@ export function buildAtlasLayout(
     height: atlasLayoutDefaults.height,
     minYear: atlasLayoutDefaults.minYear,
     maxYear: atlasLayoutDefaults.maxYear,
-    yearTicks: [1980, 1990, 2000, 2010, 2020].map((year) => ({
+    yearTicks: [1958, 1960, 1970, 1980, 1990, 2000, 2010, 2020].map((year) => ({
       year,
       x: projectAtlasYear(year),
     })),

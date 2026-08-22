@@ -282,5 +282,25 @@
       "games-values-culture",
       "organizational-dynamics-power"
     ]
+  },
+  {
+    "id": "career-industry-practice",
+    "title": {
+      "zh-CN": "职业与行业实践",
+      "en": "Career and Industry Practice"
+    },
+    "summary": {
+      "zh-CN": "围绕求职准备、作品集、教育到行业的过渡与工作环境的无顺序资源集合。"
+    },
+    "capabilityIds": [
+      "audience-positioning",
+      "cross-discipline-communication",
+      "design-specification-handoff",
+      "ethical-cultural-evaluation"
+    ],
+    "knowledgeTopicIds": [
+      "organizational-dynamics-power",
+      "game-industry-platform-economics"
+    ]
   }
 ]

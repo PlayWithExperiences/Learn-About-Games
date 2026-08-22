@@ -56,13 +56,14 @@
   },
   {
     "id": "run-structure-to-spelunky",
-    "fromId": "roguelike-run-structure",
+    "fromId": "procedural-run-structure",
     "toId": "spelunky",
     "type": "fusion",
     "status": "confirmed",
     "directionality": "directed",
     "evidenceIds": ["rps-spelunky-interview"],
     "tags": ["roguelike-lens", "run-based-structure", "fusion"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Derek Yu 说明 Roguelike 启发的平台游戏来自 Roguelike 与平台游戏原型的融合。" }
   },
   {
@@ -122,13 +123,14 @@
   },
   {
     "id": "run-structure-to-dead-cells",
-    "fromId": "roguelike-run-structure",
+    "fromId": "procedural-run-structure",
     "toId": "dead-cells",
     "type": "fusion",
     "status": "confirmed",
     "directionality": "directed",
     "evidenceIds": ["motion-twin-presskit", "motion-twin-xbox-interview"],
     "tags": ["roguelike-lens", "metroidvania-lens", "cross-theme", "run-based-structure", "fusion"],
+    "relationRole": "carrier",
     "summary": { "zh-CN": "Motion Twin 明确说 Dead Cells 有意混合 Roguelite 与 Metroidvania；单局结构节点表达前者的设计概念。" }
   },
   {
@@ -273,5 +275,675 @@
     "evidenceIds": ["bloodstained-kickstarter", "igarashi-bloodstained-interview"],
     "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "revival-context"],
     "summary": { "zh-CN": "Igarashi 把 Bloodstained 定位为其 2D Castlevania/SOTN 创作线的精神续作；这不是法定系列续作。" }
+  },
+  { "id": "spacewar-to-galaxy-game", "fromId": "spacewar", "toId": "galaxy-game", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["stanford-galaxy-game"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "Stanford 资料把 Galaxy Game 描述为投币式 Spacewar! 版本。" } },
+  { "id": "spacewar-to-computer-space", "fromId": "spacewar", "toId": "computer-space", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-computer-space"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "CHM 将 Computer Space 的玩法来源追溯到 Spacewar!。" } },
+  { "id": "brown-box-to-odyssey", "fromId": "brown-box", "toId": "magnavox-odyssey", "type": "prototype-to-product", "status": "confirmed", "directionality": "directed", "evidenceIds": ["smithsonian-brown-box", "smithsonian-odyssey"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "Smithsonian 馆藏把 Brown Box 放在 Magnavox Odyssey 的开发链中。" } },
+  { "id": "odyssey-table-tennis-to-pong", "fromId": "odyssey-table-tennis", "toId": "pong", "type": "design-response", "status": "credible", "directionality": "directed", "evidenceIds": ["alcorn-oral-history"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "Alcorn 的参与者口述把 Odyssey 网球演示置于 Pong 练习项目的直接触发背景中。" } },
+  { "id": "pong-to-home-pong", "fromId": "pong", "toId": "home-pong", "type": "commercialized-as", "status": "confirmed", "directionality": "directed", "evidenceIds": ["chm-home-pong"], "tags": ["early-electronic-games-lens"], "summary": { "zh-CN": "CHM 综述记录 Pong 从投币产品走向 1975 年家用专用机。" } },
+  {
+    "id": "donkey-kong-to-super-mario-bros",
+    "fromId": "donkey-kong",
+    "toId": "super-mario-bros",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-original-super-mario-developers"],
+    "tags": ["platform-jumping-lens", "jump-action", "side-scrolling-platform"],
+    "summary": { "zh-CN": "Nintendo 开发者回顾中的设计规格明确要求在 Super Mario Bros. 中细化 Donkey Kong 的斜坡、升降台、传送带与梯子。" }
+  },
+  {
+    "id": "mario-bros-to-super-mario-bros",
+    "fromId": "mario-bros",
+    "toId": "super-mario-bros",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-original-super-mario-developers"],
+    "tags": ["platform-jumping-lens", "jump-action", "side-scrolling-platform"],
+    "summary": { "zh-CN": "Nintendo 开发者回顾中的设计规格明确列出 Mario Bros. 的敌人攻击、移动、冻结平台与 POW Block，作为 Super Mario Bros. 的综合材料。" }
+  },
+  {
+    "id": "colossal-cave-to-zork",
+    "fromId": "colossal-cave-adventure",
+    "toId": "zork",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["strong-colossal-cave-adventure"],
+    "tags": ["parser-graphical-adventure-lens", "text-parser"],
+    "summary": { "zh-CN": "The Strong 的机构史明确将 Zork 列为受 Colossal Cave Adventure 启发的作品；没有参与者原话，因此标为 credible。" }
+  },
+  {
+    "id": "colossal-cave-to-mystery-house",
+    "fromId": "colossal-cave-adventure",
+    "toId": "mystery-house",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["strong-colossal-cave-adventure"],
+    "tags": ["parser-graphical-adventure-lens", "text-parser", "graphical-adventure"],
+    "summary": { "zh-CN": "The Strong 明确记录 Roberta Williams 玩 Colossal Cave Adventure 后受到启发并创作 Mystery House；机构史关系标为 credible。" }
+  },
+  {
+    "id": "kings-quest-to-maniac-mansion",
+    "fromId": "kings-quest",
+    "toId": "maniac-mansion",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["gamedeveloper-maniac-mansion-gdc"],
+    "tags": ["parser-graphical-adventure-lens", "graphical-adventure", "point-and-click"],
+    "summary": { "zh-CN": "Ron Gilbert 在 GDC 回顾中说明观看 King's Quest 让 Maniac Mansion 的形式成形，而对解析器的不满直接促成屏幕动词与指向点击界面。" }
+  },
+  {
+    "id": "maniac-mansion-to-secret-of-monkey-island",
+    "fromId": "maniac-mansion",
+    "toId": "secret-of-monkey-island",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["lucasfilm-scumm-history"],
+    "tags": ["parser-graphical-adventure-lens", "point-and-click", "scumm-lineage"],
+    "summary": { "zh-CN": "Lucasfilm 官方史记录 SCUMM 为 Maniac Mansion 创建，随后持续修订并用于 1990 年 The Secret of Monkey Island；这里只表达明确技术沿用。" }
+  },
+  {
+    "id": "catacomb-3d-to-wolfenstein-3d", "fromId": "catacomb-3d", "toId": "wolfenstein-3d",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["gdc-wolfenstein-postmortem"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "John Romero 的开发者回顾说明团队刚发布 Catacomb 3-D 后开始规划并在七个月内制作 Wolfenstein 3D。" }
+  },
+  {
+    "id": "wolfenstein-3d-to-doom", "fromId": "wolfenstein-3d", "toId": "doom",
+    "type": "design-response", "status": "credible", "directionality": "directed",
+    "evidenceIds": ["gdc-doom-postmortem"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "DOOM 开发回顾把项目放在 Wolfenstein 3D 之后，并记录团队对技术与设计目标的重新构建；不把它写成简单变体。" }
+  },
+  {
+    "id": "doom-to-quake", "fromId": "doom", "toId": "quake",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["gdc-quake-postmortem"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "John Romero 的 Quake 回顾明确从 DOOM 与 DOOM II 后的团队状态进入 Quake 开发；这里表达同团队的后续设计响应。" }
+  },
+  {
+    "id": "quake-to-half-life", "fromId": "quake", "toId": "half-life",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["valve-cabal-half-life"], "tags": ["first-person-shooter-lens"],
+    "summary": { "zh-CN": "Ken Birdwell 说明 Half-Life 的最初目标本质上是精致的 Quake Total Conversion，随后因整体体验不成立而推倒重做。" }
+  },
+  {
+    "id": "dune-ii-to-warcraft", "fromId": "dune-ii", "toId": "warcraft-orcs-humans",
+    "type": "direct-influence", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["patrick-wyatt-making-warcraft"], "tags": ["real-time-strategy-lens"],
+    "summary": { "zh-CN": "Warcraft 首席程序员 Patrick Wyatt 明确写道早期 Warcraft 原型受到 Dune II 启发，且当时像其精简版本。" }
+  },
+  {
+    "id": "warcraft-ii-to-starcraft", "fromId": "warcraft-ii", "toId": "starcraft",
+    "type": "design-response", "status": "confirmed", "directionality": "directed",
+    "evidenceIds": ["blizzard-starcraft-20"], "tags": ["real-time-strategy-lens"],
+    "summary": { "zh-CN": "Mike Morhaime 回顾称 StarCraft 初版使用 Warcraft II 引擎换皮；外部反响促使团队重写引擎并提高设计目标。" }
+  },
+  {
+    "id": "fps-perspective-to-wolfenstein-3d",
+    "fromId": "first-person-shooter-perspective",
+    "toId": "wolfenstein-3d",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-wolfenstein-postmortem", "gdc-doom-postmortem"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Wolfenstein 3D 把第一人称空间与连续射击组织成可传播的作品形态；GDC 回顾支持其开发语境，但不宣称它是唯一类型起点。" }
+  },
+  {
+    "id": "lock-on-targeting-to-ocarina-of-time",
+    "fromId": "lock-on-targeting-combat",
+    "toId": "ocarina-of-time",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-ocarina-z-targeting"],
+    "tags": ["innovation-event", "zelda-lineage"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Nintendo 开发者回顾说明 Z-targeting 用来解决一对多战斗的空间可读性问题，并与镜头协同。" }
+  },
+  {
+    "id": "rpg-progression-to-diablo",
+    "fromId": "rpg-character-progression",
+    "toId": "diablo",
+    "type": "fusion",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["rpgfan-brevik-interview", "gamedeveloper-fundamentals-progression"],
+    "tags": ["innovation-event", "rpg-progression", "fusion"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Diablo 将持续角色成长与实时动作结合；Brevik 的回顾支持其从 Roguelike 原型转译而来，概念来源并非单一谱系。" }
+  },
+  {
+    "id": "open-world-exploration-to-breath-of-the-wild",
+    "fromId": "open-world-nonlinear-exploration",
+    "toId": "breath-of-the-wild",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+    "tags": ["innovation-event", "nonlinear-world", "zelda-lineage"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Nintendo 幕后回顾把 open-air 方向与大尺度探索、路线选择和系统交互放在同一设计目标中。" }
+  },
+  {
+    "id": "fps-perspective-to-vertical-space-combat",
+    "fromId": "first-person-shooter-perspective",
+    "toId": "fps-vertical-space-combat",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-doom-postmortem"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "evolution",
+    "summary": { "zh-CN": "从第一人称空间的基础可读性，推进到高度差、速度与武器反馈共同构成的压迫感；Doom 的开发回顾提供承载语境。" }
+  },
+  {
+    "id": "vertical-space-combat-to-networked-space",
+    "fromId": "fps-vertical-space-combat",
+    "toId": "fps-networked-combat-space",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-quake-postmortem", "valve-cabal-half-life"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "evolution",
+    "summary": { "zh-CN": "随后谱系把第一人称战斗推进到网络化空间与情境叙事；Quake 与 Half-Life 的开发材料支持这种设计响应，而非单线发明叙事。" }
+  },
+  {
+    "id": "fps-vertical-space-to-doom",
+    "fromId": "fps-vertical-space-combat",
+    "toId": "doom",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["gdc-doom-postmortem"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Doom 是高度差、武器反馈与高速空间组织的一个承载作品；它是材料入口，不是事件本身。" }
+  },
+  {
+    "id": "fps-networked-space-to-half-life",
+    "fromId": "fps-networked-combat-space",
+    "toId": "half-life",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "evidenceIds": ["valve-cabal-half-life"],
+    "tags": ["innovation-event", "first-person-shooter-lens"],
+    "relationRole": "carrier",
+    "summary": { "zh-CN": "Half-Life 承载了把第一人称空间、网络/引擎语境与情境叙事结合起来的后续转译。" }
+  },
+{
+  "id": "rts-resource-to-direct-control",
+  "fromId": "rts-resource-and-base-production",
+  "toId": "rts-direct-unit-control",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "patrick-wyatt-making-warcraft-control"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "evolution",
+  "summary": {
+    "zh-CN": "资源、基地与生产机制继续向可直接调度的战场操作层演进；这里记录机制路线，不把时间相邻当作唯一因果。"
   }
+},
+{
+  "id": "rts-direct-control-to-asymmetric-factions",
+  "fromId": "rts-direct-unit-control",
+  "toId": "rts-asymmetric-faction-design",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "blizzard-starcraft-faction-design"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "evolution",
+  "summary": {
+    "zh-CN": "实时调度进一步与差异化阵营和反制关系结合，形成更强的对抗表达。"
+  }
+},
+{
+  "id": "rts-resource-to-dune-ii",
+  "fromId": "rts-resource-and-base-production",
+  "toId": "dune-ii",
+  "type": "prototype-to-product",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "acmi-dune-ii-rts-mechanics"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "carrier",
+  "summary": {
+    "zh-CN": "Dune II 是资源、基地与实时生产事件的承载作品；作品用于观察机制如何落地。"
+  }
+},
+{
+  "id": "rts-direct-control-to-warcraft",
+  "fromId": "rts-direct-unit-control",
+  "toId": "warcraft-orcs-humans",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "patrick-wyatt-making-warcraft-control"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "carrier",
+  "summary": {
+    "zh-CN": "Warcraft 承载了实时单位控制与战场调度机制；它是事件的作品证据，不是事件本身。"
+  }
+},
+{
+  "id": "rts-asymmetric-factions-to-starcraft",
+  "fromId": "rts-asymmetric-faction-design",
+  "toId": "starcraft",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": [
+    "blizzard-starcraft-faction-design"
+  ],
+  "tags": [
+    "innovation-event",
+    "real-time-strategy-lens"
+  ],
+  "relationRole": "carrier",
+  "summary": {
+    "zh-CN": "StarCraft 承载了差异化阵营与反制关系的设计事件；Blizzard 回顾也记录了其技术重写语境。"
+  }
+},
+{
+  "id": "fps-early-space-to-perspective",
+  "fromId": "fps-early-networked-space",
+  "toId": "first-person-shooter-perspective",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["acmi-maze-war"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "从共享第一人称空间到可持续的射击视角，事件表达一条设计问题的转译，而非单一作品的绝对发明。" }
+},
+{
+  "id": "fps-perspective-to-texture-space",
+  "fromId": "first-person-shooter-perspective",
+  "toId": "fps-texture-mapped-first-person",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-wolfenstein-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "第一人称射击视角继续向纹理化、连续可读的空间推进。" }
+},
+{
+  "id": "fps-vertical-to-open-modding",
+  "fromId": "fps-vertical-space-combat",
+  "toId": "fps-open-modding-and-deathmatch",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-doom-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "垂直空间与武器反馈进一步被放进多人对抗、改造工具和社群传播的体系。" }
+},
+{
+  "id": "rpg-progression-to-party-identity",
+  "fromId": "rpg-character-progression",
+  "toId": "rpg-party-and-quest-identity",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gamedeveloper-dd-rpg-history"],
+  "tags": ["innovation-event", "role-playing-lineage"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "角色成长从个人数值继续扩展到队伍身份、分工与任务推进。" }
+},
+{
+  "id": "rpg-party-to-procedural-risk",
+  "fromId": "rpg-party-and-quest-identity",
+  "toId": "rpg-procedural-character-risk",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nethack-license-history", "umoria-history"],
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "队伍与角色身份被转译为程序生成、单局风险和重新开始的结构。" }
+},
+{
+  "id": "rpg-procedural-to-realtime-action",
+  "fromId": "rpg-procedural-character-risk",
+  "toId": "rpg-real-time-action-progression",
+  "type": "fusion",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["rpgfan-brevik-interview"],
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "fusion"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "程序生成与角色风险被融合进实时动作和成长循环。" }
+},
+{
+  "id": "rpg-realtime-to-cross-run-narrative",
+  "fromId": "rpg-real-time-action-progression",
+  "toId": "rpg-cross-run-narrative-continuity",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["supergiant-hades-faq", "gamedeveloper-kasavin-interview"],
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "narrative-continuity"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "实时构筑和单局失败继续被转译为跨单局的关系与叙事记忆。" }
+},
+{
+  "id": "rts-resource-to-fog-control",
+  "fromId": "rts-resource-and-base-production",
+  "toId": "rts-fog-of-war-map-control",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["acmi-dune-ii-rts-mechanics"],
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "基地与资源的生产问题进一步连接到侦察、信息不完整和地图控制。" }
+},
+{
+  "id": "rts-direct-to-worker-economy",
+  "fromId": "rts-direct-unit-control",
+  "toId": "rts-worker-economy-feedback",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["patrick-wyatt-making-warcraft-control"],
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "即时单位控制继续向工人、资源、建筑和生产队列的反馈循环扩展。" }
+},
+{
+  "id": "rts-worker-to-global-counterplay",
+  "fromId": "rts-worker-economy-feedback",
+  "toId": "rts-global-faction-counterplay",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["blizzard-starcraft-20", "blizzard-starcraft-faction-design"],
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "生产反馈最终被提升到多个阵营的差异、限制与长期反制关系。" }
+},
+{
+  "id": "open-world-connected-to-nonlinear",
+  "fromId": "open-world-connected-expanse",
+  "toId": "open-world-nonlinear-exploration",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-ocarina-z-targeting"],
+  "tags": ["innovation-event", "open-world-lineage"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "连接空间继续转化为目标顺序与探索路线的非线性。" }
+},
+{
+  "id": "open-world-nonlinear-to-systemic",
+  "fromId": "open-world-nonlinear-exploration",
+  "toId": "open-world-systemic-rules",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+  "tags": ["innovation-event", "open-world-lineage"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "非线性探索进一步由天气、物理、材料和敌人行为等系统规则支撑。" }
+},
+{
+  "id": "open-world-systemic-to-self-directed",
+  "fromId": "open-world-systemic-rules",
+  "toId": "open-world-self-directed-goals",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+  "tags": ["innovation-event", "open-world-lineage"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "系统规则使玩家能够自定目标，而不必依赖唯一的任务顺序。" }
+},
+{
+  "id": "open-world-self-directed-to-physics",
+  "fromId": "open-world-self-directed-goals",
+  "toId": "open-world-physics-and-climb",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+  "tags": ["innovation-event", "open-world-lineage"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "自定目标继续由攀爬、滑翔与物理规则扩展为更广的可达性。" }
+},
+{
+  "id": "fps-early-space-to-maze-war",
+  "fromId": "fps-early-networked-space",
+  "toId": "maze-war",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["acmi-maze-war"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Maze War 是第一人称空间与网络视角事件的承载作品证据。" }
+},
+{
+  "id": "fps-texture-space-to-catacomb-3d",
+  "fromId": "fps-texture-mapped-first-person",
+  "toId": "catacomb-3d",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-wolfenstein-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Catacomb 3-D 作为纹理化第一人称空间的承载作品，呈现技术如何落到可玩空间。" }
+},
+{
+  "id": "fps-run-and-gun-to-wolfenstein-3d",
+  "fromId": "fps-fast-run-and-gun",
+  "toId": "wolfenstein-3d",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-wolfenstein-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Wolfenstein 3D 是高速移动与射击循环的承载作品证据。" }
+},
+{
+  "id": "fps-open-modding-to-doom",
+  "fromId": "fps-open-modding-and-deathmatch",
+  "toId": "doom",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-doom-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "DOOM 是开放改造、死亡竞赛和社群扩散事件的承载作品证据。" }
+},
+{
+  "id": "rpg-party-identity-to-diablo",
+  "fromId": "rpg-party-and-quest-identity",
+  "toId": "diablo",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gamedeveloper-dd-rpg-history"],
+  "tags": ["innovation-event", "role-playing-lineage"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Diablo 作为作品证据，承载角色身份、成长与任务结构的动作化转译。" }
+},
+{
+  "id": "rpg-procedural-risk-to-rogue",
+  "fromId": "rpg-procedural-character-risk",
+  "toId": "rogue",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nethack-license-history"],
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Rogue 是程序生成角色风险事件的早期承载作品之一，不主张绝对首创。" }
+},
+{
+  "id": "rpg-realtime-to-diablo",
+  "fromId": "rpg-real-time-action-progression",
+  "toId": "diablo",
+  "type": "fusion",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["rpgfan-brevik-interview"],
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "fusion"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Diablo 承载了实时动作与角色成长循环的融合。" }
+},
+{
+  "id": "rpg-cross-run-to-hades",
+  "fromId": "rpg-cross-run-narrative-continuity",
+  "toId": "hades",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["supergiant-hades-faq", "gamedeveloper-kasavin-interview"],
+  "tags": ["innovation-event", "role-playing-lineage", "roguelike-lens", "narrative-continuity"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Hades 是跨单局叙事连续性事件的承载作品，作品让机制与人物关系互相映照。" }
+},
+{
+  "id": "rts-fog-to-dune-ii",
+  "fromId": "rts-fog-of-war-map-control",
+  "toId": "dune-ii",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["acmi-dune-ii", "acmi-dune-ii-rts-mechanics"],
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Dune II 是战争迷雾与地图控制事件的承载作品证据。" }
+},
+{
+  "id": "rts-worker-to-warcraft",
+  "fromId": "rts-worker-economy-feedback",
+  "toId": "warcraft-orcs-humans",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["patrick-wyatt-making-warcraft", "patrick-wyatt-making-warcraft-control"],
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Warcraft 承载了工人经济与生产反馈事件，作品只是观察机制落地的入口。" }
+},
+{
+  "id": "rts-global-to-starcraft",
+  "fromId": "rts-global-faction-counterplay",
+  "toId": "starcraft",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["blizzard-starcraft-20", "blizzard-starcraft-faction-design"],
+  "tags": ["innovation-event", "real-time-strategy-lens"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "StarCraft 是全球阵营反制事件的承载作品证据。" }
+},
+{
+  "id": "open-world-connected-to-ocarina",
+  "fromId": "open-world-connected-expanse",
+  "toId": "ocarina-of-time",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-ocarina-z-targeting"],
+  "tags": ["innovation-event", "open-world-lineage", "zelda-lineage"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Ocarina of Time 是连接空间与自由路线事件的承载作品证据。" }
+},
+{
+  "id": "open-world-systemic-to-breath",
+  "fromId": "open-world-systemic-rules",
+  "toId": "breath-of-the-wild",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+  "tags": ["innovation-event", "open-world-lineage"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Breath of the Wild 是系统规则驱动开放世界事件的承载作品。" }
+},
+{
+  "id": "open-world-goals-to-breath",
+  "fromId": "open-world-self-directed-goals",
+  "toId": "breath-of-the-wild",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+  "tags": ["innovation-event", "open-world-lineage", "nonlinear-world"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Breath of the Wild 也承载了自定目标与非线性探索事件。" }
+},
+{
+  "id": "open-world-physics-to-breath",
+  "fromId": "open-world-physics-and-climb",
+  "toId": "breath-of-the-wild",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"],
+  "tags": ["innovation-event", "open-world-lineage"],
+  "relationRole": "carrier",
+  "summary": { "zh-CN": "Breath of the Wild 是物理规则与攀爬可达性事件的承载作品。" }
+},
+{
+  "id": "fps-texture-to-fast-run-and-gun",
+  "fromId": "fps-texture-mapped-first-person",
+  "toId": "fps-fast-run-and-gun",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-wolfenstein-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "纹理化第一人称空间继续被转译为更快、更连续的移动与射击循环。" }
+},
+{
+  "id": "fps-fast-to-vertical-space",
+  "fromId": "fps-fast-run-and-gun",
+  "toId": "fps-vertical-space-combat",
+  "type": "design-response",
+  "status": "credible",
+  "directionality": "directed",
+  "evidenceIds": ["gdc-doom-postmortem"],
+  "tags": ["innovation-event", "first-person-shooter-lens"],
+  "relationRole": "evolution",
+  "summary": { "zh-CN": "高速射击循环继续吸收垂直空间与更复杂的武器反馈。" }
+}
 ]

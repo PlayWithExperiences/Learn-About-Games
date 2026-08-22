@@ -1,0 +1,27 @@
+---
+import { sitePath } from '../lib/site-path';
+import type { Catalog } from '../lib/catalog/validate';
+
+interface Props {
+  capabilities: Catalog['capabilities'];
+  knowledgeTopics: Catalog['knowledgeTopics'];
+  capabilityRelations: Catalog['capabilityRelations'];
+}
+---
+
+<aside class="map-inspector" data-map-inspector hidden aria-live="polite" aria-labelledby="map-inspector-name">
+  <header class="map-inspector__heading">
+    <span data-map-inspector-kind>能力</span>
+    <h2 id="map-inspector-name" data-map-inspector-name></h2>
+  </header>
+  <p data-map-inspector-summary></p>
+  <section aria-labelledby="map-inspector-relations-title">
+    <h3 id="map-inspector-relations-title">直接关系</h3>
+    <ul data-map-inspector-relations></ul>
+    <p data-map-inspector-empty hidden>这个条目没有 Capability 关系。</p>
+  </section>
+  <nav class="map-inspector__actions" aria-label="当前条目操作">
+    <a data-map-inspector-resources href={sitePath('resources/')}>查看相关资源</a>
+    <a data-map-inspector-detail href={sitePath('map/')}>打开详情页</a>
+  </nav>
+</aside>

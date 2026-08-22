@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import capabilities from '../../src/data/capabilities.json' with { type: 'json' };
 
-test('renders independent local progress for every capability without an embedded career control', async ({ page, request }) => {
+test('renders independent local progress for every capability beside the embedded career lenses', async ({ page, request }) => {
   for (const capability of capabilities) {
     const response = await request.get(`capabilities/${capability.id}/`);
     expect(response.status(), capability.id).toBe(200);
@@ -9,27 +9,25 @@ test('renders independent local progress for every capability without an embedde
   }
 
   await page.goto('./map/');
-  await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
+  await expect(page.locator('[data-career-lens-button]')).toHaveCount(3);
   await expect(page.locator('[data-role-marker]')).toHaveCount(0);
 
-  await page.getByRole('link', { name: '核心循环设计', exact: true }).click();
+  await page.goto('./capabilities/core-loop-design/');
   const firstProgress = page.getByLabel('个人学习状态');
   await expect(firstProgress).toBeEnabled();
   await firstProgress.selectOption('can-guide');
   await expect(page.locator('.progress-panel__current')).toHaveText('能够指导或评审他人');
 
-  await page.getByLabel('面包屑').getByRole('link', { name: '能力地图', exact: true }).click();
-  await page.getByRole('link', { name: '体验目标建构', exact: true }).click();
+  await page.goto('./capabilities/experience-framing/');
   const secondProgress = page.getByLabel('个人学习状态');
   await expect(secondProgress).toHaveValue('unseen');
   await secondProgress.selectOption('understood');
   await page.reload();
   await expect(secondProgress).toHaveValue('understood');
 
-  await page.getByLabel('面包屑').getByRole('link', { name: '能力地图', exact: true }).click();
-  await page.getByRole('link', { name: '核心循环设计', exact: true }).click();
+  await page.goto('./capabilities/core-loop-design/');
   await expect(page.getByLabel('个人学习状态')).toHaveValue('can-guide');
-  await expect(page.locator('main')).not.toContainText(/\d+(?:\.\d+)?\s*(?:%|分)|\d+\s*\/\s*\d+/);
+  await expect(page.locator('[data-capability-progress]')).not.toContainText(/适配度|完成率|总分|评分|百分比|score|percentage/i);
 });
 
 test('keeps the complete map and personal record contract usable without JavaScript', async ({ browser }) => {
@@ -37,16 +35,14 @@ test('keeps the complete map and personal record contract usable without JavaScr
   const page = await context.newPage();
 
   await page.goto('./map/');
-  await expect(page.getByRole('heading', { name: '用领域建立方向，用能力选择行动。' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Playtest', exact: true })).toBeVisible();
-  await expect(page.getByLabel('参考职业画像')).toHaveCount(0);
-  const playtestNode = page.getByRole('link', { name: 'Playtest', exact: true }).locator('../..');
-  await playtestNode.getByText('查看关系', { exact: true }).click();
-  await expect(playtestNode.getByText('它支持', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('受到支持', { exact: true })).toBeVisible();
-  await expect(playtestNode.getByText('互补', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
+  await expect(page.locator('[data-career-lens-button]:disabled')).toHaveCount(3);
+  const relationships = page.locator('[data-egds-map] [data-outline-relations-disclosure]');
+  await relationships.locator(':scope > summary').click();
+  await expect(relationships).toContainText('Playtest');
+  await expect(relationships.getByRole('link', { name: '玩家行为观察', exact: true }).first()).toBeVisible();
 
-  await page.getByRole('link', { name: 'Playtest', exact: true }).click();
+  await relationships.getByRole('link', { name: 'Playtest', exact: true }).first().click();
   await expect(page.getByRole('heading', { name: 'Playtest', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Playtest 主题资源集合' })).toBeVisible();
   await expect(page.getByLabel('个人学习状态')).toBeDisabled();

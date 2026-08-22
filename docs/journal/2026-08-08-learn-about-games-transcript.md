@@ -284,6 +284,10 @@ Task 7 还记录了一次验收环境事故：fresh build 前启动的 preview �
 
 记录说明：以下为 final reviewer 与 handoff audit 转发给当前实现运行时的脱敏范围，是 partial export，不是原始聊天 UI 的完整逐字导出。缺失范围包括 reviewer 的完整审查过程、主 agent 私有推理与未转发消息；未获取的内容不声称完整，也未记录 token、凭据或环境变量值。
 
+## 2026-08-16：全局审计（partial export）
+
+用户要求对当前 Private v0.2 候选做全局审计，重点包括资源分类、页面运行态、EGDS 地图、Innovation Atlas 和资源目录的重复／引用问题。审计结论：结构引用、规范化 URL ownership、主题约束和页面回归通过；为 Access Version 增加同 Work Item 内完全重复身份的构建期诊断。审计没有把关键词启发式当成逐篇语义阅读，确认 `capabilityIds` 与 `knowledgeTopicIds` 的批量映射仍需按来源抽样复核。验证结果为 check 0/0/0、Vitest 188/188、145 pages、npm audit 0 vulnerabilities；并行 E2E 的 Atlas pageY 偶发偏移在单独和串行运行中通过，记录为时序波动。完整证据与截图见 [全局审计 Devlog](../devlog/2026-08-16-global-audit.md)。
+
 Final reviewer 指出首页“找位置”仍把职业与生产环境透镜整体写成未来能力，但 M0 已发布一个 `AAA / Game Designer` 参考画像。实现先在 `visible-skeleton.spec.ts` 加入当前态 exact-copy 断言；旧页面因找不到“已发布、只是一种生产语境参考、不作评分、更多画像后续扩展”的文案而取得有效 RED。最小运行时修复只替换首页这一句，没有增加画像、评分、账号或筛选功能。
 
 Handoff audit 同时指出产品设计的 localStorage 失败处理把多个阶段混在一起。规格现明确：M0 遇损坏或版本不兼容只回退安全空状态；迁移、导出、导入与手动清除是正式第一版按真实需求待评估的目标，不是 M0 已交付能力。
@@ -297,3 +301,103 @@ fresh build 后首页 targeted Chromium 1/1 GREEN。写入交接记录后的第�
 此前的部署证据 metadata 对齐 commit `9b756374292343f68fe0bac6b741b8a01c5108b8` 已由 workflow run `31265993889` 成功发布；它没有新增产品行为。主 agent 随后将 final-review 修复及其回归测试推送到远端 `main`。GitHub Pages workflow [run 31266716396](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31266716396) 记录的 head SHA 是 `8697a6b5fa56a7f6a5e15276b86ed36060cb32a2`，build 与 deploy jobs 均 completed / success；`git ls-remote` 同时确认远端 `main` 指向该 SHA。公开首页随后用精确文本复核，确认已出现“用已发布的 AAA / Game Designer 参考画像理解一种生产语境；它只是参考，不作评分，更多画像后续扩展。”
 
 因此首页修复从 Changelog 的 `Unreleased` 移入已发布 M0，并保留 run 与完整 SHA。当前证据写回只更新 README、Changelog、决策摘要、transcript 与部署回归断言，不新增产品行为；后续内容扩展仍以决策摘要的“精确下一步”为准。
+
+### 34. 2026-08-15：成长资源 300+ 扩展（partial export）
+
+记录说明：以下是本次资源扩展会话的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括完整工具输出、子代理内部推理和未转发的中间消息；未获取的内容不声称完整，也没有记录凭据、环境变量或外部账户信息。
+
+用户确认继续补全成长资源，并明确英文、中文优先，日文优先级较低；目标为至少新增 300 个 Work Item。主任务先阅读项目入口、产品设计、路线图、变更记录与 Agent Reach 研究规范，然后将检索拆为 GDC／创作者、学术／课程、中文与全球补缺三个独立批次。Agent Reach doctor 确认 Exa via mcporter 与 Jina Reader 可用；Exa 在检索过程中返回配额限制后停止重试，后续只使用 Jina 与官方原页复核。YouTube 字幕后端未启用，因此没有把搜索摘要或自动字幕当作页面证据。
+
+第一轮研究报告提供 200 条 GDC／Game Developer、100 条学术／课程和 100 条中文／全球候选。写入前按 canonical URL 归一化并与现有 catalog 及其他批次做 union/diff；其中 1 条 GDC URL 与既有 Work Item 规范化后重复，被排除，最终净增 385 条。数据最终为 41 个 Source、610 个 Work Item、624 个 Access Version；每条只有一个主要 Resource Topic，保留 originalLanguage、access model、versionRelation、presentationMode 与 checkedAt。新增 Source 仅在真实发布实体有必要时建立，不能把单篇内容误当 Source。
+
+实现先在 `catalog-data.test.ts` 写入批次 RED，再写资源与 Source 数据；随后补上批次 A/B/C 的 200/100/85 条 intake 行锁定、规范化 URL 唯一性和全量资源引用。Resources 与 Playtest E2E 首轮暴露两类测试契约问题：`Source` aria-label 的宽匹配与 610 行逐条轮询造成浏览器会话过载；修正为 exact label 和集合级 DOM 断言后，桌面／移动 40/40 通过。最终 fresh 门禁为 check 0 diagnostics、unit 168/168、静态构建 134 pages、完整 E2E 229 passed / 21 intentional skipped；随后还需完成静态 diff/secret scan、commit 与本地预览。
+
+### 35. 2026-08-15：资源搜索、紧凑目录与 500 条 GDC 扩展
+
+记录说明：以下是本次会话的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括完整工具输出、子任务内部推理和未转发消息；未获取内容不声称完整，也没有记录凭据、环境变量或私有账户信息。
+
+用户在完成 300+ 扩展后继续要求：成长资源页增加搜索框，列表减少留白、一次显示更多条目，并再补至少 500 条资源；优先英文与中文，日文优先级较低。实现先在资源过滤单元测试和 Resources Playwright 测试中取得 RED，再加入标题／简介／来源搜索、NFKC 归一化、`q` URL 参数、reload/history 恢复和无 JavaScript 禁用说明。默认主题子表、展开全表、全部收起与七维事实筛选保持不变。
+
+紧凑化只调整 Resources scoped CSS：筛选面板、主题表、Work Item 主信息／事实／访问三列的间距、字号和行 padding 收紧；移动端仍保持事实区与访问区的垂直阅读顺序。新密度回归锁定桌面展开态中位 Work Item 行高不超过 110px，并保留无横向溢出检查。
+
+内容扩展使用 Agent Reach doctor 确认的研究边界。Exa 在检索阶段触发配额限制后停止重试；本批不把搜索摘要当证据，而是直接读取 GDC Vault 官方 sitemap 与逐条会话页的 HTML metadata／HTTP 200。按 GDC play ID 和规范化 URL 去重后，净增 500 个英文 `talk` Work Item，统一保守标记为 `subscription`；既有中文资源继续保留，未用未经核验中文页面凑数。目录达到 41 个 Source、1110 个 Work Item、1124 个 Access Version 与 15 个 Resource Topic。
+
+最终 fresh 证据为：Astro check 0 errors / warnings / hints，Vitest 169/169，静态构建 135 pages，Resources 桌面／移动 E2E 32/32，完整 Chromium + mobile E2E 233 passed / 21 intentional skipped / 0 failed；`git diff --check`、canonical／topic／Source 引用审计与 secret filename/content scan 均通过。代码、资源数据、研究 notebook 与文档仍在本地 Private 候选工作树，4321 预览已服务最新 dist，入口为 `/Learn-About-Games/resources/`，未推送或部署。
+
+### 36. 2026-08-16：Innovation Atlas 事件路线化（partial export）
+
+记录说明：以下是本次 Atlas 事件优先改造的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括子任务内部推理、完整工具输出和未转发的中间消息；未获取内容不声称完整，也没有记录凭据、环境变量或外部账户信息。
+
+用户确认 Innovation Atlas 的主语应当是“品类如何演进的创新事件”，而不是游戏标题。实现先在纯测试中锁定事件角色、主题、机制说明、事件演进关系与承载作品闭包，再把第一人称射击样例扩成三段路线：第一人称视角定义、垂直空间战斗、网络化战斗空间。Doom、Quake、Half-Life 保留为事件详情中的 carrier closure，不把年代相邻写成影响，也不宣称绝对第一。
+
+Catalog schema 与 validator 现在要求带 `innovation-event` 标签的事件节点拥有有限角色、至少一个 themeId 和中文 mechanism；所有接触事件节点的关系必须显式声明 `evolution` 或 `carrier`，并检查事件→事件或事件→游戏的端点方向。事件纯 helper 按 startYear/id 稳定排序，提供空路线状态，并将 carrier 作品收集到事件详情。
+
+页面把事件索引放在网络前面。选择 Genre Family 后，普通阅读流隐藏全局游戏网络，只保留事件路线与可逆详情；地图模式仍保留完整网络、Family 透镜和缩放／平移。事件详情显示角色、引入方式、承载作品和证据链接；关闭或返回恢复原网络位置与焦点。无事件证据的品类明确显示空状态。
+
+一次 targeted E2E 首先误把 hidden DOM 条目计入可见事件数，修正断言为 `:not([hidden])` 后通过；随后发现事件索引包裹网络使地图模式的 flex 高度失效，加入 primary-network flex wrapper 规则并 fresh build。最终证据：`npm run check` 0 diagnostics，Vitest 177/177，静态构建 139 pages，Atlas 双视口 39 passed / 19 intentional skipped，base-path 2/2。4321 预览保持运行，仓库仍 Private，未推送或部署。
+
+### 37. 2026-08-16：事件索引列布局与最终回归（partial export）
+
+本节记录事件优先路线的最终收尾。事件卡初版落在 Atlas 说明左侧的窄列，中文标题因此出现近似逐字竖排；桌面改为右侧双列，移动端恢复单列，事件列表不再挤压说明区域。专项截图确认桌面事件列表宽约 832px，FPS 选择后可见 3 个创新事件与 2 条事件演进关系，作品只在事件详情中作为承载证据出现。
+
+README 的 Atlas 当前计数同步为 66 nodes、50 relations、73 evidence。最终 fresh 门禁为 `npm run build`：Astro check 0/0/0、Vitest 178/178、静态构建 140 pages；Atlas 与 base-path 定向为 41 passed / 19 intentional skipped；完整 Chromium + mobile E2E 为 251 passed / 21 intentional skipped / 0 failed。4321 本地预览保持运行，仓库仍为 Private，未推送或部署。
+
+### 38. 2026-08-16：事件节点回到地图主叙事（partial export）
+
+本轮针对视觉反馈把事件路线进一步收敛。先在 Atlas E2E 中取得旧平铺事件卡仍为 7 个的 RED，再移除地图前的事件卡和独立演进列表，保留 7 个地图事件节点、2 条地图事件关系，以及一个默认收起的紧凑索引。筛选品类时索引按匹配事件自动展开，地图模式仍以事件节点和演进关系为主；承载游戏只在事件详情中出现。
+
+CSS 只新增 Atlas scoped 层级规则：事件节点置于承载作品之上并使用强调边框，事件演进线使用连续强调描边，非匹配路线回到中性色虚线；紧凑索引使用两列桌面／单列移动布局。验证为 `npm run check` 0 diagnostics、Vitest 178/178、静态构建 140 pages、Atlas 双端专项 39/39。一次完整 E2E 的移动 EGDS 滚轮断言出现并发时序波动（250 pass/21 skip/1 fail），隔离重跑该用例 1/1 通过；修复未触碰 EGDS 代码。4321 预览在最终提交后重新启动，仓库仍 Private，未推送或部署。
+
+### 39. 2026-08-16：地图模式中的事件路线（partial export）
+
+用户再次明确：选中一个品类并进入 Innovation Atlas 地图模式后，主时间线应该呈现创新事件的演进，游戏只是点击事件后看到的承载作品。此前实现虽然把事件节点放回地图，但全图仍让大量游戏节点占据主视觉，因此先在 Atlas E2E 写入 RED，锁定选中 FPS 品类后地图必须进入 `events` 路线状态。
+
+最小实现为一个可逆的投影状态：`地图模式 + 已选品类` 时，主画布只保留匹配的 Innovation Event 节点和 `evolution` 关系；作品、硬件、实验程序仍保留在服务端 DOM、节点详情和 carrier 链接中，但不再参与主画布可见层级。切换“全部网络”或退出地图模式会恢复 `full` 路线与完整 66 节点／50 关系网络。新增合同点击“垂直空间与武器反馈”事件，确认 Doom 作为承载证据可达，并验证返回网络与完整网络恢复。
+
+验证：fresh `npm run build` 为 Astro check 0 diagnostics、Vitest 178/178、140 pages；Atlas 双视口专项 JSON 为 40 expected、20 intentional skip、0 unexpected；运行时 FPS 路线可见 3 个事件节点、2 条演进关系，html/body 横溢出均为 0。代码与文档仍在本地 Private 工作树，未推送或部署。
+
+### 40. 2026-08-16：全图双视角修订（partial export）
+
+用户进一步澄清：Innovation Event 应该是品类发展视角的主节点，但不同品类不应被拆成互不相干的地图；各品类与代表作品仍应在同一张全图中互相影响。于是撤回上一节的“事件路线隔离”作为最终交互，改为地图模式内的两个视角：代表作品、品类发展。
+
+实现把 `data-atlas-perspective` 与 `data-atlas-route-mode` 分开表达。代表作品视角保持 `full` 网络；品类发展视角保留全图，只通过不透明度、层级和关系线强调匹配事件与演进关系。点击事件仍打开详情，Doom 等作品作为承载证据出现。新增 E2E 断言两种视角均保留 66 节点／50 关系、FPS 视角有 3 个匹配事件与 2 条匹配事件关系，回到代表作品视角和详情返回均可恢复。
+
+本轮 fresh 证据：`npm run check` 0/0/0，Vitest 178/178，静态构建 140 pages；Atlas Chromium + mobile 为 40 expected / 20 intentional skipped / 0 unexpected。预览继续保持在 `http://127.0.0.1:4321/Learn-About-Games/atlas/`，未推送或部署。
+
+### 41. 2026-08-16：品类发展视角的事件主带（partial export）
+
+用户继续反馈：事件虽然已经进入地图，但仍位于上方，导致品类发展视角像“上方事件索引 + 下方作品地图”，阅读负担很大。用户要求事件节点直接成为时间线中央的主节点，点开后再看由哪一部作品承载该变化。
+
+本轮在保持完整全图的前提下增加 `category` 几何投影。代表作品视角保持原布局；品类发展视角将 Innovation Event 放入中央主带，将 Game、Commercial Hardware、Experimental Apparatus 和 Experimental Program 放到下方承载层。视角切换只更新节点／关系几何、画布高度和 SVG viewBox，不复制数据、不隐藏全图实体，详情返回语义保持不变。
+
+验证记录：纯布局与关系端点测试 35/35；`npm run check` 0 diagnostics；Vitest 179/179；静态构建 140 pages；Atlas Chromium + mobile-chromium 40 passed / 20 intentional skipped / 0 failed。截图和运行时探针确认事件节点集中在中央主带、承载作品位于事件带下方，预览仍为 `http://127.0.0.1:4321/Learn-About-Games/atlas/`。本节为脱敏 partial export，未记录凭据、外部账户或未转发的内部推理。
+
+### 42. 2026-08-16：手感与反馈成长路径试验（partial export）
+
+记录说明：以下是本次路径化学习实现的脱敏摘要，不是原始聊天 UI 的逐字导出。缺失范围包括完整工具输出和内部推理；没有写入凭据、环境变量或外部账户信息。
+
+用户确认可以先试做一条从资源聚合到成长路径的窄切片。目标不是重新定义资源目录，而是针对“手感与反馈”把已有资料按入门、理解、诊断、设计、整合和练习组织起来，使它们能和 EGDS 的方法层互相映照。
+
+实现前先写设计合同和测试：路径必须有六阶段，精确配额为 12/18/24/24/14/8，总计 100；前四阶段必须分别绑定 EGDS 的感受、理解、解构、重构，资源只来自 `game-feel-feedback`，不得重复，逆序输入不能改变选取结果，不足 100 条时明确报错。
+
+页面新增 `/resources/paths/game-feel/`。阶段使用原生 `details`，第一阶段默认打开，其余阶段和阶段内剩余资料按需展开。每个阶段公开目标、练习、阶段产出和退出条件；每条资源链接回 `/resources/?q=...`，不复制 Work Item、不新增评分、证书或个人进度语义。资源页导航只增加一个“学习路径”入口，原有主题表、事实筛选、搜索和来源目录不变。
+
+验证证据：`tests/lib/learning-path.test.ts` 3/3；路径桌面／移动／无 JavaScript E2E 6/6；`npm run check` 0/0/0；Vitest 183/183；fresh build 143 pages；完整 Chromium + mobile 回归 255 passed / 22 intentional skipped。全回归中的 Atlas 返回位置和 Career 对比度测试在并发下各出现一次既有时序波动，单独串行复跑分别通过，未修改相关实现。路径截图存于 `/tmp/learning-path-preview/1440.png` 与 `/tmp/learning-path-preview/320.png`，本地预览继续运行在 4321，未推送或部署。
+
+### 43. 2026-08-16：成长路径关注面（partial export）
+
+记录说明：以下为本轮用户反馈与实现结果的脱敏摘要，不是原始聊天 UI 的逐字导出；没有写入凭据、环境变量或内部推理。
+
+用户认为路径同时包含玩法与挑战、叙事、美学以及技术／研究内容，单一平铺会显得过于庞杂，但三大支柱又不应被强行拆成互斥分类。实现保留原六阶段阅读路径，增加七个顶部关注面：全部、玩法与挑战、叙事与表达、美学与表现、技术与实现、研究与验证、跨支柱。资料按能力与知识主题映射到关注面，允许一条资料同时命中多个面；跨支柱限定为同时命中玩法、叙事和美学。
+
+测试先取得纯函数 RED（缺少 `focuses`），再加入数据标签与页面筛选。当前验证为路径单元 4/4、Astro check 0/0/0、全量 Vitest 184/184、静态构建 143 pages、桌面／移动路径 E2E 10/10；无 JavaScript 时按钮禁用但完整 100 条资料仍可读。关注面只改变显示投影，不引入评分、进度或唯一学习顺序。
+
+### 44. 2026-08-16：关注面映射审计（partial export）
+
+本节是本轮对话的脱敏摘要，不是逐字记录；省略了完整工具输出和内部推理，未写入凭据或环境变量。
+
+用户补充：资源不必限制为单一或固定数量的 capability/topic，只要归类准确即可。实现先做 100 条“手感与反馈”路径资料的审计试验：关注面可重叠，模型记录直接命中的 capability/topic ID；移除没有证据时归入跨支柱的回退。检查结果为玩法 98、叙事 3、美学 93、实现 6、研究 50、跨支柱 1，0 条未分类，0 条玩家视角误标叙事。`player-perspective-taking` 改为研究证据，`experience-framing` 不再自动当作叙事证据。测试与路径 E2E 均通过；全目录的人工语义复核仍是后续工作。
+
+### 45. 2026-08-17：全图品类透镜与资源增量边界（partial export）
+
+用户要求选择品类时仍保留互相影响的全局 Atlas，并继续扩充英文优先资源。实现保留完整节点／关系集合，透镜只改变强调；移动端使用同源完整文字大纲。资源目录已有 3120 个 Work Item，已包含 1000 条 GDC、1000 条 Game Developer 和 500 条 GDC 批次。新离线候选中 92 条非 200、22 条为登录页，未导入为资料。以上是脱敏摘要，不是逐字导出。

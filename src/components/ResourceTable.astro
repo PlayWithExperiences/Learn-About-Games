@@ -1,0 +1,130 @@
+---
+import ResourceResults from './ResourceResults.astro';
+import type { Catalog } from '../lib/catalog/validate';
+import { formatAccessModel, formatLanguage, formatMediaType } from '../lib/resource-display';
+
+interface Props {
+  resources: Catalog['resources'];
+  sources: Catalog['sources'];
+  resourceTopics: Catalog['resourceTopics'];
+  knowledgeTopics: Catalog['knowledgeTopics'];
+  capabilities: Catalog['capabilities'];
+}
+
+const { resources, sources, resourceTopics, knowledgeTopics, capabilities } = Astro.props;
+const languages = [...new Set(resources.flatMap((resource) => [
+  resource.originalLanguage,
+  ...resource.accessVersions.map(({ language }) => language),
+]))];
+const mediaTypes = [...new Set(resources.map(({ mediaType }) => mediaType))];
+const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
+  accessVersions.map(({ accessModel }) => accessModel),
+))];
+---
+
+<section class="resource-table" aria-labelledby="resource-table-title">
+  <header class="resource-table__header">
+    <div class="resource-table__heading result-section-heading">
+      <p class="plain-label">资源表</p>
+      <h2 id="resource-table-title">Work Item 资源表</h2>
+      <p>按资源主题展开；每条 Work Item 只在一个主题表中出现，可按需展开一个主题或展开全部表格。</p>
+    </div>
+    <div class="resource-table__toolbar" aria-label="资源表工具">
+      <p id="resource-result-count" role="status" aria-live="polite">共 {resources.length} 条 Work Item</p>
+      <div class="resource-table__controls" aria-label="资源表展示方式">
+        <button type="button" data-resource-table-control="expand" disabled>展开全表</button>
+        <button type="button" data-resource-table-control="collapse" disabled>全部收起</button>
+      </div>
+      <label class="resource-search-field">
+        <span>搜索资源</span>
+        <input
+          type="search"
+          name="q"
+          aria-label="搜索资源"
+          placeholder="标题、简介、来源……"
+          autocomplete="off"
+          data-resource-search
+          disabled
+        />
+      </label>
+    </div>
+  </header>
+
+  <div class="resource-filter-panel resource-table__filters" data-resource-facts-panel>
+    <div class="resource-filter-grid">
+      <label>
+        <span>资源主题</span>
+        <select name="resourceTopic" aria-label="资源主题" data-resource-filter data-query-param="resourceTopic" disabled>
+          <option value="all">全部主题</option>
+          {resourceTopics.map((topic) => <option value={topic.id}>{topic.title['zh-CN']}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>知识主题</span>
+        <select name="knowledgeTopic" aria-label="知识主题" data-resource-filter data-query-param="knowledgeTopic" disabled>
+          <option value="all">全部知识主题</option>
+          {knowledgeTopics.map((topic) => <option value={topic.id}>{topic.name['zh-CN']}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>能力</span>
+        <select name="capability" aria-label="能力" data-resource-filter data-query-param="capability" disabled>
+          <option value="all">全部能力</option>
+          {capabilities.map((capability) => <option value={capability.id}>{capability.name['zh-CN']}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>可消费语言</span>
+        <select name="language" aria-label="可消费语言" data-resource-filter data-query-param="language" disabled>
+          <option value="all">全部语言</option>
+          {languages.map((language) => <option value={language}>{formatLanguage(language)}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>媒介</span>
+        <select name="mediaType" aria-label="媒介" data-resource-filter data-query-param="mediaType" disabled>
+          <option value="all">全部媒介</option>
+          {mediaTypes.map((mediaType) => <option value={mediaType}>{formatMediaType(mediaType)}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>访问方式</span>
+        <select name="accessModel" aria-label="访问方式" data-resource-filter data-query-param="accessModel" disabled>
+          <option value="all">全部访问方式</option>
+          {accessModels.map((accessModel) => <option value={accessModel}>{formatAccessModel(accessModel)}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Source</span>
+        <select name="source" aria-label="Source" data-resource-filter data-query-param="source" disabled>
+          <option value="all">全部 Source</option>
+          {sources.map((source) => <option value={source.id}>{source.name['zh-CN']}</option>)}
+        </select>
+      </label>
+    </div>
+    <noscript>
+      <p class="script-required-note">启用 JavaScript 后可以搜索、组合筛选或展开全部；当前可逐个展开 {resourceTopics.length} 个资源主题，全部 {resources.length} 条 Work Item 均可访问。</p>
+    </noscript>
+  </div>
+
+  <p class="resource-empty-state" hidden>没有同时符合这些事实条件的 Work Item。可以移除一个筛选条件再看。</p>
+
+  <div class="resource-table__groups">
+    {resourceTopics.map((topic) => {
+      const items = resources.filter(({ resourceTopicIds }) => resourceTopicIds[0] === topic.id);
+
+      return (
+        <details class="resource-table__group" data-resource-group={topic.id}>
+          <summary>
+            <span class="resource-table__group-title">{topic.title['zh-CN']}</span>
+            <span class="resource-table__group-summary">{topic.summary['zh-CN']}</span>
+            <span class="resource-table__group-count" data-resource-group-matching-count>
+              {items.length} 条 Work Item
+            </span>
+          </summary>
+          <ResourceResults resources={items} sources={sources} showHeading={false} />
+        </details>
+      );
+    })}
+  </div>
+</section>

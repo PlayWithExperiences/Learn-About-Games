@@ -1,285 +1,1030 @@
 ---
-import { projectRelationEndpoints, relationSemantics } from '../lib/map-geometry';
+import MapInspector from './MapInspector.astro';
+import { buildEgdsMapLayout } from '../lib/map-geometry';
 import { sitePath } from '../lib/site-path';
-import type { Catalog } from '../lib/catalog/validate';
+import type { Catalog, EgdsFrameworkNodeKind } from '../lib/catalog/validate';
 
 interface Props {
-  domains: Catalog['domains'];
+  egdsFrameworkNodes: Catalog['egdsFrameworkNodes'];
+  egdsFrameworkRelations: Catalog['egdsFrameworkRelations'];
   capabilities: Catalog['capabilities'];
   knowledgeTopics: Catalog['knowledgeTopics'];
   capabilityRelations: Catalog['capabilityRelations'];
 }
 
-const { domains, capabilities, knowledgeTopics, capabilityRelations } = Astro.props;
-const orderedDomains = [...domains].sort((a, b) => a.order - b.order);
+const {
+  egdsFrameworkNodes,
+  egdsFrameworkRelations,
+  capabilities,
+  knowledgeTopics,
+  capabilityRelations,
+} = Astro.props;
+
+const layout = buildEgdsMapLayout({
+  frameworkNodes: egdsFrameworkNodes,
+  frameworkRelations: egdsFrameworkRelations,
+  capabilities,
+  knowledgeTopics,
+  capabilityRelations,
+});
+const frameworkNodesById = new Map(egdsFrameworkNodes.map((node) => [node.id, node]));
 const capabilitiesById = new Map(capabilities.map((capability) => [capability.id, capability]));
-const positionsByCapabilityId = new Map(
-  capabilities.map((capability) => [capability.id, capability.position]),
-);
+const compareCodeUnits = (left: string, right: string) => left < right ? -1 : left > right ? 1 : 0;
+const orderedCapabilityRelations = [...capabilityRelations]
+  .sort((left, right) => compareCodeUnits(left.id, right.id));
+const allEntities = [
+  ...capabilities.map((entity) => ({
+    ...entity,
+    key: `capability:${entity.id}` as const,
+    kind: 'capability' as const,
+    kindLabel: '能力',
+    href: sitePath(`capabilities/${entity.id}/`),
+  })),
+  ...knowledgeTopics.map((entity) => ({
+    ...entity,
+    key: `knowledge-topic:${entity.id}` as const,
+    kind: 'knowledge-topic' as const,
+    kindLabel: '知识议题',
+    href: sitePath(`topics/${entity.id}/`),
+  })),
+].sort((left, right) => compareCodeUnits(left.key, right.key));
+const entitiesByFrameworkNodeId = new Map(egdsFrameworkNodes.map((node) => [
+  node.id,
+  allEntities
+    .filter((entity) => entity.frameworkNodeId === node.id)
+    .sort((left, right) => compareCodeUnits(left.key, right.key)),
+]));
+const frameworkChildrenById = new Map(egdsFrameworkNodes.map((node) => [
+  node.id,
+  egdsFrameworkNodes
+    .filter(({ parentNodeId }) => parentNodeId === node.id)
+    .sort((left, right) => left.order - right.order || compareCodeUnits(left.id, right.id)),
+]));
+const outlineRoot = egdsFrameworkNodes.find(({ parentNodeId }) => !parentNodeId);
+const outlineBranches = outlineRoot
+  ? (frameworkChildrenById.get(outlineRoot.id) ?? []).map((node) => ({
+    node,
+    children: (frameworkChildrenById.get(node.id) ?? []).map((child) => ({
+      node: child,
+      children: frameworkChildrenById.get(child.id) ?? [],
+    })),
+  }))
+  : [];
+const expandableKinds = new Set<EgdsFrameworkNodeKind>(['entry', 'stage', 'lever', 'cluster']);
+const frameworkTypeLabels: Record<EgdsFrameworkNodeKind, string> = {
+  root: 'EGDS 根节点',
+  branch: '主分支',
+  entry: '体验入口',
+  stage: '过程阶段',
+  lever: '设计杠杆',
+  cluster: '能力群',
+  'external-entry': '外部入口',
+};
+const relationLabels = {
+  supports: '支持',
+  complements: '互补',
+} as const;
+const mapData = JSON.stringify({
+  frameworkNodes: egdsFrameworkNodes,
+  frameworkRelations: egdsFrameworkRelations,
+  capabilities,
+  knowledgeTopics,
+  capabilityRelations: orderedCapabilityRelations,
+}).replaceAll('<', '\\u003c');
 
-const relationLabel = (type: 'supports' | 'complements') =>
-  type === 'supports' ? '支持' : '互补';
-
-const relationDirection = (type: 'supports' | 'complements') =>
-  relationSemantics[type].direction;
+const boxStyle = (box: { x: number; y: number; width: number; height: number }) =>
+  `--box-x:${box.x}px;--box-y:${box.y}px;--box-width:${box.width}px;--box-height:${box.height}px`;
 ---
 
-<section class="capability-map" aria-labelledby="capability-map-title">
-  <div class="map-key" aria-label="地图图例与关系说明">
+<section
+  class="capability-map"
+  data-egds-map
+  data-layout-mode={layout.mode}
+  data-site-base={sitePath()}
+  aria-labelledby="capability-map-title"
+>
+  <header class="map-key">
     <div>
-      <h2 id="capability-map-title">地图图例</h2>
-      <p>位置只表达领域归属与知识邻近，不表示价值、难度或学习顺序。</p>
+      <h2 id="capability-map-title">EGDS Expertise Map</h2>
+      <p>框架节点表达作者方法，能力与知识议题按需展开。位置不表示价值、难度或学习顺序。</p>
     </div>
-    <ul>
-      <li><span class="map-key__capability" aria-hidden="true"></span><strong>能力</strong>：可通过实践逐步掌握</li>
-      <li><span class="map-key__topic" aria-hidden="true"></span><strong>知识议题</strong>：值得理解的概念与语境</li>
-      <li><span class="map-key__supports" aria-hidden="true"></span><strong>支持</strong>：有向支持不表示必修或固定学习顺序</li>
-      <li><span class="map-key__complements" aria-hidden="true"></span><strong>互补</strong>：互补关系不表示先后</li>
+    <ul aria-label="地图图例">
+      <li><span class="map-key__framework" aria-hidden="true"></span><strong>EGDS 方法</strong><span>作者框架</span></li>
+      <li><span class="map-key__capability" aria-hidden="true"></span><strong>能力</strong><span>可实践并进入详情</span></li>
+      <li><span class="map-key__topic" aria-hidden="true"></span><strong>知识议题</strong><span>提供理解背景</span></li>
+      <li><span class="map-key__supports" aria-hidden="true"></span><strong>支持</strong><span>有向作用</span></li>
+      <li><span class="map-key__complements" aria-hidden="true"></span><strong>互补</strong><span>无向关系</span></li>
     </ul>
+  </header>
+
+  <div class="capability-map__toolbar">
+    <p data-map-status aria-live="polite">当前显示 EGDS 全貌。选择带数量的节点可展开具体能力与知识议题。</p>
+    <button type="button" data-return-map-overview hidden>收起条目</button>
   </div>
 
   <div
     class="capability-map__canvas"
     data-capability-map-canvas
-    aria-label="能力地图桌面画布"
+    aria-label="EGDS Expertise Map 桌面画布"
+    style={`--map-height:${layout.height}px`}
   >
-    {orderedDomains.map((domain) => (
-      <section
-        class="map-territory"
-        data-map-region={domain.id}
-        aria-labelledby={`map-region-${domain.id}`}
-        style={`--region-x:${domain.bounds.x}%;--region-y:${domain.bounds.y}%;--region-width:${domain.bounds.width}%;--region-height:${domain.bounds.height}%`}
-      >
-        <h3 id={`map-region-${domain.id}`}>{domain.name['zh-CN']}</h3>
-      </section>
-    ))}
-
-    <svg
-      class="capability-map__relations"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      role="img"
-      aria-labelledby="map-relations-title map-relations-description"
+    <div
+      class="capability-map__scene"
+      data-egds-scene
+      style={`width:${layout.width}px;height:${layout.height}px`}
     >
-      <title id="map-relations-title">能力关系</title>
-      <desc id="map-relations-description">支持关系有方向但不是先修顺序，互补关系没有方向。</desc>
-      <defs>
-        <marker id="support-arrow" viewBox="0 0 6 6" refX="5.25" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse" markerUnits="strokeWidth">
-          <path d="M 0 0 L 6 3 L 0 6 Z"></path>
-        </marker>
-      </defs>
-      {capabilityRelations.map((relation) => {
-        const { start, end } = projectRelationEndpoints(relation, positionsByCapabilityId);
-        const midpoint = { x: (start.x + end.x) / 2, y: (start.y + end.y) / 2 };
-        const direction = relationDirection(relation.type);
-        return (
+      <div class="capability-map__territories" data-egds-territories aria-hidden="true">
+        {layout.branchTerritories.map((territory) => (
+          <>
+            <div
+              class="egds-territory map-layout-box"
+              data-egds-territory={territory.branchId}
+              style={boxStyle(territory)}
+            ></div>
+            {territory.nestedTerritory && (
+              <div
+                class="egds-subterritory map-layout-box"
+                data-egds-subterritory={territory.nestedTerritory.id}
+                data-owner-branch={territory.branchId}
+                style={boxStyle(territory.nestedTerritory)}
+              ></div>
+            )}
+          </>
+        ))}
+      </div>
+
+      <svg
+        class="capability-map__structure"
+        width={layout.width}
+        height={layout.height}
+        viewBox={`0 0 ${layout.width} ${layout.height}`}
+        aria-hidden="true"
+      >
+        <defs>
+          <marker id="egds-process-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto" markerUnits="strokeWidth">
+            <path d="M 0 0 L 8 4 L 0 8 Z"></path>
+          </marker>
+        </defs>
+        {layout.structuralPaths.map((path) => (
+          <path
+            class:list={['egds-structural-path', `egds-structural-path--${path.hierarchyLevel}`]}
+            d={path.path}
+            data-egds-structural-path={path.id}
+            data-egds-structural-level={path.hierarchyLevel}
+            data-from-key={path.fromKey}
+            data-to-key={path.toKey}
+            data-from-port={path.fromPort}
+            data-to-port={path.toPort}
+            vector-effect="non-scaling-stroke"
+          ></path>
+        ))}
+        {layout.processPaths.map((path) => (
+          <path
+            class="egds-process-path"
+            d={path.path}
+            data-egds-process-path={path.id}
+            data-from-key={path.fromKey}
+            data-to-key={path.toKey}
+            data-from-port={path.fromPort}
+            data-to-port={path.toPort}
+            marker-end="url(#egds-process-arrow)"
+            vector-effect="non-scaling-stroke"
+          ></path>
+        ))}
+      </svg>
+
+      <svg
+        class="capability-map__relations"
+        width={layout.width}
+        height={layout.height}
+        viewBox={`0 0 ${layout.width} ${layout.height}`}
+        aria-label="当前选择的 Capability 直接关系"
+      >
+        <defs>
+          <marker id="egds-support-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto" markerUnits="strokeWidth">
+            <path d="M 0 0 L 8 4 L 0 8 Z"></path>
+          </marker>
+        </defs>
+        {orderedCapabilityRelations.map((relation) => (
           <path
             class:list={['map-relation', `map-relation--${relation.type}`]}
-            d={`M ${start.x} ${start.y} L ${midpoint.x} ${midpoint.y} L ${end.x} ${end.y}`}
             data-capability-relation={relation.id}
             data-relation-type={relation.type}
-            data-direction={direction}
+            data-direction={relation.type === 'supports' ? 'forward' : 'mutual'}
             data-from={relation.fromId}
             data-to={relation.toId}
-            data-start-x={start.x}
-            data-start-y={start.y}
-            data-end-x={end.x}
-            data-end-y={end.y}
-            marker-mid={relation.type === 'supports' ? 'url(#support-arrow)' : undefined}
+            marker-end={relation.type === 'supports' ? 'url(#egds-support-arrow)' : undefined}
+            style="display:none"
             vector-effect="non-scaling-stroke"
           >
-            <title>{capabilitiesById.get(relation.fromId)?.name['zh-CN']} {relationLabel(relation.type)} {capabilitiesById.get(relation.toId)?.name['zh-CN']}：{relation.summary['zh-CN']}</title>
+            <title>{capabilitiesById.get(relation.fromId)?.name['zh-CN']} {relationLabels[relation.type]} {capabilitiesById.get(relation.toId)?.name['zh-CN']}：{relation.summary['zh-CN']}</title>
           </path>
-        );
-      })}
-    </svg>
+        ))}
+      </svg>
 
-    <div class="capability-map__nodes">
-      {capabilities.map((capability) => (
-        <a
-          class="map-node map-node--capability"
-          href={sitePath(`capabilities/${capability.id}/`)}
-          aria-label={capability.name['zh-CN']}
-          data-map-node
-          data-map-node-id={capability.id}
-          data-map-node-kind="capability"
-          data-career-node
-          data-career-focus-target
-          data-capability-id={capability.id}
-          data-entity-label="能力"
-          data-anchor-x={capability.position.x}
-          data-anchor-y={capability.position.y}
-          style={`--node-x:${capability.position.x}%;--node-y:${capability.position.y}%`}
-        >
-          <span>{capability.name['zh-CN']}</span>
-          <small class="career-node-role-label" data-role-label hidden></small>
-        </a>
-      ))}
-      {knowledgeTopics.map((topic) => (
-        <a
-          class="map-node map-node--topic"
-          href={sitePath(`topics/${topic.id}/`)}
-          aria-label={topic.name['zh-CN']}
-          data-map-node
-          data-map-node-id={topic.id}
-          data-map-node-kind="knowledge-topic"
-          data-entity-label="知识议题"
-          data-anchor-x={topic.position.x}
-          data-anchor-y={topic.position.y}
-          style={`--node-x:${topic.position.x}%;--node-y:${topic.position.y}%`}
-        >
-          <small>知识议题</small>
-          <span>{topic.name['zh-CN']}</span>
-        </a>
-      ))}
+      <div class="capability-map__framework">
+        {layout.frameworkBoxes.map((box) => {
+          const node = frameworkNodesById.get(box.id);
+          if (!node) return null;
+          const directEntities = entitiesByFrameworkNodeId.get(node.id) ?? [];
+          const canExpand = directEntities.length > 0 && expandableKinds.has(node.kind);
+          const externalEntry = layout.externalEntries.find(({ id }) => id === node.id);
+          return (
+            <article
+              id={`egds-${node.id}`}
+              class:list={['egds-framework-node', `egds-framework-node--${node.kind}`, 'map-layout-box']}
+              data-egds-framework-node={node.id}
+              data-egds-kind={node.kind}
+              data-egds-branch={node.kind === 'branch' ? node.id : undefined}
+              data-egds-lever={node.kind === 'lever' ? node.id : undefined}
+              data-empty={directEntities.length === 0 && (frameworkChildrenById.get(node.id)?.length ?? 0) === 0 && expandableKinds.has(node.kind) ? '' : undefined}
+              style={boxStyle(box)}
+            >
+              <span class="egds-framework-node__type" data-framework-type-label>{frameworkTypeLabels[node.kind]}</span>
+              <h3>{node.name['zh-CN']}</h3>
+              {canExpand && (
+                <button
+                  type="button"
+                  data-expand-framework-node={node.id}
+                  data-entity-count={directEntities.length}
+                  aria-expanded="false"
+                  aria-label={`${node.name['zh-CN']}，展开 ${directEntities.length} 个条目`}
+                  disabled
+                >{directEntities.length} 项</button>
+              )}
+              {externalEntry && (
+                <a data-external-entry-link href={sitePath(externalEntry.targetPath)} aria-label="前往 Innovation Atlas">前往 Innovation Atlas</a>
+              )}
+              {directEntities.length === 0 && (frameworkChildrenById.get(node.id)?.length ?? 0) === 0 && expandableKinds.has(node.kind) && (
+                <span data-framework-empty>能力内容待补充</span>
+              )}
+              <small data-career-collapsed-count hidden></small>
+            </article>
+          );
+        })}
+      </div>
+
+      <section class="capability-map__expansion" data-map-expansion aria-label="聚焦能力与知识议题" hidden>
+        <div class="capability-map__entities">
+          {allEntities.map((entity) => (
+            <article
+              class:list={['map-entity', `map-entity--${entity.kind}`, 'map-layout-box']}
+              data-map-entity
+              data-map-entity-key={entity.key}
+              data-map-entity-kind={entity.kind}
+              data-framework-node-id={entity.frameworkNodeId}
+              data-capability-id={entity.kind === 'capability' ? entity.id : undefined}
+              data-career-node={entity.kind === 'capability' ? '' : undefined}
+              hidden
+            >
+              <span class="map-entity__type">{entity.kindLabel}</span>
+              <strong>{entity.name['zh-CN']}</strong>
+              <small class="career-node-role-label" data-role-label hidden></small>
+              <div class="map-entity__controls" data-map-entity-controls>
+                <button
+                  type="button"
+                  data-select-map-entity={entity.key}
+                  aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
+                  disabled
+                >关系</button>
+                <a data-map-entity-detail href={entity.href} aria-label={`打开 ${entity.name['zh-CN']} 详情`}>详情</a>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="capability-map__endpoints" aria-label="当前关系的外部端点">
+          {capabilities.map((capability) => (
+            <span
+              class="map-relation-endpoint map-layout-box"
+              data-relation-endpoint={capability.id}
+              hidden
+            >
+              <small>关系端点</small>
+              <strong>{capability.name['zh-CN']}</strong>
+            </span>
+          ))}
+        </div>
+      </section>
     </div>
   </div>
 
-  <div class="capability-map__outline" data-mobile-map-outline aria-label="能力地图关系大纲">
-    <p class="capability-map__outline-note">有向支持不表示必修或固定学习顺序；互补关系不表示先后。</p>
-    {orderedDomains.map((domain) => {
-      const domainCapabilities = capabilities.filter(({ domainId }) => domainId === domain.id);
-      const domainTopics = knowledgeTopics.filter(({ domainId }) => domainId === domain.id);
-      return (
-        <section class="map-outline-region" data-outline-region={domain.id}>
-          <div class="map-outline-region__heading">
-            <h2>{domain.name['zh-CN']}</h2>
-            <p>{domain.summary['zh-CN']}</p>
-          </div>
+  <section class="capability-map__outline" data-egds-outline aria-labelledby="egds-outline-title">
+    <header
+      class="egds-outline-root"
+      data-outline-framework-node={outlineRoot?.id}
+      data-outline-node-kind={outlineRoot?.kind}
+    >
+      <span>{outlineRoot ? frameworkTypeLabels[outlineRoot.kind] : 'EGDS 根节点'}</span>
+      <h2 id="egds-outline-title">{outlineRoot?.name['zh-CN'] ?? 'Expertise / EGDS'}</h2>
+      <p>{outlineRoot?.summary['zh-CN']}</p>
+    </header>
+    <p class="capability-map__outline-note">关系查看需要 JavaScript，详情链接仍可使用。</p>
 
-          <div class="map-outline-region__nodes">
-            {domainCapabilities.map((capability) => {
-              const outgoing = capabilityRelations.filter(
-                ({ type, fromId }) => type === 'supports' && fromId === capability.id,
-              );
-              const incoming = capabilityRelations.filter(
-                ({ type, toId }) => type === 'supports' && toId === capability.id,
-              );
-              const complements = capabilityRelations.filter(
-                ({ type, fromId, toId }) =>
-                  type === 'complements' && (fromId === capability.id || toId === capability.id),
-              );
-              return (
-                <div
-                  class="map-outline-node"
-                  data-outline-node-kind="capability"
-                  data-career-node
-                  data-capability-id={capability.id}
-                >
-                  <div class="map-outline-node__heading">
-                    <span>能力</span>
-                    <a
-                      href={sitePath(`capabilities/${capability.id}/`)}
-                      data-career-focus-target
-                      data-capability-id={capability.id}
-                    >{capability.name['zh-CN']}</a>
-                    <small class="career-node-role-label" data-role-label hidden></small>
-                  </div>
-                  <details>
-                    <summary>查看关系</summary>
-                    <p class="map-outline-node__summary">
-                      <strong>能力简介</strong>
-                      <span>{capability.summary['zh-CN']}</span>
-                    </p>
-                    <div class="map-outline-node__relations">
-                      <section>
-                        <h3>它支持</h3>
-                        {outgoing.length > 0 ? (
-                          <ul>
-                            {outgoing.map((relation) => (
-                              <li data-node-relation={relation.id}>
-                                <a href={sitePath(`capabilities/${relation.toId}/`)}>{capabilitiesById.get(relation.toId)?.name['zh-CN']}</a>
-                                <span>{relation.summary['zh-CN']}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : <p>当前没有记录直接支持的能力。</p>}
-                      </section>
-                      <section>
-                        <h3>受到支持</h3>
-                        {incoming.length > 0 ? (
-                          <ul>
-                            {incoming.map((relation) => (
-                              <li data-node-relation={relation.id}>
-                                <a href={sitePath(`capabilities/${relation.fromId}/`)}>{capabilitiesById.get(relation.fromId)?.name['zh-CN']}</a>
-                                <span>{relation.summary['zh-CN']}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : <p>当前没有记录直接支持它的能力。</p>}
-                      </section>
-                      <section>
-                        <h3>互补</h3>
-                        {complements.length > 0 ? (
-                          <ul>
-                            {complements.map((relation) => {
-                              const otherId = relation.fromId === capability.id ? relation.toId : relation.fromId;
-                              return (
-                                <li data-node-relation={relation.id}>
-                                  <a href={sitePath(`capabilities/${otherId}/`)}>{capabilitiesById.get(otherId)?.name['zh-CN']}</a>
-                                  <span>{relation.summary['zh-CN']}</span>
+    <ol class="egds-outline-tree" data-outline-children={outlineRoot?.id}>
+      {outlineBranches.map(({ node: branch, children }) => (
+        <li>
+          <details
+            data-outline-framework-node={branch.id}
+            data-outline-node-kind={branch.kind}
+            data-parent-node-id={branch.parentNodeId}
+          >
+            <summary>
+              <span>{frameworkTypeLabels[branch.kind]}</span>
+              <strong>{branch.name['zh-CN']}</strong>
+              <small data-career-collapsed-count hidden></small>
+            </summary>
+            <div class="egds-outline-node-body">
+              <p>{branch.summary['zh-CN']}</p>
+              <ol data-outline-children={branch.id}>
+                {children.map(({ node, children: grandchildren }) => {
+                  const directEntities = entitiesByFrameworkNodeId.get(node.id) ?? [];
+                  const empty = directEntities.length === 0 && grandchildren.length === 0 && expandableKinds.has(node.kind);
+                  return (
+                    <li>
+                      <details
+                        data-outline-framework-node={node.id}
+                        data-outline-node-kind={node.kind}
+                        data-parent-node-id={node.parentNodeId}
+                      >
+                        <summary>
+                          <span>{frameworkTypeLabels[node.kind]}</span>
+                          <strong>{node.name['zh-CN']}</strong>
+                          {directEntities.some(({ kind }) => kind === 'capability') && (
+                            <small data-career-collapsed-count hidden></small>
+                          )}
+                        </summary>
+                        <div class="egds-outline-node-body">
+                          <p>{node.summary['zh-CN']}</p>
+                          {node.kind === 'external-entry' && (
+                            <a data-external-entry-link href={sitePath('atlas/')} aria-label="前往 Innovation Atlas">前往 Innovation Atlas</a>
+                          )}
+                          {empty && <p data-outline-empty>能力内容待补充</p>}
+                          {directEntities.length > 0 && (
+                            <ul class="egds-outline-entities">
+                              {directEntities.map((entity) => (
+                                <li
+                                  data-outline-entity-kind={entity.kind}
+                                  data-map-entity-key={entity.key}
+                                  data-capability-id={entity.kind === 'capability' ? entity.id : undefined}
+                                  data-career-node={entity.kind === 'capability' ? '' : undefined}
+                                >
+                                  <span>{entity.kindLabel}</span>
+                                  <strong>{entity.name['zh-CN']}</strong>
+                                  <small class="career-node-role-label" data-role-label hidden></small>
+                                  <div data-map-entity-controls>
+                                    <button
+                                      type="button"
+                                      data-select-map-entity={entity.key}
+                                      aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
+                                      disabled
+                                    >关系</button>
+                                    <a data-map-entity-detail href={entity.href} aria-label={`打开 ${entity.name['zh-CN']} 详情`}>详情</a>
+                                  </div>
                                 </li>
-                              );
-                            })}
-                          </ul>
-                        ) : <p>当前没有记录互补能力。</p>}
-                      </section>
-                    </div>
-                  </details>
-                </div>
-              );
-            })}
+                              ))}
+                            </ul>
+                          )}
+                          {grandchildren.length > 0 && (
+                            <ol data-outline-children={node.id}>
+                              {grandchildren.map((grandchild) => {
+                                const grandchildEntities = entitiesByFrameworkNodeId.get(grandchild.id) ?? [];
+                                const grandchildEmpty = grandchildEntities.length === 0 && expandableKinds.has(grandchild.kind);
+                                return (
+                                  <li>
+                                    <details
+                                      data-outline-framework-node={grandchild.id}
+                                      data-outline-node-kind={grandchild.kind}
+                                      data-parent-node-id={grandchild.parentNodeId}
+                                    >
+                                      <summary>
+                                        <span>{frameworkTypeLabels[grandchild.kind]}</span>
+                                        <strong>{grandchild.name['zh-CN']}</strong>
+                                        {grandchildEntities.some(({ kind }) => kind === 'capability') && (
+                                          <small data-career-collapsed-count hidden></small>
+                                        )}
+                                      </summary>
+                                      <div class="egds-outline-node-body">
+                                        <p>{grandchild.summary['zh-CN']}</p>
+                                        {grandchildEmpty && <p data-outline-empty>能力内容待补充</p>}
+                                        {grandchildEntities.length > 0 && (
+                                          <ul class="egds-outline-entities">
+                                            {grandchildEntities.map((entity) => (
+                                              <li
+                                                data-outline-entity-kind={entity.kind}
+                                                data-map-entity-key={entity.key}
+                                                data-capability-id={entity.kind === 'capability' ? entity.id : undefined}
+                                                data-career-node={entity.kind === 'capability' ? '' : undefined}
+                                              >
+                                                <span>{entity.kindLabel}</span>
+                                                <strong>{entity.name['zh-CN']}</strong>
+                                                <small class="career-node-role-label" data-role-label hidden></small>
+                                                <div data-map-entity-controls>
+                                                  <button
+                                                    type="button"
+                                                    data-select-map-entity={entity.key}
+                                                    aria-label={`查看 ${entity.name['zh-CN']} 的关系`}
+                                                    disabled
+                                                  >关系</button>
+                                                  <a data-map-entity-detail href={entity.href} aria-label={`打开 ${entity.name['zh-CN']} 详情`}>详情</a>
+                                                </div>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        )}
+                                      </div>
+                                    </details>
+                                  </li>
+                                );
+                              })}
+                            </ol>
+                          )}
+                        </div>
+                      </details>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ol>
 
-            {domainTopics.map((topic) => (
-              <div class="map-outline-node map-outline-node--topic" data-outline-node-kind="knowledge-topic">
-                <div class="map-outline-node__heading">
-                  <span>知识议题</span>
-                  <a href={sitePath(`topics/${topic.id}/`)}>{topic.name['zh-CN']}</a>
-                </div>
-                <details>
-                  <summary>查看摘要</summary>
-                  <p class="map-outline-node__summary">{topic.summary['zh-CN']}</p>
-                </details>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    })}
-  </div>
+    <details class="egds-outline-relations" data-outline-relations-disclosure>
+      <summary>Capability 直接关系，共 {orderedCapabilityRelations.length} 条</summary>
+      <div>
+        <p>支持为有向作用，互补为无向关系。二者都不规定学习顺序。</p>
+        <ol>
+          {orderedCapabilityRelations.map((relation) => (
+            <li data-outline-relation={relation.id} data-relation-type={relation.type}>
+              <a href={sitePath(`capabilities/${relation.fromId}/`)}>{capabilitiesById.get(relation.fromId)?.name['zh-CN']}</a>
+              <strong>{relationLabels[relation.type]}</strong>
+              <a href={sitePath(`capabilities/${relation.toId}/`)}>{capabilitiesById.get(relation.toId)?.name['zh-CN']}</a>
+              <span>{relation.summary['zh-CN']}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <MapInspector
+    capabilities={capabilities}
+    knowledgeTopics={knowledgeTopics}
+    capabilityRelations={capabilityRelations}
+  />
+
+  <script is:inline type="application/json" data-egds-map-data set:html={mapData}></script>
+  <noscript>
+    <style>
+      [data-egds-map] [data-capability-map-canvas],
+      [data-egds-map] .capability-map__toolbar {
+        display: none !important;
+      }
+
+      [data-egds-map] [data-egds-outline] {
+        display: block !important;
+      }
+    </style>
+  </noscript>
 </section>
 
 <script>
-  const canvas = document.querySelector<HTMLElement>('[data-capability-map-canvas]');
+  import { buildEgdsMapLayout } from '../lib/map-geometry';
+  import type { Catalog } from '../lib/catalog/validate';
 
-  const clearAdjacency = () => {
-    canvas?.querySelectorAll<HTMLElement>('[data-adjacent]').forEach((element) => {
-      delete element.dataset.adjacent;
-    });
+  type EntityKey = `capability:${string}` | `knowledge-topic:${string}`;
+  type MapState = {
+    expandedFrameworkNodeId?: string;
+    selectedEntityKey?: EntityKey;
+  };
+  type CareerNode = {
+    capabilityId: string;
+    priority: 'core' | 'important' | 'suggested' | 'unlisted';
+    responsibility?: 'execute' | 'contribute' | 'decide' | 'direct';
+  };
+  type MapPayload = {
+    frameworkNodes: Catalog['egdsFrameworkNodes'];
+    frameworkRelations: Catalog['egdsFrameworkRelations'];
+    capabilities: Catalog['capabilities'];
+    knowledgeTopics: Catalog['knowledgeTopics'];
+    capabilityRelations: Catalog['capabilityRelations'];
   };
 
-  const showAdjacency = (nodeId: string) => {
-    clearAdjacency();
-    const adjacentIds = new Set([nodeId]);
-    canvas?.querySelectorAll<SVGPathElement>('[data-capability-relation]').forEach((edge) => {
-      if (edge.dataset.from === nodeId || edge.dataset.to === nodeId) {
-        edge.dataset.adjacent = 'true';
-        if (edge.dataset.from) adjacentIds.add(edge.dataset.from);
-        if (edge.dataset.to) adjacentIds.add(edge.dataset.to);
+  document.querySelectorAll<HTMLElement>('[data-egds-map]').forEach((root) => {
+    if (root.dataset.egdsMapInitialized === 'true') return;
+    const payloadElement = root.querySelector<HTMLScriptElement>('[data-egds-map-data]');
+    const canvas = root.querySelector<HTMLElement>('[data-capability-map-canvas]');
+    const scene = root.querySelector<HTMLElement>('[data-egds-scene]');
+    const expansion = root.querySelector<HTMLElement>('[data-map-expansion]');
+    const inspector = root.querySelector<HTMLElement>('[data-map-inspector]');
+    if (!payloadElement || !canvas || !scene || !expansion || !inspector) return;
+    root.dataset.egdsMapInitialized = 'true';
+
+    const payload = JSON.parse(payloadElement.textContent ?? '{}') as MapPayload;
+    const state: MapState = {};
+    const capabilityById = new Map(payload.capabilities.map((item) => [item.id, item]));
+    const topicById = new Map(payload.knowledgeTopics.map((item) => [item.id, item]));
+    const frameworkById = new Map(payload.frameworkNodes.map((item) => [item.id, item]));
+    const descendantFrameworkNodeIdsById = new Map(
+      payload.frameworkNodes.map((node) => [node.id, new Set([node.id])]),
+    );
+    for (const node of payload.frameworkNodes) {
+      let parentId = node.parentNodeId;
+      while (parentId) {
+        descendantFrameworkNodeIdsById.get(parentId)?.add(node.id);
+        parentId = frameworkById.get(parentId)?.parentNodeId;
       }
-    });
-    adjacentIds.forEach((id) => {
-      const node = canvas?.querySelector<HTMLElement>(`[data-map-node-id="${id}"]`);
-      if (node) node.dataset.adjacent = 'true';
-    });
-  };
+    }
+    let projectedCareerNodes = new Map<string, CareerNode>();
+    const allEntities = [
+      ...payload.capabilities.map((item) => ({ ...item, kind: 'capability' as const })),
+      ...payload.knowledgeTopics.map((item) => ({ ...item, kind: 'knowledge-topic' as const })),
+    ];
+    const entityFrameworkNodeIds = new Set(allEntities.map(({ frameworkNodeId }) => frameworkNodeId));
+    const compareCodeUnits = (left: string, right: string) => left < right ? -1 : left > right ? 1 : 0;
+    const returnButton = root.querySelector<HTMLButtonElement>('[data-return-map-overview]');
+    const status = root.querySelector<HTMLElement>('[data-map-status]');
+    const structureSvg = root.querySelector<SVGSVGElement>('.capability-map__structure');
+    const relationsSvg = root.querySelector<SVGSVGElement>('.capability-map__relations');
+    const selectButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-select-map-entity]'));
+    const responsiveMedia = window.matchMedia('(max-width: 1227px)');
+    const outlineDetailsById = new Map(
+      Array.from(root.querySelectorAll<HTMLDetailsElement>(
+        '[data-egds-outline] details[data-outline-framework-node]',
+      )).map((details) => [details.dataset.outlineFrameworkNode ?? '', details]),
+    );
+    // Native toggle events arrive after the synchronous render that changed `open`.
+    const programmaticOutlineToggles = new WeakSet<HTMLDetailsElement>();
 
-  canvas?.querySelectorAll<HTMLElement>('[data-map-node]').forEach((node) => {
-    const nodeId = node.dataset.mapNodeId;
-    if (!nodeId) return;
-    node.addEventListener('pointerenter', () => showAdjacency(nodeId));
-    node.addEventListener('pointerleave', clearAdjacency);
-    node.addEventListener('focus', () => showAdjacency(nodeId));
-    node.addEventListener('blur', clearAdjacency);
+    const setBox = (element: HTMLElement, box: { x: number; y: number; width: number; height: number }) => {
+      element.style.setProperty('--box-x', `${box.x}px`);
+      element.style.setProperty('--box-y', `${box.y}px`);
+      element.style.setProperty('--box-width', `${box.width}px`);
+      element.style.setProperty('--box-height', `${box.height}px`);
+    };
+
+    const syncCareerFrameworkFacts = () => {
+      if (!root.dataset.careerProfileId) return;
+      root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((frameworkElement) => {
+        const frameworkNodeId = frameworkElement.dataset.egdsFrameworkNode;
+        const frameworkNode = frameworkNodeId ? frameworkById.get(frameworkNodeId) : undefined;
+        const ownedFrameworkNodeIds = frameworkNode?.kind === 'branch' && frameworkNodeId
+          ? descendantFrameworkNodeIdsById.get(frameworkNodeId)
+          : frameworkNodeId
+            ? new Set([frameworkNodeId])
+            : undefined;
+        const assigned = payload.capabilities
+          .filter((capability) => ownedFrameworkNodeIds?.has(capability.frameworkNodeId))
+          .map((capability) => projectedCareerNodes.get(capability.id))
+          .filter((node): node is CareerNode => Boolean(node && node.priority !== 'unlisted'));
+        const counts = {
+          core: assigned.filter(({ priority }) => priority === 'core').length,
+          important: assigned.filter(({ priority }) => priority === 'important').length,
+          suggested: assigned.filter(({ priority }) => priority === 'suggested').length,
+        };
+        frameworkElement.dataset.careerCoreCount = String(counts.core);
+        frameworkElement.dataset.careerImportantCount = String(counts.important);
+        frameworkElement.dataset.careerSuggestedCount = String(counts.suggested);
+        const countLabel = frameworkElement.querySelector<HTMLElement>('[data-career-collapsed-count]');
+        const outlineCountLabel = frameworkNodeId
+          ? root.querySelector<HTMLElement>(
+            `[data-outline-framework-node="${CSS.escape(frameworkNodeId)}"] > summary [data-career-collapsed-count]`,
+          )
+          : undefined;
+        const showBranchAggregate = frameworkNode?.kind === 'branch' && root.dataset.layoutMode === 'focus';
+        const showFacts = frameworkNode?.kind === 'branch' ? showBranchAggregate : assigned.length > 0;
+        [countLabel, outlineCountLabel].forEach((label) => {
+          if (!label) return;
+          label.textContent = showFacts
+            ? `核心 ${counts.core}，重要 ${counts.important}，建议了解 ${counts.suggested}`
+            : '';
+          label.hidden = !showFacts;
+        });
+      });
+    };
+
+    const outlineDisclosureChain = (frameworkNodeId?: string) => {
+      const chain: HTMLDetailsElement[] = [];
+      let current = frameworkNodeId ? frameworkById.get(frameworkNodeId) : undefined;
+      while (current) {
+        const details = outlineDetailsById.get(current.id);
+        if (details) chain.unshift(details);
+        current = current.parentNodeId ? frameworkById.get(current.parentNodeId) : undefined;
+      }
+      return chain;
+    };
+
+    const syncOutlineDisclosures = () => {
+      const required = new Set(outlineDisclosureChain(state.expandedFrameworkNodeId));
+      root.querySelectorAll<HTMLDetailsElement>('[data-map-state-owned]').forEach((details) => {
+        if (required.has(details)) return;
+        if (details.open) {
+          programmaticOutlineToggles.add(details);
+          details.open = false;
+        }
+        delete details.dataset.mapStateOwned;
+      });
+      required.forEach((details) => {
+        details.dataset.mapStateOwned = 'true';
+        if (!details.open) {
+          programmaticOutlineToggles.add(details);
+          details.open = true;
+        }
+      });
+    };
+
+    const visibleEntityControl = (key: EntityKey) => Array.from(root.querySelectorAll<HTMLButtonElement>(
+      `[data-select-map-entity="${CSS.escape(key)}"]`,
+    )).find((button) => button.checkVisibility());
+
+    const focusEntityControl = (key: EntityKey) => {
+      const target = visibleEntityControl(key);
+      if (!target) return;
+      const documentElement = document.documentElement;
+      const previousScrollBehavior = documentElement.style.scrollBehavior;
+      documentElement.style.scrollBehavior = 'auto';
+      try {
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'nearest' });
+      } catch {
+        // The state change remains valid when a host cannot perform programmatic scrolling.
+      } finally {
+        documentElement.style.scrollBehavior = previousScrollBehavior;
+      }
+    };
+
+    const focusFrameworkContext = (frameworkNodeId?: string) => {
+      if (!frameworkNodeId) return;
+      if (!responsiveMedia.matches) {
+        const expandButton = root.querySelector<HTMLButtonElement>(
+          `[data-expand-framework-node="${CSS.escape(frameworkNodeId)}"]`,
+        );
+        if (expandButton?.checkVisibility()) expandButton.focus({ preventScroll: true });
+        return;
+      }
+      let current = frameworkById.get(frameworkNodeId);
+      while (current) {
+        const summary = outlineDetailsById.get(current.id)?.querySelector<HTMLElement>(':scope > summary');
+        if (summary?.checkVisibility()) {
+          summary.focus({ preventScroll: true });
+          return;
+        }
+        current = current.parentNodeId ? frameworkById.get(current.parentNodeId) : undefined;
+      }
+    };
+
+    const renderInspector = () => {
+      const selectedKey = state.selectedEntityKey;
+      if (!selectedKey) {
+        inspector.hidden = true;
+        return;
+      }
+      const [kind, id] = selectedKey.split(':') as ['capability' | 'knowledge-topic', string];
+      const entity = kind === 'capability' ? capabilityById.get(id) : topicById.get(id);
+      if (!entity) {
+        inspector.hidden = true;
+        return;
+      }
+      const kindLabel = kind === 'capability' ? '能力' : '知识议题';
+      const directRelations = kind === 'capability'
+        ? payload.capabilityRelations
+          .filter(({ fromId, toId }) => fromId === id || toId === id)
+          .sort((left, right) => compareCodeUnits(left.id, right.id))
+        : [];
+      const kindElement = inspector.querySelector<HTMLElement>('[data-map-inspector-kind]');
+      const nameElement = inspector.querySelector<HTMLElement>('[data-map-inspector-name]');
+      const summaryElement = inspector.querySelector<HTMLElement>('[data-map-inspector-summary]');
+      const relationsElement = inspector.querySelector<HTMLUListElement>('[data-map-inspector-relations]');
+      const emptyElement = inspector.querySelector<HTMLElement>('[data-map-inspector-empty]');
+      const resourcesLink = inspector.querySelector<HTMLAnchorElement>('[data-map-inspector-resources]');
+      const detailLink = inspector.querySelector<HTMLAnchorElement>('[data-map-inspector-detail]');
+      const base = root.dataset.siteBase ?? '/';
+      if (kindElement) kindElement.textContent = kindLabel;
+      if (nameElement) nameElement.textContent = entity.name['zh-CN'];
+      if (summaryElement) summaryElement.textContent = entity.summary['zh-CN'];
+      if (relationsElement) {
+        relationsElement.replaceChildren(...directRelations.map((relation) => {
+          const item = document.createElement('li');
+          const from = capabilityById.get(relation.fromId);
+          const to = capabilityById.get(relation.toId);
+          item.dataset.inspectorRelationId = relation.id;
+          item.dataset.relationType = relation.type;
+          item.textContent = `${from?.name['zh-CN'] ?? relation.fromId} ${relation.type === 'supports' ? '支持' : '互补'} ${to?.name['zh-CN'] ?? relation.toId}：${relation.summary['zh-CN']}`;
+          return item;
+        }));
+      }
+      if (emptyElement) emptyElement.hidden = directRelations.length > 0;
+      if (resourcesLink) {
+        resourcesLink.href = `${base}resources/?${kind === 'capability' ? 'capability' : 'knowledgeTopic'}=${id}`;
+      }
+      if (detailLink) detailLink.href = `${base}${kind === 'capability' ? 'capabilities' : 'topics'}/${id}/`;
+      inspector.hidden = false;
+    };
+
+    const render = () => {
+      const selectedCapabilityId = state.selectedEntityKey?.startsWith('capability:')
+        ? state.selectedEntityKey.slice('capability:'.length)
+        : undefined;
+      const nextLayout = buildEgdsMapLayout({
+        frameworkNodes: payload.frameworkNodes,
+        frameworkRelations: payload.frameworkRelations,
+        capabilities: payload.capabilities,
+        knowledgeTopics: payload.knowledgeTopics,
+        capabilityRelations: payload.capabilityRelations,
+        expandedFrameworkNodeId: state.expandedFrameworkNodeId,
+        selectedCapabilityId,
+      });
+      root.dataset.layoutMode = nextLayout.mode;
+      if (nextLayout.focusedBranchId) root.dataset.focusedBranchId = nextLayout.focusedBranchId;
+      else delete root.dataset.focusedBranchId;
+      scene.style.width = `${nextLayout.width}px`;
+      scene.style.height = `${nextLayout.height}px`;
+      canvas.style.setProperty('--map-height', `${nextLayout.height}px`);
+      [structureSvg, relationsSvg].forEach((svg) => {
+        if (!svg) return;
+        svg.setAttribute('width', String(nextLayout.width));
+        svg.setAttribute('height', String(nextLayout.height));
+        svg.setAttribute('viewBox', `0 0 ${nextLayout.width} ${nextLayout.height}`);
+      });
+      expansion.hidden = !state.expandedFrameworkNodeId;
+      if (returnButton) returnButton.hidden = !state.expandedFrameworkNodeId;
+      if (state.selectedEntityKey) root.dataset.selectedEntityKey = state.selectedEntityKey;
+      else delete root.dataset.selectedEntityKey;
+      syncOutlineDisclosures();
+
+      const frameworkBoxesById = new Map(nextLayout.frameworkBoxes.map((box) => [box.id, box]));
+      root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((element) => {
+        const id = element.dataset.egdsFrameworkNode;
+        const box = id ? frameworkBoxesById.get(id) : undefined;
+        element.hidden = !box;
+        if (box) setBox(element, box);
+        const expanded = element.dataset.egdsFrameworkNode === state.expandedFrameworkNodeId;
+        const inFocusContext = nextLayout.mode === 'focus' && (
+          element.dataset.egdsFrameworkNode === nextLayout.focusedBranchId
+          || element.dataset.egdsFrameworkNode === state.expandedFrameworkNodeId
+        );
+        element.toggleAttribute('data-focus-context', inFocusContext);
+        if (expanded) element.dataset.expanded = 'true';
+        else delete element.dataset.expanded;
+        const button = element.querySelector<HTMLButtonElement>('[data-expand-framework-node]');
+        if (button) button.setAttribute('aria-expanded', String(expanded));
+      });
+
+      const territoriesById = new Map(nextLayout.branchTerritories.map((territory) => [territory.branchId, territory]));
+      root.querySelectorAll<HTMLElement>('[data-egds-territory]').forEach((element) => {
+        const id = element.dataset.egdsTerritory;
+        const territory = id ? territoriesById.get(id) : undefined;
+        element.hidden = !territory;
+        if (territory) setBox(element, territory);
+      });
+      root.querySelectorAll<HTMLElement>('[data-egds-subterritory]').forEach((element) => {
+        const territory = Array.from(territoriesById.values())
+          .map(({ nestedTerritory }) => nestedTerritory)
+          .find((candidate) => candidate?.id === element.dataset.egdsSubterritory);
+        element.hidden = !territory;
+        if (territory) setBox(element, territory);
+      });
+
+      const structuralPathsById = new Map(nextLayout.structuralPaths.map((path) => [path.id, path]));
+      root.querySelectorAll<SVGPathElement>('[data-egds-structural-path]').forEach((element) => {
+        const id = element.dataset.egdsStructuralPath;
+        const path = id ? structuralPathsById.get(id) : undefined;
+        element.toggleAttribute('hidden', !path);
+        if (path) {
+          element.setAttribute('d', path.path);
+          element.dataset.fromPort = path.fromPort;
+          element.dataset.toPort = path.toPort;
+        }
+      });
+      const processPathsById = new Map(nextLayout.processPaths.map((path) => [path.id, path]));
+      root.querySelectorAll<SVGPathElement>('[data-egds-process-path]').forEach((element) => {
+        const id = element.dataset.egdsProcessPath;
+        const path = id ? processPathsById.get(id) : undefined;
+        element.toggleAttribute('hidden', !path);
+        if (path) {
+          element.setAttribute('d', path.path);
+          element.dataset.fromPort = path.fromPort;
+          element.dataset.toPort = path.toPort;
+        }
+      });
+
+      const entityBoxesByKey = new Map(nextLayout.entityBoxes.map((box) => [box.key, box]));
+      root.querySelectorAll<HTMLElement>('[data-map-entity]').forEach((element) => {
+        const key = element.dataset.mapEntityKey;
+        const box = key ? entityBoxesByKey.get(key as EntityKey) : undefined;
+        element.hidden = !box;
+        if (box) setBox(element, box);
+        if (key === state.selectedEntityKey) element.dataset.selected = 'true';
+        else delete element.dataset.selected;
+      });
+      root.querySelectorAll<HTMLElement>('[data-outline-entity-kind]').forEach((element) => {
+        if (element.dataset.mapEntityKey === state.selectedEntityKey) element.dataset.selected = 'true';
+        else delete element.dataset.selected;
+      });
+
+      const endpointBoxesById = new Map(nextLayout.relationEndpointBoxes.map((box) => [box.id, box]));
+      root.querySelectorAll<HTMLElement>('[data-relation-endpoint]').forEach((element) => {
+        const id = element.dataset.relationEndpoint;
+        const box = id ? endpointBoxesById.get(id) : undefined;
+        element.hidden = !box;
+        if (box) setBox(element, box);
+      });
+
+      const relationPathsById = new Map(nextLayout.relationPaths.map((path) => [path.relationId, path]));
+      root.querySelectorAll<SVGPathElement>('[data-capability-relation]').forEach((element) => {
+        const id = element.dataset.capabilityRelation;
+        const path = id ? relationPathsById.get(id) : undefined;
+        if (path) {
+          element.removeAttribute('hidden');
+          element.style.removeProperty('display');
+          element.setAttribute('d', path.path);
+        } else {
+          element.setAttribute('hidden', '');
+          element.style.removeProperty('display');
+          element.removeAttribute('d');
+        }
+      });
+      const frameworkNode = state.expandedFrameworkNodeId
+        ? frameworkById.get(state.expandedFrameworkNodeId)
+        : undefined;
+      if (status) {
+        status.textContent = frameworkNode
+          ? `当前展开：${frameworkNode.name['zh-CN']}。同一时间只显示这一组条目。`
+          : '当前显示 EGDS 全貌。选择带数量的节点可展开具体能力与知识议题。';
+      }
+      syncCareerFrameworkFacts();
+      renderInspector();
+    };
+
+    outlineDetailsById.forEach((details) => {
+      details.addEventListener('toggle', () => {
+        if (programmaticOutlineToggles.delete(details)) return;
+        const frameworkNodeId = details.dataset.outlineFrameworkNode;
+        if (details.open && frameworkNodeId && entityFrameworkNodeIds.has(frameworkNodeId)) {
+          state.expandedFrameworkNodeId = frameworkNodeId;
+          delete state.selectedEntityKey;
+          render();
+          return;
+        }
+        if (details.open || !details.dataset.mapStateOwned) return;
+        const summary = details.querySelector<HTMLElement>(':scope > summary');
+        root.querySelectorAll<HTMLElement>('[data-map-state-owned]').forEach((owned) => {
+          delete owned.dataset.mapStateOwned;
+        });
+        delete state.expandedFrameworkNodeId;
+        delete state.selectedEntityKey;
+        render();
+        summary?.focus({ preventScroll: true });
+      });
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('[data-expand-framework-node]').forEach((button) => {
+      button.disabled = false;
+      button.addEventListener('click', () => {
+        const frameworkNodeId = button.dataset.expandFrameworkNode;
+        if (state.expandedFrameworkNodeId === frameworkNodeId) {
+          delete state.expandedFrameworkNodeId;
+          delete state.selectedEntityKey;
+          render();
+          button.focus({ preventScroll: true });
+          return;
+        }
+        state.expandedFrameworkNodeId = frameworkNodeId;
+        delete state.selectedEntityKey;
+        render();
+      });
+    });
+    selectButtons.forEach((button) => {
+      button.disabled = false;
+      button.addEventListener('click', () => {
+        const key = button.dataset.selectMapEntity as EntityKey | undefined;
+        if (!key) return;
+        const entity = allEntities.find((item) => `${item.kind}:${item.id}` === key);
+        if (!entity) return;
+        state.expandedFrameworkNodeId = entity.frameworkNodeId;
+        state.selectedEntityKey = key;
+        render();
+      });
+    });
+    returnButton?.addEventListener('click', () => {
+      const previousFrameworkNodeId = state.expandedFrameworkNodeId;
+      delete state.expandedFrameworkNodeId;
+      delete state.selectedEntityKey;
+      render();
+      focusFrameworkContext(previousFrameworkNodeId);
+    });
+    root.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || (!state.expandedFrameworkNodeId && !state.selectedEntityKey)) return;
+      const previousFrameworkNodeId = state.expandedFrameworkNodeId;
+      delete state.expandedFrameworkNodeId;
+      delete state.selectedEntityKey;
+      render();
+      focusFrameworkContext(previousFrameworkNodeId);
+      event.preventDefault();
+    });
+
+    root.addEventListener('egds-map:focus-capability', (event) => {
+      const capabilityId = (event as CustomEvent<{ capabilityId?: string }>).detail?.capabilityId;
+      const capability = capabilityId ? capabilityById.get(capabilityId) : undefined;
+      if (!capability) return;
+      state.expandedFrameworkNodeId = capability.frameworkNodeId;
+      state.selectedEntityKey = `capability:${capability.id}`;
+      render();
+      focusEntityControl(`capability:${capability.id}`);
+    });
+
+    responsiveMedia.addEventListener('change', () => {
+      if (state.selectedEntityKey) focusEntityControl(state.selectedEntityKey);
+    });
+
+    const careerPriorities = new Set<CareerNode['priority']>(['core', 'important', 'suggested', 'unlisted']);
+    const careerResponsibilities = new Set<NonNullable<CareerNode['responsibility']>>([
+      'execute',
+      'contribute',
+      'decide',
+      'direct',
+    ]);
+    const isRecord = (value: unknown): value is Record<string, unknown> =>
+      typeof value === 'object' && value !== null && !Array.isArray(value);
+    const parseCareerLensDetail = (value: unknown): { profileId: string; nodes: CareerNode[] } | undefined => {
+      if (!isRecord(value) || typeof value.profileId !== 'string' || value.profileId.trim().length === 0) return;
+      if (!Array.isArray(value.nodes)) return;
+      const capabilityIds = new Set<string>();
+      const nodes: CareerNode[] = [];
+      for (const item of value.nodes) {
+        if (!isRecord(item)) return;
+        const { capabilityId, priority, responsibility } = item;
+        if (typeof capabilityId !== 'string' || !capabilityById.has(capabilityId) || capabilityIds.has(capabilityId)) return;
+        if (typeof priority !== 'string' || !careerPriorities.has(priority as CareerNode['priority'])) return;
+        if (responsibility !== undefined && (
+          typeof responsibility !== 'string'
+          || !careerResponsibilities.has(responsibility as NonNullable<CareerNode['responsibility']>)
+        )) return;
+        capabilityIds.add(capabilityId);
+        nodes.push({
+          capabilityId,
+          priority: priority as CareerNode['priority'],
+          responsibility: responsibility as CareerNode['responsibility'],
+        });
+      }
+      return { profileId: value.profileId, nodes };
+    };
+
+    root.addEventListener('egds-map:apply-career-lens', (event) => {
+      const detail = parseCareerLensDetail((event as CustomEvent<unknown>).detail);
+      if (!detail) return;
+      projectedCareerNodes = new Map(detail.nodes.map((node) => [node.capabilityId, node]));
+      root.dataset.careerProfileId = detail.profileId;
+      root.querySelectorAll<HTMLElement>('[data-career-node][data-capability-id]').forEach((element) => {
+        const capabilityId = element.dataset.capabilityId;
+        const projected = capabilityId ? projectedCareerNodes.get(capabilityId) : undefined;
+        delete element.dataset.rolePriority;
+        delete element.dataset.roleResponsibility;
+        element.dataset.roleState = !projected || projected.priority === 'unlisted' ? 'unlisted' : 'mapped';
+        if (projected && projected.priority !== 'unlisted') {
+          element.dataset.rolePriority = projected.priority;
+          if (projected.responsibility) element.dataset.roleResponsibility = projected.responsibility;
+        }
+        const label = element.querySelector<HTMLElement>('[data-role-label]');
+        if (label) {
+          label.textContent = projected?.priority === 'core'
+            ? '核心'
+            : projected?.priority === 'important'
+              ? '重要'
+              : projected?.priority === 'suggested'
+                ? '建议了解'
+                : '';
+          label.hidden = !label.textContent;
+        }
+      });
+      syncCareerFrameworkFacts();
+    });
+
+    root.addEventListener('egds-map:clear-career-lens', () => {
+      delete root.dataset.careerProfileId;
+      projectedCareerNodes = new Map();
+      root.querySelectorAll<HTMLElement>('[data-career-node][data-capability-id]').forEach((element) => {
+        delete element.dataset.rolePriority;
+        delete element.dataset.roleResponsibility;
+        delete element.dataset.roleState;
+        const label = element.querySelector<HTMLElement>('[data-role-label]');
+        if (label) {
+          label.textContent = '';
+          label.hidden = true;
+        }
+      });
+      root.querySelectorAll<HTMLElement>('[data-egds-framework-node]').forEach((element) => {
+        delete element.dataset.careerCoreCount;
+        delete element.dataset.careerImportantCount;
+        delete element.dataset.careerSuggestedCount;
+      });
+      root.querySelectorAll<HTMLElement>('[data-career-collapsed-count]').forEach((countLabel) => {
+        countLabel.textContent = '';
+        countLabel.hidden = true;
+      });
+    });
+
+    render();
   });
 </script>

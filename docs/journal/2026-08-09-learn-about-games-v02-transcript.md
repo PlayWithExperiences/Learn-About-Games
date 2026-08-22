@@ -246,3 +246,323 @@ GitHub Pages run `31282121063` 完成 build，但 Chromium E2E 60 passed / 3 ski
 主任务使用 GitHub CLI 先确认 `PlayWithExperiences/Learn-About-Games` 为 PUBLIC，再以显式 visibility consequence 参数改为 PRIVATE。写入后 GitHub API 返回 `visibility=PRIVATE`、`isPrivate=true`；未经身份验证访问仓库 URL 返回 404，原 GitHub Pages URL 也返回 404，Pages API 不再提供公开站点。Pages workflow 随后手动停用，API 返回 `state=disabled_manually`，避免私有阶段每次 main push 触发无法部署的 run。此次操作没有删除仓库、分支、commit、Actions 历史或本地工作树；恢复公开需要未来显式把仓库改回 Public、重新启用 workflow 并重新验证 Pages。
 
 项目连续性入口、README、Roadmap 与 Changelog 同步区分“最后一次成功公开发布的历史证据”和“当前私有开发状态”。下一阶段先通过文字设计确认地图层级、暗色高亮、资源密度和 Atlas 浏览工具，再实现并完成全套验收；在此之前不恢复公开。
+
+## 25. 私有完善设计确认（部分会话导出）
+
+用户要求继续处理五项已指出的问题，并明确接受文字方案。主任务先核对当前实现：能力图将 8 个 Domain 与 64 条关系同时展示；Career Lens 节点状态主要依赖边框；Source 使用双列卡片，Work Item 虽为单列但信息横向跨度仍长；Atlas 桌面画布只有横向滚动；节点详情没有搜索和显式排序控件。问题都能由现有 DOM、CSS 与数据合同直接解释，不是单纯更换颜色即可修复。
+
+主任务提出三种地图方向：继续保留地域网格并加强标题、改成严格树状图、或采用“分层思维导图 + 按需关系网”。前者无法消除等权信息竞争；严格树会错误暗示唯一父节点或固定成长顺序。用户确认尝试第三种方向。
+
+书面设计把地图定义为从左向右的一个根、五条主干、8 个 Domain 与既有 Capability / Knowledge Topic；主干和归属关系持续显示，真实 `supports` / `complements` 关系在节点聚焦时增强。五条主干为体验与玩家、玩法／空间与表达、研究／原型与交付、协作／领导与方向、产品／市场与更广语境；它们只是地图阅读分组，不是新知识实体或学习顺序。
+
+同一规格固定其余四项：深色 Career Lens 使用填充、2px 边框、实线／虚线和中文标签共同表达三档关注；Source 改为单列目录，Work Item 收紧为三段编辑行，外部观察与长版本说明进入原生 disclosure；Atlas 增加适应全图、50%-200% 缩放、原生滚动位置平移与中心锚点；节点索引增加中英文搜索、按时间／名称稳定排序，并只增强图中匹配项而不删除实体。无 JavaScript、职业无评分、资源无站内质量等级与 Atlas 主题只改变强调的合同继续保留。
+
+## 26. 私有完善实施规划（部分会话导出）
+
+用户复核书面设计后回复“继续”。主任务使用 writing-plans 流程做文件级审计，并把规格拆为 Map / Career、Resources、Atlas 三份可独立验证的实施计划。三个子系统都会修改 `src/styles/global.css`，因此不并发写入；每个切片严格先运行目标 RED，再做最小实现、定向 GREEN、视觉检查和独立提交，最后由主任务串行运行完整门禁。
+
+审计真实 `ResourceResults.astro` 与 CSS 时发现书面设计中的一处事实表述不准确：当前 Source 目录使用双列卡片，Work Item 本来就是单列编辑行，只是信息横向跨度较长。规格、摘要和计划已同步修正为“Source 改为单列目录，Work Item 收紧主信息／事实／访问三区”，没有为了匹配反馈而虚构不存在的 Work Item 双列缺陷。
+
+Map / Career 计划新增一份五组阅读层级数据，构建期验证 8 个 Domain 恰好各归属一次；纯布局 helper 生成一个根、五条主干、8 个 Domain、54 个节点和 13 条结构线，64 条真实关系只在聚焦时增强。Career 单独以 Light/Dark token、填充、2px 边框、实线／虚线和标签修复暗色辨识。
+
+Resources 计划不改变七维筛选、URL、catalog 顺序或 20/128 数量，只改 Source / Work Item 的语义行布局和原生 disclosure。Atlas 计划用 50%-200% 纯 helper、固定场景缩放和原生 scroll 位置实现适应全图、缩放、拖拽与键盘平移；节点索引增加中英文搜索与时间／名称稳定排序，图实体和 Evidence 数量保持 27/25/40。
+
+## 27. 私有完善实现与审查（部分会话导出）
+
+本节是当前运行时能够保存的脱敏部分记录，不声称覆盖原始对话的每条中间消息。实施按共享 CSS 串行推进，并为每项行为先取得有效 RED。能力地图最终只使用一份 catalog 和一份布局 helper：一个根分出五条阅读主干，再进入 8 个 Domain 与 54 个 typed 节点；13 条结构线持续可见，64 条 supports / complements 关系默认退居背景并在聚焦时增强。跨 collection 同名 ID 使用类型命名空间，桌面无 JavaScript 通过原生 details 提供完整层级和 64 条中文关系文字，移动端继续使用等价五组大纲。
+
+Career Lens 的暗色修复不再对未收录节点施加整节点 opacity；核心、重要、建议了解分别使用填充、2px 边框、线型和中文标签，hover / focus 不覆盖优先级表面。Resources 把 20 个 Source 与 128 个 Work Item 收紧为单列编辑目录，事实区内部使用三列紧凑网格，版本和外部观察进入原生 disclosure；140 个 Access Version、12 条外部观察、七维筛选、URL 与 catalog 顺序没有改变。审查时曾发现事实区错误退化为单列，桌面／320px 中位行高达到 195／409px；修复后为 142／313px，128 条结果均由浏览器测试逐项覆盖。
+
+Innovation Atlas 的视口使用 50%–200% 固定缩放、中心锚点、适应全图、复位、scroll position 平移、Pointer drag、Arrow 键与 Ctrl / Command + wheel；普通滚轮继续滚动页面。中间宽度无法在 50% 下容纳 2200px 场景，因此 1150px 及以下诚实切换为完整时期大纲；fit mode 会随 resize 更新，lostpointercapture 会清除拖拽状态。节点索引 server render 27 条时间序详情，JavaScript 增加中英文名称／摘要／Tag 搜索、按时间／名称稳定排序、结果计数、空状态和清除；搜索只弱化图中非匹配项，不删除 27 个节点、25 条关系或 40 项 Evidence，也不改变主题透镜。
+
+节点索引规格复审先发现 no-JS 控件缺少局部解释；修复后 disabled 搜索、排序、清除与完整 27 条时间序索引同时可读。独立质量审查随后用真实 catalog 证明两个阻断：全角 `ＭＥＴＲＯＩＤＶＡＮＩＡ` 无法命中，中文 `恶魔城` 因 Tag 未本地化而得到 0 项；搜索和主题两层整节点 opacity 叠加后，桌面 Light / Dark 只有 2.00:1 / 2.84:1，320px 只有 2.20:1 / 3.23:1。审查同时确认原生 output 已暴露动态 status，不需要重复 ARIA；empty / clear、dialog clone、焦点恢复、URL、no-JS 与 27/25/40 不变量均正常。
+
+修复先用真实 unit / E2E 锁定 `恶魔城` 4 项、全角 `ＭＥＴＲＯＩＤＶＡＮＩＡ` 18 项与 `单局永久死亡` 6 项，再让索引与查询统一执行 NFKC、locale lowercase 和 trim；中文 Tag 改为“恶魔城（Castlevania）探索脉络”，没有在 controller 内硬编码同义词。视觉弱化删除整 anchor / header opacity，改用不透明 muted token、虚线边框和局部类型强调；四种搜索+Metroidvania 双未匹配状态的真实文字对比度均达到至少 4.5:1。修复提交 `08be06d`，四张关键原图保存在临时目录 `/tmp/learn-about-games-atlas-index-fix/`。
+
+主任务的第一轮完整浏览器门禁运行 158 项，其中 140 passed、16 skipped、2 failed。两项失败都来自同一测试合同：`visible-skeleton.spec.ts` 用全局 heading 文本寻找“体验与玩家”，新五条主干地图中主干和同名 Domain 都合法存在，因此 Playwright strict locator 命中两个元素。根因不是产品缺内容或视觉冲突；最小修复只让该测试在桌面 `data-map-region`、移动 `data-outline-region` 中核对八个 Domain。定向复跑为 25 passed / 1 desktop-only skipped；完整复跑为 142 passed / 16 intentional skipped / 0 failed。最终 `npm run check` 为 0 errors / warnings / hints，Vitest 105/105，fresh build 105 pages，`npm audit --audit-level=high` 为 0 vulnerabilities，差异与脱敏秘密扫描均通过。
+
+## 28. 私有完善远端交接（部分会话导出）
+
+本节只记录脱敏的最终交接事实。独立 reviewer 以 `05beed7..1a1e2d1` 为范围逐项核对五条主干地图、Dark Career 三档、20/128 单列资源目录、Atlas 50%–200% 视口和中英文节点索引，结论为 Ready，0 Critical / Important / Minor。reviewer 自行运行 fresh build：Astro 0 errors / warnings / hints、Vitest 105/105、105 pages；完整 Playwright 为 142 passed / 16 intentional skipped / 0 failed；repo API 为 PRIVATE，deploy workflow 为 `disabled_manually`。
+
+主任务确认远端 `main` 与 `codex/v02` 都停在私有化提交 `d758bd5`，且它是本地 HEAD 的祖先，再用 SSH 将远端 `codex/v02` 非强制快进到 runtime `1a1e2d132e7bcd28fa3b4418c1ac23ed5b7d1d7a`。GitHub API 随后返回该精确 SHA；`main` 未更新，Pages workflow 未启用，仓库仍为 Private。本元数据提交只修正入口与交接事实，不改变已经审查的产品 runtime；下一步是用户在私有状态下复核，而不是自动恢复公开。
+
+## 29. EGDS 能力地图方向（部分会话导出）
+
+本节是当前运行时能够保存的脱敏部分记录，不声称覆盖原始对话的每条中间消息。
+
+发起人复核私有版本后指出，能力地图偶尔会出现滚动发卡，节点仍然偏大，无法在一个视口内理解全貌。更重要的问题不是节点尺寸，而是分类来源：当前“体验与玩家 / 玩法、空间与表达 / 研究、原型与交付 / 协作、领导与方向 / 产品、市场与更广语境”把设计对象、生产阶段、组织条件和商业语境放到同一层，“体验与玩家”与“玩法、空间与表达”仍会重叠。它像任何项目都可能产生的通用分类，没有体现 PlayWithExperiences 的作者输入。
+
+发起人要求能力地图以原始 EGDS Expertise Map 为蓝本：从体验与情绪曲线出发，经过感受、理解、解构和重构，再由重构进入叙事、美学、玩法与挑战等设计杠杆；从计划到落地是另一条能力线；存在团队时加入协作、领导与管理；希望盈利时加入受众、市场与商业化；讨论的不只是游戏时保留创新议题。Innovation 可以在能力地图留下入口并连接 Innovation Atlas，但不把历史网络复制进能力地图。
+
+主任务从第一性原理指出，现有五组并非完全错误，而是一套中性目录；它不能作为作者化知识地图的主骨架。讨论比较了三种方案：全量静态思维导图会在微小文字和巨大画布之间失衡；总览／完整图双模式会增加第二套真相；最终选择“一屏骨架 + 按需展开”。默认持续显示根、五主分支、EGDS 核心链、三类设计杠杆和第二层能力群，同一时间只展开一个能力群的 Capability / Knowledge Topic。发起人回复“好，先试试”。
+
+双方同时确认三种实体边界：感受、理解、解构、重构是 EGDS 方法阶段，不参与个人进度与职业画像；Capability 才是可实践、可记录状态、可被画像投影和连接资源的实体；Knowledge Topic 只提供理解背景。Career Lens 在折叠能力群上只显示核心／重要等事实计数，不生成匹配度、完成率或差距。
+
+代码只读审计发现 `.capability-map__canvas` 使用双向 `overflow: auto`，外层页面也可滚动，全站还存在 smooth scroll；这为触控板斜向手势在内外滚动上下文之间竞争提供了具体解释。书面设计因此要求地图取消纵向内部滚动，总览适应可用宽度，展开只增加页面高度；中间宽度与移动端切换为 EGDS 等价大纲。普通滚轮始终滚动页面，不把能力地图做成另一个 Atlas 视口。
+
+发起人明确偏好文字说明，只有文字确实无法表达时才考虑视觉方式；本轮讨论和书面设计均遵循这一偏好，没有用视觉草图替代作者判断。成长资源的媒介类型标识与进一步压缩、Innovation Atlas 的普通滚轮缩放和早期历史扩充，作为后续独立切片保留。本轮只写设计规格与连续性留档，不改变运行时、仓库可见性或 Pages 状态。
+
+## 30. 并行 sub-agent 研究与 EGDS 规格收敛（部分会话导出）
+
+发起人指出 EGDS 地图、资源密度和 Atlas 交互／内容的重合度不高，主任务可以让 sub-agents 分别推进并在最后统一审核。主任务承认此前把共享 CSS 的实施冲突错误扩大成了整个设计流程的串行约束，随即改为只读并行：高推理 Terra 审查 EGDS 规格，中等推理 Terra 盘点资源真实数据并设计密度合同，高推理 Sol 使用 Agent Reach 研究 Atlas 滚轮交互和早期电子游戏史。运行时一次只提供两个子任务槽，因此 Atlas 在资源任务返回后立即接续；主任务同时负责规格自审和连续性留档，没有重复 agent 的调查。
+
+EGDS reviewer 首轮判定 Not Ready：规格没有 42 Capability / 12 Knowledge Topic 到 EGDS 的逐项主要归属；树状 parent 无法表达感受 → 理解 → 解构 → 重构的过程关系；Career 的“地图中聚焦”无法打开尚未渲染的折叠能力；旧 Domain 还会从详情 breadcrumb 等路径继续作为第二套地图真相。主任务补写了正式 `egds-root`、28 个稳定 framework node、`contains`／`process-next`／`links-to`、原图 landmark 去向、54 项映射、Domain/mapGroups 同切片退休、Career 原子 focus 请求、>1150 桌面断点、720px 骨架预算和碰撞门禁。
+
+第二轮审查继续发现 stage／lever／entry 也直接承载实体，不能只称“能力群”；叶节点同时选择 Inspector 和进入详情也不能嵌套 button/anchor；framework 的 parent、contains 和实体列表存在多份真源风险。规格最终统一“可展开叶子容器”，规定关系 button 与详情 anchor 是同级控件；framework `parentNodeId` 派生 contains，实体 `frameworkNodeId` 反向派生叶列表，不在 JSON 重复保存。第三轮结论 Ready；唯一 Minor 是固定过程边仍应成为精确集合断言，随后也已补为三条 process-next 与唯一 Atlas link。
+
+Resources agent 以真实 catalog 统计出 68 演讲、27 书籍、8 论文、8 网站、5 播客、5 视频、4 文章和 3 课程；97 字符长标题、12 个双版本条目、5 个带外部观察条目是必须覆盖的真实极端。推荐“单主列 + 类型轨道”，不用颜色独自表达媒介／Source 类型，也不把外部观察数量升级为质量信号。它建议后续把 desktop P50 收紧到 112px、320px P50 收紧到 190px，并保留全部 server HTML、筛选 URL、原生 disclosure 与实体粒度。
+
+Atlas agent 对比了普通 wheel、focus-to-engage 和仅修饰键三种方案。推荐默认 cooperative：普通滚轮属于页面；用户明确进入“地图模式”后，普通 wheel 才围绕指针连续缩放，Esc／离开区域退出，达到上下限时不再阻止页面滚动；Ctrl/Command + wheel 和按钮继续保留。早期历史研究依据博物馆、大学、专利与计算机史机构来源，明确 PONG 是 1972 年商业突破节点，不是未经限定的“第一个电子游戏”。首批内容应先扩 taxonomy 与时间布局，再分别录入早期文档化设计、实验程序／装置、系统原型、量产产品和商业突破；时间相邻但缺少直接证据的节点不能为了视觉密度补关系。
+
+本阶段没有实施运行时，没有恢复公开或 Pages，也没有把 sub-agent 报告直接当成最终产品决定。主任务只把 EGDS 已确认方向写成审查通过的书面规格；Resources 与 Atlas 结论仍需要发起人确认后分别形成独立规格和计划。
+
+## 31. EGDS 书面规格确认与实施计划（部分会话导出）
+
+发起人复核 EGDS 书面设计后回复“认可”。主任务因此进入 writing-plans 阶段，没有直接修改运行时。文件级审计确认当前迁移涉及两份旧地图 collection、42 Capability、12 Knowledge Topic、catalog validator、纯布局 helper、Map／Career 组件、Capability／Topic breadcrumb、共享 CSS 和四组现有 E2E；如果一次性删除旧 Domain／mapGroups，现有页面会立刻失去类型与构建闭包。
+
+实施计划采用可构建的过渡顺序：先新增 28 个 EGDS framework node、三条固定 process relation、唯一 Atlas link 和 54 项 `frameworkNodeId`，暂时保留旧字段；随后让纯布局 helper 与详情路由在文件所有权不重叠的前提下并行。交互地图完成后，Career 只通过公开 map event 请求画像投影和 capability focus；最后在同一私有分支删除 Domains、mapGroups、`domainId`、手工 position 和所有兼容引用，避免长期保留第二套地图真相。
+
+计划把 `global.css` 的实现所有权集中在交互地图任务，其他并行 agent 不修改共享样式。默认桌面骨架固定为 1180 × 700 的作者化布局，完整显示根、五主分支、体验阶段、三类杠杆和第二层能力群；一次只在骨架下方增加一个由原分支连接的展开带。普通滚轮始终推动页面，1024／320 使用关系等价大纲。直接关系只在选中 Capability 后显示；跨能力群的端点作为关系端点 chip 出现，不伪装成第二个展开能力群。
+
+任务分配按难度使用当前真实可调用模型：catalog／交互／最终清理由高推理 Sol 负责，纯布局与 Career bridge 由高推理 Terra 负责，路由文案由中等推理 Terra 负责，根任务逐提交复核并独立做最终对抗验收。当前桌面 subagent runtime 未暴露 Luna，因此没有把 ChatGPT Free 的 Luna 可用性误写成 Codex 子代理能力。资源密度与 Atlas 早期历史研究结果继续留在后续独立规格，本计划不修改对应 runtime。
+
+实施计划保存在 `docs/superpowers/plans/2026-08-09-egds-expertise-map-implementation-plan.md`。本阶段只新增计划与连续性留档，没有推送、部署、改变仓库 Private 状态或启用 Pages。
+
+## 32. EGDS 实施、审查与最终验收（部分会话导出）
+
+发起人选择 subagent-driven 执行，并再次要求根据任务难度分配模型与推理等级。主任务保留架构、跨切片判断和最终验收；catalog、交互地图、旧 ontology 退休使用高推理 Sol，纯布局和 Career bridge 使用高推理或中高推理 bounded agent，路由文案使用中等推理 bounded agent。当前桌面 runtime 仍未暴露 Luna，因此没有虚构 Luna 子代理路径。每个任务先有独立 RED，再由规格 reviewer 和质量 reviewer 逐轮检查；发现问题后交回原实现者修复，reviewer 复审到 Approved。
+
+数据合同先把原始 EGDS 变成 28 个正式 Framework Node、三条 process relation 和唯一 Atlas link；42 Capability 与 12 Knowledge Topic 各有主要展示位置，64 条真实关系不被改造成结构边。审查先后发现 relation endpoint 可悬空、集合错误 payload 不完整；修复后 schema、loader、validator 和 raw data 共同拒绝坏引用。
+
+纯布局 helper 生成一屏 1180px 作者骨架与一个展开带。初版审查发现 relation 路径穿盒、locale-dependent sort、leader 沿节点顶边重合和非容器可被展开；修复改为 code-unit total order、typed unique key、obstacle-aware orthogonal routing 和只允许真实叶容器展开。反转输入、重复 ID、未知端点、28 个展开状态与零碰撞都由 unit / browser contract 覆盖。
+
+公开路由与 Map UI 随后迁移到 EGDS。默认 28 个方法节点持续显示，Capability / Knowledge Topic 只在一个叶容器中出现；实体“关系”按钮和详情链接是同级控件，Inspector 不复制详情页。1024px、320px 和 no-JS 使用 server-rendered nested details。审查修复了 exact DOM contract、最小字体、文字省略、outline 焦点／返回所有权、无效 public event、bootstrap double-run、responsive 断点裁切和 Atlas breakpoint 被共享 media query 误伤等问题。普通滚轮始终推动页面，不再进入双向内部滚动上下文。
+
+Career bridge 把三个画像投影到同一张 EGDS 地图。它只发送 apply / focus / clear public events，不直接写地图节点；priority、responsibility、公开依据与 framework count 都来自纯 projection。no-JS 的三份摘要改为原生 details，能力详情和资源链接可达。独立质量审查又发现 duplicate / unknown capability 会让 count 与 node 集合漂移，以及同 DOM double bootstrap 会重复 focus；helper、validator 和两个 controller guard 随后一起修复。Career、个人进度、地图展开和关系选择最终保持独立，所有中英文文案都没有 score、gap、fit 或 completion 语义。
+
+最后删除 `domains.json`、`map-groups.json`、`domainId`、手工 position、旧 collection/type/validator 和 generic geometry helper。质量审查仍找到公开 Methodology 的旧实体定义和 production CSS 中 422 行／7,744 bytes 无消费者旧选择器；两项各自取得 RED 后删除，当前三类地图实体固定为 EGDS Framework Node、Capability、Knowledge Topic。退休 source gate 对旧字段、helper 和 selector 为零输出。
+
+主任务亲自执行最终视觉矩阵，截图保存在 `/tmp/learn-about-games-egds-final/`。1440px Light / Dark 默认 canvas 完整显示五分支且 scene=720；默认 28/42/12/64 server entities 中，visible entity=0、visible relation=0、可见盒重叠=0。展开 Playtest 后只显示 6 Capability + 1 Topic；选中 Playtest 后只显示 4 条直接关系。普通滚轮在空白、framework 和实体上都使 pageY 增加 220px。1024px 与 320px 使用完整 outline；1440px / 320px no-JS 都有 42 Capability links、12 Topic links 和 54 disabled relation controls。三份 Career Lens 在 Light / Dark 均有截图；清除画像保留展开、选择和 localStorage progress。
+
+根级文档 RED 先要求 README、Roadmap 与 Changelog 把 EGDS 写成当前 Private 候选；旧文档按预期 2 项失败，更新后 Chromium 15/15。连续性更新前的 fresh gate为 Astro check 0/0/0、Vitest 130/130、105 pages、完整 Playwright 185 passed / 15 intentional skipped。第一次完整浏览器命令只因主任务的 4342 人工预览仍运行而无法启动；精确停止该 preview 后原样重跑成功，未修改产品合同。
+
+里程碑文档提交 `7706520` 后，最终全局 reviewer 仍在 1024px / 320px 真实运行态确认三个 Important：JS 原生大纲可同时手动打开多个实体叶；1024px 的递归缩进和双列实体把正文压到约 31.5px；Career 三档事实计数只写入隐藏的桌面节点，响应式折叠叶没有可见载体。三项先各自取得 E2E RED，再由 `fce67d1` 统一修复：JS 只保留最后打开叶、no-JS 仍可多开，1024px 深层正文恢复到约 606px且实体单列，Career count 在 1024px / 320px apply 和 clear 都与桌面同步且不泄漏到 Framework / Topic。独立复审结论为 Approved；fresh build 为 0 diagnostics、130/130、105 pages，完整 E2E 为 191 passed / 15 intentional skipped。
+
+本记录仍是脱敏部分导出，不声称补回已经压缩且当前运行时不可访问的逐字消息。仓库保持 Private、Pages workflow 保持 `disabled_manually`；远端 `codex/v02` 停在 `d982ceb0f0cd2cf342f8b80d5256b2f69ba90d42`。本地 EGDS runtime `fce67d18947020f292d9384f6164baf2ab69699f` 与本里程碑后续文档尚未推送或部署。下一步由发起人私有复核，而不是自动恢复公开。
+
+## 33. 地图职业合并、资源子表与 Atlas 早期史（部分会话导出）
+
+发起人继续在本地预览中反馈：能力地图与职业路径重复；资源页仍然过长；Atlas 需要更像地图的连续滚轮缩放和拖动；没有查完的早期资料应继续补充。对资源形态的进一步确认是“可以按需展开，可以展开全表后按表头筛选，也可以只展开一个子表”。发起人明确要求书面方案完成后直接并行执行，不再停下来等待方案复核，并继续要求根据难度分配 sub-agent 的模型与推理等级。
+
+主任务先用三个只读 sub-agent 分别审计 Map/Career、Resources 与 Atlas／研究。审计量化了资源页面约 21,476px／44,755px 的桌面／320px 高度；确认 `/careers/` 重复渲染同一 CapabilityMap；确认 Atlas 旧 wheel 每次固定跳 25%、使用 viewport center 且同步写 transform、stage size 与 scroll，是触控板跳动的具体机制。Agent Reach 通过 Exa、Jina 和机构原页核对 Brookhaven、Computer History Museum、Smithsonian、Stanford 与 Al Alcorn 口述史。
+
+主任务写入一份整合设计和四份分项实施计划后，按文件所有权并行派发三个实现者。Map/Career 使用高推理 Sol，Resources 使用高推理 Terra，Atlas 交互与早期史使用更高推理 Sol；主任务保留跨切片判断、审查与最终门禁。共享 `global.css` 只允许各 agent 精确修改并暂存自己的 scoped hunks，validator 在 Atlas 提交后再由 Resources review-fix 串行补充。
+
+Resources 的 RED 来自缺少 topic count helper、旧页面没有分组/展开控制；GREEN 后 15 个 topic 原生 disclosure、展开全部／收起、七维 AND filter 与独立 Source 目录均成立。默认页面高度下降约 89%／91%，而展开全表仍可恢复完整目录。独立 reviewer 找到一个 Important：`resourceTopicIds[0]` 没有 validator 保障。修复新增 REQUIRED / MULTIPLE diagnostics 并锁定 raw 128 项均恰属一个 topic；提交为 `eb5d9f1` 与 `5ed1ff7`。
+
+Atlas 的 RED 包括缺少连续 scale helper、缺少 pointer anchor 和早期 9 节点／5关系。实现新增显式地图模式、rAF 合并、指针锚定、Esc 与边界释放；数据总量变为 36 节点／30 关系／49 Evidence。新增对象类型避免把实验装置、程序、系统原型和商业硬件伪装成 Game；Odyssey Table Tennis → Pong 只标 credible participant-history，Tennis for Two 没有连向 Pong。独立 reviewer 找到新节点类型可绕过 endYear 逆序校验和早期 tick 缺失；修复提交 `209ae9c`。主实现提交为 `4212a40`。
+
+Map/Career 的 RED 包括顶栏仍有五项、Map 没有 lens、`/careers/` 未 redirect、root 与 branch field 中心偏 32px，以及 apply + focus 把地图向下推 545.5px。实现把三画像并入 Map、收敛为四项导航、构建静态兼容跳转并修正几何。独立 reviewer 又发现选中画像的 basis/mapping 被放在整张地图之后；review-fix 把所有选中事实合并为 controls 后、map 前的固定高度 disclosure，map top 在 apply/switch/focus 后均保持不变。提交为 `a3755fb` 与 `cc81bf8`。
+
+本段仍是脱敏的部分导出，不声称包含所有中间工具输出或主任务私有推理。仓库始终保持 Private，Pages workflow 始终保持 `disabled_manually`；没有 push、没有部署。最终交付会 fresh build 并重新启动 `http://127.0.0.1:4321/Learn-About-Games/` 本地预览。
+
+连续性文档与 Devlog 写入后的 fresh build 为 Astro 0 diagnostics、Vitest 139/139、107 pages。完整 E2E 首轮 197 passed / 15 skipped / 4 failed；四项都来自公开文档测试仍锁定历史 Atlas 27/25/40 和旧 Changelog 句子，运行时功能没有失败。更新为当前 36/30/49 与“本轮尚未推送或部署”后，visible-skeleton 双端为 29 passed / 1 intentional skipped，完整 E2E 复跑为 201 passed / 15 intentional skipped / 0 failed。
+
+## 34. 地图与画像视觉复核、Atlas 全屏和第二批资源（部分会话导出）
+
+发起人在新的本地预览中继续指出：EGDS 图的多行节点肉眼可见未对齐；Career 依据区未选择时留出大空白，选择后内容窄小并被内部滚动限制；Innovation Atlas 的地图模式没有占满视口；资源仍需继续补充。发起人提供了地图与 Career 的深色截图作为事实依据。
+
+主任务把问题拆成三个低重合并行任务，并延续按难度分配模型与推理等级的要求：高推理 Sol 负责 Map/Career 几何与阅读区，高推理 Sol 负责 Atlas 全屏生命周期，高推理研究 agent 使用 Agent Reach 扩展资源；根任务负责文字规格、共享文件边界、整合测试与连续性。书面设计采用 preserve-redesign，设计刻度为 variance 4、motion 3、density 9。共享 `global.css` 只允许 Map/Career 和 Atlas 分别暂存自己的 scoped hunks。
+
+Map/Career 测试先证明视觉错位不是主观感受：体验阶段和常规四节点行使用不同 x 集合，连接线也没有 port metadata。实现把四行统一到同一列网格，并让每条路径声明和命中 N/E/S/W 边界端口。最新反馈明确覆盖旧“应用画像时 map top 不移动”合同：未选择时依据区零占位；选择后允许完整内容自然推开地图，不再用固定 17rem 与内部滚动换取表面位置稳定。提交为 `66abc47`。
+
+Atlas 测试先在旧 wrapper 没有全屏状态处得到 RED。实现增加完整视口 layer、背景 inert、滚动锁、焦点循环和退出恢复。对抗测试又发现 Evidence 返回后 canvas 会抢走原节点焦点，以及 Shift+Tab 可进入背景；两项都在提交前修复。提交为 `757ff22`。
+
+资源 agent 的 coverage audit 显示旧 catalog 中 talk 68 条，而 course 3、article 4、podcast 5、website 8；两个 Capability 没有直接资源。Agent Reach doctor 确认 Exa/Jina 可用，Exa 429 后只继续核验已经发现的官方 URL。新增 20 项以 article、book、course、paper、podcast 和 website 为主，canonical 归一化后无重复；错误 DOI、404 出版社页、403 且无法复核的候选和未核验视频搬运均拒绝。提交 `ece3285` 使总量达到 148 Work Item、29 Source、161 Access Version。
+
+整合层同步 current 文案和 148／29／161 浏览器合同，历史已部署的 20／128 证据段保持不改。fresh build 为 Astro 0 diagnostics、141 unit、116 pages；完整 Playwright 为 203 passed、17 intentional skipped、0 failed。本段是脱敏部分导出，不包含秘密、环境值或不可访问的逐字对话；仓库继续 Private、Pages 继续禁用，所有新提交均未 push。
+
+## 35. EGDS 层级语法、Atlas 全屏透镜与多语言资源（部分会话导出）
+
+发起人查看共享列修复后仍明确指出，能力地图的父级和子级关系看不清楚；问题可能表现为对比色不足，但核心是不同层级没有不同的视觉语法。发起人还要求全屏 Atlas 继续允许选择特殊标签，并询问资源搜索与扩展是否已经完成，要求继续补充。
+
+主任务用文字说明选定“主干、分支领地、子节点”方案：不改变 EGDS 28 个方法节点及其作者结构，不回到通用分类，也不画五个封闭卡片。五条分支领地由 parentNodeId 和现有盒几何自动派生，体验分支另有过程子带；根主干、分支轨、子级轨、过程箭头、语义关系与背景网格各自只有一种含义。设计刻度为 variance 4、motion 2、density 9。
+
+任务继续按用户长期确认的方式并行分配：高推理 Sol 处理 EGDS 几何与视觉，高推理 Terra 处理 Atlas 全屏控件，高推理 Sol 使用 Agent Reach 做下一批资源研究，根任务负责规格、交叉审查、整合门禁和本地预览。Atlas 测试先证明唯一透镜 fieldset 位于全屏 wrapper 外；实现将同一控件移入 workspace，切换时保持 scale、pan、search 和节点／关系几何。没有复制控件或状态所有者。
+
+资源第二批不以凑总数为目标。coverage audit 后只纳入 10 项中文和 6 项日文资料，其中 9 门课程、6 篇论文、1 份完整实录；腾讯其他演讲候选因 talk 已过度集中而排除。发起人随后修正优先级：后续应先找中文、其次英文；已经核验的日文资料仍可纳入。第三批因此只补 10 项英文课程、文章、网站与论文，talk 为 0。Exa via mcporter 持续 429 后停止，最终条目均由 Jina Reader 和官方页面继续核验。目录总量成为 38 Source、174 Work Item、188 Access Version，仍没有站内评分、排名、审核等级或规定路径。
+
+本段是脱敏的部分导出，不包含秘密、不可访问的逐字推理或完整工具日志。仓库保持 Private、Pages workflow 保持 `disabled_manually`；本轮没有 push 或线上部署，最终交付仍是 fresh build 后的本地 `/Learn-About-Games/` 预览。
+
+最终整合验证为 Astro 0 diagnostics、Vitest 144／144、125 个静态页面、完整 Playwright 208 passed／18 intentional skipped。数据探针确认 174／38／188，canonical 与 Source homepage 各自唯一，Source／Work URL 无碰撞，全部 Work Item 都引用现有 Source 且恰属一个主要资源主题；npm high-level audit 为 0 vulnerabilities，差异敏感模式扫描无命中。
+
+## 36. 横向 EGDS、常见品类目录与证据扩展（部分会话导出）
+
+发起人继续查看本地页面后指出：能力地图既然采用从左到右的结构展开，就应该全部统一为从左到右，不能同时呈现左右与上下两套层级方向；成长资源可以继续补充；Innovation Atlas 应先列出常见 genre，再逐步补全这些品类的发展沿革。发起人确认以书面方案为主，并同意并行实施。
+
+主任务以文字固定三条边界。EGDS 的 x 轴只表达父→子包含关系，支持／互补关系不改变节点所有权；常见 Genre Family 是非排他浏览目录，同一谱系可以属于多个 Family；Atlas Theme 是证据谱系，必须由节点、关系和 Evidence 共同闭合，不能从目录标签自动推导历史关系。三项工作按低重合度分别交给实现／研究 agent，根任务保留跨切片审查和最终门禁。
+
+EGDS 的 pure RED 先证明旧布局仍存在非左→右包含边；实现把总览、聚焦和关系端点统一为父节点东口到子节点西口，使用稳定 preorder 和边界避让。审查进一步补回 Career 聚焦时五主分支的汇总事实，并确保 1024px／320px 响应式大纲也保留这些计数。最终 geometry 24/24、Map／Career／Profile 双项目 90/90，规格和质量审查均通过。
+
+资源研究通过 Agent Reach 运行。Exa via mcporter 在第一轮查询返回 429 后停止；Jina Reader 与官方页面逐条核验已发现候选。三篇 Level Design Book 页面与两篇腾讯完整实录入库；MOOC 搜索页只有平台级说明、CNKI 页面证书失败，均不作为具体 Work Item 证据。本批只新增 5 项而不是凑满预设 8 项，目录成为 38 Source／179 Work Item／193 Access Version。后续审查删除两项过宽映射，并加入 URL 归一化、跨 Work ownership、动态 notebook 对账和 mutation tests。
+
+Atlas 先建立 10 个 Family：动作、射击、冒险、角色扮演、策略、模拟经营、体育竞速、益智、沙盒生存、节奏派对。它们明确不是排他分类，也不生成关系。首批新增 Platform 与 Adventure 谱系，与早期电子游戏、Roguelike、Metroidvania 合为 5 个 Theme；总量成为 48 节点／36 关系／61 Evidence。Family directory 和唯一一组 Theme buttons 在普通页面与全屏地图中复用同一 DOM；切换只改变强调，缩放、平移、搜索、节点顺序和关系几何保持。对抗审查修复了全屏 disclosure 覆盖 controls／canvas 和两个 Family 同时展开互相覆盖的问题。
+
+最终 Atlas 质量审查没有停在 DOM 数量表面。cache-bust 重执行同一编译模块时，旧实现会新增 26 个 listener 并创建第二套 map state；扩展 Evidence 删除任一关键 provenance 字段仍可能通过 validator；关系端点测试也只证明某个坐标碰到边界，没有证明另一坐标仍在线段范围内。三项分别取得 RED 后，`a7d694c` 增加单一 initialized owner、扩展 provenance 的原子 bundle 和完整矩形边界 helper／浏览器断言。`publicationDate` 与 `stableId` 继续遵守“已知时填写”，没有伪造未知资料。
+
+本节是当前运行时可保存的脱敏部分记录，不声称包含已经压缩且不可访问的逐字聊天或内部推理。仓库继续 Private，Pages workflow 继续 `disabled_manually`；所有实现仍是本地候选，没有 push 或线上部署。主任务接下来只更新当前公开说明、跑 fresh 全仓门禁并重启 base-path 本地预览。
+
+最终 root 级验证重新生成 126 个静态页面：Astro check 0 diagnostics，Vitest 159/159；完整 Playwright 234 项中 214 passed、20 project-specific skipped、0 failed。首轮公开说明 E2E 的两项失败来自 README 新增 Access Version 数字后，测试仍把 Source／Work Item／主题视作相邻文字；测试改为从真实 catalog 动态计算 193 个 Access Version 后，visible-skeleton 29 passed／1 intentional skip，完整矩阵原样复跑全绿。依赖高危审计为 0；GitHub API 仍显示仓库 Private、deploy workflow `disabled_manually`、Pages API 404。
+
+## 37. Atlas 直接透镜、EGDS 可逆展开与一手资源扩展（部分会话导出）
+
+发起人在本地预览截图中指出：Atlas 选择 Family 后出现不自然的浮动内滚区域，角色扮演下的 Roguelike 看起来像链接却不能点击，多个 Family 又没有实际谱系；EGDS 点击能力群会突然变成另一种布局，且只有“返回全图”能恢复；学习资源应优先补 GDC 和主要作者的一手资料。发起人明确授权主任务按推荐方案直接实施，休息期间无需等待逐项审查。
+
+主任务先写三份小型设计和两份实施计划，把 Atlas Theme、Genre Family、EGDS expansion 与 Resource Work Item 的状态边界固定下来。Atlas Family 仍是非排他目录，Theme 才是证据谱系；Theme 引用必须是能直接操作的按钮。EGDS expansion 只能增加详情，不允许改变 overview 的节点、结构线、过程线或分支领地。资源采用官方／作者原页证据，Exa 429 后不重试，也不把搜索摘要或批量抓取结果直接写入 catalog。
+
+Atlas TDD 先锁定跨 Family Theme 引用必须可点击、空 Family 必须明确说明和全屏只保留紧凑透镜条。实现后 Roguelike 在角色扮演入口成为真实按钮，同一 Theme 的多个入口共享唯一状态；全屏不再显示遮挡画布的 Family directory。提交 `c0382a6`，Atlas／Theme／Base-path 双项目为 48 passed／20 project-specific skipped。
+
+EGDS TDD 先证明旧 focus 会把 28 个框架节点缩成 8 个并改变结构几何。提交 `9ac9abb` 保持 overview 不动，把展开实体和关系放到下方独立 band；数量按钮自身可 toggle，Escape 可关闭，焦点回到触发按钮。geometry 为 24/24，Map／Career／Profile／Visible Skeleton 双项目为 121 passed／1 intentional skipped。
+
+资源研究最终收敛到 30 项：GDC Vault 2025 官方会话 20 条，Lost Garden 作者文章 5 篇，How To Market A Game 作者文章 5 篇。GDC 访问方式保守记录为 subscription，两组作者文章为 free；全部 checkedAt 为 2026-08-12，canonical normalization 和跨 Work ownership 继续由 validator 保护。提交 `c1641d8` 后 catalog 为 38 Source／209 Work Item／223 Access Version；资源相关浏览器矩阵 42/42。
+
+本节只记录当前运行时可保存的脱敏合同、实现和验证事实，不包含秘密或不可访问的内部推理。仓库继续 Private，Pages workflow 继续禁用；没有 push 或线上部署。最终会在文档同步、整站 fresh gate 和原图复核后重新启动 `127.0.0.1:4321/Learn-About-Games/` 本地预览。
+
+整合原图位于 `/tmp/lag-reversible-review/`。Atlas Family 普通页、Roguelike 全屏、EGDS 总览、Playtest 展开、Resources 默认折叠与单表展开均以原始分辨率检查；普通页没有覆盖控件，展开 EGDS 只在总览下方增加内容，资源默认页仍保持短列表。fresh build 为 Astro 0 diagnostics、Vitest 160/160、127 pages；完整 Playwright 为 219 passed／21 project-specific skipped／0 failed；高危依赖审计为 0 vulnerabilities，差异敏感模式扫描无命中。仓库保持 Private，本地 `codex/v02` 不 push、不部署。
+
+## 38. EGDS 当前模型与独立介绍页（部分会话导出）
+
+记录说明：以下为当前会话可访问范围的脱敏摘要，是 partial export，不是聊天 UI 的完整逐字导出。未导出的私有推理、完整工具输出和不可访问的原始消息不声称完整；本文不记录凭据、环境变量或其他秘密。
+
+发起人指出，能力地图只在体验设计分支中显示感受、理解、解构和重构，无法系统说明整套 EGDS，也无法解释这套作者方法为何成为 Learn About Games 的构建依据。发起人提供四篇已发布 Emotional Game Design System 文章和 PlayWithExperiences Digital Garden，并说明最新理论内容主要位于 PKM；旧文章仍是过去真实、已经公开的版本。
+
+主任务通过 Agent Reach 检查网络工具，确认 Jina Reader 可用并逐页读取四篇作者文章、Digital Garden 首页和 sitemap；Agent Reach 版本为 v1.5.0。研究结论是：四篇文章保存方法从叙事结构、早期系统、探索感分析到 BOSS 战应用的演进；当前 PKM 使用情绪曲线、情绪体验、主观感受、客观原因、设计杠杆五层因果链，并以感受、理解、解构、重构描述反复工作的动作。两者不能被伪装成同一时间的固定规范。
+
+信息架构比较了三种方案：只扩写 About、建立独立 `/egds/`、增加第五个全局导航项。发起人批准推荐方案：当前完整模型在前，演进历史和工作知识库在后；独立页面由 About 和 Map 进入，四项全局导航保持不变。页面采用文字优先的编辑型结构，不生成一张准确性更低的新示意图，也不复制整个 PKM。
+
+实现以 Playwright 先取得两个有效 RED：`/egds/` 返回 404，About／Map 方法入口不存在。最小页面与链接实现后两项 GREEN；随后桌面五列因果链的样式合同在旧未样式化页面收到 1 列并取得第二轮 RED，CSS 完成后 EGDS route desktop／mobile 18 项通过。
+
+最终 fresh 验证为 Astro 68 files 0 errors／warnings／hints、Vitest 160/160、129 pages、完整 Playwright 227 passed／21 project-specific skipped／0 failed，高危依赖审计 0 vulnerabilities。`/tmp/lag-egds-method/` 中 1440px／320px Light／Dark 与 320px no-JS 五张截图均按原始分辨率检查，所有状态横向溢出为 0。仓库继续 Private、Pages 继续禁用；本轮不 push、不恢复线上部署，只在本地恢复可预览地址。
+
+## 39. 下一轮资料与 Atlas 扩展（部分会话导出）
+
+记录说明：以下为当前会话可访问范围的脱敏摘要，是 partial export，不是聊天 UI 的完整逐字导出。未导出的私有推理、完整工具输出和不可访问的原始消息不声称完整；本文不记录凭据、环境变量或其他秘密。
+
+发起人要求继续补全学习资料与 Innovation Map。主任务审计到当前目录为 209 Work Items、38 Sources、223 Access Versions；Innovation Atlas 为 10 Genre Families、5 themes、48 nodes、36 relations、61 Evidence，其中 Shooter、Strategy 等七个 Family 仍没有核查谱系。发起人批准先做资料与 Shooter／Strategy 的均衡批次，同时明确最终目标是尽可能覆盖，不能要求各部分数量接近。
+
+主任务据此把“均衡”定义为检索顺序而非收录配额：从薄弱主题与空 Family 开始发现，但只按证据门槛决定是否纳入。学习资料预计形成一个约 20–35 条的可审查批次；Atlas 只添加有参与者、机构档案、同期文档或可靠历史资料支持的节点和关系，不用相似性或时间相邻补线。当前仓库继续 Private，Pages 继续禁用；没有授权 push 或部署。
+
+发起人补充 EGDS 的四组一一对应关系：感受 ↔ 情绪体验、理解 ↔ 主观感受、解构 ↔ 客观原因、重构 ↔ 设计杠杆；情绪曲线是整体体验入口。主任务先以 Playwright 取得配对元素 0／4 的有效 RED，再在同一服务器渲染列表项中加入可读配对文字。英文 `Perception` 保留为辅助标签，中文仍以作者原词“感受”为准。
+
+## 40. GDC／Game Developer 资料与 Shooter／RTS 谱系（部分会话导出）
+
+记录说明：以下为当前会话可访问范围的脱敏摘要，是 partial export，不是聊天 UI 的完整逐字导出。未导出的私有推理、完整工具输出和不可访问的原始消息不声称完整；本文不记录凭据、环境变量或其他秘密。
+
+发起人确认执行，并再次强调资源扩充最终追求尽可能覆盖，不要求各主题数量相等。主任务将资源、Atlas 研究和证据合同交给三个边界互不重叠的 agent，同时保留跨切片整合、浏览器验收和提交所有权。Agent Reach doctor 确认 Exa via mcporter 与 Jina Reader；Exa 出现 405 后停止，所有最终入库资源与 Atlas 来源都由官方、作者、机构馆藏或行业原页继续核验。
+
+资源批次新增 7 条 GDC Vault 原始会话和 9 篇 Game Developer 作者文章。GDC 条目保守记录 subscription 访问方式，公开作者文章记录 free；同一 Work Item 继续拥有唯一主要 Resource Topic、canonical ownership、语言、媒介和检查日期。目录从 209／223 增至 225 Work Item／239 Access Version，Source 仍为 38。旧浏览器测试逐条串行等待 225 行造成超时，改为一次读取可见 ID 集合后继续锁定 exact match；Resources／Playtest 双项目最终 40/40。
+
+Atlas 研究形成两条选择性谱系。Shooter 使用 ACMI 的 Maze War 馆藏、GDC 的 Wolfenstein／Doom／Quake postmortem 与 Valve 开发者文章；RTS 使用 ACMI Dune II 馆藏、Patrick Wyatt 的 Warcraft 开发记录和 Blizzard 的 StarCraft 回顾。新增 10 节点、6 关系与 8 Evidence，总量变为 58／42／69。明确排除 Spacewar! 或 Maze War 到 1990 年代 FPS 的年代捷径，也不把 Dune II 或任何节点写成无条件绝对第一。
+
+第一次 Atlas 双项目浏览器运行出现 11 个失败：10 个是测试仍锁 48／36／61、五 Theme 与 Strategy 空状态；一个是真实产品问题——scene height 增至 1240 后，fit 被 50% 手动下限钳住，底部超出 viewport 约 45px。unit 先收到 0.5 而非约 0.423 的有效 RED；修复让 fit 可以为完整场景低于手动下限，按钮和 wheel 仍保持原边界。第二轮 Atlas／Theme／Base 为 48 pass／20 skip，完整 Playwright 为 229 pass／21 skip／0 fail。
+
+视觉证据保存于 `/tmp/lag-final-review/`：1440 Light Shooter 与 Dark RTS 全屏均完整 fit、58／42／69 且横溢出为 0；320 Dark no-JS 为 58 outline node、42 unique relation、69 Evidence、横溢出 0；1440 Resources 默认页高度 2378px，仍只展示折叠主题入口和筛选表头。本节对应提交为 `7893272`、`c701241` 与 `fa8ac11`；仓库、Pages、push 与线上状态均未改变。
+
+## 41. 资源 Work Item 单行密度修正（部分会话导出）
+
+发起人查看资源目录后指出，标题、事实、打开原页和“查看访问版本”仍被拉成过宽的编辑行；访问版本入口没有必要独占下一行，希望一个页面能扫描更多条目。主任务保留事实字段、原生 `details`、访问版本顺序、搜索与七维筛选，只改变关闭态的排版：桌面新增独立的版本控制列，把摘要放回同一行末端；打开后，版本列表、关联说明与外部公开观察进入同一行下方的可滚动详情区。移动端仍切换为单列自然流，避免窄屏浮层遮挡和横向溢出。
+
+先新增桌面浏览器 RED：旧 DOM 中版本摘要相对 Work Item 行顶偏移超过 24px，且仍位于第二行。最小 GREEN 后，1440px 每个摘要都与首行对齐并位于访问区右侧；打开版本详情仍可见版本链接和检查日期。Fresh `npm run build` 为 Astro check 0 errors／warnings／hints、Vitest 169/169、135 pages；资源桌面／移动 E2E 34/34；截图检查确认默认与打开态均无页面横向溢出。仓库继续 Private，`127.0.0.1:4321/Learn-About-Games/resources/` 预览保持运行，本轮没有 push 或部署。
+
+## 42. 资源主题映射审计与职业条目修正（脱敏记录）
+
+发起人指出 `Your Game Career – What You Need to Get Hired` 被放在“手感与反馈”，要求整体检查错配。主任务先核对 GDC Vault 官方页面：该会话的 track 是 `Game Career Seminar`，标签包含 `Game Career / Education`，因此原有视听反馈摘要、能力和主题来自批量模板而非来源内容。
+
+审计没有仅按一个关键词大规模重排，而是把标题、摘要、来源与主题交叉核对，修正 8 条高置信职业／教育转行业／工作环境会话，新增 `career-industry-practice` 主题，并让每条只保留一个主要主题。营销、奖项、AI、社区等只凭标题无法确定的候选记录为待人工复核，未强行改类。同步更新 README、Roadmap、Changelog 的当前资源规模与 16 个主题文案，补充目录回归测试。
+
+验证：catalog 定向 73/73，Astro check 0/0/0，fresh build 为 170/170 tests、136 pages；相关桌面／移动 E2E 在安装本地 Chromium 后运行，公开 README 的旧 15 主题文案已同步。官方来源为 https://www.gdcvault.com/play/1011932/Your-Game-Career-ndash-What；未记录凭据、环境变量或其他秘密。
+
+## 43. 资源表头工具栏与访问版本面板（脱敏记录）
+
+发起人指出“按事实筛选 Work Item”占据独立大模块，与资源表割裂；同时访问版本详情的浮层背景不够明确。主任务选择把搜索、七项事实筛选、结果总数和展开／收起合并到资源表标题右侧工具栏。事实筛选改为原生 details：无筛选的 JavaScript 增强态默认折叠，URL 已带筛选时展开；无 JavaScript 仍显示禁用控件和说明。
+
+访问版本详情的桌面浮层改用不透明 `surface-strong` 表面，保留边框、阴影和高层级；移动端继续使用静态文档流，避免浮层遮挡。TDD 先新增表头归属和面板不透明度 RED，GREEN 后 Resources／Playtest 桌面与移动共 50 项通过；未记录凭据或其他秘密。
+
+## 44. 资源表直接筛选、全站短文案换行与 Batch J（partial export）
+
+发起人进一步指出事实筛选外层标签占据额外空间，要求默认直接显示所有筛选框；同时要求搜索、结果数、展开／收起和筛选贴近资源表头，访问版本面板不能透出后面的 Work Item。实现移除外层筛选 `details`，保留七个原生 select 和搜索输入；桌面 Work Item 的访问版本摘要继续与首行对齐，展开内容使用不透明层级表面，移动端回到文档流。
+
+发起人又指出全站说明文本常出现“第一行完整、第二行只剩一两个字”的视觉问题。主任务在不改变语义的前提下为首页、EGDS、Career、Atlas、资源页说明和主题入口加入 `text-wrap: balance` 与中文 `line-break: strict`，并给资源页标题限制阅读宽度。该修正目标是减少孤立尾行，不是强行让所有正文保持同一行数。
+
+资源研究继续使用 Agent Reach 与官方页面核验。GDC 官方 sitemap 共发现 1402 个新候选；筛选出 1000 个标题唯一且 HTTP 200 的会话，逐条保留官方 play URL、标题 metadata、subscription 访问模型、英文原始语言、主要 Resource Topic、checkedAt 和受限主张。最终目录达到 2110 Work Item、41 Source、2124 Access Version；Batch J 1000 条已追加到研究 notebook。没有把订阅会话误报为免费，也没有新增站内评分或排序。
+
+Innovation Atlas 本轮只新增一个证据透镜“解谜冒险结构谱系”，复用现有 parser→graphical adventure 证据，将 Puzzle 与 Adventure 作为非排他入口；58 nodes、42 relations、69 Evidence 和既有几何保持不变。该入口明确说明不等于完整益智游戏史，后续仍可基于新证据扩展节点与关系。
+
+本段是脱敏 partial export，不声称覆盖聊天 UI 的完整逐字记录；未记录凭据、环境变量或其他秘密。当前工作树尚未提交或部署，完成前需执行完整 check、unit、build、Playwright 和本地 4321 预览验收。
+
+## 45. 页面密度与 Game Developer 复盘批次（partial export）
+
+发起人继续指出全站存在无意义分割线、长中文说明被截成孤立短行，以及资源页需要在同一屏看到更多信息。主任务将说明文本从强制平衡换行收敛为 `text-wrap: pretty`，放宽 EGDS 和资源页长文案宽度，保留框架节点的词组平衡换行；Career、地图和资源标题区删除重复边界，只保留表格行与必要结构线。新增浏览器合同覆盖 1440px 资源表头、职业地图边界和 EGDS 长标题／节点标签。
+
+资源研究继续使用官方 Game Developer 页面，新增 10 条设计复盘，目录达到 41 Source／2120 Work Item／2134 Access Version。每条保存英文原始语言、免费访问、唯一主要资源主题、canonical URL 与检查日期；没有将标题或来源页推断为评分、排名或学习顺序。Atlas 当前 58 nodes／42 relations／69 Evidence，Roguelike Family 入口已验证可点击，空 Family 仍明确显示待研究。
+
+本段是脱敏 partial export，不声称覆盖聊天 UI 的完整逐字记录；未记录凭据、环境变量或其他秘密。提交前仍需以 fresh check、unit、build 与关键 Playwright 矩阵确认工作树状态。
+
+## 46. Innovation event Atlas 与资源密度收敛（partial export）
+
+发起人进一步明确，Innovation Atlas 的主语不应只是游戏标题，而应是“某种品类、视角、机制或空间结构何时出现，以及后来如何被作品承载”。主任务因此新增五个 `innovation-event` 节点：程序生成与单局结构、第一人称射击视角、锁定目标的空间战斗、角色成长与持续进展、开放世界与非线性探索；事件卡先呈现窄 claim 与承载作品，再进入同一张时间网络。总量变为 64 nodes / 46 relations / 73 Evidence，绝对首创与完整品类史仍被排除。
+
+资源目录此前已经完成英文优先的 1000 条 GDC Vault 批次与 10 条 Game Developer 复盘；本阶段不重复导入同一批 URL，当前目录仍为 41 Source / 2120 Work Item / 2134 Access Version。资源表继续把搜索、结果数、展开／收起和七项事实筛选放在表头，访问版本面板使用不透明背景；Work Item 展开态改为更紧凑的同一行流，窄屏再退化为单列。
+
+本阶段已运行 Astro check 0/0/0、Atlas unit 29/29、fresh build 138 pages、资源 Chromium 20/20 与创新事件 E2E 1/1。预览继续只在本机 `http://127.0.0.1:4321/Learn-About-Games/` 提供；本段是脱敏 partial export，不记录凭据、环境变量或其他秘密。
+
+## 47. Game Developer 千条资源与 RTS 事件（脱敏 partial export）
+
+发起人要求再检索 1000 条成长资源并继续补全 Innovation Atlas。主任务从官方 Game Developer 页面导入 1000 条英文文章，按 canonical URL 去重并逐条保留主题、能力、访问模型和检查日期；中文既有资源未被删除或降级。目录达到 41 Source、3120 Work Item、3134 Access Version、16 个资源主题。
+
+Atlas 新增“资源与基地生产”“直接单位控制”“非对称阵营设计”三个 RTS innovation-event 节点，以及事件演进和事件—承载作品关系；作品仍作为证据材料，而不是事件的替代物。当前 Atlas 为 69 nodes、55 relations、76 Evidence。相关单测、构建和双视口定向浏览器测试均通过。本段不记录凭据、环境变量或其他秘密。
+
+## 0111 上线前内容补全与呈现修正（2026-08-20，partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
+
+发起人给出无头运行方案：不提问、不启动浏览器伴侣、不 push；目标是上线前补全官方 GDC YouTube 免费镜像、修正 `whyRelevant` 的诚信呈现、中文化外观控件并客观提示中文资源覆盖。主任务读取项目设计、路线和视觉规范后执行；缺少独立的 ProjectVision/ProjectProgress 文件未擅自补建。
+
+通过 Agent Reach doctor 确认 YouTube backend 原先因缺少 yt-dlp 未启用；在 `/tmp/lag-yt-dlp-env` 隔离环境安装 yt-dlp 2026.07.04，一次性 dump `@GDCFestivalofGaming/videos` 得到 1914 条视频。标题归一化后 raw exact 128、contains 36、fuzzy 7、ambiguous-contains 3；保守复核仅接受 128 exact 与 15 contains。最终追加 139 条官方免费 Access Version，4 条因跨 Work Item URL ownership 跳过；模糊与歧义候选未入库。
+
+`getResourceRelevanceDisplay` 先以单元测试取得缺少 helper 的 RED，再实现为 GREEN；它按中文 `summary` 与 `whyRelevant` 去首尾空白比较。相同项只显示一次并标记“来自来源页面的描述”，不同项继续显示 `whyRelevant`。资源结果、知识议题和能力页均调用同一 helper。Appearance 控件改为“外观／系统／浅色／深色”；资源页从 catalog 动态计算并呈现 40 / 3120 的中文可消费版本覆盖。
+
+首次独立 clone 的 Astro check 通过，但旧 catalog 测试仍假定 Access Version 为 3134、扩展批次只有 30 条，并假定所有 GDC 版本均为 subscription。该失败被保留为可辨认的真实回归，随后仅更新对应数据合同与 research coverage，明确区分 GDC 原页 subscription 和官方 YouTube free 镜像。
+
+最终 fresh clone 验证：Astro check 73 files、0 errors／warnings／hints；Vitest 196/196；Astro build 146 pages。已提交 `299b1ed`（实现）与 `8d8df00`（测试合同与研究记录）；本地 `codex/v02` 继续未 push、未部署。
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
+
+## 0208 成长资源与创新路线目标审计（2026-08-22，partial export）
+
+记录说明：以下是当前会话的脱敏补记，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
+
+发起人要求继续补全成长资源与创新地图，先选择内容证据线，随后明确授权无人值守执行，并把基准提高为至少 1000 条成长资源和至少 3 条完整创新地图路线。主任务确认最新 `codex/v02` 执行线已有 5437 个 Work Item、84 个 Atlas 节点、86 条关系和 76 项 Evidence，因此没有从旧 `main` 的 128 条目录重复堆量，而是先建立审计合同。
+
+本轮新增 `src/lib/atlas-route-audit.ts`、对应路线闭包测试、资源目标测试和只读 `scripts/audit-content-targets.mjs`。路线判定要求事件节点有合法角色和主题、演进关系相邻且有向、每个链上事件有非事件承载作品、事件／关系 Evidence 可解析；审计输出把空主题、缺载体、证据缺口和读取／解析失败分开。当前报告确认 FPS、RPG、RTS、Open World 四条完整路线；早期电子游戏、冒险、益智冒险为空，Metroidvania／Platform 只有一个事件，Roguelike 当前最长链没有合法起止角色，因此未凭时间或标签补边。
+
+资源报告确认 5437 Work Item、5437 个唯一规范化 canonical URL、5590 Access Version；每条资源至少有 Access Version 和 Resource Topic。README、Roadmap、Changelog、决策摘要与 Devlog 已同步当前事实。视频涓流按既有 24 小时冷却规则执行一次，留下 `SKIP`；外部状态为 48 completed、4 no_transcript、44 retryable、42 channel_failure、2 model_failure、剩余 2215 条，未宣称字幕批处理完成。
+
+验证记录：嵌套 worktree 的 Vitest 只触发已知 `astro/tsconfigs/strict` 解析假失败；仓库外独立 clone 的 Astro check 0/0/0、目标合同 59/59、全量 Vitest 204/204、静态构建 151 pages。初轮 Playwright 发现 Source／资源统计文案漂移；同步后最终完整 Playwright 为 262 passed、0 failed、22 skipped。所有提交仅在本地 `codex/v02`，未 push、未恢复 Public、未启用 Pages。
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
+
+## 2301 三个官方 YouTube 频道完整收录与字幕研究（2026-08-20，partial export）
+
+记录说明：以下是当前会话的脱敏摘要，不是聊天 UI 的完整逐字导出；未写入凭据、环境变量或其他秘密。
+
+发起人要求无人值守完成 PLAN：不提问、不启动浏览器伴侣、不 push；只收录官方 YouTube 上传，不能用标题批量伪造 `whyRelevant`、摘要或精确主题。主任务通过命令行完成三个频道的 flat dump，并额外探测 streams 与 playlists：GDC Festival of Gaming 1914、Game Maker's Toolkit 237、Masahiro Sakurai on Creating Games 英文频道 300，三组视频 id 均无重复；streams 分别为 4、0、0，playlists 分别为 11、27、19。
+
+按既有 YouTube video id 跳过 139、1、1 条，新增 1775、236、299 条，共 2310 个 Work Item 和 2310 个英文免费 Access Version；新建 GDC 与樱井英文 Source，GMTK 复用既有 Source。新条目分别使用 `talk`、`video`、`talk`，不写 `whyRelevant`，只保留标题、官方频道、公开播放页、访问事实和一个主题。标题明确支持主题的 1129 条之外，1181 条使用 schema 所需的保守 `design-fundamentals` 兜底；新条目相关性文案重复率为 0/2310。目录达到 43 Source、5430 Work Item、5583 Access Version。
+
+flat 输出完整提供了 id/title/duration，但三个频道的全部 2451 行都没有 `upload_date`；没有静默截断、猜测日期或把未建模字段塞入摘要。其他候选频道 Adam Millard、Noclip、Extra Credits、Game Dev Guide、Unreal Engine 与 Unity 只进入研究报告，保持“仅提议”。字幕记录写入 `docs/research/2026-08-20-youtube-channel-intake.md`：不使用滚动重复的 auto-VTT，正文取料建议使用 `jdepoix/youtube-transcript-api`；本仓库不实现转录管线。
+
+为允许新条目诚实省略 `whyRelevant`，schema、validator、搜索和资源相关性展示改为可选字段；既有 Work Item 与 Access Version 未改写或删除。独立 clone 首次暴露 Devlog 缺少 frontmatter、超大 JSON 直接导入导致测试类型退化为 `any[]`、以及旧 intake 快照和一个错误能力 id；分别以补 frontmatter、在测试边界使用 `Catalog['resources']`、区分历史快照与新批次、移除“Steam”子串误触映射的最小修复解决。最后一次提交后的独立 clone 已通过 `npm ci`、Astro check 0 errors／warnings／hints、Vitest 198/198 与静态构建 149 pages；本地嵌套 worktree 的假失败未被修复或混入产品结论。
+
+原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。

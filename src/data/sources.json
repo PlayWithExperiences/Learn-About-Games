@@ -294,11 +294,373 @@
     },
     "kind": "organization",
     "summary": {
-      "zh-CN": "腾讯游戏学堂在哔哩哔哩的官方账号。"
+      "zh-CN": "腾讯面向游戏开发者发布课程、演讲实录与行业学习内容的官方平台。"
     },
-    "homepage": "https://space.bilibili.com/425475475",
+    "homepage": "https://gameinstitute.qq.com/",
     "languages": [
       "zh-Hans"
+    ]
+  },
+  {
+    "id": "mit-opencourseware",
+    "name": {
+      "zh-CN": "MIT OpenCourseWare",
+      "en": "MIT OpenCourseWare"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "麻省理工学院公开发布课程材料的平台。"
+    },
+    "homepage": "https://ocw.mit.edu/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "aaai",
+    "name": {
+      "zh-CN": "AAAI",
+      "en": "Association for the Advancement of Artificial Intelligence"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "AAAI 的会议与论文官方发布平台。"
+    },
+    "homepage": "https://aaai.org/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-accessibility-guidelines",
+    "name": {
+      "zh-CN": "Game Accessibility Guidelines",
+      "en": "Game Accessibility Guidelines"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "由工作室、专业人士与学者共同维护的游戏无障碍设计参考。"
+    },
+    "homepage": "https://gameaccessibilityguidelines.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-developer",
+    "name": {
+      "zh-CN": "Game Developer",
+      "en": "Game Developer"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "面向游戏开发从业者的行业出版平台。"
+    },
+    "homepage": "https://www.gamedeveloper.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "owlcat-games",
+    "name": {
+      "zh-CN": "Owlcat Games",
+      "en": "Owlcat Games"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Owlcat Games 的官方工作室网站。"
+    },
+    "homepage": "https://owlcat.games/",
+    "languages": [
+      "en",
+      "zh-Hans"
+    ]
+  },
+  {
+    "id": "richard-bartle",
+    "name": {
+      "zh-CN": "Richard A. Bartle",
+      "en": "Richard A. Bartle"
+    },
+    "kind": "creator",
+    "summary": {
+      "zh-CN": "MUD 设计者与玩家类型研究作者的个人资料站。"
+    },
+    "homepage": "https://mud.co.uk/richard/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "liz-england",
+    "name": {
+      "zh-CN": "Liz England",
+      "en": "Liz England"
+    },
+    "kind": "creator",
+    "summary": {
+      "zh-CN": "游戏设计师 Liz England 的个人网站与文章归档。"
+    },
+    "homepage": "https://www.lizengland.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "directing-video-games",
+    "name": {
+      "zh-CN": "Directing Video Games",
+      "en": "Directing Video Games"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Brian Allgeier 维护的游戏创意领导与导演实践网站。"
+    },
+    "homepage": "https://www.directingvideogames.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "chalmers-research",
+    "name": {
+      "zh-CN": "Chalmers Research",
+      "en": "Chalmers Research"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "查尔姆斯理工大学的官方研究成果目录。"
+    },
+    "homepage": "https://research.chalmers.se/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "j-stage",
+    "name": {
+      "zh-CN": "J-STAGE",
+      "en": "J-STAGE"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "日本科学技术振兴机构运营的学术期刊与会议论文官方发布平台。"
+    },
+    "homepage": "https://www.jstage.jst.go.jp/",
+    "languages": [
+      "ja",
+      "en"
+    ]
+  },
+  {
+    "id": "chinese-university-mooc",
+    "name": {
+      "zh-CN": "中国大学 MOOC",
+      "en": "Chinese University MOOC"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "汇集中国高校公开课程的官方在线学习平台。"
+    },
+    "homepage": "https://www.icourse163.org/",
+    "languages": [
+      "zh-Hans"
+    ]
+  },
+  {
+    "id": "game-design-concepts",
+    "name": {
+      "zh-CN": "Game Design Concepts",
+      "en": "Game Design Concepts"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Ian Schreiber 发布并以 Creative Commons 许可长期保留的游戏设计公开课程网站。"
+    },
+    "homepage": "https://gamedesignconcepts.wordpress.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-balance-concepts",
+    "name": {
+      "zh-CN": "Game Balance Concepts",
+      "en": "Game Balance Concepts"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Ian Schreiber 发布的游戏平衡公开课程网站，按十个层级组织学习内容。"
+    },
+    "homepage": "https://gamebalanceconcepts.wordpress.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "lost-garden",
+    "name": {
+      "zh-CN": "Lost Garden",
+      "en": "Lost Garden"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "游戏设计师 Daniel Cook 发布设计方法、团队实践与制作案例的作者网站。"
+    },
+    "homepage": "https://lostgarden.home.blog/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "heterogeneous-tasks",
+    "name": {
+      "zh-CN": "Heterogeneous Tasks",
+      "en": "Heterogeneous Tasks"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Sam Kabo Ashwell 发布互动小说分析与选择结构设计文章的作者网站。"
+    },
+    "homepage": "https://heterogenoustasks.wordpress.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "steamworks-documentation",
+    "name": {
+      "zh-CN": "Steamworks Documentation",
+      "en": "Steamworks Documentation"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Valve 面向 Steam 开发者发布平台、商店、发行与营销规则的一手文档。"
+    },
+    "homepage": "https://partner.steamgames.com/doc/home",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "how-to-market-a-game",
+    "name": {
+      "zh-CN": "How To Market A Game",
+      "en": "How To Market A Game"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "Chris Zukowski 面向独立游戏开发者发布受众、定位、商店页与发行营销方法的网站。"
+    },
+    "homepage": "https://howtomarketagame.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "choice-of-games",
+    "name": {
+      "zh-CN": "Choice of Games",
+      "en": "Choice of Games"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "ChoiceScript 的开发与发布方，公开维护互动小说创作语言和作者文档。"
+    },
+    "homepage": "https://www.choiceofgames.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "game-ai-pro",
+    "name": {
+      "zh-CN": "Game AI Pro",
+      "en": "Game AI Pro"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "Game AI Pro 系列编辑与作者发布的游戏人工智能章节与技术资料。"
+    },
+    "homepage": "http://www.gameaipro.com/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "atlassian-team-playbook",
+    "name": {
+      "zh-CN": "Atlassian Team Playbook",
+      "en": "Atlassian Team Playbook"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Atlassian 发布的团队协作、决策、回顾与项目工作方法。"
+    },
+    "homepage": "https://www.atlassian.com/team-playbook",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "coursera",
+    "name": {
+      "zh-CN": "Coursera",
+      "en": "Coursera"
+    },
+    "kind": "publisher",
+    "summary": {
+      "zh-CN": "承载大学与专业机构课程页面的开放在线学习平台；课程归属仍以页面标注的机构为准。"
+    },
+    "homepage": "https://www.coursera.org/",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "gdc-festival-of-gaming",
+    "name": {
+      "zh-CN": "GDC Festival of Gaming",
+      "en": "GDC Festival of Gaming"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "Game Developers Conference 官方 YouTube 频道，公开发布会议演讲与游戏开发相关视频。"
+    },
+    "homepage": "https://www.youtube.com/@GDCFestivalofGaming",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "masahiro-sakurai-on-creating-games-en",
+    "name": {
+      "zh-CN": "Masahiro Sakurai on Creating Games",
+      "en": "Masahiro Sakurai on Creating Games"
+    },
+    "kind": "channel",
+    "summary": {
+      "zh-CN": "樱井政博以英文公开讲解游戏制作的官方 YouTube 频道。"
+    },
+    "homepage": "https://www.youtube.com/@sora_sakurai_en",
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "id": "values-at-play",
+    "name": {
+      "zh-CN": "Values at Play",
+      "en": "Values at Play"
+    },
+    "kind": "organization",
+    "summary": {
+      "zh-CN": "Mary Flanagan 与 Helen Nissenbaum 主持、美国国家科学基金会资助的研究项目，研究设计师如何有意与无意地把社会、道德与政治价值观嵌入游戏的机制与叙事，并给出可操作的方法、课程与设计工具。论文、课程包与方法卡全部免费公开。"
+    },
+    "homepage": "https://www.valuesatplay.org/",
+    "languages": [
+      "en"
     ]
   }
 ]

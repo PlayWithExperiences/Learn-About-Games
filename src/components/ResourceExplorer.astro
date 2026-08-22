@@ -1,7 +1,6 @@
 ---
-import ResourceResults from './ResourceResults.astro';
+import ResourceTable from './ResourceTable.astro';
 import type { Catalog } from '../lib/catalog/validate';
-import { formatAccessModel, formatLanguage, formatMediaType } from '../lib/resource-display';
 import { sitePath } from '../lib/site-path';
 
 interface Props {
@@ -21,17 +20,12 @@ const {
   knowledgeTopics,
   capabilities,
   title = '按主题与事实浏览游戏学习资源',
-  lede = '先选择想理解的主题，再按能力、语言、媒介、访问方式或 Source 缩小范围。这里没有固定顺序。',
+  lede = '先选主题，再用能力、语言、媒介、访问方式或 Source 缩小范围。',
 } = Astro.props;
 
-const languages = [...new Set(resources.flatMap((resource) => [
-  resource.originalLanguage,
-  ...resource.accessVersions.map(({ language }) => language),
-]))];
-const mediaTypes = [...new Set(resources.map(({ mediaType }) => mediaType))];
-const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
-  accessVersions.map(({ accessModel }) => accessModel),
-))];
+const chineseVersionResourceCount = resources.filter((resource) =>
+  resource.accessVersions.some(({ language }) => language === 'zh-Hans'),
+).length;
 ---
 
 <section class="resource-explorer" aria-labelledby="resource-list-title">
@@ -39,7 +33,16 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     <p class="plain-label">资源导航</p>
     <h1 id="resource-list-title">{title}</h1>
     <p class="lede">{lede}</p>
+    <p class="resource-language-note">
+      当前目录以英文资料为主；{chineseVersionResourceCount} / {resources.length} 个 Work Item 提供中文可消费版本。
+    </p>
   </header>
+
+  <nav class="resource-subnav" aria-label="成长资源入口">
+    <a href={sitePath('resources/')} aria-current="page">资源表</a>
+    <a href={sitePath('resources/paths/game-feel/')}>学习路径</a>
+    <a href={sitePath('resources/sources/')}>来源</a>
+  </nav>
 
   <nav class="resource-topic-index" aria-labelledby="resource-topic-index-title">
     <div>
@@ -58,77 +61,21 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     </div>
   </nav>
 
-  <fieldset class="resource-filter-panel">
-    <legend>按事实筛选 Work Item</legend>
-    <div class="resource-filter-grid">
-      <label>
-        <span>资源主题</span>
-        <select name="resourceTopic" aria-label="资源主题" data-resource-filter data-query-param="resourceTopic" disabled>
-          <option value="all">全部主题</option>
-          {resourceTopics.map((topic) => <option value={topic.id}>{topic.title['zh-CN']}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>知识主题</span>
-        <select name="knowledgeTopic" aria-label="知识主题" data-resource-filter data-query-param="knowledgeTopic" disabled>
-          <option value="all">全部知识主题</option>
-          {knowledgeTopics.map((topic) => <option value={topic.id}>{topic.name['zh-CN']}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>能力</span>
-        <select name="capability" aria-label="能力" data-resource-filter data-query-param="capability" disabled>
-          <option value="all">全部能力</option>
-          {capabilities.map((capability) => <option value={capability.id}>{capability.name['zh-CN']}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>可消费语言</span>
-        <select name="language" aria-label="可消费语言" data-resource-filter data-query-param="language" disabled>
-          <option value="all">全部语言</option>
-          {languages.map((language) => <option value={language}>{formatLanguage(language)}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>媒介</span>
-        <select name="mediaType" aria-label="媒介" data-resource-filter data-query-param="mediaType" disabled>
-          <option value="all">全部媒介</option>
-          {mediaTypes.map((mediaType) => <option value={mediaType}>{formatMediaType(mediaType)}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>访问方式</span>
-        <select name="accessModel" aria-label="访问方式" data-resource-filter data-query-param="accessModel" disabled>
-          <option value="all">全部访问方式</option>
-          {accessModels.map((accessModel) => <option value={accessModel}>{formatAccessModel(accessModel)}</option>)}
-        </select>
-      </label>
-      <label>
-        <span>Source</span>
-        <select name="source" aria-label="Source" data-resource-filter data-query-param="source" disabled>
-          <option value="all">全部 Source</option>
-          {sources.map((source) => <option value={source.id}>{source.name['zh-CN']}</option>)}
-        </select>
-      </label>
-    </div>
-    <noscript>
-      <p class="script-required-note">启用 JavaScript 后可以组合筛选；当前列出全部 Source 与 Work Item。</p>
-    </noscript>
-  </fieldset>
-
-  <p id="resource-result-count" role="status" aria-live="polite">
-    共 {sources.length} 个 Source，{resources.length} 条 Work Item
-  </p>
-
-  <p class="resource-empty-state" hidden>没有同时符合这些事实条件的 Work Item。可以移除一个筛选条件再看。</p>
-
-  <ResourceResults resources={resources} sources={sources} showSources />
+  <ResourceTable
+    resources={resources}
+    sources={sources}
+    resourceTopics={resourceTopics}
+    knowledgeTopics={knowledgeTopics}
+    capabilities={capabilities}
+  />
 </section>
 
 <script>
   const controls = Array.from(document.querySelectorAll<HTMLSelectElement>('[data-resource-filter]'));
+  const searchInput = document.querySelector<HTMLInputElement>('[data-resource-search]');
   const workItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="work-item"]'));
-  const sourceItems = Array.from(document.querySelectorAll<HTMLElement>('[data-result-kind="source"]'));
+  const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-resource-group]'));
+  const tableControls = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-resource-table-control]'));
   const resultCount = document.querySelector<HTMLElement>('#resource-result-count');
   const emptyState = document.querySelector<HTMLElement>('.resource-empty-state');
 
@@ -146,8 +93,14 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     return (value?.split(' ') ?? []).includes(expected);
   }
 
+  function normalizeSearchText(value: string) {
+    return value.normalize('NFKC').trim().toLocaleLowerCase();
+  }
+
   function workItemMatches(item: HTMLElement, values: Record<string, string>) {
     return (
+      (!values.search || normalizeSearchText(item.dataset.searchText ?? '').includes(normalizeSearchText(values.search)))
+      &&
       (values.resourceTopic === 'all' || hasListValue(item.dataset.resourceTopics, values.resourceTopic))
       && (values.knowledgeTopic === 'all' || hasListValue(item.dataset.knowledgeTopics, values.knowledgeTopic))
       && (values.capability === 'all' || hasListValue(item.dataset.capabilities, values.capability))
@@ -159,7 +112,10 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
   }
 
   function valuesFromControls() {
-    return Object.fromEntries(controls.map((control) => [control.name, control.value]));
+    return {
+      search: searchInput?.value ?? '',
+      ...Object.fromEntries(controls.map((control) => [control.name, control.value])),
+    };
   }
 
   function updateResults() {
@@ -171,19 +127,26 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
       item.hidden = !visible;
       return visible;
     });
-    const visibleSourceIds = new Set(visibleWorkItems.map((item) => item.dataset.sourceId));
-    const visibleSources = sourceItems.filter((item) => {
-      const visible = visibleSourceIds.has(item.dataset.sourceId);
-      item.hidden = !visible;
-      return visible;
-    });
+    const filtersActive = Object.entries(values).some(([key, value]) =>
+      key === 'search' ? value.length > 0 : value !== 'all',
+    );
+    for (const group of groups) {
+      const matchingCount = workItems.filter((item) =>
+        item.closest<HTMLElement>('[data-resource-group]') === group && !item.hidden,
+      ).length;
+      const count = group.querySelector<HTMLElement>('[data-resource-group-matching-count]');
+      if (count) count.textContent = `${matchingCount} 条 Work Item`;
+      group.hidden = filtersActive && matchingCount === 0;
+      if (filtersActive) group.open = matchingCount > 0;
+    }
 
-    resultCount.textContent = `共 ${visibleSources.length} 个 Source，${visibleWorkItems.length} 条 Work Item`;
+    resultCount.textContent = `共 ${visibleWorkItems.length} 条 Work Item`;
     if (emptyState) emptyState.hidden = visibleWorkItems.length > 0;
   }
 
   function syncControlsFromUrl() {
     const params = new URLSearchParams(window.location.search);
+    if (searchInput) searchInput.value = params.get('q') ?? '';
     for (const control of controls) {
       const paramName = queryParamByFilter[control.name as keyof typeof queryParamByFilter];
       const requestedValue = paramName ? params.get(paramName) : null;
@@ -195,6 +158,9 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
 
   function writeUrlFromControls() {
     const url = new URL(window.location.href);
+    const search = searchInput?.value.trim() ?? '';
+    if (search) url.searchParams.set('q', search);
+    else url.searchParams.delete('q');
     for (const control of controls) {
       const paramName = queryParamByFilter[control.name as keyof typeof queryParamByFilter];
       if (!paramName) continue;
@@ -212,6 +178,24 @@ const accessModels = [...new Set(resources.flatMap(({ accessVersions }) =>
     control.addEventListener('change', () => {
       writeUrlFromControls();
       updateResults();
+    });
+  }
+
+  if (searchInput) {
+    searchInput.disabled = false;
+    searchInput.addEventListener('input', () => {
+      writeUrlFromControls();
+      updateResults();
+    });
+  }
+
+  for (const control of tableControls) {
+    control.disabled = false;
+    control.addEventListener('click', () => {
+      const open = control.dataset.resourceTableControl === 'expand';
+      for (const group of groups) {
+        if (!group.hidden) group.open = open;
+      }
     });
   }
 

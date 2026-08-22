@@ -1,11 +1,22 @@
 import { describe, expect, it } from 'vitest';
 
-import { validateCatalog, type Catalog } from '../../src/lib/catalog/validate';
+import egdsFrameworkNodes from '../../src/data/egds-framework-nodes.json';
+import egdsFrameworkRelations from '../../src/data/egds-framework-relations.json';
+import capabilities from '../../src/data/capabilities.json';
+import roleProfiles from '../../src/data/role-profiles.json';
+import {
+  normalizeCatalogUrl,
+  validateCatalog,
+  type Catalog,
+} from '../../src/lib/catalog/validate';
 
 const localized = (text: string) => ({ 'zh-CN': text });
 
 const emptyCatalog = (): Catalog => ({
-  domains: [],
+  egdsFrameworkNodes: structuredClone(egdsFrameworkNodes) as unknown as Catalog['egdsFrameworkNodes'],
+  egdsFrameworkRelations: structuredClone(
+    egdsFrameworkRelations,
+  ) as unknown as Catalog['egdsFrameworkRelations'],
   capabilities: [],
   knowledgeTopics: [],
   capabilityRelations: [],
@@ -13,6 +24,7 @@ const emptyCatalog = (): Catalog => ({
   sources: [],
   resources: [],
   roleProfiles: [],
+  atlasGenreFamilies: [],
   atlasTags: [],
   atlasNodes: [],
   atlasEvidence: [],
@@ -21,6 +33,12 @@ const emptyCatalog = (): Catalog => ({
 });
 
 const emptyV02Catalog = (): Catalog => emptyCatalog();
+
+const rawCareerCatalog = (): Catalog => ({
+  ...emptyCatalog(),
+  capabilities: structuredClone(capabilities) as Catalog['capabilities'],
+  roleProfiles: structuredClone(roleProfiles) as Catalog['roleProfiles'],
+});
 
 const validV02Resource = (id: string, canonicalUrl: string) =>
   ({
@@ -48,26 +66,17 @@ const validV02Resource = (id: string, canonicalUrl: string) =>
   }) as unknown as Catalog['resources'][number];
 
 const seedV02References = (catalog: Catalog) => {
-  catalog.domains.push({
-    id: 'domain',
-    name: localized('领域'),
-    summary: localized('示例领域。'),
-    order: 1,
-    bounds: { x: 0, y: 0, width: 50, height: 50 },
-  } as unknown as Catalog['domains'][number]);
   catalog.capabilities.push({
     id: 'capability',
     name: localized('能力'),
     summary: localized('示例能力。'),
-    domainId: 'domain',
-    position: { x: 10, y: 10 },
+    frameworkNodeId: 'perception',
   } as unknown as Catalog['capabilities'][number]);
   catalog.knowledgeTopics.push({
     id: 'knowledge-topic',
     name: localized('知识议题'),
     summary: localized('示例议题。'),
-    domainId: 'domain',
-    position: { x: 20, y: 20 },
+    frameworkNodeId: 'perception',
   } as unknown as Catalog['knowledgeTopics'][number]);
   catalog.resourceTopics.push({
     id: 'resource-topic',
@@ -87,27 +96,268 @@ const seedV02References = (catalog: Catalog) => {
 };
 
 describe('validateCatalog', () => {
-  it('reports a capability with a missing domain', () => {
+  it('validates Atlas Genre Family orders and Theme family references', () => {
     const catalog = emptyCatalog();
-    catalog.capabilities.push({
-      id: 'playtesting',
-      name: localized('Playtest'),
-      summary: localized('通过观察验证设计判断。'),
-      domainId: 'missing-domain',
-      position: { x: 10, y: 10 },
-    } as Catalog['capabilities'][number]);
+    catalog.atlasGenreFamilies.push(
+      {
+        id: 'action',
+        title: localized('动作'),
+        summary: localized('强调实时输入与动作执行。'),
+        order: 1,
+      },
+      {
+        id: 'adventure',
+        title: localized('冒险'),
+        summary: localized('强调探索、叙事与问题求解。'),
+        order: 1,
+      },
+    );
+    catalog.atlasThemes.push({
+      id: 'invalid-lineage',
+      title: localized('无效谱系'),
+      summary: localized('用于验证 family 引用。'),
+      familyIds: ['action', 'action', 'missing-family'],
+      scopeNote: localized(' '),
+      tags: [],
+    });
+
+    expect(validateCatalog(catalog).filter(({ code }) => code.startsWith('ATLAS_'))).toEqual([
+      {
+        code: 'ATLAS_GENRE_FAMILY_ORDER_DUPLICATE',
+        collection: 'atlasGenreFamilies',
+        id: 'adventure',
+        field: 'order',
+        targetId: '1',
+      },
+      {
+        code: 'ATLAS_THEME_FAMILY_DUPLICATE',
+        collection: 'atlasThemes',
+        id: 'invalid-lineage',
+        field: 'familyIds.1',
+        targetId: 'action',
+      },
+      {
+        code: 'ATLAS_THEME_FAMILY_MISSING',
+        collection: 'atlasThemes',
+        id: 'invalid-lineage',
+        field: 'familyIds.2',
+        targetId: 'missing-family',
+      },
+      {
+        code: 'ATLAS_THEME_SCOPE_INVALID',
+        collection: 'atlasThemes',
+        id: 'invalid-lineage',
+        field: 'scopeNote',
+        targetId: '',
+      },
+    ]);
+  });
+
+  it('allows only the foundation Atlas Theme to omit Genre Families', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasThemes.push(
+      {
+        id: 'early-electronic-games',
+        title: localized('早期电子游戏与商业化'),
+        summary: localized('非类型的基础历史透镜。'),
+        familyIds: [],
+        scopeNote: localized('追踪实验、原型与商业产品，不将其归为单一类型。'),
+        tags: [],
+      },
+      {
+        id: 'lineage-without-family',
+        title: localized('缺少 Family 的谱系'),
+        summary: localized('用于验证非基础透镜必须引用 Family。'),
+        familyIds: [],
+        scopeNote: localized('只验证 family 约束。'),
+        tags: [],
+      },
+    );
+
+    expect(validateCatalog(catalog).filter(({ code }) => code === 'ATLAS_THEME_FAMILY_MISSING'))
+      .toEqual([
+        {
+          code: 'ATLAS_THEME_FAMILY_MISSING',
+          collection: 'atlasThemes',
+          id: 'lineage-without-family',
+          field: 'familyIds',
+          targetId: '',
+        },
+      ]);
+  });
+
+  it('reports a framework node with a missing parent', () => {
+    const catalog = emptyCatalog();
+    const node = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-journey');
+    expect(node).toBeDefined();
+    node!.parentNodeId = 'missing-parent';
 
     expect(validateCatalog(catalog)).toContainEqual({
-      code: 'CAPABILITY_DOMAIN_MISSING',
+      code: 'EGDS_PARENT_NODE_MISSING',
+      collection: 'egdsFrameworkNodes',
+      id: 'experience-journey',
+      field: 'parentNodeId',
+      targetId: 'missing-parent',
+    });
+  });
+
+  it('reports a cycle in the EGDS framework parent chain', () => {
+    const catalog = emptyCatalog();
+    const node = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-journey');
+    expect(node).toBeDefined();
+    node!.parentNodeId = 'experience-journey';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_FRAMEWORK_CYCLE',
+      collection: 'egdsFrameworkNodes',
+      id: 'experience-journey',
+      field: 'parentNodeId',
+      targetId: 'experience-journey',
+    });
+  });
+
+  it('requires exactly one egds-root framework root', () => {
+    const catalog = emptyCatalog();
+    catalog.egdsFrameworkNodes.push({
+      ...structuredClone(catalog.egdsFrameworkNodes[0]),
+      id: 'second-root',
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_ROOT_COUNT_INVALID',
+      collection: 'egdsFrameworkNodes',
+      id: 'egds-root',
+      field: 'kind/parentNodeId',
+      targetId: 'egds-root,second-root',
+    });
+  });
+
+  it('requires the exact five ordered root branches', () => {
+    const catalog = emptyCatalog();
+    const branch = catalog.egdsFrameworkNodes.find(({ id }) => id === 'experience-design');
+    expect(branch).toBeDefined();
+    branch!.order = 6;
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_BRANCH_SET_INVALID',
+      collection: 'egdsFrameworkNodes',
+      id: 'egds-root',
+      field: 'parentNodeId/order',
+      targetId:
+        'from-plan-to-ship:2:branch,with-team:3:branch,product-profit:4:branch,beyond-games:5:branch,experience-design:6:branch',
+    });
+  });
+
+  it('requires the exact EGDS process relation tuple set', () => {
+    const catalog = emptyCatalog();
+    const relation = catalog.egdsFrameworkRelations.find(
+      ({ id }) => id === 'process-perception-rationalization',
+    );
+    expect(relation?.type).toBe('process-next');
+    if (relation?.type === 'process-next') relation.toId = 'deconstruction';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_PROCESS_RELATION_SET_INVALID',
+      collection: 'egdsFrameworkRelations',
+      id: 'process-next',
+      field: 'fromId/toId',
+      targetId:
+        'deconstruction:reconstruction,perception:deconstruction,rationalization:deconstruction',
+    });
+  });
+
+  it('requires the exact EGDS Atlas link relation tuple set', () => {
+    const catalog = emptyCatalog();
+    const relation = catalog.egdsFrameworkRelations.find(({ id }) => id === 'link-innovation-atlas');
+    expect(relation?.type).toBe('links-to');
+    if (relation?.type === 'links-to') Object.assign(relation, { targetPath: 'map/' });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_LINK_RELATION_SET_INVALID',
+      collection: 'egdsFrameworkRelations',
+      id: 'links-to',
+      field: 'fromId/targetPath',
+      targetId: 'innovation-possibility-space:map/',
+    });
+  });
+
+  it('reports a missing process relation endpoint without changing the approved tuple set', () => {
+    const catalog = emptyCatalog();
+    catalog.egdsFrameworkNodes = catalog.egdsFrameworkNodes.filter(({ id }) => id !== 'perception');
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'EGDS_RELATION_ENDPOINT_MISSING',
+        collection: 'egdsFrameworkRelations',
+        id: 'process-perception-rationalization',
+        field: 'fromId',
+        targetId: 'perception',
+      },
+    ]);
+  });
+
+  it('reports a missing links-to source without treating targetPath as a framework endpoint', () => {
+    const catalog = emptyCatalog();
+    catalog.egdsFrameworkNodes = catalog.egdsFrameworkNodes.filter(
+      ({ id }) => id !== 'innovation-possibility-space',
+    );
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'EGDS_RELATION_ENDPOINT_MISSING',
+        collection: 'egdsFrameworkRelations',
+        id: 'link-innovation-atlas',
+        field: 'fromId',
+        targetId: 'innovation-possibility-space',
+      },
+    ]);
+  });
+
+  it('rejects entity placement on a non-container EGDS node', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.capabilities[0].frameworkNodeId = 'innovation-possibility-space';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'EGDS_ENTITY_CONTAINER_INVALID',
       collection: 'capabilities',
-      id: 'playtesting',
-      field: 'domainId',
-      targetId: 'missing-domain',
+      id: 'capability',
+      field: 'frameworkNodeId',
+      targetId: 'innovation-possibility-space',
+    });
+  });
+
+  it('reports a Capability placement that references a missing framework node', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.capabilities[0].frameworkNodeId = 'missing-framework-node';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'CAPABILITY_FRAMEWORK_NODE_MISSING',
+      collection: 'capabilities',
+      id: 'capability',
+      field: 'frameworkNodeId',
+      targetId: 'missing-framework-node',
+    });
+  });
+
+  it('reports a Knowledge Topic placement that references a missing framework node', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.knowledgeTopics[0].frameworkNodeId = 'missing-framework-node';
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'KNOWLEDGE_TOPIC_FRAMEWORK_NODE_MISSING',
+      collection: 'knowledgeTopics',
+      id: 'knowledge-topic',
+      field: 'frameworkNodeId',
+      targetId: 'missing-framework-node',
     });
   });
 
   it('reports missing source and capability references on resources', () => {
     const catalog = emptyCatalog();
+    seedV02References(catalog);
     catalog.resources.push({
       id: 'observation-guide',
       title: localized('观察指南'),
@@ -115,7 +365,7 @@ describe('validateCatalog', () => {
       sourceId: 'missing-source',
       capabilityIds: ['missing-capability'],
       knowledgeTopicIds: [],
-      resourceTopicIds: [],
+      resourceTopicIds: ['resource-topic'],
       mediaType: 'article',
       canonicalUrl: 'https://example.com/observation-guide',
       whyRelevant: localized('示例关联。'),
@@ -173,6 +423,30 @@ describe('validateCatalog', () => {
     });
   });
 
+  it('reports a duplicate capability mapping with the full nested target', () => {
+    const catalog = rawCareerCatalog();
+    const profile = catalog.roleProfiles[0];
+    const duplicate = structuredClone(profile.capabilities[0]);
+    profile.capabilities.push(duplicate);
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'PROFILE_CAPABILITY_DUPLICATE',
+        collection: 'roleProfiles',
+        id: profile.id,
+        field: 'capabilities',
+        targetId: duplicate.capabilityId,
+      },
+    ]);
+  });
+
+  it('accepts the three raw role profiles', () => {
+    const catalog = rawCareerCatalog();
+
+    expect(catalog.roleProfiles).toHaveLength(3);
+    expect(validateCatalog(catalog)).toEqual([]);
+  });
+
   it('reports missing endpoints and evidence on Atlas relations', () => {
     const catalog = emptyCatalog();
     catalog.atlasRelations.push(
@@ -211,6 +485,11 @@ describe('validateCatalog', () => {
       originalLanguage: 'en',
       url: 'https://example.com/evidence',
       summary: localized('示例证据。'),
+      sourceKind: 'institutional-history',
+      institutionOrAuthor: 'Example Institution',
+      checkedAt: '2026-08-13',
+      locator: 'Example record',
+      boundedClaim: localized('只支持示例节点和标签测试。'),
     } as Catalog['atlasEvidence'][number]);
     catalog.atlasNodes.push(
       {
@@ -252,14 +531,83 @@ describe('validateCatalog', () => {
         id: 'theme',
         title: localized('主题'),
         summary: localized('示例主题。'),
+        familyIds: ['family'],
+        scopeNote: localized('示例范围。'),
         tags: ['missing-theme-tag'],
       } as unknown as Catalog['atlasThemes'][number],
     );
+    catalog.atlasGenreFamilies.push({
+      id: 'family',
+      title: localized('Family'),
+      summary: localized('示例 Family。'),
+      order: 1,
+    });
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'ATLAS_TAG_REFERENCE_MISSING',
       'ATLAS_TAG_REFERENCE_MISSING',
       'ATLAS_TAG_REFERENCE_MISSING',
+    ]);
+  });
+
+  it('requires event metadata and an explicit role for event relations', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasEvidence.push({
+      id: 'event-evidence',
+      title: localized('事件证据'),
+      sourceTitle: 'Example archive',
+      originalLanguage: 'en',
+      url: 'https://example.com/event',
+      summary: localized('支持示例事件。'),
+      sourceKind: 'institutional-history',
+      institutionOrAuthor: 'Example archive',
+      checkedAt: '2026-08-13',
+      locator: 'Example record',
+      boundedClaim: localized('只用于事件元数据校验。'),
+    } as Catalog['atlasEvidence'][number]);
+    catalog.atlasTags.push(
+      { id: 'innovation-event', name: localized('创新事件'), summary: localized('事件标签。') },
+      { id: 'event-theme', name: localized('事件主题'), summary: localized('主题标签。') },
+    );
+    catalog.atlasNodes.push(
+      {
+        id: 'event-node',
+        kind: 'innovation',
+        name: localized('事件节点'),
+        summary: localized('示例事件。'),
+        startYear: 1993,
+        lane: 0,
+        tags: ['innovation-event'],
+        evidenceIds: ['event-evidence'],
+      } as unknown as Catalog['atlasNodes'][number],
+      {
+        id: 'carrier-game',
+        kind: 'game',
+        name: localized('承载作品'),
+        summary: localized('示例作品。'),
+        startYear: 1993,
+        lane: 1,
+        tags: ['event-theme'],
+        evidenceIds: ['event-evidence'],
+      } as unknown as Catalog['atlasNodes'][number],
+    );
+    catalog.atlasRelations.push({
+      id: 'event-carrier',
+      fromId: 'event-node',
+      toId: 'carrier-game',
+      type: 'design-response',
+      status: 'confirmed',
+      directionality: 'directed',
+      tags: ['event-theme'],
+      evidenceIds: ['event-evidence'],
+      summary: localized('示例事件关系。'),
+    } as unknown as Catalog['atlasRelations'][number]);
+
+    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'ATLAS_EVENT_ROLE_REQUIRED',
+      'ATLAS_EVENT_THEME_REQUIRED',
+      'ATLAS_EVENT_MECHANISM_REQUIRED',
+      'ATLAS_RELATION_ROLE_REQUIRED',
     ]);
   });
 
@@ -271,7 +619,7 @@ describe('validateCatalog', () => {
         title: localized('证据'),
         sourceTitle: ' ',
         originalLanguage: 'de',
-        url: 'https://example.com/evidence',
+        url: 'not-a-url',
         summary: localized('示例证据。'),
       } as unknown as Catalog['atlasEvidence'][number],
     );
@@ -279,7 +627,101 @@ describe('validateCatalog', () => {
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
       'ATLAS_EVIDENCE_SOURCE_TITLE_INVALID',
       'ATLAS_EVIDENCE_ORIGINAL_LANGUAGE_INVALID',
+      'ATLAS_EVIDENCE_URL_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+      'ATLAS_EVIDENCE_PROVENANCE_INVALID',
     ]);
+  });
+
+  it('requires traceable provenance on every Atlas evidence item', () => {
+    const catalog = emptyCatalog();
+    catalog.atlasEvidence.push({
+      id: 'untraceable-evidence',
+      title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en',
+      url: 'https://example.com/evidence',
+      summary: localized('示例证据。'),
+    } as Catalog['atlasEvidence'][number]);
+
+    expect(validateCatalog(catalog)).toEqual([
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'sourceKind',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'institutionOrAuthor',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'checkedAt',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'locator',
+        targetId: '',
+      },
+      {
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: 'untraceable-evidence',
+        field: 'boundedClaim',
+        targetId: '',
+      },
+    ]);
+  });
+
+  it('requires every critical field when Atlas evidence opts into extended provenance', () => {
+    const provenanceEvidence = {
+      id: 'extended-provenance',
+      title: localized('证据'),
+      sourceTitle: 'Evidence',
+      originalLanguage: 'en' as const,
+      url: 'https://example.com/evidence',
+      summary: localized('示例证据。'),
+      sourceKind: 'institutional-history' as const,
+      institutionOrAuthor: 'Example Institution',
+      checkedAt: '2026-08-12',
+      locator: 'History section',
+      boundedClaim: localized('只支持这条有限主张。'),
+    } satisfies Catalog['atlasEvidence'][number];
+
+    for (const [field, invalidValue] of [
+      ['sourceKind', undefined],
+      ['institutionOrAuthor', ' '],
+      ['checkedAt', '2026-02-30'],
+      ['locator', ' '],
+      ['boundedClaim', localized(' ')],
+    ] as const) {
+      const catalog = emptyCatalog();
+      catalog.atlasEvidence.push({
+        ...provenanceEvidence,
+        [field]: invalidValue,
+      } as Catalog['atlasEvidence'][number]);
+
+      expect(validateCatalog(catalog), field).toContainEqual({
+        code: 'ATLAS_EVIDENCE_PROVENANCE_INVALID',
+        collection: 'atlasEvidence',
+        id: provenanceEvidence.id,
+        field,
+        targetId: '',
+      });
+    }
   });
 
   it('requires disputed Atlas relations to justify their explicit directionality', () => {
@@ -413,6 +855,36 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('rejects reversed ranges for every extended Atlas node kind', () => {
+    const catalog = emptyCatalog();
+    const extendedKinds = [
+      'experimental-apparatus',
+      'experimental-program',
+      'system-prototype',
+      'commercial-hardware',
+    ] as const;
+    catalog.atlasNodes.push(...extendedKinds.map((kind) => ({
+      id: `reversed-${kind}`,
+      kind,
+      name: localized('逆序范围'),
+      summary: localized('结束年份早于开始年份。'),
+      startYear: 1975,
+      endYear: 1958,
+      lane: 1,
+      tags: [],
+      evidenceIds: [],
+    })));
+
+    expect(validateCatalog(catalog).filter(({ code }) => code === 'ATLAS_NODE_DATE_RANGE_INVALID'))
+      .toEqual(extendedKinds.map((kind) => ({
+        code: 'ATLAS_NODE_DATE_RANGE_INVALID',
+        collection: 'atlasNodes',
+        id: `reversed-${kind}`,
+        field: 'startYear/endYear',
+        targetId: '',
+      })));
+  });
+
   it('constrains Atlas relation type, status, and directionality enums', () => {
     const catalog = emptyCatalog();
     catalog.atlasRelations.push(
@@ -492,6 +964,11 @@ describe('validateCatalog', () => {
       originalLanguage: 'en',
       url: 'https://example.com/evidence',
       summary: localized('示例证据。'),
+      sourceKind: 'institutional-history',
+      institutionOrAuthor: 'Example Institution',
+      checkedAt: '2026-08-13',
+      locator: 'Example record',
+      boundedClaim: localized('只支持时间顺序测试。'),
     });
     catalog.atlasNodes.push(
       {
@@ -538,21 +1015,13 @@ describe('validateCatalog', () => {
     });
   });
 
-  it('accepts empty non-map collections', () => {
+  it('accepts empty optional collections', () => {
     const catalog = emptyCatalog();
-    catalog.domains.push({
-      id: 'iteration',
-      name: localized('迭代与验证'),
-      summary: localized('通过观察与反馈检验设计。'),
-      order: 1,
-      bounds: { x: 0, y: 0, width: 50, height: 50 },
-    });
     catalog.capabilities.push({
       id: 'playtesting',
       name: localized('Playtest'),
       summary: localized('通过观察验证设计判断。'),
-      domainId: 'iteration',
-      position: { x: 10, y: 10 },
+      frameworkNodeId: 'perception',
     });
 
     expect(validateCatalog(catalog)).toEqual([]);
@@ -607,6 +1076,108 @@ describe('validateCatalog', () => {
     ]);
   });
 
+  it('normalizes catalog URLs before comparing Source and Work ownership', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.sources[0].homepage = 'https://www.EXAMPLE.com/work/?b=2&a=1#source';
+    catalog.resources.push(validV02Resource('work', 'https://example.com/work?a=1&b=2'));
+
+    expect(normalizeCatalogUrl(catalog.sources[0].homepage)).toBe(
+      'https://example.com/work?a=1&b=2',
+    );
+    expect(normalizeCatalogUrl('https://example.com/?tag=z&b=2&tag=a&a=1')).toBe(
+      'https://example.com/?a=1&b=2&tag=z&tag=a',
+    );
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'SOURCE_HOMEPAGE_RESOURCE_URL_CONFLICT',
+      collection: 'sources',
+      id: 'source',
+      field: 'homepage',
+      targetId: 'https://www.EXAMPLE.com/work/?b=2&a=1#source',
+    });
+  });
+
+  it('rejects normalized duplicate Source homepages', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.sources.push({
+      ...structuredClone(catalog.sources[0]),
+      id: 'normalized-duplicate-source',
+      homepage: 'https://www.EXAMPLE.com/source/#duplicate',
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'SOURCE_HOMEPAGE_DUPLICATE',
+      collection: 'sources',
+      id: 'normalized-duplicate-source',
+      field: 'homepage',
+      targetId: 'https://www.EXAMPLE.com/source/#duplicate',
+    });
+  });
+
+  it('rejects one normalized Access URL owned by two Work Items', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const first = validV02Resource('first-work', 'https://example.com/first');
+    first.accessVersions[0].url = 'https://www.EXAMPLE.com/shared/?b=2&a=1#first';
+    const second = validV02Resource('second-work', 'https://example.com/second');
+    second.accessVersions[0].url = 'https://example.com/shared?a=1&b=2';
+    catalog.resources.push(first, second);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_URL_OWNERSHIP_CONFLICT',
+      collection: 'resources',
+      id: 'second-work',
+      field: 'canonicalUrl/accessVersions.url',
+      targetId: 'https://example.com/shared?a=1&b=2',
+    });
+  });
+
+  it('rejects normalized duplicate canonical URLs when Access URLs are distinct', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const first = validV02Resource(
+      'first-canonical-work',
+      'https://www.EXAMPLE.com/shared-canonical/?b=2&a=1#first',
+    );
+    first.accessVersions[0].url = 'https://example.com/first-access';
+    const second = validV02Resource(
+      'second-canonical-work',
+      'https://example.com/shared-canonical?a=1&b=2',
+    );
+    second.accessVersions[0].url = 'https://example.com/second-access';
+    catalog.resources.push(first, second);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_CANONICAL_URL_DUPLICATE',
+      collection: 'resources',
+      id: 'second-canonical-work',
+      field: 'canonicalUrl',
+      targetId: 'https://example.com/shared-canonical?a=1&b=2',
+    });
+  });
+
+  it('rejects one Work canonical URL reused by another Work Access URL after normalization', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const canonicalOwner = validV02Resource(
+      'canonical-owner',
+      'https://www.EXAMPLE.com/shared-identity/?b=2&a=1#canonical',
+    );
+    canonicalOwner.accessVersions[0].url = 'https://example.com/canonical-owner-access';
+    const accessOwner = validV02Resource('access-owner', 'https://example.com/access-owner');
+    accessOwner.accessVersions[0].url = 'https://example.com/shared-identity?a=1&b=2';
+    catalog.resources.push(canonicalOwner, accessOwner);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_URL_OWNERSHIP_CONFLICT',
+      collection: 'resources',
+      id: 'access-owner',
+      field: 'canonicalUrl/accessVersions.url',
+      targetId: 'https://example.com/shared-identity?a=1&b=2',
+    });
+  });
+
   it('validates typed resource topic references and requires one topical connection', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);
@@ -621,6 +1192,60 @@ describe('validateCatalog', () => {
       'RESOURCE_KNOWLEDGE_TOPIC_MISSING',
       'RESOURCE_RESOURCE_TOPIC_MISSING',
     ]);
+  });
+
+  it('requires a primary Resource Topic for every Work Item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resources.push({
+      ...validV02Resource('missing-primary-topic', 'https://example.com/missing-primary-topic'),
+      resourceTopicIds: [],
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_PRIMARY_TOPIC_REQUIRED',
+      collection: 'resources',
+      id: 'missing-primary-topic',
+      field: 'resourceTopicIds',
+      targetId: '',
+    });
+  });
+
+  it('rejects multiple primary Resource Topics on one Work Item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    catalog.resourceTopics.push({
+      ...structuredClone(catalog.resourceTopics[0]),
+      id: 'second-resource-topic',
+    });
+    catalog.resources.push({
+      ...validV02Resource('multiple-primary-topics', 'https://example.com/multiple-primary-topics'),
+      resourceTopicIds: ['resource-topic', 'second-resource-topic'],
+    });
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_PRIMARY_TOPIC_MULTIPLE',
+      collection: 'resources',
+      id: 'multiple-primary-topics',
+      field: 'resourceTopicIds',
+      targetId: 'resource-topic,second-resource-topic',
+    });
+  });
+
+  it('rejects an exact duplicate Access Version identity within one Work Item', () => {
+    const catalog = emptyV02Catalog();
+    seedV02References(catalog);
+    const resource = validV02Resource('duplicate-access-version', 'https://example.com/duplicate-access');
+    resource.accessVersions.push(structuredClone(resource.accessVersions[0]));
+    catalog.resources.push(resource);
+
+    expect(validateCatalog(catalog)).toContainEqual({
+      code: 'RESOURCE_ACCESS_VERSION_DUPLICATE',
+      collection: 'resources',
+      id: 'duplicate-access-version',
+      field: 'accessVersions',
+      targetId: 'https://example.com/duplicate-access',
+    });
   });
 
   it('requires unique canonical identities, a checked access version, and factual external signals', () => {
@@ -646,6 +1271,7 @@ describe('validateCatalog', () => {
     });
 
     expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
+      'RESOURCE_URL_OWNERSHIP_CONFLICT',
       'RESOURCE_CANONICAL_URL_DUPLICATE',
       'RESOURCE_EXTERNAL_SIGNAL_INVALID',
       'RESOURCE_ACCESS_VERSION_REQUIRED',
@@ -895,8 +1521,7 @@ describe('validateCatalog', () => {
       id: 'second-capability',
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
-      domainId: 'domain',
-      position: { x: 30, y: 30 },
+      frameworkNodeId: 'perception',
     });
     catalog.capabilityRelations.push(
       {
@@ -937,38 +1562,6 @@ describe('validateCatalog', () => {
     ]);
   });
 
-  it('reports invalid map bounds and node positions outside their domains', () => {
-    const catalog = emptyV02Catalog();
-    catalog.domains.push({
-      id: 'domain',
-      name: localized('领域'),
-      summary: localized('示例领域。'),
-      order: 1,
-      bounds: { x: 90, y: 90, width: 20, height: 20 },
-    } as unknown as Catalog['domains'][number]);
-    catalog.capabilities.push({
-      id: 'capability',
-      name: localized('能力'),
-      summary: localized('示例能力。'),
-      domainId: 'domain',
-      position: { x: 40, y: 40 },
-    } as unknown as Catalog['capabilities'][number]);
-    catalog.knowledgeTopics.push({
-      id: 'knowledge-topic',
-      name: localized('知识议题'),
-      summary: localized('示例议题。'),
-      domainId: 'domain',
-      position: { x: 120, y: 10 },
-    } as unknown as Catalog['knowledgeTopics'][number]);
-
-    expect(validateCatalog(catalog).map(({ code }) => code)).toEqual([
-      'DOMAIN_BOUNDS_INVALID',
-      'CAPABILITY_POSITION_OUTSIDE_DOMAIN',
-      'KNOWLEDGE_TOPIC_POSITION_INVALID',
-      'KNOWLEDGE_TOPIC_POSITION_OUTSIDE_DOMAIN',
-    ]);
-  });
-
   it('rejects duplicate undirected complements and non-bilingual rationales', () => {
     const catalog = emptyV02Catalog();
     seedV02References(catalog);
@@ -976,8 +1569,7 @@ describe('validateCatalog', () => {
       id: 'second-capability',
       name: localized('第二项能力'),
       summary: localized('用于关系测试。'),
-      domainId: 'domain',
-      position: { x: 30, y: 30 },
+      frameworkNodeId: 'perception',
     } as unknown as Catalog['capabilities'][number]);
     catalog.capabilityRelations.push(
       {

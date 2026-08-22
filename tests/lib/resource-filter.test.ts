@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Catalog } from '../../src/lib/catalog/validate';
-import { filterResources } from '../../src/lib/resource-filter';
+import {
+  countResourcesByTopic,
+  filterResources,
+  normalizeResourceSearchText,
+} from '../../src/lib/resource-filter';
 
 type Resource = Catalog['resources'][number];
 
@@ -114,5 +118,31 @@ describe('resource factual filtering', () => {
       'different-facts',
       'second-match',
     ]);
+  });
+
+  it('matches search text across localized title, summary, and relevance without changing order', () => {
+    const searchableResources = [
+      makeResource('中文标题', {
+        title: { 'zh-CN': '情绪体验与关卡节奏', en: 'Emotional Experience and Pacing' },
+        summary: { 'zh-CN': '从玩家感受理解节奏设计。' },
+        whyRelevant: { 'zh-CN': '帮助设计师观察体验曲线。' },
+      }),
+      makeResource('english-title', {
+        title: { 'zh-CN': '系统设计', en: 'Systems Design' },
+      }),
+    ];
+
+    expect(filterResources(searchableResources, { search: ' 情绪体验 ' }).map(({ id }) => id))
+      .toEqual(['中文标题']);
+    expect(filterResources(searchableResources, { search: 'SYSTEMS' }).map(({ id }) => id))
+      .toEqual(['english-title']);
+    expect(normalizeResourceSearchText('Ｍｅｔｒｏｉｄｖａｎｉａ')).toBe('metroidvania');
+  });
+
+  it('derives matching counts by primary Resource Topic without changing catalog order', () => {
+    expect(countResourcesByTopic(resources, ['topic-a', 'topic-b'])).toEqual(new Map([
+      ['topic-a', 3],
+      ['topic-b', 1],
+    ]));
   });
 });

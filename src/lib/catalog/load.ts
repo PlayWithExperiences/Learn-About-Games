@@ -5,7 +5,8 @@ import { validateCatalog, type Catalog } from './validate';
 type ProductCollection = keyof Catalog;
 
 const productCollections: ProductCollection[] = [
-  'domains',
+  'egdsFrameworkNodes',
+  'egdsFrameworkRelations',
   'capabilities',
   'knowledgeTopics',
   'capabilityRelations',
@@ -13,6 +14,7 @@ const productCollections: ProductCollection[] = [
   'sources',
   'resources',
   'roleProfiles',
+  'atlasGenreFamilies',
   'atlasTags',
   'atlasNodes',
   'atlasEvidence',

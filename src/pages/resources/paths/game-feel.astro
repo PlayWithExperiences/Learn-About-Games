@@ -1,0 +1,15 @@
+---
+import LearningPath from '../../../components/LearningPath.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { loadCatalog } from '../../../lib/catalog/load';
+import { buildGameFeelLearningPath } from '../../../lib/learning-paths';
+
+const catalog = await loadCatalog();
+const path = buildGameFeelLearningPath(catalog.resources);
+---
+
+<BaseLayout title={path.title} description={path.summary}>
+  <div class="page-shell resource-page learning-path-page">
+    <LearningPath path={path} sources={catalog.sources} />
+  </div>
+</BaseLayout>
