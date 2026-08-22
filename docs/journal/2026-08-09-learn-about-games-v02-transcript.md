@@ -577,4 +577,22 @@ flat 输出完整提供了 id/title/duration，但三个频道的全部 2451 行
 
 为允许新条目诚实省略 `whyRelevant`，schema、validator、搜索和资源相关性展示改为可选字段；既有 Work Item 与 Access Version 未改写或删除。独立 clone 首次暴露 Devlog 缺少 frontmatter、超大 JSON 直接导入导致测试类型退化为 `any[]`、以及旧 intake 快照和一个错误能力 id；分别以补 frontmatter、在测试边界使用 `Catalog['resources']`、区分历史快照与新批次、移除“Steam”子串误触映射的最小修复解决。最后一次提交后的独立 clone 已通过 `npm ci`、Astro check 0 errors／warnings／hints、Vitest 198/198 与静态构建 149 pages；本地嵌套 worktree 的假失败未被修复或混入产品结论。
 
+## 1452 YouTube 元数据校验、回写验证与全量时间估算（2026-08-22，partial export）
+
+记录说明：以下是本轮对话的脱敏摘要，不是聊天 UI 的完整逐字导出；没有写入凭据、字幕全文、外部缓存内容或内部推理。
+
+发起人要求设立目标并继续无人值守推进现有 YouTube 成长资源的摘要补全，同时询问官方 API 打通后是否能把已取得的信息写回资源详情、有哪些限制以及全量时间。目标设为：对 2,311 条现有 YouTube Work Item 做可追溯补全，成功结果安全写回，失败逐条区分记录，不把未调用或失败伪装成空内容。
+
+使用 agent-reach 做 YouTube 通道体检后确认当前通用 yt-dlp 路由未安装；官方资料核对确认 YouTube Data API 默认配额为每日 10,000 units，频道、playlistItems 和 videos 的读取成本低，`captions.list`／`captions.download` 需要 OAuth scope，且字幕下载还要求用户有视频编辑权限，因此不能靠当前账号通用获取三个第三方频道的正文。Agent Platform API 仍只负责 Agent/Gemini，不是 YouTube 数据入口。
+
+用已经打通的 ADC 全量同步官方元数据：仓库外 `~/.cache/lag-youtube/metadata.json` 得到 2,534 条记录；现有 2,311 条目标全部映射，额外 223 条不自动导入。目标中官方字段标记 271 条有字幕、2,040 条没有。仓库目录没有因这一步改变。
+
+小批正文验证先重试两个已有字幕缓存，发现它们只有 `[Music]`、`got you` 等 48/53 字符音频标记；模型失败的根因不是摘要提示，而是正文不可分析。新增 `TranscriptInsufficientError`、正文质量校验与独立状态 `transcript_insufficient`，12 个 Python 合同测试通过；两个条目已从 model failure 重新标记为正文不足，不再调用模型。随后在临时目录复制目录上用一条已有完整字幕条目验证真实回写闭环：摘要 196 字、主题 1 个、能力 2 个，状态为 `completed`；生产资源目录仍保持原有 48 条真实写回。
+
+当前生产状态：48 completed、4 no_transcript、2 transcript_insufficient、42 transcript_channel，剩余 2,215 条；YouTube 通道冷却至 2026-08-23 00:50。按现有约每 4 小时 1 条的安全涓流速度粗估，排队时间至少约 369 天，且不含失败、音频转写和模型重试；因此官方 API 只能把身份和公开元数据通道打通，不能承诺短期完成全部正文摘要。仓库保持 Private，凭据和原始字幕继续留在仓库外。
+
+验证：`python3 -m unittest scripts.test_sync_youtube_metadata scripts.test_backfill_video_content` 为 12/12；`npm run check` 为 0 errors、0 warnings、0 hints；`npm test` 为 204/204；`git diff --check` 通过。
+
+原始对话：dialogues/2026-0822.md「1452 YouTube 元数据校验、回写验证与全量时间估算」
+
 原始对话：当前运行时未导出完整逐字记录；本节只保留可验证的摘要与产出。
