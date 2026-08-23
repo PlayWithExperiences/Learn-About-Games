@@ -472,14 +472,6 @@
 
 原始对话：dialogues/2026-0823.md「1436 输出限制核对、普通 Gemini Notebook 单条测试」
 
-## 0133 确认 v02 内容达标与 NotebookLM 内容转化路线
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-会话以补全成长资源和创新地图为目标，用户选择优先走真实可核查的内容证据线，并设定 1000 条资源 +3 条完整创新路线的基准。经审计发现 .worktrees/v02 已有 5,437 条资源、84 个 Atlas 节点、86 条关系，数量已达标；完成路线闭包审计，确证 FPS、RPG、RTS、开放世界四条完整证据链。独立 clone 验证全量测试 204/204 通过、E2E 262 passed 0 failed。修复 README 与 Source 统计漂移（Source 43→44）后回归通过。随后讨论模型调用费用问题，确认 Google 当前走 Vertex ADC 付费路由，完成 gemini-2.5-flash、gemini-3.7-flash、agnes-2.5-flash 三次调用对比，均出现输出截断。用户建议用 NotebookLM 做视频内容总结，已验证普通版 NotebookLM 成功导入 YouTube 转写并生成约 3,791 字符结构化中文总结，带来源引用无截断。双方确认选定 NotebookLM 作为内容转化主力路线，区分公开展示部分与 Daily Check-in/PKM 回写部分，并提出结构化模板要求；用户询问免费版与 AI Plus 配额差异，待调研。产出：路线审计纯函数、报告脚本、204 项测试、README/Source 统计修正 commit，以及 NotebookLM 测试笔记本。风险：Google Vertex 路由未确认免费；NotebookLM 免费额度需进一步核实；视频字幕通道仍受 IpBlocked 熔断冷却中。
-
-原始对话：dialogues/2026-0823.md
-
 ## 1604 NotebookLM 内容转化路线与配额核对（2026-08-23）
 
 - 决策：無涘 ｜ 记录：AI。选定普通 NotebookLM / Gemini Notebook 作为 YouTube 视频内容转化主力。现有 150–250 字 `summary` 继续承担网站目录摘要，不被长文覆盖；新增长篇内容详述与 Studio 产物作为独立产物。
@@ -499,3 +491,29 @@
 - 边界：AI。公开前需要逐项确认 Notebook 分享权限、原始 YouTube/文档版权和生成产物的公开资格。本轮只核对规则和 schema，没有生成、公开或写回任何产物。
 
 原始对话：dialogues/2026-0823.md「1941 NotebookLM 多模态产物的公开托管边界」
+
+## 0133 资源审计达标与NotebookLM产物写回
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+本会话围绕成长资源补全与NotebookLM产物生成两个阶段展开。第一阶段确认v02工作树已有5437条Work Item，超1000条目标；审计验证4条完整创新路线（FPS、RPG、RTS、开放世界）均满足事件-演化-载体-证据闭包。204项单测、151页构建、262个E2E用例全通过，README/Source统计文案同步修正。第二阶段转向NotebookLM产物写回：用户要求正式生成Celeste信息图、思维导图、演示文稿三件套，并走PicGo上传路径确保链接持久化。AI先补全思维导图与演示文稿（12页中文详细稿），三份文件均已下载待上传。关键点：早期明确未将预览写回PKM，经用户纠正后补全流程；PicGo上传后将更新PKM文件与fixture，避免依赖NotebookLM私有链接。
+
+原始对话：dialogues/2026-0823.md「0133 learn-about-games」
+
+## 2211 网站挂掉恢复及外部事实字段语义核查
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a02eeb-abd4-7f40-8a5e-142ce37f284b
+
+两场独立问题。第一场：localhost:4321 无法访问，根因是开发服务器进程未运行，非路由或构建错误；执行 npm run dev -- --host 127.0.0.1 后恢复，资源页返回 HTTP 200，npm run check 通过（0 error / 0 warning）；诊断记录已提交至 0fdeb31。第二场：用户截图询问资源页「外部事实」字段含义；AI 追踪到 resources.json 中 externalSignals 字段，指向 Senko's Activity Log 的 Team Management 专题作为旁证，类型为「二手专题摘要（非视频正文）」，非官方字幕或本站评分；渲染逻辑在 ResourceResults.astro。结论：字段命名易误导，建议改为「外部旁证」或「第三方来源注记」，本轮未修改代码，仅做语义核查并留痕。
+
+原始对话：dialogues/2026-0823.md「2211 learn-about-games」
+
+## 2217 NotebookLM 全量模板正式写回（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。Celeste 这条资源按既定模板正式生成并写回，不再停留在 NotebookLM 预览：信息图、思维导图、演示文稿和文字版内容总结都必须存在。
+- 产出：AI。NotebookLM Studio 已生成中文简体横向手绘笔记信息图、中文简体详细思维导图，以及中文简体默认时长的 12 页详细 PowerPoint 演示文稿；三份下载文件格式均已核验。
+- 托管：AI。三份文件均经 PicGo 本地上传接口写入 `Medill-East/IMGStorage`，PNG/PPTX 链接逐一回读 HTTP 200；PKM 资源笔记已替换旧的 `not-generated` 状态并写入三条稳定链接。
+- 每日线：AI。`AI-Life-Mentor` 的 Celeste fixture 已将三项 artifact 标为 `generated`；Daily Check-in #182 已原地更新三条产物行并回读确认，未创建重复 Issue。
+- 边界：AI。本轮没有新增 OpenRouter 或其他模型批量调用、没有重试 NotebookLM、没有订阅或付费操作；NotebookLM 仍是人工网页入口，后续全库生成必须逐次取得调用与费用确认。
+
+原始对话：dialogues/2026-0823.md「2217 NotebookLM 全量模板正式写回」
