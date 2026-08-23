@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-23 22:03 · 记录者 AI*
+*更新于 2026-08-23 22:10 · 记录者 AI*
 
 ## 现在在哪
 
@@ -25,6 +25,7 @@
 - 最终验证已通过：Python 回填/runtime/metadata 测试 45/45，JSON、`git diff --check`、secret scan 通过；`npm run build` 通过 Astro check 0/0/0、Vitest 204/204、静态构建 151 页。
 - 本机预览诊断（2026-08-23 22:03）：初次访问 `http://127.0.0.1:4321/Learn-About-Games/resources/` 与站点根路径均为 connection refused，4321 没有监听进程；这证明本次故障边界是开发服务器未运行，不是资源路由 404。执行 `npm run dev -- --host 127.0.0.1` 后，Astro v7.2.0 以后台进程运行，`astro dev status` 显示正常；资源页及带 `resourceTopic` 参数的 URL 均返回 HTTP 200，`npm run check` 为 0 errors / 0 warnings。没有现有日志证据能判定上一次进程为何消失，不能把它写成已确认的崩溃。
 - 资源页当前单次 HTML 响应约 13.9 MB（5,437 个 Work Item）；这是独立的初始加载性能风险，本次探针已与“端口无服务”区分记录，未把它误判成宕机。
+- 外部观察语义核查（2026-08-23 22:10）：资源页截图中的“外部事实”实际对应 `externalSignals`，是第三方来源的可追溯旁证，不是官方视频正文、本站评分或推荐等级。示例资源 `Don’t Put Decisions Off [Team Management]` 的记录指向 Senko's Activity Log 的 Team Management 专题，并明确标为“二手专题摘要（非视频正文）”；页面当前将其显示为“查看访问版本与外部事实 / 外部公开观察”，该命名容易让用户误解为本站确认的内容事实，尚未做 UI 改名或隐藏决定。
 - NotebookLM 每日精选线已接通：`AI-Life-Mentor` 用 reviewed JSON inbox 接收人工生成结果，空目录是可见的正常 no-op，坏 JSON、消费状态查询失败和 PKM 写回失败都会抛出；不会在定时脚本内偷偷调用 NotebookLM 或模型。Celeste fixture 已通过本地校验，Daily Check-in #182 与 PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 均已回读确认。
 - 本轮新增真实外部操作严格为一条 Celeste 信息图生成：NotebookLM Studio 一次生成、一次状态核验和一次预览读取；没有重试、没有 OpenRouter 新批量调用、没有订阅或其他付费操作，也没有 PKM/网站写回。此前内容详述与 PKM/Issue 写回属于上一阶段，不能与本次试看片混为一次产出。
 - 免费路由器 smoke test：仓库外临时启动 FreeLLMAPI Docker 实例，仅使用匿名免费渠道并处理一条真实《Designing Celeste》字幕；裸模型名被同名模型合并解析到 Navy，改用精确 `ovh:Qwen3.5-397B-A17B` 后确实到达 OVH，但上游返回 429；Kilo 的 `nvidia/nemotron-3-ultra-550b-a55b:free` 在 60 秒上游超时内未返回。未写回仓库、未启用付费模型或 Premium；当前结论是该路由器可作为本地兼容层候选，但免费匿名端点尚不足以承接长字幕批量总结。
