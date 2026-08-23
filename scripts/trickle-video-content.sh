@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# 分层涓流：描述正文先批量补，触碰 YouTube 的字幕/音频路线仍每次只补 1 条。
+# 分层涓流：所有官方描述达标的正文先批量补，触碰 YouTube 的字幕/音频路线仍每次只补 1 条。
 #
 # 为什么是这个形状（2026-08-21 無涘 拍板：宁可慢，不许冒封 IP 的风险）：
 #   Codex 一次性连发跑到第 95 条时被 YouTube 封 IP（41 次 IpBlocked）。
 #   出口是机场/数据中心 IP（AS134972 东京），正是 youtube-transcript-api 文档
 #   点名的第二类成因，阈值本就远低于住宅 IP。
 #   所以策略是「远低于观测到的失败点」+「一撞就长退避」：
-#     · 描述路线每次最多取 20 条，不发 YouTube 请求
+#     · 描述路线每次最多取 20 条，不发 YouTube 请求；不因视频已有字幕而放弃官方描述证据
 #     · 描述路线没有可处理候选时，才退回 YouTube 路线且每次只取 1 条
 #     · launchd 每 4 小时触发一次；描述批次可达 120 条/天，YouTube fallback 仍约 6 条/天
 #     · 报告里出现任何通道类失败，立刻写 24 小时冷却，期间所有运行直接跳过
@@ -59,7 +59,7 @@ cd "$REPO" || { log "ABORT	进不去 $REPO"; exit 1; }
 # ── 优先级：先补 GMTK 与樱井（Daily 素材线），耗尽后自动放开到全量目标 ──
 # Official descriptions are analyzed through the user's ADC/Vertex project;
 # this keeps the text queue independent from OpenRouter billing state.
-ARGS=(--limit 20 --description-fallback --description-only --vertex-text)
+ARGS=(--limit 20 --description-fallback --description-only-all --vertex-text)
 if [ -s "$PRIORITY_IDS" ]; then
   priority_remaining="$("$PY" - "$PRIORITY_IDS" "$REPO/src/data/resources.json" "$CACHE/state.json" <<'PY'
 import json
@@ -76,7 +76,7 @@ for item_id in priority_ids:
         continue
     record = state.get(item_id, {})
     status = record.get("status")
-    if status is None or (status in {"no_transcript", "transcript_insufficient"} and not record.get("audioAttempted")):
+    if status in {None, "evidence_pending"} or (status in {"no_transcript", "transcript_insufficient"} and not record.get("audioAttempted")):
         remaining += 1
 print(remaining)
 PY
@@ -123,6 +123,10 @@ if [ "$rc" -eq 0 ]; then
   if [ "$processed" = "0" ]; then
     log "INFO	描述队列本轮无候选，退回单条字幕/音频路线"
     run_backfill --limit 1 --description-fallback --audio-fallback --vertex-text
+    if [ "$rc" -eq 0 ] && [ "$(count_processed)" = "0" ]; then
+      log "INFO\t未分类/音频队列本轮无候选，退回单条 retryable 重试路线"
+      run_backfill --limit 1 --retryable --audio-fallback --vertex-text
+    fi
   elif [ "$processed" = "-1" ]; then
     log "WARN	无法读取描述批次报告，不自动退回 YouTube 路线"
   fi

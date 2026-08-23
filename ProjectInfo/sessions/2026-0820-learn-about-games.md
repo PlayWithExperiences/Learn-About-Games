@@ -190,3 +190,176 @@
 - 决策：无新产品决策，待無涘确认 ｜ 记录：AI。下一步保持当前实体边界，不复制其 article/tag 站点模型；若未来引入其中资源，按本项目既有 Source／Work Item／Access Version／Capability 证据合同逐条核验。
 
 原始对话：dialogues/2026-0823.md「0054 动作游戏知识库旁证」
+
+## 0102 Vertex 字幕批次收束与 ADC 阻塞（2026-08-23）
+
+决策：無涘 ｜ 记录：AI。上一轮 Vertex 字幕批次完整处理 100/100，随后涓流任务又用合格官方描述恢复 1 条；当前 2,001 条资源已经写回并通过摘要、主题与能力合同。外部正式状态剩余 254 条未分类，显式非完成为 56 条（4 无字幕、2 字幕过短、49 字幕通道、1 模型输出）。描述证据筛选为 0。
+
+决策：無涘 ｜ 记录：AI。新字幕批次在 5/100 连续遭遇 ADC `vertex_channel` 后熔断；音频回退小批在 5/10 也因 ADC 取 token 失败停止。10 条探针没有资源写入，临时状态逐条记录失败；不能把“模型通道不可用”写成“视频没有内容”。
+
+验证：26/26 Python 合同测试通过；当前完成入口为 1,759 description、191 transcript、2 audio、49 条历史回写。正式 state 与临时 state 的差异已在 roadmap 和 ProjectProgress 标明，等待认证和仓库外缓存写权限恢复后同步。
+
+原始对话：dialogues/2026-0823.md「0102 Vertex 字幕批次收束与 ADC 阻塞」
+
+## 0115 官方描述全量候选模式（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。对外部正式 state 的 254 条未分类项重新盘点，确认 75 条 GMTK 中有 74 条官方描述达到证据门槛；179 条樱井视频目前没有合格描述、字幕或音频证据。
+- 决策：無涘 ｜ 记录：AI。新增 `--description-only-all`，使官方描述在“字幕标记可用”时仍能作为明确输入；保留旧 `--description-only` 语义。dry-run 选出 74 条且未写资源，合同测试 27/27。
+- 决策：無涘 ｜ 记录：AI。唯一真源涓流脚本已切换新模式，但当前沙盒无法同步仓库外 launchd 副本；正式 state 仍为 2,001 completed，待正常终端同步和 ADC 可用后继续。
+- 推断：AI。74 条描述候选约为 1–2 小时模型运行量，受无人值守每 4 小时 20 条限制会拉长到数天；179 条无正文证据项不作完成时间承诺。
+- 验证：AI。最终对账确认 2,001 条完成资源均有 150–250 字中文摘要，状态中的 `summaryLength` 全部一致，`pending_write=0`；合同测试 27/27，Astro check 0/0/0、Vitest 204/204、静态构建 151 页。
+
+原始对话：dialogues/2026-0823.md「0115 官方描述全量候选模式」
+
+## 0137 官方描述涓流真实批次（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。触发既有 launchd 后，真实批次选中 20 条并最终 20/20 写回；完成数由 2,001 增至 2,021，`no_transcript`、`transcript_insufficient`、通道失败和模型失败均未增加。
+- 决策：無涘 ｜ 记录：AI。发现旧副本仍使用 `--description-only` 时，Python 回填器只在新别名下强制描述优先；已统一两个参数的描述优先语义，并新增 `should_prefer_description` 合同测试，避免下一批因旧副本参数回退到 YouTube 字幕。
+- 验证：AI。修复后旧参数 dry-run 选出 74 条，合同测试 28/28；真实批次的 state/report/resources 更新时间均为 01:36:21，正式 state 记录为 2,021 completed、234 未分类、50 retryable、4 no_transcript、2 transcript_insufficient。
+- 验证：AI。批次后完整构建再次通过：Astro check 0/0/0、Vitest 204/204、静态构建 151 页；2,021 条完成资源的摘要、长度和 `summaryLength` 三方对账无差异。
+
+原始对话：dialogues/2026-0823.md「0137 官方描述涓流真实批次」
+
+## 0145 第二轮官方描述涓流真实批次（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。再次触发 launchd 后，第二轮描述批次 20/20 成功，累计完成 2,041；中途出现的 1 条 `pending_write` 正常收敛，最终没有新增失败或残留 pending write。
+- 验证：AI。state/report/resources 更新时间均为 01:44:42；正式 state 为 2,041 completed、214 未分类、50 retryable、4 no_transcript、2 transcript_insufficient。2,041 条完成资源摘要、长度和 `summaryLength` 三方一致。
+- 推断：AI。剩余 34 条仍有合格官方描述，179 条樱井视频仍没有可核验正文证据。
+
+原始对话：dialogues/2026-0823.md「0145 第二轮官方描述涓流真实批次」
+
+## 0154 描述队列清空与回退恢复（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。第三轮描述 20/20、第四轮描述 14/14 成功，累计完成 2,075，剩余官方描述候选为 0。
+- 决策：無涘 ｜ 记录：AI。随后两次单条回退各恢复 1 条原 `transcript_insufficient`；核对 state 后确认两条实际使用合格官方描述，不是音频分析成功。当前完成 2,077、未分类 180、retryable 50、no_transcript 4、transcript_insufficient 0。
+- 验证：AI。2,077 条完成资源摘要、长度与 `summaryLength` 一致，`pending_write=0`；剩余 180 条全部需要单条字幕/音频或新的正文入口。
+
+原始对话：dialogues/2026-0823.md「0154 描述队列清空与回退恢复」
+
+## 0201 单条终态恢复与音频通道熔断（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。描述队列清空后连续单条回退恢复 3 条 `no_transcript`，均实际使用官方描述；完成数达到 2,080，`no_transcript` 与 `transcript_insufficient` 均为 0。
+- 决策：無涘 ｜ 记录：AI。下一条进入真正音频入口后，`yt-20260820-gdc-9YG9INjO91Y` 明确记为 `audio_channel` retryable，未写资源摘要；通道冷却规则已生效。
+- 验证：AI。当前正式 state 为 2,080 completed、180 未分类、50 条通道失败、1 条模型输出失败；`pending_write=0`，资源没有因失败新增内容。
+
+原始对话：dialogues/2026-0823.md「0201 单条终态恢复与音频通道熔断」
+
+## 0204 剩余未分类证据盘点（2026-08-23）
+
+- 核查：AI。180 条未分类项中，1 条 GMTK 的字幕标记为可用但描述不足；179 条樱井视频字幕标记不可用且描述不足。未分类项没有字幕文本缓存，音频缓存只对应已完成条目。
+- 决策：無涘 ｜ 记录：AI。冷却期间不解除通道保护；冷却结束后先定向重试 `audio_channel` 条目，再逐条处理剩余未分类项，不能凭标题生成摘要。
+
+原始对话：dialogues/2026-0823.md「0204 剩余未分类证据盘点」
+
+## 0212 官方字幕接口边界与 retryable 调度修复（2026-08-23）
+
+核查官方 YouTube Data API 文档确认：`captions.list` 只列出字幕轨道且需要更高 YouTube OAuth scope；`captions.download` 还要求当前用户拥有视频编辑权限。因此它不能解锁三个第三方频道的字幕正文，项目继续把它定位为权限边界核查，不作为通用下载路线。
+
+发现涓流脚本在描述/音频候选都耗尽后不会进入已记录 `retryable` 的重试队列，已在仓库内唯一真源 `scripts/trickle-video-content.sh` 增加每轮最多 1 条的重试分支；24 小时冷却与逐条失败留痕不变。当前仍为 2,080/2,311，冷却期间未触发新通道请求。
+
+验证已完成：`bash -n`、28/28 Python 合同测试和 `git diff --check` 均通过；未触发冷却中的 YouTube/音频请求。agent-reach 版本检查显示当前 v1.5.0 已是最新。Exa 小样本找到了与个别樱井视频标题对应的外部文章，但覆盖和可追溯性不足，本轮没有把搜索片段写入资源。最终对账与构建仍以 2,080 条已写回摘要为准，目标保持进行中。
+
+原始对话：dialogues/2026-0823.md「0212 官方字幕接口边界与 retryable 调度修复」
+
+## 0224 音频通道根因定位与工具链修复（2026-08-23）
+
+外部失败日志把首个音频探针的根因明确为 yt-dlp 后处理缺少 `ffmpeg/ffprobe`，不是已证实的 YouTube IP 限流；本机已有 Homebrew 的两个可执行文件。回填脚本已显式传入 `/opt/homebrew/bin`，并新增 `audio_tooling` 分类，避免将本地依赖故障计入通道熔断。
+
+代码验证为 31/31 回填合同测试、Python 编译、shell 语法和 diff 检查通过；runtime 维护脚本隔离测试为 1/1。回填器现在会为缺失 state 条目建立 `evidence_pending` 记录并在 report 区分两类未完成状态。当前沙盒不能写仓库外 launchd 副本、state 或 cooldown，所以没有伪造外部状态已修正；正常终端执行 `repair_video_runtime.py --apply --kickstart` 后再验证实际音频下载。
+
+最终门禁复核：`npm run build` 通过，Astro check 0/0/0、Vitest 204/204、静态输出 151 页；秘密扫描和 `git diff --check` 也通过。外部正式 state 仍未执行 apply，目标保持进行中。
+
+原始对话：dialogues/2026-0823.md「0224 音频通道根因定位与工具链修复」
+
+## 0307 二手正文入口小批验证与安全回写合同
+
+- 决策：無涘 ｜ 记录：AI。继续处理 179 条樱井视频缺少官方正文证据的问题，先使用 Senko's Activity Log 两个专题页做逐条、可追溯的二手旁证小批；完成 Team Management 6 条、Planning & Game Design 19 条，共 25 条。
+- 产出：AI。25 条资源已写入 `src/data/resources.json` 的中文摘要、能力/资源主题映射和 `externalSignals`。摘要长度为 181–204 字，来源标签固定为“二手专题摘要（非视频正文）”，保留专题页 URL。
+- 修复：AI。runtime 对账脚本现在能在显式 `--apply` 时识别这些经过审核的仓库记录，把它们镜像进仓库外 state；不覆盖已有非 `evidence_pending` 状态，并写入证据类型、URL、摘要长度和哈希。缺失记录随后初始化为 `evidence_pending`。
+- 验证：AI。JSON 逐条校验通过，回填测试 31/31，runtime 测试 3/3，Python 编译、diff 检查、Astro check 0/0/0、Vitest 204/204、静态构建 151 页通过。当前没有执行外部 `--apply`，因此正式 state 仍保持 2,080 completed、51 retryable、180 条未分类。
+- 下一步：AI。用户在正常终端运行 `PYTHONPATH=... python3 scripts/repair_video_runtime.py --apply --kickstart` 后，再观察 25 条 external_article 状态、155 条 evidence_pending 初始化和音频工具链重试结果；未获得正文的条目继续保留可辨认状态。
+
+原始对话：dialogues/2026-0823.md「0307 二手正文入口小批验证与安全回写合同」
+
+## 0319 Work Attitude 专题二十三条旁证补全
+
+- 决策：無涘 ｜ 记录：AI。沿已验证的二手文章路线继续推进，对 Senko's Activity Log Work Attitude 专题的 23 个小节逐条对齐 YouTube 资源；专题明确提示其内容是原视频的入口式整理，不能替代原视频。
+- 产出：AI。23 条资源更新为中文摘要，补充合法能力和资源主题映射，并写入固定二手来源标记与 URL。连同 Team Management 6 条、Planning & Game Design 19 条，累计 48 条资源已准备好在显式 apply 后同步到外部 state。
+- 失败可辨认：AI。一次生成中发现一条摘要只有 133 字，长度合同阻止补丁应用；补足后再写入。完整构建又发现 3 条把主题 ID 放入能力数组，修正后 204/204 单测通过。
+- 验证：AI。累计 48 条摘要长度 150–204 字；回填合同 31/31、runtime 测试 3/3、Vitest 204/204、Astro check 0/0/0、静态构建 151 页通过。当前外部 state 没有被改写，仍为 2,080 completed、51 retryable、180 条缺失记录。
+- 下一步：AI。用户在正常终端执行维护命令后，核对 48 条 `external_article` 完成、132 条 `evidence_pending` 初始化及音频工具链重试；之后继续查找剩余未分类条目的逐条可核验入口。
+
+原始对话：dialogues/2026-0823.md「0319 Work Attitude 专题二十三条旁证补全」
+
+## 0324 Gameplay 专题二十九条旁证补全
+
+- 决策：無涘 ｜ 记录：AI。继续处理樱井视频的二手正文入口，核对 Senko's Activity Log Gameplay 专题的 29 个编号和对应视频链接；页面明确把 gameplay 作为风险与奖励的博弈，同时承认游戏乐趣不只来自 gameplay。
+- 产出：AI。29 条资源更新为中文摘要，补充合法能力和资源主题映射，并写入固定二手来源标记与 URL。连同前三批，累计 77 条资源已准备好在显式 apply 后同步到外部 state。
+- 失败可辨认：AI。第一次完整构建发现 4 条把 `challenge-difficulty-design`、`progression-economy-design` 或 `world-character-coherence` 能力 ID误放进资源主题字段，修正后回归通过；未把失败构建当作成功。
+- 验证：AI。Gameplay 29 条摘要长度 150–169 字，累计 77 条逐条校验通过；回填合同 31/31、runtime 测试 3/3、Vitest 204/204、Astro check 0/0/0、静态构建 151 页通过。当前外部 state 仍未改写，保持 2,080 completed、51 retryable、180 条缺失记录。
+- 下一步：AI。用户在正常终端执行维护命令后，核对 77 条 `external_article` 完成、103 条 `evidence_pending` 初始化及音频工具链重试；之后继续查找剩余未分类条目的逐条可核验入口。
+
+原始对话：dialogues/2026-0823.md「0324 Gameplay 专题二十九条旁证补全」
+
+## 0346 五组专题扩展与旁证对账边界修复
+
+- 决策：無涘 ｜ 记录：AI。继续按已核对的二手专题入口扩展，新增 Design Specifics 18、UI 15、Graphics 20、Effects 11、Game Concepts 12、Motion/Animation 18 条，共新增 94 条；连同前四批，资源侧累计 171 条二手旁证。
+- 产出：AI。171 条均写入 150–205 字中文摘要、合法 `capabilityIds`、唯一 `resourceTopicIds` 与固定 Senko's Activity Log 来源标记；没有把二手文章冒充官方字幕或视频全文。
+- 发现与修复：AI。只读 state 对账发现 43 条旁证对应条目已由官方 `description/audio` 完成，不能覆盖。为 `reconcile_external_article_results` 增加“保留既有 completed、记录跳过 ID”的分支；真正 retryable 冲突仍拒绝覆盖。新增测试先按预期失败，再恢复为 4/4 runtime 测试通过。
+- 验证：AI。摘要、URL、主题/能力白名单检查通过；Python 回填合同 31/31、runtime 4/4、Astro check 0/0/0、Vitest 204/204、静态构建 151 页通过。外部正式 state 未在当前沙盒写回。
+- 当前边界：AI。171 条中 128 条是 apply 后可新增的 `external_article / secondary_summary`，43 条只保留资源侧旁证并在 report 的 `externalArticleSkippedExisting` 留痕；预期剩余 52 条为 `evidence_pending`。当前正式 state 仍为 2,080 completed、51 retryable、180 个目标缺失记录。
+
+原始对话：dialogues/2026-0823.md「0346 五组专题扩展与旁证对账边界修复」
+
+## 0408 Sound、Programming、PR 旁证扩展与最终 state 投影
+
+- 结论：资源侧累计 203 条 Senko's Activity Log 二手专题旁证，新增 Sound 14、Programming 9、PR/Marketing 9；每条有 150–205 字中文摘要、合法映射和来源 URL。
+- 状态：外部 state 只读对账为 2,131 条记录（2,080 completed、51 retryable）。203 条旁证中 53 条命中已有官方完成，150 条可新增；其余 30 个目标在 apply 后写入 `evidence_pending`。外部 `--apply` 尚未执行。
+- 修复/验证：repair 运行时保留已有官方完成并记录 `externalArticleSkippedExisting`；JSON、diff、回填 31/31、runtime 4/4、Astro 0/0/0、Vitest 204/204、151 页构建通过。Chat 31 条因长度门槛未全部通过而暂缓。
+
+原始对话：dialogues/2026-0823.md「0408 Sound、Programming、PR 旁证扩展与最终 state 投影」
+
+## 0413 一手摘要保护复核
+
+- 发现：203 条二手旁证与官方完成 state 重合 53 条；其中 39 条资源原来已有有效一手摘要，14 条原来是占位摘要。
+- 修复：恢复 39 条原摘要，仅保留二手 URL 作为补充证据；14 条占位项继续保留二手摘要。state 投影不变：150 条可新增、30 条 `evidence_pending`。
+- 验证：回填合同 31/31、runtime 4/4、Astro 0/0/0、Vitest 204/204、151 页构建通过。
+
+原始对话：dialogues/2026-0823.md「0413 一手摘要保护复核」
+
+## 0418 Chat 专题补全与最终 state 投影
+
+- 产出：Chat 31 条通过摘要长度合同后写入资源，旁证累计 234 条；每条有来源 URL、二手证据标记和合法映射。
+- 保护：与官方完成 state 重合 62 条不覆盖；其中 39 条原有一手摘要已恢复，二手内容只保留为补充。172 条可新增，8 条在 apply 后进入 `evidence_pending`。
+- 验证：JSON、diff、回填 31/31、runtime 4/4、Astro 0/0/0、Vitest 204/204、151 页构建通过；外部 `--apply` 尚未执行。
+
+原始对话：dialogues/2026-0823.md「0418 Chat 专题补全与最终 state 投影」
+
+## 0447 官方描述回退、内容对账与外部回写边界
+
+- 决策：無涘 ｜ 记录：AI。继续把可获得内容写回成长资源；官方公开视频描述、已核对的二手文章摘要、字幕/音频失败必须保持不同证据层。
+- 产出：AI。资源侧累计 291 条可定位内容证据：237 条 Senko 二手专题、Polygon 1 条、Nintendo Wire 1 条、YouTube Data API v3 官方公开描述 52 条。49 条原先 retryable 的条目依据官方描述补齐中文摘要、能力映射和资源主题。
+- 映射边界：AI。2,311 条目标均有一个合法主要资源主题；1,676 条至少有一个 capability，635 条保持空 capability。公告、汇编或公开描述不能直接支持某项能力时宁可留空，不用标题模板凑满。
+- 对账：AI。2,311 条目标的内存投影为 2,309 `completed`、2 `retryable`、0 `unclassified`、0 `evidence_pending`；正式 apply 会新增/替换 229 条，保留已有完成记录 62 条。当前外部 state 尚未变化，仍是 2,080 completed、51 retryable。
+- 失败可辨认：AI。GMTK 商店宣传片和 GDC Iwata 致谢片没有足够教学正文，继续保留 retryable；后者的音频失败仍需工具链重试，不因官方描述摘要被伪装成字幕完成。
+- 验证：AI。Python 36/36、JSON、secret scan、diff 检查、Astro check 0/0/0、Vitest 204/204、静态构建 151 页全部通过。
+- 阻塞：AI。当前沙盒与 Computer Use 安全策略不允许写仓库外缓存，未执行 `--apply --kickstart`。正常终端执行后需核对 report；仓库仍 Private。
+
+原始对话：dialogues/2026-0823.md「0447 官方描述回退、内容对账与外部回写边界」
+
+## 0457 官方元数据与资源记录一致性审计
+
+- 审计：AI。按 YouTube video ID 对照仓库目标资源与仓库外 ADC 元数据缓存，2,311/2,311 条均成功映射；来源、canonical URL、标题及 `publishedAt`、`duration`、`captionAvailability`、`privacyStatus` 均无缺失或错配，目标记录均为公开状态。
+- 状态：AI。外部 runtime 尚未被用户执行 `--apply --kickstart`，仍为 2,080 `completed`、51 `retryable`；仓库资源侧的 2,309/2 投影继续只作投影，不写成外部事实。
+- 验证：AI。官方元数据、资源字段、43 个 Python 合同测试和 `git diff --check` 均通过；没有写入凭据或外部缓存。
+
+原始对话：dialogues/2026-0823.md「0457 官方元数据与资源记录一致性审计」
+
+## 1149 2,311 条目标正式回写与最终闭环
+
+- 正式状态：AI。用户贴出的终端输出确认 `--apply --kickstart` 成功，launchd 返回码 0；运行后 Iwata 音频条目完成，手动显式 ffmpeg 路径重试 GMTK 条目也完成。state 最终为 2,311 `completed`、0 retryable、0 unclassified、0 evidence_pending。
+- 一致性：AI。2,311 个 state ID 与资源 ID完全一致；每条中文摘要非空，摘要长度与 state 相等，唯一主要资源主题存在；官方元数据 2,311/2,311 对齐且均为公开状态。
+- 证据与映射：AI。资源侧 291 条固定证据标记保持来源层级；1,677 条有 capability，634 条保守留空。23 条历史摘要长度元数据由 `--reconcile-summary-lengths` 对账，未触碰摘要内容。
+- 验证：AI。45 个 Python 合同测试、Astro check、Vitest 204、151 页静态构建、JSON、密保和 diff 检查全部通过。内容补全目标完成；网站仍保持 Private。
+
+原始对话：dialogues/2026-0823.md「1149 2,311 条目标正式回写与最终闭环」

@@ -1,30 +1,33 @@
 # ProjectProgress
 
-> 现状快照，覆盖写，不堆历史。历史看 roadmap.md。
+> 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-23 · 记录者 AI*
+*更新于 2026-08-23 11:49 · 记录者 AI*
 
 ## 现在在哪
 
-- 现状（AI 会话 · codex，待無涘确认）：
-  当前 v0.2 已形成可运行的 Astro/TypeScript 网站，包含 EGDS 能力地图、职业透镜、学习路径、资源主题筛选与搜索，以及保留全局关系的 Innovation Atlas。`codex/v02` 已合并进 `main`，并以本地 tag `v0.2-content-baseline` 保留回滚锚点；当前 main 有 5437 个 Work Item、5590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence。FPS、RPG、RTS、Open World 四条创新事件路线已满足完整闭包；其它低证据透镜仍明确未闭合。仓库继续保持 Private，尚未公开部署。
-- 外部旁证（2026-08-23，AI 调研，待無涘确认）：发现公开的[动作游戏设计知识库](https://jskyzero.github.io/ActionGameDesign.ByAI/)及其[知乎介绍](https://zhuanlan.zhihu.com/p/2074199959247836670)。实时首页显示 51 篇条目；它以“来源文章／演讲 → AI 一句话结论 → 标签 → 详情页”的内容模型组织 GDC、CEDEC、视频与原创方法论，仓库 schema 也围绕 `article`、`source`、`references` 三类字段展开。它与本项目重叠在资源发现和部分动作设计主题，不重叠于 EGDS Framework Node、Capability／Knowledge Topic、Career Lens、Access Version 或 Innovation Atlas 关系模型。推断：这是相邻的窄领域内容产品与可借鉴的资源入口旁证，不构成需要复制其站点结构或另立第二套知识地图的理由。已核查首页、README、内容 schema 与一篇完整条目；未核查其全部 51 篇的事实质量、实际读者数据与长期维护稳定性。
+- 现状（AI 会话 · codex，待無涘确认）：当前 v0.2 是可运行的 Astro/TypeScript 网站，包含 EGDS 能力地图、职业透镜、资源主题筛选与搜索，以及保留全局关系的 Innovation Atlas。仓库当前有 5,437 个 Work Item、5,590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence；FPS、RPG、RTS、Open World 四条创新事件路线已满足完整闭包。仓库保持 Private，未恢复 Pages、未公开部署。
+- 官方 YouTube 元数据：仓库外 ADC 缓存有 2,534 条频道元数据；现有 2,311 条目标 Work Item 100% 映射。目标中 271 条标记有字幕、2,040 条没有；`youtube.readonly` 可读取公开元数据，但不能通用解锁第三方频道字幕正文。
+- 元数据一致性审计：2,311/2,311 条均能按 YouTube video ID 对回资源；来源、canonical URL、标题和 `publishedAt`/`duration`/`captionAvailability`/`privacyStatus` 均无缺失或错配，且目标记录全部为公开状态。
+- 内容补全结果：2,311 条目标全部已完成并有可核对中文摘要；资源目录有 291 条可定位内容证据：237 条 Senko 二手专题摘要、1 条 Polygon 文章摘要、1 条 Nintendo Wire 文章摘要、52 条 YouTube Data API v3 官方公开描述摘要。所有摘要均带来源类型，不把文章或描述写成字幕正文。
 
 ## 当前阶段
 
-- 内容目标审计已完成；合并后的 main 通过 Astro check 0/0/0、Vitest 204/204、静态构建 151 页和目标审计。合并后全量 Playwright 为 259 passed / 3 failed / 22 skipped：Atlas 位置断言单跑通过，两个 Playtest 失败根因是资源页仍把 5437 条 Work Item server-render 成约 12.7MB HTML，再由客户端筛到 61 条，120 秒内触发浏览器会话超时。合并后的 main 已把涓流脚本从旧 v02 worktree 切换到主工作树。
+- 资源侧已完成官方描述回退、二手旁证和剩余音频补全：49 条原本处于 `retryable` 的条目依据官方描述补齐；GDC Iwata 纪念片与 GMTK 宣传片随后通过显式音频工具链完成分析。2,311 条目标的 state 均为 `completed`，没有遗留 retryable。
+- 映射保守边界：2,311 条目标均已有一个合法主要资源主题；其中 1,677 条至少有一个 capability，634 条 capability 仍为空（GDC 625、英文樱井 8、GMTK 1）。这不是用模板硬填的缺陷：公告、汇编或证据不足的条目若不能直接支持某项能力，就保留空映射，避免把标题猜测写成语义事实。
+- 正式 state 已回写：2,311 条记录、2,311 `completed`、0 `retryable`、0 `unclassified`、0 `evidence_pending`。其中 1,871 条来自官方描述分析、210 条字幕分析、4 条音频分析、177 条二手旁证回写；49 条历史完成记录没有重新猜测输入通道，保留原有 model/summaryLength 事实。
+- 外部回写脚本具备严格合同：只接受固定 provider/label、150–250 字中文摘要、合法 URL、唯一主要资源主题；保留已有 completed，允许审核过的证据替换 retryable。新增 `--reconcile-summary-lengths`，已修正 23 条历史 state 元数据滞后，不改摘要正文。
+- 最终验证已通过：Python 回填/runtime/metadata 测试 45/45，JSON、`git diff --check`、secret scan 通过；`npm run build` 通过 Astro check 0/0/0、Vitest 204/204、静态构建 151 页。
 
 ## 下一步
 
-- 官方 API 元数据入口已合并进 main：新增 scripts/sync_youtube_metadata.py，从 sources.json 的 YouTube @handle 发现频道，依次读取 uploads playlist、视频列表与标题／描述／发布时间／时长／字幕可用性等事实字段，默认原子写入仓库外 ~/.cache/lag-youtube/metadata.json；本轮 ADC 全量同步得到 2,534 条频道元数据，现有 2,311 条目标 Work Item 100% 映射，另有 223 条频道后来新增视频暂不自动扩目录；目标中 271 条标记有字幕、2,040 条没有。同步不写 token、不写目录、不生成排名。
-- Career Lens 与统计文案已修正；当前新增的 Playtest 失败不是数据缺失，而是 5437 条资源的初始 DOM／客户端筛选性能瓶颈。公开前需要单独做资源筛选切片，避免用延长 timeout 掩盖页面成本。
-- YouTube 内容补全当前累计 1,792 completed、4 no_transcript、2 transcript_insufficient、41 channel_failure；真正未完成 519 条，其中 472 条尚未进入已分类状态，47 条已经尝试但仍是显式非完成状态。完成入口为 1,740 条 `inputMode=description`、1 条 `transcript`、2 条 `audio`，另有 49 条历史回写没有入口字段。第十六轮 Vertex 文本批次处理 100/100，首轮 63 条直接完成，37 条经过保留草稿与修复提示后全部完成；过程中验证了音频回退、外部字幕异常归一化和 Vertex 音频草稿修复。原始音频、字幕、官方元数据和状态仍在仓库外缓存。缓存审计显示目标中约 2,096 条描述达到 240 字符门槛，公开频道 RSS 对 GMTK 返回 404。
-- OAuth/ADC 与官方 API 边界已确认：Agent Platform API（`aiplatform.googleapis.com`）负责 Agent/Gemini 资源与模型调用，不是 YouTube 数据入口；本轮探针发现项目服务尚未实际启用，已在用户项目范围内启用并用 ADC 成功调用 `gemini-2.5-flash` 文本和音频输入。YouTube Data API v3 桌面 OAuth/ADC 认证成功。`youtube.readonly` 足够读取公开频道／视频元数据，但官方 `captions.list`／`captions.download` 需要更高 YouTube scope，且下载字幕还要求用户拥有视频编辑权限，因此不能用它通用解锁这三个第三方频道的字幕正文。官方 Data API 配额默认每日 10,000 units，本轮读取远低于额度；真正瓶颈仍是 YouTube 通道速率、24 小时冷却、音频下载和模型分析。凭据不得进入仓库、前端或对话。
-- 时间估算（AI 推断）：描述路线不受 YouTube 请求冷却影响；本轮 Vertex 初次 100 条约 8 分钟完成，含定向修复和 1 条音频回退的全流程约 26 分钟。若继续手动按当前吞吐推进，472 条尚未分类条目约需 2–3 小时模型运行时间；若受涓流脚本每 4 小时最多 20 条的上限约束，则理论约 4–5 天。另外 47 条显式非完成条目仍受字幕／音频通道和冷却约束，不能用描述吞吐估算。
-- 涓流队列已修正为：先消化仓库外 priority 文件中的 GMTK／樱井条目，优先队列没有可处理候选后自动放开到全部 2,311 条；已有通道失败仍保持 retryable，不因切换队列被当作完成。当前 priority 文件剩余 532 个可处理候选。
-- 仓库仍为 Private、Pages workflow 仍手动停用；恢复公开需要先修复资源筛选性能，再完成桌面／移动、双主题、无 JS 与线上验收。
+- 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
+- 保持仓库 Private；公开或部署仍需先处理资源页 5,437 条 Work Item 的初始 DOM/客户端筛选成本，并完成线上验收。
 
 ## 阻塞 / 待定
 
-- Vision 为 AI 草稿，待無涘确认
-- 风险/阻塞（AI 访谈 · codex，待無涘确认）：主要风险是资源数量增长速度可能超过逐条验证和 capability/topic 映射的能力，造成错配、过拟合或重复归类。Innovation Atlas 仍需要更多一手证据来支持事件之间的影响关系，视觉层级也需要继续验证。当前代码构建和测试没有阻塞，但 GitHub 仓库为私有，正式公开访问仍是部署层面的实际阻塞。
+- Vision 为 AI 草稿，待無涘确认。
+- 本轮外部 state 回写与摘要长度对账已完成；无 YouTube 内容补全阻塞。
+- 主要产品风险仍是资源数量增长可能造成错配、重复归类或证据等级混淆；Innovation Atlas 的低证据透镜继续保持未闭合，不因资源补全自动闭合。
+
+原始对话：dialogues/2026-0823.md「0447 官方描述回退、内容对账与外部回写边界」

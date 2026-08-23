@@ -7,6 +7,7 @@ from unittest.mock import patch
 import scripts.backfill_video_content as backfill
 
 from scripts.backfill_video_content import (
+    AudioToolingError,
     ModelOutputError,
     DescriptionInsufficientError,
     apply_model_result,
@@ -14,9 +15,12 @@ from scripts.backfill_video_content import (
     build_description_prompt,
     classify_transcript_exception,
     fetch_transcript,
+    initialize_pending_records,
     parse_model_payload,
     parse_vertex_response,
     select_candidates,
+    select_description_ids,
+    should_prefer_description,
     update_report_totals,
     validate_description_text,
 )
@@ -37,6 +41,48 @@ class FakeTranscriptApi:
 
 
 class TestBackfillContracts(unittest.TestCase):
+    def test_initializes_missing_items_without_marking_them_complete(self):
+        state = {"items": {"done": {"status": "completed"}}}
+        resources = [
+            {"id": "done", "sourceId": "game-makers-toolkit"},
+            {"id": "pending", "sourceId": "game-makers-toolkit"},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            state_path = Path(directory) / "state.json"
+            self.assertEqual(initialize_pending_records(state, resources, state_path), 1)
+            record = state["items"]["pending"]
+            self.assertEqual(record["status"], "evidence_pending")
+            self.assertFalse(record["retryable"])
+            self.assertIn("尚未调用分析模型", record["nextStep"])
+            persisted = json.loads(state_path.read_text(encoding="utf-8"))
+            self.assertEqual(persisted["items"]["pending"]["status"], "evidence_pending")
+            dry_state = {"items": {}}
+            dry_path = Path(directory) / "dry-state.json"
+            self.assertEqual(initialize_pending_records(dry_state, resources, dry_path, persist=False), 2)
+            self.assertFalse(dry_path.exists())
+
+    def test_resolves_explicit_ffmpeg_toolchain_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            tool_dir = Path(directory)
+            for name in ("ffmpeg", "ffprobe"):
+                tool = tool_dir / name
+                tool.write_text("#!/bin/sh\n", encoding="utf-8")
+                tool.chmod(0o755)
+            with patch.dict(backfill.os.environ, {"FFMPEG_LOCATION": directory}):
+                self.assertEqual(backfill.resolve_ffmpeg_location(), directory)
+
+    def test_audio_route_reports_missing_local_tooling_before_download(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(backfill, "resolve_ffmpeg_location", return_value=None):
+                with patch.object(backfill.subprocess, "run") as run:
+                    with self.assertRaises(AudioToolingError):
+                        backfill.fetch_audio_via_ytdlp(
+                            "video-1",
+                            "/bin/false",
+                            Path(directory),
+                        )
+                    run.assert_not_called()
+
     def test_classifies_missing_transcript_as_terminal(self):
         self.assertEqual(classify_transcript_exception(TranscriptsDisabled()), "no_transcript")
         self.assertEqual(classify_transcript_exception(NoTranscriptFound()), "no_transcript")
@@ -44,6 +90,11 @@ class TestBackfillContracts(unittest.TestCase):
     def test_classifies_rate_limit_as_channel_failure(self):
         error = RuntimeError("YouTube returned HTTP 429: too many requests")
         self.assertEqual(classify_transcript_exception(error), "channel_error")
+
+    def test_transcript_channel_errors_can_enter_explicit_audio_fallback(self):
+        self.assertTrue(backfill.should_try_audio_fallback(backfill.TranscriptChannelError("blocked")))
+        self.assertTrue(backfill.should_try_audio_fallback(backfill.TranscriptRetryableError("temporary")))
+        self.assertFalse(backfill.should_try_audio_fallback(RuntimeError("unrelated")))
 
     def test_rejects_transcript_that_is_only_audio_markers(self):
         with self.assertRaisesRegex(RuntimeError, "字幕正文过短或只有音频标记"):
@@ -344,6 +395,56 @@ The next point
         )
         self.assertEqual([item["id"] for item in selected], ["description-item"])
 
+    def test_description_only_modes_can_include_caption_available_items(self):
+        resources = [
+            {
+                "id": "caption-item",
+                "canonicalUrl": "https://www.youtube.com/watch?v=caption-item",
+            },
+            {
+                "id": "short-item",
+                "canonicalUrl": "https://www.youtube.com/watch?v=short-item",
+            },
+        ]
+        metadata = {
+            "caption-item": {
+                "captionAvailability": "true",
+                "description": "A concrete official explanation. " * 12,
+            },
+            "short-item": {
+                "captionAvailability": "true",
+                "description": "Too short",
+            },
+        }
+        self.assertEqual(
+            select_description_ids(resources, metadata, include_caption_available=True),
+            {"caption-item"},
+        )
+        self.assertEqual(select_description_ids(resources, metadata), set())
+
+    def test_description_only_mode_prefers_selected_description_over_transcript(self):
+        record = {"captionAvailability": "true"}
+        self.assertTrue(
+            should_prefer_description(
+                "An official description",
+                record,
+                "caption-item",
+                {"caption-item"},
+                description_only=True,
+                description_only_all=False,
+            )
+        )
+        self.assertFalse(
+            should_prefer_description(
+                "An official description",
+                record,
+                "caption-item",
+                {"caption-item"},
+                description_only=False,
+                description_only_all=False,
+            )
+        )
+
     def test_report_distinguishes_uncompleted_from_unclassified(self):
         report = {}
         state = {
@@ -355,6 +456,8 @@ The next point
         update_report_totals(report, state, {"done", "failed", "pending"})
         self.assertEqual(report["remainingAfterRun"], 1)
         self.assertEqual(report["uncompletedAfterRun"], 2)
+        self.assertEqual(report["unclassifiedAfterRun"], 1)
+        self.assertEqual(report["evidencePendingAfterRun"], 0)
 
     def test_rejects_unknown_ids_and_short_summary(self):
         with self.assertRaises(ModelOutputError):
@@ -377,6 +480,20 @@ The next point
         )
         self.assertEqual(result["resourceTopicIds"], [])
         self.assertEqual(result["capabilityIds"], ["aesthetic-direction"])
+
+    def test_drops_topic_id_misplaced_as_capability(self):
+        summary = "摘要内容" * 50
+        result = parse_model_payload(
+            {
+                "summary": {"zh-CN": summary},
+                "resourceTopicIds": ["systems-mechanics"],
+                "capabilityIds": ["production-iteration"],
+            },
+            {"systems-mechanics", "production-iteration"},
+            {"game-feel-tuning"},
+        )
+        self.assertEqual(result["resourceTopicIds"], ["systems-mechanics"])
+        self.assertEqual(result["capabilityIds"], [])
 
     def test_drops_observed_gdc_boilerplate_topic_id(self):
         summary = "摘要内容" * 50

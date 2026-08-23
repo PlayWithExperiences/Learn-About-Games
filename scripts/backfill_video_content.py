@@ -90,6 +90,10 @@ class AudioChannelError(RuntimeError):
     """The audio download route failed before content analysis."""
 
 
+class AudioToolingError(RuntimeError):
+    """The local ffmpeg/ffprobe toolchain is unavailable before download."""
+
+
 class AudioInputLimitError(RuntimeError):
     """The downloaded audio needs a larger-file upload route than inline data."""
 
@@ -120,6 +124,14 @@ class NoTranscriptFound(RuntimeError):
 
 class ModelChannelError(RuntimeError):
     """Every configured model failed through a channel error."""
+
+
+def should_try_audio_fallback(error: BaseException) -> bool:
+    """Return whether a transcript failure can be retried through audio."""
+    return isinstance(
+        error,
+        (NoTranscriptFound, TranscriptInsufficientError, TranscriptChannelError, TranscriptRetryableError),
+    )
 
 
 @contextmanager
@@ -228,6 +240,26 @@ def resolve_ytdlp_binary() -> str | None:
         return discovered
     if DEFAULT_YTDLP.is_file() and os.access(DEFAULT_YTDLP, os.X_OK):
         return str(DEFAULT_YTDLP)
+    return None
+
+
+def resolve_ffmpeg_location() -> str | None:
+    """Find a directory containing both ffmpeg and ffprobe for yt-dlp."""
+    configured = os.environ.get("FFMPEG_LOCATION", "").strip()
+    candidates = [Path(configured)] if configured else []
+    candidates.extend((Path("/opt/homebrew/bin"), Path("/usr/local/bin")))
+    for candidate in candidates:
+        if candidate.is_file():
+            candidate = candidate.parent
+        if all(
+            (candidate / name).is_file() and os.access(candidate / name, os.X_OK)
+            for name in ("ffmpeg", "ffprobe")
+        ):
+            return str(candidate)
+    ffmpeg = shutil.which("ffmpeg")
+    ffprobe = shutil.which("ffprobe")
+    if ffmpeg and ffprobe:
+        return str(Path(ffmpeg).parent)
     return None
 
 
@@ -360,6 +392,9 @@ def fetch_audio_via_ytdlp(
         if size > max_bytes:
             raise AudioInputLimitError(f"音频缓存超过 inline 上限：{size} bytes")
         return cached
+    ffmpeg_location = resolve_ffmpeg_location()
+    if not ffmpeg_location:
+        raise AudioToolingError("找不到可执行的 ffmpeg 和 ffprobe，无法进入音频路线")
 
     with tempfile.TemporaryDirectory(prefix="lag-audio-ytdlp-") as directory:
         output_template = str(Path(directory) / "%(id)s.%(ext)s")
@@ -377,6 +412,8 @@ def fetch_audio_via_ytdlp(
             "1",
             "--fragment-retries",
             "1",
+            "--ffmpeg-location",
+            ffmpeg_location,
             "--no-warnings",
             "--output",
             output_template,
@@ -454,6 +491,42 @@ def get_cached_description(metadata: dict[str, dict[str, Any]], video_id: str) -
         return None
 
 
+def select_description_ids(
+    resources: list[dict[str, Any]],
+    metadata: dict[str, dict[str, Any]],
+    include_caption_available: bool = False,
+) -> set[str]:
+    """Select items whose official descriptions meet the evidence threshold."""
+    selected: set[str] = set()
+    for item in resources:
+        video_id = extract_video_id(item["canonicalUrl"])
+        metadata_record = metadata.get(video_id, {})
+        if not include_caption_available and metadata_record.get("captionAvailability") != "false":
+            continue
+        if get_cached_description(metadata, video_id):
+            selected.add(item["id"])
+    return selected
+
+
+def should_prefer_description(
+    description: str | None,
+    metadata_record: dict[str, Any] | None,
+    item_id: str,
+    description_ids: set[str] | None,
+    description_only: bool,
+    description_only_all: bool,
+) -> bool:
+    """Use selected official description evidence before any YouTube route."""
+    return bool(
+        description
+        and metadata_record
+        and (
+            metadata_record.get("captionAvailability") == "false"
+            or ((description_only or description_only_all) and item_id in (description_ids or set()))
+        )
+    )
+
+
 def parse_json_object(text: str) -> dict[str, Any]:
     candidate = text.strip()
     if candidate.startswith("```"):
@@ -511,6 +584,14 @@ def parse_model_payload(
             ignored_values = (set(unknown) & allowed_capabilities) | (
                 set(unknown) & IGNORED_CHANNEL_BOILERPLATE_TOPIC_IDS
             )
+            if ignored_values:
+                values = [value for value in values if value not in ignored_values]
+                unknown = sorted(set(values) - allowed)
+        elif name == "capabilityIds":
+            # 对称处理：模型也会把合法资源主题 ID 放进能力字段。不要猜测性
+            # 映射，丢弃误放并让 apply_model_result 保留原有能力；其它未知 ID
+            # 仍必须失败并留痕。
+            ignored_values = set(unknown) & allowed_topics
             if ignored_values:
                 values = [value for value in values if value not in ignored_values]
                 unknown = sorted(set(values) - allowed)
@@ -1103,6 +1184,12 @@ def update_report_totals(report: dict[str, Any], state: dict[str, Any], target_i
     """Keep classified and genuinely incomplete counts separate in reports."""
     totals = status_totals(state, target_ids)
     report["totals"] = totals
+    records = state.get("items", {})
+    report["unclassifiedAfterRun"] = sum(item_id not in records for item_id in target_ids)
+    report["evidencePendingAfterRun"] = sum(
+        isinstance(records.get(item_id), dict) and records[item_id].get("status") == "evidence_pending"
+        for item_id in target_ids
+    )
     # remainingAfterRun is the historical "not yet classified" count. Keep it
     # for existing consumers, but expose the user-relevant incomplete count too.
     report["remainingAfterRun"] = len(target_ids) - sum(totals.values())
@@ -1112,6 +1199,35 @@ def update_report_totals(report: dict[str, Any], state: dict[str, Any], target_i
 def update_record(state: dict[str, Any], item_id: str, record: dict[str, Any], path: Path) -> None:
     state.setdefault("items", {})[item_id] = {**record, "updatedAt": now_iso()}
     save_state(path, state)
+
+
+def initialize_pending_records(
+    state: dict[str, Any],
+    target_items: list[dict[str, Any]],
+    state_path: Path,
+    *,
+    persist: bool = True,
+) -> int:
+    """Give every not-yet-attempted target an explicit, non-terminal state."""
+    items = state.setdefault("items", {})
+    missing = 0
+    timestamp = now_iso()
+    for item in target_items:
+        item_id = item["id"]
+        if item_id in items:
+            if not isinstance(items[item_id], dict):
+                raise ValueError(f"状态记录不是对象：{item_id}")
+            continue
+        items[item_id] = {
+            "status": "evidence_pending",
+            "retryable": False,
+            "nextStep": "等待字幕、音频或其它可核验正文入口；尚未调用分析模型",
+            "updatedAt": timestamp,
+        }
+        missing += 1
+    if missing and persist:
+        save_state(state_path, state)
+    return missing
 
 
 def recover_pending(resources: list[dict[str, Any]], state: dict[str, Any], resources_path: Path, state_path: Path) -> None:
@@ -1204,18 +1320,21 @@ def process(args: argparse.Namespace) -> int:
     target_ids = {item["id"] for item in target_items}
     state = load_state(args.state)
     recover_pending(resources, state, args.resources, args.state)
+    initialize_pending_records(state, target_items, args.state, persist=not args.dry_run)
     candidate_ids = load_candidate_ids(args.ids_file)
     metadata_by_video = load_youtube_metadata(args.metadata) if args.description_fallback else {}
     description_ids: set[str] | None = None
-    if args.description_only:
+    if args.description_only or args.description_only_all:
         if not args.description_fallback:
-            raise ValueError("--description-only 必须同时启用 --description-fallback")
-        description_ids = set()
-        for item in target_items:
-            video_id = extract_video_id(item["canonicalUrl"])
-            metadata_record = metadata_by_video.get(video_id, {})
-            if metadata_record.get("captionAvailability") == "false" and get_cached_description(metadata_by_video, video_id):
-                description_ids.add(item["id"])
+            raise ValueError("--description-only/--description-only-all 必须同时启用 --description-fallback")
+        description_ids = select_description_ids(
+            target_items,
+            metadata_by_video,
+            # Both flags are description-only production modes.  The explicit
+            # --description-only-all spelling remains for old launchers and
+            # operators who want to make the caption-inclusive behavior clear.
+            include_caption_available=True,
+        )
     selected = select_candidates(
         resources,
         state,
@@ -1224,7 +1343,7 @@ def process(args: argparse.Namespace) -> int:
         candidate_ids,
         args.audio_fallback,
         description_ids,
-        args.description_only,
+        args.description_only or args.description_only_all,
     )
     report: dict[str, Any] = {
         "startedAt": now_iso(),
@@ -1265,10 +1384,13 @@ def process(args: argparse.Namespace) -> int:
             model_result: dict[str, Any]
             metadata_record = metadata_by_video.get(video_id)
             description = get_cached_description(metadata_by_video, video_id) if args.description_fallback else None
-            prefer_description = bool(
-                description
-                and metadata_record
-                and metadata_record.get("captionAvailability") == "false"
+            prefer_description = should_prefer_description(
+                description,
+                metadata_record,
+                item_id,
+                description_ids,
+                args.description_only,
+                args.description_only_all,
             )
             if prefer_description:
                 input_mode = "description"
@@ -1304,7 +1426,12 @@ def process(args: argparse.Namespace) -> int:
                         atomic_write_text(args.cache_dir / f"{video_id}.txt", transcript + "\n")
                     else:
                         transcript = validate_transcript_text(transcript)
-                except (NoTranscriptFound, TranscriptInsufficientError) as transcript_error:
+                except (
+                    NoTranscriptFound,
+                    TranscriptInsufficientError,
+                    TranscriptChannelError,
+                    TranscriptRetryableError,
+                ) as transcript_error:
                     if description is not None:
                         input_mode = "description"
                         prompt = build_description_prompt(item, source_name, description, topics, capabilities)
@@ -1331,7 +1458,7 @@ def process(args: argparse.Namespace) -> int:
                                 args.max_tokens,
                                 args.model_timeout,
                             )
-                    elif not args.audio_fallback:
+                    elif not args.audio_fallback or not should_try_audio_fallback(transcript_error):
                         raise transcript_error
                     else:
                         audio_attempted = True
@@ -1420,6 +1547,9 @@ def process(args: argparse.Namespace) -> int:
                 failure_class = "vertex_channel"
                 status = "retryable"
                 kind = "channel_error"
+            elif isinstance(exc, AudioToolingError):
+                failure_class = "audio_tooling"
+                status = "retryable"
             elif isinstance(exc, AudioChannelError):
                 failure_class = "audio_channel"
                 status = "retryable"
@@ -1496,7 +1626,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--audio-fallback", action="store_true", help="无可用字幕时下载音频并调用 Vertex ADC")
     parser.add_argument("--vertex-text", action="store_true", help="用 Vertex ADC 分析文本证据，不依赖 OpenRouter")
     parser.add_argument("--description-fallback", action="store_true", help="优先使用官方 YouTube 描述作为正文证据")
-    parser.add_argument("--description-only", action="store_true", help="只处理官方描述达标的条目，不请求字幕或音频")
+    parser.add_argument(
+        "--description-only",
+        action="store_true",
+        help="只处理官方描述达标的条目，包括元数据标记有字幕的条目；不请求字幕或音频",
+    )
+    parser.add_argument(
+        "--description-only-all",
+        action="store_true",
+        help="--description-only 的显式别名；处理所有官方描述达标的条目，不请求字幕或音频",
+    )
     parser.add_argument("--audio-timeout", type=int, default=120)
     parser.add_argument("--audio-cache-dir", type=Path, default=DEFAULT_AUDIO_CACHE)
     parser.add_argument("--vertex-model", default=os.environ.get("VERTEX_MODEL", DEFAULT_VERTEX_MODEL))
