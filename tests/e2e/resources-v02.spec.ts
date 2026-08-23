@@ -298,7 +298,7 @@ test('keeps the access-version control on the same desktop row as the Work Item 
   )).toBe(true);
 });
 
-test('shows the stored Work Item summary in its disclosure panel', async ({ page }) => {
+test('keeps the stored Work Item summary hidden while retaining access versions', async ({ page }) => {
   const resource = resources[0];
 
   await page.goto('./resources/');
@@ -306,9 +306,10 @@ test('shows the stored Work Item summary in its disclosure panel', async ({ page
 
   const row = page.locator(`[data-result-id="${resource.id}"]`);
   const disclosure = row.locator('.work-item-result__more');
-  await expect(disclosure.locator('summary')).toContainText('查看摘要');
+  await expect(disclosure.locator('summary')).toContainText('查看访问版本');
   await disclosure.locator('summary').click();
-  await expect(disclosure.locator('[data-work-item-summary]')).toContainText(resource.summary['zh-CN']);
+  await expect(disclosure.locator('[data-work-item-summary]')).toHaveCount(0);
+  await expect(disclosure.getByRole('link', { name: '访问此版本' }).first()).toBeVisible();
 });
 
 test('keeps resource search, facts, count and table actions in one compact table header', async ({ page }) => {
