@@ -287,3 +287,14 @@
 - 验证：AI。Python 45/45、JSON、secret scan、`git diff --check`、Astro check 0/0/0、Vitest 204/204、静态构建 151 页通过。仓库保持 Private，未 push、未部署。
 
 原始对话：dialogues/2026-0823.md「1149 2,311 条目标正式回写与最终闭环」
+
+## 2026-08-23：NotebookLM 内容转化与公开/PKM 双层产出
+
+- 决策：無涘 ｜ 记录：AI。选定普通 NotebookLM / Gemini Notebook 作为视频内容转化主力；现有网站目录 `summary` 保持短摘要语义，完整文字版总结改为独立产物，不覆盖已有数据。
+- 决策：無涘 ｜ 记录：AI。内容总结采用“按信息密度详略得当”的软篇幅规则。1800–2500 字是普通样本的目标区间，不是最低字数，也不是硬截断；内容不足就短，论证密集就长，必须以来源边界正常收束。
+- 决策：無涘 ｜ 记录：AI。产出拆成 Learn About Games 公开层和 PKM/Daily Check-in 层：前者展示标题、来源、短版概览和审核后的产物入口；后者保存完整总结、引用/证据边界、信息图、思维导图、演示文稿及状态。Daily Check-in 每日抽取精选资源并引用 PKM 原文，避免重复复制长文。
+- 事实：AI。普通 NotebookLM 对公开 YouTube 只导入带字幕的视频转写，已完成一次约 3,791 字符中文内容详述验证；此前 YouTube→Obsidian 路线已验证 `youtube-transcript-api` 的干净字幕、按视频 ID 归档、引用锚点以及推送即时写入/回复追加的 PKM 机制。
+- 事实：AI。Google 官方当前 Notebook 配额：Standard 100 notebooks/user、50 sources/notebook、50 chats/day、3 audio/day、3 video/day；Plus 200、100、200、6、6；Pro 500、300、500、20、20。AI Plus 足够每日精选与小批量研究，但不适合作为 2,311 条资源全部生成文字、信息图、思维导图和演示文稿的无人工批处理方案。
+- 边界：AI。普通 NotebookLM 是网页入口，不等于公开批量 API；Enterprise/API 需另行核对许可、项目和费用。任何订阅、API 或大量模型调用必须先获得無涘确认。本轮仅调研与留痕，没有新增模型调用、付费操作或资源写回。
+
+原始对话：dialogues/2026-0823.md「1604 NotebookLM 内容转化与公开/PKM 双层产出」

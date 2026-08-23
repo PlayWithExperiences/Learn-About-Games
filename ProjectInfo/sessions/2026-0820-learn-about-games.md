@@ -403,14 +403,6 @@
 
 原始对话：dialogues/2026-0823.md「1243 续」
 
-## 0133 完成 YouTube 资源摘要回写及规则制定
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-本场基于用户要求补全成长资源和创新地图，最终选定方案 A（补真实摘要与 Atlas 事件/关系），并将目标扩展为至少 1000 条资源及 3 条完整创新路线。AI 在 v02 工作树中执行大量 YouTube 视频摘要生成，最终将 2311 条视频全部标记为已完成，资源总量达 5437 条，4 条创新路线（FPS、RPG、RTS、开放世界）闭环审计通过，构建与测试全通过。过程中未经用户确认即进行了数千次 OpenRouter 模型调用，产生费用；用户要求将“大量调用前需询问”及“涉及现实金额操作需用户确认”写入全局指南，并已完成。本地 Astro 开发服务器停止后，AI 直接恢复。目前摘要已存储在 resources.json 中，但资源列表页面未直接渲染完整摘要，仅用于搜索。下一步需决定是否在界面中增加摘要展示区，并持续遵守费用确认规则。
-
-原始对话：dialogues/2026-0823.md
-
 ## 1316 FreeLLMAPI 单条真实字幕 smoke test
 
 - 决策：無涘 ｜ 记录：AI。按“只跑一条真实资源、不写回、不产生付费额度”的边界，仓库外启动 FreeLLMAPI 临时 Docker 实例，输入使用 `4RlpMhBKNr0`《Designing Celeste》英文字幕。
@@ -418,3 +410,83 @@
 - 结论：AI。FreeLLMAPI 的本地启动、OpenAI 兼容入口、精确提供方路由可工作，但免费匿名端点的容量与延迟尚不足以直接支撑长字幕总结；暂不接入或批量运行。临时容器已停止，无仓库代码/资源写回、无付费模型或 Premium 调用。
 
 原始对话：dialogues/2026-0823.md「1316 FreeLLMAPI 单条真实字幕 smoke test」
+
+## 1333 发现 ModLens 已配置 Agnes API Key
+
+- 决策：無涘 ｜ 记录：AI。检查本机 dsh 的 ModLens 共享配置，不读取或输出密钥值。
+- 发现：AI。`/Users/haodong/.modlens/config.json` 存在且为用户私有权限；`providers.openai.baseUrl` 为 Agnes API，模型为 `agnes-2.5-flash`，`apiKey` 字段非空。该 Key 不在 dsh 的 `.credentials.yaml` 中，而在 ModLens 配置中。
+- 结论：AI。现有 Key 可以作为 Agnes 单条样例测试的凭据来源，但本次只确认配置，没有发起外部模型请求；需用户确认后再调用。
+
+原始对话：dialogues/2026-0823.md「1333 发现 ModLens 已配置 Agnes API Key」
+
+## 1337 Agnes 单条深度总结验证
+
+- 决策：無涘 ｜ 记录：AI。使用 ModLens 中已有的 Agnes API Key，只发送一条真实字幕总结请求，不写回资源、不重试、不切换模型。
+- 结果：AI。`agnes-2.5-flash` 返回 HTTP 200；输入约 6,582 tokens，输出达到 2,400 tokens 上限。结果已超出来源页简介层级，覆盖核心设计问题、具体方法、因果取舍、可迁移原则和检查清单，但在清单中途被长度上限截断。
+- 结论：AI。Agnes 具备承接“资源正文文字版总结”的可行性；正式流程应提高单条输出预算或采用结构化分段，仍需用户确认后才能进行任何批量调用。未写回仓库、未发起第二次请求。
+
+原始对话：dialogues/2026-0823.md「1337 Agnes 单条深度总结验证」
+
+## 1352 注册型免费模型 Top 3 筛选
+
+- 推断：AI。筛选标准固定为：允许注册并使用个人 API Key；官方存在免费层；不要求充值、绑定付费或购买 credits；免费限流可观察；能承接英文字幕到中文的长文本、深度文字总结。匿名公共网关不作为批量方案。
+- 建议：AI。综合质量、长文本能力、现有可用性和项目适配度，候选总榜为：1) Google AI Studio 的 `gemini-3.7-flash`；2) Agnes 的 `agnes-2.5-flash`；3) Z.ai 的 `glm-4.7-flash`。这不是可直接横比的“智力分数”，而是基于官方模型定位、上下文/输出上限、免费层条件和已完成的 Agnes 单条实测得出的工作建议。
+- 事实：AI。Google 的免费层提供部分 Gemini 模型的免费输入/输出和 AI Studio/API 访问；`gemini-3.7-flash` 官方定位为高能力 Flash 工作模型，公开规格为约 1M 上下文和 65K 级输出，但具体 RPM/TPM/RPD 需在项目控制台确认。免费层内容可能用于改进 Google 产品；YouTubeKnowledge 项目的 Cloud Billing 状态必须先核对，不能把“AI Studio 免费”当成不会产生费用。
+- 事实：AI。Agnes `agnes-2.5-flash` 的公开参考规格为 512K 上下文、65.5K 最大输出，默认免费层实际文本 RPM 参考值为 20；此前已用现有 Agnes key 成功完成一条真实深度总结，未写回、未重试。账户权限、限额和数据条款仍以 Agnes 平台为准。
+- 事实：AI。Z.ai `glm-4.7-flash` 官方价格页标为 Free，公开规格为 200K 上下文、128K 最大输出，并明确适合中文写作、翻译和长文本处理；免费额度不在公开文档中固定承诺，需注册后在 rate-limit 面板核对。
+- 事实：AI。Groq `openai/gpt-oss-120b` 是新增候选中的强质量/高速度路线，官方免费层公开限制为 30 RPM、8K TPM、200K TPD；适合少量高质量对照，不适合作为 2311 条资源的唯一批处理入口。Cloudflare 也能提供 GPT-OSS，但免费 Workers 每日 10,000 neurons，且与 Groq 是同一底层模型路线，暂列备选；Mistral 免费模式的具体高档模型可用性尚未确认。
+- 淘汰记录：AI。OpenRouter 免费账户为低量实验用途，免费模型总量有每日请求限制；提高额度需要购买 credits。Cerebras 当前免费路径涉及验证付款方式和短期 credits，SambaNova 免费计划也涉及付款条件；因此都不符合本轮“注册但不花钱”的筛选条件。GitHub Models 已退役，不再推荐。
+- 下一步：AI。先由無涘注册 Z.ai，必要时再注册 Groq；确认账户显示的免费模型、RPM/TPM/每日额度和数据条款。之后只做一次同输入 A/B/C 单条对照，不写回、不重试、不批量；比较深度、事实依附、可迁移洞见、中文可读性和截断情况。任何模型调用或批量任务开始前，必须重新向無涘说明调用数量、输入输出上限、失败重试策略和可能费用，并取得确认。
+
+原始对话：dialogues/2026-0823.md「1352 注册型免费模型 Top 3 筛选」
+
+## 1415 两路模型接入与文字版总结测试准备
+
+- 事实：AI。仓库当前已有 Google ADC（`/Users/haodong/.config/gcloud/application_default_credentials.json`）和 ModLens 私有 Agnes 配置（`/Users/haodong/.modlens/config.json`）；未读取、输出或复制任何密钥。gcloud 当前项目已启用 `aiplatform.googleapis.com`，但 `billingEnabled=True`，Google 试验不能在未确认费用边界前发起。
+- 事实：AI。`scripts/backfill_video_content.py` 的既有合同只校验 `summary.zh-CN` 150–250 字，提示词也要求四句 180–205 字；`src/content.config.ts` 的资源 schema 目前只有 `summary`，没有独立的长篇内容详述字段。因此不能直接把新产物覆盖现有摘要，否则会破坏目录摘要语义和现有校验。
+- 建议：AI。先验证“完整字幕生成文字版内容详述”的质量，再决定字段和 UI。最小样本使用本地已有《Level Design Workshop: Designing Celeste》完整字幕，video ID `4RlpMhBKNr0`，缓存约 29,643 字符；Google 与 Agnes 各调用 1 次，使用完全相同提示词，目标约 1,500–2,500 个中文字符，要求按内容推进解释观点、案例、因果取舍和限制，不生成逐字稿，不写回、不重试。
+- 待無涘确认：AI。若坚持本次 Google 测试费用上限为 0，需要改用明确处于 AI Studio Free Tier 且未绑定 Cloud Billing 的凭据/项目；若使用当前 ADC/Vertex 项目，则必须明确接受存在潜在计费风险。Agnes 不需要用户把 Key 发到聊天，现有 ModLens 配置即可作为本地入口。
+
+原始对话：dialogues/2026-0823.md「1415 两路模型接入与文字版总结测试准备」
+
+## 1425 Gemini 3.7 与 NotebookLM 方案核对
+
+- 事实：AI。按無涘确认执行了 Google `gemini-2.5-flash` 1 次与 Agnes `agnes-2.5-flash` 1 次，均 HTTP 200；未写回、不重试。Google 2.5 usage 为约 6,485 input / 2,633 output / 11,481 total token，其中 thoughts 约 2,363；Agnes completion 5,000 中 reasoning 约 4,400、可见正文约 600，当前样本被 reasoning 占满，需另行调参后才适合比较。
+- 事实：AI。经用户追加确认，再调用 Google `gemini-3.7-flash` 1 次，HTTP 200，`finishReason=STOP`，约 6,485 input / 2,523 output / 9,008 total token。3.7 输出完整到达证据边界，较 2.5 更适合“内容详述”。该请求走现有 ADC/Vertex endpoint，不是 AI Studio API Key 路线，响应 `trafficType=ON_DEMAND`。
+- 费用边界：AI。当前 gcloud 项目仍为 `billingEnabled=True`，Cloud Billing 项目描述能看到关联 billing account，但即时日志/账单查询没有返回可确认的费用行；这不是零费用证明。3.7 的 AI Studio 价格页虽然标记 Free Tier 输入/输出可免费，不能直接套用于本次 Vertex/ADC ON_DEMAND 请求；后续必须在 Billing Reports 数据出现后核对。
+- 研究结论：AI。普通 NotebookLM 支持带字幕的公开 YouTube URL，但只导入字幕文字；官方免费参考限制为 50 sources/notebook、50 chats/day、10 reports/day，适合人工验证和少量研究，不适合直接批量 2,311 条写回。官方 Gemini Notebook Enterprise（原 NotebookLM Enterprise）提供创建 Notebook、`notebooks.sources.batchCreate` 添加 YouTube、交互/流式回答 API，但需要 Discovery Engine API、Cloud NotebookLM User 角色及 Enterprise license；当前项目只启用了 `aiplatform.googleapis.com`，未启用 `discoveryengine.googleapis.com`。
+- Google Free 规则：AI。普通 AI Studio Free 不要求 Enterprise 权限；官方不承诺一组固定的免费 RPM/TPM/RPD，具体值在 AI Studio Rate limits 页面按项目/模型展示。RPD 按太平洋时间午夜重置，限额按项目而非 API Key 计算；Gemini 3.7 Flash 价格页的 Free Tier 与本次 Vertex/ADC 路线必须分开记账。
+- 下一步：AI。若要继续用严格免费 Google 路线，应先在 AI Studio 确认一个未绑定 Cloud Billing、明确显示 Free Tier 的项目/凭据，再做一次无写回的 3.7 调用；若选择 NotebookLM，先用普通 Notebook 手工验证一条 YouTube，再评估 Enterprise license/API，不得擅自启用 Discovery Engine 或购买订阅。
+
+原始对话：dialogues/2026-0823.md「1425 Gemini 3.7 与 NotebookLM 方案核对」
+
+## 1436 输出限制核对与普通 Gemini Notebook 路线验证（2026-08-23）
+
+决策：無涘 ｜ 记录：AI。确认当前短摘要合同不是长篇内容详述合同：`scripts/backfill_video_content.py` 要求目录 `summary.zh-CN` 150–250 字，提示词要求 180–205 字四句；因此不能只把生产脚本 `max_tokens` 调大，也不能用长文覆盖现有摘要。Google 2.5 的旧样本是可见输出触顶中断，Agnes 旧样本则把 completion 预算大量消耗在 reasoning；下一次长输出复测需同时处理输出预算与推理预算，并在调用前确认数量、重试和费用。
+
+事实：AI。使用用户已登录的普通 Gemini Notebook 网页端创建一个一次性测试笔记本，导入公开 YouTube 视频 `4RlpMhBKNr0`。来源被识别为《Level Design Workshop: Designing Celeste》，网页明确显示只导入 YouTube 转写文字；随后提交一次约 1,800–2,500 字目标的中文内容详述请求。该次没有调用 Google/Agnes API，没有写回仓库，没有启用 Gemini Notebook Enterprise 或购买订阅。
+
+结果：AI。Notebook 回答约 3,791 字符，正常收束到“视频未提及或未解决的边界问题”，包含三层分形叙事、下落方块迭代、多解法与捷径、安全模型、情绪同步、隐性教学、歌曲式区域编排和可迁移方法；回答带来源引用，明显超出目录摘要层级。尾部附带产品推荐文案，正式入库时应剥离。普通网页路线适合单条人工验证，尚不能视为批量 API。
+
+待無涘确认：AI。是否新增 Google `gemini-3.7-flash` 1 次和 Agnes `agnes-2.5-flash` 1 次做长输出复测；建议分别把输出上限提高到约 8,000 token，并先验证 Agnes 的推理预算参数。当前 Google ADC/Vertex 项目绑定 Cloud Billing，新增 Google 请求不能默认为免费；本次未发起这两次调用。
+
+原始对话：dialogues/2026-0823.md「1436 输出限制核对、普通 Gemini Notebook 单条测试」
+
+## 0133 确认 v02 内容达标与 NotebookLM 内容转化路线
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+会话以补全成长资源和创新地图为目标，用户选择优先走真实可核查的内容证据线，并设定 1000 条资源 +3 条完整创新路线的基准。经审计发现 .worktrees/v02 已有 5,437 条资源、84 个 Atlas 节点、86 条关系，数量已达标；完成路线闭包审计，确证 FPS、RPG、RTS、开放世界四条完整证据链。独立 clone 验证全量测试 204/204 通过、E2E 262 passed 0 failed。修复 README 与 Source 统计漂移（Source 43→44）后回归通过。随后讨论模型调用费用问题，确认 Google 当前走 Vertex ADC 付费路由，完成 gemini-2.5-flash、gemini-3.7-flash、agnes-2.5-flash 三次调用对比，均出现输出截断。用户建议用 NotebookLM 做视频内容总结，已验证普通版 NotebookLM 成功导入 YouTube 转写并生成约 3,791 字符结构化中文总结，带来源引用无截断。双方确认选定 NotebookLM 作为内容转化主力路线，区分公开展示部分与 Daily Check-in/PKM 回写部分，并提出结构化模板要求；用户询问免费版与 AI Plus 配额差异，待调研。产出：路线审计纯函数、报告脚本、204 项测试、README/Source 统计修正 commit，以及 NotebookLM 测试笔记本。风险：Google Vertex 路由未确认免费；NotebookLM 免费额度需进一步核实；视频字幕通道仍受 IpBlocked 熔断冷却中。
+
+原始对话：dialogues/2026-0823.md
+
+## 1604 NotebookLM 内容转化路线与配额核对（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。选定普通 NotebookLM / Gemini Notebook 作为 YouTube 视频内容转化主力。现有 150–250 字 `summary` 继续承担网站目录摘要，不被长文覆盖；新增长篇内容详述与 Studio 产物作为独立产物。
+- 规则：無涘 ｜ 记录：AI。1800–2500 字改为软目标，不是截断上限或最低字数；按视频内容密度详略得当，长文以论证完整和证据边界为完成判据。
+- 架构：無涘 ｜ 记录：AI。公开网站层展示标题、来源、短版概览和经审核的产物入口；PKM 层保存完整总结、引用、证据边界、信息图、思维导图、演示文稿和生成状态。Daily Check-in 只抽取精选条目并引用 PKM 原文，避免重复灌入长文。
+- 复用：AI。旧 YouTube→Obsidian 路线可复用 `youtube-transcript-api` 的干净字幕、按视频 ID 的规范资源笔记、引用锚点、失败状态和“推送立即写入/回复追加”的幂等 PKM 写回机制。GitHub 上有非官方 NotebookLM→Obsidian 工具可作目录/导出参考，但暂不直接接入生产。
+- 配额：AI。官方当前表为 Standard 100 notebooks、50 sources/notebook、50 chats/day、3 audio/day、3 video/day；Plus 200、100、200、6、6；Pro 500、300、500、20、20。Plus 适合每日精选与小批研究，不适合 2,311 条资源的全部 Studio 产物全自动生成；价格与最终资格取决于 Google 账户账单地区。
+- 边界：AI。普通 NotebookLM 已验证能导入有字幕的公开 YouTube，但它仍是网页入口而非批量 API。本次没有新增模型调用、没有订阅、没有资源写回；后续实现前须再次确认调用量、输出上限、重试和费用。
+
+原始对话：dialogues/2026-0823.md「1604 NotebookLM 内容转化路线与配额核对」
