@@ -308,3 +308,12 @@
 - 验证：AI。Learn About Games build 为 Astro 0/0/0、Vitest 204/204、151 pages；摘要隐藏定向 E2E 通过。全量 E2E 251 passed / 22 skipped / 13 failed，失败集中于既有/并发稳定性与旧质量词断言。
 
 原始对话：dialogues/2026-0823.md「2110 NotebookLM 单条 Daily Check-in 线路落地」
+
+## 2026-08-23：NotebookLM Studio 信息图单条复测（21:49）
+
+- 决策：無涘 ｜ 记录：AI。此前 `location=unsupported` 已不再出现；按单条最小验证原则，只重新生成一项 Celeste 信息图，不批量、不重试、不写回。
+- 结果：AI。NotebookLM Studio 成功生成并打开一张中文简体、横向、手绘笔记、详细 Beta 信息图。卡片标题为“登山游戏关卡设计方法”，预览标题为“《蔚蓝》（Celeste）关卡设计方法论：以“故事”为锚点”。
+- 证据：AI。页面出现新的产物卡片和“信息图已准备就绪”提示，预览实际显示中文图像内容；这次不是仅返回任务编号。旧 fixture 的 `not-generated` 状态继续保留，因为本次试看片尚未写入正式资源记录。
+- 边界：AI。本轮没有下载或写回 PKM/网站，也没有重新生成思维导图和演示文稿；后续若正式纳入资源，需另行核验导出资产与托管策略。
+
+原始对话：dialogues/2026-0823.md「2149 NotebookLM 信息图单条复测」

@@ -701,3 +701,11 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 验证：AI。Learn About Games `npm run build` 通过 Astro check 0/0/0、Vitest 204/204、151 页静态构建；摘要隐藏定向 E2E 桌面/移动通过。全量 E2E 为 251 passed、22 skipped、13 failed，失败属于已有/并发稳定性与旧质量词断言，不能当作全量 GREEN。
 
 原始对话：dialogues/2026-0823.md「2110 NotebookLM 单条 Daily Check-in 线路落地」
+
+## 2026-08-23 21:49：NotebookLM Studio 信息图复测成功
+
+- 产出：AI。此前 `location=unsupported` 的 NotebookLM Studio 入口已恢复；Celeste 单条信息图以中文简体、横向、手绘笔记、详细 Beta 设置成功生成，Studio 卡片为“登山游戏关卡设计方法”，预览标题为“《蔚蓝》（Celeste）关卡设计方法论：以“故事”为锚点”。
+- 验证：AI。新产物卡片、完成提示和可打开的实际中文信息图预览均已核对；结果包含分形故事、宽容度与核心挑战、隐式教学、第二层技巧、安全感/节奏/筹码和歌曲式区域编排等板块。
+- 范围：AI。本轮只生成并查看一项，没有重试、没有批量外部调用、没有付费/订阅操作，也没有写回 PKM、网站或旧的 `not-generated` fixture。思维导图与演示文稿未在本轮重新生成。
+
+原始对话：dialogues/2026-0823.md「2149 NotebookLM 信息图单条复测」
