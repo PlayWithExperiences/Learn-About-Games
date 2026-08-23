@@ -12,3 +12,13 @@
 - 验证：AI。`scripts/test_notebooklm_line.py` 8/8；JSON 解析通过；PicGo 心跳正常；新四个远程文件 HEAD 200；Mindmap/PDF 本地文件格式核验通过。没有新增 OpenRouter 批量调用、没有付费操作。
 
 原始对话：dialogues/2026-0823.md「2256 NotebookLM 产物模板与托管修复」
+
+## 0311 合并、真实闭环与每日调度
+
+- 决策：無涘 ｜ 记录：AI。将 `codex/notebooklm-daily` 分支合并回两个仓库各自的 `main`；Learn-About-Games 保持私有且不自动推送，AI-Life-Mentor 的消费端提交推送到远端。
+- 产出：AI。对唯一候选 `youtube-hTNA84vJNEc` 完成一次 NotebookLM 生产，得到文字版内容总结、横向详细信息图、完整展开思维导图、PPTX 与本地转换 PDF；四项资产经 PicGo 上传、HTTP 200 与 SHA-256 回读校验。
+- 写回：AI。ready JSON 已提交到 AI-Life-Mentor；PKM 文件 `2026-0824-0258-design-fundamentals.md` 与补充 Daily Check-in #183 已回读确认，修复后的边界段落只有一处，未重新调用模型。
+- 自动化：AI。Codex 本机 cron 已启用，每天 07:30（北京时间）一次一条、无重试；它只负责 NotebookLM → PicGo → ready JSON → 安全推送，08:30 的 GitHub Actions 再消费到 Daily Check-in/PKM。launchd 模板保持未安装，避免重复调度。
+- 验证：AI。producer 15/15、preflight 3/3、publish 2/2、AI 消费端 14/14 通过；没有 OpenRouter、付费 API 或手动触发完整 Daily Check-in。
+
+原始对话：dialogues/2026-0824.md「0235 续」

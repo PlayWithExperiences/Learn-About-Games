@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-24 02:25 · 记录者 AI*
+*更新于 2026-08-24 03:11 · 记录者 AI*
 
 ## 现在在哪
 
@@ -32,18 +32,21 @@
 - 外部旁证语义修正（2026-08-23 22:28）：全仓审计确认 `externalSignals` 是第三方来源的可追溯旁证，不是官方视频正文、本站评分或推荐等级。用户可见的“查看访问版本与外部事实 / 外部公开观察”已统一为“查看访问版本与外部旁证 / 外部旁证”，并补充“不等同于原始内容、不用于评分、排序或推荐”的说明；内部字段和 catalog 数据结构保持不迁移。Vitest 205/205、Astro check 0/0/0、静态构建 151 页、Resources E2E 桌面/移动 44/44 通过。
 - 官方描述旁证对象修正（2026-08-23 22:45）：复查发现 52 条记录把取证通道 `YouTube Data API v3` 当作用户可见来源，并用统一免责声明代替具体证据。现已改为 `YouTube` 来源、`视频简介首段（原文摘录，非字幕正文）` 对象，并从本机官方元数据缓存写入各视频实际简介首段；保留视频页 URL、观察日期和非字幕正文边界。最终 `npm run build` 为 Astro 0/0/0、Vitest 206/206、静态构建 151 页；Resources E2E 桌面/移动 46/46。
 - NotebookLM 每日精选线已接通：`AI-Life-Mentor` 用 reviewed JSON inbox 接收人工生成结果，空目录是可见的正常 no-op，坏 JSON、消费状态查询失败和 PKM 写回失败都会抛出；不会在定时脚本内偷偷调用 NotebookLM 或模型。Celeste fixture 已更新为三项 `generated` 产物，Daily Check-in #182 的旧 `not-generated` 行已替换并回读确认；PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 也已写入三条 PicGo 链接。
-- 本轮新增真实外部操作严格限定为 Celeste 全量模板：补生成一次思维导图、一次演示文稿，信息图/思维导图/演示文稿各通过 PicGo 上传一次；没有重试、没有 OpenRouter 新批量调用、没有订阅或其他付费操作。三项生成设置和稳定地址均已写回记录。
-- 本次自动化验证已通过：producer 测试 10/10、preflight runner 测试 3/3、Learn Vitest 204/204、Astro check 0/0/0、AI-Life-Mentor NotebookLM 测试 13/13、Skill validator、shell 和 plist 校验均通过；验证过程没有真实 NotebookLM、PicGo、GitHub push 或模型调用。
+- 本轮新增真实外部操作严格限定为一条候选资源 `youtube-hTNA84vJNEc`：NotebookLM 内容详述、信息图、完整思维导图和演示文稿各生成一次；PPTX 在本机转换为 PDF；四项资产各通过 PicGo 上传一次并回读校验。没有重试、没有 OpenRouter 新批量调用、没有订阅或其他付费操作。
+- 单条产出已写入 `AI-Life-Mentor/notebooklm-resources/2026-0824-0258-design-fundamentals.json`，由 `publish-notebooklm-resource.sh` 保护性提交并推送到 AI-Life-Mentor `main`；PKM 笔记与 Daily Check-in #183 已回读确认。NotebookLM 工作台链接只保留在 PKM/每日精选，媒体使用 PicGo 稳定地址。
+- 两个 `codex/notebooklm-daily` feature 分支已分别以非快进方式合并到 Learn-About-Games `main` 与 AI-Life-Mentor `main`；Learn-About-Games 保持私有且未推送，AI-Life-Mentor 已推送到远端。已合并工作树已清理，本机 Skill 入口已切回 Learn-About-Games `main`。
+- 本次自动化验证已通过：producer 测试 15/15、preflight runner 测试 3/3、publish 测试 2/2、AI-Life-Mentor NotebookLM 测试 14/14；NotebookLM 产物、PicGo 四个 URL、PDF/PPTX/PNG 文件格式和远端内容一致性均已核验。网站相关既有构建基线仍为 Astro check 0/0/0、Vitest 206/206；未把未相关的全量 E2E 历史失败写成已修复。
 - NotebookLM 每日精选线已接通：`AI-Life-Mentor` 用 reviewed JSON inbox 接收人工生成结果，空目录是可见的正常 no-op，坏 JSON、消费状态查询失败和 PKM 写回失败都会抛出；不会在定时脚本内偷偷调用 NotebookLM 或模型。Celeste fixture 已通过本地校验，Daily Check-in #182 与 PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 均已回读确认。
 - NotebookLM 每日生产自动化已实现（2026-08-24 01:29）：`scripts/notebooklm_producer.py` 从 2,454 个唯一 YouTube `video_id` 中按稳定顺序选择候选，使用本地 ledger、单实例锁和 `generating → ready/failed` 状态防止重复调用；`tools/notebooklm-daily-resource` 已作为版本化本机 Skill，并通过 `/Users/haodong/.codex/skills/notebooklm-daily-resource` 暴露。AI-Life-Mentor 消费端已改为全量分页扫描历史 Issue，ready-only 校验并保留旧 Celeste 记录兼容性。
-- 自动化边界已落地：`automation/notebooklm-daily-preflight.sh` 与 07:30 launchd plist 只执行本地 preflight，当前未安装、未加载、未调用 NotebookLM、PicGo 或 `codex exec`；真实单次调用仍需单独确认。
-- 本轮真实外部操作严格为一条 Celeste 测试：NotebookLM/Gemini Notebook 一次内容详述、一次信息图尝试（无可验证产物），以及一次 PKM/Issue 写回；没有 OpenRouter 新批量调用、没有订阅或其他付费操作。
+- 自动化边界已落地：`automation/notebooklm-daily-preflight.sh` 与 07:30 launchd plist 保持为本地 preflight 模板、未安装以避免重复调度；Codex 本机 cron `Learn About Games — NotebookLM 每日学习资源` 已启用，每天 07:30（北京时间）只处理一条，失败留 ledger 并通知，不重试。现有 GitHub Actions Daily Check-in 仍在 08:30 消费 ready JSON。
+- 本轮真实单次生产已完成并经过人工浏览器验收；后续调度会复用同一 Skill/合同，不在定时脚本内偷偷调用 NotebookLM，也不手动触发会调用 OpenRouter 的完整 Daily Check-in。
 - 免费路由器 smoke test：仓库外临时启动 FreeLLMAPI Docker 实例，仅使用匿名免费渠道并处理一条真实《Designing Celeste》字幕；裸模型名被同名模型合并解析到 Navy，改用精确 `ovh:Qwen3.5-397B-A17B` 后确实到达 OVH，但上游返回 429；Kilo 的 `nvidia/nemotron-3-ultra-550b-a55b:free` 在 60 秒上游超时内未返回。未写回仓库、未启用付费模型或 Premium；当前结论是该路由器可作为本地兼容层候选，但免费匿名端点尚不足以承接长字幕批量总结。
 
 ## 下一步
 
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
-- 若继续推进长篇详述，只把人工审核后的 NotebookLM JSON 放入 inbox，再由每日任务抽取一条写入 PKM 和 Check-in；不自动对全库生成 Studio 多模态产物。Celeste 四项产物（信息图、完整思维导图、PPTX、PDF）已完成下载/转换、格式核验、PicGo 托管与写回；后续每一条资源仍需在新增 NotebookLM 调用前单独确认调用次数、输出上限、重试策略和潜在费用。
+- 每天由本机 Codex cron 按 ledger 选取一条未处理资源，完成 NotebookLM → 下载/转换 → PicGo → ready JSON → AI-Life-Mentor `main` 的链路；次日 GitHub Actions 再消费到 Daily Check-in 与 PKM。producer 的 `generating → ready/failed`、唯一 marker 和完整 Issue 分页扫描共同防止重复。
+- 不自动对全库生成 Studio 多模态产物；任何扩大到批量、换模型、重试、订阅或可能计费的 API/云服务调用，都必须在开始前重新取得用户确认。
 - 在实现多模态展示前，先确定 `artifact` 资产层和托管策略：图片/思维导图可导出后静态托管，演示文稿导出 PDF/PPTX，音频/视频不直接塞进 Git 仓库，优先使用对象存储或只保留外部分享入口。公开前需逐项审核 NotebookLM 分享权限、原始来源版权和生成内容的可公开性。
 - AI Plus 适合作为每日精选和小批研究的容量升级，不足以把 2,311 条资源的文字、信息图、思维导图、演示文稿全部一次性生成；批量方案还受普通 Notebook 网页入口、浏览器自动化稳定性和版权/分享边界限制。购买或升级订阅必须另行获得确认。
 - 保持仓库 Private；公开或部署仍需先处理资源页 5,437 条 Work Item 的初始 DOM/客户端筛选成本，并完成线上验收。
@@ -53,9 +56,9 @@
 
 - Vision 为 AI 草稿，待無涘确认。
 - 本轮外部 state 回写与摘要长度对账已完成；无 YouTube 内容补全阻塞。
-- 待确认：NotebookLM→PKM/Daily Check-in 已打通“人工产出 JSON → 单条写回”的链路，且 Celeste 四项 Studio/本地转换产物已完成 PicGo 稳定托管；当前 NotebookLM 仍是网页端入口，不应当作批量 API。批量生成、Enterprise/API 路线、公开资产版权与托管策略仍需单独核对许可、项目和费用。
+- NotebookLM→PKM/Daily Check-in 单条生产、PicGo 稳定托管与每日调度已打通；当前 NotebookLM 仍是网页端入口，不应当作批量 API。公开资产版权与托管策略仍需在未来公开前逐项核对。
 - 待确认：网站是否托管 NotebookLM 导出的本地资产，还是只提供 NotebookLM 外链；当前更推荐“网站自托管可公开资产 + NotebookLM 外链作为补充”，避免私有链接导致访客无法查看或链接失效。
-- 费用边界：本轮没有订阅、没有 OpenRouter 批量调用，也没有产生已知模型费用；完成一条 NotebookLM 思维导图生成、四项产物托管和一条 PKM/Issue 更新。任何涉及现实金额的订阅、API 或大批量生成仍须先询问無涘。
+- 费用边界：本轮没有订阅、没有 OpenRouter 调用、没有付费 API 或大批量生成；只完成一条 NotebookLM 生产和四项资产托管。NotebookLM 账号侧实际配额/计费状态未由本机推断，任何现实金额操作仍须先询问無涘。
 - 验证边界：Learn About Games 定向资源 E2E 桌面/移动的摘要隐藏测试通过；全量 E2E 为 251 passed、22 skipped、13 failed。13 项失败集中在 Atlas/Map/Career 重载单例、并发导航超时和既有质量词断言，不能宣称全量全绿；本次代码构建、Vitest 与改动相关测试通过。
 - 主要产品风险仍是资源数量增长可能造成错配、重复归类或证据等级混淆；Innovation Atlas 的低证据透镜继续保持未闭合，不因资源补全自动闭合。
 

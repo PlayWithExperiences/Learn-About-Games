@@ -361,3 +361,11 @@
 - 验证：AI。新增真实 fixture 域名回归测试，旧数据下先失败，替换后 `scripts/test_notebooklm_line.py` 为 9/9；Issue #182 回读确认新 URL 2 处、旧 URL 0 处，资源 marker 仍唯一。本轮没有模型调用、重试、批量操作或现实金额操作。
 
 原始对话：dialogues/2026-0824.md「0000 NotebookLM 页面入口域名纠正」
+
+## 2026-08-24 · NotebookLM 每日生产线合并并启用
+
+- 决策：無涘 ｜ 记录：AI。将 `codex/notebooklm-daily` 合并回 Learn-About-Games `main` 与 AI-Life-Mentor `main`；生产端保持网站私有，消费端按 ready JSON 写回 PKM/Daily Check-in。
+- 实现：AI。启用 Codex 本机每日 07:30（北京时间）任务，每次最多一条资源、一次 NotebookLM 生产、无重试；08:30 GitHub Actions 只消费 ready JSON，不在消费端调用 NotebookLM。
+- 边界：AI。单条 `youtube-hTNA84vJNEc` 已完成四项产物、PicGo 托管和 PKM/Issue 回写；任何批量、重试、换模型、付费 API、订阅或公开发布仍需另行确认。
+
+原始对话：dialogues/2026-0824.md「0235 续」
