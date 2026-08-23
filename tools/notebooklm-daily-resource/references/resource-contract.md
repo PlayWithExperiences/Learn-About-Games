@@ -1,0 +1,79 @@
+# NotebookLM ready-resource contract
+
+This reference defines the only JSON shape that the producer may mark `ready`. The
+inbox consumer validates it again, so this file is guidance rather than a bypass for
+validation.
+
+## Fixed content template
+
+```text
+# 标题（YYYY-MMDD-HHMM-TOPIC）
+
+来源：原始 YouTube 视频链接
+
+信息图：中文简体，横向，手绘笔记，详细
+
+思维导图：中文简体，完整展开全部层级，不只展开一层
+
+演示文稿：优先保留可获得的原始演示文稿；否则保留 NotebookLM 生成的中文简体详细演示文稿。PPTX/Slides 使用普通链接，PDF 也使用普通链接。
+
+内容总结：请根据来源内容密度决定篇幅。按演讲/视频的论证推进顺序展开核心问题、案例与迭代过程、设计取舍、玩家体验影响、可迁移的方法；不要只给摘要，也不要逐字转录。最后必须说明来源没有覆盖或无法确认的边界。只依据来源内容，不补充外部事实。
+```
+
+## JSON shape
+
+```json
+{
+  "resource_id": "youtube-ABCDEFGHIJK",
+  "title": "视频标题",
+  "topic": "design-fundamentals",
+  "timestamp": "2026-0824-0730",
+  "generated_at": "2026-08-24T07:30:00+08:00",
+  "producer_status": "ready",
+  "generation_run_id": "run-20260824073000-1234",
+  "output_fingerprint": "由 producer 计算，不手填",
+  "source": {
+    "label": "YouTube · 视频标题",
+    "url": "https://www.youtube.com/watch?v=ABCDEFGHIJK",
+    "video_id": "ABCDEFGHIJK"
+  },
+  "notebook_url": "https://notebook.google.com/notebook/example",
+  "artifacts": {
+    "infographic": {
+      "label": "中文简体横向手绘笔记（详细）",
+      "url": "https://raw.githubusercontent.com/Medill-East/IMGStorage/master/20260824073000-topic-infographic.png"
+    },
+    "mind_map": {
+      "label": "中文简体完整思维导图",
+      "url": "https://raw.githubusercontent.com/Medill-East/IMGStorage/master/20260824073000-topic-mindmap.png"
+    },
+    "slide_deck": {
+      "label": "中文简体详细演示文稿",
+      "url": "https://raw.githubusercontent.com/Medill-East/IMGStorage/master/20260824073000-topic-slides.pptx",
+      "pdf_url": "https://raw.githubusercontent.com/Medill-East/IMGStorage/master/20260824073000-topic-slides.pdf",
+      "pdf_label": "演示文稿 PDF（普通链接）"
+    }
+  },
+  "content_summary": "按来源推进顺序写出的中文文字版内容总结。",
+  "boundary": "来源没有覆盖或无法确认的内容。"
+}
+```
+
+`resource_id`、`source.video_id`、`producer_status`、`generation_run_id`、
+`generated_at` 和 `output_fingerprint` 由生产核心校验/补入；不要用标题或时间戳
+替代稳定的 `video_id` 去重。`notebook_url` 是私有辅助入口，只进入 PKM/每日精选。
+
+每一个 artifact 都必须实际存在并有可引用 `url` 才能标记 `ready`。如果 NotebookLM
+没有生成某项，使用 `failed`/`partial` 记录原因并停止，不要写入空链接或
+`status: "not-generated"` 的 ready 记录。
+
+## PicGo 命名与校验
+
+上传前取系统时钟，而不是复制旧文件名：
+
+```bash
+date '+%Y%m%d%H%M%S'
+```
+
+命名模式为 `YYYYMMDDHHMMSS-topic-artifact.ext`。同一秒内的多个文件使用不同的
+artifact 后缀；如果目标文件已经存在且内容不同，停止并报告，不覆盖。
