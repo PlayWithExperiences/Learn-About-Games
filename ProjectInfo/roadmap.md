@@ -298,3 +298,13 @@
 - 边界：AI。普通 NotebookLM 是网页入口，不等于公开批量 API；Enterprise/API 需另行核对许可、项目和费用。任何订阅、API 或大量模型调用必须先获得無涘确认。本轮仅调研与留痕，没有新增模型调用、付费操作或资源写回。
 
 原始对话：dialogues/2026-0823.md「1604 NotebookLM 内容转化与公开/PKM 双层产出」
+
+## 2026-08-23：NotebookLM 单条 Daily Check-in 线路落地（21:10）
+
+- 决策：無涘 ｜ 记录：AI。完整文字版内容详述不再和 Learn About Games 的目录短摘要混用；站内 Work Item 的既有 AI 摘要隐藏但不删除，长文只进入 PKM/Daily Check-in 层。
+- 实现：AI。`AI-Life-Mentor` 增加 reviewed JSON inbox、固定模板（标题、来源、信息图、思维导图、演示文稿、内容总结、来源边界）、消费 marker、幂等 PKM 资源笔记和 Daily Check-in 追加；没有待处理资源时正常跳过，通道错误显式失败。
+- 单条验证：AI。Celeste 视频 `4RlpMhBKNr0` 通过 NotebookLM/Gemini Notebook 得到 4,407 字符中文文字版总结；NotebookLM Studio 当前 `location=unsupported`，未生成的多模态产物在 fixture 中如实保留 `not-generated` 状态。
+- 回写：AI。`AI-Life-Mentor#182` 已追加 NotebookLM 资源，PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 已写入并回读。未恢复 Public、未启用 Pages、未部署；本轮没有 OpenRouter 批量调用或付费操作。
+- 验证：AI。Learn About Games build 为 Astro 0/0/0、Vitest 204/204、151 pages；摘要隐藏定向 E2E 通过。全量 E2E 251 passed / 22 skipped / 13 failed，失败集中于既有/并发稳定性与旧质量词断言。
+
+原始对话：dialogues/2026-0823.md「2110 NotebookLM 单条 Daily Check-in 线路落地」

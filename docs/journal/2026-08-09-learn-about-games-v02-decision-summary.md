@@ -690,3 +690,14 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 验证：AI。Python 45/45、Astro check 0/0/0、Vitest 204/204、静态构建 151 页、JSON、secret scan、diff 检查全部通过。目标完成，仓库保持 Private。
 
 原始对话：dialogues/2026-0823.md「1149 2,311 条目标正式回写与最终闭环」
+
+## 2026-08-23 21:10：NotebookLM 单条 Daily Check-in 线路落地
+
+- 决策：無涘 ｜ 记录：AI。Learn About Games 的站内 Work Item 不再直接展示既有 AI 短摘要；原始数据保留，目录搜索与相关性字段不因隐藏展示而删除。完整内容详述只进入 PKM/Daily Check-in 层。
+- 产出：AI。以 `Level Design Workshop: Designing Celeste`（YouTube `4RlpMhBKNr0`）完成一次 NotebookLM/Gemini Notebook 单条测试，清理后得到 4,407 字符中文文字版总结，按论证推进、设计取舍、玩家体验、可迁移方法和来源边界展开。
+- 失败可辨认：AI。当前 NotebookLM Studio 页面跳转到 `location=unsupported`；信息图尝试没有返回可验证文件，思维导图与演示文稿也没有生成。JSON fixture 明确记录 `not-generated`，没有把私有工作台链接伪装成公开媒体产物。
+- 线路：AI。`AI-Life-Mentor` 新增 reviewed JSON inbox、固定模板渲染、消费 marker、幂等 PKM 写回和 Daily Check-in 追加；空 inbox 是正常 no-op，坏文件、状态查询失败和 PKM 写入失败会显式失败。当天 Issue #182 与 PKM 资源笔记已回读确认。
+- 费用与范围：AI。本轮只做一条 NotebookLM 内容测试和一次信息图尝试，没有 OpenRouter 新批量调用、没有订阅、没有已知模型付费操作；没有恢复网站 Public、没有启用 Pages、没有部署。
+- 验证：AI。Learn About Games `npm run build` 通过 Astro check 0/0/0、Vitest 204/204、151 页静态构建；摘要隐藏定向 E2E 桌面/移动通过。全量 E2E 为 251 passed、22 skipped、13 failed，失败属于已有/并发稳定性与旧质量词断言，不能当作全量 GREEN。
+
+原始对话：dialogues/2026-0823.md「2110 NotebookLM 单条 Daily Check-in 线路落地」

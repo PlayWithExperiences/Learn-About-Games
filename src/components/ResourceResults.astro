@@ -123,12 +123,8 @@ const workCountBySource = new Map(
             <span>{accessModels.map(formatAccessModel).join('、')}</span>
           </div>
           <details class="work-item-result__more">
-            <summary>{resource.externalSignals?.length ? '查看摘要、访问版本与外部事实' : '查看摘要与访问版本'}</summary>
+            <summary>{resource.externalSignals?.length ? '查看访问版本与外部事实' : '查看访问版本'}</summary>
             <div class="work-item-result__more-body">
-              <section class="work-item-result__summary" data-work-item-summary aria-label="内容摘要">
-                <h4>内容摘要</h4>
-                <p>{resource.summary['zh-CN']}</p>
-              </section>
               <ul class="access-version-list" aria-label={`${resource.title['zh-CN']} 的访问版本`}>
                 {resource.accessVersions.map((version) => (
                   <li>
