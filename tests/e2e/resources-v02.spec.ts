@@ -199,7 +199,21 @@ test('keeps Source facts and their Work Items available on static Source pages',
   }
 });
 
-test('renders raw external observations in catalog order without quality badges', async ({ page }) => {
+test('labels third-party observations as evidence rather than site facts', async ({ page }) => {
+  const resource = resources.find(({ externalSignals }) => (externalSignals?.length ?? 0) > 0);
+  expect(resource).toBeTruthy();
+
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+  const row = page.locator(`[data-result-id="${resource?.id}"]`);
+  const disclosure = row.locator('.work-item-result__more');
+  await expect(disclosure.locator('summary')).toHaveText('查看访问版本与外部旁证');
+  await disclosure.locator('summary').click();
+  await expect(row.getByRole('heading', { name: '外部旁证', exact: true })).toBeVisible();
+  await expect(page.locator('main')).not.toContainText('外部事实');
+});
+
+test('renders raw external observations in catalog order without site-authored quality fields', async ({ page }) => {
   const resource = resources.find(({ externalSignals }) => (externalSignals?.length ?? 0) > 1);
   expect(resource).toBeTruthy();
 
@@ -214,7 +228,11 @@ test('renders raw external observations in catalog order without quality badges'
     await expect(observations.nth(index)).toContainText(signal.observedAt);
   }
 
-  await expect(page.locator('main')).not.toContainText(/本站评分|排名|精选|已审核/);
+  const siteAuthoredSurface = row.locator(
+    '.work-item-result__index, .work-item-result__main, .work-item-result__facts, .work-item-result__access',
+  );
+  const surfaceText = (await siteAuthoredSurface.allTextContents()).join(' ');
+  expect(surfaceText).not.toMatch(/本站评分|排名|精选|已审核/);
 });
 
 test('uses one compact editorial row per Source and Work Item', async ({ page }) => {

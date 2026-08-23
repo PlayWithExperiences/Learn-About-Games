@@ -90,7 +90,7 @@ Keep all existing article filter attributes. Render:
   <span>{accessModels.map(formatAccessModel).join('、')}</span>
 </div>
 <details class="work-item-result__more">
-  <summary>{resource.externalSignals?.length ? '查看访问版本与外部事实' : '查看访问版本'}</summary>
+  <summary>{resource.externalSignals?.length ? '查看访问版本与外部旁证' : '查看访问版本'}</summary>
   <ul class="access-version-list" aria-label={resource.title['zh-CN'] + ' 的访问版本'}>
     {resource.accessVersions.map((version) => (
       <li>
@@ -109,8 +109,8 @@ Keep all existing article filter attributes. Render:
     ))}
   </ul>
   {resource.externalSignals?.length ? (
-    <section class="external-observations" aria-label={resource.title['zh-CN'] + ' 的外部观察'}>
-      <h4>外部公开观察</h4>
+    <section class="external-observations" aria-label={resource.title['zh-CN'] + ' 的外部旁证'}>
+      <h4>外部旁证</h4>
       <ul>
         {resource.externalSignals.map((signal) => (
           <li data-external-observation>

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  externalObservationCopy,
   formatAccessVersion,
   formatAccessModel,
   formatExternalSignal,
@@ -14,6 +15,15 @@ import {
 } from '../../src/lib/resource-display';
 
 describe('resource factual display', () => {
+  it('uses unambiguous language for third-party observations', () => {
+    expect(externalObservationCopy).toEqual({
+      directoryNote: '按目录顺序列出。第三方来源只作为旁证记录，不用于评分、排序或推荐。',
+      disclosure: '查看访问版本与外部旁证',
+      sectionTitle: '外部旁证',
+      sourceNote: '以下是带来源与日期的第三方旁证记录；不等同于原始内容，也不构成本站评价、评分或排序。',
+    });
+  });
+
   it('labels every supported media and the two orthogonal access-version dimensions', () => {
     expect(formatMediaType('article')).toBe('文章');
     expect(formatMediaType('book')).toBe('书籍');

@@ -2,7 +2,11 @@
 import ResourceResults from '../../components/ResourceResults.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadCatalog } from '../../lib/catalog/load';
-import { formatLanguage, formatSourceKind } from '../../lib/resource-display';
+import {
+  externalObservationCopy,
+  formatLanguage,
+  formatSourceKind,
+} from '../../lib/resource-display';
 import { sitePath } from '../../lib/site-path';
 
 export async function getStaticPaths() {
@@ -38,8 +42,8 @@ const resources = catalog.resources.filter(({ sourceId }) => sourceId === source
 
     {source.externalSignals && source.externalSignals.length > 0 && (
       <section class="source-detail-page__observations" aria-labelledby="source-observations-title">
-        <h2 id="source-observations-title">外部公开观察</h2>
-        <p>以下是带来源与日期的公开事实，不构成本站评价。</p>
+        <h2 id="source-observations-title">{externalObservationCopy.sectionTitle}</h2>
+        <p>{externalObservationCopy.sourceNote}</p>
         <ul>
           {source.externalSignals.map((signal) => (
             <li data-external-observation>
