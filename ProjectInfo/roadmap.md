@@ -353,3 +353,11 @@
 - 验证：AI。渲染器单测 8/8 通过；Issue #182 回读确认工作台链接恰好出现 1 次且位于 PPTX 链接之后；本轮没有模型调用、重试、批量操作或现实金额操作。
 
 原始对话：dialogues/2026-0823.md「2350 NotebookLM Slides 工作台入口同步」
+
+## 2026-08-24：NotebookLM 页面入口域名纠正（00:06）
+
+- 决策：無涘 ｜ 记录：AI。NotebookLM 产物入口必须指向用户实际可查看的 `notebook.google.com/notebook/...` 页面，不能使用无法展示这些产出的 `gemini.google.com/notebook/...` 地址。
+- 实现：AI。Celeste 资源 JSON、PKM 来源与“NotebookLM 工作台（Slides）”链接、Daily Check-in #182 的两处旧 URL 均已替换；渲染器逻辑不变，后续沿用资源记录中的正确 URL。
+- 验证：AI。新增真实 fixture 域名回归测试，旧数据下先失败，替换后 `scripts/test_notebooklm_line.py` 为 9/9；Issue #182 回读确认新 URL 2 处、旧 URL 0 处，资源 marker 仍唯一。本轮没有模型调用、重试、批量操作或现实金额操作。
+
+原始对话：dialogues/2026-0824.md「0000 NotebookLM 页面入口域名纠正」
