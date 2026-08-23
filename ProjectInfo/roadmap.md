@@ -345,3 +345,11 @@
 - 边界：AI。本轮只有一次新增 NotebookLM 思维导图生成，无重试、无 OpenRouter 批量调用、无订阅或其他现实金额操作；Learn About Games 仍保持 Private，未部署、未推送。
 
 原始对话：dialogues/2026-0823.md「2256 NotebookLM 产物模板与托管修复」
+
+## 2026-08-23：NotebookLM Slides 工作台入口同步（23:54）
+
+- 决策：無涘 ｜ 记录：AI。现有演示文稿的 PicGo PPTX 链接下方同时附上 NotebookLM 工作台链接，并明确标注为“NotebookLM 工作台（Slides）”；不伪造不存在的 Slides 直达深链。
+- 实现：AI。NotebookLM 资源渲染器只在“演示文稿”区插入该入口，顺序为 PPTX → NotebookLM 工作台（Slides）→ PDF；PKM 笔记与 Daily Check-in #182 已同步。
+- 验证：AI。渲染器单测 8/8 通过；Issue #182 回读确认工作台链接恰好出现 1 次且位于 PPTX 链接之后；本轮没有模型调用、重试、批量操作或现实金额操作。
+
+原始对话：dialogues/2026-0823.md「2350 NotebookLM Slides 工作台入口同步」
