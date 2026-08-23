@@ -279,6 +279,34 @@ class NotebookLMProducerTests(unittest.TestCase):
                 "failed",
             )
 
+    def test_mark_failed_records_reason_and_blocks_automatic_reclaim(self):
+        candidate = producer.Candidate(
+            resource_id="youtube-ABCDEFGHIJK",
+            video_id="ABCDEFGHIJK",
+            source_url="https://www.youtube.com/watch?v=ABCDEFGHIJK",
+            catalog_id="resource-1",
+            title="Example",
+            topic="design-fundamentals",
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            ledger_path = root / "ledger.json"
+            producer.claim_candidate(candidate, ledger_path, NOW)
+
+            failed = producer.mark_failed(
+                candidate,
+                ledger_path,
+                generation_run_id="run-20260824-0130",
+                now=NOW,
+                reason="NotebookLM 浏览器运行时不可用",
+            )
+
+            self.assertEqual(failed["status"], "failed")
+            self.assertEqual(failed["failure_reason"], "NotebookLM 浏览器运行时不可用")
+            with self.assertRaises(producer.AlreadyProcessed):
+                producer.claim_candidate(candidate, ledger_path, "2026-08-24T01:32:00+08:00")
+
 
 if __name__ == "__main__":
     unittest.main()

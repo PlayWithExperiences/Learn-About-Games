@@ -313,6 +313,36 @@ def claim_candidate(
         return claim
 
 
+def mark_failed(
+    candidate: Candidate,
+    ledger_path: Path,
+    generation_run_id: str,
+    now: str,
+    reason: str,
+) -> dict:
+    """Record a terminal producer failure; never make it automatically retryable."""
+    failure_reason = _required_text(reason, "failure_reason")
+    lock_path = ledger_path.with_suffix(ledger_path.suffix + ".lock")
+    with producer_lock(lock_path):
+        ledger = read_ledger(ledger_path)
+        entry = ledger["entries"].get(candidate.resource_id)
+        if not isinstance(entry, dict) or entry.get("status") != "generating":
+            raise AlreadyProcessed(
+                f"{candidate.resource_id} 当前不是 generating，拒绝覆盖状态：{entry.get('status') if entry else 'missing'}"
+            )
+        entry.update(
+            {
+                "status": "failed",
+                "generation_run_id": _required_text(generation_run_id, "generation_run_id"),
+                "failed_at": now,
+                "failure_reason": failure_reason,
+            }
+        )
+        ledger["entries"][candidate.resource_id] = entry
+        write_ledger(ledger_path, ledger)
+        return entry
+
+
 def _artifact(value: object, field: str) -> dict:
     if not isinstance(value, dict):
         raise ProducerError(f"{field} 必须是对象")
@@ -509,6 +539,12 @@ def _parser() -> argparse.ArgumentParser:
         sub.add_argument("--catalog", type=Path, required=True)
         sub.add_argument("--inbox", type=Path, required=True)
         sub.add_argument("--state-dir", type=Path)
+    failed = subparsers.add_parser("fail")
+    failed.add_argument("--catalog", type=Path, required=True)
+    failed.add_argument("--state-dir", type=Path)
+    failed.add_argument("--resource-id", required=True)
+    failed.add_argument("--generation-run-id", required=True)
+    failed.add_argument("--reason", required=True)
     publish = subparsers.add_parser("publish")
     publish.add_argument("--catalog", type=Path, required=True)
     publish.add_argument("--inbox", type=Path, required=True)
@@ -532,6 +568,12 @@ def _command(args: argparse.Namespace) -> dict | str:
             raise ProducerError(f"不能占用候选：{result['status']}：{result['reason']}")
         candidate = Candidate(**result["candidate"])
         return claim_candidate(candidate, ledger_path, _now(), inbox_dir=args.inbox)
+
+    if args.command == "fail":
+        candidate = next((item for item in candidates if item.resource_id == args.resource_id), None)
+        if candidate is None:
+            raise ProducerError(f"找不到 resource_id：{args.resource_id}")
+        return mark_failed(candidate, ledger_path, args.generation_run_id, _now(), args.reason)
 
     candidate = next((item for item in candidates if item.resource_id == args.resource_id), None)
     if candidate is None:
