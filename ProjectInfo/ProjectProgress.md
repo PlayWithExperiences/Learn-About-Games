@@ -14,7 +14,7 @@
 - 内容转化路线决策：以 NotebookLM / Gemini Notebook 作为视频内容转化主力；保留现有 `summary` 数据作为目录事实，但本轮已将站内 Work Item 的 AI 摘要展示隐藏，未删除数据。完整文字版详述与 Studio 产物独立写入 PKM/每日精选；详述篇幅按内容密度决定，1800–2500 字不是硬上限，也不为凑字数扩写。
 - 双层产出模型：Learn About Games 公开层只展示事实元数据、来源和访问版本，不直接暴露 PKM 长文或私有 Notebook 链接；PKM 层保存完整文字版总结、引用/证据边界、信息图、思维导图、演示文稿及明确生成状态。Daily Check-in 每天抽取一篇并链接到 PKM 原文，不把同一长文重复灌进网站目录。
 - NotebookLM 多模态托管边界：本轮已按固定模板完成 Celeste 四项 Studio 产物：中文简体、横向、手绘笔记、详细 Beta 信息图；中文简体完整展开（三级结构）思维导图；中文简体默认时长详细演示文稿（12 页 PowerPoint）及本地免费转换的 PDF。四份文件均从 NotebookLM/本机转换链下载或生成并经格式核验，再通过 PicGo 上传到 `Medill-East/IMGStorage`；PNG/PPTX/PDF 稳定地址均回读 HTTP 200。正式记录使用带当前时间戳和语义文件名的 PicGo 地址，不把可能失效的 NotebookLM 私有链接当成媒体托管地址。
-- NotebookLM 资产模板修复（2026-08-23 22:56）：PKM 与 Daily Check-in 的来源、信息图、思维导图、演示文稿、内容总结和来源边界统一为 H3 无冒号；PNG 使用 `![...](...)`，演示文稿保留 PPTX 普通链接并附 PDF 图片式链接。旧 PicGo 文件未删除，只由新地址 supersede。
+- NotebookLM 资产模板修复（2026-08-23 23:31）：PKM 与 Daily Check-in 的来源、信息图、思维导图、演示文稿、内容总结和来源边界统一为 H3 无冒号；PNG 使用 `![...](...)`，演示文稿保留 PPTX 普通链接，PDF 使用普通 `[...](...)` 链接，不把 Slides 转成图片。旧 PicGo 文件未删除，只由新地址替代。
 - 官方配额核对（以 [Gemini Notebook 官方配额表](https://support.google.com/notebooklm/answer/16213268?hl=en) 为准）：Standard 为 100 notebooks/user、50 sources/notebook、50 chats/day、3 audio/day、3 video/day；Plus 为 200、100、200、6、6；Pro 为 500、300、500、20、20。日报、信息图、幻灯片等另有独立额度，且官方注明会变化。
 
 ## 当前阶段
