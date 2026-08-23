@@ -394,3 +394,11 @@
 - 验证：AI。访问 `http://127.0.0.1:4321/Learn-About-Games/` 返回 HTTP 200；未修改代码、部署配置或执行外部/付费调用。
 
 原始对话：dialogues/2026-0823.md「1229 续」
+
+## 1232 资源摘要展示位置核查
+
+- 事实：AI。模型回写正文位于 `src/data/resources.json` 每个资源对象的 `summary.zh-CN`；按 canonical URL 统计，仓库有 2,314 个 YouTube Work Item，其中 2,311 条达到本轮回写的完整摘要目标。
+- 事实：AI。`src/components/ResourceResults.astro` 当前只把 `resource.summary` 放入搜索文本，不在资源列表正文渲染；“查看访问版本”展开区显示访问版本、可选的 `whyRelevant` 和外部观察。因此截图中的资源表看不到完整模型摘要。
+- 下一步：AI。若要在网页直接阅读这些摘要，需要新增 Work Item 摘要展示区；本次只做核查，没有改产品代码。
+
+原始对话：dialogues/2026-0823.md「1232 续」
