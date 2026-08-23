@@ -46,6 +46,15 @@ Use this skill when a local Mac run must turn one unprocessed Learn About Games 
 
 9. The normal automated boundary ends at a validated `ready` JSON. Do not push, create an Issue, write PKM, or enable launchd from this Skill unless the current run explicitly includes that mutation. The GitHub Action is the consumer and will write PKM/Issue once the JSON is available remotely.
 
+When the current run explicitly includes remote delivery, push only the exact validated JSON through the repository-owned guard:
+
+```bash
+/Users/haodong/Documents/GitHub/Learn-About-Games/automation/publish-notebooklm-resource.sh \
+  --resource-file '<ready JSON path>'
+```
+
+The guard only permits the AI-Life-Mentor `main` branch, stages one inbox JSON, refuses pre-existing staged changes, never force-pushes, and never retries. It may push the already-merged local code commit together with the one resource commit; unrelated unstaged dialogue/session edits remain untouched.
+
 ## Failure handling
 
 If the browser, NotebookLM, export, PicGo, URL verification, or result validation fails, stop without retrying. Record the exact phase, `resource_id`, `video_id`, and error in the producer ledger as `failed` or `partial`; never create an empty or apparently successful JSON. A failed claim is not an invitation to choose the same video again tomorrow automatically.
