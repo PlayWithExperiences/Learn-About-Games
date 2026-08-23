@@ -525,3 +525,11 @@
 - 验证：AI。先新增顺序断言并确认旧实现失败，再完成最小实现；`python3 -m unittest scripts/test_notebooklm_line.py` 为 8/8，Issue #182 回读确认链接恰好 1 次且位于 PPTX 之后。本轮无模型调用、无重试、无批量操作、无现实金额操作。
 
 原始对话：dialogues/2026-0823.md「2350 NotebookLM Slides 工作台入口同步」
+
+## 0006 NotebookLM 页面入口域名纠正（2026-08-24）
+
+- 决策：無涘 ｜ 记录：AI。NotebookLM 产物入口使用用户实际可查看的 `notebook.google.com/notebook/...` 页面，不再使用 `gemini.google.com/notebook/...`。
+- 实现：AI。Celeste fixture、PKM 来源和 Slides 入口、Daily Check-in #182 已统一替换为 NotebookLM 页面地址；渲染器逻辑无需改变。
+- 验证：AI。真实 fixture 域名测试在旧 URL 下先失败，修正后 9/9 通过；Issue #182 回读确认新 URL 2 处、旧 URL 0 处。本轮无模型调用、无重试、无批量操作、无现实金额操作。
+
+原始对话：dialogues/2026-0824.md「0000 NotebookLM 页面入口域名纠正」
