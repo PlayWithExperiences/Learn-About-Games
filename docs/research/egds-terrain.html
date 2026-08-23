@@ -1,0 +1,297 @@
+<meta charset="utf-8">
+<title>EGDS 地形图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --ink:#15171C; --ink-2:#3E4450; --ink-3:#6B7280;
+  --paper:#F6F7F9; --surface:#FFFFFF; --rule:#DFE3E9; --rule-soft:#EDF0F4;
+  --have:#0B6B62;  --have-bg:#E4F1EF;
+  --hole:#B23C0B;  --hole-bg:#FBEDE6;
+  --part:#8A5A00;  --part-bg:#FBF1DC;
+  --shadow:0 1px 2px rgba(21,23,28,.04), 0 8px 24px -16px rgba(21,23,28,.18);
+  --sans:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader","Noto Serif SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ink:#E8EAEE; --ink-2:#B0B7C3; --ink-3:#828A98;
+  --paper:#0F1116; --surface:#171A21; --rule:#2A2F3A; --rule-soft:#212630;
+  --have:#5CC7BA; --have-bg:#0F2724;
+  --hole:#F0916A; --hole-bg:#2A1A12;
+  --part:#E0B457; --part-bg:#2A2312;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --ink:#E8EAEE; --ink-2:#B0B7C3; --ink-3:#828A98;
+  --paper:#0F1116; --surface:#171A21; --rule:#2A2F3A; --rule-soft:#212630;
+  --have:#5CC7BA; --have-bg:#0F2724;
+  --hole:#F0916A; --hole-bg:#2A1A12;
+  --part:#E0B457; --part-bg:#2A2312;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px 96px}
+
+.masthead{border-bottom:1px solid var(--rule);padding:56px 0 26px;margin-bottom:12px;display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.2vw,44px);line-height:1.15;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.standfirst{font-size:16.5px;color:var(--ink-2);max-width:62ch;margin:0}
+
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:28px 0 0}
+.toc a{display:flex;flex-direction:column;gap:3px;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);text-decoration:none;color:inherit;transition:border-color .12s}
+.toc a:hover{border-color:var(--ink-3)}
+.toc .q{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;color:var(--ink-3);text-transform:uppercase}
+.toc .t{font-weight:500;font-size:15px}
+
+section{margin-top:72px;scroll-margin-top:20px}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.4vw,28px);margin:0 0 6px;letter-spacing:-.005em;text-wrap:balance}
+.sec-note{color:var(--ink-3);font-size:14px;margin:0 0 26px;max-width:66ch}
+p{margin:0 0 14px;max-width:66ch}
+strong{font-weight:700}
+
+figure{margin:0 0 26px;background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow);padding:24px 22px 18px}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule-soft);font-size:13px;color:var(--ink-2);line-height:1.6}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+thead th{background:var(--surface);border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding:12px 8px;text-align:center;white-space:nowrap}
+thead th.left{text-align:left;padding-left:18px;min-width:190px}
+tbody td{border-bottom:1px solid var(--rule-soft);padding:12px 8px;text-align:center;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--rule-soft)}
+td.name{text-align:left;padding-left:18px}
+td.name .n{font-weight:500;display:block}
+td.name .s{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.02em}
+td.note{text-align:left;font-size:12.5px;color:var(--ink-2);line-height:1.55;min-width:230px;max-width:300px;padding-right:18px}
+.dot{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:500}
+.d-full{background:var(--have);color:var(--paper)}
+.d-part{background:var(--part-bg);color:var(--part)}
+.d-none{color:var(--rule)}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:3px 7px;border-radius:2px;white-space:nowrap}
+.tag.dyn{background:var(--have-bg);color:var(--have)}
+.tag.sta{background:var(--rule-soft);color:var(--ink-2)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 18px;font-size:13px;color:var(--ink-2)}
+.legend b{font-family:var(--mono);font-size:11px}
+
+.gapgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.gapcard{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--hole);padding:18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.gapcard .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--hole)}
+.gapcard .h{font-weight:700;font-size:15.5px}
+.gapcard p{margin:0;font-size:13.5px;color:var(--ink-2);max-width:none}
+
+.steps{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);box-shadow:var(--shadow)}
+.step{background:var(--surface);padding:14px 18px;display:grid;grid-template-columns:34px 150px 1fr;gap:16px;align-items:baseline;font-size:13.5px}
+.step .num{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.step .nm{font-weight:500}
+.step .nm em{display:block;font-family:var(--mono);font-size:10.5px;font-style:normal;color:var(--ink-3);letter-spacing:.03em}
+.step .ds{color:var(--ink-2)}
+.step.new{background:var(--hole-bg)}
+.step.new .num,.step.new .nm{color:var(--hole)}
+@media(max-width:640px){.step{grid-template-columns:28px 1fr;}.step .ds{grid-column:2}}
+
+footer{margin-top:84px;padding-top:20px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 20px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">EGDS · 定位与缺口 · 2026-08-23</div>
+  <h1>EGDS 地形图</h1>
+  <p class="standfirst">两天里堆了三份调研、六十多条文献。这一页只回答三个问题：外面已经做过什么、EGDS 现在长什么样、还剩哪些洞。其余细节都在下面的链接里，不用现在读。</p>
+  <nav class="toc">
+    <a href="#terrain"><span class="q">问题一</span><span class="t">外面做过什么</span></a>
+    <a href="#hole"><span class="q">问题二</span><span class="t">EGDS 现在长什么样</span></a>
+    <a href="#cognition"><span class="q">问题三</span><span class="t">认知过程缺一步吗</span></a>
+    <a href="#gaps"><span class="q">结论</span><span class="t">剩下的洞</span></a>
+  </nav>
+</header>
+
+<section id="terrain">
+  <h2>一 · 外面已经做过什么</h2>
+  <p class="sec-note">按「它覆盖了 EGDS 的哪几层」排。没有任何一支覆盖全五层——但每一层都已经有人做过了。</p>
+
+  <div class="legend">
+    <span><b class="dot d-full" style="width:18px;height:18px">●</b> 覆盖</span>
+    <span><b class="dot d-part" style="width:18px;height:18px">◐</b> 部分</span>
+    <span><b class="dot d-none" style="width:18px;height:18px">—</b> 无</span>
+    <span><span class="tag dyn">动态</span> 处理时间变化</span>
+    <span><span class="tag sta">静态</span> 对象无时间轴</span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="left">既有体系</th><th>时间</th>
+          <th>情绪曲线</th><th>情绪体验</th><th>主观感受</th><th>客观原因</th><th>设计杠杆</th>
+          <th class="left" style="padding-left:14px">它真正解决的那件事</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="hole">
+  <h2>二 · EGDS 现在长什么样，以及那个洞</h2>
+  <p class="sec-note">时间尺度在 EGDS 里<b>不是缺失</b>——它已经长在设计杠杆那一侧了（game feel = moment，pacing = 段落，core loop = 跨时刻）。缺的是感受那一侧对应的中间一格。</p>
+
+  <figure>
+    <svg viewBox="0 0 900 400" role="img" aria-label="EGDS 的感受侧与杠杆侧按时间尺度对齐：杠杆侧三格齐全，感受侧的段落一格是空的，pacing control 没有对应的感受名字">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+        <marker id="arh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--hole)"/>
+        </marker>
+      </defs>
+
+      <!-- column headers -->
+      <text x="215" y="26" text-anchor="middle" font-size="12" font-family="monospace" fill="currentColor" opacity=".55" letter-spacing="1">时刻 · MOMENT</text>
+      <text x="450" y="26" text-anchor="middle" font-size="12" font-family="monospace" fill="currentColor" opacity=".55" letter-spacing="1">段落 · SEQUENCE</text>
+      <text x="705" y="26" text-anchor="middle" font-size="12" font-family="monospace" fill="currentColor" opacity=".55" letter-spacing="1">跨时刻 / 整体</text>
+
+      <!-- band labels -->
+      <text x="12" y="96" font-size="13" font-weight="600" fill="currentColor">感受侧</text>
+      <text x="12" y="114" font-size="10.5" font-family="monospace" fill="currentColor" opacity=".5">玩家身上发生的</text>
+      <text x="12" y="296" font-size="13" font-weight="600" fill="currentColor">杠杆侧</text>
+      <text x="12" y="314" font-size="10.5" font-family="monospace" fill="currentColor" opacity=".5">设计师能动的</text>
+
+      <!-- FEELING ROW -->
+      <rect x="110" y="52" width="210" height="76" rx="2" fill="var(--have-bg)" stroke="var(--have)" stroke-width="1.5"/>
+      <text x="215" y="83" text-anchor="middle" font-size="14" font-weight="600" fill="var(--have)">情绪体验</text>
+      <text x="215" y="104" text-anchor="middle" font-size="11" fill="var(--have)" opacity=".85">曲线上的转折点</text>
+
+      <rect x="345" y="52" width="210" height="76" rx="2" fill="var(--hole-bg)" stroke="var(--hole)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <text x="450" y="83" text-anchor="middle" font-size="14" font-weight="600" fill="var(--hole)">（没有名字）</text>
+      <text x="450" y="104" text-anchor="middle" font-size="11" fill="var(--hole)" opacity=".85">心流 · 沉浸 · cozy 住这里</text>
+
+      <rect x="580" y="52" width="250" height="76" rx="2" fill="var(--have-bg)" stroke="var(--have)" stroke-width="1.5"/>
+      <text x="705" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="var(--have)">主观感受 · 情绪曲线</text>
+      <text x="705" y="99" text-anchor="middle" font-size="11" fill="var(--have)" opacity=".85">跨时刻恒定的系统属性</text>
+      <text x="705" y="116" text-anchor="middle" font-size="11" fill="var(--have)" opacity=".85">／ 整段的起伏</text>
+
+      <!-- arrows lever -> feeling -->
+      <line x1="215" y1="228" x2="215" y2="134" stroke="currentColor" stroke-width="1.4" marker-end="url(#ar)"/>
+      <text x="226" y="185" font-size="11" font-family="monospace" fill="currentColor" opacity=".6">作用于</text>
+
+      <line x1="450" y1="228" x2="450" y2="134" stroke="var(--hole)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arh)"/>
+      <text x="461" y="178" font-size="11" font-family="monospace" fill="var(--hole)">作用于</text>
+      <text x="461" y="194" font-size="13" font-weight="700" fill="var(--hole)">？</text>
+
+      <line x1="705" y1="228" x2="705" y2="134" stroke="currentColor" stroke-width="1.4" marker-end="url(#ar)"/>
+      <text x="716" y="185" font-size="11" font-family="monospace" fill="currentColor" opacity=".6">作用于</text>
+
+      <!-- LEVER ROW -->
+      <rect x="110" y="232" width="210" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".85"/>
+      <text x="215" y="263" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">game feel tuning</text>
+      <text x="215" y="284" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">moment to moment 手感</text>
+
+      <rect x="345" y="232" width="210" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".85"/>
+      <text x="450" y="263" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">pacing control</text>
+      <text x="450" y="284" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">flow build-up</text>
+
+      <rect x="580" y="232" width="250" height="76" rx="2" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".85"/>
+      <text x="705" y="263" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">core loop construction</text>
+      <text x="705" y="284" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">what to play</text>
+
+      <!-- bottom note -->
+      <line x1="110" y1="340" x2="830" y2="340" stroke="currentColor" stroke-width="1" opacity=".18"/>
+      <text x="110" y="364" font-size="11.5" font-family="monospace" fill="currentColor" opacity=".55">「玩法与挑战」下的三细分 —— 另两个模块（美学 Aesthetics · 叙事 Narrative）尚未按时间尺度展开</text>
+      <text x="110" y="384" font-size="11.5" font-family="monospace" fill="var(--hole)">陈星汉的七章情绪曲线，单位正是中间这一格：sequence（影视术语，约 5–15 分钟）</text>
+    </svg>
+    <figcaption><b>这张图的唯一主张：</b>pacing control 是一个已经存在的杠杆，但它作用的那个感受<b>在 EGDS 里没有名字</b>。心流、沉浸、cozy 之所以反复无处安放，不是因为它们特殊，是因为感受侧缺了「段落」这一行。而陈星汉原本的七章情绪曲线，单位恰恰就是这一格——它是被剥离掉的，不是从来没有过。</figcaption>
+  </figure>
+</section>
+
+<section id="cognition">
+  <h2>三 · 认知过程：四步还是五步</h2>
+  <p class="sec-note">無涘的提问：理解（deconstruction）之前，是不是还缺一步「分析」？我认为是缺，但缺的那一步更准确的名字不是分析，是<b>归因</b>——而这两件事被混在「客观原因」这一层里了。</p>
+
+  <div class="steps">
+    <div class="step"><span class="num">①</span><span class="nm">察觉<em>perception</em></span><span class="ds">有东西变了，但说不出是什么。产物＝<b>情绪曲线</b>（无名的起伏）</span></div>
+    <div class="step"><span class="num">②</span><span class="nm">命名<em>identification</em></span><span class="ds">给它一个名字。单次命名＝<b>情绪体验</b>；跨时刻命名＝<b>主观感受</b></span></div>
+    <div class="step"><span class="num">③</span><span class="nm">分解<em>decomposition</em></span><span class="ds">它由哪些部件构成。<b>穷举</b>——这是去程</span></div>
+    <div class="step new"><span class="num">④</span><span class="nm">归因<em>attribution</em></span><span class="ds"><b>哪个部件导致了它。</b>筛选，而且可证伪——这是返程。<b>目前和 ③ 混在「客观原因」一层里</b></span></div>
+    <div class="step"><span class="num">⑤</span><span class="nm">重构<em>reconstruction</em></span><span class="ds">动哪个杠杆能改变它。产物＝<b>设计杠杆</b></span></div>
+  </div>
+  <p style="margin-top:20px"><b>为什么 ③ 和 ④ 必须分开：</b>你可以把一场战斗拆成二十个元素，仍然不知道是哪个让人爽。<b>拆解是穷举，归因是筛选。</b>而这正是那条已命名的盲区——「穷尽 ＝ 打破砂锅缺了返程」——在 EGDS 内部的复现。</p>
+  <p><b>而且 ④ 才是可证伪的那一步。</b>「探索感由正反馈循环、难达处藏宝、宝物价值可观构成」是 ③；「去掉难达处藏宝，探索感就塌了」才是 ④。今天缺的那个 <span style="font-family:var(--mono);font-size:12.5px">失效条件</span> 字段，就是 ④ 的书面形式。</p>
+</section>
+
+<section id="gaps">
+  <h2>四 · 剩下的洞</h2>
+  <p class="sec-note">扣掉上面所有既有工作之后，有证据支持仍未被做过的部分。按可动手程度排。</p>
+  <div class="gapgrid">
+    <div class="gapcard">
+      <span class="k">最可动手</span>
+      <span class="h">动态可运行的参照样库</span>
+      <p>感官分析的 reference standard 是<b>可制备的实物</b>（一支标准香精）。游戏侧没有一组参数锁定、可运行、可版本化的 play slice，让不同的人用同样的输入延迟／动画／镜头／音效来校准「打击感」。<b>这正是「手感衡量精度不够」的解药，而西西弗斯下山已经是半个现成切片。</b></p>
+    </div>
+    <div class="gapcard">
+      <span class="k">结构性</span>
+      <span class="h">段落级感受没有名字</span>
+      <p>杠杆侧有 pacing control，感受侧对应的那一格是空的。补法可以直接借影视的 beat / scene / sequence / act / story 五级，不必新造词。</p>
+    </div>
+    <div class="gapcard">
+      <span class="k">结构性</span>
+      <span class="h">分解与归因混在一层</span>
+      <p>「客观原因」现在同时装着「由什么构成」和「什么导致了它」。前者是穷举，后者可证伪。不分开，框架就没有失效条件。</p>
+    </div>
+    <div class="gapcard">
+      <span class="k">运行时</span>
+      <span class="h">曲线 → 下一次运行的闭环</span>
+      <p>影视有八十年的观众实时曲线（dial testing → CinemaScore → LIRIS-ACCEDE），但<b>没有把观众曲线自动变成下一次运行的设计输入</b>的闭环——因为电影是固定播放路径。游戏天然有状态、输入、重试、多次运行，<b>这个闭环只有在游戏里做得成。</b></p>
+    </div>
+    <div class="gapcard">
+      <span class="k">可验证</span>
+      <span class="h">中文工艺词的跨语言验证</span>
+      <p>理论支持「专家的默认命名层会下移」（Rosch → Tanaka &amp; Taylor），但没人对「打击感／枪感／手感」和英文对应做过自由命名、反应时、一致性的成套比较。</p>
+    </div>
+    <div class="gapcard">
+      <span class="k">须回避的坑</span>
+      <span class="h">语义可分离 ≠ 因果可操纵</span>
+      <p>厚概念论战（Väyrynen 等）争的是<b>词义</b>里描述与评价能否拆开；EGDS 要的是<b>因果</b>上能否操纵。两者相邻但不同——proposal 里必须主动说清走的是哪一条，否则第一个哲学背景的评审就会拿这个问你。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>docs/research/subjective-feelings-corpus/ · feeling-lexicon-prior-art/ · film-emotional-arc-prior-art/</span>
+  <span>Learn About Games</span>
+</footer>
+
+</div>
+
+<script>
+const R=[
+ ["感性工学","Kansei Engineering · 長町三生","sta",0,0,2,2,2,"把用户的感受词经语义差异量表＋统计映射到<b>物理设计参数</b>。已有 Pokémon GO、DOTA 2 的已发表游戏案例。"],
+ ["描述性感官分析","QDA · ISO 13299 / 11132","sta",0,0,2,1,0,"把一组人<b>训练成可重复的测量仪器</b>：共识词表＋实物参照样＋评审员间一致性统计。主体间验证是内建的。"],
+ ["风味轮 / 词表","Coffee · WSET · Beer","sta",0,0,2,0,0,"宽类→具体的分级词表，每条配<b>实物参照标准</b>——不给定义，给样本。二十四诗品的工业化版本。"],
+ ["PLEX","22 类 · Arrasvuori / Lucero","sta",0,0,2,0,1,"把玩乐体验分成 22 个跨情境类目，配 Cards 与 Design Patterns。<b>停在体验类目，不往下走。</b>"],
+ ["Quantic Foundry","12 动机 · Nick Yee","sta",0,0,2,0,0,"因子分析 14 万+ 玩家，12 动机 3 大簇，跨地区结构一致。测的是<b>动机</b>不是体验。"],
+ ["GEQ / PXI / PENS","游戏体验量表","sta",0,1,2,1,0,"标准化问卷构念。PXI 有 means-end 两层（功能后果／心理社会后果）。"],
+ ["Swink《Game Feel》","game feel 拆解","sta",0,0,2,2,1,"把手感拆成输入、响应、语境、隐喻、润饰。<b>读完仍做不出来</b>——差的那段被归给品味与能力。"],
+ ["McKee《Story》","叙事结构","dyn",1,2,0,0,0,"<b>转折点＝价值符号翻转</b>；beat→scene→sequence→act→story 五级时间尺度。变量是叙事价值，不是观众情绪。"],
+ ["Reagan et al. 2016","六种情绪弧","dyn",2,0,0,0,0,"1,327 本小说的情感时间序列，SVD＋聚类得<b>六种基本弧</b>。10,000 词窗口会抹平 scene 级转折。"],
+ ["Murch《Rule of Six》","剪辑优先级","dyn",0,1,1,0,2,"emotion 51 / story 23 / rhythm 10 / eye-trace 7 / 2D 5 / 3D 4。是<b>冲突仲裁规则</b>，不是回归模型。"],
+ ["dial testing 一系","Program Analyzer → LIRIS-ACCEDE","dyn",2,1,0,0,0,"1930 年代起的<b>观众实时曲线</b>。产出曲线，但<b>没有回接到下一次运行</b>的闭环。"],
+];
+const M=[['dot d-none','—'],['dot d-part','◐'],['dot d-full','●']];
+document.getElementById('rows').innerHTML=R.map(r=>`
+ <tr>
+  <td class="name"><span class="n">${r[0]}</span><span class="s">${r[1]}</span></td>
+  <td><span class="tag ${r[2]}">${r[2]==='dyn'?'动态':'静态'}</span></td>
+  ${[3,4,5,6,7].map(i=>`<td><span class="${M[r[i]][0]}">${M[r[i]][1]}</span></td>`).join('')}
+  <td class="note">${r[8]}</td>
+ </tr>`).join('');
+</script>
