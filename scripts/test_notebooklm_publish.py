@@ -11,6 +11,7 @@ class PublishScriptContractTests(unittest.TestCase):
         text = SCRIPT.read_text(encoding="utf-8")
         self.assertIn("producer_status", text)
         self.assertIn("git -C \"$ai_root\" add -- \"$relative_path\"", text)
+        self.assertIn("git -C \"$ai_root\" ls-tree -r --name-only HEAD", text)
         self.assertIn("git -C \"$ai_root\" push origin main", text)
         self.assertNotIn("--force", text)
         self.assertNotIn("git pull", text)

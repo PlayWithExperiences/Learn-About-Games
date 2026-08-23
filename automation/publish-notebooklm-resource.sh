@@ -68,14 +68,22 @@ if ! git -C "$ai_root" diff --cached --quiet; then
 fi
 
 relative_path="${resource_real#"$ai_root/"}"
-git -C "$ai_root" add -- "$relative_path"
-staged_paths="$(git -C "$ai_root" diff --cached --name-only)"
-if [[ "$staged_paths" != "$relative_path" ]]; then
-  git -C "$ai_root" reset -- "$relative_path" >/dev/null
-  echo "暂存文件不是单一目标资源，已停止：$staged_paths" >&2
-  exit 1
+tracked_path="$(git -C "$ai_root" ls-tree -r --name-only HEAD -- "$relative_path")"
+resource_already_committed=false
+if [[ "$tracked_path" == "$relative_path" ]] && git -C "$ai_root" diff --quiet HEAD -- "$relative_path"; then
+  resource_already_committed=true
+else
+  git -C "$ai_root" add -- "$relative_path"
+  staged_paths="$(git -C "$ai_root" diff --cached --name-only)"
+  if [[ "$staged_paths" != "$relative_path" ]]; then
+    git -C "$ai_root" reset -- "$relative_path" >/dev/null
+    echo "暂存文件不是单一目标资源，已停止：$staged_paths" >&2
+    exit 1
+  fi
 fi
 
-git -C "$ai_root" commit -m "feat: publish NotebookLM resource $resource_id"
+if [[ "$resource_already_committed" != true ]]; then
+  git -C "$ai_root" commit -m "feat: publish NotebookLM resource $resource_id"
+fi
 git -C "$ai_root" push origin main
 echo "已推送 NotebookLM 资源：$resource_id"
