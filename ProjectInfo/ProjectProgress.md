@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-24 00:06 · 记录者 AI*
+*更新于 2026-08-24 02:25 · 记录者 AI*
 
 ## 现在在哪
 
@@ -33,6 +33,11 @@
 - 官方描述旁证对象修正（2026-08-23 22:45）：复查发现 52 条记录把取证通道 `YouTube Data API v3` 当作用户可见来源，并用统一免责声明代替具体证据。现已改为 `YouTube` 来源、`视频简介首段（原文摘录，非字幕正文）` 对象，并从本机官方元数据缓存写入各视频实际简介首段；保留视频页 URL、观察日期和非字幕正文边界。最终 `npm run build` 为 Astro 0/0/0、Vitest 206/206、静态构建 151 页；Resources E2E 桌面/移动 46/46。
 - NotebookLM 每日精选线已接通：`AI-Life-Mentor` 用 reviewed JSON inbox 接收人工生成结果，空目录是可见的正常 no-op，坏 JSON、消费状态查询失败和 PKM 写回失败都会抛出；不会在定时脚本内偷偷调用 NotebookLM 或模型。Celeste fixture 已更新为三项 `generated` 产物，Daily Check-in #182 的旧 `not-generated` 行已替换并回读确认；PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 也已写入三条 PicGo 链接。
 - 本轮新增真实外部操作严格限定为 Celeste 全量模板：补生成一次思维导图、一次演示文稿，信息图/思维导图/演示文稿各通过 PicGo 上传一次；没有重试、没有 OpenRouter 新批量调用、没有订阅或其他付费操作。三项生成设置和稳定地址均已写回记录。
+- 本次自动化验证已通过：producer 测试 10/10、preflight runner 测试 3/3、Learn Vitest 204/204、Astro check 0/0/0、AI-Life-Mentor NotebookLM 测试 13/13、Skill validator、shell 和 plist 校验均通过；验证过程没有真实 NotebookLM、PicGo、GitHub push 或模型调用。
+- NotebookLM 每日精选线已接通：`AI-Life-Mentor` 用 reviewed JSON inbox 接收人工生成结果，空目录是可见的正常 no-op，坏 JSON、消费状态查询失败和 PKM 写回失败都会抛出；不会在定时脚本内偷偷调用 NotebookLM 或模型。Celeste fixture 已通过本地校验，Daily Check-in #182 与 PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 均已回读确认。
+- NotebookLM 每日生产自动化已实现（2026-08-24 01:29）：`scripts/notebooklm_producer.py` 从 2,454 个唯一 YouTube `video_id` 中按稳定顺序选择候选，使用本地 ledger、单实例锁和 `generating → ready/failed` 状态防止重复调用；`tools/notebooklm-daily-resource` 已作为版本化本机 Skill，并通过 `/Users/haodong/.codex/skills/notebooklm-daily-resource` 暴露。AI-Life-Mentor 消费端已改为全量分页扫描历史 Issue，ready-only 校验并保留旧 Celeste 记录兼容性。
+- 自动化边界已落地：`automation/notebooklm-daily-preflight.sh` 与 07:30 launchd plist 只执行本地 preflight，当前未安装、未加载、未调用 NotebookLM、PicGo 或 `codex exec`；真实单次调用仍需单独确认。
+- 本轮真实外部操作严格为一条 Celeste 测试：NotebookLM/Gemini Notebook 一次内容详述、一次信息图尝试（无可验证产物），以及一次 PKM/Issue 写回；没有 OpenRouter 新批量调用、没有订阅或其他付费操作。
 - 免费路由器 smoke test：仓库外临时启动 FreeLLMAPI Docker 实例，仅使用匿名免费渠道并处理一条真实《Designing Celeste》字幕；裸模型名被同名模型合并解析到 Navy，改用精确 `ovh:Qwen3.5-397B-A17B` 后确实到达 OVH，但上游返回 429；Kilo 的 `nvidia/nemotron-3-ultra-550b-a55b:free` 在 60 秒上游超时内未返回。未写回仓库、未启用付费模型或 Premium；当前结论是该路由器可作为本地兼容层候选，但免费匿名端点尚不足以承接长字幕批量总结。
 
 ## 下一步
