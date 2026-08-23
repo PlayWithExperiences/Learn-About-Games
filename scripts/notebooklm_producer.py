@@ -69,6 +69,16 @@ def _required_text(value: object, field: str) -> str:
     return value.strip()
 
 
+def _summary_body(value: object, boundary: str) -> str:
+    """Keep the boundary in its dedicated field, not duplicated in the summary."""
+    summary = _required_text(value, "content_summary")
+    marker = "\n### 来源边界"
+    marker_index = summary.rfind(marker)
+    if marker_index >= 0 and summary[marker_index + len(marker):].strip() == boundary.strip():
+        return summary[:marker_index].rstrip()
+    return summary
+
+
 def _topic(value: object) -> str:
     if isinstance(value, str) and SLUG_RE.fullmatch(value.strip()):
         return value.strip()
@@ -366,8 +376,9 @@ def normalize_result(
     if not isinstance(raw_result, dict):
         raise ProducerError("NotebookLM 结果必须是 JSON 对象")
     title = _required_text(raw_result.get("title"), "title")
-    content_summary = _required_text(raw_result.get("content_summary"), "content_summary")
+    raw_content_summary = _required_text(raw_result.get("content_summary"), "content_summary")
     boundary = _required_text(raw_result.get("boundary"), "boundary")
+    content_summary = _summary_body(raw_content_summary, boundary)
     topic = _strict_topic(raw_result.get("topic"), "topic")
     raw_source = raw_result.get("source")
     if not isinstance(raw_source, dict):
