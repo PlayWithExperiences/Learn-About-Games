@@ -490,3 +490,12 @@
 - 边界：AI。普通 NotebookLM 已验证能导入有字幕的公开 YouTube，但它仍是网页入口而非批量 API。本次没有新增模型调用、没有订阅、没有资源写回；后续实现前须再次确认调用量、输出上限、重试和费用。
 
 原始对话：dialogues/2026-0823.md「1604 NotebookLM 内容转化路线与配额核对」
+
+## 1941 NotebookLM 多模态产物的公开托管边界（2026-08-23）
+
+- 事实：AI。NotebookLM 的信息图、思维导图、幻灯片和音频可以分享链接或下载文件；分享链接要求 Notebook 对访问者开放，Notebook 被删除或重新设为私有后旧链接会失效。
+- 事实：AI。Learn About Games 当前 `src/content.config.ts` 的资源 schema 只有标题、摘要、来源、URL 和 Access Version，没有 NotebookLM artifact 字段；当前不能把多模态产物直接塞入现有资源记录。
+- 建议：AI。新增独立资产层：PNG/SVG、PDF/PPTX 等可公开文件由网站静态资源或对象存储托管；音频/视频不直接提交 Git 仓库；NotebookLM 链接作为可选的继续研究入口，而不是唯一展示源。
+- 边界：AI。公开前需要逐项确认 Notebook 分享权限、原始 YouTube/文档版权和生成产物的公开资格。本轮只核对规则和 schema，没有生成、公开或写回任何产物。
+
+原始对话：dialogues/2026-0823.md「1941 NotebookLM 多模态产物的公开托管边界」
