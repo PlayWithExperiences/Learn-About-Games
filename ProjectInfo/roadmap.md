@@ -335,3 +335,13 @@
 - 边界：AI。原文摘录来自本机已缓存的官方 YouTube 元数据，没有新增 API、搜索或模型调用；没有把视频简介冒充字幕或视频正文。
 
 原始对话：dialogues/2026-0823.md「2245 官方描述旁证对象修正」
+
+## 2026-08-23：NotebookLM 产物模板、完整思维导图与 PDF 托管修复（22:56）
+
+- 决策：無涘 ｜ 记录：AI。PKM 与 Daily Check-in 的来源、信息图、思维导图、演示文稿、内容总结和来源边界统一用 H3 无冒号；PNG 使用 `![...](...)`；PPTX 保留普通链接，PDF 使用图片式链接。
+- 事实：AI。Celeste 思维导图在 NotebookLM 查看器中全部展开后重新下载，实际包含三级结构；PPTX 通过本机 LibreOffice 免费转换为 12 页 PDF，并完成首张页面渲染检查。
+- 托管：AI。PicGo 使用当前时间戳 `20260823224813` 加语义文件名上传四份文件；四个地址均为 HTTP 200，上传后 `autoRename` 恢复为 `true`。旧地址不删除，只由新地址替代。
+- 写回：AI。资源 JSON、PKM `2026-0823-2051-designing-celeste.md` 与 Daily Check-in #182 已统一到新地址；AI-Life-Mentor 渲染器和单测同步支持 H3、图片链接与 `pdf_url`。
+- 边界：AI。本轮只有一次新增 NotebookLM 思维导图生成，无重试、无 OpenRouter 批量调用、无订阅或其他现实金额操作；Learn About Games 仍保持 Private，未部署、未推送。
+
+原始对话：dialogues/2026-0823.md「2256 NotebookLM 产物模板与托管修复」

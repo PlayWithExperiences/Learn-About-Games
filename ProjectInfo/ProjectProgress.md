@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-23 22:45 · 记录者 AI*
+*更新于 2026-08-23 22:56 · 记录者 AI*
 
 ## 现在在哪
 
@@ -13,7 +13,8 @@
 - 长篇内容详述探针：普通 Gemini Notebook 已在用户已登录的 Google 账号中成功创建一次测试笔记本，导入公开视频 `4RlpMhBKNr0` 的 YouTube 转写，并完成一次 4,407 字符的中文内容详述；回答按演讲推进展开了分形叙事层级、下落方块迭代、设计取舍、玩家体验、可迁移方法和来源边界。结果经过人工清理，只保留正文，不把 NotebookLM 的附加引导文案当成内容。
 - 内容转化路线决策：以 NotebookLM / Gemini Notebook 作为视频内容转化主力；保留现有 `summary` 数据作为目录事实，但本轮已将站内 Work Item 的 AI 摘要展示隐藏，未删除数据。完整文字版详述与 Studio 产物独立写入 PKM/每日精选；详述篇幅按内容密度决定，1800–2500 字不是硬上限，也不为凑字数扩写。
 - 双层产出模型：Learn About Games 公开层只展示事实元数据、来源和访问版本，不直接暴露 PKM 长文或私有 Notebook 链接；PKM 层保存完整文字版总结、引用/证据边界、信息图、思维导图、演示文稿及明确生成状态。Daily Check-in 每天抽取一篇并链接到 PKM 原文，不把同一长文重复灌进网站目录。
-- NotebookLM 多模态托管边界：本轮已按固定模板完成 Celeste 三件 Studio 产物：中文简体、横向、手绘笔记、详细 Beta 信息图；中文简体详细思维导图；中文简体默认时长详细演示文稿（12 页 PowerPoint）。三份文件均从 NotebookLM 下载并经文件格式核验，再通过 PicGo 上传到 `Medill-East/IMGStorage`；PNG/PPTX 稳定地址均回读 HTTP 200。正式记录使用 PicGo 地址，不把可能失效的 NotebookLM 私有链接当成媒体托管地址。
+- NotebookLM 多模态托管边界：本轮已按固定模板完成 Celeste 四项 Studio 产物：中文简体、横向、手绘笔记、详细 Beta 信息图；中文简体完整展开（三级结构）思维导图；中文简体默认时长详细演示文稿（12 页 PowerPoint）及本地免费转换的 PDF。四份文件均从 NotebookLM/本机转换链下载或生成并经格式核验，再通过 PicGo 上传到 `Medill-East/IMGStorage`；PNG/PPTX/PDF 稳定地址均回读 HTTP 200。正式记录使用带当前时间戳和语义文件名的 PicGo 地址，不把可能失效的 NotebookLM 私有链接当成媒体托管地址。
+- NotebookLM 资产模板修复（2026-08-23 22:56）：PKM 与 Daily Check-in 的来源、信息图、思维导图、演示文稿、内容总结和来源边界统一为 H3 无冒号；PNG 使用 `![...](...)`，演示文稿保留 PPTX 普通链接并附 PDF 图片式链接。旧 PicGo 文件未删除，只由新地址 supersede。
 - 官方配额核对（以 [Gemini Notebook 官方配额表](https://support.google.com/notebooklm/answer/16213268?hl=en) 为准）：Standard 为 100 notebooks/user、50 sources/notebook、50 chats/day、3 audio/day、3 video/day；Plus 为 200、100、200、6、6；Pro 为 500、300、500、20、20。日报、信息图、幻灯片等另有独立额度，且官方注明会变化。
 
 ## 当前阶段
@@ -35,7 +36,7 @@
 ## 下一步
 
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
-- 若继续推进长篇详述，只把人工审核后的 NotebookLM JSON 放入 inbox，再由每日任务抽取一条写入 PKM 和 Check-in；不自动对全库生成 Studio 多模态产物。Celeste 三件套已完成下载、格式核验、PicGo 托管与写回；后续每一条资源仍需在新增 NotebookLM 调用前单独确认调用次数、输出上限、重试策略和潜在费用。
+- 若继续推进长篇详述，只把人工审核后的 NotebookLM JSON 放入 inbox，再由每日任务抽取一条写入 PKM 和 Check-in；不自动对全库生成 Studio 多模态产物。Celeste 四项产物（信息图、完整思维导图、PPTX、PDF）已完成下载/转换、格式核验、PicGo 托管与写回；后续每一条资源仍需在新增 NotebookLM 调用前单独确认调用次数、输出上限、重试策略和潜在费用。
 - 在实现多模态展示前，先确定 `artifact` 资产层和托管策略：图片/思维导图可导出后静态托管，演示文稿导出 PDF/PPTX，音频/视频不直接塞进 Git 仓库，优先使用对象存储或只保留外部分享入口。公开前需逐项审核 NotebookLM 分享权限、原始来源版权和生成内容的可公开性。
 - AI Plus 适合作为每日精选和小批研究的容量升级，不足以把 2,311 条资源的文字、信息图、思维导图、演示文稿全部一次性生成；批量方案还受普通 Notebook 网页入口、浏览器自动化稳定性和版权/分享边界限制。购买或升级订阅必须另行获得确认。
 - 保持仓库 Private；公开或部署仍需先处理资源页 5,437 条 Work Item 的初始 DOM/客户端筛选成本，并完成线上验收。
@@ -45,9 +46,9 @@
 
 - Vision 为 AI 草稿，待無涘确认。
 - 本轮外部 state 回写与摘要长度对账已完成；无 YouTube 内容补全阻塞。
-- 待确认：NotebookLM→PKM/Daily Check-in 已打通“人工产出 JSON → 单条写回”的链路，且 Celeste 三项 Studio 产物已完成 PicGo 稳定托管；当前 NotebookLM 仍是网页端入口，不应当作批量 API。批量生成、Enterprise/API 路线、公开资产版权与托管策略仍需单独核对许可、项目和费用。
+- 待确认：NotebookLM→PKM/Daily Check-in 已打通“人工产出 JSON → 单条写回”的链路，且 Celeste 四项 Studio/本地转换产物已完成 PicGo 稳定托管；当前 NotebookLM 仍是网页端入口，不应当作批量 API。批量生成、Enterprise/API 路线、公开资产版权与托管策略仍需单独核对许可、项目和费用。
 - 待确认：网站是否托管 NotebookLM 导出的本地资产，还是只提供 NotebookLM 外链；当前更推荐“网站自托管可公开资产 + NotebookLM 外链作为补充”，避免私有链接导致访客无法查看或链接失效。
-- 费用边界：本轮没有订阅、没有 OpenRouter 批量调用，也没有产生已知模型费用；完成一条 NotebookLM 内容测试、三项 Studio 产物生成/托管和一条 PKM/Issue 更新。任何涉及现实金额的订阅、API 或大批量生成仍须先询问無涘。
+- 费用边界：本轮没有订阅、没有 OpenRouter 批量调用，也没有产生已知模型费用；完成一条 NotebookLM 思维导图生成、四项产物托管和一条 PKM/Issue 更新。任何涉及现实金额的订阅、API 或大批量生成仍须先询问無涘。
 - 验证边界：Learn About Games 定向资源 E2E 桌面/移动的摘要隐藏测试通过；全量 E2E 为 251 passed、22 skipped、13 failed。13 项失败集中在 Atlas/Map/Career 重载单例、并发导航超时和既有质量词断言，不能宣称全量全绿；本次代码构建、Vitest 与改动相关测试通过。
 - 主要产品风险仍是资源数量增长可能造成错配、重复归类或证据等级混淆；Innovation Atlas 的低证据透镜继续保持未闭合，不因资源补全自动闭合。
 
