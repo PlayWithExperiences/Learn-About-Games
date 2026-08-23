@@ -517,3 +517,11 @@
 - 边界：AI。本轮没有新增 OpenRouter 或其他模型批量调用、没有重试 NotebookLM、没有订阅或付费操作；NotebookLM 仍是人工网页入口，后续全库生成必须逐次取得调用与费用确认。
 
 原始对话：dialogues/2026-0823.md「2217 NotebookLM 全量模板正式写回」
+
+## 2350 NotebookLM Slides 工作台入口同步（2026-08-23）
+
+- 决策：無涘 ｜ 记录：AI。演示文稿的 PicGo PPTX 链接下方同时附上 NotebookLM 链接；由于当前资源 JSON 只有 NotebookLM 工作台 URL，没有独立的 Slides 直达 URL，入口标注为“NotebookLM 工作台（Slides）”。
+- 实现：AI。渲染器在“演示文稿”区按 PPTX → NotebookLM 工作台（Slides）→ PDF 的顺序输出；Celeste PKM 笔记与 Daily Check-in #182 已同步，Learn About Games 公开层不暴露该私有链接。
+- 验证：AI。先新增顺序断言并确认旧实现失败，再完成最小实现；`python3 -m unittest scripts/test_notebooklm_line.py` 为 8/8，Issue #182 回读确认链接恰好 1 次且位于 PPTX 之后。本轮无模型调用、无重试、无批量操作、无现实金额操作。
+
+原始对话：dialogues/2026-0823.md「2350 NotebookLM Slides 工作台入口同步」
