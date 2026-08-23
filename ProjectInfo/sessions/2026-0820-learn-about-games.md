@@ -364,14 +364,6 @@
 
 原始对话：dialogues/2026-0823.md「1159 批量调用与现实金额确认规则回写」
 
-## 0133 补全成长资源与创新地图
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-本场会话完成 Learn-About-Games 项目的成长资源和创新地图补全。基于 v02 工作树已有的 5,437 条资源，进行审计和证据闭环，确认至少 3 条完整创新路线（FPS、RPG、RTS、开放世界）满足事件、演化、载体和证据闭包要求。随后处理 YouTube 视频元数据映射与摘要生成，成功回写 2,311 条资源状态为 completed，0 条 retryable，全部具有中文摘要和资源主题。过程中发现并修复了外部 state 与资源摘要长度不一致问题，补充了音频工具路径修复。最终构建、测试全部通过，本地备份提交。同时，会话中明确规则：大量外部调用或可能产生费用的操作必须事先询问用户确认，并将该规则写入 GlobalGuideline。风险方面，视频处理通道冷却和工具缺失已解决；下一步无剩余阻塞，项目保持 Private 未部署。服务器状态待查，但本场主要内容已闭环。
-
-原始对话：dialogues/2026-0823.md
-
 ## 1217 线上部署状态核查
 
 - 事实：AI。GitHub 仓库 `PlayWithExperiences/Learn-About-Games` 当前为 Private，GitHub API 返回 `has_pages=false`；`.github/workflows/deploy.yml` 状态为 `disabled_manually`，最后更新于 2026-08-09 10:59（中国标准时间）。
@@ -402,3 +394,19 @@
 - 下一步：AI。若要在网页直接阅读这些摘要，需要新增 Work Item 摘要展示区；本次只做核查，没有改产品代码。
 
 原始对话：dialogues/2026-0823.md「1232 续」
+
+## 1243 资源摘要展示区
+
+- 产出：AI。`src/components/ResourceResults.astro` 的 Work Item 展开区新增“内容摘要”，渲染每条资源的 `summary.zh-CN`；展开入口同步改为“查看摘要与访问版本”，有外部观察时显示“查看摘要、访问版本与外部事实”。
+- 验证：AI。新增摘要展示 E2E；`npm run check` 通过（0 errors / 0 warnings / 0 hints），Vitest 204/204，桌面与移动 Chromium E2E 2/2，`npm run build` 生成 151 页成功。本次没有外部模型、搜索、下载或付费调用。
+- 文件：AI。修改 `src/components/ResourceResults.astro`、`src/styles/global.css`、`tests/e2e/resources-v02.spec.ts`；摘要仍以折叠面板承载，保持资源表扫描密度。
+
+原始对话：dialogues/2026-0823.md「1243 续」
+
+## 0133 完成 YouTube 资源摘要回写及规则制定
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+本场基于用户要求补全成长资源和创新地图，最终选定方案 A（补真实摘要与 Atlas 事件/关系），并将目标扩展为至少 1000 条资源及 3 条完整创新路线。AI 在 v02 工作树中执行大量 YouTube 视频摘要生成，最终将 2311 条视频全部标记为已完成，资源总量达 5437 条，4 条创新路线（FPS、RPG、RTS、开放世界）闭环审计通过，构建与测试全通过。过程中未经用户确认即进行了数千次 OpenRouter 模型调用，产生费用；用户要求将“大量调用前需询问”及“涉及现实金额操作需用户确认”写入全局指南，并已完成。本地 Astro 开发服务器停止后，AI 直接恢复。目前摘要已存储在 resources.json 中，但资源列表页面未直接渲染完整摘要，仅用于搜索。下一步需决定是否在界面中增加摘要展示区，并持续遵守费用确认规则。
+
+原始对话：dialogues/2026-0823.md

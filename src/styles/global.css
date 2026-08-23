@@ -2829,6 +2829,26 @@ h2 {
   margin-top: 0;
 }
 
+.work-item-result__summary {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.work-item-result__summary h4 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.8rem;
+}
+
+.work-item-result__summary p {
+  max-width: 78ch;
+  margin: 0.3rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
 .access-version-list,
 .external-observations ul,
 .source-detail-page__observations ul {

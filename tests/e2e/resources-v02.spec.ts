@@ -298,6 +298,19 @@ test('keeps the access-version control on the same desktop row as the Work Item 
   )).toBe(true);
 });
 
+test('shows the stored Work Item summary in its disclosure panel', async ({ page }) => {
+  const resource = resources[0];
+
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+
+  const row = page.locator(`[data-result-id="${resource.id}"]`);
+  const disclosure = row.locator('.work-item-result__more');
+  await expect(disclosure.locator('summary')).toContainText('查看摘要');
+  await disclosure.locator('summary').click();
+  await expect(disclosure.locator('[data-work-item-summary]')).toContainText(resource.summary['zh-CN']);
+});
+
 test('keeps resource search, facts, count and table actions in one compact table header', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('./resources/');
