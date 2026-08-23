@@ -78,6 +78,19 @@ describe('early electronic game Atlas slice', () => {
 });
 
 describe('raw product catalog data', () => {
+  it('describes official-description evidence by its concrete source object', () => {
+    const signals = resources.flatMap(({ externalSignals }) =>
+      (externalSignals ?? []).filter(({ label }) => label.includes('视频简介首段')),
+    );
+
+    expect(signals).toHaveLength(52);
+    expect(signals.every(({ provider }) => provider === 'YouTube')).toBe(true);
+    expect(signals.every(({ label }) => label === '视频简介首段（原文摘录，非字幕正文）')).toBe(true);
+    expect(signals.every(({ value }) =>
+      typeof value === 'string' && value.length > 100 && !value.includes('YouTube Data API v3'),
+    )).toBe(true);
+  });
+
   it('defines the approved ordered Atlas Genre Family directory', () => {
     expect(atlasGenreFamilies.map(({ id, order }) => [id, order])).toEqual([
       ['action', 1],

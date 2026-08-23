@@ -20,3 +20,13 @@
 - 边界：AI。本次没有修改 `resources.json` 的旁证数据，没有删除第三方链接，没有改变排序、筛选或资源证据等级。
 
 原始对话：dialogues/2026-0823.md「2228 外部旁证文案统一与资源页回归」
+
+## 2245 官方描述旁证对象修正
+
+- 决策：無涘 ｜ 记录：AI。用户反馈“ YouTube V3 ”只是技术通道名，不是旁证对象；页面应直接标明旁证对应的视频简介、文章摘要或公开指标，以及具体内容。
+- 审计：AI。`resources.json` 中 52 条官方描述记录的 provider 都是 `YouTube Data API v3`，value 都是同一条通道免责声明；本机 `/Users/haodong/.cache/lag-youtube/metadata.json` 可按视频 ID 找到 52 条官方简介，且每条都有可用的首段文字。
+- 实现：AI。52 条记录改为 `provider: YouTube`、`label: 视频简介首段（原文摘录，非字幕正文）`，value 写入对应简介首段；同步更新 `repair_video_runtime.py` 的证据合同和页面说明，保留 URL、日期及非字幕正文边界。
+- 测试：AI。先写数据契约与 Larian 页面回归并确认旧状态失败；修正后 catalog/display 单测 31/31、Python 回写测试 7/7、Chromium 目标 E2E 1/1 通过。最终 `npm run build` 为 Astro 0/0/0、Vitest 206/206、静态构建 151 页；Resources E2E 桌面/移动 46/46。
+- 边界：AI。本次只使用已有本地缓存做确定性机械回写，没有新外部调用、没有翻译/改写原文，也没有修改 237 条二手专题旁证或 YouTube/Bilibili 公开指标。
+
+原始对话：dialogues/2026-0823.md「2245 官方描述旁证对象修正」

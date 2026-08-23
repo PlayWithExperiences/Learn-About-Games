@@ -118396,9 +118396,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Games Career Week on GDC YouTube: Quality assurance has long been viewed as an entry point into the game industry. Due to this, many entry-level professionals attempt to get a job in QA in order to transfer to other disciplines. However, QA is not merely a starting point in the industry - it has its own goals, benefits, and unique impact on a game's production. A full career can be started and nourished in QA, and it can be a fulfilling career path on its own. This 2024 Game Career Seminar talk outlines the unique impact QA has on game development and provides many compelling reasons to consider a game career in QA.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=Ohp-aEEupBg"
       }
@@ -118576,9 +118576,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "'Hi-Fi RUSH' is a 60fps rhythm action game rendered in a stylish 3D toon art style using a customized Unreal Engine 4. In 'Hi-Fi RUSH', the developers at Tango Gameworks used toon shading for the entire world, both character and environment, while providing modern 3D graphics features, all at 60fps at native resolution. In this GDC 2024 talk, learn about the development of a deferred toon renderer developed for toon shading a 3D world in a 2D way. Various customized UE4 render passes along with added render passes of their own are stylized and combined inside deferred rendered post process volumes.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=gdBACyIOCtc"
       }
@@ -118661,9 +118661,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this 2024 Animation Summit session, join the esteemed team of Insomniac Animation Directors as they guide you on an immersive journey behind the scenes, offering a deeper exploration of the creative process behind Marvel's Spider-Man 2's animated world. From the intricacies of cinematic Quick Time Events (QTEs) to the technical and creative process of bringing ASL to the screen, they delve into both the technical challenges and creative triumphs encountered along the way.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=WMlEyfqVZLk"
       }
@@ -118704,9 +118704,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Path traced effects in games have been a dream of many since the early days of real-time rendering. The advent of hardware accelerated ray tracing and recent advances in algorithms derived from Reservoir-based Spatio-Temporal Importance Sampling (ReSTIR) have turned those dreams into reality. In this 2024 Advanced Graphics Summit talk, Evan and Adam discuss the theoretical and practical elements necessary to add real-time path–traced lighting to an advanced, modern game engine (Unreal Engine 5).",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=lxRgmZTEBHM"
       }
@@ -118749,9 +118749,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "\"Tchia\" is a one-of-a-kind cultural celebration of the small island nation of New Caledonia. Featuring elements of geography, art, food, architecture, mythology, and innumerable other aspects of New Caledonian life, it is the musical sonorities of New Caledonia that frequently take center stage. Join composer John Robert Matz as he looks at the process that went into creating a culturally-sensitive, respectful, collaborative score that features and revels in local voices, rhythms, and timbres.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=OhRZWuuBN8w"
       }
@@ -118826,9 +118826,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Before Prince of Persia, there was Karateka. Released in 1984, the directorial debut of game creator Jordan Mechner was a worldwide hit, full of groundbreaking innovations in story, cinematics, music, and animation. It was also the work of an unknown teenager looking to break into the game industry.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=mHc2iCfDoro"
       }
@@ -118869,9 +118869,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Join Cult of the Lamb's Lead Gameplay Developer, Harrison Gibbins and Twitch Integration Developer, Thomas Tuts, as they give an in-depth look at how the integration was designed and developed, the hurdles that were faced as well as an in-depth look at how well Cult of the Lamb performed on Twitch.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=QgmIs32SWdM"
       }
@@ -118914,9 +118914,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this 2023 UX Summit session, Andreia Gonalves, a Senior UX Designer at Full Circle, an Electronic Arts studio, walks attendees through the framework the skate development team has applied to their internal playtesting. This framework, which can be applied to the existing process of team playtesting, has been shown to empower team members to really step into the player's shoes, to ask for and receive more relevant feedback, as well as to increase empathy, rallying the team around player pain points.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=3SAdUHgaF9w"
       }
@@ -118959,9 +118959,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "This GDC 2024 talk takes a dive into the process of color design as part of art in video games and compares it to the process of finding and executing the same effects in audio. It is about finding the feel, direction, storytelling and building associations to make a stronger impact with what the game is trying to do.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=uUtQb81UMlw"
       }
@@ -119002,9 +119002,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "No plan survives development. Join the cinematic director of Larian Studios, Jason Latino, for an account of how the realities of making a game at the scale and reactivity of Baldur's Gate 3 required constant evolution and reexamination of first principles. In this GDC 2024 talk, Jason goes over the initial vision and tracks the specific moments that forced changes on tools, team and approach--leading up to the final challenge--bringing in the release date by a month.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=MdmY9Mt-vz8"
       }
@@ -119047,9 +119047,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Melissa Phillips, Director of the Games Leadership Network, has spent the last year working with over 80 current and emerging Games Industry Leaders from over 50 studios worldwide to better understand the challenges facing our studios in the Games Leadership space. In this GDC 2024 talk, Melissa addresses topics like: What trends are we seeing in Games Leadership? How can we better prepare our teams to move into Leadership positions and what might we do to continue to retain those already in Leadership positions?",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=NPGZRcXvuso"
       }
@@ -119090,9 +119090,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this 2024 Independent Games Summit talk, Jonathan Smårs shares insight into the Valheim development journey so far through a patch-by-patch breakdown and managing player expectations spanning multiple years of development during early access and lessons learned along the way, both internal and external challenges that have emerged, and oh - and they bought a horse.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=YoOCUpdYYm4"
       }
@@ -119133,9 +119133,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "The GDC 2024 talk is a dive into the world-building aspect of The Dark Place of Alan Wake II. Nazareno Urbano explains how they approached the environment world-building and what tools were used to create an evolving nightmare dimension where the world is shifting, and multiple layers of reality are interconnected in a dream logic structure where the reality is subjective.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=vyafiQG6XEU"
       }
@@ -119176,9 +119176,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Video game trailers are unique in the entertainment landscape in terms of production, content, and especially presentation. In this GDC 2024 session, Adrien Marie, Brand Manager at Dotemu, shares through multiple examples his insights on game trailers, their structures, formats, goals and how the way they are presented can and must change your way to build them.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=W9R132PueC4"
       }
@@ -119221,9 +119221,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "At GDC 2024, developers of The Legend of Zelda: Tears of the Kingdom discuss structuring an expanded Hyrule around physics-based gameplay and evolved sound design! Join the game’s Technical Director Takuhiro Dohta, Lead Physics Programmer Takahiro Takayama, and Lead Sound Engineer Junya Osada as they explore challenges their teams faced when approaching this sequel.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=N-dPDsLTrTE"
       }
@@ -119264,9 +119264,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Formed over 4 years of designing Fallout: Wasteland Warfare and all of its expansions, campaigns, AI and RPG (plus 20+ years of game design experience), this 2024 Tabletop Summit talk examines how Bethesda's award-winning Fallout videogame series was converted to the tabletop game of Fallout: Wasteland Warfare.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=UfUjrGheJvk"
       }
@@ -119307,9 +119307,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Video games are now a significant part of life for those aged 50 years and older, with over 50-million players. This talk features Northeastern University and AARP discussing the AARP research on 50-plus players, their needs, and the market opportunity.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=HRfl3xVL32Q"
       }
@@ -119387,9 +119387,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this session, Game Director John Johanas shares how the initial concept for Hi-Fi RUSH came to be. From there, he provides in-depth details into the development team's early learnings on approaching this type of rhythm-action title.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=pG4UxqRMNX0"
       }
@@ -119430,9 +119430,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Playing with nostalgia is always a risky bet, but the team at Tribute Games won big when making Teenage Mutant Ninja Turtles: Shredder's Revenge. In this design talk, game designer Frederic Gemus shares Tribute Games' design philosophies and how they were successfully applied to the game. With the help of concrete examples from the production of the game, learn how to properly adapt older licenses by finding key aspects, the difference between remaking versus redoing features, and, finally, how to inject new ideas into the mix.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=oz_mTRuiIYg"
       }
@@ -119473,9 +119473,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "You can't think of Star Wars without the Mos Eisley Cantina. Learn how the narrative team on 'STAR WARS Jedi: Survivor' brought Pyloon's Saloon to life, generating hundreds of state-based interactions for its diverse cast of evolving NPCs.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=yQFTFS9ZO5E"
       }
@@ -119516,9 +119516,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "This GDC 2024 panel carries forward the legacy of one of GDC's most impactful diversity panels, which was initially initiated by the legendary Brenda Romero and Leigh Alexander, and later carried on by Rami Ismail. #1ReasonToBe showcases women from emerging territories across the globe, engaging in candid conversations about game development within their respective and unique point of views.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=2ZHOUAjzDj0"
       }
@@ -119562,9 +119562,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Sometimes people say \"Quaternions are 4 dimensional\". They are trying to scare you. It's no more true than \"3x3 matrices are 9 dimensional\", and no more helpful either. There is a concrete, 3D way to visualize quaternions. In this GDC 2023 session, Hamish Todd dives into how quaternions are created, interpolated, and composed together.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=en2QcehKJd8"
       }
@@ -119605,9 +119605,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In 2018, pumped by the success of their first game, \"Bury me, my Love,\" Florent Maurin and his team start working on a second project called The Wreck. They had money, experience, confidence, and a great idea to toy with. Things looked bright. But after a year, the vertical slice the team worked so hard on pretty much sucks. How did it come to this? What went wrong? And, more importantly: Is it still possible to stop The Wreck from ending in a wreck? In this session, Florent explains how success can sometimes have negative consequences, how easy it is to rush in the wrong direction, how hard it can be to steer away from it, and how, sometimes, what you really need is a series of kicks in the butt.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=yeyMASDMfB4"
       }
@@ -119650,9 +119650,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "How do newer writers fit into game design and narrative design teams? Do writers coming from the worlds of film and comics have advantages getting work over prose writers? Is it easier to be a freelancer or employee? Do you have the skills to be a writer in this industry? How do you know when you've \"made it\"? Especially for individuals with little experience and those looking to break in, this GDC 2024 session has participants asking veteran writers and narrative designers questions without definitive answers.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=Xpfm_xtKZdc"
       }
@@ -119693,9 +119693,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "When players are unfamiliar with a culture, how do we tell a story that's rooted in it? In this GDC 2024 talk, creative director Abhi outlines various techniques used to follow a \"Lore, don't tell\" approach that let him not only be laser focused on the story he wanted to tell in Venba but also helped him shine a light on the culture he loves with all its details",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=2RPdqg5fiz8"
       }
@@ -119736,9 +119736,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Getting hired is tough! Hiring is tough! In this GDC 2024 talk, a 15-year recruiting veteran takes you through the journey of getting employed, and the myriad of ways to turn off the hiring manager. Not only do they share what to avoid and how to impress, but they explore using empathy as a tool to form deeper connections and improve your professional standing.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=n0bFSdch8rk"
       }
@@ -119781,9 +119781,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Composer Austin Wintory and Director/Actor Troy Baker unpack the incredibly elaborate five-year process of writing, producing, and directing the interactive musical roleplaying game Stray Gods. This talk details the process of discovering the mechanics for interactive songs, the long road to writing and testing the songs, and the equally long road in casting, directing, and producing the songs.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=cY7JAkOayQM"
       }
@@ -119858,9 +119858,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this GDC 2023 talk, Rebekah Saltsman shares how the marketing and development teams at Finji use an integrated communication and asset creation process to manage projects that intentionally balances the high-profile marketing asks required to ship a game alongside the development reality of a project.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=D9glo1vLS-I"
       }
@@ -119932,9 +119932,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Visai Games’ Venba won the Seumas McNally Grand Prize for Best Independent Game at the 26th annual Independent Games Festival Awards (at GDC 2024) on Wednesday. Watch the full ceremony here.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=WkW3FicsKUU"
       }
@@ -120008,9 +120008,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "This year's GDC Main Stage featured an instrumental concert showcasing incredible video game scores, conducted by composer Austin Wintory (The Banner Saga, Stray Gods: The Roleplaying Musical) and co-hosted by actor and singer-songwriter Troy Baker (The Last of Us, Bioshock Infinite, Uncharted 4: A Thief's End). Watch the full performance here, featuring special guest appearances from Peter McConnell, Darren Korb, Ashley Barrett, Laura Intravia, and more.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=3wNHW50J0UI"
       }
@@ -120154,9 +120154,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "On 'As Dusk Falls,' INTERIOR/NIGHT set out to create an original narrative IP inspired by prestige television, with a deeply branching story that would resonate across all possible paths. But how do you deliver a grounded, emotionally authentic experience when the story can go a hundred different ways? The answer is: You learn to exist in a multiverse. In this GDC 2023 talk, Brad Kane, Narrative Director at INTERIOR/NIGHT, explores the principles that went into bringing a prestige interactive drama to life, and how interactive writer-designers can use both halves of the brain to navigate a \"narrative multiverse.\"",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=P0iluGzYGpY"
       }
@@ -120467,9 +120467,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Games are fun entertainment. Tests are boring but useful. What if we combined the best parts of each? When you apply to certain jobs at Roblox, you get a link to a game. After about 30 minutes playing an interactive 3D puzzle-strategy game, the team learns something definitive about your strength in a certain cognitive skill—such as systems thinking, creative problem solving, or critical thinking. This GDC 2023 session dives into this creative process for finding the right talent.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=chY8bfGa5rU"
       }
@@ -120510,9 +120510,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Welcome to your new job! Here's your computer, your password and... your manager. Gulp! If you've ever found your manager intimidating, prepare to be demystified as you learn more about what their job is, what they want from you, and, most importantly, how you can put yourself in the driver's seat and help them help you. This 2023 Game Career Seminar talk includes concrete guides and templates to help you build out your toolbox at work, and thrive in any kind of manager relationship: good or bad.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=TO23gOGZkcA"
       }
@@ -120555,9 +120555,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this GDC 2023 talk, Stephanie Fisher and Alison Harvey outline the concrete and specific benefits of inclusion organizing in creating change in the short, medium, and long term. They also outline their findings on how inclusivity-focused groups and initiatives like Pixelles can communicate their impact to different audiences in a manner that is driven and informed by consent, safety, and privacy.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=SXQT4J110Dg"
       }
@@ -120598,9 +120598,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Creating stories for games is a team effort, but what happens when we stop thinking as a team, and start thinking as an ensemble? How can we tell stories across not just dialogue, but art, audio, even design? Even more radically, how can we foster shared ownership as creators? This 2023 Game Narrative Summit talk discusses what game narrative can learn from the sister medium of theatre in a pragmatic way: How to use language for elements of time and space to generate story, how to begin the story creation process as a collective, and how to direct methodology for collaborative creation.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=WDK4FBm3DDY"
       }
@@ -120745,9 +120745,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "The benefits of mentorship are clear for mentees: It provides them with support in navigating what can be a strange new industry, opens doors to opportunities, and provides a critical avenue for people to safely stay and grow in this industry. However, mentorship doesn't only benefit the mentees. In this GDC 2023 talk, Andy Schmoll, Expert AI Designer at Ubisoft Toronto, covers what it means—and doesn't mean—to be a mentor.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=o6q1F_phK7c"
       }
@@ -120788,9 +120788,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "This 2023 Level Design Summit session teaches designers how to pull the player into a character (regardless of genre) and give said players the tools to understand and enjoy performing as a character in the game.This talk relies on Evan Hill's experience directing players both in linear story games like the Last of Us Part 2 and in computer roleplaying games like Outer Worlds and Torment.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=G3vJMocSxuc"
       }
@@ -120901,9 +120901,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Why would anyone care about the parody of a game that came out seven years prior? As it turns out, there are some solid reasons why. In this GDC 2023 talk, Bradley Lovell, developer of 2022's The Looker, a parody of the 2015 open-world puzzle game The Witness, discusses what it takes to make a high-bandwidth parody that goes beyond obvious audio-visual gags to tell jokes through gameplay, as well as engage deeply with the source material. This discussion touches on the core appeals of parody games, as well as the unique opportunities for humor that games afford. Bradley also discusses the importance of maintaining internal consistency so a game's humor and subversion of expectations do not cause unintentional damage to its core design.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=AbzbdDRzfso"
       }
@@ -121014,9 +121014,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "This 2023 Game Narrative Summit session explores unique and innovative mechanics in the tabletop roleplaying game world, and provides jumping-off points for designers to implement and experiment with them in their own games. Evan Hill, Senior Area Designer at Obsidian, introduces attendees to the wide and strange world of tabletop RPGs, and discusses all the obvious and secret ways the genre has influenced the goals and designs of digital games (for example: how computer roleplaying games work to capture the experience of having a Game Master). Evan also outlines the experimental nature of the talk, looking for new innovations and adaptations that can be transported to digital game design.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=6sXdCKd0XdE"
       }
@@ -121093,9 +121093,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "In this GDC 2023 session, hear how Sam Barlow and Half Mermaid conceived and then designed the multi-dimensional, decade-spanning series of interconnected Interactive Movies, IMMORTALITY. Learn about the design processes and prototypes that allowed the team to explore the game ideas and structure. How the ambitious and layered story was outlined and researched, and how the team collaborated with notable screenwriters to tap into authenticity. How game design learning translates into the production and directing of the three movies worth of footage. Finally, what learnings other teams can take from this ambitious and boundary pushing title to apply to their own genres and game ideas.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=jhFHX3TCw6I"
       }
@@ -121207,9 +121207,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "It's no secret there has been a noticeable rise in visibility for \"wholesome\" games—games with non-violent, often inclusive, themes and mechanics. Titles such as Unpacking, A Short Hike, and Ooblets are just some examples of games that have hit a level of popularity, rivaling their more violent counterparts. However, whether it's been content creators, development, discourse, showcases, events, or exploration of cozy games: What are some of the actual numbers behind this rise, and why does it matter? Using information gathered by the creators of Wholesome Games, this 2023 Fair Play Summit panel explores the viability of wholesome games—their business, impact, and meaning for the industry and beyond.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=6wkVGQ8swBg"
       }
@@ -182199,9 +182199,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "It's easy to assume that amazing indie games like Gunpoint, Crypt of the Necrodancer, Ape Out, and Into the Breach were designed in a flash of inspiration. But that's not true - find out how these games came to be in this episode of Game Maker's Toolkit.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=kMDe7_YwVKI"
       }
@@ -182487,9 +182487,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Welcome back to the School of Stealth, a GMTK miniseries on how stealth games work. In episode two, let’s look at stealth game gadgets. From optic fibre cameras to camouflage outfits to the trusty silenced pistol. Subscribe to ensure you catch future episodes.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=QLWC081dDpc"
       }
@@ -183168,9 +183168,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "2019 has already seen the release of four post apocalyptic open world games - but 4A's Metro Exodus is by far the most immersive. So what does that phrase actually mean, and what design decisions help create that feeling?",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=8geGHbWIMXA"
       }
@@ -183833,9 +183833,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "The new Spider-Man game on PS4 is being praised for making you feel like Spider-Man. But what does that actually mean, and what does it mean for web-swinging?",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=DKSpE2PGJjI"
       }
@@ -183876,9 +183876,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Overcooked is one of the best co-op games I’ve played, because it seems to force players to not only work with each other - but talk to each other. In this video, I’ll explain how the kitchens themselves encourage this behaviour.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=C3M8BvWcJQY"
       }
@@ -184069,9 +184069,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Making a Metroidvania is an enormous design challenge. How do you let a player loose in an interconnected world, without them becoming lost or frustrated?",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=kUT60DKaEGc"
       }
@@ -184645,9 +184645,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "You asked for it! Before we finish Boss Keys season one, by looking at the most recent Zelda game (Breath of the Wild), let's take a detour to the games that started it all - Zelda 1 and 2 on the NES.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=emtlJ5SXLM4"
       }
@@ -184688,9 +184688,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube Data API v3 官方公开描述；摘要仅依据描述，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Super Mario Odyssey’s success can be traced back to the design philosophies we’ve discussed on earlier episodes of Game Maker’s Toolkit. Let’s look at how these different ideas have been put into practice, in Mario’s latest game.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=z_KVEjhT4wQ"
       }
@@ -193872,9 +193872,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube 官方公开描述；仅支持频道目标与受众范围，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "My goal for this channel is to benefit those who make games, those who play games, and those who work in games. I hope you'll continue to tune in as we move forward!",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=PUj0WzkmLf0"
       }
@@ -194032,9 +194032,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube 官方公开描述提到组合数量增长与 bug testing 的不可穷举性；不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "When the number of elements in a game increases, it's not addition, it's multiplication! Today, I'll discuss a type of bug testing that's become physically impossible to complete.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=yIXB0vGJBuw"
       }
@@ -199683,9 +199683,9 @@
     ],
     "externalSignals": [
       {
-        "provider": "YouTube Data API v3",
-        "label": "官方公开描述（非字幕正文）",
-        "value": "YouTube 官方公开描述与频道公开材料；用于旁证频道目标与受众，不等同于字幕正文。",
+        "provider": "YouTube",
+        "label": "视频简介首段（原文摘录，非字幕正文）",
+        "value": "Join me as I kick off my new channel, \"Masahiro Sakurai on Creating Games,\" with an overview of the kinds of things I'll be talking about. Why am I making a channel, exactly? You'll find out in this video.",
         "observedAt": "2026-08-23",
         "url": "https://www.youtube.com/watch?v=7M-DnOIeasA"
       }

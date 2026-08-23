@@ -213,6 +213,20 @@ test('labels third-party observations as evidence rather than site facts', async
   await expect(page.locator('main')).not.toContainText('外部事实');
 });
 
+test('names the concrete source object for official-description evidence', async ({ page }) => {
+  const resource = resources.find(({ id }) => id === 'yt-20260820-gdc-MdmY9Mt-vz8');
+  expect(resource).toBeTruthy();
+
+  await page.goto('./resources/');
+  await page.getByRole('button', { name: '展开全表' }).click();
+  const row = page.locator(`[data-result-id="${resource?.id}"]`);
+  await row.locator('.work-item-result__more summary').click();
+  await expect(row).toContainText('YouTube');
+  await expect(row).toContainText('视频简介首段（原文摘录，非字幕正文）');
+  await expect(row).toContainText('No plan survives development.');
+  await expect(row).not.toContainText('YouTube Data API v3');
+});
+
 test('renders raw external observations in catalog order without site-authored quality fields', async ({ page }) => {
   const resource = resources.find(({ externalSignals }) => (externalSignals?.length ?? 0) > 1);
   expect(resource).toBeTruthy();

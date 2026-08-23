@@ -49,10 +49,10 @@ const languageLabels: Record<string, string> = {
 };
 
 export const externalObservationCopy = {
-  directoryNote: '按目录顺序列出。第三方来源只作为旁证记录，不用于评分、排序或推荐。',
+  directoryNote: '按目录顺序列出。第三方来源只作为旁证记录，并标明具体旁证对象；不用于评分、排序或推荐。',
   disclosure: '查看访问版本与外部旁证',
   sectionTitle: '外部旁证',
-  sourceNote: '以下是带来源与日期的第三方旁证记录；不等同于原始内容，也不构成本站评价、评分或排序。',
+  sourceNote: '以下记录会标明具体旁证对象（如视频简介首段、文章摘要或公开指标）；不等同于原始内容，也不构成本站评价、评分或排序。',
 } as const;
 
 export function formatMediaType(mediaType: Catalog['resources'][number]['mediaType']) {
