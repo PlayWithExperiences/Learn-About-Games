@@ -136,6 +136,120 @@ class NotebookLMProducerTests(unittest.TestCase):
             self.assertEqual(result["candidate"]["video_id"], "ABCDEFGHIJK")
             self.assertFalse(ledger_path.exists())
 
+    def test_preflight_batch_returns_ten_candidates_without_writing_state(self):
+        catalog = _catalog(
+            *(
+                _resource(
+                    f"resource-{index}",
+                    f"https://www.youtube.com/watch?v=A{index:010d}",
+                )
+                for index in range(12)
+            )
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            catalog_path = root / "resources.json"
+            catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+            inbox = root / "inbox"
+            inbox.mkdir()
+            ledger_path = root / "ledger.json"
+
+            result = producer.preflight(catalog_path, inbox, ledger_path, limit=10, now=NOW)
+
+            self.assertEqual(result["status"], "ready_to_claim")
+            self.assertEqual(len(result["candidates"]), 10)
+            self.assertEqual(result["candidates"][0]["video_id"], "A0000000000")
+            self.assertEqual(result["candidates"][-1]["video_id"], "A0000000009")
+            self.assertEqual(result["candidate_count"], 12)
+            self.assertEqual(result["claimed_today"], 0)
+            self.assertEqual(result["remaining_today"], 10)
+            self.assertFalse(ledger_path.exists())
+
+    def test_preflight_rejects_batch_limits_outside_one_to_ten(self):
+        catalog = _catalog(_resource("resource-1", "https://www.youtube.com/watch?v=ABCDEFGHIJK"))
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            catalog_path = root / "resources.json"
+            catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+            inbox = root / "inbox"
+            inbox.mkdir()
+
+            for limit in (0, 11):
+                with self.subTest(limit=limit), self.assertRaises(producer.ProducerError):
+                    producer.preflight(catalog_path, inbox, root / "ledger.json", limit=limit, now=NOW)
+
+    def test_claim_cli_can_claim_the_exact_candidate_selected_for_a_batch(self):
+        catalog = _catalog(
+            _resource("resource-1", "https://www.youtube.com/watch?v=ABCDEFGHIJK"),
+            _resource("resource-2", "https://youtu.be/LMNOPQRSTUV"),
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            catalog_path = root / "resources.json"
+            catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+            inbox = root / "inbox"
+            inbox.mkdir()
+            state_dir = root / "state"
+            batch = producer.preflight(catalog_path, inbox, state_dir / "ledger.json", limit=2, now=NOW)
+            selected = batch["candidates"][1]
+
+            args = producer._parser().parse_args(
+                [
+                    "claim",
+                    "--catalog",
+                    str(catalog_path),
+                    "--inbox",
+                    str(inbox),
+                    "--state-dir",
+                    str(state_dir),
+                    "--resource-id",
+                    selected["resource_id"],
+                ]
+            )
+            claimed = producer._command(args)
+
+            self.assertEqual(claimed["resource_id"], selected["resource_id"])
+            self.assertNotIn("youtube-ABCDEFGHIJK", producer.read_ledger(state_dir / "ledger.json")["entries"])
+
+    def test_claims_are_capped_at_ten_per_beijing_calendar_day(self):
+        catalog = _catalog(
+            *(
+                _resource(
+                    f"resource-{index}",
+                    f"https://www.youtube.com/watch?v=A{index:010d}",
+                )
+                for index in range(11)
+            )
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            catalog_path = root / "resources.json"
+            catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+            inbox = root / "inbox"
+            inbox.mkdir()
+            ledger_path = root / "ledger.json"
+            candidates = producer.load_candidates(catalog_path)
+
+            first_claim = producer.claim_candidate(candidates[0], ledger_path, NOW, inbox_dir=inbox)
+            producer.mark_failed(
+                candidates[0],
+                ledger_path,
+                first_claim["generation_run_id"],
+                NOW,
+                "asset-download failed",
+            )
+            for candidate in candidates[1:10]:
+                producer.claim_candidate(candidate, ledger_path, NOW, inbox_dir=inbox)
+
+            with self.assertRaises(producer.ProducerError) as context:
+                producer.claim_candidate(candidates[10], ledger_path, NOW, inbox_dir=inbox)
+
+            self.assertIn("10", str(context.exception))
+            result = producer.preflight(catalog_path, inbox, ledger_path, limit=10, now=NOW)
+            self.assertEqual(result["status"], "daily_limit_reached")
+            self.assertEqual(result["claimed_today"], 10)
+            self.assertEqual(result["remaining_today"], 0)
+
     def test_publish_ready_writes_metadata_and_is_idempotent(self):
         candidate = producer.Candidate(
             resource_id="youtube-ABCDEFGHIJK",

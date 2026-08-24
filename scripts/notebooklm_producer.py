@@ -1,4 +1,4 @@
-"""Deterministic, idempotent preparation for one NotebookLM resource.
+"""Deterministic, idempotent preparation for bounded NotebookLM batches.
 
 This module deliberately does not call NotebookLM, PicGo, GitHub, or an LLM.  The
 local Skill owns those runtime actions; this module owns candidate selection, the
@@ -23,6 +23,7 @@ from urllib.parse import parse_qs, urlparse
 
 BEIJING = timezone(timedelta(hours=8))
 DEFAULT_STATE_DIR = Path.home() / ".local" / "state" / "learn-about-games" / "notebooklm-daily"
+DAILY_BATCH_LIMIT = 10
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 TIMESTAMP_RE = re.compile(r"^\d{4}-\d{4}-\d{4}$")
@@ -53,6 +54,28 @@ class Candidate:
 
 def _now() -> str:
     return datetime.now(BEIJING).isoformat(timespec="seconds")
+
+
+def _beijing_datetime(value: str) -> datetime:
+    if not isinstance(value, str) or not value.strip():
+        raise ProducerError(f"时间戳必须是非空 ISO 日期时间：{value}")
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ProducerError(f"时间戳不是 ISO 日期时间：{value}") from exc
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=BEIJING)
+    return parsed.astimezone(BEIJING)
+
+
+def _calendar_day(value: str) -> str:
+    return _beijing_datetime(value).date().isoformat()
+
+
+def _validate_batch_limit(value: int) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= DAILY_BATCH_LIMIT:
+        raise ProducerError(f"批量上限必须在 1 到 {DAILY_BATCH_LIMIT} 之间：{value}")
+    return value
 
 
 def _timestamp(now: str) -> str:
@@ -207,6 +230,19 @@ def read_ledger(path: Path) -> dict:
     return ledger
 
 
+def _claimed_today(ledger: dict, now: str) -> int:
+    """Count every claim made on the Beijing calendar day, including failures."""
+    today = _calendar_day(now)
+    count = 0
+    for resource_id, entry in ledger["entries"].items():
+        if not isinstance(entry, dict):
+            raise ProducerError(f"ledger entries.{resource_id} 必须是对象")
+        claimed_at = entry.get("claimed_at")
+        if claimed_at is not None and _calendar_day(claimed_at) == today:
+            count += 1
+    return count
+
+
 def _atomic_write_json(path: Path, value: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
@@ -306,6 +342,11 @@ def claim_candidate(
         existing_inbox = _existing_inbox_for_video(inbox_dir, candidate.video_id)
         if existing_inbox is not None:
             raise AlreadyProcessed(f"{candidate.video_id} 已存在 inbox 记录：{existing_inbox}")
+        claimed_today = _claimed_today(ledger, now)
+        if claimed_today >= DAILY_BATCH_LIMIT:
+            raise ProducerError(
+                f"今日 NotebookLM 生产调用已达到上限 {DAILY_BATCH_LIMIT} 次，拒绝新的 claim"
+            )
 
         claim = {
             "resource_id": candidate.resource_id,
@@ -520,18 +561,61 @@ def _candidate_state(candidate: Candidate, ledger: dict, inbox_dir: Path | None)
     return "ready_to_claim", "没有发现本地 ledger 或 inbox 记录"
 
 
-def preflight(catalog_path: Path, inbox_dir: Path | None, ledger_path: Path) -> dict:
+def preflight(
+    catalog_path: Path,
+    inbox_dir: Path | None,
+    ledger_path: Path,
+    *,
+    limit: int = 1,
+    now: str | None = None,
+) -> dict:
     """Read-only selection probe; it never claims, writes, or calls a service."""
+    _validate_batch_limit(limit)
+    effective_now = now or _now()
     candidates = load_candidates(catalog_path)
     ledger = read_ledger(ledger_path)
+    claimed_today = _claimed_today(ledger, effective_now)
+    remaining_today = max(0, DAILY_BATCH_LIMIT - claimed_today)
+    base = {
+        "candidate_count": len(candidates),
+        "claimed_today": claimed_today,
+        "remaining_today": remaining_today,
+        "requested_limit": limit,
+    }
+    if remaining_today == 0:
+        return {
+            **base,
+            "status": "daily_limit_reached",
+            "reason": f"今日已记录 {DAILY_BATCH_LIMIT} 次 NotebookLM claim，包含失败调用",
+            "candidates": [],
+        }
+
+    selected: list[dict] = []
     for candidate in candidates:
         status, reason = _candidate_state(candidate, ledger, inbox_dir)
         if status == "ready_to_claim":
-            return {"status": status, "reason": reason, "candidate": asdict(candidate)}
+            selected.append(asdict(candidate))
+            if len(selected) >= min(limit, remaining_today):
+                break
+
+    if selected:
+        result = {
+            **base,
+            "status": "ready_to_claim",
+            "reason": "按目录顺序返回未在 ledger 或 inbox 留痕的候选",
+            "candidates": selected,
+            "selected_count": len(selected),
+        }
+        if limit == 1:
+            result["candidate"] = selected[0]
+        return result
+
     return {
+        **base,
         "status": "no_candidate",
         "reason": "所有候选都已在本地 ledger 或 inbox 中留下状态",
-        "candidate_count": len(candidates),
+        "candidates": [],
+        "selected_count": 0,
     }
 
 
@@ -543,13 +627,18 @@ def _state_path(cli_value: str | None) -> Path:
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Prepare one idempotent NotebookLM inbox resource")
+    parser = argparse.ArgumentParser(description="Prepare bounded idempotent NotebookLM inbox resources")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for command in ("preflight", "claim"):
-        sub = subparsers.add_parser(command)
-        sub.add_argument("--catalog", type=Path, required=True)
-        sub.add_argument("--inbox", type=Path, required=True)
-        sub.add_argument("--state-dir", type=Path)
+    preflight_parser = subparsers.add_parser("preflight")
+    preflight_parser.add_argument("--catalog", type=Path, required=True)
+    preflight_parser.add_argument("--inbox", type=Path, required=True)
+    preflight_parser.add_argument("--state-dir", type=Path)
+    preflight_parser.add_argument("--limit", type=int, default=1)
+    claim_parser = subparsers.add_parser("claim")
+    claim_parser.add_argument("--catalog", type=Path, required=True)
+    claim_parser.add_argument("--inbox", type=Path, required=True)
+    claim_parser.add_argument("--state-dir", type=Path)
+    claim_parser.add_argument("--resource-id")
     failed = subparsers.add_parser("fail")
     failed.add_argument("--catalog", type=Path, required=True)
     failed.add_argument("--state-dir", type=Path)
@@ -570,14 +659,19 @@ def _command(args: argparse.Namespace) -> dict | str:
     state_dir = _state_path(str(args.state_dir) if args.state_dir else None)
     ledger_path = state_dir / "ledger.json"
     if args.command == "preflight":
-        return preflight(args.catalog, args.inbox, ledger_path)
+        return preflight(args.catalog, args.inbox, ledger_path, limit=args.limit)
 
     candidates = load_candidates(args.catalog)
     if args.command == "claim":
-        result = preflight(args.catalog, args.inbox, ledger_path)
-        if result["status"] != "ready_to_claim":
-            raise ProducerError(f"不能占用候选：{result['status']}：{result['reason']}")
-        candidate = Candidate(**result["candidate"])
+        if args.resource_id:
+            candidate = next((item for item in candidates if item.resource_id == args.resource_id), None)
+            if candidate is None:
+                raise ProducerError(f"找不到 resource_id：{args.resource_id}")
+        else:
+            result = preflight(args.catalog, args.inbox, ledger_path)
+            if result["status"] != "ready_to_claim":
+                raise ProducerError(f"不能占用候选：{result['status']}：{result['reason']}")
+            candidate = Candidate(**result["candidate"])
         return claim_candidate(candidate, ledger_path, _now(), inbox_dir=args.inbox)
 
     if args.command == "fail":

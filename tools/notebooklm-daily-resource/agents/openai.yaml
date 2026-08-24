@@ -1,4 +1,4 @@
 interface:
-  display_name: "NotebookLM Daily Resource"
-  short_description: "Generate one deduplicated NotebookLM resource for Daily Check-in"
-  default_prompt: "Run the safe preflight for one new Learn About Games video; do not call NotebookLM until explicitly confirmed."
+display_name: "NotebookLM Daily Batch"
+short_description: "Generate up to ten deduplicated NotebookLM resources for Daily Check-in"
+default_prompt: "Run the safe preflight for up to ten new Learn About Games videos; do not call NotebookLM until the batch is explicitly confirmed."
