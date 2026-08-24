@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-24 03:11 · 记录者 AI*
+*更新于 2026-08-24 10:31:51 · 记录者 AI*
 
 ## 现在在哪
 
@@ -40,12 +40,15 @@
 - NotebookLM 每日生产自动化已实现（2026-08-24 01:29）：`scripts/notebooklm_producer.py` 从 2,454 个唯一 YouTube `video_id` 中按稳定顺序选择候选，使用本地 ledger、单实例锁和 `generating → ready/failed` 状态防止重复调用；`tools/notebooklm-daily-resource` 已作为版本化本机 Skill，并通过 `/Users/haodong/.codex/skills/notebooklm-daily-resource` 暴露。AI-Life-Mentor 消费端已改为全量分页扫描历史 Issue，ready-only 校验并保留旧 Celeste 记录兼容性。
 - 自动化边界已落地：`automation/notebooklm-daily-preflight.sh` 与 07:30 launchd plist 保持为本地 preflight 模板、未安装以避免重复调度；Codex 本机 cron `Learn About Games — NotebookLM 每日学习资源` 已启用，每天 07:30（北京时间）只处理一条，失败留 ledger 并通知，不重试。现有 GitHub Actions Daily Check-in 仍在 08:30 消费 ready JSON。
 - 本轮真实单次生产已完成并经过人工浏览器验收；后续调度会复用同一 Skill/合同，不在定时脚本内偷偷调用 NotebookLM，也不手动触发会调用 OpenRouter 的完整 Daily Check-in。
+- Daily Check-in 消费故障核查（2026-08-24 10:31:51）：事实：远端 ready 资源 `youtube-hTNA84vJNEc` 存在，但已通过 NotebookLM 补发 Issue #183 写入并带 marker；Celeste 资源已由 Issue #182 标记，完整分页扫描后两条都属于已消费。Action run [32681846088](https://github.com/Medill-East/AI-Life-Mentor/actions/runs/32681846088) 先成功生成每日正文，随后在 `pick_resource` 得到空候选池时抛出 `NoNotebookLMResource`，创建失败 Issue #184；不是 NotebookLM 内容缺失，也不是消费状态查询失败。
+- 同日 producer ledger 另有一条 `youtube-E4ZUgPoDrvY` 在 asset-download 阶段失败，未写 ready JSON、未上传或推送；当前本地 preflight 只报告下一个候选 `_gbJw7orSI8` 为 `ready_to_claim`，本次没有 claim 或重跑。
 - 免费路由器 smoke test：仓库外临时启动 FreeLLMAPI Docker 实例，仅使用匿名免费渠道并处理一条真实《Designing Celeste》字幕；裸模型名被同名模型合并解析到 Navy，改用精确 `ovh:Qwen3.5-397B-A17B` 后确实到达 OVH，但上游返回 429；Kilo 的 `nvidia/nemotron-3-ultra-550b-a55b:free` 在 60 秒上游超时内未返回。未写回仓库、未启用付费模型或 Premium；当前结论是该路由器可作为本地兼容层候选，但免费匿名端点尚不足以承接长字幕批量总结。
 
 ## 下一步
 
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
 - 每天由本机 Codex cron 按 ledger 选取一条未处理资源，完成 NotebookLM → 下载/转换 → PicGo → ready JSON → AI-Life-Mentor `main` 的链路；次日 GitHub Actions 再消费到 Daily Check-in 与 PKM。producer 的 `generating → ready/failed`、唯一 marker 和完整 Issue 分页扫描共同防止重复。
+- 建议（未实施）：AI-Life-Mentor 消费端应把“目录有记录但全部 ready 资源均已被 marker 消费”当作可观察的正常 no-op；继续让坏 JSON、消费状态查询失败和 PKM 写回失败抛错，并为“排空队列”补一条 `attach_notebooklm_resource` 回归测试。资源补发 Issue 仍应计入消费，避免次日重复投递。
 - 不自动对全库生成 Studio 多模态产物；任何扩大到批量、换模型、重试、订阅或可能计费的 API/云服务调用，都必须在开始前重新取得用户确认。
 - 在实现多模态展示前，先确定 `artifact` 资产层和托管策略：图片/思维导图可导出后静态托管，演示文稿导出 PDF/PPTX，音频/视频不直接塞进 Git 仓库，优先使用对象存储或只保留外部分享入口。公开前需逐项审核 NotebookLM 分享权限、原始来源版权和生成内容的可公开性。
 - AI Plus 适合作为每日精选和小批研究的容量升级，不足以把 2,311 条资源的文字、信息图、思维导图、演示文稿全部一次性生成；批量方案还受普通 Notebook 网页入口、浏览器自动化稳定性和版权/分享边界限制。购买或升级订阅必须另行获得确认。
