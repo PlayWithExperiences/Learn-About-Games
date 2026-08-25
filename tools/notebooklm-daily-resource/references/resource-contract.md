@@ -30,6 +30,7 @@ validation.
   "timestamp": "2026-0824-0730",
   "generated_at": "2026-08-24T07:30:00+08:00",
   "producer_status": "ready",
+  "contract_version": 2,
   "generation_run_id": "run-20260824073000-1234",
   "output_fingerprint": "由 producer 计算，不手填",
   "source": {
@@ -45,7 +46,13 @@ validation.
     },
     "mind_map": {
       "label": "中文简体完整思维导图",
-      "url": "https://raw.githubusercontent.com/Medill-East/IMGStorage/master/20260824073000-topic-mindmap.png"
+      "url": "https://raw.githubusercontent.com/Medill-East/IMGStorage/master/20260824073000-topic-mindmap.png",
+      "expansion_verification": {
+        "method": "notebooklm-viewer",
+        "action": "全部展开",
+        "observed_depth": 3,
+        "collapsed_node_count": 0
+      }
     },
     "slide_deck": {
       "label": "中文简体详细演示文稿",
@@ -59,9 +66,13 @@ validation.
 }
 ```
 
-`resource_id`、`source.video_id`、`producer_status`、`generation_run_id`、
-`generated_at` 和 `output_fingerprint` 由生产核心校验/补入；不要用标题或时间戳
+`resource_id`、`source.video_id`、`contract_version`、`producer_status`、
+`generation_run_id`、`generated_at` 和 `output_fingerprint` 由生产核心校验/补入；不要用标题或时间戳
 替代稳定的 `video_id` 去重。`notebook_url` 是私有辅助入口，只进入 PKM/每日精选。
+
+`contract_version: 2` 的思维导图必须带 `expansion_verification`：生产者只接受
+NotebookLM 查看器实际执行“全部展开”、观察到至少三级节点、且剩余折叠节点为 0
+的记录。旧版没有该字段的已发布资源继续按兼容规则消费；新生产结果不得省略它。
 
 每一个 artifact 都必须实际存在并有可引用 `url` 才能标记 `ready`。如果 NotebookLM
 没有生成某项，使用 `failed`/`partial` 记录原因并停止，不要写入空链接或

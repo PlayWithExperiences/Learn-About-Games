@@ -24,6 +24,19 @@ def _resource(resource_id: str, url: str, *, access_url: str | None = None) -> d
     }
 
 
+def _mind_map_artifact() -> dict:
+    return {
+        "label": "中文简体完整思维导图",
+        "url": "https://example.com/map.png",
+        "expansion_verification": {
+            "method": "notebooklm-viewer",
+            "action": "全部展开",
+            "observed_depth": 3,
+            "collapsed_node_count": 0,
+        },
+    }
+
+
 class NotebookLMProducerTests(unittest.TestCase):
     def test_load_candidates_deduplicates_urls_and_keeps_catalog_order(self):
         catalog = _catalog(
@@ -265,7 +278,7 @@ class NotebookLMProducerTests(unittest.TestCase):
             "source": {"label": "YouTube", "url": candidate.source_url},
             "artifacts": {
                 "infographic": {"label": "Info", "url": "https://example.com/info.png"},
-                "mind_map": {"label": "Map", "url": "https://example.com/map.png"},
+                "mind_map": _mind_map_artifact(),
                 "slide_deck": {"label": "Slides", "url": "https://example.com/slides.pptx"},
             },
             "content_summary": "按来源顺序整理出的完整文字版总结。",
@@ -291,6 +304,7 @@ class NotebookLMProducerTests(unittest.TestCase):
             self.assertEqual(saved["resource_id"], candidate.resource_id)
             self.assertEqual(saved["source"]["video_id"], candidate.video_id)
             self.assertEqual(saved["producer_status"], "ready")
+            self.assertEqual(saved["contract_version"], 2)
             self.assertEqual(saved["generation_run_id"], "run-20260824-0130")
             self.assertTrue(saved["output_fingerprint"])
             self.assertEqual(producer.read_ledger(ledger_path)["entries"][candidate.resource_id]["status"], "ready")
@@ -364,7 +378,7 @@ class NotebookLMProducerTests(unittest.TestCase):
             "source": {"label": "YouTube", "url": candidate.source_url},
             "artifacts": {
                 "infographic": {"label": "Info", "url": "https://example.com/info.png"},
-                "mind_map": {"label": "Map", "url": "https://example.com/map.png"},
+                "mind_map": _mind_map_artifact(),
                 "slide_deck": {"label": "Slides", "url": "https://example.com/slides.pptx"},
             },
             "content_summary": "按来源顺序整理出的完整文字版总结。",
@@ -392,6 +406,31 @@ class NotebookLMProducerTests(unittest.TestCase):
                 producer.read_ledger(ledger_path)["entries"][candidate.resource_id]["status"],
                 "failed",
             )
+
+    def test_normalize_rejects_mind_map_without_full_expansion_verification(self):
+        candidate = producer.Candidate(
+            resource_id="youtube-ABCDEFGHIJK",
+            video_id="ABCDEFGHIJK",
+            source_url="https://www.youtube.com/watch?v=ABCDEFGHIJK",
+            catalog_id="resource-1",
+            title="Example",
+            topic="design-fundamentals",
+        )
+        raw_result = {
+            "title": "Example NotebookLM Result",
+            "topic": "design-fundamentals",
+            "source": {"label": "YouTube", "url": candidate.source_url},
+            "artifacts": {
+                "infographic": {"label": "Info", "url": "https://example.com/info.png"},
+                "mind_map": {"label": "Map", "url": "https://example.com/collapsed-map.png"},
+                "slide_deck": {"label": "Slides", "url": "https://example.com/slides.pptx"},
+            },
+            "content_summary": "按来源顺序整理出的完整文字版总结。",
+            "boundary": "来源没有覆盖的范围已明确说明。",
+        }
+
+        with self.assertRaisesRegex(producer.ProducerError, "全部展开"):
+            producer.normalize_result(candidate, raw_result, "run-20260824-0130", NOW)
 
     def test_mark_failed_records_reason_and_blocks_automatic_reclaim(self):
         candidate = producer.Candidate(

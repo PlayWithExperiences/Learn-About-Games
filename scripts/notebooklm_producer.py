@@ -24,6 +24,7 @@ from urllib.parse import parse_qs, urlparse
 BEIJING = timezone(timedelta(hours=8))
 DEFAULT_STATE_DIR = Path.home() / ".local" / "state" / "learn-about-games" / "notebooklm-daily"
 DAILY_BATCH_LIMIT = 10
+READY_CONTRACT_VERSION = 2
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 TIMESTAMP_RE = re.compile(r"^\d{4}-\d{4}-\d{4}$")
@@ -407,6 +408,28 @@ def _artifact(value: object, field: str) -> dict:
     return normalized
 
 
+def _mind_map_artifact(value: object, field: str) -> dict:
+    normalized = _artifact(value, field)
+    verification = normalized.get("expansion_verification")
+    if not isinstance(verification, dict):
+        raise ProducerError(
+            f'{field} 必须记录 NotebookLM 查看器“全部展开”的展开核验，拒绝发布未验证的思维导图'
+        )
+    if verification.get("method") != "notebooklm-viewer":
+        raise ProducerError(f'{field} 的展开核验必须来自 NotebookLM 查看器“全部展开”')
+    if verification.get("action") != "全部展开":
+        raise ProducerError(f'{field} 必须记录实际执行的 NotebookLM“全部展开”操作')
+    observed_depth = verification.get("observed_depth")
+    if isinstance(observed_depth, bool) or not isinstance(observed_depth, int) or observed_depth < 3:
+        raise ProducerError(f'{field} 的展开核验必须观察到至少三级节点（根节点不算可折叠子层）')
+    collapsed_node_count = verification.get("collapsed_node_count")
+    if isinstance(collapsed_node_count, bool) or not isinstance(collapsed_node_count, int):
+        raise ProducerError(f'{field} 的展开核验必须记录剩余折叠节点数量；执行“全部展开”后应为 0')
+    if collapsed_node_count != 0:
+        raise ProducerError(f'{field} 仍有 {collapsed_node_count} 个折叠节点，不能标记 ready')
+    return normalized
+
+
 def normalize_result(
     candidate: Candidate,
     raw_result: dict,
@@ -431,10 +454,13 @@ def normalize_result(
     artifacts_raw = raw_result.get("artifacts")
     if not isinstance(artifacts_raw, dict):
         raise ProducerError("artifacts 必须是对象")
-    artifacts = {
-        key: _artifact(artifacts_raw.get(key), f"artifacts.{key}")
-        for key in ("infographic", "mind_map", "slide_deck")
-    }
+    artifacts = {}
+    for key in ("infographic", "mind_map", "slide_deck"):
+        field = f"artifacts.{key}"
+        if key == "mind_map":
+            artifacts[key] = _mind_map_artifact(artifacts_raw.get(key), field)
+        else:
+            artifacts[key] = _artifact(artifacts_raw.get(key), field)
     timestamp = _timestamp(now)
     normalized = dict(raw_result)
     normalized.update(
@@ -444,6 +470,7 @@ def normalize_result(
             "topic": topic,
             "timestamp": timestamp,
             "generated_at": now,
+            "contract_version": READY_CONTRACT_VERSION,
             "producer_status": "ready",
             "generation_run_id": _required_text(generation_run_id, "generation_run_id"),
             "source": {"label": source_label, "url": candidate.source_url, "video_id": candidate.video_id},
