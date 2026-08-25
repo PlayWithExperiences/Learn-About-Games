@@ -74,6 +74,10 @@ validation.
 NotebookLM 查看器实际执行“全部展开”、观察到至少三级节点、且剩余折叠节点为 0
 的记录。旧版没有该字段的已发布资源继续按兼容规则消费；新生产结果不得省略它。
 
+`delivery_status: "quarantined"` 是消费端对历史坏资产的隔离标记，不是新的生产
+成功状态；它必须带 `delivery_reason`，消费端会保留文件但跳过推送，等待明确授权的
+单条补发。新生产结果不要自行写入该状态。
+
 每一个 artifact 都必须实际存在并有可引用 `url` 才能标记 `ready`。如果 NotebookLM
 没有生成某项，使用 `failed`/`partial` 记录原因并停止，不要写入空链接或
 `status: "not-generated"` 的 ready 记录。
