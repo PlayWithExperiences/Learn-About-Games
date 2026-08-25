@@ -492,22 +492,6 @@
 
 原始对话：dialogues/2026-0823.md「1941 NotebookLM 多模态产物的公开托管边界」
 
-## 0133 资源审计达标与NotebookLM产物写回
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
-
-本会话围绕成长资源补全与NotebookLM产物生成两个阶段展开。第一阶段确认v02工作树已有5437条Work Item，超1000条目标；审计验证4条完整创新路线（FPS、RPG、RTS、开放世界）均满足事件-演化-载体-证据闭包。204项单测、151页构建、262个E2E用例全通过，README/Source统计文案同步修正。第二阶段转向NotebookLM产物写回：用户要求正式生成Celeste信息图、思维导图、演示文稿三件套，并走PicGo上传路径确保链接持久化。AI先补全思维导图与演示文稿（12页中文详细稿），三份文件均已下载待上传。关键点：早期明确未将预览写回PKM，经用户纠正后补全流程；PicGo上传后将更新PKM文件与fixture，避免依赖NotebookLM私有链接。
-
-原始对话：dialogues/2026-0823.md「0133 learn-about-games」
-
-## 2211 网站挂掉恢复及外部事实字段语义核查
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a02eeb-abd4-7f40-8a5e-142ce37f284b
-
-两场独立问题。第一场：localhost:4321 无法访问，根因是开发服务器进程未运行，非路由或构建错误；执行 npm run dev -- --host 127.0.0.1 后恢复，资源页返回 HTTP 200，npm run check 通过（0 error / 0 warning）；诊断记录已提交至 0fdeb31。第二场：用户截图询问资源页「外部事实」字段含义；AI 追踪到 resources.json 中 externalSignals 字段，指向 Senko's Activity Log 的 Team Management 专题作为旁证，类型为「二手专题摘要（非视频正文）」，非官方字幕或本站评分；渲染逻辑在 ResourceResults.astro。结论：字段命名易误导，建议改为「外部旁证」或「第三方来源注记」，本轮未修改代码，仅做语义核查并留痕。
-
-原始对话：dialogues/2026-0823.md「2211 learn-about-games」
-
 ## 2217 NotebookLM 全量模板正式写回（2026-08-23）
 
 - 决策：無涘 ｜ 记录：AI。Celeste 这条资源按既定模板正式生成并写回，不再停留在 NotebookLM 预览：信息图、思维导图、演示文稿和文字版内容总结都必须存在。
@@ -517,6 +501,14 @@
 - 边界：AI。本轮没有新增 OpenRouter 或其他模型批量调用、没有重试 NotebookLM、没有订阅或付费操作；NotebookLM 仍是人工网页入口，后续全库生成必须逐次取得调用与费用确认。
 
 原始对话：dialogues/2026-0823.md「2217 NotebookLM 全量模板正式写回」
+
+## 2211 网站恢复与外部事实文案修正
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a02eeb-abd4-7f40-8a5e-142ce37f284b
+
+会话分为两部分：一是排查网站挂掉问题，二是修正"外部事实"文案。网站恢复根因是开发服务器未运行，启动后/ resources /路由返回200，无构建或运行时错误。随后用户询问截图中"外部事实"的含义，经核查确认为命名不当的"第三方旁证"字段，指向Senko's Activity Log的专题摘要，数据本身有边界标注但UI文案易误解。用户要求统一修改后，全仓审计渲染入口，用测试锁定契约，将资源页和Source详情页的"外部事实 / 外部公开观察 / 公开事实"统一改为"外部旁证 / 第三方来源注记"，内部字段externalSignals保持不变。Vitest 205/205通过，Astro check 0错误，Resources E2E从42/44修正为44/44通过（原有2个假阳性因测试把资源正文普通词误判为质量标签），静态构建151页，旧文案无残留。留痕已补至会话档案末尾，待提交。
+
+原始对话：dialogues/2026-0823.md「2211 learn-about-games」
 
 ## 2350 NotebookLM Slides 工作台入口同步（2026-08-23）
 
@@ -533,3 +525,37 @@
 - 验证：AI。真实 fixture 域名测试在旧 URL 下先失败，修正后 9/9 通过；Issue #182 回读确认新 URL 2 处、旧 URL 0 处。本轮无模型调用、无重试、无批量操作、无现实金额操作。
 
 原始对话：dialogues/2026-0824.md「0000 NotebookLM 页面入口域名纠正」
+
+## 0133 成长资源与NotebookLM自动化实现
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0253e-64c9-7651-b8c7-959c8e88a1d8
+
+本轮会话完成两件事：一是Learn-About-Games项目的内容审计与验证，二是AI-Life-Mentor的NotebookLM每日资源处理系统实现与首次运行。内容方面，发现v02工作树已有5437条资源，超过1000条目标；通过路线审计确认4条完整证据链（FPS、RPG、RTS、开放世界），独立clone验证全部测试通过（204/204单测、262/284 E2E）。AI-Life-Mentor方面，实现了本机Skill（notebooklm-daily-resource），补齐了inbox状态校验、video_id去重、ledger记录和Daily Check-in全量历史扫描；合并两个仓库的main分支后，完成了一次受控真实运行——处理YouTube视频hTNA84vJNEc，生成信息图、思维导图、Slides并上传至图床，写入ready JSON，修复了PKM渲染重复边界标题的问题，最终成功推送到AI-Life-Mentor远端。系统目前处于每日07:30预检模板状态，未自动加载定时任务。
+
+原始对话：dialogues/2026-0824.md「0133 learn-about-games」
+
+## 0749 NotebookLM资源生产导出失败
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a030f6-e0a6-7a70-8275-0e4987d1151d
+
+本次运行对候选 youtube-E4ZUgPoDrvY（游戏设计基础视频）执行完整生产链路。成功完成：preflight检查、单条claim、Chrome接管现有NotebookLM页面（已含文字总结）、Studio生成完整思维导图并确认就绪、信息图推进到「已准备就绪」完成态。失败点在下载验证阶段：浏览器菜单下载未在本机落盘；pageAssets bundle未能暴露当前可见的2752×1536信息图主图（资产清单时间窗口不匹配）；直接fetch和page上下文截图均受Google鉴权限制无法获取原始字节。已按producer fail合同记账，未写ready JSON，未走PicGo上传，未推送远端。产物风险：NotebookLM Studio侧三类输出均已成功生成，仅导出环节不可用；后续可尝试CDP协议直接读取页面canvas/paint事件或换用Screenshot API重试下载。
+
+原始对话：dialogues/2026-0824.md「0749 learn-about-games」
+
+## 1031 NotebookLM Daily Check-in 排空队列故障（2026-08-24）
+
+- 事实：AI。远端 Daily Check-in run `32681846088` 于北京时间 10:04 失败并创建 Issue #184；日志显示每日正文模型先有一次空响应，随后第二候选成功，最终失败栈落在 `notebooklm_line.pick_resource()` 的 `NoNotebookLMResource`。
+- 事实：AI。ready 资源 `youtube-hTNA84vJNEc` 已存在于远端 inbox，并由 NotebookLM 补发 Issue #183（`daily-checkin` label + resource marker）写入；Celeste 由 Issue #182 标记。完整 Issue 分页扫描后，当前两条资源均已消费，本地纯函数复现同样得到“资源都已推送”。
+- 根因：AI。`daily_checkin.attach_notebooklm_resource()` 只把 `load_resources()` 的空/缺目录视为 no-op，没有处理 `pick_resource()` 在所有 ready 资源已消费时的正常排空状态；因此“没有未消费内容”被错误升级为 workflow failure。不是 NotebookLM 生成缺失，也不是 GitHub 消费状态查询失败。
+- 独立状态：AI。今日另一个 producer claim `youtube-E4ZUgPoDrvY` 在 asset-download 验证阶段终止并记为 `failed`，未产生 ready JSON；本轮未重试或继续 claim。
+- 建议：AI。修复上层 no-op 边界并补 exhausted-queue 回归测试，同时保留坏 JSON、消费状态查询失败、PKM 写回失败的显式异常合同；资源补发 Issue 继续算已消费，避免重复投递。本场只读诊断，未修改 AI-Life-Mentor 源码或远端状态。
+
+原始对话：dialogues/2026-0824.md「1031 Daily Check-in「无可消耗 NotebookLM 内容」故障核查」
+
+## 0738 NotebookLM工作本权限失效导致当日生产停止
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a0361c-dbc3-79a3-8781-65a239ef141f
+
+本场次执行Learn About Games的NotebookLM每日资源生产线，preflight确认当天额度10/10可用。精确claim首条候选youtube-yorTG9at90g后，在Chrome接管NotebookLM时遭遇系统性阻塞：两个旧工作Notebook均可读但一旦尝试新增来源即跳转"您无权查看此笔记本"，而新开窗口的https://notebook.google.com/又落地到unsupported页面，当前登录态下没有可写的工作台可用。按合同将已claim候选记为failed（失败原因：browser-notebook-access），停止后续claim避免浪费额度。未生成空JSON、未上传PicGo、未推送ready队列。环境异常：线程日期标记为2026-08-24，但系统时钟为2026-08-25，producer写出的时间戳均为未来时间，已记入自动化记忆。统计：preflight=10、尝试=1、ready=0、failed=1、未处理=9、停止原因=无可写NotebookLM工作本。后续需修复登录权限或重建可写工作台才能恢复生产。
+
+原始对话：dialogues/2026-0825.md「0738 learn-about-games」

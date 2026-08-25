@@ -2,24 +2,33 @@
 
 > 按主题一份，追加不覆盖；同一场会话的节就地更新。
 
-## 1034 排查 NotebookLM 队列报错并制定修复计划
+## 1440 批量续做、工作 Notebook 复用与 PKM 队列分层
+
+决策：無涘 ｜ 记录：AI
+
+- 已完成并推送 3 条新的 ready 资源：`youtube-_gbJw7orSI8`、`youtube-tR-9oXiytsk`、`youtube-7rqfbvnO_H0`。它们均在同一个长期工作 Notebook 中完成当前来源隔离、文字总结、信息图、思维导图、Slides、PPTX/PDF 下载校验、PicGo 上传和 ready JSON 受保护推送。
+- 第 4 条 `youtube-ii_Q4OCoHvU` 的文字总结与思维导图已完成；信息图生成时 NotebookLM 返回“您已达到每日信息图数量上限，改日再来吧！”。已将它记为终态 `failed`，未伪造 ready JSON，也未继续生成无法消费的 Slides。
+- 当日 ledger 共 6 次 claim：4 条 ready、2 条 failed；剩余候选没有继续 claim，因为已确认的 Studio 配额耗尽使完整 ready 合同无法成立。自动化已加入 quota-block 停止规则，Slides 单条等待上限放宽为 15 分钟。
+- PKM 语义确认：ready JSON 先作为 `AI-Life-Mentor/notebooklm-resources/` 的持久化队列；Daily Check-in 每天只选 1 条未消费资源写入 `AI/DailyCheckin/` 并附到 Issue，ready JSON 保留，不会因消费删除。此前已完成的 3 条已在该队列中。
+- Plus 账号的 Notebook/来源与已知部分配额可由官方页面核对；信息图与幻灯片固定数值未公开，因此本次不声称已消耗 80%，只报告实际产出与明确的配额阻断。
+
+原始对话：dialogues/2026-0824.md「1439 notebooklm-empty-queue 续」
+
+## 1034 修复队列空误报并排查思维导图折叠问题
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a03195-9a08-7001-b1c4-c722da0d65ed
 
-用户反馈 daily checkin 报错「无可消耗 notebooklm 内容」。AI 排查确认根因：资源 `youtube-hTNA84vJNEc` 已写入 Issue #183，消费扫描正确识别为已消费，但 `attach_notebooklm_resource()` 只处理「目录为空」的正常跳过，未处理「资源全部已消费」的情况，导致 `NoNotebookLMResource` 异常被抛成 workflow failure（Issue #184，run 32681846088）。今日 Producer 任务在资产下载阶段失败、未生成 ready JSON，是独立问题，非本次报错主因。诊断已留痕三份项目档案，本地提交 8d2468b，消费逻辑未修改。用户要求彻底修复，并将每日生产量从 1 提升至 10，充分利用 Plus 额度（目标消耗 80%）。AI 核实官方配额：Plus 含 200 chats/day、6 audio/day、6 video/day、20 reports/flashcards/quizzes/mind maps per day，日报/信息图/幻灯片无公开固定上限。每日 10 条资源在 chats/mind maps/reports 维度仅占 50%，非 80%。任务已拆分为消费端恢复语义 + producer 批量生产两个子系统，采用 TDD 先写红测，尚未启动真实 NotebookLM 生产。
+本场修复了 Daily Check-in 将空队列误判为失败的问题，根因在于消费端未处理“全部资源已消费”的正常状态，已改为 no-op。同时响应需求将每日 NotebookLM 生产上限从 1 条提升至 10 条，并改用单个工作 Notebook 复用来源。实际执行中，因 Plus 信息图每日额度耗尽（今日成功 3 张后触发上限），仅完成 3 条完整资源；Slides 生成等待窗口延长至 15 分钟。用户发现第 185 期 Issue 附带的思维导图 PNG 仅展示根节点与一级分支，处于折叠状态，未完全展开。需核查 NotebookLM 导出前是否支持递归展开，并确认每日自动化任务是否按新逻辑运行。相关代码修改已提交，测试通过，项目档案已更新。
 
-原始对话：dialogues/2026-0824.md「1034 notebooklm-empty-queue」
+原始对话：dialogues/2026-0825.md「1034 notebooklm-empty-queue」
 
-## 1056 消费端恢复与 NotebookLM 每日十条上限
+## 1253 思维导图根因修复与每日生产核对
 
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a03195-9a08-7001-b1c4-c722da0d65ed
+决策：無涘 ｜ 记录：AI
 
-结论：本次 Check-in 报错与 producer 下载失败是两个独立问题。消费端根因是 ready 资源存在但全部被 marker 消费后，`pick_resource()` 抛出的 `NoNotebookLMResource` 没有在 `attach_notebooklm_resource()` 上层处理；已改为可观察 no-op，保持远端消费查询、资源校验和 PKM 写回失败显式失败。producer 的下载失败不应生成 ready JSON，正确产物是 ledger 中带 phase/reason 的 terminal failed。
+- 根因是 NotebookLM 默认思维导图导出未被要求在查看器中实际“全部展开”，且 ready 合同没有结构验收；Issue #185 的 2049×1337 PNG 仍有 `>` 折叠指示，故不是 PKM 裁切。
+- Learn-About-Games producer/Skill/合同已升级 v2，必须记录查看器“全部展开”、至少三级节点、剩余折叠节点为 0；producer 缺失即拒绝 ready。AI-Life-Mentor consumer 对 v2 再验一次；旧资源兼容读取。
+- 自动化保持 ACTIVE、07:30、每日最多 10 次串行 claim；新增 claim 前工作台可写预检。今天 producer 已触发但因 NotebookLM Access Request/unsupported 失败，Daily Check-in Action [32799530766](https://github.com/Medill-East/AI-Life-Mentor/actions/runs/32799530766) 成功消费昨天队列中的一条。只读 preflight：2,454 候选、今天已 claim 1、剩余 9 次。
+- 验证通过：Learn 20/20、AI-Life-Mentor 16/16；Learn `7aad100` 本地提交，AI-Life-Mentor `533de75` 已推送。当前旧 PNG 未宣称已修复，需 NotebookLM 恢复可写后再补发。
 
-实现：`scripts/notebooklm_producer.py` 增加只读 `preflight --limit 10`，按 catalog 顺序返回最多十条候选；`claim --resource-id` 保证批次按预检对象精确占用；锁内按北京时间自然日计数所有 claim（包括失败），第 11 次拒绝，状态区分 `no_candidate` 与 `daily_limit_reached`。Skill、preflight shell 和 Codex cron 同步为最多十条、串行、自动重试为零；失败写账后继续 distinct candidate，并要求真实 download event + 字节/类型/尺寸校验。
-
-验证：Learn-About-Games producer 14/14、automation 3/3；AI-Life-Mentor NotebookLM 15/15；两边 Python 编译检查通过。当前真实 ledger 今日有 2 次 claim：`youtube-hTNA84vJNEc` ready，`youtube-E4ZUgPoDrvY` asset-download failed；只读 preflight 返回 8 条剩余候选，本轮未调用 NotebookLM、未上传 PicGo、未 push。
-
-配额边界：官方 Plus 表可核实 200 chats/day、20 reports/day、20 flashcards/day、20 quizzes/day、20 mind maps/day，信息图/幻灯片固定额度未公开；不能从本机得到账号当前用量或诚实宣称已消耗 80%。每日十条是这条自动化的安全上限与目标，不把未知的 Plus 额度当作可用余额。
-
-原始对话：dialogues/2026-0824.md「1056 NotebookLM 消费恢复与每日批量上限修复」
+原始对话：dialogues/2026-0825.md「1253 思维导图根因修复与每日生产核对」
