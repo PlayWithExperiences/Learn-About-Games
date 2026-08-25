@@ -32,3 +32,13 @@
 - 验证通过：Learn 20/20、AI-Life-Mentor 16/16；Learn `7aad100` 本地提交，AI-Life-Mentor `533de75` 已推送。当前旧 PNG 未宣称已修复，需 NotebookLM 恢复可写后再补发。
 
 原始对话：dialogues/2026-0825.md「1253 思维导图根因修复与每日生产核对」
+
+## 1258 旧队列折叠资源隔离
+
+决策：無涘 ｜ 记录：AI
+
+- 只读核验确认未消费的 `youtube-_gbJw7orSI8`（1875×938）和 `youtube-7rqfbvnO_H0`（1549×936）也是默认折叠图；Celeste 的 4134×13238 图符合完整展开形态。
+- 两条旧资源已保留文件但标记 `delivery_status: quarantined`，消费端跳过并报告“已消费或隔离”，防止错误继续进入 Daily Check-in。AI-Life-Mentor 修复 commit `4d15fc3` 已推送。
+- 当前待 NotebookLM 恢复可写后，按 v2 合同对隔离资源各做一次单条补发；不自动重试、不创建额外 Notebook。
+
+原始对话：dialogues/2026-0825.md「1258 旧队列折叠资源隔离」

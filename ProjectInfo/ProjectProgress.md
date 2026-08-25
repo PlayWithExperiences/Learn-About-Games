@@ -49,12 +49,14 @@
 - 2026-08-24 当日 ledger 共 6 次 claim：4 条 ready（含此前 `youtube-hTNA84vJNEc`）、2 条 failed（含此前下载失败与本次信息图配额失败）。ready JSON 是 PKM 的持久化资源队列；Daily Check-in 每天只选择 1 条未消费资源写入 `AI/DailyCheckin/` 并附到 Issue，不会删除 ready JSON。已将自动化更新为：明确命中 NotebookLM 某类资产的当日配额时记录 `quota_block` 并停止当天剩余 claim；Slides 单条允许最长等待 15 分钟。
 - 思维导图根因核查（2026-08-25 12:52）：Daily Check-in #185 消费的 `youtube-tR-9oXiytsk` 对应 PNG 为 2049×1337，图像本身只有根节点和 7 个一级分支，分支右侧仍有 `>` 折叠指示；故障发生在 NotebookLM 默认导出未执行查看器“全部展开”，不是 PKM 渲染裁切。Learn-About-Games commit `7aad100` 将 ready 合同升级为 v2：必须记录查看器操作、至少三级节点和 0 个剩余折叠节点，生产器缺一即拒绝；AI-Life-Mentor consumer commit `2ddbe10` 已合并远端并推送（merge `533de75`），新 v2 资源再次消费时也会拒绝假成功，旧资源保持兼容读取。
 - 自动化运行核对（2026-08-25 12:52）：Codex cron 仍为 ACTIVE、每天 07:30、单日最多 10 次串行 claim；今天实际触发并 claim `youtube-yorTG9at90g`，但在 NotebookLM 工作台写权限检查处以 `browser-notebook-access` 失败，未生成 ready JSON。Daily Check-in Action [32799530766](https://github.com/Medill-East/AI-Life-Mentor/actions/runs/32799530766) 于 08:30 成功，Issue #185 正确消费昨天队列中的一条。当前只读 preflight 为 2,454 个候选、今日已 claim 1、剩余本地尝试 9；没有为验证而额外调用 NotebookLM。
+- 旧队列隔离（2026-08-25 12:58）：只读下载确认未消费的 `youtube-_gbJw7orSI8` 思维导图为 1875×938、`youtube-7rqfbvnO_H0` 为 1549×936，均仍有 `>` 折叠指示；已在 AI-Life-Mentor 中标记 `delivery_status: quarantined` 并推送 commit `4d15fc3`，消费端现跳过它们。Celeste 的 4134×13238 图保留为已验证完整展开资源；现存队列没有再发现未隔离的折叠未消费图。
 
 ## 下一步
 
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
 - 每天由本机 Codex cron 按 ledger 最多串行选取 10 条未处理资源，完成 NotebookLM → 下载/转换 → PicGo → ready JSON → AI-Life-Mentor `main` 的链路；次日 GitHub Actions 每天只消费 1 条到 Daily Check-in 与 PKM。producer 的 `generating → ready/failed`、北京时间 10 次 claim guard、唯一 marker 和完整 Issue 分页扫描共同防止重复或假成功；若 NotebookLM 明确返回某类资产的当日配额耗尽，则记录 `quota_block` 并停止当天批次。
 - 下次生产先做不消耗额度的 NotebookLM 工作台就绪预检；只有确认 `notebook.google.com/notebook/...` 可编辑且来源/Studio 控件存在后才 claim。每条思维导图必须在查看器执行“更多选项 → 全部展开”并通过 v2 合同门槛。今天已收到的 #185 资源本身仍是旧合同的折叠图，待 NotebookLM 恢复可写且获得新的单条生产机会后再补发，不能把重新生成伪装成已修复。
+- 两条已隔离旧资源（`youtube-_gbJw7orSI8`、`youtube-7rqfbvnO_H0`）待 NotebookLM 恢复可写后各做一次单条 v2 补发；不自动重试、不为单条材料新建 Notebook。
 - “排空队列”已落为 `attach_notebooklm_resource` 回归测试并修复；资源补发 Issue 仍计入消费，避免次日重复投递。调度提示已要求先监听真实下载事件，再做字节/类型/尺寸校验；页面点击、pageAssets 列表或 HTTP 响应不再作为下载成功判据。
 - 不自动对全库生成 Studio 多模态产物；任何扩大到批量、换模型、重试、订阅或可能计费的 API/云服务调用，都必须在开始前重新取得用户确认。
 - 在实现多模态展示前，先确定 `artifact` 资产层和托管策略：图片/思维导图可导出后静态托管，演示文稿导出 PDF/PPTX，音频/视频不直接塞进 Git 仓库，优先使用对象存储或只保留外部分享入口。公开前需逐项审核 NotebookLM 分享权限、原始来源版权和生成内容的可公开性。
