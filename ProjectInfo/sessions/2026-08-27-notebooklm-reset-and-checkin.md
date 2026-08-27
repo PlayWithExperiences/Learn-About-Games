@@ -10,3 +10,13 @@
 - 今日边界：AI。截至 2026-08-27 12:37，GitHub API 显示该 workflow 当日 run 数为 0；workflow 与仓库 Actions 仍 active/enabled，远端仍有 5 条未消费 ready。因此今天没收到 Check-in 不能归因于“无可消费内容”，而是消费者 scheduled event 尚未创建/排队；本次未手动补跑，避免未经确认触发模型/API调用。
 
 原始对话：dialogues/2026-0827.md「1235 NotebookLM 重置与 Daily Check-in 触发机制」
+
+## 1255 双路径单次验证
+
+- 决策：無涘 ｜ 记录：AI。按用户要求把 producer 收集与 Daily Check-in 消费分开各验证一次；producer 不批量重试，consumer 只 dispatch 一次。
+- 生产：AI。12:46:51 claim `youtube-_sslFBVy5Lc`，复用长期 Notebook 导入并隔离唯一来源，文字总结完成；页面仍显示信息图每日配额上限，12:50:19 记为 `quota_block` failed，未调用其他 Studio 资产、未生成半成品 ready。
+- 消费：AI。先以 TDD 增加无 ready 正文提示，17/18 个消费者单测分别在修复前失败、修复后通过；随后加入同日成功 Issue 幂等检查，避免手动 dispatch 与迟到 schedule 重复调用模型。修复已推送 AI-Life-Mentor `main`（最终远端 `dbf50ee`）。
+- 验证：AI。手动 dispatch `33040627453` 成功（head `3f86ee9`），创建 Issue #187（`每日学习 · 2026-08-27`），消费 `youtube-XW7KvppTspc`。本次没有第二个 dispatch。
+- 边界：AI。workflow YAML 的 `concurrency` 增强因当前 OAuth 凭据缺少 `workflow` scope 被撤回，未擅自扩大权限；Python 幂等检查已在远端生效。今日无 ready 分支已由单测覆盖，真实 run 因队列有内容走的是正常消费分支。
+
+原始对话：dialogues/2026-0827.md「1240 双路径收集与消费验证」
