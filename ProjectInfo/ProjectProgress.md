@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-25 16:08:53 +0800 · 记录者 AI*
+*更新于 2026-08-27 12:30:47 +0800 · 记录者 AI*
 
 ## 现在在哪
 
@@ -52,10 +52,14 @@
 - 旧队列隔离（2026-08-25 12:58）：只读下载确认未消费的 `youtube-_gbJw7orSI8` 思维导图为 1875×938、`youtube-7rqfbvnO_H0` 为 1549×936，均仍有 `>` 折叠指示；已在 AI-Life-Mentor 中标记 `delivery_status: quarantined` 并推送 commit `4d15fc3`，消费端现跳过它们。Celeste 的 4134×13238 图保留为已验证完整展开资源；现存队列没有再发现未隔离的折叠未消费图。
 - NotebookLM 批量生产收尾（2026-08-25 16:02）：今天 ledger 共 8 次 distinct claim/production attempt，6 条 `ready`、2 条 `failed`，达到 10 次日上限的 80%。`youtube-yorTG9at90g` 在工作台写权限预检处失败；`youtube-f8VIlfTtypg` 在信息图阶段收到 NotebookLM 明确的每日数量上限，已停止该条 Slides 和后续候选，未生成 ready JSON。6 条 ready（`youtube-pmSAG51BybY`、`youtube-3Omb5exWpd4`、`youtube-XW7KvppTspc`、`youtube-GZ99gAb4T0o`、`youtube-SpRJuinc9AM`、`youtube-VZ4xevskMCI`）均通过 contract v2；思维导图 proof 为查看器“全部展开”、深度 4–5、折叠 0，四项远端资产逐个字节回读一致，6 个 ready JSON 均已在 `AI-Life-Mentor` `origin/main` 可读。全部 6 条复用了同一个 Notebook，没有为单条材料新建笔记本。
 - 自动化当前事实（2026-08-25 16:08）：Codex 定时任务 `learn-about-games-notebooklm` 为 `ACTIVE`，每天 07:30（北京时间）串行最多 10 次、失败不重试并在明确配额耗尽时停止；本机没有重复 cron，仓库内 launchd plist 是备用 preflight 模板，当前未加载以避免双重调度。Daily Check-in 仍由 `AI-Life-Mentor` 的 GitHub Actions 在 08:30 每天消费 1 条 ready。
+- NotebookLM 今日批次停止（2026-08-26 07:33，时间取自系统 `date`）：本次只读 preflight 返回 10 条候选、`claimed_today=0`、`remaining_today=10`；Chrome 中的长期工作 Notebook `https://notebook.google.com/notebook/880ad454-f2a0-4246-85c3-40a8b2f54af2` 通过了可编辑性预检，来源面板与 Studio 控件均存在。随后精确 claim 首条 `youtube-mncyepcgJO8`，但在当前可见 Studio 区域立即读到 NotebookLM 明文提示“您已达到每日信息图数量上限，改日再来吧！”。该条已按 `quota_block` 记入 ledger 为 `failed`，没有继续导入来源、没有生成任何新摘要/信息图/思维导图/Slides、没有 PicGo 上传、没有 ready JSON、没有运行 `publish-notebooklm-resource.sh`。停止后再次只读 preflight 显示 `claimed_today=1`、`remaining_today=9`，下一条候选是 `youtube-8FgBctI5ulU`，但按配额护栏本日不再继续 claim。
+- 2026-08-27 NotebookLM / Daily Check-in 链路核对（12:30）：Codex 自动任务于 07:33 自动运行，精确 claim `youtube-8FgBctI5ulU`，在导入来源并提交新总结查询后收到 NotebookLM 明文“您已达到每日信息图数量上限，改日再来吧！”，07:36:40 记为 `quota_block` failed，未生成新 ready。GitHub Actions 的 Daily Check-in workflow 仍为 active、仓库 Actions 仍 enabled，但 GitHub API 查询 2026-08-27 的该 workflow run 数为 0，远端最新 Daily Check-in 仍是 8 月 26 日成功的 Issue #186；因此今天未发的直接原因是消费者没有被 GitHub scheduled event 创建/排队，而不是无 ready 内容。远端当前仍有 5 条未被历史 Issue marker 消费的 ready 资源。
 
 ## 下一步
 
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
+- 2026-08-27 的收集已自动触发但因 NotebookLM 信息图日配额在首条 claim 后停止；今天没有手动触发 Daily Check-in。待 GitHub scheduled event 恢复后，消费者可从远端仍未消费的 5 条 ready 资源中按既定规则消费 1 条。
+- 今天（系统时钟 2026-08-26）已在首条 claim 前完成 NotebookLM 工作台访问预检，并在首条 claim 后命中信息图明确配额提示；因此本日外部生产已停止。下一自然日从不消耗额度的预检重新开始，再从 `youtube-8FgBctI5ulU` 继续，不回头重试 `youtube-mncyepcgJO8`。
 - 每天由本机 Codex cron 按 ledger 最多串行选取 10 条未处理资源，完成 NotebookLM → 下载/转换 → PicGo → ready JSON → AI-Life-Mentor `main` 的链路；次日 GitHub Actions 每天只消费 1 条到 Daily Check-in 与 PKM。producer 的 `generating → ready/failed`、北京时间 10 次 claim guard、唯一 marker 和完整 Issue 分页扫描共同防止重复或假成功；若 NotebookLM 明确返回某类资产的当日配额耗尽，则记录 `quota_block` 并停止当天批次。
 - 下次生产先做不消耗额度的 NotebookLM 工作台就绪预检；本次已确认 `notebook.google.com/notebook/...` 可编辑且来源/Studio 控件存在。每条思维导图必须在查看器执行“更多选项 → 全部展开”并通过 v2 合同门槛。今天已收到的 #185 资源本身仍是旧合同的折叠图，待下一自然日配额恢复后按 v2 单条补发，不能把重新生成伪装成已修复。
 - 两条已隔离旧资源（`youtube-_gbJw7orSI8`、`youtube-7rqfbvnO_H0`）待下一自然日配额恢复后各做一次单条 v2 补发；`youtube-f8VIlfTtypg` 已明确失败，不自动重试、不为单条材料新建 Notebook。
@@ -72,6 +76,8 @@
 - 本轮外部 state 回写与摘要长度对账已完成；无 YouTube 内容补全阻塞。
 - NotebookLM→PKM/Daily Check-in 批量生产、PicGo 稳定托管与每日单条消费已打通；ready JSON 先进入 PKM 资源队列，Daily Check-in 再逐日消费。当前 NotebookLM 仍是网页端入口，不应当作批量 API；本日已触达信息图配额，剩余候选留到下一自然日。公开资产版权与托管策略仍需在未来公开前逐项核对。
 - 当前新增阻塞：本日 NotebookLM 在第 7 条的信息图阶段明确返回每日数量上限，故停止当天剩余 2 个内部 claim 位；该失败已写入 ledger，未生成空 JSON、未继续调用 Slides、未领取后续候选。此前的工作台访问失败也已单独留痕；当前工作台已恢复可写，下一自然日从不消耗额度的预检开始。
+- 当前新增阻塞（系统时钟 2026-08-26 07:33）：今天新的首条 claim `youtube-mncyepcgJO8` 在尚未导入当前来源前，就从当前可见 Studio 区域读到 NotebookLM 明文提示“您已达到每日信息图数量上限，改日再来吧！”。该条已按 `quota_block` 失败留痕，今天剩余 9 个本地 claim 位不再使用，以免把明确的服务配额耗尽伪装成普通超时或继续制造无法 ready 的半成品。
+- 当前新增阻塞（2026-08-27 12:30）：NotebookLM 生产自动任务已运行，但首条 `youtube-8FgBctI5ulU` 被信息图日配额拦截；Daily Check-in workflow 当前没有 2026-08-27 run，故未创建今日 Issue。GitHub 已确认仓库与 workflow 均 active/enabled；剩余 5 条 ready 仍在远端队列中，未将“未触发”误报成“无可消费内容”。
 - 待确认：网站是否托管 NotebookLM 导出的本地资产，还是只提供 NotebookLM 外链；当前更推荐“网站自托管可公开资产 + NotebookLM 外链作为补充”，避免私有链接导致访客无法查看或链接失效。
 - 费用边界：本轮（2026-08-25）只执行了用户确认范围内的 8 次 NotebookLM 网页生产尝试，成功写回 6 条 ready；没有 OpenRouter、付费 API、订阅、充值或其他现实金额操作。NotebookLM 账号侧实际配额仍以服务端显示为准，任何现实金额操作仍须先询问無涘。
 - 验证边界：Learn About Games 定向资源 E2E 桌面/移动的摘要隐藏测试通过；全量 E2E 为 251 passed、22 skipped、13 failed。13 项失败集中在 Atlas/Map/Career 重载单例、并发导航超时和既有质量词断言，不能宣称全量全绿；本次代码构建、Vitest 与改动相关测试通过。
