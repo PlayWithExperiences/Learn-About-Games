@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-27 12:30:47 +0800 · 记录者 AI*
+*更新于 2026-08-27 12:37:51 +0800 · 记录者 AI*
 
 ## 现在在哪
 
@@ -18,6 +18,7 @@
 - NotebookLM Slides 入口同步（2026-08-23 23:54）：资源记录没有独立的 Slides 直达链接，只有 NotebookLM 工作台地址；渲染器、PKM 和 Daily Check-in #182 在现有 PPTX 链接正下方追加 `[NotebookLM 工作台（Slides）](...)`，并保留后续 PDF 普通链接。该私有工作台链接只出现在 PKM/每日精选，不进入 Learn About Games 公开层。
 - NotebookLM 页面入口纠正（2026-08-24 00:06）：确认 `gemini.google.com/notebook/...` 不是用户查看 NotebookLM 产物的实际页面，Celeste 资源 fixture、PKM 来源与 Slides 入口、Daily Check-in #182 已统一改为 `notebook.google.com/notebook/...`；公开网站层仍不暴露该私有入口。
 - 官方配额核对（以 [Gemini Notebook 官方配额表](https://support.google.com/geminotebook/answer/16213268?hl=en) 为准）：Plus 为 200 notebooks/user、100 sources/notebook、200 chats/day、6 audio/day、6 video/day、20 reports/day、20 flashcards/day、20 quizzes/day、20 mind maps/day、3 次 Deep Research/day；信息图与幻灯片页面显示为 More limits，没有公开固定数字，且官方注明会变化。账号当前已用量不由本机 ledger 代表。
+- 配额重置与消费者触发核对（2026-08-27 12:37）：官方只说明 daily quotas 在 24 小时后重置、monthly quotas 在 30 天后重置，没有承诺北京时间零点或公开当前账号的精确重置时刻；本次最后一次明确配额拦截为 07:36:40，因此 08-28 07:36:40 后只能作为保守的首次探测点，不是服务端保证的固定重置点。NotebookLM producer 的每日 07:30 自动收集与 AI-Life-Mentor GitHub Actions 的 08:30（UTC 00:30）Daily Check-in 是两条独立链路；后者每次只消费 1 条 ready 资源，支持 `workflow_dispatch`，无 ready 时仍可创建普通 Check-in。08-27 截至 12:37 仍无该 workflow run。
 
 ## 当前阶段
 
