@@ -2,7 +2,7 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-27 12:55:32 +0800 · 记录者 AI*
+*更新于 2026-08-27 13:20:10 +0800 · 记录者 AI*
 
 ## 现在在哪
 
@@ -38,7 +38,8 @@
 - 两个 `codex/notebooklm-daily` feature 分支已分别以非快进方式合并到 Learn-About-Games `main` 与 AI-Life-Mentor `main`；Learn-About-Games 保持私有且未推送，AI-Life-Mentor 已推送到远端。已合并工作树已清理，本机 Skill 入口已切回 Learn-About-Games `main`。
 - 本次自动化验证已通过：producer 测试 15/15、preflight runner 测试 3/3、publish 测试 2/2、AI-Life-Mentor NotebookLM 测试 14/14；NotebookLM 产物、PicGo 四个 URL、PDF/PPTX/PNG 文件格式和远端内容一致性均已核验。网站相关既有构建基线仍为 Astro check 0/0/0、Vitest 206/206；未把未相关的全量 E2E 历史失败写成已修复。
 - NotebookLM 每日精选线已接通：`AI-Life-Mentor` 用 reviewed JSON inbox 接收人工生成结果，空目录是可见的正常 no-op，坏 JSON、消费状态查询失败和 PKM 写回失败都会抛出；不会在定时脚本内偷偷调用 NotebookLM 或模型。Celeste fixture 已通过本地校验，Daily Check-in #182 与 PKM `PlayWithExperiences/AI/Learn-About-Games/2026-0823-2051-designing-celeste.md` 均已回读确认。
-- NotebookLM 每日生产自动化已实现（2026-08-24 01:29）：`scripts/notebooklm_producer.py` 从 2,454 个唯一 YouTube `video_id` 中按稳定顺序选择候选，使用本地 ledger、单实例锁和 `generating → ready/failed` 状态防止重复调用；`tools/notebooklm-daily-resource` 已作为版本化本机 Skill，并通过 `/Users/haodong/.codex/skills/notebooklm-daily-resource` 暴露。AI-Life-Mentor 消费端已改为全量分页扫描历史 Issue，ready-only 校验并保留旧 Celeste 记录兼容性。
+- NotebookLM 每日生产自动化已实现（2026-08-24 01:29）：`scripts/notebooklm_producer.py` 从 2,454 个唯一 YouTube `video_id` 中按稳定顺序选择候选，使用本地 ledger、单实例锁和 `generating → ready/failed` 状态防止重复调用；收集流程的唯一真源现为项目级 `.agents/skills/collect-resources-about-game/`，原 `tools/notebooklm-daily-resource` 只保留兼容别名，07:30 自动化已切换到共享入口。AI-Life-Mentor 消费端已改为全量分页扫描历史 Issue，ready-only 校验并保留旧 Celeste 记录兼容性。
+- 跨 AI 收集 skill 已落地（2026-08-27 13:20）：标准 slug 为 `collect-resources-about-game`，用户可见调用名保留 `/Collect-Resources-About-Game`；核心 `SKILL.md`、v2 资源合同和平台无关的失败/证据/Notebook 复用规则进入仓库，可被支持 Agent Skills 的客户端从 `.agents/skills/` 读取。本机 `.agents`、`.claude`、`.codex` 三个入口均指向同一份真源，客户端差异只留在浏览器、下载监听和上传适配器；本轮没有触发真实 NotebookLM 生产。
 - 自动化边界已落地：`automation/notebooklm-daily-preflight.sh` 与 07:30 launchd plist 保持为本地 preflight 模板、未安装以避免重复调度；Codex 本机 cron `Learn About Games — NotebookLM 每日学习资源` 已启用，每天 07:30（北京时间）最多串行处理十条，失败留 ledger 并通知，不重试同一视频。现有 GitHub Actions Daily Check-in 仍在 08:30 消费 ready JSON。
 - 本轮真实单次生产已完成并经过人工浏览器验收；后续调度会复用同一 Skill/合同，不在定时脚本内偷偷调用 NotebookLM，也不手动触发会调用 OpenRouter 的完整 Daily Check-in。
 - Daily Check-in 消费故障核查（2026-08-24 10:31:51）：事实：远端 ready 资源 `youtube-hTNA84vJNEc` 存在，但已通过 NotebookLM 补发 Issue #183 写入并带 marker；Celeste 资源已由 Issue #182 标记，完整分页扫描后两条都属于已消费。Action run [32681846088](https://github.com/Medill-East/AI-Life-Mentor/actions/runs/32681846088) 先成功生成每日正文，随后在 `pick_resource` 得到空候选池时抛出 `NoNotebookLMResource`，创建失败 Issue #184；不是 NotebookLM 内容缺失，也不是消费状态查询失败。

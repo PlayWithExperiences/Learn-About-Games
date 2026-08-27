@@ -1,4 +1,6 @@
 interface:
-display_name: "NotebookLM Daily Batch"
-short_description: "Generate up to ten deduplicated NotebookLM resources for Daily Check-in"
-default_prompt: "Run the safe preflight for up to ten new Learn About Games videos; do not call NotebookLM until the batch is explicitly confirmed."
+  display_name: "NotebookLM Daily Resource (compatibility alias)"
+  short_description: "Use the shared game-resource collection skill"
+  default_prompt: "Load $collect-resources-about-game for the canonical cross-client collection workflow."
+policy:
+  allow_implicit_invocation: false

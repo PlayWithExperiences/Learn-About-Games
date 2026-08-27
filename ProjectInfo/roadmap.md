@@ -369,3 +369,13 @@
 - 边界：AI。单条 `youtube-hTNA84vJNEc` 已完成四项产物、PicGo 托管和 PKM/Issue 回写；任何批量、重试、换模型、付费 API、订阅或公开发布仍需另行确认。
 
 原始对话：dialogues/2026-0824.md「0235 续」
+
+## 2026-08-27：收集端跨 AI skill 单一真源（13:20）
+
+- 决策：無涘 ｜ 记录：AI。将 NotebookLM 游戏资源收集流程做成 `/Collect-Resources-About-Game`，并按 Director 要求让不同 AI 共享同一份可读、可验证的流程合同。
+- 实现：AI。唯一真源为项目级 `.agents/skills/collect-resources-about-game/`；标准 slug 使用小写 `collect-resources-about-game`，展示/调用元数据保留用户指定名称。原 `tools/notebooklm-daily-resource` 降为兼容别名，Codex 07:30 自动化改读共享 skill；本机 `.agents`、`.claude`、`.codex` 入口通过符号链接指向同一份文件，平台差异只由运行时适配器承担。
+- 约束：AI。skill 固化预检、精确 claim、持久 Notebook 复用、v2 思维导图“全部展开”证明、真实下载/上传校验、quota_block 停止、失败留痕和 ready 原子发布；不负责 Daily Check-in 消费、PKM 最终写入或网站发布。
+- 验证：AI。NotebookLM 相关测试 20/20；Agent Skills 前置 YAML/命名/引用/契约、秘密与绝对路径扫描、三个入口目标检查均通过；独立前向 dry-run 遵守了“无浏览器能力则明确 unknown 并停止”的规则。系统缺少 `skills-ref`/PyYAML，官方 validator 未运行，已用 Ruby YAML 与定向合同检查替代。
+- 边界：AI。本轮只改 skill、兼容入口、自动化提示和项目留痕，没有新的 NotebookLM、搜索、上传、付费 API 或远端发布操作。
+
+原始对话：dialogues/2026-0827.md「1320 收集端跨 AI skill 收尾」

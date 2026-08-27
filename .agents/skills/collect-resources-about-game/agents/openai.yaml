@@ -1,0 +1,6 @@
+interface:
+  display_name: "Collect-Resources-About-Game"
+  short_description: "Collect validated game-learning resources safely"
+  default_prompt: "Use $collect-resources-about-game to collect a bounded batch of new Learn About Games resources."
+policy:
+  allow_implicit_invocation: true
