@@ -51,3 +51,61 @@
 验证：AI。原始 preflight JSON 通过 `python3 -m json.tool` 校验；本次无业务数据改动、无外部生产调用。下一次须先重新做不消耗额度的就绪检查，成功后才能在首次真实 claim 前确认批次授权。
 
 原始对话：dialogues/2026-0828.md「2001 NotebookLM 预检与浏览器阻塞」
+
+## 2026-08-28 2007 NotebookLM 工作台恢复
+
+决策：無涘（沿用既有收集合同，批次范围待本次确认）｜记录：AI（在场模型）
+
+- 重试 preflight：命令成功，仍为 `status=ready_to_claim`，候选总数 2,454，固定返回 10 条，`claimed_today=0`、`remaining_today=10`；首条为 `youtube-JGZQSFvcQzo`。原始 JSON 已保存为 `~/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-28T200510-preflight.json`。
+- 浏览器就绪：复用 Chrome 连接新建检查标签后，长期 Notebook 页面正常打开。可见且可操作的证据包括“添加来源”按钮（启用）、来源面板、“收起 Studio 面板”、思维导图、信息图和查询框；页面未进行导入或生成动作。
+- 暂停：工作台已达到 `available`，但首次真实 claim 前仍需确认本批最多 10 条、并发 1、自动重试 0。当前未 claim、未改变 ledger、未写 candidate `failed`、未调用 NotebookLM、未下载/上传、未写 ready inbox，也未触发 Daily Check-in、PKM 或网站发布。
+
+结构化运行报告：
+
+```json
+{
+  "preflight_status": "ready_to_claim",
+  "attempted": [],
+  "ready": [],
+  "failed": [],
+  "skipped": [],
+  "remaining_today": 10,
+  "stop_reason": "等待首次真实 claim 前确认本批最多 10 条、并发 1、自动重试 0"
+}
+```
+
+验证：AI。来源面板与 Studio 控件的可见/启用状态均已通过浏览器只读核验；原始 preflight JSON 通过 `python3 -m json.tool` 校验。本轮没有生产调用或业务数据改动。
+
+原始对话：dialogues/2026-0828.md「2007 NotebookLM 工作台恢复」
+
+## 2026-08-28 2009 批次授权待确认
+
+决策：無涘（待本次批次范围确认）｜记录：AI（在场模型）
+
+- 用户要求再次尝试后，重复 preflight 仍成功且长期 Notebook 已通过只读就绪核验：来源面板与 Studio 控件存在，“添加来源”启用，思维导图、信息图和查询框可见。
+- 按合同在首次真实 claim 前暂停，请求明确确认：最多 10 条、逐条串行并发 1、自动重试 0，仅使用当前 NotebookLM 工作台，不调用付费 API 或更换模型。确认后从固定清单首条 `youtube-JGZQSFvcQzo` 开始。
+- 当前状态：未 claim、未导入来源、未生成/下载/上传资产、未写 ready；今日剩余 claim 位 10。
+
+结构化运行报告：
+
+```json
+{
+  "preflight_status": "ready_to_claim",
+  "attempted": [],
+  "ready": [],
+  "failed": [],
+  "skipped": [],
+  "remaining_today": 10,
+  "stop_reason": "等待用户确认最多 10 条、并发 1、自动重试 0，以及服务边界"
+}
+```
+
+原始对话：dialogues/2026-0828.md「2009 批次授权待确认」
+
+## 2003 Collect-resources 技能预检：浏览器不可用阻塞 claim
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a04833-ca03-7963-be3f-8a5105ca8988
+
+执行 collect-resources-about-game 技能的只读预检。预检结果 `ready_to_claim`，候选池 2,454 个，今日额度 10，本批前 10 条未领取。浏览器已连接（Chrome 扩展），但首次打开 NotebookLM 页面导航超时，重载后显示 Gemini Notebook 登录外壳，来源面板与 Studio 控件均不可见，状态为 `browser-notebook-access: unavailable`。未在 claim 前停止，未生成资源、未调用 NotebookLM、未修改 ledger/inbox。已落盘原始预检 JSON、主题摘要、对话记录，Git 提交 `5dc36fa`（本地，未推送）。下一步：恢复 NotebookLM 页面至可见来源面板和 Studio 控件后，重新执行就绪预检再决定是否领取候选。
+
+原始对话：dialogues/2026-0828.md「2003 collect-resources-skill」
