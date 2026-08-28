@@ -22,3 +22,32 @@
 - 边界：本轮未触发 NotebookLM、搜索、上传、付费 API 或远端发布；只改变共享 skill 入口、兼容别名、自动化提示和项目留痕。
 
 原始对话：dialogues/2026-0827.md「1320 收集端跨 AI skill 收尾」
+
+## 2026-08-28 2001 NotebookLM 预检与浏览器阻塞
+
+决策：無涘（沿用既有收集合同）｜记录：AI（在场模型）
+
+- 预检：`notebooklm_producer.py preflight --limit 10` 成功，`status=ready_to_claim`，候选总数 2,454，`claimed_today=0`，`remaining_today=10`；按目录顺序固定返回 10 条候选，首条为 `youtube-JGZQSFvcQzo`。原始 JSON 已保存为 `~/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-28T195935-preflight.json`。
+- 浏览器就绪：已连接 Chrome 扩展并打开既有长期 Notebook。首次页面显示代理/防火墙检查错误；重载一次后标题恢复为 Gemini Notebook 并显示已登录外壳，但等待 10 秒后可见界面仍只有账号入口，来源面板与 Studio 控件均不可见。按合同判定 `browser-notebook-access=unavailable`，不是 `no_candidate`。
+- 停止：未 claim、未改变 ledger、未写 candidate `failed`、未导入 YouTube 来源、未调用 NotebookLM 生成、未下载/上传、未写 ready inbox，也未触发 Daily Check-in、PKM 或网站发布。10 条固定候选均在 claim 前跳过，停止原因是运行级浏览器阻塞。
+
+结构化运行报告：
+
+```json
+{
+  "preflight_status": "ready_to_claim",
+  "attempted": [],
+  "ready": [],
+  "failed": [],
+  "skipped": {
+    "count": 10,
+    "reason": "browser-notebook-access: unavailable before claim"
+  },
+  "remaining_today": 10,
+  "stop_reason": "浏览器已登录外壳但来源面板与 Studio 控件不可见；未取得可编辑 NotebookLM 工作台证据"
+}
+```
+
+验证：AI。原始 preflight JSON 通过 `python3 -m json.tool` 校验；本次无业务数据改动、无外部生产调用。下一次须先重新做不消耗额度的就绪检查，成功后才能在首次真实 claim 前确认批次授权。
+
+原始对话：dialogues/2026-0828.md「2001 NotebookLM 预检与浏览器阻塞」

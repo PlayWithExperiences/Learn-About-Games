@@ -2,10 +2,11 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-27 13:20:10 +0800 · 记录者 AI*
+*更新于 2026-08-28 20:01:04 +0800 · 记录者 AI*
 
 ## 现在在哪
 
+- 最新收集端预检（2026-08-28 19:59:35 +0800）：`notebooklm_producer.py preflight --limit 10` 成功，目录共有 2,454 个未留痕候选，今日 `claimed_today=0`、`remaining_today=10`，按目录顺序固定返回 10 条候选；原始 JSON 已保存到 producer 状态目录的 `preflight/2026-08-28T195935-preflight.json`。该步骤没有 claim、没有写 ledger，也没有调用 NotebookLM。
 - 现状（AI 会话 · codex，待無涘确认）：当前 v0.2 是可运行的 Astro/TypeScript 网站，包含 EGDS 能力地图、职业透镜、资源主题筛选与搜索，以及保留全局关系的 Innovation Atlas。仓库当前有 5,437 个 Work Item、5,590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence；FPS、RPG、RTS、Open World 四条创新事件路线已满足完整闭包。仓库保持 Private，未恢复 Pages、未公开部署。
 - 官方 YouTube 元数据：仓库外 ADC 缓存有 2,534 条频道元数据；现有 2,311 条目标 Work Item 100% 映射。目标中 271 条标记有字幕、2,040 条没有；`youtube.readonly` 可读取公开元数据，但不能通用解锁第三方频道字幕正文。
 - 元数据一致性审计：2,311/2,311 条均能按 YouTube video ID 对回资源；来源、canonical URL、标题和 `publishedAt`/`duration`/`captionAvailability`/`privacyStatus` 均无缺失或错配，且目标记录全部为公开状态。
@@ -22,6 +23,7 @@
 
 ## 当前阶段
 
+- 本次收集运行在 claim 前的浏览器就绪门槛停止（2026-08-28 20:01）：Chrome 扩展连接存在；首次打开长期 Notebook 出现代理/防火墙检查页，重载一次后恢复为已登录的 Gemini Notebook 外壳，但等待稳定后可见界面仍只有账号入口，没有来源面板或 Studio 控件，因此状态为 `browser-notebook-access: unavailable`。未 claim 候选，没有 candidate failure、NotebookLM 调用、资产生成、下载、PicGo 上传或 ready 发布。
 - 资源侧已完成官方描述回退、二手旁证和剩余音频补全：49 条原本处于 `retryable` 的条目依据官方描述补齐；GDC Iwata 纪念片与 GMTK 宣传片随后通过显式音频工具链完成分析。2,311 条目标的 state 均为 `completed`，没有遗留 retryable。
 - 映射保守边界：2,311 条目标均已有一个合法主要资源主题；其中 1,677 条至少有一个 capability，634 条 capability 仍为空（GDC 625、英文樱井 8、GMTK 1）。这不是用模板硬填的缺陷：公告、汇编或证据不足的条目若不能直接支持某项能力，就保留空映射，避免把标题猜测写成语义事实。
 - 正式 state 已回写：2,311 条记录、2,311 `completed`、0 `retryable`、0 `unclassified`、0 `evidence_pending`。其中 1,871 条来自官方描述分析、210 条字幕分析、4 条音频分析、177 条二手旁证回写；49 条历史完成记录没有重新猜测输入通道，保留原有 model/summaryLength 事实。
@@ -60,6 +62,7 @@
 
 ## 下一步
 
+- NotebookLM 恢复生产前，先重新执行不消耗额度的工作台就绪检查；只有同时看到已登录可编辑页面、来源面板和 Studio 控件，才可按本次固定候选顺序 claim。当前首条是 `youtube-JGZQSFvcQzo`，本次未领取；普通运行级阻塞不应改写候选状态。
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
 - 2026-08-27 的收集已自动触发，并按用户要求对下一候选做了一次受限探针；信息图配额仍未恢复，producer 已停止。Daily Check-in 已通过单次手动 dispatch 成功生成 Issue #187 并消费 1 条 ready；远端队列剩余内容继续由后续每日消费者各消费 1 条。
 - 消费端现已把“无 ready”作为成功的可见状态（`no_ready_resource`），并在同日已有成功 Issue 时跳过重复模型调用；同日 workflow 延迟与手动补跑的并发锁增强仍待取得 GitHub `workflow` scope 后再推送，当前不影响已推送的 Python 幂等护栏。
@@ -76,6 +79,7 @@
 
 ## 阻塞 / 待定
 
+- 当前新增阻塞（2026-08-28 20:01）：NotebookLM 长期工作台的浏览器就绪检查为 `unavailable`；代理/防火墙页经一次重载后虽显示已登录外壳，但来源面板与 Studio 控件仍不可见。今天没有消耗 claim 位，10 次本地额度仍可用；需恢复可编辑工作台后再继续，并在首次真实 claim 前确认本批最多 10 条、并发 1、自动重试 0 的授权范围。
 - Vision 为 AI 草稿，待無涘确认。
 - 本轮外部 state 回写与摘要长度对账已完成；无 YouTube 内容补全阻塞。
 - NotebookLM→PKM/Daily Check-in 批量生产、PicGo 稳定托管与每日单条消费已打通；ready JSON 先进入 PKM 资源队列，Daily Check-in 再逐日消费。当前 NotebookLM 仍是网页端入口，不应当作批量 API；本日已触达信息图配额，剩余候选留到下一自然日。公开资产版权与托管策略仍需在未来公开前逐项核对。
