@@ -131,10 +131,36 @@
 
 原始对话：dialogues/2026-0828.md「2003 collect-resources-skill」
 
-## 2003 收集首条游戏资源并生成四项资产
+## 2026-08-28 2323 续产第 2 条与信息图配额阻断
+
+决策：無涘（沿用已确认的最多 10 条、串行并发 1、自动重试 0 和 NotebookLM 服务边界）｜记录：AI（在场模型）
+
+- 新的只读 `preflight --limit 10` 成功，上一条 ready 后固定返回 9 条候选；按顺序精确 claim `youtube-a-zKMzboOec`，`generation_run_id=run-20260828231614-96167`。没有改用新的候选、模型或服务。
+- 当前长期 Notebook 的来源导入成功，来源面板只保留 Animation Bootcamp 这一条来源，中文内容总结生成完成；在开始信息图阶段前，Studio 明确显示“您已达到每日信息图数量上限，改日再来吧！”。这是实际配额证据，不是等待超时或浏览器失联。
+- 按合同在 `quota_block / infographic` 阶段停止：调用 `notebooklm_producer.py fail` 将该 claim 留为 `failed`，没有继续生成思维导图/Slides，没有上传、ready 发布或自动重试，也没有领取后续 8 条候选。
+
+结构化运行报告：
+
+```json
+{
+  "preflight_status": "ready_to_claim",
+  "attempted": ["youtube-a-zKMzboOec"],
+  "ready": [],
+  "failed": ["youtube-a-zKMzboOec"],
+  "skipped": {"count": 8, "reason": "NotebookLM Studio 在信息图阶段明确命中日配额，按合同停止当天后续 claim"},
+  "remaining_today": 8,
+  "stop_reason": "信息图日配额已耗尽；不调用替代模型/付费 API，不继续半成品生产"
+}
+```
+
+验证：AI。`fail` 返回 `status=failed`，ledger 显示今日已用 2 次 claim（1 条 ready、1 条 failed）；本轮没有生成新 ready JSON、没有 PicGo 上传、没有 PKM/Daily Check-in、没有推送或部署。下次配额恢复后须重新做工作台就绪检查和只读 preflight，不能自动重试本条。
+
+原始对话：dialogues/2026-0828.md「2323 续产第 2 条与信息图配额阻断」
+
+## 2003 NotebookLM 资源收集第1条生产完成
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a04833-ca03-7963-be3f-8a5105ca8988
 
-执行 collect-resources-about-game 技能，preflight 检查确认 2,454 个候选。NotebookLM 工作台恢复后可用，成功 claim 首条候选 `youtube-JGZQSFvcQzo`（Turn Your Writers Into Programmers: Greyboxing Narrative with Story Languages）。生成了中文内容总结、信息图、思维导图（65节点/第4层/全部展开硬校验）和演示文稿（12页），使用渲染图重建 PPTX/PDF。PicGo 上传时遇到自动改名问题，通过 computer-use 技能临时关闭后恢复，4个成品成功上传并回读校验（HTTP 200/SHA-256一致）。已完成首条候选的完整收集流程，ready 队列写入 inbox，本地提交留痕。
+执行 collect-resources-about-game 技能进行资源收集。首次 preflight 发现 2,454 个候选，但 NotebookLM 浏览器因代理/防火墙问题无法访问来源面板和 Studio 控件，在 claim 前停止。用户反馈页面恢复后重新核验，确认可用并等待授权确认。用户确认后从固定清单首条 `youtube-JGZQSFvcQzo` 开始生产，成功生成中文总结、信息图（2752×1536）、思维导图（65节点/深度4/全展开）和演示文稿（12页），通过 PicGo 上传至图床，远端回读 SHA-256 校验通过，发布 contract v2 ready JSON 到 inbox。项目留痕已本地提交（c61405f）。运行报告：attempted 1, ready 1, failed 0, skipped 9, remaining_today 9。其余9条未处理，非失败。
 
 原始对话：dialogues/2026-0828.md「2003 collect-resources-skill」
