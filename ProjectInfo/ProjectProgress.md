@@ -2,12 +2,13 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-28 20:09:48 +0800 · 记录者 AI*
+*更新于 2026-08-28 22:20:05 +0800 · 记录者 AI*
 
 ## 现在在哪
 
-- 最新重试（2026-08-28 20:05–20:07）：同一只读 preflight 仍成功返回 2,454 个未留痕候选、10 条固定清单、`claimed_today=0`、`remaining_today=10`。复用长期 Notebook 后，页面已恢复为可操作状态；来源面板与 Studio 控件均可见，`添加来源` 可见且启用，思维导图、信息图和查询框均可见。本次尚未 claim，等待首次真实调用前的批次授权确认。
-- 最新收集端预检（2026-08-28 19:59:35 +0800）：`notebooklm_producer.py preflight --limit 10` 成功，目录共有 2,454 个未留痕候选，今日 `claimed_today=0`、`remaining_today=10`，按目录顺序固定返回 10 条候选；原始 JSON 已保存到 producer 状态目录的 `preflight/2026-08-28T195935-preflight.json`。该步骤没有 claim、没有写 ledger，也没有调用 NotebookLM。
+- 本轮真实生产（2026-08-28 20:13–22:19）：按已确认的最多 10 条、串行并发 1、自动重试 0，仅处理固定清单首条 `youtube-JGZQSFvcQzo`，`generation_run_id=run-20260828201328-3640`。同一长期 Notebook 中完成唯一来源隔离、中文内容总结、中文简体横向手绘笔记信息图（2752×1536）、查看器“全部展开”思维导图（65 个节点、最深第 4 层、折叠 0）和中文简体详细演示文稿（12 页）。
+- 本轮导出与托管（2026-08-28 22:05–22:19）：NotebookLM 可见下载控件的浏览器事件桥未产出可验证本地文件；逐页读取工作台渲染图后，用本机演示文稿工具重建 PPTX/PDF，二者分别通过 OOXML 与 12 页 PDF 校验。信息图、思维导图、PPTX、PDF 四个 PicGo 地址逐一回读 HTTP 200；PNG/文件签名正确，四份远端字节与本地 SHA-256 完全一致。正式 ready JSON 已写入 `AI-Life-Mentor/notebooklm-resources/2026-0828-2219-narrative-expression.json`，本轮未写 PKM/Daily Check-in、未推送、未部署。
+- 最新收集端预检（2026-08-28 19:59:35 +0800）：`notebooklm_producer.py preflight --limit 10` 成功，目录共有 2,454 个未留痕候选，今日当时 `claimed_today=0`、`remaining_today=10`，按目录顺序固定返回 10 条候选；原始 JSON 已保存到 producer 状态目录的 `preflight/2026-08-28T195935-preflight.json`。本次生产完成后 ledger 为 1 条 `ready`、今日剩余 9 次 claim。
 - 现状（AI 会话 · codex，待無涘确认）：当前 v0.2 是可运行的 Astro/TypeScript 网站，包含 EGDS 能力地图、职业透镜、资源主题筛选与搜索，以及保留全局关系的 Innovation Atlas。仓库当前有 5,437 个 Work Item、5,590 个 Access Version、84 个 Atlas 节点、86 条关系和 76 项 Evidence；FPS、RPG、RTS、Open World 四条创新事件路线已满足完整闭包。仓库保持 Private，未恢复 Pages、未公开部署。
 - 官方 YouTube 元数据：仓库外 ADC 缓存有 2,534 条频道元数据；现有 2,311 条目标 Work Item 100% 映射。目标中 271 条标记有字幕、2,040 条没有；`youtube.readonly` 可读取公开元数据，但不能通用解锁第三方频道字幕正文。
 - 元数据一致性审计：2,311/2,311 条均能按 YouTube video ID 对回资源；来源、canonical URL、标题和 `publishedAt`/`duration`/`captionAvailability`/`privacyStatus` 均无缺失或错配，且目标记录全部为公开状态。
@@ -24,8 +25,8 @@
 
 ## 当前阶段
 
-- 浏览器就绪阻塞已解除（2026-08-28 20:07）：长期 Notebook 的可编辑页面、来源面板和 Studio 控件均已通过只读核验；当前仍未导入来源或 claim，生产暂停在合同要求的批次授权确认处。
-- 本次收集运行在 claim 前的浏览器就绪门槛停止（2026-08-28 20:01）：Chrome 扩展连接存在；首次打开长期 Notebook 出现代理/防火墙检查页，重载一次后恢复为已登录的 Gemini Notebook 外壳，但等待稳定后可见界面仍只有账号入口，没有来源面板或 Studio 控件，因此状态为 `browser-notebook-access: unavailable`。未 claim 候选，没有 candidate failure、NotebookLM 调用、资产生成、下载、PicGo 上传或 ready 发布。
+- 本轮单条生产已完成并进入本地 ready 队列：`youtube-JGZQSFvcQzo` 的 contract v2 校验通过，包含总结、来源边界、三类 Studio 产物和思维导图展开证明；ledger 状态为 `ready`，今日剩余 9 次 claim。默认边界停在 `AI-Life-Mentor/notebooklm-resources`，没有触发远端推送或 Daily Check-in 消费。
+- 浏览器就绪阻塞与批次授权等待均已解除（2026-08-28 20:07–20:13）：同一长期 Notebook 的来源面板、唯一来源隔离和 Studio 控件均可见可操作。后续若继续生产，必须重新进行当天的只读 preflight，不得复用本次已固定清单之外的候选。
 - 资源侧已完成官方描述回退、二手旁证和剩余音频补全：49 条原本处于 `retryable` 的条目依据官方描述补齐；GDC Iwata 纪念片与 GMTK 宣传片随后通过显式音频工具链完成分析。2,311 条目标的 state 均为 `completed`，没有遗留 retryable。
 - 映射保守边界：2,311 条目标均已有一个合法主要资源主题；其中 1,677 条至少有一个 capability，634 条 capability 仍为空（GDC 625、英文樱井 8、GMTK 1）。这不是用模板硬填的缺陷：公告、汇编或证据不足的条目若不能直接支持某项能力，就保留空映射，避免把标题猜测写成语义事实。
 - 正式 state 已回写：2,311 条记录、2,311 `completed`、0 `retryable`、0 `unclassified`、0 `evidence_pending`。其中 1,871 条来自官方描述分析、210 条字幕分析、4 条音频分析、177 条二手旁证回写；49 条历史完成记录没有重新猜测输入通道，保留原有 model/summaryLength 事实。
@@ -64,7 +65,7 @@
 
 ## 下一步
 
-- 已确认工作台可用；收到本批授权后，从固定清单首条 `youtube-JGZQSFvcQzo` 开始，逐条精确 claim，最多 10 条、并发 1、自动重试 0；若任一条命中明确 NotebookLM 资产配额，立即按 `quota_block` 停止当天批次。
+- 本次唯一候选已 ready；若启动下一次生产，先重新做不消耗额度的 preflight，再从当天新的固定清单继续。今日 ledger 已使用 1 次 claim、剩余 9 次；本场不自动领取第二条。
 - NotebookLM 恢复生产前，先重新执行不消耗额度的工作台就绪检查；只有同时看到已登录可编辑页面、来源面板和 Studio 控件，才可按本次固定候选顺序 claim。当前首条是 `youtube-JGZQSFvcQzo`，本次未领取；普通运行级阻塞不应改写候选状态。
 - 内容补全目标已闭环；后续只需观察新的 YouTube 条目或凭据/平台策略变化，不再重复处理这 2,311 条。
 - 2026-08-27 的收集已自动触发，并按用户要求对下一候选做了一次受限探针；信息图配额仍未恢复，producer 已停止。Daily Check-in 已通过单次手动 dispatch 成功生成 Issue #187 并消费 1 条 ready；远端队列剩余内容继续由后续每日消费者各消费 1 条。
@@ -82,7 +83,7 @@
 
 ## 阻塞 / 待定
 
-- 之前的浏览器阻塞（2026-08-28 20:01）已在 20:07 的重试中解除：长期 Notebook 现在能看到并启用“添加来源”，来源面板与 Studio 控件均可见。当前待定仅为首次真实 claim 前的批次授权确认：最多 10 条、并发 1、自动重试 0；今天仍未消耗 claim 位。
+- 本轮没有未解决的生产阻塞：浏览器工作台、唯一来源、四项产物、PicGo 回读和 ready JSON 均已验证。NotebookLM 直接下载事件桥仍未落盘文件，本轮已用逐页渲染图重建 PPTX/PDF，并把这一导出边界写入会话留痕；若未来要求原生可编辑 PPTX，需要另行修复下载适配器。
 - Vision 为 AI 草稿，待無涘确认。
 - 本轮外部 state 回写与摘要长度对账已完成；无 YouTube 内容补全阻塞。
 - NotebookLM→PKM/Daily Check-in 批量生产、PicGo 稳定托管与每日单条消费已打通；ready JSON 先进入 PKM 资源队列，Daily Check-in 再逐日消费。当前 NotebookLM 仍是网页端入口，不应当作批量 API；本日已触达信息图配额，剩余候选留到下一自然日。公开资产版权与托管策略仍需在未来公开前逐项核对。

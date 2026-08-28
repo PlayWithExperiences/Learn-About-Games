@@ -102,10 +102,39 @@
 
 原始对话：dialogues/2026-0828.md「2009 批次授权待确认」
 
-## 2003 Collect-resources 技能预检：浏览器不可用阻塞 claim
+## 2221 演示文稿导出替代路径与 ready 发布
+
+决策：無涘（沿用已确认的单条生产范围与 ready 队列边界）｜记录：AI（在场模型）
+
+- 生产：精确 claim 固定清单首条 `youtube-JGZQSFvcQzo`，`generation_run_id=run-20260828201328-3640`。同一长期 Notebook 中只保留该 YouTube 来源，完成中文内容总结、信息图、思维导图和详细演示文稿；没有领取第二条候选、没有换模型、没有付费 API 或自动重试。
+- 资产核验：信息图通过当前页面资源 bundle 保存为 PNG（2752×1536）；思维导图在 NotebookLM 查看器执行“Expand all nodes（全部展开）”，观察到 65 个节点、最深第 4 层、折叠节点 0，先保留完整 SVG，再栅格化为 PNG（2105×4616）。
+- Slides：NotebookLM 工作台显示演示文稿已准备就绪，共 12 页。可见 PPTX/PDF 下载控件各监听一次均未产生可验证文件；随后从每页当前渲染图取得 1376×768 原始画面，逐页保存并用本机 `python-pptx`/Pillow 重建 12 页 PPTX 与 PDF。两者分别通过 OOXML 完整性和 12 页 PDF 校验；结果中的演示文稿明确标注为工作台渲染成品，未伪称原生可编辑文件。
+- 托管：PicGo 心跳正常。首次信息图上传因 PicGo 当时 `autoRename=true` 返回了不符合语义命名合同的孤立时间名，未写入结果；随后临时关闭自动改名，以系统时钟 `20260828221419` 为前缀串行重新上传信息图、思维导图、PPTX、PDF，四个正式文件名均为 `YYYYMMDDHHMMSS-narrative-expression-artifact.ext`，上传后已将 PicGo `autoRename` 恢复为原值 `true`。未删除首次孤立文件，避免不可逆外部删除。
+- 回读：四个正式 URL 均 HTTP 200；信息图/思维导图为 PNG，PPTX/PDF 远端 MIME 为通用 `application/octet-stream`，但文件签名分别确认 PNG、OOXML 和 12 页 PDF，且四个远端响应字节与本地 SHA-256 完全一致。
+- 发布：contract v2 ready JSON 已写入 `AI-Life-Mentor/notebooklm-resources/2026-0828-2219-narrative-expression.json`，包含 6,395 字符内容总结、1,255 字符来源边界、四项资产链接和思维导图展开证明；ledger 已由 `generating` 转为 `ready`。本轮默认停在本地 ready 队列，没有运行 `publish-notebooklm-resource.sh`，没有写 PKM/Daily Check-in，没有推送或部署。
+
+结构化运行报告：
+
+```json
+{
+  "preflight_status": "ready_to_claim",
+  "attempted": ["youtube-JGZQSFvcQzo"],
+  "ready": ["youtube-JGZQSFvcQzo"],
+  "failed": [],
+  "skipped": {"count": 9, "reason": "首条已 ready，本场按 ready 队列边界停止，未领取其余固定候选"},
+  "remaining_today": 9,
+  "stop_reason": "单条 contract v2 资源已完成并进入本地 ready inbox；默认边界不继续领取第二条"
+}
+```
+
+验证：AI。ready JSON、ledger 状态、四个远端回读、PNG/PPTX/PDF 文件签名、12 页页数、`git diff --check` 均已核验；本轮没有修改网站业务数据、公开状态或部署设置。
+
+原始对话：dialogues/2026-0828.md「2003 collect-resources-skill」
+
+## 2003 收集首条游戏资源并生成四项资产
 
 决策：無涘 ｜ 记录：codex（自动）｜ session 01a04833-ca03-7963-be3f-8a5105ca8988
 
-执行 collect-resources-about-game 技能的只读预检。预检结果 `ready_to_claim`，候选池 2,454 个，今日额度 10，本批前 10 条未领取。浏览器已连接（Chrome 扩展），但首次打开 NotebookLM 页面导航超时，重载后显示 Gemini Notebook 登录外壳，来源面板与 Studio 控件均不可见，状态为 `browser-notebook-access: unavailable`。未在 claim 前停止，未生成资源、未调用 NotebookLM、未修改 ledger/inbox。已落盘原始预检 JSON、主题摘要、对话记录，Git 提交 `5dc36fa`（本地，未推送）。下一步：恢复 NotebookLM 页面至可见来源面板和 Studio 控件后，重新执行就绪预检再决定是否领取候选。
+执行 collect-resources-about-game 技能，preflight 检查确认 2,454 个候选。NotebookLM 工作台恢复后可用，成功 claim 首条候选 `youtube-JGZQSFvcQzo`（Turn Your Writers Into Programmers: Greyboxing Narrative with Story Languages）。生成了中文内容总结、信息图、思维导图（65节点/第4层/全部展开硬校验）和演示文稿（12页），使用渲染图重建 PPTX/PDF。PicGo 上传时遇到自动改名问题，通过 computer-use 技能临时关闭后恢复，4个成品成功上传并回读校验（HTTP 200/SHA-256一致）。已完成首条候选的完整收集流程，ready 队列写入 inbox，本地提交留痕。
 
 原始对话：dialogues/2026-0828.md「2003 collect-resources-skill」
