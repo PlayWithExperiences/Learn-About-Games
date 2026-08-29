@@ -46,3 +46,15 @@
 - 下一步：等待 Chrome 控制通道恢复后，只读确认工作台，再从固定清单继续；若通道仍不可用，继续保持可辨认阻塞。
 
 原始对话：dialogues/2026-0829.md「1423 登录态恢复但浏览器通道再次阻塞」
+
+## 1853 今日固定批次收口
+
+决策：無涘 ｜ 记录：AI。
+
+- 用户确认登录后继续今日固定收集。NotebookLM 工作台控制已恢复；按稳定顺序新增处理 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4` 四条，均完成唯一来源隔离、中文总结、信息图、思维导图、Slides/PPTX/PDF，并通过思维导图查看器“全部展开”（观察深度 3、折叠节点 0）、文件格式和远端字节/SHA-256 核验。
+- 四份 ready JSON：`/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1659-level-spatial-design.json`、`/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1753-design-fundamentals.json`、`/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1820-level-spatial-design.json`、`/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1844-level-spatial-design.json`。每份 JSON 均保存四项稳定 Raw 地址；对应 PPTX/PDF 页数为 13/15/13/12。
+- 第五条 `youtube-j_Ez3RpJUtw`（`run-20260829184427-45772`）已 claim，来源导入和总结完成；信息图阶段读取到“您已达到每日信息图数量上限，改日再来吧！ 或进行升级。”，于 18:50:01 按 `quota_block / infographic` 记为 `failed`，没有继续生成、上传或写 ready JSON。
+- 失败后的只读 preflight 为 `claimed_today=9`、`remaining_today=1`，最后候选 `youtube-HAvS-RwkjdA` 保持未 claim。按明确服务配额护栏停止当天批次；没有触发 PKM、Daily Check-in、远端推送或部署。
+- 官方规则结论保持：5 小时刷新按计算量限制运行，并受每周上限影响；官方没有公开信息图/Slide Deck 每个窗口的固定数量，也没有证据证明每次刷新补回 6 条。参考：[官方使用限制说明](https://support.google.com/gemininotebook/answer/17670842?hl=en)、[官方限额表](https://support.google.com/gemininotebook/answer/16213268?hl=en)。
+
+原始对话：dialogues/2026-0829.md「1853 今日固定批次收口」
