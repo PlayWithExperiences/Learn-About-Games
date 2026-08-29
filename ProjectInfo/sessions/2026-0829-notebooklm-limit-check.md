@@ -23,3 +23,15 @@
 - 账目：今日累计 3 次 claim，2 条 `ready`、1 条 `failed`（LEGO 条目的 `browser_control / slide_deck`），`remaining_today=7`。固定清单后续 7 条保持未 claim；本场在本地 ready 队列收口。
 
 原始对话：dialogues/2026-0829.md「1324 续」
+
+## 1408 五小时限额确认与浏览器阻塞收口
+
+决策：無涘 ｜ 记录：AI。
+
+- 结论：Google 官方新帮助页说明 Gemini Notebook 将于 2026-09-02 起采用按计算量的使用限制，达到限制后每 5 小时刷新，但直到触及每周上限；没有说明每个 5 小时窗口固定恢复 6 条。信息图和 Slide Deck 没有公开固定条数，Plus 旧表的 6/day 对应音频/视频概览，思维导图为 20/day。
+- 本轮按用户要求继续使用今日本地 claim 位，领取 `youtube-CkHGuHd9BgU`（`run-20260829135125-72099`），但在来源 URL 提交前 Chrome 控制通道连续超时。扩展、native host、旧/新标签页恢复路径均已核验；内置浏览器未登录，未输入账号或绕过登录。
+- producer 已如实将本条标记为 `failed`，阶段 `browser_control / source_add`；没有 NotebookLM 产物、PicGo 上传或 ready JSON。收口后今日 4 次 claim（2 ready、2 failed），剩余 6 条未 claim；停止原因是浏览器通道失稳，不是明确配额阻断。
+- 风险：官方 5 小时说明尚未给出信息图/Slide Deck 的每窗口数值；后续必须以工作台显示的剩余量、恢复时刻和明文 quota block 为准，不能将 6 条推算为每 5 小时固定 6 条。
+- 下一步：待 Chrome 控制通道恢复后，重新只读 preflight；仅从未 claim 的固定清单开始，不能重占本条失败 claim。
+
+原始对话：dialogues/2026-0829.md「1408 确认五小时限额并收口今日批次」

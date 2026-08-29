@@ -2,9 +2,14 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-29 13:24:30 +0800 · 记录者 AI*
+*更新于 2026-08-29 14:08:50 +0800 · 记录者 AI*
 
 ## 现在在哪
+
+- 本次继续收集的只读预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T135106+0800-preflight.json` 显示开始时今日 `claimed_today=3`、`remaining_today=7`，固定清单首条为 `youtube-CkHGuHd9BgU`（`Designing Unforgettable 'Titanfall' Single Player Levels with Action Blocks`）。用户已明确要求继续使用今日额度；本条精确 claim 为 `generation_run_id=run-20260829135125-72099`。
+- 本条未能进入 NotebookLM 生成：添加来源对话框的 URL 尚未提交，Chrome 控制通道在输入阶段连续超时。已分别核对 Chrome 运行中、扩展已启用、native host 正常、旧标签页与新标签页恢复路径；内置浏览器无 Google 登录态，未要求用户输入账号，也未绕过登录。producer 已将本条以 `browser_control / source_add` 写为 `failed`，没有生成、上传或 ready JSON。
+- 收口后的预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T140835+0800-post-browser-block.json` 显示今日累计 4 次 claim：2 条 `ready`（`youtube-3U5AUkWU5Qw`、`youtube-FhKjv7CPUqw`）、2 条 `failed`（`youtube-2qrzI8YCVgI` 的 `browser_control / slide_deck`、`youtube-CkHGuHd9BgU` 的 `browser_control / source_add`），`remaining_today=6`。后续 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`、`youtube-j_Ez3RpJUtw`、`youtube-HAvS-RwkjdA` 均保持未 claim；停止原因是浏览器通道失稳，不是 NotebookLM 明文配额阻断。
+- 官方限额新说明已核对：Google 当前帮助页写明自 2026-09-02 起 Gemini Notebook 使用按计算量计的限制，受提示词复杂度、模型/功能、对话长度等影响；达到限制后额度每 5 小时刷新，但直到触及每周上限。官方没有说每个 5 小时窗口固定补回 6 条，也没有给信息图或 Slide Deck 公开的固定条数；旧表中的 Plus `6/day` 对应音频/视频概览，思维导图仍为 20/day，信息图和 Slide Deck 仍为 `More limits`。本项目后续以工作台显示的剩余量、恢复时刻和明文 quota block 为准，不把 6 条套成每 5 小时 6 条。
 
 - 本轮续产完成（截至 2026-08-29 13:24）：在获准打开的新 Chrome 配置窗口中恢复 NotebookLM 控制后，按只读预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T122415-preflight.json` 继续处理固定清单下一条 `youtube-FhKjv7CPUqw`（`Level Design Workshop: A Narrative Approach to Level Design`），`generation_run_id=run-20260829122447-1992`。来源已在同一长期 Notebook 中导入并收敛为唯一来源；中文回答原文 7,351 字符，清理为 6,561 字符内容总结和 778 字符来源边界。
 - 本轮 NotebookLM 产物核验：信息图为 2,752×1,536 PNG；思维导图实际执行 viewer「全部展开」，38 个节点、最深第 4 层、折叠节点 0；演示文稿查看器逐页资产共 14 页。NotebookLM 原生下载事件未在 30 秒内产出可验证文件，因此按查看器真实渲染资产重建 PPTX/PDF；PPTX ZIP 无损且含 14 个 slide XML，PDF 可解析且为 14 页。没有把按钮点击或返回 job 当作下载成功。
