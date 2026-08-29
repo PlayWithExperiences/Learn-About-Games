@@ -2,10 +2,12 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-29 14:08:50 +0800 · 记录者 AI*
+*更新于 2026-08-29 14:23:33 +0800 · 记录者 AI*
 
 ## 现在在哪
 
+- 截至 2026-08-29 14:23:33：用户已在 Chrome 的同一配置中登录 Google；只读读取确认账号可见（Haodong Liao / Google One 会员），NotebookLM 工作台标签页也已进入目标长期 Notebook。首次接管后尝试读取工作台时，页面导航触发 CDP `Page.getFrameTree` 超时；内核重置后，重连对该标签页的认领再次超时，随后 Chrome 控制通道报告不可用。登录本身有效，但浏览器控制尚未稳定。
+- 本次恢复没有执行新的 producer claim，没有提交来源 URL，没有触发 NotebookLM 生成、PicGo 上传或 ready JSON；今日 ledger 仍为 4 次 claim（2 条 `ready`、2 条 `failed`），`remaining_today=6`。固定未领取清单仍为 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`、`youtube-j_Ez3RpJUtw`、`youtube-HAvS-RwkjdA`。
 - 本次继续收集的只读预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T135106+0800-preflight.json` 显示开始时今日 `claimed_today=3`、`remaining_today=7`，固定清单首条为 `youtube-CkHGuHd9BgU`（`Designing Unforgettable 'Titanfall' Single Player Levels with Action Blocks`）。用户已明确要求继续使用今日额度；本条精确 claim 为 `generation_run_id=run-20260829135125-72099`。
 - 本条未能进入 NotebookLM 生成：添加来源对话框的 URL 尚未提交，Chrome 控制通道在输入阶段连续超时。已分别核对 Chrome 运行中、扩展已启用、native host 正常、旧标签页与新标签页恢复路径；内置浏览器无 Google 登录态，未要求用户输入账号，也未绕过登录。producer 已将本条以 `browser_control / source_add` 写为 `failed`，没有生成、上传或 ready JSON。
 - 收口后的预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T140835+0800-post-browser-block.json` 显示今日累计 4 次 claim：2 条 `ready`（`youtube-3U5AUkWU5Qw`、`youtube-FhKjv7CPUqw`）、2 条 `failed`（`youtube-2qrzI8YCVgI` 的 `browser_control / slide_deck`、`youtube-CkHGuHd9BgU` 的 `browser_control / source_add`），`remaining_today=6`。后续 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`、`youtube-j_Ez3RpJUtw`、`youtube-HAvS-RwkjdA` 均保持未 claim；停止原因是浏览器通道失稳，不是 NotebookLM 明文配额阻断。
@@ -86,7 +88,7 @@
 
 ## 下一步
 
-- 本轮失败不是 NotebookLM 配额拒绝，而是浏览器标签控制权在内核重置后无法恢复。若要继续今天的收集，需先取得用户明确许可打开该 Chrome 用户配置的新窗口，恢复控制后重新做工作台就绪检查和 `preflight`；当前下一条固定候选为 `youtube-FhKjv7CPUqw`，不得自动重试本轮已失败的 `youtube-2qrzI8YCVgI`。
+- 本轮失败不是 NotebookLM 配额拒绝，而是浏览器标签控制权在内核重置后无法恢复。用户已完成 Chrome 登录并授权继续；仍需等 Chrome 控制通道恢复后重新做工作台就绪检查，再从未 claim 的固定清单开始，绝不重试已失败的 claim。
 - 07:58 已完成的 `youtube-3U5AUkWU5Qw` 不应重复生产；若今天在恢复浏览器控制后继续，必须重新从不消耗额度的工作台就绪检查与只读 `preflight` 开始，并按新的固定清单继续，不能把此前剩余 9 条当成已验证成功。
 - 当前已有 1 条 ready、1 条 quota-block failed；若在配额恢复后启动下一次生产，先重新做不消耗额度的工作台就绪检查和 preflight，再从新的固定清单继续，不能自动重试 `youtube-a-zKMzboOec`。今日 ledger 已使用 2 次 claim、剩余 8 次；本场不再领取其余候选。
 - NotebookLM 恢复生产前，先重新执行不消耗额度的工作台就绪检查；只有同时看到已登录可编辑页面、来源面板和 Studio 控件，才可按本次固定候选顺序 claim。当前首条是 `youtube-JGZQSFvcQzo`，本次未领取；普通运行级阻塞不应改写候选状态。
@@ -106,6 +108,7 @@
 
 ## 阻塞 / 待定
 
+- 当前新增阻塞（系统时钟 2026-08-29 14:23:33）：Chrome 中的 Google 登录态已确认有效，但工作台读取/认领在 CDP 帧树阶段超时；一次受控重连后通道报告 `Browser is not available: chrome`。本次未新增 claim，今日账仍为 4 次（2 ready、2 failed），剩余 6 条未领取。需要 Chrome 控制通道恢复后再继续；不以登录成功伪装成工作台已可操作，也不重复撞击同一标签页。
 - 本轮（2026-08-29 11:59）没有读到新的 NotebookLM 明文配额阻断；停止原因是 `browser_control / slide_deck`，不是服务端拒绝。Chrome 运行、扩展启用、native host 正确，但恢复标签控制权按插件规则需要用户许可打开新窗口；在恢复前不再 claim 今日剩余 8 次。
 - 首条资源的浏览器工作台、唯一来源、四项产物、PicGo 回读和 ready JSON 均已验证；本轮续产在第二条的信息图阶段遇到明确的 NotebookLM 日配额阻断，已写入 ledger 的 `failed`，没有继续当天批次。NotebookLM 直接下载事件桥仍未落盘文件，首条已用逐页渲染图重建 PPTX/PDF，并把这一导出边界写入会话留痕；若未来要求原生可编辑 PPTX，需要另行修复下载适配器。
 - 当前新增阻塞（2026-08-28 23:21）：`youtube-a-zKMzboOec` 在来源导入和文字总结成功后，进入信息图阶段时读取到 Studio 明文提示“您已达到每日信息图数量上限，改日再来吧！”。该 claim 已按 `quota_block / infographic` 失败留痕，未调用替代模型、付费 API 或自动重试；当天其余 8 条固定候选全部保持未 claim。
