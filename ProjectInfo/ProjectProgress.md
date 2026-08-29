@@ -2,10 +2,15 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-29 12:01:10 +0800 · 记录者 AI*
+*更新于 2026-08-29 13:24:30 +0800 · 记录者 AI*
 
 ## 现在在哪
 
+- 本轮续产完成（截至 2026-08-29 13:24）：在获准打开的新 Chrome 配置窗口中恢复 NotebookLM 控制后，按只读预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T122415-preflight.json` 继续处理固定清单下一条 `youtube-FhKjv7CPUqw`（`Level Design Workshop: A Narrative Approach to Level Design`），`generation_run_id=run-20260829122447-1992`。来源已在同一长期 Notebook 中导入并收敛为唯一来源；中文回答原文 7,351 字符，清理为 6,561 字符内容总结和 778 字符来源边界。
+- 本轮 NotebookLM 产物核验：信息图为 2,752×1,536 PNG；思维导图实际执行 viewer「全部展开」，38 个节点、最深第 4 层、折叠节点 0；演示文稿查看器逐页资产共 14 页。NotebookLM 原生下载事件未在 30 秒内产出可验证文件，因此按查看器真实渲染资产重建 PPTX/PDF；PPTX ZIP 无损且含 14 个 slide XML，PDF 可解析且为 14 页。没有把按钮点击或返回 job 当作下载成功。
+- 本轮上传与正式入队（截至 2026-08-29 13:24）：信息图、思维导图、PPTX、PDF 以 `20260829131742-narrative-expression-*` 语义文件名逐个串行经 PicGo 上传；四个 Raw 地址均 HTTP 200，PNG/OOXML/PDF 文件签名正确，远端字节数与本地 SHA-256 完全一致。PicGo `autoRename` 已从临时 `false` 恢复原值 `true`。`notebooklm_producer.py publish` 成功写入 [ready JSON](</Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1323-narrative-expression.json>)。
+- 本日本地生产账（截至 2026-08-29 13:24）：ledger 已记录 3 次 claim，结果为 2 条 `ready`（`youtube-3U5AUkWU5Qw`、`youtube-FhKjv7CPUqw`）和 1 条 `failed`（`youtube-2qrzI8YCVgI`，`browser_control / slide_deck`），因此 `remaining_today=7`。固定清单后续 `youtube-CkHGuHd9BgU`、`youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`、`youtube-j_Ez3RpJUtw`、`youtube-HAvS-RwkjdA` 保持未 claim；本轮停在本地 ready 队列，没有触发 PKM、Daily Check-in、远端推送或部署。
+- 本轮本地回归：生产器、预检自动化和发布脚本合同测试共 20/20 通过；未新增付费 API、订阅或模型批量调用。
 - 官方限额核对（本次记录于 2026-08-29 12:01）：Google 当前官方帮助页已将 NotebookLM 更名为 Gemini Notebook；Plus 的公开数值仍为 200 notebooks/user、100 sources/notebook、200 chats/day、6 audio/day、6 video/day、20 reports/flashcards/quizzes/mind maps/day、3 次 Deep Research/day。信息图与 Slide Deck 仍只显示 `More limits`，没有公开固定数字；官方同时注明限额会变化，daily quotas 在 24 小时后重置、monthly quotas 在 30 天后重置。官方思维导图说明单独确认 Plus 为 20/day；因此本次没有证据证明公开 Plus 表发生了新的数字下调，账号实际剩余量仍只能以工作台提示为准。
 - 本轮受限生产（2026-08-29 11:33–11:59）：只读 `preflight --limit 10` 返回 2,454 个候选，开始时 `claimed_today=1`、`remaining_today=9`；精确 claim `youtube-2qrzI8YCVgI`，`generation_run_id=run-20260829113535-74127`。在同一长期 Notebook 中导入并隔离唯一来源（17/100），中文总结生成 7,026 字符；信息图已实际生成，页面资产打包为已验证 PNG（2752×1536，约 6.7 MB）。思维导图已实际生成，并在 viewer 执行 `Expand all nodes（全部展开）`；内部树节点实测 43 个、层级 1–4、所有有子节点者 `aria-expanded=true`，可见折叠节点 0；保留的完整 SVG 为 49,593 字符且 XML 校验通过。两项直接下载事件都未在 30 秒内落盘，未把点击当成下载成功。
 - 本轮最终收口（2026-08-29 11:59:40）：读取思维导图画布几何时浏览器内核重置，随后 Chrome 标签列表仍可读，但原 NotebookLM 标签控制权无法重新取得；Chrome、扩展和 native host 诊断均通过。因未能继续提交 Slides，producer 已把该 claim 按 `browser_control / slide_deck` 记为 `failed`；没有提交 Slides 请求、没有 PicGo 上传、没有发布 ready JSON，也没有触发 PKM/Daily Check-in。收口后 ledger 为今日 2 次 claim（此前 1 条 ready + 本条 1 条 failed），`remaining_today=8`；未遇到今天新的 NotebookLM 明文配额阻断。
