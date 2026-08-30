@@ -106,3 +106,16 @@
 - 验证通过：自动化合同 5/5、生产器 16/16、发布合同 2/2、`git diff --check`；本场未消费 ready、未写 PKM/Daily Check-in、未创建 Issue、未推送或部署。
 
 原始对话：dialogues/2026-0830.md「1414 HAv 失败候选重试并进入 ready」
+
+## 2026-08-30 1457 今日限额续产
+
+决策：無涘 ｜ 记录：AI（在场模型）。
+
+- 本场收到“持续推进到今日限额”确认，沿用先前只读预检的固定顺序，最多继续 7 条、串行并发 1、自动重试 0；没有重新预检来改换候选，也没有重试旧失败条目。
+- 新增 4 次 claim。`youtube-I1yBJD4yRss`（`run-20260830142129-87995`）、`youtube-o02uJ-ktCuk`（`run-20260830143309-96939`）和 `youtube-QBAM27YbKZg`（`run-20260830144012-99867`）均在信息图阶段发现当前 viewer 图片不在 `pageAssets` 清单，且唯一可见下载回退等待 25 秒没有产生浏览器下载事件或可验证本地文件，正式记录 `asset-download / infographic` 失败。
+- `youtube-LuNH9Rz2e2k`（`run-20260830145311-11173`）已完成唯一来源隔离和中文总结（正文 5,595 字符、来源边界 834 字符），但 NotebookLM 信息图界面明确返回“您已达到每日信息图数量上限，改日再来吧！或进行升级”，按 `quota_block / infographic` 失败并停止当天批次。
+- 终止时本地 producer 只读预检为 `ready_to_claim`，`claimed_today=7`、`remaining_today=3`；未 claim 的固定候选为 `youtube-5UdVNmbIClM`、`youtube-8uE6-vIi1rQ`、`youtube-XPPtLNkVPWY`。本地名额未满不等于可以继续调用；明确服务配额优先，未升级、未自动重试。
+- 本场没有新的 ready JSON 或 PicGo 上传。前一条 `youtube-HAvS-RwkjdA` 的 retry ready 仍为 `/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0830-1413-systems-mechanics.json`；本场未消费 ready、未写 PKM/Daily Check-in、未创建 Issue、未推送或部署。
+- 根因边界进一步明确：后台 page-assets 已被 HAv retry 证明可以绕过正在使用的 Chrome 窗口；本场 3 条失败不是把下载弹窗点击当作成功，而是目标 viewer 图片未进入可导出资产清单，随后真实下载事件也没有产出。第 4 条则是服务端信息图配额的明文阻断。
+
+原始对话：dialogues/2026-0830.md「1457 持续推进至今日限额并遇 NotebookLM 信息图配额」
