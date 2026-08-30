@@ -709,3 +709,12 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 范围：AI。本轮只生成并查看一项，没有重试、没有批量外部调用、没有付费/订阅操作，也没有写回 PKM、网站或旧的 `not-generated` fixture。思维导图与演示文稿未在本轮重新生成。
 
 原始对话：dialogues/2026-0823.md「2149 NotebookLM 信息图单条复测」
+
+## 2026-08-30 15:58：NotebookLM 资源闭环合并并完成 PKM 回写
+
+- 决策：無涘 ｜ 记录：AI。此前 9 个本地未跟踪 ready JSON 经明确授权逐条补交；`ready` 仍只表示运输态，远端队列、PKM 正文和 Daily Check-in marker 三段均有实证后才算 `consumed`。
+- 结果：AI。9 条资源已逐条推送到 AI-Life-Mentor `main`，远端 `notebooklm-resources/` 当前共 21 个已跟踪 JSON；9/9 远端路径/blob、9/9 PKM 正文、9/9 marker 回读一致。
+- 边界：AI。本次 9 次串行、无重试、无新的 NotebookLM claim 或付费调用；普通消费者仍按每天最多一条运行。Learn-About-Games 修复合并到本地 `main`，仓库仍 Private，未推送或部署。
+- 验证：AI。Learn 自动化 6/6、生产器 16/16、发布合同 4/4、AI-Life-Mentor 消费端 19/19；首次 PKM 反向核验的路径参数错误已纠正，最终 9/9 通过。
+
+原始对话：dialogues/2026-0830.md「1558 合并并回写 PKM」

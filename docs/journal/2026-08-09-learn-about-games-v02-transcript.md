@@ -1000,3 +1000,17 @@ AI 先核对仓库外官方 YouTube 元数据缓存，发现此前字幕/模型�
 最终验证：Python 45/45、Astro check 0/0/0、Vitest 204/204、静态构建 151 页、JSON、secret scan、`git diff --check` 通过。目标完成，未 push、未部署。
 
 原始对话：dialogues/2026-0823.md「1149 2,311 条目标正式回写与最终闭环」
+
+## 1558 合并并回写 PKM（partial export）
+
+记录说明：以下为当前运行时可访问范围内的脱敏摘要，不是聊天 UI 的完整逐字记录；没有写入凭据、token、私有 Notebook 正文或环境变量值。
+
+用户确认合并此前的闭环修复，并要求把已经收集的资源写回 PKM。范围锁定为 9 个此前只存在于 AI-Life-Mentor 本地、尚未跟踪的 ready JSON。没有重新调用 NotebookLM、没有扩大候选、没有重试，也没有触发新的模型或付费服务调用。
+
+9 个资源按串行单文件流程完成：每条先推送到 AI-Life-Mentor `main`，再回读远端路径与 Git blob；随后通过现有消费桥接写入规范 PKM 资源笔记，并追加 Daily Check-in marker。远端 `notebooklm-resources/` 共 21 个已跟踪 JSON。
+
+最终反向核验为远端路径/blob 9/9、PKM 正文 9/9、Daily Check-in marker 9/9。第一次 PKM 核验因校验器漏拼资源目录前缀而出现首条假警报，修正为规范路径后 9/9 通过；这不是生产写入失败，也没有重写 PKM 内容。
+
+Learn 自动化 6/6、生产器 16/16、发布合同 4/4、AI-Life-Mentor 消费端 19/19 通过。Learn 修复已合并到本地 `main`，网站仍 Private，未推送或部署。
+
+原始对话：dialogues/2026-0830.md「1558 合并并回写 PKM」

@@ -11,3 +11,13 @@
 - 下一步：AI。提交并审查两个隔离分支；若無涘确认补交范围，逐条推送这 9 个历史 JSON 并逐条回读，再由既有 Daily Check-in 按每天 1 篇消费。
 
 原始对话：dialogues/2026-0830.md「1527 PKM 归档闭环修复」
+
+## 1558 历史资源合并并回写 PKM
+
+- 决策：無涘 ｜ 记录：AI。确认合并修复并回写 PKM；范围锁定为此前 9 个本地未跟踪 ready JSON，不重新调用 NotebookLM、不扩大候选、不重试。
+- 产出：AI。9 条资源逐条经 `publish-notebooklm-resource.sh` 推送到 AI-Life-Mentor `main`，随后通过现有消费桥接写入 9 个规范 PKM 资源笔记并补齐 9 个 Daily Check-in marker。
+- 验证：AI。远端路径/blob 9/9、PKM 正文 9/9、Daily Check-in marker 9/9；AI-Life-Mentor 远端 `notebooklm-resources/` 共 21 个已跟踪 JSON，9 个资源不再是 untracked。自动化 6/6、生产器 16/16、发布合同 4/4、消费端 19/19 通过。
+- 纠偏：AI。第一次 PKM 反向核验误把资源文件名直接当 API 路径，产生“首条缺失”的校验器假警报；改用 `resource_note_path()` 后 9/9 通过，未修改或重写任何 PKM 内容。
+- 边界：AI。Learn-About-Games 修复已合并到本地 `main`，仓库仍 Private，未推送网站、未恢复 Pages；AI-Life-Mentor 资源提交已推到远端，用户原有的 `.claude/trace-health.json` 与对话脏改动保持未提交。
+
+原始对话：dialogues/2026-0830.md「1558 合并并回写 PKM」
