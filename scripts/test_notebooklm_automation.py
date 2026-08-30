@@ -9,6 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "automation" / "notebooklm-daily-preflight.sh"
 PLIST = ROOT / "automation" / "com.lag.notebooklm-daily-preflight.plist"
+SKILL = ROOT / ".agents" / "skills" / "collect-resources-about-game" / "SKILL.md"
+CONTRACT = ROOT / ".agents" / "skills" / "collect-resources-about-game" / "references" / "resource-contract.md"
 
 
 class NotebookLMAutomationTests(unittest.TestCase):
@@ -60,6 +62,17 @@ class NotebookLMAutomationTests(unittest.TestCase):
         self.assertNotIn("codex exec", " ".join(payload["ProgramArguments"]))
         self.assertIn("notebooklm-daily", payload["StandardOutPath"])
         self.assertIn("notebooklm-daily", payload["StandardErrorPath"])
+
+    def test_skill_documents_background_page_asset_export_without_download_prompt(self):
+        skill = SKILL.read_text(encoding="utf-8")
+        contract = CONTRACT.read_text(encoding="utf-8")
+
+        self.assertIn("pageAssets", skill)
+        self.assertIn("bundle", skill)
+        self.assertIn("不要依赖 Chrome 下载弹窗", skill)
+        self.assertIn("页面资产列表本身不算成功", skill)
+        self.assertIn("页面资产后台路径", contract)
+        self.assertIn("不要依赖 Chrome 下载弹窗", contract)
 
 
 if __name__ == "__main__":

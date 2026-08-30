@@ -81,3 +81,15 @@
 - 发布后今日 ledger 为 2 次 claim：1 条此前 `failed`、本条 `ready`，`remaining_today=8`；固定清单余下 8 条未 claim。本场不消费 ready，不写 PKM/Daily Check-in，不推送、不部署；生产器、预检自动化、发布合同测试 20/20 通过。
 
 原始对话：dialogues/2026-0830.md「1249 确认执行：Edith Finch 原型复盘 ready 与前次失败解释」
+
+## 2026-08-30 1310 下载弹窗隔离修复
+
+决策：無涘 ｜ 记录：AI（在场模型）。
+
+- 根因边界：`youtube-HAvS-RwkjdA` 的失败日志只证明两条可见下载路径都没有产生可验证本地文件，不能证明用户一定点击了 Chrome 的 Cancel；但可见下载弹窗/事件桥是会被当前窗口或人工操作打断的脆弱主路径。
+- 修复：共享收集 skill 与资源合同改为优先使用当前 viewer 的页面资产后台能力，按 `list()` → 精确资产选择 → `bundle()` 将实际字节导出到全新临时目录；页面资产列表、viewer URL、job id、HTTP 响应或点击无报错均不算成功。可见下载仅在后台能力不可用或明确失败时回退，且不要求用户操作弹窗。
+- 实测：当前 NotebookLM 标签的单张页面资产后台探针 `requested=1`、`downloaded=1`、`failed=0`，本地得到非零字节 JPEG（64×64）；没有生成、claim 或消耗 NotebookLM 配额。
+- 验证：先让合同测试在缺少后台导出规则时失败，再补齐文档后转绿；自动化 4/4、生产器 15/15、发布 2/2，共 21/21，`git diff --check` 通过。
+- 状态：旧 `youtube-HAvS-RwkjdA` 仍保持 `asset-download / infographic` failed，没有伪造 ready；本轮不重跑，若重跑需另行确认一次新的单条 NotebookLM claim。
+
+原始对话：dialogues/2026-0830.md「1310 下载弹窗导致的候选失败：根因确认与后台导出修复」
