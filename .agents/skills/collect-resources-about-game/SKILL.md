@@ -71,6 +71,7 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" preflight \
 - `claimed`、`generating`、`ready`、`delivering`、`consumed`、`failed`、`partial` 都是该视频的留痕；未经用户明确要求，不自动重置、重跑或换平台重试。
 - 每个北京时间自然日最多 10 次 distinct claim，失败 claim 也计入；逐条串行、并发 1、自动重试 0。普通单候选失败后才可继续预检已返回的下一个不同候选；NotebookLM 明确命中某类当日配额时立即记录 `quota_block` 并停止当天剩余批次。
 - `claim`、`fail`、`publish` 使用 producer 提供的原子接口。候选被 claim 后，必须最终留下 `ready` 或带阶段/原因的 `failed`/`partial`，不能删除 ledger 条目制造“从未尝试”。
+- 只有用户明确授权时才允许显式重跑 `failed`/`partial`；使用 producer 的 `retry` 接口并提供准确的 `previous-generation-run-id`。它会保留旧失败尝试、重新计入当天 claim 上限，且不会改变普通 `claim` 的自动去重护栏。
 
 ### 3. 复用 Notebook 与隔离来源
 
@@ -134,6 +135,18 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" fail \
   --generation-run-id '<claimed generation_run_id>' \
   --reason '<阶段、可核查现象和停止原因>'
 ```
+
+若用户明确授权重跑某条既有 `failed`/`partial` 候选，必须保留原失败记录并使用准确的上一轮运行 ID：
+
+```bash
+python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" retry \
+  --catalog "$PROJECT_ROOT/src/data/resources.json" \
+  --inbox "$INBOX" \
+  --resource-id '<failed resource_id>' \
+  --previous-generation-run-id '<previous generation_run_id>'
+```
+
+该命令只允许显式重跑，旧失败尝试会保留在 ledger 的 `attempt_history` 中；没有用户授权时不得调用它。
 
 不要生成空链接、`not-generated` 的 ready、假成功的 partial 或删除失败记录。普通失败可继续预检已返回的下一个 distinct candidate；明确配额阻断则停止当天，不消耗剩余 claim 位。claim 前的运行时不可用属于运行级阻塞，不伪造 candidate failure。
 

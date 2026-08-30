@@ -93,3 +93,16 @@
 - 状态：旧 `youtube-HAvS-RwkjdA` 仍保持 `asset-download / infographic` failed，没有伪造 ready；本轮不重跑，若重跑需另行确认一次新的单条 NotebookLM claim。
 
 原始对话：dialogues/2026-0830.md「1310 下载弹窗导致的候选失败：根因确认与后台导出修复」
+
+## 2026-08-30 1414 HAv 失败候选 retry ready
+
+决策：無涘 ｜ 记录：AI（在场模型）。
+
+- 用户明确确认只完整推进旧失败候选 `youtube-HAvS-RwkjdA`；本轮新 claim 为 `run-20260830132511-54079`，旧失败 `run-20260830073426-50030` 保留在 `attempt_history`，没有自动扩展到其他候选。
+- 同一长期 Notebook 中保持 Studio 各产物的唯一来源选择；文字总结清理为 5,155 字符正文、782 字符来源边界。信息图为 2,752×1,536 PNG；思维导图 viewer 执行“全部展开”，实测 48 节点、深度 4、折叠 0；演示文稿为 13 页。
+- 导出已验证绕过可见 Chrome 下载弹窗：信息图和思维导图使用 page-assets 后台 bundle；演示文稿用 13 张当前 viewer 页面资产重建 PPTX/PDF，并通过 PNG/OOXML/PDF 校验。
+- 四项资产按 `20260830141001-systems-mechanics-*` 语义文件名经 PicGo 串行上传并回读；四个 Raw 地址均 HTTP 200，远端字节和本地 SHA-256 一致。PicGo `autoRename` 已恢复 `true`。
+- producer 已发布 `/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0830-1413-systems-mechanics.json`，状态 `ready`；发布结果保留总结、来源边界、资产地址和思维导图展开证明，私有 Notebook 地址不进入本项目留痕。
+- 验证通过：自动化合同 5/5、生产器 16/16、发布合同 2/2、`git diff --check`；本场未消费 ready、未写 PKM/Daily Check-in、未创建 Issue、未推送或部署。
+
+原始对话：dialogues/2026-0830.md「1414 HAv 失败候选重试并进入 ready」

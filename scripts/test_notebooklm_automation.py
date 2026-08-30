@@ -74,6 +74,13 @@ class NotebookLMAutomationTests(unittest.TestCase):
         self.assertIn("页面资产后台路径", contract)
         self.assertIn("不要依赖 Chrome 下载弹窗", contract)
 
+    def test_skill_documents_explicit_retry_without_automatic_reclaim(self):
+        skill = SKILL.read_text(encoding="utf-8")
+
+        self.assertIn("显式重跑", skill)
+        self.assertIn("previous-generation-run-id", skill)
+        self.assertIn("保留旧失败尝试", skill)
+
 
 if __name__ == "__main__":
     unittest.main()

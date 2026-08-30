@@ -460,6 +460,47 @@ class NotebookLMProducerTests(unittest.TestCase):
             with self.assertRaises(producer.AlreadyProcessed):
                 producer.claim_candidate(candidate, ledger_path, "2026-08-24T01:32:00+08:00")
 
+    def test_explicit_retry_reclaims_failed_attempt_and_preserves_history(self):
+        candidate = producer.Candidate(
+            resource_id="youtube-ABCDEFGHIJK",
+            video_id="ABCDEFGHIJK",
+            source_url="https://www.youtube.com/watch?v=ABCDEFGHIJK",
+            catalog_id="resource-1",
+            title="Example",
+            topic="design-fundamentals",
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            ledger_path = Path(temp_dir) / "ledger.json"
+            first = producer.claim_candidate(candidate, ledger_path, NOW)
+            producer.mark_failed(
+                candidate,
+                ledger_path,
+                generation_run_id=first["generation_run_id"],
+                now=NOW,
+                reason="asset-download / infographic：没有本地文件",
+            )
+
+            retried = producer.retry_candidate(
+                candidate,
+                ledger_path,
+                "2026-08-24T01:32:00+08:00",
+                previous_generation_run_id=first["generation_run_id"],
+            )
+
+            self.assertEqual(retried["status"], "generating")
+            self.assertNotEqual(retried["generation_run_id"], first["generation_run_id"])
+            self.assertEqual(retried["retry_of_generation_run_id"], first["generation_run_id"])
+            self.assertEqual(len(retried["attempt_history"]), 1)
+            self.assertEqual(retried["attempt_history"][0]["status"], "failed")
+            self.assertEqual(
+                producer._claimed_today(
+                    producer.read_ledger(ledger_path),
+                    "2026-08-24T01:32:00+08:00",
+                ),
+                2,
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

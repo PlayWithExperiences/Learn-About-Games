@@ -238,9 +238,17 @@ def _claimed_today(ledger: dict, now: str) -> int:
     for resource_id, entry in ledger["entries"].items():
         if not isinstance(entry, dict):
             raise ProducerError(f"ledger entries.{resource_id} 必须是对象")
-        claimed_at = entry.get("claimed_at")
-        if claimed_at is not None and _calendar_day(claimed_at) == today:
-            count += 1
+        attempts = [entry]
+        history = entry.get("attempt_history", [])
+        if not isinstance(history, list):
+            raise ProducerError(f"ledger entries.{resource_id}.attempt_history 必须是数组")
+        attempts.extend(history)
+        for attempt in attempts:
+            if not isinstance(attempt, dict):
+                raise ProducerError(f"ledger entries.{resource_id}.attempt_history 项必须是对象")
+            claimed_at = attempt.get("claimed_at")
+            if claimed_at is not None and _calendar_day(claimed_at) == today:
+                count += 1
     return count
 
 
@@ -359,6 +367,63 @@ def claim_candidate(
             "status": "generating",
             "generation_run_id": _run_id(now),
             "claimed_at": now,
+        }
+        ledger["entries"][candidate.resource_id] = claim
+        write_ledger(ledger_path, ledger)
+        return claim
+
+
+def retry_candidate(
+    candidate: Candidate,
+    ledger_path: Path,
+    now: str,
+    *,
+    previous_generation_run_id: str,
+    inbox_dir: Path | None = None,
+) -> dict:
+    """Explicitly retry a failed attempt while preserving its durable history."""
+    previous_run_id = _required_text(previous_generation_run_id, "previous_generation_run_id")
+    lock_path = ledger_path.with_suffix(ledger_path.suffix + ".lock")
+    with producer_lock(lock_path):
+        ledger = read_ledger(ledger_path)
+        existing = ledger["entries"].get(candidate.resource_id)
+        if not isinstance(existing, dict):
+            raise ProducerError(f"{candidate.resource_id} 没有可重试的历史 claim")
+        if existing.get("status") not in {"failed", "partial"}:
+            raise AlreadyProcessed(
+                f"{candidate.resource_id} 当前为 {existing.get('status')}，只允许显式重试 failed/partial"
+            )
+        if existing.get("generation_run_id") != previous_run_id:
+            raise ProducerError(
+                f"{candidate.resource_id} 的 previous_generation_run_id 不匹配当前失败尝试"
+            )
+        existing_inbox = _existing_inbox_for_video(inbox_dir, candidate.video_id)
+        if existing_inbox is not None:
+            raise AlreadyProcessed(f"{candidate.video_id} 已存在 inbox 记录：{existing_inbox}")
+        claimed_today = _claimed_today(ledger, now)
+        if claimed_today >= DAILY_BATCH_LIMIT:
+            raise ProducerError(
+                f"今日 NotebookLM 生产调用已达到上限 {DAILY_BATCH_LIMIT} 次，拒绝新的 retry claim"
+            )
+
+        history = existing.get("attempt_history", [])
+        if not isinstance(history, list):
+            raise ProducerError(f"ledger entries.{candidate.resource_id}.attempt_history 必须是数组")
+        previous_attempt = dict(existing)
+        previous_attempt.pop("attempt_history", None)
+        history = [*history, previous_attempt]
+        claim = {
+            "resource_id": candidate.resource_id,
+            "video_id": candidate.video_id,
+            "catalog_id": candidate.catalog_id,
+            "source_url": candidate.source_url,
+            "title": candidate.title,
+            "topic": candidate.topic,
+            "status": "generating",
+            "generation_run_id": _run_id(now),
+            "claimed_at": now,
+            "retry_of_generation_run_id": previous_run_id,
+            "attempt_history": history,
         }
         ledger["entries"][candidate.resource_id] = claim
         write_ledger(ledger_path, ledger)
@@ -666,6 +731,12 @@ def _parser() -> argparse.ArgumentParser:
     claim_parser.add_argument("--inbox", type=Path, required=True)
     claim_parser.add_argument("--state-dir", type=Path)
     claim_parser.add_argument("--resource-id")
+    retry = subparsers.add_parser("retry")
+    retry.add_argument("--catalog", type=Path, required=True)
+    retry.add_argument("--inbox", type=Path, required=True)
+    retry.add_argument("--state-dir", type=Path)
+    retry.add_argument("--resource-id", required=True)
+    retry.add_argument("--previous-generation-run-id", required=True)
     failed = subparsers.add_parser("fail")
     failed.add_argument("--catalog", type=Path, required=True)
     failed.add_argument("--state-dir", type=Path)
@@ -700,6 +771,18 @@ def _command(args: argparse.Namespace) -> dict | str:
                 raise ProducerError(f"不能占用候选：{result['status']}：{result['reason']}")
             candidate = Candidate(**result["candidate"])
         return claim_candidate(candidate, ledger_path, _now(), inbox_dir=args.inbox)
+
+    if args.command == "retry":
+        candidate = next((item for item in candidates if item.resource_id == args.resource_id), None)
+        if candidate is None:
+            raise ProducerError(f"找不到 resource_id：{args.resource_id}")
+        return retry_candidate(
+            candidate,
+            ledger_path,
+            _now(),
+            previous_generation_run_id=args.previous_generation_run_id,
+            inbox_dir=args.inbox,
+        )
 
     if args.command == "fail":
         candidate = next((item for item in candidates if item.resource_id == args.resource_id), None)
