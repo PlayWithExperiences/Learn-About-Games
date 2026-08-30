@@ -21,3 +21,11 @@
 - 边界：AI。Learn-About-Games 修复已合并到本地 `main`，仓库仍 Private，未推送网站、未恢复 Pages；AI-Life-Mentor 资源提交已推到远端，用户原有的 `.claude/trace-health.json` 与对话脏改动保持未提交。
 
 原始对话：dialogues/2026-0830.md「1558 合并并回写 PKM」
+
+## 1606 全量对账纠偏
+
+- 核查：AI。对 AI-Life-Mentor `origin/main` 的资源目录做全量盘点时发现，之前的“21 个资源”统计把 `README.md` 也计入了；实际为 20 个 JSON。
+- 结果：AI。20 个 JSON 中，16 个 PKM 正文与当前规范完全一致，1 个更早的 PKM 正文虽为旧版但资源身份与 marker 有效，3 个更早资源缺 PKM 正文且缺 marker。
+- 边界：AI。本场不覆盖旧版有效笔记，也不在未确认新增范围前补写这 3 条；此前明确授权的 9 条仍保持远端/PKM/marker 9/9。
+
+原始对话：dialogues/2026-0830.md「1606 全量对账纠偏」
