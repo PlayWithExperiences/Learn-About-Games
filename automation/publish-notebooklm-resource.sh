@@ -86,4 +86,18 @@ if [[ "$resource_already_committed" != true ]]; then
   git -C "$ai_root" commit -m "feat: publish NotebookLM resource $resource_id"
 fi
 git -C "$ai_root" push origin main
-echo "已推送 NotebookLM 资源：$resource_id"
+
+remote_tracked_path="$(git -C "$ai_root" ls-tree -r --name-only origin/main -- "$relative_path")"
+if [[ "$remote_tracked_path" != "$relative_path" ]]; then
+  echo "远端 inbox 回读失败：origin/main 中没有 $relative_path" >&2
+  exit 1
+fi
+
+local_blob="$(git -C "$ai_root" hash-object "$resource_real")"
+remote_blob="$(git -C "$ai_root" rev-parse "origin/main:$relative_path")"
+if [[ "$remote_blob" != "$local_blob" ]]; then
+  echo "远端 JSON 与本地字节不一致：$relative_path" >&2
+  exit 1
+fi
+
+echo "已推送且远端回读确认 NotebookLM 资源：$resource_id"

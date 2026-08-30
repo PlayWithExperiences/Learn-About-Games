@@ -379,3 +379,12 @@
 - 边界：AI。本轮只改 skill、兼容入口、自动化提示和项目留痕，没有新的 NotebookLM、搜索、上传、付费 API 或远端发布操作。
 
 原始对话：dialogues/2026-0827.md「1320 收集端跨 AI skill 收尾」
+
+## 2026-08-30：NotebookLM 资源必须闭合到 PKM 消费队列（15:21）
+
+- 决策：無涘 ｜ 记录：AI。已验证的 NotebookLM 资源不能停在本机 `ready` JSON；收集端必须把每个成功结果交付到 AI-Life-Mentor `main` 的 `notebooklm-resources/`，再由既有 Daily Check-in 消费端写入 PKM 并追加稳定 marker。
+- 原因：AI。此前共享 skill 把远端交付写成“当前任务明确包含时才做”，自动化提示又明确要求“不要推送/写 PKM”，导致资源只存在本机或未进入远端仓库，GitHub Actions 无法看见，因而不会进入 PKM。文件存在和 ready 状态都不是远端交付或 PKM 归档的证据。
+- 实现：AI。`ready` 明确为待交付运输态；每条资源必须经单文件交付脚本 push，并回读远端路径和精确 blob。生产端仍不直接创建 Issue 或写 PKM；消费端保持“每天最多一条、先幂等写 PKM、再写 Issue marker、两者确认后才算 consumed”。
+- 边界：AI。本次修复不重新调用 NotebookLM、不绕过 Chrome 弹窗重试、不自动补交既有本机未跟踪 JSON；历史资源补交是独立的多次远端 Git 写入，须按明确数量单独执行并逐条核验。
+
+原始对话：dialogues/2026-0830.md「1527 PKM 归档闭环修复」

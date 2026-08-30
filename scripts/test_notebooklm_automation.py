@@ -11,6 +11,7 @@ RUNNER = ROOT / "automation" / "notebooklm-daily-preflight.sh"
 PLIST = ROOT / "automation" / "com.lag.notebooklm-daily-preflight.plist"
 SKILL = ROOT / ".agents" / "skills" / "collect-resources-about-game" / "SKILL.md"
 CONTRACT = ROOT / ".agents" / "skills" / "collect-resources-about-game" / "references" / "resource-contract.md"
+VISION = ROOT / "ProjectInfo" / "ProjectVision.md"
 
 
 class NotebookLMAutomationTests(unittest.TestCase):
@@ -80,6 +81,20 @@ class NotebookLMAutomationTests(unittest.TestCase):
         self.assertIn("显式重跑", skill)
         self.assertIn("previous-generation-run-id", skill)
         self.assertIn("保留旧失败尝试", skill)
+
+    def test_skill_requires_remote_handoff_after_ready(self):
+        skill = SKILL.read_text(encoding="utf-8")
+        contract = CONTRACT.read_text(encoding="utf-8")
+        vision = VISION.read_text(encoding="utf-8")
+
+        self.assertIn("`ready` 只是待交付运输态", skill)
+        self.assertIn("每个成功的 ready JSON 都必须", skill)
+        self.assertIn("远端回读", skill)
+        self.assertNotIn("当前任务明确包含远端交付时", skill)
+        self.assertNotIn("默认边界停在 ready 队列", skill)
+        self.assertIn("`ready` is a validated transport state", contract)
+        self.assertIn("只写入本机 `ready` JSON 不算完成", vision)
+        self.assertIn("先幂等写入 PKM", vision)
 
 
 if __name__ == "__main__":

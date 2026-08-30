@@ -2,7 +2,9 @@
 
 This reference defines the only JSON shape that the producer may mark `ready`. The
 inbox consumer validates it again, so this file is guidance rather than a bypass for
-validation.
+validation. `ready` is a validated transport state, not proof that the resource has
+reached PKM; the producer must deliver the exact file to the AI-Life-Mentor `main`
+inbox and verify the remote path and blob before reporting handoff success.
 
 ## Fixed content template
 

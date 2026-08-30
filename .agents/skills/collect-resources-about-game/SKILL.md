@@ -1,17 +1,17 @@
 ---
 name: collect-resources-about-game
-description: Use when collecting new Learn About Games game-development resources from public YouTube sources into the NotebookLM-ready queue, including NotebookLM production, artifact validation, or quota and duplicate diagnosis. Do not use for Daily Check-in consumption or public-site publishing.
+description: Use when collecting new Learn About Games game-development resources from public YouTube sources into the AI-Life-Mentor PKM-consumer pipeline, including NotebookLM production, artifact validation, remote handoff, or quota and duplicate diagnosis. Do not use for Daily Check-in consumption or public-site publishing.
 compatibility: Requires a trusted project checkout, Python 3, git, network access, and a client-specific authenticated browser/upload adapter when real NotebookLM production is requested.
 metadata:
   display_name: "Collect-Resources-About-Game"
   invocation: "/Collect-Resources-About-Game"
   contract: "notebooklm-resource-contract-v2"
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Collect-Resources-About-Game
 
-这是 Learn About Games 的**收集端** skill：从资源目录选择尚未处理的公开视频，经过 NotebookLM 和资产校验后写入持久化 `ready` 队列。它不消费队列、不创建 Daily Check-in、不写 PKM 最终笔记，也不发布公开网站内容。
+这是 Learn About Games 的**收集端** skill：从资源目录选择尚未处理的公开视频，经过 NotebookLM 和资产校验后写入持久化 `ready` 运输态，并把每个成功结果交付到 AI-Life-Mentor 的远端 inbox。`ready` 只是待交付运输态，不是归档完成；它不消费队列、不创建 Daily Check-in、不直接写 PKM 最终笔记，也不发布公开网站内容。
 
 ## 跨 AI 入口
 
@@ -122,11 +122,13 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" publish \
   --result-json '<temporary result JSON>'
 ```
 
-producer 会补入/校验稳定 ID、状态、时间和指纹；不要手填或用标题/时间戳替代 `video_id`。结果写入 INBOX 后，只有在当前任务明确包含远端交付时，才用 `automation/publish-notebooklm-resource.sh --resource-file <ready-json>` 推送单个已验证 JSON。默认边界停在 ready 队列；不在本 skill 内创建 Issue、写 PKM、触发 Daily Check-in、启用 launchd 或发布网站。
+producer 会补入/校验稳定 ID、状态、时间和指纹；不要手填或用标题/时间戳替代 `video_id`。结果写入 INBOX 后，**每个成功的 ready JSON 都必须**立即用 `automation/publish-notebooklm-resource.sh --resource-file <ready-json>` 完成单文件远端交付。脚本只提交该资源到 AI-Life-Mentor `main`，并在 push 后回读远端路径和精确 blob；远端回读失败就是交付失败，不能把本地 ready 当成完成，也不能在报告中计入已交付/可消费结果。交付失败时保留本地 ready 和失败证据，停止当前资源的后续声称；修复 Git 交付后只重跑该交付步骤，不重新调用 NotebookLM。
+
+交付成功只表示资源已进入 AI-Life-Mentor 的持久化消费队列，不表示已经写入 PKM。Daily Check-in 消费端每天最多选一条未被 Issue marker 标记的 `ready` 资源，先幂等写入 PKM 资源笔记，再追加 Issue marker；只有两者都确认后才算 `consumed`。生产端不在本 skill 内创建 Issue、写 PKM、触发 Daily Check-in、启用 launchd 或发布网站。
 
 ## 失败路径
 
-候选已 claim 后，在浏览器、导入、来源隔离、生成、思维导图展开、导出、上传、URL 校验、JSON 校验或推送阶段失败，立即用实际阶段调用：
+候选已 claim 后，在浏览器、导入、来源隔离、生成、思维导图展开、导出、上传、URL 校验或 JSON 校验阶段失败，立即用实际阶段调用：
 
 ```bash
 python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" fail \
@@ -148,6 +150,6 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" retry \
 
 该命令只允许显式重跑，旧失败尝试会保留在 ledger 的 `attempt_history` 中；没有用户授权时不得调用它。
 
-不要生成空链接、`not-generated` 的 ready、假成功的 partial 或删除失败记录。普通失败可继续预检已返回的下一个 distinct candidate；明确配额阻断则停止当天，不消耗剩余 claim 位。claim 前的运行时不可用属于运行级阻塞，不伪造 candidate failure。
+不要生成空链接、`not-generated` 的 ready、假成功的 partial 或删除失败记录。远端交付脚本失败时，不要把它改写成 NotebookLM 生成失败，也不要继续声称该资源已交付；必须把脚本的非零退出、资源文件和可核查错误写入本次运行报告。普通生产失败可继续预检已返回的下一个 distinct candidate；明确配额阻断则停止当天，不消耗剩余 claim 位。claim 前的运行时不可用属于运行级阻塞，不伪造 candidate failure。
 
 每次运行结束输出结构化报告，至少区分：`preflight_status`、`attempted`、`ready`、`failed`、`skipped`、`remaining_today` 和 `stop_reason`。若候选列表是 `[]`，只在预检命令本身成功且状态为 `no_candidate` 时这样报告；如果通道失败，报告错误本身。

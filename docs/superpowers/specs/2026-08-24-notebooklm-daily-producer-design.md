@@ -14,7 +14,8 @@
 - 一个来自 Learn About Games 资源库、尚未处理过的 YouTube 视频；
 - NotebookLM 生成的中文内容总结，以及信息图、完整思维导图和演示文稿结果（能导出或下载的产物才写入结果）；
 - 经过时间戳命名并通过 PicGo 上传的可长期引用链接；
-- 一个写入 `AI-Life-Mentor/notebooklm-resources/` 的、可被现有 Daily Check-in 消费的 JSON 记录；
+- 一个已验证的 `ready` JSON，以及将该 JSON 交付到 AI-Life-Mentor `main` 的远端
+  `notebooklm-resources/` 并完成路径/内容回读；本机 `ready` 文件本身不算生产完成；
 - 可追踪的生产状态、输出指纹和失败原因。
 
 Daily Check-in 仍负责把已准备好的结果写回 PKM/Obsidian 并追加到当天 Issue；本机生产器不直接改写 Daily Check-in Issue。这样 NotebookLM 的私有链接和网站公开展示保持隔离。
@@ -36,6 +37,10 @@ Daily Check-in 仍负责把已准备好的结果写回 PKM/Obsidian 并追加到
 ### 方案 A：本机 Skill + 本机调度 + GitHub inbox/Action 消费（推荐）
 
 本机在用户已经登录的 NotebookLM 浏览器环境中生产结果，写入带状态的 inbox；GitHub Action 只消费 `ready` 结果。
+
+这里的“写入 inbox”分为两个不能省略的阶段：先由 producer 原子写入本机 `ready`
+运输态，再由单资源交付脚本提交到 AI-Life-Mentor `main`，push 后回读远端路径和
+精确 Git blob。只有第二阶段成功，结果才算进入可被 Daily Check-in 看见的持久化队列。
 
 优点：能复用当前登录态和 NotebookLM 页面能力，能把私有产物留在 PKM，同时保留现有云端 Daily Check-in 流程。
 限制：依赖 Mac 在线、浏览器会话有效，以及本机运行时确实能控制浏览器；这些条件不满足时只能清晰失败，不能静默降级。
@@ -74,7 +79,9 @@ NotebookLM runtime adapter
 本地产物暂存 + PicGo 时间戳上传
         │ 原子写入 ready JSON（含 resource_id、video_id、指纹、链接）
         ▼
-AI-Life-Mentor/notebooklm-resources/
+单资源 Git 交付 + 远端路径/字节回读
+        ▼
+AI-Life-Mentor main/notebooklm-resources/
         │
         ▼
 Daily Check-in GitHub Action
@@ -94,7 +101,9 @@ Skill 的职责限定为生产和交付前准备：
 3. 通过 runtime adapter 打开 NotebookLM 页面，导入或复用对应来源，使用固定提示模板生成：标题、来源、信息图、完整思维导图、演示文稿、内容总结和边界声明。
 4. 检查每一项产出是否真的存在、是否指向正确的来源；缺失项写成失败/部分失败状态，不用空字符串掩盖失败。
 5. 对需要长期引用的图片或可下载文件使用当前系统时间生成唯一文件名，再通过 PicGo 上传；不得用固定文件名覆盖旧文件。
-6. 原子写入 `ready` JSON 和本地 ledger，供现有 Daily Check-in 消费。
+6. 原子写入 `ready` JSON 和本地 ledger；随后强制调用单资源 Git 交付脚本，并
+   回读 AI-Life-Mentor `main` 的路径和精确 blob。远端交付失败必须让本次运行失败，
+   不得把只存在本机的 `ready` 报告成可消费结果。
 
 Skill 不负责：
 
@@ -149,7 +158,8 @@ candidate → claimed → generating → ready → delivering → consumed
 - `candidate`：尚未开始生产；
 - `claimed`：本次运行已占用，防止并发实例重复领取；
 - `generating`：已开始 NotebookLM 生产；该状态一旦写入，进程崩溃后不得自动再次调用同一视频；
-- `ready`：JSON 和所需产物均已验证，可由 Daily Check-in 消费；
+- `ready`：JSON 和所需产物均已验证的本地运输态；只有完成远端交付并在
+  AI-Life-Mentor `main` 回读确认后，才进入 Daily Check-in 可见的持久化队列；
 - `delivering`：消费端已领取，正在写 PKM/Issue；
 - `consumed`：PKM 与 Daily Check-in 均已确认包含该 `resource_id`；
 - `failed` / `partial`：发生明确失败或产出不完整，保留原因和证据，等待人工决定是否显式重置。
@@ -164,7 +174,7 @@ candidate → claimed → generating → ready → delivering → consumed
 2. 远端 inbox/ledger 是否已经有同一 `video_id` 或 `resource_id`；
 3. PKM 和 Daily Check-in 是否已经出现该 `resource_id` 标记。
 
-任何一层发现已处理或正在处理，都只记录 `skip_already_seen`，不调用 NotebookLM。实现时不能只依赖最近 60 个 Issue；需要一个可遍历或可查询的长期 ledger。
+任何一层发现已处理或正在处理，都只记录 `skip_already_seen`，不调用 NotebookLM。实现时不能只依赖最近 60 个 Issue；需要一个可遍历或可查询的长期 ledger。远端交付回读失败时，必须记录为交付失败；它不能退化成“本地已有 ready，所以已完成”。
 
 ### 5.4 并发与原子性
 
@@ -172,6 +182,7 @@ candidate → claimed → generating → ready → delivering → consumed
 - ledger 和 JSON 先写临时文件，再用原子替换落盘；
 - 生产调用前先落 `generating`，调用完成后先验证产物，再落 `ready`；
 - PicGo 上传和写 JSON 使用唯一时间戳文件名；已存在的不同内容不得覆盖；
+- producer 在 ready 之后必须完成单文件远端交付，并回读同一路径及 blob；中途失败时保留本地文件和错误证据，不重新调用 NotebookLM；
 - Daily Check-in 在写 PKM 成功、Issue 标记存在后才把资源标为 `consumed`；中途失败时保持 `delivering`，下次只恢复写回，不重新生产。
 
 ## 6. Daily Check-in 消费端改造边界
@@ -217,6 +228,9 @@ launchd 的 stdout/stderr 写入专用日志；失败日志至少包含时间、
 5. Daily Check-in 消费端验证“重复运行不重复写 PKM/Issue”；
 6. `preflight` dry-run 验证会选择正确的下一条候选且不会产生外部写入。
 
+远端交付验证另需覆盖：只存在本机 inbox 的 `ready` 文件不能被报告为已交付；push
+后远端缺少目标路径或目标 blob 与本地文件不一致时，脚本必须非零退出并留下明确错误。
+
 之后才进行一次受控真实测试：一条视频、一次 NotebookLM 调用、无自动重试。验收证据必须包括：NotebookLM 结果完整性、PicGo 链接实际可访问、ready JSON、ledger 状态、PKM 写回和 Daily Check-in 标记。测试失败时保留失败状态，不重跑同一视频。
 
 最后才启用每日 launchd 调度，并在前几次运行中只观察状态和日志；不自动推送 Learn About Games 网站，也不改变仓库公开状态。
@@ -229,6 +243,8 @@ launchd 的 stdout/stderr 写入专用日志；失败日志至少包含时间、
 - NotebookLM 调用发生前已有 `generating` 记录，调用失败不会变成空的“成功” JSON；
 - 每日自动路径的外部调用上限是 1 次，且没有自动重试；
 - 已生成但尚未消费的 `ready` 资源不会被第二次生产；
+- 已生成但只存在本机的 `ready` 资源不会被报告为已交付；远端交付必须能由路径和精确 blob 回读证明；
+- 远端 inbox 中的每一条成功资源都能被现有 Daily Check-in 消费，先写入幂等 PKM 笔记，再以稳定 marker 去重；
 - PKM/Issue 写回中断后可以从 `delivering` 恢复，不重新生产；
 - 公开 Learn About Games 页面不包含 NotebookLM 私有产物；
 - 所有 PicGo 上传名包含实际系统时间戳，重复运行不会覆盖不同内容；
