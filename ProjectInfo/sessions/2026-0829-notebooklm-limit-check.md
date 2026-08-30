@@ -69,3 +69,15 @@
 - 本场停在首次真实 NotebookLM/PicGo 调用前，等待明确的手动批次授权；拟处理范围最多 9 条、串行并发 1、自动重试 0。没有修改网站代码、没有消费 ready、没有创建 Issue 或写 PKM。
 
 原始对话：dialogues/2026-0830.md「1149 预检与 NotebookLM 工作台就绪检查」
+
+## 2026-08-30 1249 Edith Finch 原型复盘 ready
+
+决策：無涘 ｜ 记录：AI（在场模型）。
+
+- 前次 `youtube-HAvS-RwkjdA` 的失败原因已核清：NotebookLM 信息图卡片实际生成，但两条允许的浏览器/viewer 下载路径都没有产出可验证的本地非零字节文件，因此按 `asset-download / infographic` 留痕；不是候选缺失、登录失败或总结生成失败。
+- 用户确认后，沿用 1149 预检固定清单，不重新预检、不重试旧失败条目；精确 claim `youtube-0xVYVP0hxME`，`generation_run_id=run-20260830115819-91345`。同一长期 Notebook 中完成唯一来源隔离，中文总结 5,704 字符、来源边界 1,124 字符。
+- NotebookLM 资产已实质核验：信息图 2,752×1,536 PNG；思维导图 viewer 执行“全部展开”，59 个节点、深度 4、折叠 0；演示文稿为 15 页。原生下载事件未落盘时，按合同允许的第二路径取得真实 viewer/page-assets，重建 PPTX/PDF，并在结果中保留该导出边界。
+- 四项资产以语义时间戳文件名经 PicGo 串行上传；四个 Raw 地址均 HTTP 200，远端字节数与本地 SHA-256 一致，PicGo `autoRename` 已恢复 `true`。`producer publish` 成功写入 `/Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0830-1246-prototyping-experimentation.json`。
+- 发布后今日 ledger 为 2 次 claim：1 条此前 `failed`、本条 `ready`，`remaining_today=8`；固定清单余下 8 条未 claim。本场不消费 ready，不写 PKM/Daily Check-in，不推送、不部署；生产器、预检自动化、发布合同测试 20/20 通过。
+
+原始对话：dialogues/2026-0830.md「1249 确认执行：Edith Finch 原型复盘 ready 与前次失败解释」
