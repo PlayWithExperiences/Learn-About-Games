@@ -2,14 +2,6 @@
 
 > 按主题一份，追加不覆盖；同一场会话的节就地更新。
 
-## 1144 核对官方限额并尝试今日资源收集
-
-决策：無涘 ｜ 记录：codex（自动）｜ session 01a04b91-f7e5-7a50-a598-cf704b643bec
-
-先核对 NotebookLM 官方公开限额，Plus 账号的公开数字未下调：200 Notebook、100 来源/Notebook、200 聊天/日、音频/视频各 6 次/日、报告/闪卡/测验/思维导图各 20 次/日；信息图和 Slide Deck 仍标注 "More limits" 无公开固定值，额度按 24 小时重置且不保证北京时间零点。随后按串行每条单独 claim 的方式尝试今日候选，第 1 条（youtube-2qrzI8YCVgI）完成了中文总结、信息图 PNG 验证和完整展开思维导图，但因浏览器内核重置导致控制权丢失，Slides 未提交，记为 failed。第 2 条（youtube-FhKjv7CPUqw）总结与信息图已生成，思维导图也完成节点校验（38 节点、层级 1-4），Slides 生成过程中多次触发通道超时，最终因浏览器适配器不稳定而终止，未继续领取后续候选。本次未遇到明确配额阻断，记录已入库 Git。今日账：1 ready + 2 failed，剩余 8 次 claim。
-
-原始对话：dialogues/2026-0829.md「1144 notebooklm-limit-check」
-
 ## 1324 完成续产候选
 
 决策：無涘 ｜ 记录：AI。
@@ -36,6 +28,14 @@
 
 原始对话：dialogues/2026-0829.md「1408 确认五小时限额并收口今日批次」
 
+## 1144 确认官方5小时刷新规则并完成今日收集
+
+决策：無涘 ｜ 记录：codex（自动）｜ session 01a04b91-f7e5-7a50-a598-cf704b643bec
+
+核对 Google 官方说明后发现：自 2026-09-02 起，Gemini Notebook 改为按计算量计费，5 小时为刷新窗口，受提示词复杂度、功能、对话长度和每周上限共同影响，官方未公布每 5 小时固定恢复 6 条。旧表中的 Plus 6/day 仅针对音频/视频概览，信息图和演示文稿仍标注 More limits，思维导图为 20/day。今日实际执行 4 次 claim：2 条 ready（LEGO Horizon 边际收益、叙事关卡设计），2 条因浏览器控制通道不稳定失败。已停止继续领取，剩余 6 个位未消耗。项目留痕已提交。用户确认登录后，可恢复继续处理剩余候选。
+
+原始对话：dialogues/2026-0829.md「1144 notebooklm-limit-check」
+
 ## 1423 登录成功但控制通道未稳定
 
 决策：無涘 ｜ 记录：AI。
@@ -58,3 +58,14 @@
 - 官方规则结论保持：5 小时刷新按计算量限制运行，并受每周上限影响；官方没有公开信息图/Slide Deck 每个窗口的固定数量，也没有证据证明每次刷新补回 6 条。参考：[官方使用限制说明](https://support.google.com/gemininotebook/answer/17670842?hl=en)、[官方限额表](https://support.google.com/gemininotebook/answer/16213268?hl=en)。
 
 原始对话：dialogues/2026-0829.md「1853 今日固定批次收口」
+
+## 2026-08-30 1149 预检与工作台就绪检查
+
+决策：待無涘确认 ｜ 记录：codex
+
+- 只读 `preflight --limit 10` 成功，返回 `ready_to_claim`：2,454 个目录候选，按目录顺序固定返回 9 条；今日本地 ledger 已有 1 次 claim，`remaining_today=9`。首条为 `youtube-0xVYVP0hxME`（`Weaving 13 Prototypes into 1 Game: Lessons from 'Edith Finch'`）。本次原始 JSON 保存于 producer 状态目录的本日 preflight 快照。
+- 今日更早的 `youtube-HAvS-RwkjdA` 已由前一轮以 `run-20260830073426-50030` claim，并在 `asset-download / infographic` 阶段失败；本次未重试。
+- Chrome/NotebookLM 只读就绪检查为 `available`：已登录的长期 Notebook 可接管，来源面板、添加来源、查询框、信息图、思维导图、演示文稿控件均可用。未提交来源、未生成、未下载、未上传、未 publish。
+- 本场停在首次真实 NotebookLM/PicGo 调用前，等待明确的手动批次授权；拟处理范围最多 9 条、串行并发 1、自动重试 0。没有修改网站代码、没有消费 ready、没有创建 Issue 或写 PKM。
+
+原始对话：dialogues/2026-0830.md「1149 预检与 NotebookLM 工作台就绪检查」

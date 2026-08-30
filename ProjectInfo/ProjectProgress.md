@@ -2,20 +2,20 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 roadmap.md 与 sessions/。
 
-*更新于 2026-08-29 18:53:39 +0800 · 记录者 AI*
+*更新于 2026-08-30 11:49:20 +0800 · 记录者 codex*
 
-## 最新收口（2026-08-29 18:53:39）
+## 最新检查（2026-08-30 11:49:20）
 
-- 今日固定批次已实际新增 4 条 contract v2 `ready`：`youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`。每条均完成唯一来源隔离、中文总结、信息图、思维导图、Slides/PPTX/PDF，并通过查看器“全部展开”（观察深度 3、折叠节点 0）、格式核验和远端字节/SHA-256 回读。
-- 四份 ready JSON 已写入 AI-Life-Mentor 队列：[1659](</Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1659-level-spatial-design.json>)、[1753](</Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1753-design-fundamentals.json>)、[1820](</Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1820-level-spatial-design.json>)、[1844](</Users/haodong/Documents/GitHub/AI-Life-Mentor/notebooklm-resources/2026-0829-1844-level-spatial-design.json>)。四项远端资产/条目均已实际回读，未把页面按钮或 URL 存在误判为成功。
-- `youtube-j_Ez3RpJUtw`（`run-20260829184427-45772`）已 claim 并完成来源与总结，但信息图阶段收到 NotebookLM 明文“您已达到每日信息图数量上限，改日再来吧！ 或进行升级。”，已按 `quota_block / infographic` 失败留痕；没有生成资产、上传或 ready JSON。
-- 配额失败后的只读 preflight 显示今日 `claimed_today=9`、本地 `remaining_today=1`，仅剩 `youtube-HAvS-RwkjdA` 未 claim；按明确服务端配额护栏停止，未领取最后候选。今日没有触发 PKM、Daily Check-in、推送或部署。
-- 官方使用限制说明仍只承诺按计算量的 5 小时刷新并受每周上限影响，没有说明信息图/Slide Deck 每个 5 小时窗口固定恢复 6 条；旧表的 Plus `6/day` 对应音频/视频概览，信息图和 Slide Deck 仍为 `More limits`。后续以工作台明文提示和只读 preflight 为准，不把 5 小时推算为 6 条。
+- 本次只读 `preflight --limit 10` 成功：目录有 2,454 个候选，按稳定顺序返回 9 条，状态 `ready_to_claim`；今日本地 ledger 已有 1 次 claim，`remaining_today=9`。首条固定候选为 `youtube-0xVYVP0hxME`（`Weaving 13 Prototypes into 1 Game: Lessons from 'Edith Finch'`），本批候选顺序已保存。
+- 今日更早的 `youtube-HAvS-RwkjdA` 已由前一轮实际 claim 为 `run-20260830073426-50030`，在信息图资产下载校验阶段失败；ledger 留有 `failed` 与具体原因，没有 ready JSON、上传或自动重试。本次没有重新领取该条。
+- 本次 Chrome/NotebookLM 就绪检查为 `available`：已登录的 Chrome 可接管长期工作 Notebook，来源面板的“添加来源”、查询框、信息图、思维导图和演示文稿控件均在可用状态；未提交来源、未生成资产、未上传、未发布。
+- 手动批次尚未取得本次明确授权。待确认范围前不调用 NotebookLM/PicGo；不把本地 `remaining_today=9` 当成服务端信息图额度，也不把 `ready_to_claim` 当成生产成功。
 
 ## 现在在哪
 
-- 截至 2026-08-29 14:23:33：用户已在 Chrome 的同一配置中登录 Google；只读读取确认账号可见（Haodong Liao / Google One 会员），NotebookLM 工作台标签页也已进入目标长期 Notebook。首次接管后尝试读取工作台时，页面导航触发 CDP `Page.getFrameTree` 超时；内核重置后，重连对该标签页的认领再次超时，随后 Chrome 控制通道报告不可用。登录本身有效，但浏览器控制尚未稳定。
-- 本次恢复没有执行新的 producer claim，没有提交来源 URL，没有触发 NotebookLM 生成、PicGo 上传或 ready JSON；今日 ledger 仍为 4 次 claim（2 条 `ready`、2 条 `failed`），`remaining_today=6`。固定未领取清单仍为 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`、`youtube-j_Ez3RpJUtw`、`youtube-HAvS-RwkjdA`。
+- 截至 2026-08-30 11:49:20：Chrome 控制通道已恢复并可读取目标长期 Notebook；页面显示已登录账号，来源面板可见且“添加来源”可用，查询框与信息图、思维导图、演示文稿控件均可用。此次只读检查没有产生第三方写入。
+- 今日 ledger 当前为 1 次 claim：`youtube-HAvS-RwkjdA` 已在更早一轮以 `asset-download / infographic` 失败；本次 preflight 返回 9 条未留痕候选，首条为 `youtube-0xVYVP0hxME`。本次会话没有新的 producer claim，避免在授权不清时消耗领取位。
+- 本次预检原始结果保存在 producer 状态目录的本日快照中；当前固定候选只按该结果顺序处理，不能再次预检后让 claim 静默换材料。
 - 本次继续收集的只读预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T135106+0800-preflight.json` 显示开始时今日 `claimed_today=3`、`remaining_today=7`，固定清单首条为 `youtube-CkHGuHd9BgU`（`Designing Unforgettable 'Titanfall' Single Player Levels with Action Blocks`）。用户已明确要求继续使用今日额度；本条精确 claim 为 `generation_run_id=run-20260829135125-72099`。
 - 本条未能进入 NotebookLM 生成：添加来源对话框的 URL 尚未提交，Chrome 控制通道在输入阶段连续超时。已分别核对 Chrome 运行中、扩展已启用、native host 正常、旧标签页与新标签页恢复路径；内置浏览器无 Google 登录态，未要求用户输入账号，也未绕过登录。producer 已将本条以 `browser_control / source_add` 写为 `failed`，没有生成、上传或 ready JSON。
 - 收口后的预检快照 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-08-29T140835+0800-post-browser-block.json` 显示今日累计 4 次 claim：2 条 `ready`（`youtube-3U5AUkWU5Qw`、`youtube-FhKjv7CPUqw`）、2 条 `failed`（`youtube-2qrzI8YCVgI` 的 `browser_control / slide_deck`、`youtube-CkHGuHd9BgU` 的 `browser_control / source_add`），`remaining_today=6`。后续 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`、`youtube-j_Ez3RpJUtw`、`youtube-HAvS-RwkjdA` 均保持未 claim；停止原因是浏览器通道失稳，不是 NotebookLM 明文配额阻断。
@@ -54,10 +54,10 @@
 
 ## 当前阶段
 
-- 截至 2026-08-29 18:53:39，最新一批新增 ready 资源是 `youtube-PxpjRuATxKE`、`youtube-rXm5zCdiNT0`、`youtube-WFu1utKAZ18`、`youtube-brByJ5EVBn4`；四份 contract v2 JSON 均包含总结、来源边界、四项资产和思维导图展开证明。
-- `youtube-j_Ez3RpJUtw` 已按 `quota_block / infographic` 失败；NotebookLM 明确提示当日信息图数量上限，没有生成 ready 或半成品。`youtube-HAvS-RwkjdA` 保持未 claim，等待后续配额恢复后的新一轮预检。
-- 今日生产边界已收口在 AI-Life-Mentor 的 ready 队列；没有触发 PKM、Daily Check-in、远端推送或部署。此前浏览器控制失败与本次服务端配额失败分开记账。
-- 浏览器就绪阻塞与批次授权等待均已解除（2026-08-28 20:07–20:13）：同一长期 Notebook 的来源面板、唯一来源隔离和 Studio 控件均可见可操作。后续若继续生产，必须重新进行当天的只读 preflight，不得复用本次已固定清单之外的候选。
+- 截至 2026-08-30 11:49:20，今天没有新增 ready；前一轮 `youtube-HAvS-RwkjdA` 已按 `asset-download / infographic` 失败留痕。昨日四条 contract v2 ready 仍在 AI-Life-Mentor 队列，本场不消费。
+- 今日新的固定清单为 9 条，首条 `youtube-0xVYVP0hxME`；本次已完成浏览器就绪检查，但没有 claim。若获得明确确认，才可从该清单首条开始逐条处理。
+- 生产边界仍停在 AI-Life-Mentor 的 ready 队列；不在本场触发 PKM、Daily Check-in、远端推送或部署。普通失败按阶段留痕，明确服务配额阻断则停止当天剩余 claim。
+- 当前浏览器就绪阻塞已解除；当前唯一待定是手动批次授权，需明确 NotebookLM/PicGo 服务范围、最多处理这次预检返回的 9 条、并发 1、自动重试 0。
 - 资源侧已完成官方描述回退、二手旁证和剩余音频补全：49 条原本处于 `retryable` 的条目依据官方描述补齐；GDC Iwata 纪念片与 GMTK 宣传片随后通过显式音频工具链完成分析。2,311 条目标的 state 均为 `completed`，没有遗留 retryable。
 - 映射保守边界：2,311 条目标均已有一个合法主要资源主题；其中 1,677 条至少有一个 capability，634 条 capability 仍为空（GDC 625、英文樱井 8、GMTK 1）。这不是用模板硬填的缺陷：公告、汇编或证据不足的条目若不能直接支持某项能力，就保留空映射，避免把标题猜测写成语义事实。
 - 正式 state 已回写：2,311 条记录、2,311 `completed`、0 `retryable`、0 `unclassified`、0 `evidence_pending`。其中 1,871 条来自官方描述分析、210 条字幕分析、4 条音频分析、177 条二手旁证回写；49 条历史完成记录没有重新猜测输入通道，保留原有 model/summaryLength 事实。
@@ -96,7 +96,8 @@
 
 ## 下一步
 
-- 今日固定批次已因 NotebookLM 明确信息图日配额停止：4 条新增 ready、1 条 quota-block failed，最后的 `youtube-HAvS-RwkjdA` 未 claim。下一轮只能先做不消耗额度的工作台就绪检查和 preflight，再决定是否领取它；不重试今天的失败 claim。
+- 今日已完成一次新的只读 preflight 与 NotebookLM 工作台就绪检查；今日 ledger 目前为 1 次 claim（`youtube-HAvS-RwkjdA` 失败），固定清单剩余 9 条，首条为 `youtube-0xVYVP0hxME`。不重试已失败 claim。
+- 若继续手动生产，必须先确认本批最多 9 条、服务为 NotebookLM/PicGo、串行并发 1、自动重试 0；确认前不执行 claim、来源提交、生成、上传或 publish。
 - 四份 ready JSON 已进入 AI-Life-Mentor 队列，但本场不触发 PKM 或 Daily Check-in 消费；媒体远端地址、文件校验和来源边界均保留在各 JSON 中。
 - 5 小时刷新与信息图每日上限的关系仍未被官方固定数值化；当前唯一可确认的账号实测是 Studio 的每日信息图 quota block，不能把本地剩余 claim 位当成服务端可用额度。
 - NotebookLM 恢复生产前，先重新执行不消耗额度的工作台就绪检查；只有同时看到已登录可编辑页面、来源面板和 Studio 控件，才可按本次固定候选顺序 claim。当前首条是 `youtube-JGZQSFvcQzo`，本次未领取；普通运行级阻塞不应改写候选状态。
@@ -116,6 +117,7 @@
 
 ## 阻塞 / 待定
 
+- 当前待定（2026-08-30 11:49:20）：浏览器已明确 `available`，但本次手动批次的外部调用范围尚未获無涘明确确认；因此停在 claim 前，不把候选清单当成已开始生产。候选与状态不变，失败必须继续可辨认。
 - 当前新增阻塞（系统时钟 2026-08-29 18:53:39）：NotebookLM Studio 明确显示“您已达到每日信息图数量上限，改日再来吧！ 或进行升级。”；`youtube-j_Ez3RpJUtw` 已按 `quota_block / infographic` 失败，今天停止剩余候选。最后一个 `youtube-HAvS-RwkjdA` 没有 claim，避免把明确服务配额耗尽伪装成可继续生产。
 - 本轮四条 ready 的浏览器工作台、唯一来源、四项产物、PicGo 回读和 JSON 均已验证；没有因为返回 job、页面存在或 URL 可访问就判定成功。演示文稿中 PPTX/PDF 页数分别为 13、15、13、12，四项远端内容均与本地 SHA-256 一致。
 - 5 小时按计算量刷新的官方说明与信息图每日上限并非同一条公开数值规则；官方尚未说明每个 5 小时窗口恢复多少信息图或 Slide Deck。下一次只在配额可能恢复后重新预检，不自动重试失败 claim。
