@@ -726,3 +726,11 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 边界：AI。不同内容的旧版笔记不覆盖；3 个缺口属于新增外部写入范围，待用户单独确认后再补写，不能把全量 20 条宣称为已归档。
 
 原始对话：dialogues/2026-0830.md「1606 全量对账纠偏」
+
+## 2026-08-30 16:17：补齐 3 条历史 PKM 缺口
+
+- 决策：無涘 ｜ 记录：AI。确认补写全量盘点出的 3 条历史缺口，范围锁定为 `youtube-_gbJw7orSI8`、`youtube-7rqfbvnO_H0`、`youtube-GZ99gAb4T0o`；串行、零重试。
+- 结果：AI。3 条均已写入 PKM 并追加 Daily Check-in marker。全量 20 个资源 JSON 现为 20/20 PKM 正文、20/20 marker；19 条与当前规范一致，Celeste 旧版正文因身份/来源/marker 有效而保留不覆盖。
+- 边界：AI。本次没有重新调用 NotebookLM、模型、Chrome 下载或 PicGo；Learn-About-Games 仍 Private，未推送或部署。
+
+原始对话：dialogues/2026-0830.md「1617 补齐历史 PKM 缺口」

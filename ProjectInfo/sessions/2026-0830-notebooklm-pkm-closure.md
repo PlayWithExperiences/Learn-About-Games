@@ -29,3 +29,11 @@
 - 边界：AI。本场不覆盖旧版有效笔记，也不在未确认新增范围前补写这 3 条；此前明确授权的 9 条仍保持远端/PKM/marker 9/9。
 
 原始对话：dialogues/2026-0830.md「1606 全量对账纠偏」
+
+## 1617 补齐历史 PKM 缺口
+
+- 决策：無涘 ｜ 记录：AI。确认把全量盘点出的 3 条历史缺口补回 PKM；范围只包含 `youtube-_gbJw7orSI8`、`youtube-7rqfbvnO_H0`、`youtube-GZ99gAb4T0o`，串行执行、零重试。
+- 产出：AI。3 条均通过现有消费桥接写入 PKM 资源正文并追加 Daily Check-in marker；未调用 NotebookLM、模型、Chrome 下载或 PicGo。
+- 验证：AI。全量 20 个资源 JSON 现为 20/20 PKM 正文、20/20 marker；其中 19 条与当前规范一致，Celeste 1 条保留旧版但身份/来源/marker 有效。消费者回归 19/19 通过。
+
+原始对话：dialogues/2026-0830.md「1617 补齐历史 PKM 缺口」

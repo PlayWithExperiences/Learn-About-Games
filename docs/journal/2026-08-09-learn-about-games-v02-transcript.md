@@ -1024,3 +1024,13 @@ Learn 自动化 6/6、生产器 16/16、发布合同 4/4、AI-Life-Mentor 消费
 因此将结论收窄为：本次明确授权的 9 条已完成远端队列、PKM 正文、Daily Check-in marker 9/9；全量历史资源尚有 3 条真实缺口。旧版有效笔记不覆盖，3 条新增 PKM/marker 写入等待单独确认；没有在本轮继续发起外部写入。
 
 原始对话：dialogues/2026-0830.md「1606 全量对账纠偏」
+
+## 1617 补齐历史 PKM 缺口（partial export）
+
+记录说明：以下为脱敏摘要，不是聊天 UI 的完整逐字记录；没有写入凭据、token、私有 Notebook 正文或环境变量值。
+
+用户确认补写全量盘点出的 3 条历史缺口：`youtube-_gbJw7orSI8`、`youtube-7rqfbvnO_H0`、`youtube-GZ99gAb4T0o`。执行限制为串行、零重试，只使用现有 PKM/marker 写回桥接，不重新调用 NotebookLM、模型、Chrome 下载或 PicGo。
+
+3 条均成功写入 PKM 并追加 Daily Check-in marker。全量 20 个资源 JSON 现为 20/20 PKM 正文、20/20 marker；其中 19 条与当前规范一致，Celeste 1 条是旧版正文但身份、来源和 marker 有效，按契约保留不覆盖。消费者回归 19/19 通过。
+
+原始对话：dialogues/2026-0830.md「1617 补齐历史 PKM 缺口」
