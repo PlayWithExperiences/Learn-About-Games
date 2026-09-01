@@ -2,9 +2,9 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 `roadmap.md` 与 `sessions/`。
 
-*更新于 2026-09-01 11:47:53 +0800 · 记录者 AI*
+*更新于 2026-09-01 12:42:13 +0800 · 记录者 AI*
 
-## 最新检查（2026-09-01 11:47:53 +0800）
+## 最新检查（2026-09-01 12:42:13 +0800）
 
 - 仓库仍为 Private；当前 v0.2 候选未推送、未部署，Pages 不恢复。
 - 共享 `collect-resources-about-game` skill 与资源合同仍优先使用 NotebookLM viewer 的 `pageAssets.list()` → 精确匹配 → `pageAssets.bundle()` 后台导出；本轮新增的闭环规则要求每个本地 `ready` JSON 必须经单文件 Git 交付并完成远端路径/blob 回读。
@@ -21,6 +21,8 @@
 - post-fail preflight 显示 `claimed_today=1`、`remaining_today=9`，下一条 distinct 候选为 `youtube-s_I07Iq_2XM`（`'Into the Breach' Design Postmortem`）。
 - 2026-09-01 11:47:53 本轮只读 preflight 成功：目录仍有 2,454 个候选，固定清单返回 9 条，`claimed_today=1`、`remaining_today=9`；首条仍为 `youtube-s_I07Iq_2XM`。原始 JSON 与运行报告已保存到 producer 状态目录。
 - claim 前浏览器就绪检查明确失败：NotebookLM 首页重定向至 Google 登录页，未取得已登录、可编辑工作台以及来源面板/Studio 控件证据。按合同记录为运行级 `browser-notebook-access: unavailable`，本轮未 claim、未新增候选失败、未调用 NotebookLM、未生成/上传/发布 ready。
+- 2026-09-01 12:42:13 纠正浏览器范围：11:47 检查的是 Codex 内置浏览器；Chrome 扩展中的既有 `Gemini Notebook` 工作台实际可用。新 Chrome 标签页的 DOM 已确认来源面板、添加来源、对话和 Studio 的信息图/思维导图/演示文稿控件均存在；当前状态为 `browser-notebook-access=available`。
+- 纠正后仍未 claim：本轮只是复核通道并等待手动批次授权，9 条固定候选暂记为 `deferred`，不是 `failed`；新的 fallback 运行报告已保存到 producer 状态目录。
 
 ## 现在在哪
 
@@ -30,6 +32,7 @@
 - 公开来源仍是 [YouTube 视频](https://www.youtube.com/watch?v=HAvS-RwkjdA)；私有 Notebook 工作台地址不写入本项目快照。
 - 当前最新失败条目不是“无候选”也不是“配额耗尽”，而是浏览器提交链路不稳定：总结和信息图成功，思维导图提交未完成，producer 已准确留为 `failed`。
 - 本轮新增阻塞发生在 claim 前的访问门槛，和上一轮已 claim 的思维导图失败分开记账；9 条固定候选均为 `skipped`，不是候选级 `failed`。
+- 上述 11:47 的“访问门槛阻塞”仅针对当时选中的 Codex 内置浏览器；Chrome fallback 已取得工作台可用证据，当前真正的下一门槛是用户确认生产范围，不再把两套浏览器状态混为一谈。
 
 ## 当前阶段
 
@@ -44,4 +47,4 @@
 - 后续新资源必须在 ready 之后逐条交付并完成远端路径/blob 回读；普通 Daily Check-in 继续按每天 1 篇消费，PKM 写入和 Issue marker 均成功后才算 `consumed`。
 - 在用户未改变“不改 PicGo 设置”的约束前，不继续领取固定清单下一候选；需先决定不改设置前提下的合规命名托管路径。NotebookLM 信息图配额恢复后仍沿用后台页面资产导出和强制远端交付规则；保持仓库 Private，不公开部署。
 - 下一轮若继续生产，先复核两个前置条件：`2026-09-01` 系统时钟为何落在适用日期 `2026-08-31` 之后；NotebookLM mind-map 提交为何在配置页连续超时/重置。未解决前，不应把后续失败归因到内容本身或候选本身。
-- 若要继续本批，先在当前浏览器完成 Google/NotebookLM 登录，并重新取得可编辑工作台、来源面板与 Studio 控件证据；在此之前不得 claim `youtube-s_I07Iq_2XM`。
+- 若要继续本批，先明确确认最多 10 条、逐条串行、并发 1、自动重试 0，以及当前 NotebookLM/已配置上传器服务边界；确认后从固定清单首条 `youtube-s_I07Iq_2XM` 开始，不重复 preflight 或改换候选。

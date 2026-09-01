@@ -28,14 +28,12 @@
 
 原始对话：dialogues/2026-0901.md「0814 notebooklm-single-fail」
 
-## 1147 Claim 前访问预检被登录页阻断（2026-09-01）
+## 1242 Chrome fallback 复核纠正内置浏览器范围（2026-09-01）
 
 决策：無涘（沿用收集合同）｜记录：codex（自动）｜session 01a05b11-718c-7a71-8bbd-8c94a426ab2e
 
-本轮只读 `preflight --limit 10` 成功：目录共有 2,454 个候选，固定返回 9 条，`claimed_today=1`、`remaining_today=9`；首条为 `youtube-s_I07Iq_2XM`（`'Into the Breach' Design Postmortem`）。预检原始 JSON 与结构化运行报告均已保存到 producer 持久化状态目录。
+用户指出页面实际能够正常打开后，补查发现此前结论只覆盖 Codex 内置浏览器：该浏览器的新标签页确实落在 Google 登录页。Chrome 扩展中已有一个 `Gemini Notebook` 工作台，原标签页被另一自动化会话占用；使用同一工作台的新标签页做只读复核，标题显示为目标 Notebook，DOM 同时确认来源面板、“添加来源”、对话区和 Studio 的“信息图 / 思维导图 / 演示文稿”控件。
 
-Claim 前浏览器连接本身建立成功，但 NotebookLM 首页重定向到 Google Accounts 登录页；没有取得已登录、可编辑的 NotebookLM 工作台，也没有来源面板或 Studio 控件证据。按合同记录为运行级 `browser-notebook-access: unavailable`，不是 `no_candidate`，也不是候选级失败。
+因此将整体浏览器就绪状态纠正为 `available`；11:47 的 `unavailable` 运行报告保留为内置浏览器检查的历史证据，不再作为 Chrome 工作台不可用的结论。纠正后仍未 claim、未调用 NotebookLM、未改来源选择、未生成或上传资产；9 条固定候选改记为等待授权的 `deferred`，不是候选级失败。下一步等待用户明确确认最多 10 条、串行并发 1、自动重试 0 和服务边界，再从 `youtube-s_I07Iq_2XM` 开始。
 
-本轮 `attempted=[]`、`ready=[]`、`failed=[]`，预检返回的 9 条候选全部 `skipped`；没有 claim、没有新增 ledger 条目、没有 NotebookLM/模型调用、没有生成或上传资产、没有 ready JSON、没有 AI-Life-Mentor 远端交付、没有 PKM/Daily Check-in 或网站发布。下一步是先恢复并验证 NotebookLM 登录与可编辑工作台，再从固定清单首条重新开始；不得在访问证据恢复前领取候选。
-
-原始对话：dialogues/2026-0901.md「1147 notebooklm-browser-access-block」
+原始对话：dialogues/2026-0901.md「1242 notebooklm-browser-access-block」
