@@ -28,6 +28,24 @@
 
 原始对话：dialogues/2026-0901.md「0814 notebooklm-single-fail」
 
+## 1555 首条 Into the Breach 候选在思维导图资产导出阶段失败
+
+决策：無涘 ｜ 记录：codex（自动）
+
+用户确认本批最多 9 条、逐条串行、并发 1、自动重试 0，仅使用当前 NotebookLM 与已配置上传器；不调用付费 API、不写 PKM/Daily Check-in、不发布网站。本场按固定候选首条 `youtube-s_I07Iq_2XM` 执行，`generation_run_id=run-20260901153845-39506`。
+
+NotebookLM 工作台可用。视频来源导入成功后，页面显示 33 个来源；关闭全选并精确勾选 `Into the Breach Design Postmortem`，读取 DOM `checked` 状态确认当前仅 1 个来源。中文正文生成完成，来源数为 1，正文含“来源边界：”段。
+
+信息图配置为中文简体、横向、手绘笔记、详细，卡片准备就绪后通过 viewer 的 `pageAssets.bundle()` 导出真实 PNG；本地 `file`/`sips` 核验为 5,527,567 bytes、`2752×1536`、PNG，并完成视觉检查。该临时资产未上传，因为后续思维导图未闭环。
+
+思维导图卡片生成完成。打开查看器后执行“全部展开”，DOM 树核验 81 个节点、最大层级 4、`collapsed_node_count=0`。但当前页面资产清单没有目标思维导图文件；随后按合同允许的唯一真实下载回退点击 `Download mindmap as image`，下载事件明确在 3000ms 超时，没有得到可验证本地文件。
+
+因此 producer 已于 15:53:06 将该候选从 `generating` 正式记为 `failed`，阶段为 `asset-download / mind_map`，并保留可观察的失败原因；没有生成 ready JSON、没有 PicGo 上传、没有 AI-Life-Mentor 远端交付、没有 PKM 或 Daily Check-in 写入，也没有继续领取固定清单剩余 8 条。post-fail preflight 显示目录候选仍为 2,454，`claimed_today=2`、`remaining_today=8`、`status=ready_to_claim`。
+
+原始 preflight：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-09-01T155327+0800-preflight.json`；运行报告：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-01T153845+0800.json`。下一步：暂停本批；如需继续，必须由用户明确授权对该失败候选进行单条显式重试，并先解决思维导图可验证导出通道。
+
+原始对话：dialogues/2026-0901.md「1555 notebooklm-single-fail」
+
 ## 1242 Chrome fallback 复核纠正内置浏览器范围（2026-09-01）
 
 决策：無涘（沿用收集合同）｜记录：codex（自动）｜session 01a05b11-718c-7a71-8bbd-8c94a426ab2e
