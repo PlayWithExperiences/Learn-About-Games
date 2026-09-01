@@ -55,3 +55,23 @@ NotebookLM 工作台可用。视频来源导入成功后，页面显示 33 个�
 因此将整体浏览器就绪状态纠正为 `available`；11:47 的 `unavailable` 运行报告保留为内置浏览器检查的历史证据，不再作为 Chrome 工作台不可用的结论。纠正后仍未 claim、未调用 NotebookLM、未改来源选择、未生成或上传资产；9 条固定候选改记为等待授权的 `deferred`，不是候选级失败。下一步等待用户明确确认最多 10 条、串行并发 1、自动重试 0 和服务边界，再从 `youtube-s_I07Iq_2XM` 开始。
 
 原始对话：dialogues/2026-0901.md「1242 notebooklm-browser-access-block」
+
+## 2149 剩余批次配额停止
+
+决策：無涘 ｜ 记录：Codex
+
+用户要求“把剩余的跑完”。本轮沿用已确认的 `collect-resources-about-game` 边界：固定清单逐条串行、并发 1、自动重试 0、最多 9 条；仅使用当前 NotebookLM 与已配置上传器，不调用付费 API、不写 PKM/Daily Check-in、不发布网站。20:42:22 的只读预检返回 `ready_to_claim`，目录候选 2,454 条，续跑固定清单为 8 条；Chrome 工作台复核可用。
+
+按预检顺序领取前 5 条，均生成了有“来源边界：”的中文总结，但没有一条闭环为 `ready`：
+
+- `youtube-ke_kOD2D-bs` / `run-20260901204456-96174`：总结 8,519 字符；信息图 PNG 已验为 `2752×1536`；思维导图全部展开后 46 节点、最大层级 4、无折叠节点，目标文件不在页面资产清单，唯一下载回退等待 3,000ms 超时，`asset-download / mind_map` 失败。
+- `youtube-neuRe4WWiKs` / `run-20260901205840-1940`：总结 3,991 字符；信息图 PNG 已验为 `2752×1536`；思维导图全部展开后 50 节点、最大层级 4、无折叠节点，目标文件不在页面资产清单，唯一下载回退等待 3,000ms 超时，`asset-download / mind_map` 失败。
+- `youtube-fBRTIwymDyY` / `run-20260901211112-7298`：总结 6,867 字符；信息图页面真实加载为 `2752×1536`，但资产索引没有目标 PNG，官方下载回退等待 3,000ms 超时，`asset-download / info_graph` 失败。
+- `youtube-I5wwviUJV9M` / `run-20260901211927-11140`：总结 7,498 字符；信息图 PNG 已验为 `2752×1536`；思维导图全部展开后 64 节点、最大层级 4、无折叠节点，目标文件不在页面资产清单，唯一下载回退等待 3,000ms 超时，`asset-download / mind_map` 失败。
+- `youtube-qie4My7zOgI` / `run-20260901213012-15398`：总结 5,367 字符；信息图阶段明确出现“您已达到每日信息图数量上限，改日再来吧！或进行升级。”，`quota / info_graph` 失败。
+
+NotebookLM 明确给出每日信息图配额阻断后停止整批，没有领取剩余 3 条：`youtube-VnRT2R0yt6c`（Designing Shadow Complex）、`youtube-7R-x9NSBS2Y`（The Design of 'Subnautica'）、`youtube-JyuR2fKvQ20`（To Err is to Play: Human Error and Game Design）。停批后 21:45:04 预检仍为 `ready_to_claim`，`claimed_today=7`、`remaining_today=3`。本次账目为 `attempted=5`、`ready=0`、`failed=5`、`skipped=3`；没有 ready JSON、inbox、远端发布、PicGo、PKM 或 Daily Check-in 产出。
+
+批次报告：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-01T214525+0800-remaining-batch.json`
+
+原始对话：dialogues/2026-0901.md「2149 剩余批次配额停止」

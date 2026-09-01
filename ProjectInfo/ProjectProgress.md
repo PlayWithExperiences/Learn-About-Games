@@ -2,36 +2,36 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 `roadmap.md` 与 `sessions/`。
 
-*更新于 2026-09-01 15:55:03 +0800 · 记录者 AI*
+*更新于 2026-09-01 21:49:53 +0800 · 记录者 Codex*
 
-## 最新检查（2026-09-01 15:55:03 +0800）
+## 最新检查（2026-09-01 21:49:53 +0800）
 
 - 仓库仍为 Private；当前 v0.2 候选未推送、未部署，Pages 不恢复。
 - `collect-resources-about-game` 的生产合同仍是：来源收敛为单条、中文总结带“来源边界：”、信息图/思维导图/演示文稿均须有可验证真实资产；思维导图必须执行“全部展开”并观察到至少三级且无折叠节点；`ready` 后还必须逐文件交付并回读远端 blob。
-- 2026-09-01 11:47:53 的 Codex 内置浏览器检查只得到 Google 登录页；该运行级 `unavailable` 证据仍保留，不能外推为所有浏览器不可用。
-- 2026-09-01 12:42:13 已用 Chrome 工作台纠正范围：可编辑的 NotebookLM 页面、来源面板、对话和 Studio 的信息图/思维导图/演示文稿控件均可见。
-- 用户随后确认本批最多 9 条（按当日剩余名额）、逐条串行、并发 1、自动重试 0；仅使用当前 NotebookLM 与已配置上传器，不调用付费 API、不写 PKM/Daily Check-in、不发布网站。
-- 首条固定候选 `youtube-s_I07Iq_2XM` 已于 2026-09-01 15:38:45 claim，`generation_run_id=run-20260901153845-39506`。NotebookLM 中导入成功，来源总数为 33，且已将选择收敛为该视频唯一来源。
-- 中文正文已生成并核验：来源数为 1，正文含明确的“来源边界：”段；信息图已通过 viewer `pageAssets.bundle()` 导出并验成真实 PNG，尺寸 `2752×1536`、非零字节，并完成视觉检查。
-- 思维导图已实际执行 viewer 的“全部展开”：81 个节点、最大层级 4、`collapsed_node_count=0`。但当前页面资产清单没有目标图文件；随后点击唯一允许的真实下载回退，下载事件明确在 3000ms 超时，未得到可验证本地文件。
-- producer 已将首条从 `generating` 正式记为 `failed`（阶段 `asset-download / mind_map`），没有生成 ready JSON、没有调用 PicGo、没有交付 AI-Life-Mentor、没有写 PKM/Daily Check-in。
-- post-fail preflight 已复核：目录仍有 2,454 个候选，`claimed_today=2`、`remaining_today=8`、`status=ready_to_claim`；当前固定清单中剩余 8 条未领取，因本轮失败即停而记为 `skipped`。
-- 当前原始预检与结构化运行报告已保存：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-09-01T155327+0800-preflight.json`、`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-01T153845+0800.json`。
+- 本次续跑前的固定预检于 20:42:22 返回 `ready_to_claim`：目录候选 2,454 条，前一条失败记录后今日已领取 2 条、剩余 8 次；用户确认最多 9 条、逐条串行、并发 1、自动重试 0，仅使用当前 NotebookLM 与已配置上传器，不调用付费 API、不写 PKM/Daily Check-in、不发布网站。
+- Chrome NotebookLM 工作台已复核可用，来源面板、对话和 Studio 的信息图/思维导图/演示文稿控件均可见。
+- 本次固定剩余清单前 5 条均已 claim，但没有一条达到 `ready`：
+  - `youtube-ke_kOD2D-bs`（Designing Games for Game Designers，`run-20260901204456-96174`）：总结 8,519 字符且有边界段；信息图 PNG 已验为 `2752×1536`；思维导图 46 节点、最大层级 4、无折叠节点，但页面资产清单没有目标文件，唯一下载回退 3,000ms 超时，阶段 `asset-download / mind_map` 失败。
+  - `youtube-neuRe4WWiKs`（Can You Make a Good Game Without Good Play Mechanics?，`run-20260901205840-1940`）：总结 3,991 字符且有边界段；信息图 PNG 已验为 `2752×1536`；思维导图 50 节点、最大层级 4、无折叠节点，但目标文件未出现在页面资产清单，唯一下载回退 3,000ms 超时，阶段 `asset-download / mind_map` 失败。
+  - `youtube-fBRTIwymDyY`（Designing Over the Top - Saints Row: The Third Postmortem，`run-20260901211112-7298`）：总结 6,867 字符且有边界段；信息图页面真实加载为 `2752×1536`，但资产索引没有目标 PNG，官方下载回退 3,000ms 超时，阶段 `asset-download / info_graph` 失败。
+  - `youtube-I5wwviUJV9M`（Reimagining a Classic: The Design Challenges of Deus Ex: Human Revolution，`run-20260901211927-11140`）：总结 7,498 字符且有边界段；信息图 PNG 已验为 `2752×1536`；思维导图 64 节点、最大层级 4、无折叠节点，但页面资产清单没有目标文件，唯一下载回退 3,000ms 超时，阶段 `asset-download / mind_map` 失败。
+  - `youtube-qie4My7zOgI`（Player-Driven Stories: How Do We Get There?，`run-20260901213012-15398`）：总结 5,367 字符且有边界段；Studio 明确提示“您已达到每日信息图数量上限，改日再来吧！或进行升级。”，阶段 `quota / info_graph` 失败。
+- 明确配额阻断后停止整批，未领取固定清单的后三条：`youtube-VnRT2R0yt6c`（Designing Shadow Complex）、`youtube-7R-x9NSBS2Y`（The Design of 'Subnautica'）、`youtube-JyuR2fKvQ20`（To Err is to Play: Human Error and Game Design）。停批后预检于 21:45:04 仍为 `ready_to_claim`，目录候选 2,454 条，`claimed_today=7`、`remaining_today=3`；这 3 次名额没有继续消耗。
+- 本次续跑账目为 `attempted=5`、`ready=0`、`failed=5`、`skipped=3`、`remaining_today=3`。没有生成 ready JSON，没有写 AI-Life-Mentor inbox，没有调用 PicGo，没有写 PKM/Daily Check-in，也没有发布网站。
+- 本次结构化批次报告为 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-01T214525+0800-remaining-batch.json`；原始续跑预检为 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-09-01T204222+0800-preflight.json`，停批后预检为 `/Users/haodong/.local/state/learn-about-games/notebooklm-daily/preflight/2026-09-01T214504+0800-preflight.json`。
 
 ## 现在在哪
 
-- Learn-About-Games 本地 `main` 保持现有候选状态；不推送、不恢复 Pages、不改变网站公开状态。
-- producer ledger 中 `youtube-s_I07Iq_2XM` 是明确的 `failed`，不是 `generating`、`no_candidate` 或 `quota_block`；失败原因是目标思维导图资产导出通道未产出可验证文件。
-- 本轮没有 `ready` 资源，因此没有进入远端 inbox 交付链，也没有触发 AI-Life-Mentor 消费端。信息图的临时导出只作为失败前证据，不被冒充为已交付资产。
-- 现有 PicGo 的用户约束（不擅自修改 `autoRename`）仍保留；由于本轮在 PicGo 之前失败，未产生新的命名例外。
+- producer ledger 已将本次 5 个 claim 全部落为明确 `failed`，没有悬挂的 `generating`、假 `ready` 或 `quota_block` 状态；此前首条 `youtube-s_I07Iq_2XM` 也仍是独立的 `failed`。
+- 其中 3 张信息图 PNG 曾通过页面资产包完成本地硬校验，但因对应思维导图未形成可交付文件，不能冒充完整资源交付；另外一条信息图只在页面加载、未通过资产索引/下载回读。所有临时资产均未上传。
+- 当日批次已因 NotebookLM 明确的每日信息图配额阻断停止。失败候选不自动重试，未领取候选不因停批写入 claim。
 
 ## 当前阶段
 
-- 生产闭环的“失败可辨认”已保持：浏览器工作台可用、来源隔离和正文/信息图成功，但思维导图导出失败；因此没有假 ready，也没有继续消耗后续候选配额。
-- 失败证据同时包含业务状态（producer ledger）和浏览器观察（全部展开成功、页面资产缺失、下载回退超时），后续若要重试必须由用户明确授权单条重试，不能自动重试或把失败候选重新当作新候选。
+- 生产闭环保持“失败可辨认”：正文边界、信息图/思维导图节点证据和实际下载通道分别记录；页面显示“已准备就绪”或节点展开本身不替代真实资产文件。
+- 远端交付链未启动，AI-Life-Mentor、PKM、Daily Check-in 和网站发布状态均未被本次续跑改变。
 
 ## 下一步
 
-- 暂停本批后续 claim；如继续，先明确是否允许对这条 `failed` 候选进行一次单条显式重试，并重新确认当前 NotebookLM/上传器边界。
-- 在思维导图存在可验证导出路径前，不标记 `ready`，不上传、不推送、不写 PKM；不要把 viewer 已生成或节点已展开替代为图片资产存在。
-- 继续保持 Learn-About-Games Private，不恢复 Pages、不自动推送；后续真实 `ready` 仍须经过本地合同验证、AI-Life-Mentor 单文件远端交付和路径/blob 回读。
+- 等 NotebookLM 配额恢复后，先重新执行一次只读 `preflight`，确认名额和候选顺序，再从本次固定清单剩余第一条 `youtube-VnRT2R0yt6c`（Designing Shadow Complex）开始；同日不重试本次 5 条失败 claim，除非用户另行明确授权新的单条重试策略。
+- 任何候选只有在总结、来源边界、信息图、全部展开的思维导图、演示文稿和逐文件远端回读均通过后才能标记 `ready`；继续保持 Learn-About-Games Private，不恢复 Pages、不自动推送。
