@@ -8,7 +8,7 @@
 
 - 仓库仍为 Private；v0.2 候选未推送、未部署，Pages 不恢复。
 - `youtube-VnRT2R0yt6c`（Designing Shadow Complex）已交付：`retry`（`run-20260903220020-85372`，旧失败保留）→ 总结 4147 字+边界 910 字从既有 Notebook 对话重读（无新生成、不耗配额）→ 4 个 URL 发布时重验通过 → `publish` → `notebooklm-resources/2026-0903-2201-design-fundamentals.json` → 变基后 push（远端 `b2f2e01`）→ blob `1f30708a` 两端一致。消费端校验通过（ready/active）。
-- 浏览器通道是本场自建的：拷贝 Profile 三探皆撞 Google 登录墙后停手删拷贝；改用全新浏览器由用户亲手登录，经 raw CDP 只读对话；交付后浏览器已关、`/tmp/lag-auto-profile` 已擦。Codex 额度耗尽，07:30 自动化不可依靠。
+- 浏览器自建通道已沉淀为持久能力（`automation/browser/`：`launch.cjs`/`cdp.cjs`/README，`87f96af`）：登录态保留在 `~/.local/state/learn-about-games/browser-profile`（700）；有头登录+无头复用均已验证；ESM 仓库脚本须用 `.cjs`。会话过期时只需重复一次有头登录。
 - push 时远端超前 3 个提交；除本文件外另有 2 个本机 main 已有留痕提交一并推上（`trace-health`、`0903` 会话留痕，无秘密），已核查。
 - 9-03 预算剩余 9；下一普通候选仍为 `youtube-7R-x9NSBS2Y`。运行报告为 `runs/2026-09-03T221000+0800-shadow-complex-delivered.json`。
 - PKM 抽查：21/21 历史 inbox 资源均有 marker；8-31 条双处落盘。本条的 PKM 笔记+marker 由下一个 Daily Check-in 写入。
