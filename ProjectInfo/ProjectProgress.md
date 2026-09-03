@@ -2,7 +2,15 @@
 
 > 现状快照，覆盖写，不堆历史。历史看 `roadmap.md` 与 `sessions/`。
 
-*更新于 2026-09-01 21:49:53 +0800 · 记录者 Codex*
+*更新于 2026-09-03 21:36:00 +0800 · 记录者 AI*
+
+## 最新检查（2026-09-03 21:36:00 +0800）
+
+- 仓库仍为 Private；v0.2 候选未推送、未部署，Pages 不恢复。
+- 用户确认 inbox 已空（9-01/02/03 连续 `no_ready_resource`），授权把 9-02 已验证遗留做完。今晚只做该条交付，不做新 claim、不调 NotebookLM、不改 PicGo 设置。
+- `youtube-VnRT2R0yt6c`（Designing Shadow Complex，`run-20260902073459-60639`）：4 个本地产物 SHA-256 与 9-02 记录一致，已改走桌面端 github 图床（`Medill-East/IMGStorage`）上传成功，4 条远端 URL 全部 HTTP 200 且字节一致。`autoRename` 保持 `true`，远端为时间戳名（沿用 8-31 例外口径）。
+- 卡点：`content_summary` + `boundary` 正文只在 9-02 直播会话里验证过、从未落盘（私有工作台正文不得进日志），ready JSON 无法组装；ledger 未动（无 claim/retry/publish/fail），剩余额度未消耗。运行报告为 `runs/2026-09-03T213600+0800-shadow-complex-delivery.json`。
+- PKM 抽查：21/21 inbox 资源均有消费 marker（与 Issue 全量对账一致）；抽查 8-31 `youtube-8uE6-vIi1rQ`，PKM 资源笔记与 DailyCheckin 条目均在。已消费=已落 PKM 成立。
 
 ## 最新检查（2026-09-01 21:49:53 +0800）
 
@@ -33,5 +41,6 @@
 
 ## 下一步
 
-- 等 NotebookLM 配额恢复后，先重新执行一次只读 `preflight`，确认名额和候选顺序，再从本次固定清单剩余第一条 `youtube-VnRT2R0yt6c`（Designing Shadow Complex）开始；同日不重试本次 5 条失败 claim，除非用户另行明确授权新的单条重试策略。
-- 任何候选只有在总结、来源边界、信息图、全部展开的思维导图、演示文稿和逐文件远端回读均通过后才能标记 `ready`；继续保持 Learn-About-Games Private，不恢复 Pages、不自动推送。
+- 取回 Shadow Complex 的总结+边界正文（二选一）：用户从 Notebook `Lessons in Designing Shadow Complex` 对话里复制两段给我；或等配额恢复后由有浏览器通道的自动化按 `retry`（带准确上一轮 run id）重读后收尾。拿到正文即 publish + 单文件远端交付 + 回读 blob。
+- 交付进 inbox 后，下一个 Daily Check-in（每天 08:30，池中将只有这一条）自动写 PKM 笔记并追加 marker，届时才算 `consumed`；生产端不直接写 PKM/Issue。
+- 等 NotebookLM 配额恢复后，先重新执行一次只读 `preflight`，再从固定清单剩余第一条 `youtube-VnRT2R0yt6c` 的后续候选（`youtube-7R-x9NSBS2Y` 起）继续；同日不重试 9-01 的 5 条失败 claim，除非用户另行明确授权。
