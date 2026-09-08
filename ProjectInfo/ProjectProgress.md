@@ -1,17 +1,16 @@
 # ProjectProgress
 
-更新于 2026-09-07 08:02:01 +0800 · 记录者 Codex
+更新于 2026-09-09 07:33:32 +0800 · 记录者 Codex
 
 ## 当前状态
 
-- 产品仍为Private refinement，未推送或部署Learn-About-Games，未改运行时代码。
-- 9月7日NotebookLM批次进行中：preflight ready_to_claim，固定10候选，attempted2 / ready1 / delivered1 / failed0 / in_progress1 / remaining8。
-- 已交付youtube-Q1Tczf8vxCM：2026-0907-0750-level-spatial-design.json，commit230031a，远端精确blob fe7c8433b3be02d452a8aaf4227c4bac406dc8c1。四项资产真实文件、上传和远端字节校验完成。
-- 第二条youtube-5jrq5rDI4dk处理中，图与导图上传校验通过，演示文稿仍在生成；不得视作ready或已交付。
-- 隔离副本403与原仓库本地凭据助手配置差异有关；复用既有配置后本条Git交付已成功。历史9月6日ready未补交，其远端状态本轮未核实。
+- 产品维持 Private refinement；本轮未改运行时代码、未推送或部署 Learn-About-Games。
+- 9月9日自动化 preflight ready_to_claim，候选9，今日已claim1，剩余9。新增 attempted0 / ready0 / delivered0 / failed0；运行级 blocked1。
+- 既有 youtube-YyQfP1GjdJ8 / run-20260909012154-76767 仍为 generating，工作台显示角色共鸣信息图；是否仍有原会话执行未知，尚无交接证据。
+- 本轮为遵守并发1停止新claim，保留既有ledger和他人未提交改动。来源面板与Studio未验证，浏览器完整就绪状态unknown。未核实历史ready远端状态，不声称其已交付。
 
 ## 下一步
 
-- 继续验证第二条演示文稿，完成后单文件交付；配额阻断则停止当天。
-- 无自动重试，无历史批量补交，不写PKM、Issue或触发Daily Check-in。
-- 最新证据：sessions/2026-0907-notebooklm-daily.md；本地runs/2026-09-07T073230+0800/。
+- 原生产会话收口或明确交接上述claim后再启动新批次；验证完整产物后才可publish和单文件交付。
+- 无自动重试、历史批量补交、PKM/Issue写入或Daily Check-in触发。
+- 证据：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-09T073332+0800/report.json；ProjectInfo/sessions/2026-0909-notebooklm-preflight.md。
