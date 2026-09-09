@@ -1,17 +1,18 @@
 # ProjectProgress
 
-更新于 2026-09-09 20:37:43 +0800 · 记录者 muse-spark
+更新于 2026-09-10 07:32:13 +0800 · 记录者 Codex
 
 ## 当前状态
 
 - 产品维持 Private refinement；本轮未改运行时代码、未推送或部署 Learn-About-Games。
-- 9月9日 20:37 第三轮只读 preflight 仍为 ready_to_claim：候选 9（`youtube-t7VkrExQwSo` 起按目录顺序），今日已 claim 1，剩余 9。新增 attempted0 / ready0 / delivered0 / failed0；运行级 blocked1。
-- 用户报告的上轮 OpenAI 400（单请求 51 images 超 50 上限）本轮未复现（未调用视觉模型）；后续图片验证单请求 ≤30 张、分批串行、调用前计数。
-- ledger 仅剩 1 条 generating 未收口：youtube-1hdXDgCh8rw / run-20260904044845-6015（9-04，5 天）；今日的 youtube-YyQfP1GjdJ8 与 9-05 的 youtube-tmuy9fyNUjY 已收口为 ready。并发 1 下仍不得新 claim。
-- 本运行时浏览器通道经零配额检查可达（已登录 Sakurai notebook，来源面板存在），但多来源混杂、Studio/隔离未验证，仍记 unknown；用户已确认批次边界但未授权处置 9-04 stale claim，并发 1 下本轮仍零 claim；保留既有 ledger，未调用 NotebookLM/PicGo/Git。未核实历史 ready 远端状态，不声称其已交付；无当日配额阻断证据。
+- 9月10日自动化 preflight 为 ready_to_claim：目录解析到 2454 个候选，选出 10 条未留痕候选，首条 youtube-t7VkrExQwSo；今日 claimed0 / remaining10。
+- 本轮 attempted0 / ready0 / delivered0 / candidate-failed0 / skipped10，运行级 blocked1。
+- 当前 ledger 仍有 youtube-1hdXDgCh8rw / run-20260904044845-6015 处于 generating（9月4日领取）。尚无本轮交接或收口依据，并发1下未领取新候选，未修改既有 ledger。
+- 只读 CDP 探针可达 NotebookLM 页面，Studio 文本存在、未见 Sign in 文本；来源面板及可编辑权限未充分验证，browser-notebook-access 为 unknown，不将选择器未命中解释为面板不存在。
+- 未调用生成、上传或远端交付；未核验历史 ready 的远端状态；无当日资产配额耗尽证据。
 
 ## 下一步
 
-- 原生产会话收口或明确交接上述 claim、且确认可用 NotebookLM 浏览器适配器与本批授权（范围、服务、最多 10 条、并发 1、重试 0）后再启动新批次；验证完整产物后才可 publish 和单文件交付。
-- 无自动重试、历史批量补交、PKM/Issue 写入或 Daily Check-in 触发。
-- 证据：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-09T203743+0800/report.json；ProjectInfo/sessions/2026-0909-notebooklm-preflight-2037.md。
+- 原生产会话收口或明确交接上述 generating claim，并验证 NotebookLM 来源面板及编辑控件后，再执行已有授权的串行批次。
+- 不自动重试历史候选或批量补交；不写 PKM、Issue 或触发 Daily Check-in。
+- 本轮证据：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-10T073213+0800/report.json；原始 preflight.json 和 active-claims.json 同目录。
