@@ -8,7 +8,7 @@
 - 9月9日 20:37 第三轮只读 preflight 仍为 ready_to_claim：候选 9（`youtube-t7VkrExQwSo` 起按目录顺序），今日已 claim 1，剩余 9。新增 attempted0 / ready0 / delivered0 / failed0；运行级 blocked1。
 - 用户报告的上轮 OpenAI 400（单请求 51 images 超 50 上限）本轮未复现（未调用视觉模型）；后续图片验证单请求 ≤30 张、分批串行、调用前计数。
 - ledger 仅剩 1 条 generating 未收口：youtube-1hdXDgCh8rw / run-20260904044845-6015（9-04，5 天）；今日的 youtube-YyQfP1GjdJ8 与 9-05 的 youtube-tmuy9fyNUjY 已收口为 ready。并发 1 下仍不得新 claim。
-- 本运行时浏览器就绪 unknown（无已登录 NotebookLM 页面/资产适配器），停止新 claim；保留既有 ledger，未调用 NotebookLM/PicGo/Git。未核实历史 ready 远端状态，不声称其已交付；无当日配额阻断证据。
+- 本运行时浏览器通道经零配额检查可达（已登录 Sakurai notebook，来源面板存在），但多来源混杂、Studio/隔离未验证，仍记 unknown；用户已确认批次边界但未授权处置 9-04 stale claim，并发 1 下本轮仍零 claim；保留既有 ledger，未调用 NotebookLM/PicGo/Git。未核实历史 ready 远端状态，不声称其已交付；无当日配额阻断证据。
 
 ## 下一步
 
