@@ -58,3 +58,9 @@
 - triple验：ledger ready35/failed24（`youtube-s_I07Iq_2XM` run-20260910190705-59640，history=2）；inbox `2026-0910-2119-systems-mechanics.json`（11460B）；远端 `180ffbb` 发布＋`dfb9392` 合并推送（首推被顶、变基被他人脏改挡，改 merge，未碰他人文件）。四件：总结3178＋边界459；信息图 2752×1536 中文；思维导图复用 9-01 中文旧卡（Expand-all：162文本/0折叠/目视4级，PNG 3507×14334）；14页 deck。PicGo 4/4。今日 claimed3/remaining7。选择器恢复 52 全选。
 - 新教训（记入通道记忆）：①新建思维导图节点全英文（纯中文主题亦然，机制未明）→ 后续优先复用旧中文卡；②"列表不可见≠不存在"第二例（旧三卡被虚拟列表隐藏）→ "找不到"结论前换三种以上定位方式。
 - 已派 subagent（`d0a5cebb`）显式 retry `youtube-QBAM27YbKZg`（Fallout 4 模块化，prev run-20260830144012-99867，疑有 9 天前旧卡"开放世界模块化关卡设计指南"）：同 recipe＋新教训＋语言红线（新建全英文即 fail）。
+
+## 9-10 22:37 QBAM fail＠chat-thread-stuck，主会话接管收尾（记录：muse-spark）
+- 子智能体中期后未等指令即收工（run 悬 generating、面板 Fallout-only、草稿 174 字残留）。主会话接管：reload 恢复 52 全选＋清草稿（已验 52/52/draft0）；producer fail 落盘（run-20260910215530-11420，failed_at 22:37:21，reason 完整，history=1；一次重复 fail 调用被正确拒绝，无污染）。全库 ready35/failed24，并发位释放。
+- salvage：对话历史无 Fallout 总结（仅 XCOM＋Breach 拒文）；旧三卡三定位法确认缺失。QBAM 需新总结＋三件全新建，但 Chat 线程粘 Breach（新请求被拒，pill/menu/新对话入口均失效）→ 本子内无法合规开工，非单条问题。
+- 复用面速查（loaded DOM）：Heaven/Vault、Sunless、Saints Row、Deus Ex、League 有 mentions；Titanfall/Horizon/Celeste 无。mentions≠总结，具体 salvage 留待逐条 retry 时深查。
+- 下一步需用户定夺：A 磨旧本 Chat 换源（低概率，不耗 claim 但烧时间）；B 轮换新本（单本承接剩余队列，需明确授权＋记录原因，复用策略变更）。
