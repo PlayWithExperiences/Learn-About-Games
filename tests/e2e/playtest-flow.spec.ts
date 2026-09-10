@@ -38,10 +38,27 @@ test('guides a learner from the home page to the unordered Playtest topic collec
   await expect(page.getByLabel('资源主题', { exact: true })).toHaveValue('playtesting');
   await expect(page.getByText('按顺序阅读或观看')).toHaveCount(0);
   await expect(page.locator('[data-result-kind="work-item"]:visible')).toHaveCount(playtestingResources.length);
+  // Read the complete visible set in one browser call. Repeated role queries
+  // across the 5,000+ row catalog can exhaust the test's navigation budget.
+  const visibleRows = await page.locator('[data-result-kind="work-item"]:visible').evaluateAll((rows) =>
+    rows.map((row) => {
+      const heading = row.querySelector<HTMLElement>('h3');
+      return {
+        id: row.getAttribute('data-result-id'),
+        title: heading?.textContent?.trim(),
+        headingVisible: heading?.checkVisibility({ checkVisibilityCSS: true }) ?? false,
+        links: [...row.querySelectorAll<HTMLAnchorElement>('a[href]')]
+          .filter((link) => link.checkVisibility({ checkVisibilityCSS: true }))
+          .map((link) => link.getAttribute('href')),
+      };
+    }),
+  );
+  expect(new Set(visibleRows.map(({ id }) => id))).toEqual(new Set(playtestingResources.map(({ id }) => id)));
+  const rowsById = new Map(visibleRows.map((row) => [row.id, row]));
   for (const resource of playtestingResources) {
-    const row = page.locator(`[data-result-id="${resource.id}"]`);
-    await expect(row.getByRole('heading', { name: resource.title['zh-CN'], exact: true })).toBeVisible();
-    await expect(row.locator(`a[href="${resource.canonicalUrl}"]`).first()).toBeVisible();
+    const row = rowsById.get(resource.id);
+    expect(row).toMatchObject({ title: resource.title['zh-CN'], headingVisible: true });
+    expect(row?.links).toContain(resource.canonicalUrl);
   }
 });
 

@@ -274,25 +274,25 @@ test('publishes the current v0.2 scope without retaining the M0 roadmap as curre
     `${atlasNodes.length} 节点、${atlasRelations.length} 条有证据关系与 ${atlasEvidence.length} 项 Evidence`,
   ))).toBeVisible();
   await expect(page.getByText(new RegExp(`${atlasGenreFamilies.length} 个常见 Genre Family`))).toBeVisible();
-  await expect(page.locator('article.prose')).toContainText('从感受、理解、解构走向重构');
+  await expect(page.locator('article.prose')).toContainText('从感知、理解、归因走向重构');
   await expect(page.locator('article.prose')).not.toContainText('能力地图包含 8 个领域');
   await expect(page.locator('article.prose')).not.toContainText('v0.2 已进入实施');
   await expect(page.locator('article.prose')).not.toContainText('AAA / Game Designer');
 });
 
-test('records EGDS as the current private candidate rather than a future migration', async ({ page }) => {
+test('records the EGDS v0.3 public sharing direction', async ({ page }) => {
   await page.goto('./project/roadmap/');
   const roadmap = page.locator('article.prose');
 
-  await expect(roadmap).toContainText('EGDS 能力地图已经在本地候选完成');
-  await expect(roadmap).toContainText('仓库仍保持 Private，Pages workflow 仍保持手动停用');
+  await expect(roadmap).toContainText('EGDS 能力地图采用 v0.3 方法描述');
+  await expect(roadmap).toContainText('2026-09-10 用户决定恢复仓库公开与网站分享');
   await expect(roadmap).not.toContainText('下一切片改为以 PlayWithExperiences / EGDS');
   await expect(roadmap).not.toContainText('按 EGDS 实施计划');
 
   await page.goto('./project/changelog/');
   const changelog = page.locator('article.prose');
   await expect(changelog).toContainText('EGDS 取代通用分组成为能力地图的唯一知识骨架');
-  await expect(changelog).toContainText('本轮尚未推送或部署');
+  await expect(changelog).toContainText('2026-09-10 · EGDS v0.3 同步');
 });
 
 test('records the verified deployment chain through the final-review fix', async ({ page }) => {

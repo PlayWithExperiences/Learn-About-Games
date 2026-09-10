@@ -161,9 +161,9 @@ describe('game feel learning path', () => {
     ]);
     expect(path.stages.map(({ resources }) => resources.length)).toEqual([12, 18, 24, 24, 14, 8]);
     expect(path.stages.slice(0, 4).map(({ egdsAction, experienceLayer }) => [egdsAction, experienceLayer])).toEqual([
-      ['感受', '情绪体验'],
+      ['感知', '体验形态'],
       ['理解', '主观感受'],
-      ['解构', '客观原因'],
+      ['归因', '感受诱因'],
       ['重构', '设计杠杆'],
     ]);
     expect(path.stages.flatMap(({ resources }) => resources)).toHaveLength(100);

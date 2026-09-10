@@ -2,16 +2,16 @@
 
 Learn About Games 的目标是成为一个公开的游戏知识地图、职业参考、学习资源导航与游戏创新沿革项目。它从三个连续问题出发：游戏设计的全貌是什么，我大致处于哪里，接下来可以学习和实践什么？
 
-当前状态：仓库在产品完善期间暂时设为 Private；公开 GitHub Pages 已下线并返回 404。当前候选只通过本机 `http://127.0.0.1:4321/Learn-About-Games/` 预览，历史线上 URL 不代表当前可访问状态。
+分享入口：[Learn About Games](https://playwithexperiences.github.io/Learn-About-Games/) · [GitHub 仓库](https://github.com/PlayWithExperiences/Learn-About-Games)。发布状态可在 [GitHub Actions](https://github.com/PlayWithExperiences/Learn-About-Games/actions/workflows/deploy.yml) 核对。
 
 网站用“看地图、找位置、向前走”组织入口。地图提供方向，不提供资格认证；职业画像是带生产语境的参考，不是统一标准。
 
 ## 当前版本｜v0.2
 
-v0.2 把 M0 的纵向切片扩展成一张可以继续生长的游戏知识网络；当前 EGDS 完善版只在本地 Private 分支形成候选，尚未推送或部署：
+v0.2 把 M0 的纵向切片扩展成一张可以继续生长的游戏知识网络；本次公开分享版将方法描述同步到 EGDS v0.3：
 
-- 能力地图包含 28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条 `supports` / `complements` 关系。它以 PlayWithExperiences 的 EGDS 为作者化骨架：从体验旅程与情绪曲线出发，从感受、理解、解构走向重构，再进入叙事、美学与表现、玩法与挑战等设计杠杆；生产、团队、产品与更广语境形成其余四条条件分支。桌面所有父子包含关系统一从左向右展开，并用五条中性分支领地、不同权重的主干／分支／子级线和独立过程箭头表达层级；中间宽度、移动端与无 JavaScript 使用同源原生大纲。
-- 独立的 [EGDS 方法介绍页](src/pages/egds/index.astro) 说明能力地图采用的作者方法基础。正文以 PlayWithExperiences Digital Garden 的当前工作模型为先：情绪曲线是整体入口；感受 ↔ 情绪体验、理解 ↔ 主观感受、解构 ↔ 客观原因、重构 ↔ 设计杠杆构成四组明确对应；2024 年四篇已发布文章作为真实演进记录保留。
+- 能力地图包含 28 个 EGDS 方法节点、42 个可实践能力、12 个知识议题和 64 条 `supports` / `complements` 关系。它以 PlayWithExperiences 的 EGDS 为作者化骨架：从体验形态出发，从感知、理解、归因走向重构，再进入叙事、美学、玩法与挑战等设计杠杆；生产、团队、产品与更广语境是本站扩展的其余四条条件分支，不属于 EGDS 核心四层。桌面所有父子包含关系统一从左向右展开，并用五条中性分支领地、不同权重的主干／分支／子级线和独立过程箭头表达层级；中间宽度、移动端与无 JavaScript 使用同源原生大纲。
+- 独立的 [EGDS 方法介绍页](src/pages/egds/index.astro) 说明能力地图采用的作者方法基础。正文已与 EGDS 项目核对至 v0.3：体验型游戏设计系统（Experiential Game Design System）。感知 ↔ 体验形态、理解 ↔ 主观感受、归因 ↔ 感受诱因、重构 ↔ 设计杠杆构成四组对应；体验形态按曲线、段落、循环、瞬间从整体到局部观察；2024 年四篇已发布文章作为真实演进记录保留。
 - `AAA · Game Designer`、`AAA · Creative Director` 与 `Indie · Solo Developer` 是能力地图内的三种职业标签。它们只在唯一一张地图上改变强调，并在标签旁公开映射、依据和局限；不评分、不隐藏节点，也不生成统一成长路线。旧 `/careers/` 只保留到地图标签区的兼容跳转。
 - 成长资源收录 44 个 Source、5437 个具体 Work Item、5590 个 Access Version 与 16 个无顺序资源主题。主目录默认折叠为 16 个可独立展开的主题子表，也可展开全表；搜索框与七项事实筛选直接位于资源表头，筛选不再包在额外的“按事实筛选”折叠框里。Source 目录拥有独立子入口。本轮完整收录 GDC Festival of Gaming、Game Maker's Toolkit 与 Masahiro Sakurai on Creating Games 英文频道的公开视频；每条保留官方播放页、免费访问事实和一个保守主题，不为凑数量填充 `whyRelevant` 或未经标题支持的细分类。此前英文 GDC 会话、中文与少量日文核验条目继续保留；GDC Vault 会话仍保守标记为 subscription。
 - Innovation Atlas 是一张 84 节点、86 条有证据关系与 76 项 Evidence 构成的全局时间网络。10 个常见 Genre Family 只负责非排他的浏览入口；网络把“创新事件”和“承载作品”分开标记：事件是时间线的主叙事，作品是事件详情中的承载证据。第一人称射击视角、锁定目标的空间战斗、即时战略的资源生产与非对称阵营等事件，会在同一张全局网络中互相影响；选择品类只改变高亮，不切断跨品类关系。事件卡先解释发生了什么、何时出现、如何被引入和扩散，再列出支持这些判断的作品与证据，不宣称唯一发明者；Genre 谱系仍只是可核查的选择性透镜，不冒充完整品类史。桌面只有明确进入全屏“地图模式”后，普通滚轮才围绕指针连续缩放并允许拖动；“适应全图”会以完整内容为先，必要时可以低于手动缩放的 50% 下限。
@@ -23,7 +23,7 @@ v0.2 把 M0 的纵向切片扩展成一张可以继续生长的游戏知识网�
 
 EGDS 是 PlayWithExperiences 提出并持续修订的一种设计视角，不是唯一行业标准。EGDS Framework Node 只表达方法结构；Capability 才参与个人实践状态和职业画像；Knowledge Topic 只提供理解背景。
 
-当前方法入口位于本地站点 `/Learn-About-Games/egds/`。站内只保存可核查摘要和原始链接，不镜像完整 PKM；最新概念关系仍以 [PlayWithExperiences Digital Garden](https://play-with-experiences-digital-garden.vercel.app/) 为准。
+当前方法入口为 [EGDS v0.3](https://playwithexperiences.github.io/Learn-About-Games/egds/)。站内只保存可核查摘要和原始链接，不镜像完整 PKM；v0.3 口径于 2026-09-10 经 EGDS 项目确认；[PlayWithExperiences Digital Garden](https://play-with-experiences-digital-garden.vercel.app/) 提供概念和案例来源，其中部分页面保留历史名称。
 
 ## 本地命令
 

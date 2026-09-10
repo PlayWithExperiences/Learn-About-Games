@@ -511,7 +511,7 @@ h2 {
 .egds-model-chain {
   display: grid;
   border-top: 2px solid var(--ink-soft);
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .egds-model-chain li {

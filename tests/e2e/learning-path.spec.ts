@@ -12,7 +12,7 @@ test('exposes the game-feel learning path and its EGDS stages', async ({ page, r
   await expect(page.locator('[data-learning-path-resource]')).toHaveCount(100);
   await expect(page.locator('[data-learning-path-stage="observe"]')).toContainText('感受');
   await expect(page.locator('[data-learning-path-stage="understand"]')).toContainText('理解');
-  await expect(page.locator('[data-learning-path-stage="deconstruct"]')).toContainText('解构');
+  await expect(page.locator('[data-learning-path-stage="deconstruct"]')).toContainText('归因');
   await expect(page.locator('[data-learning-path-stage="reconstruct"]')).toContainText('重构');
   await expect(page.getByRole('link', { name: '资源表', exact: true })).toHaveAttribute('href', /resources\/$/);
 

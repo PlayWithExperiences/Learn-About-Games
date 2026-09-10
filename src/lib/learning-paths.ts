@@ -38,8 +38,8 @@ export type LearningPathStageId =
 export type LearningPathStage = {
   id: LearningPathStageId;
   title: string;
-  egdsAction?: '感受' | '理解' | '解构' | '重构';
-  experienceLayer?: '情绪体验' | '主观感受' | '客观原因' | '设计杠杆';
+  egdsAction?: '感知' | '理解' | '归因' | '重构';
+  experienceLayer?: '体验形态' | '主观感受' | '感受诱因' | '设计杠杆';
   goal: string;
   practice: string;
   deliverable: string;
@@ -77,7 +77,7 @@ const learningPathFocuses: LearningPathFocus[] = [
   },
   {
     id: 'aesthetics',
-    label: '美学与表现',
+    label: '美学',
     description: '视觉、声音、动画、镜头与多模态线索如何放大体验。',
     kind: 'pillar',
   },
@@ -215,8 +215,8 @@ const stageDefinitions: StageDefinition[] = [
   {
     id: 'observe',
     title: '观察与描述',
-    egdsAction: '感受',
-    experienceLayer: '情绪体验',
+    egdsAction: '感知',
+    experienceLayer: '体验形态',
     goal: '先把手感当成可观察的体验，而不是马上把它归结为某个参数。',
     practice: '选一个熟悉的动作，分别记录输入、等待、动作、反馈和身体感受；至少做一次慢速与一次快速记录。',
     deliverable: '一张“输入 → 动作 → 反馈 → 感受”的体验记录表。',
@@ -244,9 +244,9 @@ const stageDefinitions: StageDefinition[] = [
   },
   {
     id: 'deconstruct',
-    title: '解构问题',
-    egdsAction: '解构',
-    experienceLayer: '客观原因',
+    title: '归因与检验',
+    egdsAction: '归因',
+    experienceLayer: '感受诱因',
     goal: '把感受到的问题拆成输入、运动、时序、规则、节奏和反馈回路。',
     practice: '对一个问题做变量拆解，逐项关闭或替换反馈，再比较问题是否仍然存在。',
     deliverable: '一张问题树和一组最小可复现实验。',

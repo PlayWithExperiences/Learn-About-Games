@@ -4,71 +4,66 @@ import { sitePath } from '../../lib/site-path';
 
 const currentModel = [
   {
-    name: '情绪曲线',
-    english: 'Emotional Curve',
-    description: '观察一段体验随时间发生的情绪变化，而不是只看孤立的高点。',
-  },
-  {
-    name: '情绪体验',
-    english: 'Emotional Experiences',
-    description: '把曲线拆成玩家能够辨认和描述的局部体验。',
+    name: '体验形态',
+    english: 'Experience form',
+    description: '按体验曲线、体验段落、体验循环、体验瞬间，从整体到局部观察体验。',
   },
   {
     name: '主观感受',
-    english: 'Subjective Feelings',
-    description: '记录玩家如何感到紧张、好奇、安全、受挫或满足。',
+    english: 'Subjective feelings',
+    description: '描述玩家如何感到紧张、好奇、安全、受挫或满足，保留个体与情境差异。',
   },
   {
-    name: '客观原因',
-    english: 'Objective Reasons',
-    description: '追查规则、信息、节奏、空间与呈现如何共同造成这些感受。',
+    name: '感受诱因',
+    english: 'Eliciting factors',
+    description: '追查可能引发感受的条件与线索，区分观察、归因假设和已经取得的证据。',
   },
   {
     name: '设计杠杆',
-    english: 'Design Levers',
-    description: '找到能够被调整、组合和验证的具体设计手段。',
+    english: 'Design levers',
+    description: '找到可以调整、组合和验证的设计手段，为期望体验创造发生条件。',
   },
 ];
 
 const practiceCycle = [
   {
-    name: '感受',
+    name: '感知',
     english: 'Perception',
-    causalLayer: '情绪体验',
-    description: '先确认玩家实际经历了什么，不急于替体验下结论。',
+    causalLayer: '体验形态',
+    description: '观察已有体验，或明确期望体验的尺度与变化，不急于替玩家下结论。',
   },
   {
     name: '理解',
-    english: 'Rationalize',
+    english: 'Understanding',
     causalLayer: '主观感受',
-    description: '为感受建立可讨论的解释，区分观察、推断和假设。',
+    description: '理解玩家如何感受这段体验，以及个体、情境和预期如何影响感受。',
   },
   {
-    name: '解构',
-    english: 'Deconstruct',
-    causalLayer: '客观原因',
-    description: '把体验拆到规则、反馈、叙事、空间和表现等可检查原因。',
+    name: '归因',
+    english: 'Attribution',
+    causalLayer: '感受诱因',
+    description: '提出并检查可能引发感受的条件，不把相关关系直接当成普遍因果。',
   },
   {
     name: '重构',
-    english: 'Reconstruct',
+    english: 'Reconstruction',
     causalLayer: '设计杠杆',
-    description: '使用设计杠杆重新组织体验，并通过游玩证据继续修正。',
+    description: '选择并组合设计杠杆，通过原型与游玩证据检验、修正期望体验。',
   },
 ];
 
 const designLevers = [
   {
     name: '玩法与挑战',
-    description: '规则、目标、选择、难度、反馈和行动空间。',
+    description: '核心循环构建、手感调校与节奏控制。玩法与挑战由游戏系统支撑，游戏系统由游戏机制支撑。',
   },
   {
     name: '叙事',
-    description: '情境、角色、事件、信息安排和玩家能动性。',
+    description: '叙事建构与叙事呈现，涉及结构、内容及其表达。',
   },
   {
-    name: '美学与表现',
-    description: '视觉、声音、文字、动作和整体呈现方式。',
+    name: '美学',
+    description: '艺术方向与艺术呈现，涉及视觉、听觉等感官表达。',
   },
 ];
 
@@ -101,15 +96,16 @@ const publishedArticles = [
 ---
 
 <BaseLayout
-  title="EGDS｜情感化游戏设计系统"
-  description="从 PlayWithExperiences 的当前 PKM 模型理解 EGDS，以及它与 Learn About Games 能力地图的关系。"
+  title="EGDS｜体验型游戏设计系统"
+  description="认识 EGDS v0.3 体验型游戏设计系统：通过感知、理解、归因与重构，分析和设计游戏体验。"
 >
   <article class="egds-page">
     <header class="egds-page__intro page-shell">
-      <p class="plain-label">PlayWithExperiences 方法</p>
-      <h1>EGDS｜情感化游戏设计系统</h1>
-      <p class="lede">从玩家真实感受到的体验出发，追查它为何发生，再把理解转化为可以调整和验证的设计行动。</p>
-      <p>Digital Garden 是当前 EGDS 工作模型的主要来源。已经发布的文章保留了方法形成时的真实版本，但不反向限制现在的模型。</p>
+      <p class="plain-label">PlayWithExperiences 方法 · v0.3</p>
+      <h1>EGDS｜体验型游戏设计系统</h1>
+      <p lang="en">Experiential Game Design System</p>
+      <p class="lede">通过感知、理解、归因与重构，分析和设计游戏体验。</p>
+      <p>本文已于 2026-09-10 与 EGDS 项目核对，采用作者当前 v0.3 定义。Digital Garden 与已发布文章提供概念和案例来源，其中的旧名称保留历史语境。</p>
       <div class="egds-page__intro-actions">
         <a class="text-link" href="#current-model">阅读当前模型</a>
         <a class="text-link" href={sitePath('map/')}>在能力地图中查看</a>
@@ -118,12 +114,12 @@ const publishedArticles = [
 
     <section class="egds-page__model page-shell" id="current-model" aria-labelledby="egds-current-model-heading">
       <div class="egds-page__section-copy">
-        <h2 id="egds-current-model-heading">当前模型从体验结果追到设计原因。</h2>
-        <p>这条链不是必须照抄的制作流程。它帮助设计者从整体体验逐层缩小问题，直到找到可以修改的设计杠杆。</p>
+        <h2 id="egds-current-model-heading">四层内容，让体验有迹可循。</h2>
+        <p>分析时，从已有体验出发，理解感受并追查诱因与设计手段。设计时，从期望体验出发，推导发生条件并选择设计杠杆。四层是内容结构，不是必修的制作顺序。</p>
       </div>
       <ol class="egds-model-chain" data-egds-current-model>
         {currentModel.map((layer) => (
-          <li data-egds-emotional-curve-entry={currentModel.indexOf(layer) === 0 ? '' : undefined}>
+          <li data-egds-experience-form-entry={currentModel.indexOf(layer) === 0 ? '' : undefined}>
             <span class="egds-model-chain__index" aria-hidden="true">{String(currentModel.indexOf(layer) + 1).padStart(2, '0')}</span>
             <strong>{layer.name}</strong>
             <span lang="en">{layer.english}</span>
@@ -136,7 +132,7 @@ const publishedArticles = [
     <section class="egds-page__practice page-shell" aria-labelledby="egds-practice-heading">
       <div class="egds-page__section-copy">
         <h2 id="egds-practice-heading">把感受转成可以讨论的设计工作。</h2>
-        <p>情绪曲线是整体体验入口。感受、理解、解构与重构分别对应情绪体验、主观感受、客观原因与设计杠杆；新证据会让设计者重新回到前面的动作。</p>
+        <p>感知、理解、归因与重构是认知过程，分别对应体验形态、主观感受、感受诱因与设计杠杆四类内容。过程与内容结构需要区分，新证据可以让设计者返回前面的过程。</p>
       </div>
       <ol class="egds-practice-cycle" data-egds-practice-cycle>
         {practiceCycle.map((step) => (
@@ -156,7 +152,7 @@ const publishedArticles = [
     <section class="egds-page__levers page-shell" aria-labelledby="egds-levers-heading">
       <div class="egds-page__section-copy">
         <h2 id="egds-levers-heading">重构会同时使用多类设计杠杆。</h2>
-        <p>三类入口可以共同作用于同一段体验。它们不是互斥标签，也不代表固定的部门边界。</p>
+        <p>叙事、玩法与挑战、美学可以相互增强，共同作用于同一段体验。它们不是互斥标签，也不代表固定的部门边界；包含关系与支撑关系分别理解。</p>
       </div>
       <ul class="egds-lever-list" data-egds-levers>
         {designLevers.map((lever) => (
@@ -171,7 +167,7 @@ const publishedArticles = [
     <section class="egds-page__map-relationship page-shell" aria-labelledby="egds-map-relationship-heading">
       <div class="egds-page__section-copy">
         <h2 id="egds-map-relationship-heading">EGDS 是地图的依据，但不等于整张地图。</h2>
-        <p>Learn About Games 把作者方法延伸到生产、协作、产品与更广语境，因此需要明确三类实体各自表达什么。</p>
+        <p>本站以 EGDS v0.3 组织体验设计，并扩展到生产、协作、产品与更广语境。后四类是 Learn About Games 的能力地图扩展，不是 EGDS 核心的四层内容。</p>
       </div>
       <dl class="egds-entity-boundaries">
         <div>
@@ -193,7 +189,7 @@ const publishedArticles = [
     <section class="egds-page__history page-shell" data-egds-history aria-labelledby="egds-history-heading">
       <div class="egds-page__section-copy">
         <h2 id="egds-history-heading">已发布文章保存了方法的形成过程。</h2>
-        <p>四篇文章记录的是方法形成时的真实版本。它们帮助读者理解概念如何出现，但当前定义以 PKM 为先。</p>
+        <p>四篇文章记录的是方法形成时的真实版本。文章标题中的“情感化”与正文旧术语保留原貌；本页当前定义采用经作者项目核对的 v0.3。</p>
       </div>
       <div class="egds-history-grid">
         {publishedArticles.map((article) => (
@@ -208,15 +204,15 @@ const publishedArticles = [
 
     <section class="egds-page__current-source page-shell" aria-labelledby="egds-current-source-heading">
       <div>
-        <h2 id="egds-current-source-heading">当前模型继续在 Digital Garden 生长。</h2>
-        <p>PKM 保存更细的概念页、案例、组织笔记和仍在修订的联系。本站只提供方法入口与稳定摘要，不镜像整个知识库。</p>
+        <h2 id="egds-current-source-heading">继续阅读概念与案例来源。</h2>
+        <p>Digital Garden 保存更细的概念页、案例与仍在修订的联系，部分页面沿用历史术语。本站提供 v0.3 方法摘要与来源入口，不镜像整个知识库。</p>
       </div>
       <a class="button-link" href="https://play-with-experiences-digital-garden.vercel.app/">打开当前 EGDS Digital Garden</a>
     </section>
 
     <aside class="egds-page__boundary page-shell" aria-labelledby="egds-boundary-heading">
       <h2 id="egds-boundary-heading">使用边界</h2>
-      <p>EGDS 是 PlayWithExperiences 提出并持续修订的作者方法。它不是行业标准、资格认证、必修顺序、唯一学习路径或个人评分系统。</p>
+      <p>设计师创造的是让体验发生的场域和舞台。EGDS 是 PlayWithExperiences 提出并持续修订的作者方法，不宣称普遍效果已经验证；它不是行业标准、资格认证、必修顺序、唯一学习路径或个人评分系统。</p>
     </aside>
   </article>
 </BaseLayout>

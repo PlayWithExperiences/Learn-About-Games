@@ -3,8 +3,8 @@ import type { Catalog } from '../../src/lib/catalog/validate';
 import rawResources from '../../src/data/resources.json' with { type: 'json' };
 
 const resources = rawResources as Catalog['resources'];
-const homeMapDescription = '从 PlayWithExperiences 的 EGDS 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
-const mapDescription = '以 PlayWithExperiences 的 EGDS 作为可讨论、可修订的设计视角，理解设计如何成为结果。';
+const homeMapDescription = '从 PlayWithExperiences 的 EGDS v0.3 认识游戏设计及相邻知识的整体轮廓；它是一种可讨论的视角，不是唯一答案。';
+const mapDescription = '以 PlayWithExperiences 的 EGDS v0.3 作为可讨论、可修订的设计视角，理解设计如何成为结果。';
 const misleadingEgdsClaimPatterns = [
   /EGDS\s*(?:是|作为)\s*(?:一种|一个)?\s*行业标准/i,
   /EGDS\s*(?:是|规定|要求|提供|定义)\s*(?:一个|一种)?\s*必修顺序/i,
@@ -61,7 +61,7 @@ test('explains the map through the PlayWithExperiences EGDS framework', async ({
   await expect(page.getByRole('heading', { name: '从体验出发，理解设计如何成为结果。', exact: true })).toBeVisible();
   await expect(
     page.getByText(
-      '本地图以 PlayWithExperiences 的 EGDS 为知识骨架，结合公开资料与行业实践持续修订。它是一种可讨论的设计视角，不是唯一标准答案。',
+      '本地图以 PlayWithExperiences 的 EGDS v0.3 为知识骨架，结合公开资料与行业实践持续修订。它是一种可讨论的设计视角，不是唯一标准答案。',
       { exact: true },
     ),
   ).toBeVisible();
@@ -71,26 +71,25 @@ test('publishes the current EGDS method from PKM while preserving its article hi
   const response = await page.goto('./egds/');
 
   expect(response?.status()).toBe(200);
-  await expect(page.getByRole('heading', { name: 'EGDS｜情感化游戏设计系统', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'EGDS｜体验型游戏设计系统', exact: true })).toBeVisible();
 
   const currentModel = page.locator('[data-egds-current-model]');
-  await expect(currentModel.locator('li')).toHaveCount(5);
+  await expect(currentModel.locator('li')).toHaveCount(4);
   await expect(currentModel.locator('li')).toHaveText([
-    /情绪曲线/,
-    /情绪体验/,
+    /体验形态/,
     /主观感受/,
-    /客观原因/,
+    /感受诱因/,
     /设计杠杆/,
   ]);
 
   const practiceCycle = page.locator('[data-egds-practice-cycle]');
   await expect(practiceCycle.locator('li')).toHaveCount(4);
-  await expect(practiceCycle.locator('li')).toHaveText([/感受/, /理解/, /解构/, /重构/]);
+  await expect(practiceCycle.locator('li')).toHaveText([/感知/, /理解/, /归因/, /重构/]);
 
   await expect(page.locator('[data-egds-levers] li')).toHaveText([
     /玩法与挑战/,
     /叙事/,
-    /美学与表现/,
+    /美学/,
   ]);
 
   const history = page.locator('[data-egds-history]');
@@ -103,7 +102,7 @@ test('publishes the current EGDS method from PKM while preserving its article hi
     'href',
     'https://play-with-experiences-digital-garden.vercel.app/',
   );
-  await expect(page.getByText(/Digital Garden 是当前 EGDS 工作模型的主要来源/)).toBeVisible();
+  await expect(page.getByText(/本文已于 2026-09-10 与 EGDS 项目核对/)).toBeVisible();
   await expect(page.getByText(/四篇文章记录的是方法形成时的真实版本/)).toBeVisible();
 });
 
@@ -113,12 +112,12 @@ test('pairs each EGDS practice action with its causal layer', async ({ page }) =
   const pairs = page.locator('[data-egds-cycle-pair]');
   await expect(pairs).toHaveCount(4);
   await expect(pairs).toHaveText([
-    /感受.*情绪体验/,
+    /感知.*体验形态/,
     /理解.*主观感受/,
-    /解构.*客观原因/,
+    /归因.*感受诱因/,
     /重构.*设计杠杆/,
   ]);
-  await expect(page.locator('[data-egds-emotional-curve-entry]')).toContainText('情绪曲线');
+  await expect(page.locator('[data-egds-experience-form-entry]')).toContainText('体验曲线、体验段落、体验循环、体验瞬间');
 });
 
 test('links the EGDS method from About and the capability map without adding a fifth top task', async ({ page }, testInfo) => {
@@ -159,7 +158,7 @@ test('gives the EGDS method a compact editorial layout without page overflow', a
     expect(metrics.modelColumns).toBe(1);
     expect(metrics.cycleColumns).toBe(1);
   } else {
-    expect(metrics.modelColumns).toBe(5);
+    expect(metrics.modelColumns).toBe(4);
     expect(metrics.cycleColumns).toBe(4);
   }
 });
@@ -215,7 +214,7 @@ test('keeps the full EGDS explanation readable without JavaScript', async ({ bro
     const page = await context.newPage();
     await page.goto('./egds/');
 
-    await expect(page.locator('[data-egds-current-model] li')).toHaveCount(5);
+    await expect(page.locator('[data-egds-current-model] li')).toHaveCount(4);
     await expect(page.locator('[data-egds-practice-cycle] li')).toHaveCount(4);
     await expect(page.locator('[data-egds-history] article')).toHaveCount(4);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
@@ -259,7 +258,7 @@ test('keeps capability and topic detail routes while linking breadcrumbs to thei
   expect(topicResponse?.status()).toBe(200);
 
   const topicBreadcrumb = page.getByRole('navigation', { name: '面包屑' });
-  await expect(topicBreadcrumb.getByRole('link', { name: '感受', exact: true })).toHaveAttribute(
+  await expect(topicBreadcrumb.getByRole('link', { name: '感知', exact: true })).toHaveAttribute(
     'href',
     '/Learn-About-Games/map/#egds-perception',
   );

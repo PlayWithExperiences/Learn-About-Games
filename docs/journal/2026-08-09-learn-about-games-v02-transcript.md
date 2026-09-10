@@ -1,5 +1,10 @@
 # Learn About Games v0.2 会话记录
 
+## 2026-09-10 续接记录
+
+本历史记录不是完整会话导出。最新用户要求、跨项目确认及发布证据见 `ProjectInfo/sessions/2026-0910-egds-v03-release.md`，session `01a089f3-8f52-7861-b050-c2f32e60e435`；不把旧版术语与 Private 限制作为最新决定。
+
+
 ## 导出范围
 
 本文是当前运行时可访问范围内的脱敏部分导出，不是原始聊天 UI 的完整逐字记录。M0 的早期来源、讨论、实现与发布过程保存在 [2026-08-08-learn-about-games-transcript.md](2026-08-08-learn-about-games-transcript.md)。

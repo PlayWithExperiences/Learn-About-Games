@@ -2,6 +2,12 @@
 
 Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.md](ROADMAP.md)。
 
+## 2026-09-10 · EGDS v0.3 同步
+
+- 方法介绍、首页、About、能力地图与手感路径对照采用“体验型游戏设计系统 / Experiential Game Design System”。认知过程改为感知、理解、归因、重构；内容结构改为体验形态、主观感受、感受诱因、设计杠杆。
+- 体验形态包含曲线、段落、循环、瞬间四种尺度，不再单列旧版情绪体验层。补充分析／设计双向用途、三类杠杆与本站能力地图扩展的边界。
+- 与 EGDS 项目确认当前定义；旧文章题名和稳定深链保持历史兼容。EGDS 方法论版本不等同于本站软件版本。
+
 ## [Unreleased]
 
 - 内容目标审计已落地：当前 catalog 为 44 个 Source、5437 个 Work Item、5590 个 Access Version，规范化 canonical URL 5437/5437 唯一；新增只读 `scripts/audit-content-targets.mjs` 与 `auditAtlasRoutes()`，以事件、演进、承载作品和 Evidence 闭包确认 FPS、RPG、开放世界四条路线完整。无证据闭合的透镜继续保留为空或未闭合状态，不用时间相邻关系补边。

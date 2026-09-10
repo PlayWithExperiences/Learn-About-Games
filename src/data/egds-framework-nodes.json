@@ -3,14 +3,14 @@
     "id": "egds-root",
     "kind": "root",
     "name": { "zh-CN": "Expertise / EGDS", "en": "Expertise / EGDS" },
-    "summary": { "zh-CN": "以体验设计为核心，并连接落地、团队、产品盈利与更广语境的作者方法框架。", "en": "An authorial method framework centered on experience design and connected to delivery, teams, product and profit, and broader contexts." },
+    "summary": { "zh-CN": "以 EGDS v0.3 组织体验设计，并由本站扩展到落地、团队、产品盈利与更广语境的能力地图。", "en": "An expertise map using EGDS v0.3 for experience design, extended by this site to delivery, teams, product and profit, and broader contexts." },
     "order": 1
   },
   {
     "id": "experience-design",
     "kind": "branch",
     "name": { "zh-CN": "体验设计", "en": "Experience Design" },
-    "summary": { "zh-CN": "从体验旅程出发，确认感受、理解主观体验、解构客观原因，再选择设计杠杆重构目标体验。", "en": "Start from the experience journey, confirm perception, understand subjective experience, deconstruct objective causes, and select design levers to reconstruct the intended experience." },
+    "summary": { "zh-CN": "通过感知、理解、归因与重构，分析已有体验或设计期望体验；对应体验形态、主观感受、感受诱因与设计杠杆。", "en": "Use Perception, Understanding, Attribution, and Reconstruction to analyze existing or design intended experiences, across experience form, subjective feelings, eliciting factors, and design levers." },
     "order": 1,
     "parentNodeId": "egds-root"
   },
@@ -49,23 +49,23 @@
   {
     "id": "experience-journey",
     "kind": "entry",
-    "name": { "zh-CN": "体验旅程与情绪曲线", "en": "Experience Journey and Emotional Curve" },
-    "summary": { "zh-CN": "把游戏过程理解为多个情绪体验构成的曲线。", "en": "Understand the game process as a curve composed of multiple emotional experiences." },
+    "name": { "zh-CN": "体验形态与观察尺度", "en": "Experience Form and Observation Scales" },
+    "summary": { "zh-CN": "从体验曲线、体验段落、体验循环到体验瞬间，由整体到局部观察体验。", "en": "Observe experience from whole to part: experience curve, passage, loop, and moment." },
     "order": 1,
     "parentNodeId": "experience-design"
   },
   {
     "id": "perception",
     "kind": "stage",
-    "name": { "zh-CN": "感受", "en": "Perception" },
-    "summary": { "zh-CN": "确认某种体验确实发生。", "en": "Confirm that an experience actually occurs." },
+    "name": { "zh-CN": "感知", "en": "Perception" },
+    "summary": { "zh-CN": "感知已有体验，或明确期望体验的形态与尺度。", "en": "Perceive an existing experience, or articulate the form and scale of an intended experience." },
     "order": 2,
     "parentNodeId": "experience-design"
   },
   {
     "id": "rationalization",
     "kind": "stage",
-    "name": { "zh-CN": "理解", "en": "Rationalization" },
+    "name": { "zh-CN": "理解", "en": "Understanding" },
     "summary": { "zh-CN": "识别玩家的主观感受是什么。", "en": "Identify the player's subjective experience." },
     "order": 3,
     "parentNodeId": "experience-design"
@@ -73,8 +73,8 @@
   {
     "id": "deconstruction",
     "kind": "stage",
-    "name": { "zh-CN": "解构", "en": "Deconstruction" },
-    "summary": { "zh-CN": "理解产生体验的客观原因。", "en": "Understand the objective causes that produce the experience." },
+    "name": { "zh-CN": "归因", "en": "Attribution" },
+    "summary": { "zh-CN": "追查可能引发主观感受的诱因，区分观察、归因假设与证据。", "en": "Investigate factors that may elicit subjective feelings, distinguishing observation, attribution hypotheses, and evidence." },
     "order": 4,
     "parentNodeId": "experience-design"
   },
@@ -82,7 +82,7 @@
     "id": "reconstruction",
     "kind": "stage",
     "name": { "zh-CN": "重构", "en": "Reconstruction" },
-    "summary": { "zh-CN": "在可能性空间中选择设计杠杆，重新把目标体验传达给玩家。", "en": "Select design levers within the possibility space to communicate the intended experience to players again." },
+    "summary": { "zh-CN": "选择并组合设计杠杆，为期望体验创造发生条件，再通过游玩证据修正。", "en": "Select and combine design levers to create conditions for intended experiences, then revise through play evidence." },
     "order": 5,
     "parentNodeId": "experience-design"
   },
@@ -97,8 +97,8 @@
   {
     "id": "aesthetics-lever",
     "kind": "lever",
-    "name": { "zh-CN": "美学与表现", "en": "Aesthetics and Presentation" },
-    "summary": { "zh-CN": "以美学方向与美学表达作为实现体验目标的手段。", "en": "Use aesthetic direction and expression as means to realize experience goals." },
+    "name": { "zh-CN": "美学", "en": "Aesthetics" },
+    "summary": { "zh-CN": "通过艺术方向与艺术呈现组织视觉、听觉等表达，为期望体验创造条件。", "en": "Use artistic direction and artistic presentation across visual, auditory, and other expression to create conditions for intended experiences." },
     "order": 2,
     "parentNodeId": "reconstruction"
   },
