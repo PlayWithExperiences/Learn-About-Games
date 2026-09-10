@@ -27,3 +27,8 @@
 - 用户："这个肯定是要，就是确保按照规则正确产出才行" → 不放宽合同，特批选项否决；按规则实产。
 - 策略：10 条导出失败项已有旧 viewer 验证过的思维导图，只重做下载导出、不新生成思维导图，可合规绕墙；配额类需新建思维导图（撞墙）排后；`1wyToyTk3D0`（视频无法导入）放最后。
 - 已派 subagent（`aeae9fdb`）显式 retry 首条 `youtube-s_I07Iq_2XM`（Into the Breach，prev run-20260901153845-39506，旧 viewer 验证 81节点/4级/0折叠，卡 asset-download）：先 retry 拿新 run，再盘点三卡、补导出、上传、publish、交付；展开证明沿用历史证据＋如实标注，伪造即 fail。今日 9-10 claimed0 起计。
+
+## 9-10 14:14 第二条回执：failed @ mind-map-expansion（记录：muse-spark）
+- `youtube-s_I07Iq_2XM` retry（run-20260901153845-39506 → run-20260910135253-56675，旧失败保留 attempt_history=1）已 fail 落盘（ledger 已验）；今日 claimed1 / remaining9。证据：`runs/2026-09-10T141405+0800-breach-retry/`（report.json＋viewer-collapsed.png＋6 份 eval）。
+- 本次实证：viewer 渲染根＋7 一级分支、每分支带">"折叠标记；⋮ 菜单仅"删除"；悬浮下载 2 次点击、70s+ 落盘 0 文件。9-01 旧证据仅记历史，未伪造成本次 expansion_verification；无 publish/PicGo/交付；图片纪律遵守。
+- Viewer 改版后第二例，结论升级为系统性：contract v2"全部展开＋零折叠"在当前 viewer 下不可过；配额类/导出类重跑都会撞墙。今日剩余 9 claim 位建议保留，不再耗。
