@@ -16,18 +16,18 @@ EGDS v0.3 已公开，依赖安全修复也已部署。仓库 PUBLIC，Pages wor
 
 ## 资源生产工作段（保留原状态，独立于发布）
 
-更新于 2026-09-10 13:10:00 +0800 · 记录者 muse-spark
+更新于 2026-09-10 19:05:00 +0800 · 记录者 muse-spark
 
 ## 当前状态
 
-- 产品维持 Private refinement；本轮未改运行时代码、未推送或部署 Learn-About-Games。
-- 9-04 stale（`youtube-1hdXDgCh8rw / run-20260904044845-6015`）已收口为 `failed @ mind-map-expansion`（9-10 13:09 落盘，ledger 已验：全库 ready33 / failed26 / generating0，并发位释放）。通过项：单源隔离（52 源仅勾 #18）、中文总结＋边界已提取、信息图 PASS（2752×1536，未上传）；思维导图卡已生成但新版 viewer 无"全部展开"入口致硬门槛不过。演示文稿未建，PicGo/交付未动，无配额阻断，图片铁律遵守。
-- 系统性预警：新版思维导图 viewer（跨域 iframe canvas-app）无"全部展开"，凡需新建思维导图的生产都会撞墙；等用户定夺（特批钻取证据 / 等 viewer 恢复 / 换证明方式）后再动失败重跑队列。
-- 今早 07:32 Codex 自动化 preflight 为 ready_to_claim（2454 候选选 10 条，首条 youtube-t7VkrExQwSo，claimed0/remaining10），当时 stale 仍为 generating；该快照已被本次收口取代，并发位现已释放。
-- 用户已确认：失败的继续、没做完的继续；首条收口 9-04；笔记本复用＋选择器隔离；批次边界（剩余配额内、并发 1、重试 0）与图片铁律（单次 read 1 张）。
+- 9-04 stale（`youtube-1hdXDgCh8rw`）经 retry（run-20260904044845-6015 → run-20260910181916-43520）已 **ready＋远端交付**：inbox `2026-0910-1857-design-fundamentals.json`，远端 `a59f087` 发布＋`3ece40a` 推送，blob 回读一致。四件：总结1796＋边界586；信息图 2752×1536；思维导图本 run Expand-all（74文本/0折叠/目视4级）＋新鲜导出 3278×5937；12页 deck。PicGo 4/4 未改设置。全库 ready34 / failed25 / generating0。
+- viewer 定论已反转：等效路径存在（viewer 内 `Expand all nodes`，DOM＋目视双验），工具沉淀 `automation/browser/oopif-probe.cjs`；两例旧"无入口"结论已更正（ledger 历史不改写）。
+- 现场教训：checkbox 索引漂移（label 原子＋重查）；dlto headless 无效（~/Downloads 即时搬运）；deck 按钮曾跳新本；误建空白本 08729983 未动。
+- 今日 claimed2 / remaining8；图片铁律全程遵守；web_search 后端 402（未用外部结论）。
+- 用户授权：失败的继续、没做完的继续；按规则实产（不放宽合同）；批次边界并发 1。
 
 ## 下一步
 
-- 用户定夺 viewer 范式问题后，再执行失败重跑队列（配额类→导出类→其他，`1wyToyTk3D0` 无法导入放最后）。
-- 不自动重试历史候选或批量补交；不写 PKM、Issue 或触发 Daily Check-in。
-- 证据：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-10T130858+0800-merge-closeout/report.json；ProjectInfo/sessions/2026-0909-notebooklm-preflight-2037.md；今早 preflight：runs/2026-09-10T073213+0800/report.json。
+- 已派 `youtube-s_I07Iq_2XM` retry（prev 用最新 run-20260910135253-56675），同 recipe＋教训；回执后验 ledger＋blob。
+- 其后：其余导出失败类 → 配额类 → 其他，`1wyToyTk3D0` 放最后；不写 PKM/Issue，不触发 Daily Check-in。
+- 证据：runs/2026-09-10T182500+0800-merge-retry/report.json；ProjectInfo/sessions/2026-0909-notebooklm-preflight-2037.md。
