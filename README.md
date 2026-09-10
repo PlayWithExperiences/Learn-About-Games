@@ -42,7 +42,9 @@ npm run test:e2e
 
 ## 部署证据
 
-以下是历史发布证据，不代表当前站点仍公开可访问。
+2026-09-10 已恢复 Public 与 Pages：[run 34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功部署 `66a5e8c`。线上 EGDS v0.3 四层、28 方法节点、5437 资源与筛选已验证。
+
+以下保留历史发布证据；本次版本的部署状态以文首 GitHub Actions 与最新 Changelog 为准。
 
 v0.2 runtime commit `0b6bfb462f7b697ac526a9c6bf48a95878ed642a` 由 GitHub Pages workflow [run 31282275108](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/31282275108) 成功完成 build、Chromium E2E、artifact 与 deploy。线上复核确认 8 条关键路由均为 HTTP 200；地图为 54 个可进入节点与 64 条关系，职业方向包含 3 个画像，资源目录包含 20 个 Source 与 128 个 Work Item，Atlas 包含 27 个节点、25 条关系和 40 项 Evidence。320px 关键页面无页面级横向溢出。
 

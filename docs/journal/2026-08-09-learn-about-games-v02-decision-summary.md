@@ -6,7 +6,7 @@
 
 决策：無涘 ｜ 记录：Codex
 
-用户要求把仓库公开上线以便分享，前置条件是向 EGDS 项目确认并同步 v0.3 描述；此授权取代以下历史私有完善阶段的禁止发布约束。当前同步已经完成，公开部署仍在验收中，未取得线上成功回执。
+用户要求把仓库公开上线以便分享，前置条件是向 EGDS 项目确认并同步 v0.3 描述；此授权取代以下历史私有完善阶段的禁止发布约束。当前同步与公开部署均完成，runtime `66a5e8c` 经 [run 34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功发布；线上四条关键路由与 v0.3 内容、资源数量及筛选已通过。
 
 EGDS 项目任务 `01a0877b-836d-7910-a730-ced8db009ccc` 已确认“体验型游戏设计系统 / Experiential Game Design System”、感知／理解／归因／重构与体验形态／主观感受／感受诱因／设计杠杆；体验形态有曲线／段落／循环／瞬间四种尺度。官网本身仍私有，本站继续引用既有 Digital Garden 和博客历史文章。对应源记录为 PWE-EGDS 的 `content/SOURCES.md` 与 `ProjectInfo/roadmap.md`，不复制完整 PKM。
 

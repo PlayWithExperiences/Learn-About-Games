@@ -1039,3 +1039,8 @@ Learn 自动化 6/6、生产器 16/16、发布合同 4/4、AI-Life-Mentor 消费
 3 条均成功写入 PKM 并追加 Daily Check-in marker。全量 20 个资源 JSON 现为 20/20 PKM 正文、20/20 marker；其中 19 条与当前规范一致，Celeste 1 条是旧版正文但身份、来源和 marker 有效，按契约保留不覆盖。消费者回归 19/19 通过。
 
 原始对话：dialogues/2026-0830.md「1617 补齐历史 PKM 缺口」
+
+
+## 2026-09-10 14:45:21 +0800 · 恢复公开结果
+
+仓库 PUBLIC，Pages run [34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功，runtime `66a5e8c`。原始用户要求与答复见 ProjectInfo/dialogues/2026-0910.md「1415 （未分类）」；完整验收与边界见 ProjectInfo/sessions/2026-0910-egds-v03-release.md。

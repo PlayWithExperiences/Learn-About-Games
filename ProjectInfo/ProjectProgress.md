@@ -1,10 +1,14 @@
 # ProjectProgress
 
-更新于 2026-09-10 14:31:32 +0800 · 记录者 Codex
+更新于 2026-09-10 14:45:21 +0800 · 记录者 Codex
 
 ## 当前主工作段：EGDS v0.3 与公开分享
 
-用户已授权同步 EGDS v0.3 后恢复仓库公开与 Pages。已向 EGDS 项目确认并同步中文／英文名称、四过程、四层、四尺度和杠杆边界。206 单元测试与构建通过；全量 E2E 的 4 项旧测试问题已修正，定向 22 项通过。正在提交并恢复部署，尚未取得线上成功回执。
+已完成 EGDS v0.3 同步及公开发布。仓库 PUBLIC，Pages workflow 活跃；运行 [34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功部署 runtime `66a5e8c`。线上首页、EGDS、地图、资源页 HTTP 200；四层定义、5437 条资源和 68 条 Playtest 筛选正确，320px 无横向溢出、无脚本异常。网站：https://playwithexperiences.github.io/Learn-About-Games/
+
+云端构建完成 152 页、206 单元测试通过；Chromium 141 passed / 4 skipped。旧测试的四层断言与大目录查询已修正。后续提交只记录发布回执和文档，使用 skip-ci 避免再次部署；已验证网站 runtime 仍为 `66a5e8c`。
+
+下一步：依据真实分享反馈继续完善。既有 Dependabot 告警待单独升级；本站为静态部署，无服务端图片处理接口，不把这个边界当成依赖已修复。
 
 资源保持 5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics；地图 28 方法节点 / 42 能力 / 12 议题 / 64 关系；Atlas 84 节点 / 86 关系 / 76 Evidence。完整发布回执见 sessions/2026-0910-egds-v03-release.md。
 

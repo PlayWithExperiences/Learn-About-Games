@@ -28,3 +28,25 @@ trace-user-count: 1
 - 仅暂存本任务改动与 dialogues/2026-0910.md 中本场 1415 小节；该文件其他任务小节留在工作区，不混入本次提交。
 
 原始对话：dialogues/2026-0910.md「1415 （未分类）」
+
+## 2026-09-10 14:33:43 +0800 · 仓库公开，Pages 已启动
+
+决策：無涘 ｜ 记录：Codex
+
+- commit `66a5e8c` 已推送 main，GitHub API 回读 visibility=public。已创建 build_type=workflow 的 Pages 配置，启用 deploy.yml 并手动运行 `34445710700`。当前未声称部署完成。
+- 添加 Devlog 后实际 Astro check 0/0/0，构建 152 页。
+- 推送回执出现 10 条既有 Dependabot 告警：Astro 当前 7.2.0（修复范围最高需 7.2.8），SVGO 需 4.1.0、fast-uri 需 3.1.6。10 条包含 manifest 重复，不等于 10 个独立漏洞。本站 output=static，只上传 dist，不运行 Astro SSR／图片优化服务；没有把这一部署边界写成依赖问题已修复。依赖升级未纳入本次范围。
+
+原始对话：dialogues/2026-0910.md「1415 （未分类）」
+
+## 2026-09-10 14:45:21 +0800 · 发布成功与线上验收
+
+决策：無涘 ｜ 记录：Codex
+
+- GitHub run [34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) completed/success，部署 head `66a5e8cce9f90d9b6e215d75b064266ab70b236c`。云端 152 页，Astro 0 errors/warnings，单元测试 206 passed，Chromium 141 passed / 4 skipped。
+- 网站 https://playwithexperiences.github.io/Learn-About-Games/ 。匿名仓库 GET 200；首页、egds/、map/、resources/ 四条真实线上路由均 200。标题“EGDS｜体验型游戏设计系统”、四层顺序正确；地图 28 方法节点；资源 5437，真实操作 playtesting 筛选得到 68 条；320px EGDS 页面 overflow=0；浏览器 pageerror=[]。
+- 线上验收原始 JSON 在 `/tmp/lag-v03-online.json`，手机截图 `/tmp/lag-v03-live-mobile.png`；关键内容与计数已完整写在本节，不以临时文件存在充当验收。
+- 发布回执提交只更新仓库文档，使用 `[skip ci]`，不会把未重新部署的文档提交当成新网站 runtime。线上代码与 EGDS 页面为上方 `66a5e8c`；GitHub README/Changelog 的回执在部署后补录。
+- 保留其他 NotebookLM 工作段的未提交记录与浏览器修改；没有发布 PWE-EGDS 项目，没有新增模型调用、资源抓取或依赖下载批次。
+
+原始对话：dialogues/2026-0910.md「1415 （未分类）」

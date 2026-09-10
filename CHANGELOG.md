@@ -4,11 +4,15 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## 2026-09-10 · EGDS v0.3 同步
 
+- 仓库恢复 Public，GitHub Pages 已重新上线。Runtime `66a5e8c` 由 [run 34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功部署；云端 206 单元测试、141 Chromium 用例通过（4 项条件跳过），构建 152 页。线上四条关键路由、EGDS 四层与资源筛选已核对。
+
 - 方法介绍、首页、About、能力地图与手感路径对照采用“体验型游戏设计系统 / Experiential Game Design System”。认知过程改为感知、理解、归因、重构；内容结构改为体验形态、主观感受、感受诱因、设计杠杆。
 - 体验形态包含曲线、段落、循环、瞬间四种尺度，不再单列旧版情绪体验层。补充分析／设计双向用途、三类杠杆与本站能力地图扩展的边界。
 - 与 EGDS 项目确认当前定义；旧文章题名和稳定深链保持历史兼容。EGDS 方法论版本不等同于本站软件版本。
 
-## [Unreleased]
+## 2026-08 · 私有完善阶段记录
+
+以下按当时工作段保留，包含当时的术语与未发布状态；当前 EGDS v0.3 定义及公开分享方向见上方最新条目。
 
 - 内容目标审计已落地：当前 catalog 为 44 个 Source、5437 个 Work Item、5590 个 Access Version，规范化 canonical URL 5437/5437 唯一；新增只读 `scripts/audit-content-targets.mjs` 与 `auditAtlasRoutes()`，以事件、演进、承载作品和 Evidence 闭包确认 FPS、RPG、开放世界四条路线完整。无证据闭合的透镜继续保留为空或未闭合状态，不用时间相邻关系补边。
 - 完整收录三个官方 YouTube 频道的公开视频：GDC Festival of Gaming dump 1914 条、Game Maker's Toolkit 237 条、Masahiro Sakurai on Creating Games 英文频道 300 条；按 YouTube video id 去重后新增 2310 个 Work Item、2310 个免费英文 Access Version 和 2 个 Source。目录达到 43 个 Source、5430 个 Work Item、5583 个 Access Version。新条目不写 `whyRelevant`，因此与 `summary` 相同的比例为 0/2310（0%）；标题不足以支持细分类的 1181 条只使用 `design-fundamentals` 保守兜底。研究记录另列出仅提议频道与字幕取料边界。
