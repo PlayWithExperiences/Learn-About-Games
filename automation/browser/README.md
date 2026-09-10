@@ -44,3 +44,8 @@ node automation/browser/launch.cjs https://notebook.google.com/
 共享 skill（`.agents/skills/collect-resources-about-game`）保持客户端无关；
 本目录是 DSH 侧的运行时适配实现。换客户端时照着“启动→登录→驱动”
 三步重做适配即可，skill 正文不需要改。
+
+## 2026-09-10 补记：新版思维导图 viewer 与 oopif-probe
+- viewer 已迁入跨进程 OOPIF（`*.scf.usercontent.goog`，MindmapApp）：`Page.getFrameTree` 看不见它，须直连 `/json/list` 里 type=iframe 的独立 websocket。探针：`oopif-probe.cjs '<js>' [out]`。
+- "全部展开"入口在 viewer 内工具栏（`aria-label="Expand all nodes"`），外层卡片 ⋮ 菜单确实只有删除。开卡用卡片行内 button 的 DOM `.click()`（祖先 DIV 点击/双击无效，坐标点击易误触）。
+- viewer 内下载时好时坏，生产仍按 skill 做双路径＋字节校验。

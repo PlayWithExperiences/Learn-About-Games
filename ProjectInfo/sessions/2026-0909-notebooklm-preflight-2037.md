@@ -38,3 +38,9 @@
 - 事故：web_search 后端 402 Insufficient Balance（endpoint/余额配置问题，已如实记录，未伪造外部结论）；只做本地探针。
 - 本机进展：headless Chrome 已重起并进工作本；确认 viewer 为 scf.usercontent.goog 跨域 iframe；已写 /tmp/frame-probe.cjs（getFrameTree→createIsolatedWorld→带 contextId 求值），验证可进帧执行。卡片坐标点击 fragile（误触表情符号面板一次），改 DOM .click() 方案。
 - 已派 subagent（`a707d365`）按清单探索：开 viewer→帧内省→缩放/快捷键/右键实验→等效操作复现或穷尽证据；铁律：截图落 /tmp、单次 read 1 张、不 claim 不建卡不动选择器。待回执。
+
+## 9-10 17:50 探索回执已验：等效路径存在（记录：muse-spark）
+- 结论：viewer 内工具栏有 `Expand all nodes` 按钮，一键全展开；萌龙卡实测 DOM（svg 文本 12→74，">"→0）＋单张目视（至少 4 级，无折叠标记）双验证通过。证据 /tmp/exp-report.json、exp24-expand.json、exp28-zoomed.png。
+- 关键技术：viewer 是 OOPIF，getFrameTree 不可见，直连独立 websocket（已沉淀 `automation/browser/oopif-probe.cjs`＋README 补记）；开卡用行内 button DOM.click()。
+- 更正：两例 failed 的"无全部展开入口"不准确（只查了外层 ⋮ 菜单）——ledger 旧失败保留为历史，不改写；Merge/Breach 可凭此路径合规重跑过门槛。
+- 约束：viewer 内下载本次 stall（时好时坏，生产仍双路径＋字节校验）；另一会话正在产 Great Level Design 条目，选择器不动，队列暂冻，剩 9 claim 位保留。
