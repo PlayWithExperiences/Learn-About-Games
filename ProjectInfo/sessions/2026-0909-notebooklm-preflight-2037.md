@@ -48,3 +48,8 @@
 ## 9-10 18:05 用户说继续：现场空闲，派 Merge 重跑（记录：muse-spark）
 - 只读确认：无"正在生成/生成中"标记，无分钟级新卡，Great Level Design 摘要静置于对话区 → 判现场空闲。
 - 已派 subagent（`64674a93`）显式 retry `youtube-1hdXDgCh8rw`（prev run-20260904044845-6015）：先确认选择器无争用；复用总结＋已验证信息图；思维导图走 Expand-all 新步骤；演示文稿新建；上传/publish/交付。铁律同前。
+
+## 9-10 19:00 Merge ready＋已交付（首条产出），派 Breach（记录：muse-spark）
+- triple验：ledger ready34/failed25（`youtube-1hdXDgCh8rw` run-20260910181916-43520，history=1）；inbox `2026-0910-1857-design-fundamentals.json`（8243B）；远端 `a59f087` 发布＋`3ece40a` 合并推送。四件：总结1796＋边界586；信息图 2752×1536；思维导图本 run Expand-all（74文本/0折叠/目视4级）＋新鲜导出 3278×5937；12页 deck CRC clean。PicGo 4/4 SHA 一致未改设置。今日 claimed2/remaining8。
+- 现场教训：checkbox 索引漂移（label 原子＋重查）；dlto headless 无效（~/Downloads 即时搬运）；deck 按钮曾跳新本（重试 stayed）；误建空白本 08729983 未动留待定夺。
+- 已派 subagent（`407efe78`）显式 retry `youtube-s_I07Iq_2XM`（prev 用最新 run-20260910135253-56675）：同 recipe＋教训；先确认现场无争用。
