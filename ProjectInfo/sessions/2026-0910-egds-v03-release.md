@@ -71,3 +71,15 @@ trace-user-count: 2
 - 只提交依赖清单、锁文件与本次记录，保留其他任务的浏览器及 NotebookLM 未提交改动。
 
 原始对话：dialogues/2026-0910.md，本 session 01a089f3-8f52-7861-b050-c2f32e60e435。
+
+### 2026-09-10 16:18:01 +0800 · 安全修复发布收口（fixed）
+
+决策：無涘 ｜ 记录：Codex
+
+- 修复提交 `7a101aaf87b2274c443ac7e2a0425790d4efe8a6` 已推送，并由 [run 34453141646](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34453141646) 完成 build 与 deploy，conclusion=success。
+- GitHub 告警 #1–6、#8、#10–14 共 12 条均为 `fixed`，时间 2026-09-10T08:03:48Z/49Z；不是 dismissed。发布后开放告警再次返回 0。npm audit 全级别为 0，无目标旧版嵌套副本。此为依赖告警修复结论，不扩张为整个网站已安全审计。
+- 云端 Astro 0 errors/warnings、206 单元测试、152 页构建与 141 Chromium passed / 4 skipped 全部通过；独立复核未发现可报告的依赖兼容或遗留版本问题。
+- 线上四路由均 HTTP 200；EGDS 四层正确，地图 28 节点、资源 5437、Playtest 筛选 68；手机 overflow=0、pageErrors=[]。原始验证 JSON：/tmp/lag-security-online.json。正常页面与资源浏览行为保留，未修改业务源码或目录内容。
+- 最终文档回执使用 skip-ci，仅保存这次结果；网站 runtime 保持 `7a101aa`，不把后续文档提交当成另一次已部署版本。
+
+原始对话：dialogues/2026-0910.md，本 session 01a089f3-8f52-7861-b050-c2f32e60e435。

@@ -4,6 +4,8 @@
 
 ## 2026-09-10 当前发布工作段
 
+最新补充（2026-09-10 16:18:01 +0800）：依赖修复 `7a101aa` 已由 [run 34453141646](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34453141646) 成功部署；原 12 条 Dependabot 告警全部 fixed，开放告警及 npm audit 均为 0。以下 `66a5e8c` 为本日较早的首次恢复公开版本。
+
 决策：無涘 ｜ 记录：Codex
 
 用户要求把仓库公开上线以便分享，前置条件是向 EGDS 项目确认并同步 v0.3 描述；此授权取代以下历史私有完善阶段的禁止发布约束。当前同步与公开部署均完成，runtime `66a5e8c` 经 [run 34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功发布；线上四条关键路由与 v0.3 内容、资源数量及筛选已通过。

@@ -1,14 +1,16 @@
 # ProjectProgress
 
-更新于 2026-09-10 16:03:38 +0800 · 记录者 Codex
+更新于 2026-09-10 16:18:01 +0800 · 记录者 Codex
 
-## 当前主工作段：EGDS v0.3 与公开分享
+## 当前主工作段：EGDS v0.3 公开版与依赖安全修复
 
-已完成 EGDS v0.3 同步及公开发布。仓库 PUBLIC，Pages workflow 活跃；运行 [34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功部署 runtime `66a5e8c`。线上首页、EGDS、地图、资源页 HTTP 200；四层定义、5437 条资源和 68 条 Playtest 筛选正确，320px 无横向溢出、无脚本异常。网站：https://playwithexperiences.github.io/Learn-About-Games/
+EGDS v0.3 已公开，依赖安全修复也已部署。仓库 PUBLIC，Pages workflow 活跃；[run 34453141646](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34453141646) 成功发布 runtime `7a101aa`。网站 https://playwithexperiences.github.io/Learn-About-Games/ 。
 
-云端构建完成 152 页、206 单元测试通过；Chromium 141 passed / 4 skipped。旧测试的四层断言与大目录查询已修正。后续提交只记录发布回执和文档，使用 skip-ci 避免再次部署；已验证网站 runtime 仍为 `66a5e8c`。
+原 12 条 Dependabot 告警（7 个包）全部为 fixed，发布后再次读取开放告警为 0；完整 npm audit 为 0。Astro 7.2.8、Vitest/@vitest/mocker 4.1.11、sharp 0.35.4、svgo 4.1.0、js-yaml 4.3.2、fast-uri 3.1.7。没有用忽略、强制关闭或删依赖来隐藏告警。
 
-下一步：依据真实分享反馈继续完善。用户已要求修复依赖告警；Astro/Vitest 与受影响间接依赖已升级，安装后的 npm audit 为 0。构建、206 单元测试与正常 AVIF 转换通过；移动端六项关键回归与独立复核已通过，新版本正提交发布，待最终部署回执。
+云端 206 单元测试与 141 Chromium 用例通过（4 项条件跳过），构建 152 页；本地另有 6 项移动端关键回归和 AVIF 转换控制通过。发布后首页、EGDS、地图、资源页 HTTP 200，四层定义、28 方法节点、5437 条资源和 68 条 Playtest 筛选正常；320px 无横向溢出，无脚本异常。
+
+下一步：依据真实使用反馈继续维护。当前已识别的依赖告警已修复；这不是全站安全审计声明。后续回执提交仅更新文档，skip-ci 不改变上述已部署 runtime。
 
 资源保持 5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics；地图 28 方法节点 / 42 能力 / 12 议题 / 64 关系；Atlas 84 节点 / 86 关系 / 76 Evidence。完整发布回执见 sessions/2026-0910-egds-v03-release.md。
 

@@ -4,6 +4,8 @@ Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.m
 
 ## 2026-09-10 · 依赖安全修复
 
+- 已由 [run 34453141646](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34453141646) 部署 `7a101aa`；12 条 GitHub 依赖告警均为 fixed，开放告警为 0。云端 206 单元测试及 141 Chromium 用例通过（4 项条件跳过）；线上访问与筛选复核正常。
+
 - 升级 Astro 7.2.0 → 7.2.8、Vitest 4.1.10 → 4.1.11，并将 sharp、SVGO、js-yaml、fast-uri 及关联依赖更新到修复版本。没有忽略、降级或手动关闭安全告警。
 - 安装后的完整 `npm audit` 为 0 个已知漏洞；正常 AVIF 解码、类型检查、206 项单元测试与 152 页静态构建通过。网站内容、EGDS 定义、资源数量与公开访问方式保持不变。
 
