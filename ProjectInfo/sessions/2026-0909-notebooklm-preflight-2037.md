@@ -53,3 +53,8 @@
 - triple验：ledger ready34/failed25（`youtube-1hdXDgCh8rw` run-20260910181916-43520，history=1）；inbox `2026-0910-1857-design-fundamentals.json`（8243B）；远端 `a59f087` 发布＋`3ece40a` 合并推送。四件：总结1796＋边界586；信息图 2752×1536；思维导图本 run Expand-all（74文本/0折叠/目视4级）＋新鲜导出 3278×5937；12页 deck CRC clean。PicGo 4/4 SHA 一致未改设置。今日 claimed2/remaining8。
 - 现场教训：checkbox 索引漂移（label 原子＋重查）；dlto headless 无效（~/Downloads 即时搬运）；deck 按钮曾跳新本（重试 stayed）；误建空白本 08729983 未动留待定夺。
 - 已派 subagent（`407efe78`）显式 retry `youtube-s_I07Iq_2XM`（prev 用最新 run-20260910135253-56675）：同 recipe＋教训；先确认现场无争用。
+
+## 9-10 21:25 Breach ready＋已交付，派 Fallout4（记录：muse-spark）
+- triple验：ledger ready35/failed24（`youtube-s_I07Iq_2XM` run-20260910190705-59640，history=2）；inbox `2026-0910-2119-systems-mechanics.json`（11460B）；远端 `180ffbb` 发布＋`dfb9392` 合并推送（首推被顶、变基被他人脏改挡，改 merge，未碰他人文件）。四件：总结3178＋边界459；信息图 2752×1536 中文；思维导图复用 9-01 中文旧卡（Expand-all：162文本/0折叠/目视4级，PNG 3507×14334）；14页 deck。PicGo 4/4。今日 claimed3/remaining7。选择器恢复 52 全选。
+- 新教训（记入通道记忆）：①新建思维导图节点全英文（纯中文主题亦然，机制未明）→ 后续优先复用旧中文卡；②"列表不可见≠不存在"第二例（旧三卡被虚拟列表隐藏）→ "找不到"结论前换三种以上定位方式。
+- 已派 subagent（`d0a5cebb`）显式 retry `youtube-QBAM27YbKZg`（Fallout 4 模块化，prev run-20260830144012-99867，疑有 9 天前旧卡"开放世界模块化关卡设计指南"）：同 recipe＋新教训＋语言红线（新建全英文即 fail）。
