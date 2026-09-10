@@ -3,7 +3,7 @@
 更新于 2026-09-10 14:25:03 +0800 · 记录者 Codex
 
 session 01a089f3-8f52-7861-b050-c2f32e60e435
-trace-user-count: 1
+trace-user-count: 2
 
 ## 已确认与当前产出
 
@@ -50,3 +50,24 @@ trace-user-count: 1
 - 保留其他 NotebookLM 工作段的未提交记录与浏览器修改；没有发布 PWE-EGDS 项目，没有新增模型调用、资源抓取或依赖下载批次。
 
 原始对话：dialogues/2026-0910.md「1415 （未分类）」
+
+## 2026-09-10 16:02:23 +0800 · 修复依赖安全告警
+
+决策：無涘 ｜ 记录：Codex
+
+- 用户追问“另有现存依赖安全告警尚未修复，本次未做依赖升级。 EE这个指的是什么，该修复就修复”，已授权修复与继续发布。
+- 实时 Dependabot 12 条告警涉及 7 包。修复前 npm audit 为 7 个受影响包：1 critical / 4 high / 2 moderate；告警数与包数不同，不直接相加。
+- 两个直接版本：astro 7.2.8、vitest 4.1.11。锁定解析结果包括 @vitest/mocker 4.1.11、sharp 0.35.4、svgo 4.1.0、js-yaml 4.3.2、fast-uri 3.1.7；无需新增直接依赖、override、审计忽略或改变应用代码。变更仅 package.json / package-lock.json 与说明文档。
+- npm audit 修改前后 JSON：/tmp/lag-security-before.json、/tmp/lag-security-after.json；后者所有级别均 0。实际安装树无目标旧版副本，Node 引擎兼容项目 Node 24/25。
+- 原始边界：静态构建/dev/preview 依赖，不作为 GitHub Pages Node 服务器部署。AVIF RCE 触发条件是让工具处理不可信 AVIF；修复采用上游发布版而非自行改第三方代码。参考 https://github.com/advisories/GHSA-26w7-cxv4-gfx2 及 https://github.com/advisories/GHSA-82fw-gwwq-j7x9 。不声称重放了全部上游攻击 PoC；以受影响版本退出依赖树、实时审计清零为依赖修复证据。
+- 正常图片控制：sharp 0.35.4 / libheif 1.23.2，2×2 AVIF 编码→解码→PNG 通过。npm run build：Astro 0 errors/warnings，206 单元测试，152 页通过。移动端回归、独立补丁复核及新部署回执待收口。
+
+原始对话：dialogues/2026-0910.md，本 session 01a089f3-8f52-7861-b050-c2f32e60e435。
+
+### 2026-09-10 16:03:38 +0800 · 发布前复核通过
+
+- 移动端六项 EGDS/布局/no-JS/资源导航/学习路径回归全部通过（7.5s）；未重复执行此前已通过且内容未变的测试，完整 Chromium 发布门禁仍由 CI 执行。
+- 独立只读复核：无低于安全下限的嵌套副本；301 个已安装锁文件包逐个版本一致；变化包的 Linux x64 optional 平台依赖齐全且 Node 24 兼容。7 个原有 WASM/optional extraneous 条目版本与锁文件一致，不属于受影响旧版本，没有扩大清理范围。
+- 只提交依赖清单、锁文件与本次记录，保留其他任务的浏览器及 NotebookLM 未提交改动。
+
+原始对话：dialogues/2026-0910.md，本 session 01a089f3-8f52-7861-b050-c2f32e60e435。
