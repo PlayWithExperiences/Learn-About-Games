@@ -32,3 +32,9 @@
 - `youtube-s_I07Iq_2XM` retry（run-20260901153845-39506 → run-20260910135253-56675，旧失败保留 attempt_history=1）已 fail 落盘（ledger 已验）；今日 claimed1 / remaining9。证据：`runs/2026-09-10T141405+0800-breach-retry/`（report.json＋viewer-collapsed.png＋6 份 eval）。
 - 本次实证：viewer 渲染根＋7 一级分支、每分支带">"折叠标记；⋮ 菜单仅"删除"；悬浮下载 2 次点击、70s+ 落盘 0 文件。9-01 旧证据仅记历史，未伪造成本次 expansion_verification；无 publish/PicGo/交付；图片纪律遵守。
 - Viewer 改版后第二例，结论升级为系统性：contract v2"全部展开＋零折叠"在当前 viewer 下不可过；配额类/导出类重跑都会撞墙。今日剩余 9 claim 位建议保留，不再耗。
+
+## 9-10 16:35 新框架等效路径探索启动（记录：muse-spark）
+- 用户："如果这是 NotebookLM 整体升级，应该探索怎么在新框架下实现跟原来一样的效果" → 不等不绕，正面探索；合同不放宽。
+- 事故：web_search 后端 402 Insufficient Balance（endpoint/余额配置问题，已如实记录，未伪造外部结论）；只做本地探针。
+- 本机进展：headless Chrome 已重起并进工作本；确认 viewer 为 scf.usercontent.goog 跨域 iframe；已写 /tmp/frame-probe.cjs（getFrameTree→createIsolatedWorld→带 contextId 求值），验证可进帧执行。卡片坐标点击 fragile（误触表情符号面板一次），改 DOM .click() 方案。
+- 已派 subagent（`a707d365`）按清单探索：开 viewer→帧内省→缩放/快捷键/右键实验→等效操作复现或穷尽证据；铁律：截图落 /tmp、单次 read 1 张、不 claim 不建卡不动选择器。待回执。
