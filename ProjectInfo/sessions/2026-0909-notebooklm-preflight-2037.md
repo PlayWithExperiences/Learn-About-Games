@@ -44,3 +44,7 @@
 - 关键技术：viewer 是 OOPIF，getFrameTree 不可见，直连独立 websocket（已沉淀 `automation/browser/oopif-probe.cjs`＋README 补记）；开卡用行内 button DOM.click()。
 - 更正：两例 failed 的"无全部展开入口"不准确（只查了外层 ⋮ 菜单）——ledger 旧失败保留为历史，不改写；Merge/Breach 可凭此路径合规重跑过门槛。
 - 约束：viewer 内下载本次 stall（时好时坏，生产仍双路径＋字节校验）；另一会话正在产 Great Level Design 条目，选择器不动，队列暂冻，剩 9 claim 位保留。
+
+## 9-10 18:05 用户说继续：现场空闲，派 Merge 重跑（记录：muse-spark）
+- 只读确认：无"正在生成/生成中"标记，无分钟级新卡，Great Level Design 摘要静置于对话区 → 判现场空闲。
+- 已派 subagent（`64674a93`）显式 retry `youtube-1hdXDgCh8rw`（prev run-20260904044845-6015）：先确认选择器无争用；复用总结＋已验证信息图；思维导图走 Expand-all 新步骤；演示文稿新建；上传/publish/交付。铁律同前。
