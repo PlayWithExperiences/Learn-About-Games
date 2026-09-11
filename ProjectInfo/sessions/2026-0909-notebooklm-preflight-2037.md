@@ -74,3 +74,8 @@
 - 主会话亲测（零配额，复用 Merge 旧卡）：viewer 打开正常（MindmapApp OOPIF 存活）→ Download 点击成功 → /tmp/dlprobe 75s+ 零文件 → 浏览器随即崩溃（CDP fetch failed×3）；~/Downloads 留 `Unconfirmed 80752.crdownload` 177KB 残体（12:33）。与 QBAM 的 1.1MB stall 同签名。
 - 结论：viewer 下载即崩 headless Chrome（153.0.8010.36），与条目无关；继续烧 claim 必败。队列暂停，新 claim/重试一律停。候选出路（零配额）：Page.printToPDF 直取 OOPIF 渲染字节（绕下载链路）；headed 模式（需显示器，会弹窗口）；降级 Chrome；等 NotebookLM/Chrome 修复。
 - 诊断 registra：内存 free 约 760MB（偏紧但未 OOM）；磁盘 86%/62Gi；无 crashpad 落盘；自动化 profile 与用户 Chrome 隔离（未碰用户进程）。
+
+## 9-11 12:57 printToPDF 不可用，SVG 链路走通（记录：muse-spark）
+- `Page.printToPDF`/`captureScreenshot` 在 OOPIF 上均不可用（仅顶层 target 可执行）——此路证死。
+- 新链路走通（Merge 旧卡，零配额）：Expand-all → 帧内取 SVG＋内联 computed 样式＋getBBox viewBox → 去 15 个纯`<`/`>`导航文本（59 内容节点保留）→ 独立 Chrome 渲染 2664×4428 PNG（510KB），单张目视：整树＋中文清晰＋零折叠标记。证据 /tmp/mm-render5.png、mm-clean.svg。工具记 automation/browser/README.md。
+- 待用户点头后，用此链路（export_note 如实标注 SVG-extract＋raster）续跑 QBAM 新本 retry；信息图 viewer 同理（若 SVG/DOM 渲染）或顶层 clip＋DSF。

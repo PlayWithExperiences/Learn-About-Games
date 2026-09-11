@@ -49,3 +49,8 @@ node automation/browser/launch.cjs https://notebook.google.com/
 - viewer 已迁入跨进程 OOPIF（`*.scf.usercontent.goog`，MindmapApp）：`Page.getFrameTree` 看不见它，须直连 `/json/list` 里 type=iframe 的独立 websocket。探针：`oopif-probe.cjs '<js>' [out]`。
 - "全部展开"入口在 viewer 内工具栏（`aria-label="Expand all nodes"`），外层卡片 ⋮ 菜单确实只有删除。开卡用卡片行内 button 的 DOM `.click()`（祖先 DIV 点击/双击无效，坐标点击易误触）。
 - viewer 内下载时好时坏，生产仍按 skill 做双路径＋字节校验。
+
+## 2026-09-11 补记：SVG 导出链路（绕下载崩溃）
+- viewer 下载会崩 headless Chrome（`Unconfirmed *.crdownload` 残体为证）；`Page.printToPDF`/`captureScreenshot` 在 OOPIF 上不可用（仅顶层 target 可截图）。
+- 可用链路：oopif-probe 进帧点 Expand-all → 取 `svg` 外层 HTML＋内联 computed 关键样式（fill/color/font/stroke）＋getBBox 设 viewBox → 去仅含`<`/`>`的文本节点（导航 affordance，非内容）→ 独立 Chrome `--headless --screenshot --window-size` 渲染定宽 PNG。已验证 2664×4428 中文清晰、零折叠标记。
+- 同理可用于信息图 viewer（若其为 SVG/DOM 渲染）；纯图片 viewer 则用顶层 clip 截图＋DSF。
