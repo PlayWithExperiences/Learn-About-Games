@@ -79,3 +79,6 @@
 - `Page.printToPDF`/`captureScreenshot` 在 OOPIF 上均不可用（仅顶层 target 可执行）——此路证死。
 - 新链路走通（Merge 旧卡，零配额）：Expand-all → 帧内取 SVG＋内联 computed 样式＋getBBox viewBox → 去 15 个纯`<`/`>`导航文本（59 内容节点保留）→ 独立 Chrome 渲染 2664×4428 PNG（510KB），单张目视：整树＋中文清晰＋零折叠标记。证据 /tmp/mm-render5.png、mm-clean.svg。工具记 automation/browser/README.md。
 - 待用户点头后，用此链路（export_note 如实标注 SVG-extract＋raster）续跑 QBAM 新本 retry；信息图 viewer 同理（若 SVG/DOM 渲染）或顶层 clip＋DSF。
+
+## 9-11 13:05 用户采用 SVG 链路，派 QBAM 新本续跑（记录：muse-spark）
+- 已派 subagent（`6b37b353`）retry `youtube-QBAM27YbKZg`（prev run-20260911102250-33885）：复用来源/总结/已验证信息图；信息图＋思维导图走 SVG 链路（严禁点下载）；语言红线；publish＋交付；export_note 如实标注方法。
