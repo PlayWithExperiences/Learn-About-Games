@@ -68,3 +68,9 @@
 ## 9-10 22:45 用户授权轮换，新本已建（记录：muse-spark）
 - 轮换原因：旧本（880ad454）Chat 线程粘住 Breach 无法切换来源，新对话入口失效，逐条单源隔离不可验证；用户明确授权开新本承接剩余队列。单本复用、不逐条建本；旧本 52 源保留不动。
 - 新本：https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17（"创建笔记本" DOM 点击建成，落地 addSource 态）。
+
+## 9-11 12:35 下载通道判别探针：环境级故障实锤（记录：muse-spark）
+- QBAM 新本 fail 已验（ledger failed history=2，证据 runs/2026-09-11T111848+0800-fallout-newnb/）。
+- 主会话亲测（零配额，复用 Merge 旧卡）：viewer 打开正常（MindmapApp OOPIF 存活）→ Download 点击成功 → /tmp/dlprobe 75s+ 零文件 → 浏览器随即崩溃（CDP fetch failed×3）；~/Downloads 留 `Unconfirmed 80752.crdownload` 177KB 残体（12:33）。与 QBAM 的 1.1MB stall 同签名。
+- 结论：viewer 下载即崩 headless Chrome（153.0.8010.36），与条目无关；继续烧 claim 必败。队列暂停，新 claim/重试一律停。候选出路（零配额）：Page.printToPDF 直取 OOPIF 渲染字节（绕下载链路）；headed 模式（需显示器，会弹窗口）；降级 Chrome；等 NotebookLM/Chrome 修复。
+- 诊断 registra：内存 free 约 760MB（偏紧但未 OOM）；磁盘 86%/62Gi；无 crashpad 落盘；自动化 profile 与用户 Chrome 隔离（未碰用户进程）。
