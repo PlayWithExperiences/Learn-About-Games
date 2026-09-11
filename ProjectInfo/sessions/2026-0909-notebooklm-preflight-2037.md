@@ -93,3 +93,10 @@
 - 通道结论：viewer 下载必崩（实锤）；clip 截图链路可用（scale1/2 出字节）但 modal 会无故关闭＋Studio 虚拟列表反复吞卡（" Building" 匹配落 title、真卡靠 chip/文本枚举），坐标/行点击五次三番误触（表情面板、误建空白本 cf1899e8——未动任何来源，已离开）。
 - 下一步（续跑 recipe）：开 viewer→立即 clip（同链路零间隔，rect 现测现用，shot 先验）取信息图字节→单张目视→建思维导图（中文，语言红线）→Expand-all→SVG 链路→建 deck→上传→publish（沿用 run）→交付。浏览器若死直接重起。
 - 教训：cdp.cjs eval 抛异常即写文件崩（他人文件的已知坑，动前先包 try 返回字符串）；卡片行点击禁用坐标，统一"文本枚举→行内 button DOM.click→URL 不变"三验。
+
+## 9-12 01:45 信息图字节战：证死两条，收兵（记录：muse-spark）
+- lh3 直链：curl 56；页内 fetch 无凭证 400/1555B、有凭证 CORS "Failed to fetch"——直取证死。
+- 缓存取证：大文件为压缩数据，无 PNG 魔数（4 字节命中系偶然），证死。
+- clip 链路可用但 modal 存活窗口短（开后数十秒自关，原因未明；与 viewer 下载崩溃不同，截图本身不崩）。最佳单次：race4x 局部大图（右半 crisp 中文手绘）；native rect（g 缩放锁＋视口撑大）曾一次打出 2752×1536 但内容偏移（app 回写 transform）。
+- 现场：run-20260911205631-38417 generating（主会话持有）；新本源/总结/信息图卡俱在；mindmap/deck 未建；浏览器活着停在新本。
+- 续跑 recipe（晨起）：开 viewer→6s 内 clip（固定 rect 150,135,980,500 scale3 先验内容）→ 若 modal 配合则拼大图/调 g 锁；建思维导图（语言红线）→SVG→deck→上传→publish→交付。
