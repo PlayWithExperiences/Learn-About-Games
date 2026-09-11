@@ -86,3 +86,10 @@
 ## 9-12 00:08 上一棒异常终止，派接力（记录：muse-spark）
 - 状态：`youtube-QBAM27YbKZg` run-20260911205631-38417 仍 generating（9-11 20:56 claim）；9-12 新自然日 claimed0/10；浏览器已死。交接语"配置框已开"因浏览器死而不可靠。
 - 已派 subagent（`e57699`）沿用旧 run 接力：重起浏览器→盘点新本实际→续跑（SVG 链路、语言红线）；不新 claim 不 retry。
+
+## 9-12 01:15 主会话亲自下场：断点记录（记录：muse-spark）
+- 背景：两棒子智能体连续异常终止；run-20260911205631-38417 仍 generating（保持，不悬空无人认领——主会话接管中）。
+- 已确认银行资产（新本 2ce16a4b）：来源 1 个 Fallout；对话区有总结＋边界（9-11）；信息图卡"游戏模块化关卡设计解析"已生成，viewer 打开可见完整中文手绘（shot 存证 /tmp/lag-state.png），自然 2752×1536，lh3 直链需凭证（curl 56、页内 fetch 被 CORS 拦）。
+- 通道结论：viewer 下载必崩（实锤）；clip 截图链路可用（scale1/2 出字节）但 modal 会无故关闭＋Studio 虚拟列表反复吞卡（" Building" 匹配落 title、真卡靠 chip/文本枚举），坐标/行点击五次三番误触（表情面板、误建空白本 cf1899e8——未动任何来源，已离开）。
+- 下一步（续跑 recipe）：开 viewer→立即 clip（同链路零间隔，rect 现测现用，shot 先验）取信息图字节→单张目视→建思维导图（中文，语言红线）→Expand-all→SVG 链路→建 deck→上传→publish（沿用 run）→交付。浏览器若死直接重起。
+- 教训：cdp.cjs eval 抛异常即写文件崩（他人文件的已知坑，动前先包 try 返回字符串）；卡片行点击禁用坐标，统一"文本枚举→行内 button DOM.click→URL 不变"三验。
