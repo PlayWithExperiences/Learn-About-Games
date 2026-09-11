@@ -82,3 +82,7 @@
 
 ## 9-11 13:05 用户采用 SVG 链路，派 QBAM 新本续跑（记录：muse-spark）
 - 已派 subagent（`6b37b353`）retry `youtube-QBAM27YbKZg`（prev run-20260911102250-33885）：复用来源/总结/已验证信息图；信息图＋思维导图走 SVG 链路（严禁点下载）；语言红线；publish＋交付；export_note 如实标注方法。
+
+## 9-12 00:08 上一棒异常终止，派接力（记录：muse-spark）
+- 状态：`youtube-QBAM27YbKZg` run-20260911205631-38417 仍 generating（9-11 20:56 claim）；9-12 新自然日 claimed0/10；浏览器已死。交接语"配置框已开"因浏览器死而不可靠。
+- 已派 subagent（`e57699`）沿用旧 run 接力：重起浏览器→盘点新本实际→续跑（SVG 链路、语言红线）；不新 claim 不 retry。
