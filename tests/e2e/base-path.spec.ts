@@ -72,7 +72,7 @@ test('serves the static site and its visible internal links from the project bas
   const stylesheet = await request.get(stylesheetHref);
   expect(stylesheet.status(), stylesheetHref).toBe(200);
 
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   const atlasDetailHrefs = await page.locator('[data-atlas-node-link], [data-atlas-relation-link]').evaluateAll((links) =>
     links.map((link) => link.getAttribute('href')),
   );

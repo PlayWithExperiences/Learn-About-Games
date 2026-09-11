@@ -1,9 +1,9 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
-const atlasUrl = 'http://127.0.0.1:4321/Learn-About-Games/atlas/';
-const ATLAS_NODE_COUNT = 84;
+const atlasUrl = 'http://127.0.0.1:4321/Learn-About-Games/atlas/network/';
+const ATLAS_NODE_COUNT = 96;
 const ATLAS_RELATION_COUNT = 86;
-const ATLAS_WORK_PRIMARY_NODE_COUNT = 57;
+const ATLAS_WORK_PRIMARY_NODE_COUNT = 69;
 const ATLAS_CATEGORY_PRIMARY_NODE_COUNT = 27;
 const ATLAS_EVENT_PRIMARY_NODE_COUNT = 25;
 const ATLAS_PRIMARY_RELATION_COUNTS = {
@@ -13,7 +13,7 @@ const ATLAS_PRIMARY_RELATION_COUNTS = {
 } as const;
 const ATLAS_EVENT_COUNT = 25;
 const ATLAS_EVOLUTION_RELATION_COUNT = 20;
-const ATLAS_EVIDENCE_COUNT = 76;
+const ATLAS_EVIDENCE_COUNT = 78;
 const ATLAS_THEME_BUTTON_COUNT = 26;
 const ATLAS_THEME_ID_COUNT = 11;
 const ATLAS_SCOPE_NOTE_COUNT = 14;
@@ -140,11 +140,12 @@ test('reaches the global Innovation Atlas through shared navigation', async ({ p
 
   await expect(page).toHaveURL(/\/Learn-About-Games\/atlas\/$/);
   await expect(page.getByRole('heading', { name: 'Game Innovation Atlas', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: '打开精确年份坐标与完整证据网络' }).click();
   await expect(page.getByText('创新事件与承载作品时间网络', { exact: false })).toBeVisible();
 });
 
 test('server renders one fixed global event-and-carrier time network', async ({ page }, testInfo) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const network = page.locator('[data-atlas-global-network]');
   const nodes = network.locator('[data-atlas-node]');
@@ -162,13 +163,13 @@ test('server renders one fixed global event-and-carrier time network', async ({ 
   }
   expect(new Set(await entityIds(nodes)).size).toBe(ATLAS_NODE_COUNT);
   expect(new Set(await entityIds(relations)).size).toBe(ATLAS_RELATION_COUNT);
-  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(50);
+  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(61);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(ATLAS_EVENT_COUNT);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="category"]')).toHaveCount(2);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-apparatus"]')).toHaveCount(1);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-program"]')).toHaveCount(1);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="system-prototype"]')).toHaveCount(1);
-  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="commercial-hardware"]')).toHaveCount(4);
+  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="commercial-hardware"]')).toHaveCount(5);
 
   const nodeGeometry = await nodes.evaluateAll((elements) =>
     elements.map((element) => ({
@@ -234,7 +235,7 @@ test('server renders one fixed global event-and-carrier time network', async ({ 
 });
 
 test('renders innovation events as first-class details and preserves them in theme emphasis', async ({ page }, testInfo) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   await expect(page.locator('[data-atlas-event-index]')).toHaveCount(1);
   await expect(page.locator('[data-atlas-event-index] article')).toHaveCount(0);
@@ -277,7 +278,7 @@ test('renders innovation events as first-class details and preserves them in the
 
 test('view controls provide bounded zoom, fit, center anchoring, reset and map-mode wheel zoom', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop viewport controls are tested once.');
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const controls = page.locator('[data-atlas-view-controls]');
   const fit = controls.getByRole('button', { name: '适应全图' });
@@ -387,7 +388,7 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and map-m
 test('keeps Atlas desktop controls independent from the wider EGDS map breakpoint', async ({ page }) => {
   for (const width of [320, 1150]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto('./atlas/');
+    await page.goto('./atlas/network/');
     await expect(page.locator('[data-atlas-view-controls]'), `${width}px controls`).toBeHidden();
     await expect(page.locator('[data-atlas-canvas]'), `${width}px canvas`).toBeHidden();
     await expect(page.locator('[data-atlas-scroll-note]'), `${width}px scroll note`).toBeHidden();
@@ -404,7 +405,7 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
 
   for (const width of [1200, 1151, 1227, 1228]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto('./atlas/');
+    await page.goto('./atlas/network/');
     const controls = page.locator('[data-atlas-view-controls]');
     const viewport = page.locator('[data-atlas-canvas]');
     await expect(controls, `${width}px controls`).toBeVisible();
@@ -456,7 +457,7 @@ test('keeps Atlas desktop controls independent from the wider EGDS map breakpoin
 test('ordinary wheel scrolls the page outside map mode and zooms continuously inside it', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop wheel ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   await page.getByRole('button', { name: '适应全图' }).click();
 
   const viewport = page.locator('[data-atlas-canvas]');
@@ -496,7 +497,7 @@ test('ordinary wheel scrolls the page outside map mode and zooms continuously in
 test('map mode occupies the visual viewport, locks the page and restores scroll and focus on exit', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const network = page.locator('[data-atlas-global-network]');
   const viewport = page.locator('[data-atlas-canvas]');
@@ -577,7 +578,7 @@ test('map mode occupies the visual viewport, locks the page and restores scroll 
 
 test('Atlas bootstrap keeps one controller owner when its compiled module runs again', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Controller ownership is tested once.');
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   const explorer = page.locator('[data-atlas-explorer]');
 
   await page.evaluate(async () => {
@@ -607,7 +608,7 @@ test('Atlas bootstrap keeps one controller owner when its compiled module runs a
 test('family directory and fullscreen theme controls stay synchronized and keyboard-accessible without changing map state', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Fullscreen lens ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const explorer = page.locator('[data-atlas-explorer]');
   const network = page.locator('[data-atlas-global-network]');
@@ -685,7 +686,7 @@ test('family directory and fullscreen theme controls stay synchronized and keybo
 test('cross-Family lineages activate directly and fullscreen uses a compact lens strip', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop family and fullscreen behavior is tested once.');
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const directory = page.locator('[data-atlas-family-directory]');
   const rolePlaying = directory.locator('[data-atlas-family="role-playing"]');
@@ -719,7 +720,7 @@ test('cross-Family lineages activate directly and fullscreen uses a compact lens
 });
 
 test('genre lenses promote innovation events and keep carrier games in reversible detail', async ({ page }, testInfo) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   await openAtlasFamily(page, 'shooter');
   await visibleThemeButton(page, 'first-person-shooter-lineage').click();
 
@@ -758,7 +759,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
 test('Atlas offers representative-work, event-history, and category-development map perspectives', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'The two map perspectives are tested once at a desktop viewport.');
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   await openAtlasFamily(page, 'shooter');
   await page.locator('[data-atlas-map-mode]').click();
   const noLensNetwork = page.locator('[data-atlas-global-network][data-map-mode="true"]');
@@ -775,7 +776,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   const perspectives = network.locator('[data-atlas-perspective-controls]');
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
-  await expect(page.locator('[data-atlas-lens-status]')).toContainText('代表作品视角：显示 57 个作品/载体节点与 38 条关系');
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText('代表作品视角：显示 69 个作品/载体节点与 38 条关系');
   await expect(perspectives.locator('[data-atlas-perspective="works"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_WORK_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
@@ -849,7 +850,7 @@ test('Atlas offers representative-work, event-history, and category-development 
 });
 
 test('a genre without event evidence shows an honest empty state', async ({ page }, testInfo) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   await page.locator('[data-atlas-foundation-lens] [data-atlas-theme-button="early-electronic-games"]').click();
 
   await expect(page.locator('[data-atlas-primary-network]')).toBeVisible();
@@ -865,7 +866,7 @@ test('a genre without event evidence shows an honest empty state', async ({ page
 });
 
 test('new Strategy lineage and empty Genre Families expose honest status', async ({ page }) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   const strategy = page.locator('[data-atlas-family="strategy"]');
   await expect(strategy.locator('summary')).toContainText('1 条已核查谱系');
   await strategy.locator('summary').click();
@@ -888,7 +889,7 @@ test('fullscreen lens strip does not cover the map controls or canvas', async ({
 
   for (const width of [1151, 1200, 1440]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto('./atlas/');
+    await page.goto('./atlas/network/');
     await page.locator('[data-atlas-map-mode]').click();
 
     const overlap = await page.evaluate(() => {
@@ -915,7 +916,7 @@ test('fullscreen lens strip does not cover the map controls or canvas', async ({
 test('fullscreen detail evidence temporarily releases the page and resumes the same map context', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop fullscreen detail return is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const network = page.locator('[data-atlas-global-network]');
   const viewport = page.locator('[data-atlas-canvas]');
@@ -953,7 +954,7 @@ test('fullscreen detail evidence temporarily releases the page and resumes the s
 test('fit follows viewport resizing until manual zoom or reset takes ownership', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Fit resize ownership is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   const stage = page.locator('[data-atlas-stage]');
   await page.getByRole('button', { name: '适应全图' }).click();
   const initialFit = Number(await stage.getAttribute('data-scale'));
@@ -974,7 +975,7 @@ test('fit follows viewport resizing until manual zoom or reset takes ownership',
 test('lost pointer capture clears drag state without waiting for pointerup', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Pointer capture cleanup is tested once.');
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   const viewport = page.locator('[data-atlas-canvas]');
   await page.locator('[data-atlas-map-mode]').click();
   await viewport.scrollIntoViewIfNeeded();
@@ -990,7 +991,7 @@ test('lost pointer capture clears drag state without waiting for pointerup', asy
 
 test('pan inputs preserve graph identity, interactive targets and dialog return positions', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop pan and detail flow are tested once.');
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
   await openAtlasFamily(page, 'action');
   await visibleThemeButton(page, 'metroidvania').click();
 
@@ -1056,7 +1057,7 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
 
 test('theme controls only change emphasis without changing graph identity or geometry', async ({ page }) => {
   await page.setViewportSize({ width: 1200, height: 800 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const buttons = page.locator('[data-atlas-theme-button]');
   const viewport = page.locator('[data-atlas-canvas]');
@@ -1138,7 +1139,7 @@ test('non-matching desktop edges keep neutral direction semantics and 3:1 contra
   test.skip(testInfo.project.name !== 'chromium', 'Desktop edge styling is tested once.');
 
   for (const appearance of ['light', 'dark']) {
-    await page.goto('./atlas/');
+    await page.goto('./atlas/network/');
     await page.getByLabel('外观').selectOption(appearance);
     await openAtlasFamily(page, 'action');
     await visibleThemeButton(page, 'metroidvania').click();
@@ -1174,7 +1175,7 @@ test('mobile relation references participate in theme emphasis with readable non
   await page.setViewportSize({ width: 320, height: 760 });
 
   for (const appearance of ['light', 'dark']) {
-    await page.goto('./atlas/');
+    await page.goto('./atlas/network/');
     await page.getByLabel('外观').selectOption(appearance);
     await openAtlasFamily(page, 'action');
     await visibleThemeButton(page, 'metroidvania').click();
@@ -1193,7 +1194,7 @@ test('mobile relation references participate in theme emphasis with readable non
 
 test('relation geometry preserves endpoints, arrows and an undirected structural comparison', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop geometry is tested once.');
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const network = page.locator('[data-atlas-global-network]');
   const nodes = await network.locator('[data-atlas-node]').evaluateAll((elements) =>
@@ -1266,7 +1267,7 @@ test('relation geometry preserves endpoints, arrows and an undirected structural
 
 test('selected detail dialog preserves the network position and returns focus to its origin', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop detail flow is tested once.');
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const nodeLink = page.locator('[data-atlas-node-id="dead-cells"][data-atlas-node] [data-atlas-node-link]');
   await nodeLink.scrollIntoViewIfNeeded();
@@ -1319,7 +1320,7 @@ test('selected detail dialog preserves the network position and returns focus to
 });
 
 test('renders the Evidence index and keeps node and relation references reachable', async ({ page }) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const index = page.locator('[data-atlas-evidence-index]');
   const rows = index.locator('[data-atlas-evidence-row]');
@@ -1341,7 +1342,7 @@ test('renders the Evidence index and keeps node and relation references reachabl
 });
 
 test('node index searches bilingual metadata, sorts locally and preserves the fixed graph', async ({ page }) => {
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   const index = page.locator('[data-atlas-node-index]');
   const search = index.getByRole('searchbox', { name: '搜索节点' });
@@ -1442,7 +1443,7 @@ test('search and theme emphasis keep context text readable in both themes and re
   for (const colorScheme of ['light', 'dark'] as const) {
     await page.emulateMedia({ colorScheme });
     await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto('./atlas/');
+    await page.goto('./atlas/network/');
     await page.locator('[data-atlas-node-search]').fill('法定系列续作');
     await openAtlasFamily(page, 'action');
     await visibleThemeButton(page, 'metroidvania').click();
@@ -1473,7 +1474,7 @@ test('search and theme emphasis keep context text readable in both themes and re
 test('mobile uses a relation-equivalent era outline without horizontal overflow', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-chromium', 'Mobile outline is tested once.');
   await page.setViewportSize({ width: 320, height: 760 });
-  await page.goto('./atlas/');
+  await page.goto('./atlas/network/');
 
   await expect(page.locator('[data-atlas-canvas]')).toBeHidden();
   await expect(page.locator('[data-atlas-view-controls]')).toHaveCount(1);

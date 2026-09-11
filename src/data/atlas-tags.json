@@ -218,5 +218,29 @@
     "id": "open-world-lineage",
     "name": { "zh-CN": "开放世界发展谱系", "en": "Open-world development lineage" },
     "summary": { "zh-CN": "追踪大尺度连接空间、非线性目标、系统规则与玩家自定路线的有证据设计事件。" }
+  },
+  {
+    "id": "simulation-history",
+    "name": {
+      "zh-CN": "模拟与玩家自定目标"
+    }, "summary": {"zh-CN":"用于历史阅读分组，不生成直接影响关系。"}
+  },
+  {
+    "id": "social-worlds-history",
+    "name": {
+      "zh-CN": "持续在线世界"
+    }, "summary": {"zh-CN":"用于历史阅读分组，不生成直接影响关系。"}
+  },
+  {
+    "id": "puzzle-history",
+    "name": {
+      "zh-CN": "规则与空间解谜"
+    }, "summary": {"zh-CN":"用于历史阅读分组，不生成直接影响关系。"}
+  },
+  {
+    "id": "physical-play-history",
+    "name": {
+      "zh-CN": "体育与身体输入"
+    }, "summary": {"zh-CN":"用于历史阅读分组，不生成直接影响关系。"}
   }
 ]

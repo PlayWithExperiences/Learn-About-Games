@@ -1,0 +1,974 @@
+---
+import type { Catalog } from '../lib/catalog/validate';
+import { sitePath } from '../lib/site-path';
+import {
+  historyEras,
+  historyTracks,
+  historyRoutes,
+  trackFor,
+  historyKindLabels,
+  historyRelationLabels,
+  historyStatusLabels,
+} from '../lib/innovation-history';
+interface Props {
+  catalog: Catalog;
+}
+const { catalog } = Astro.props;
+const nodes = [...catalog.atlasNodes].sort(
+  (a, b) => a.startYear - b.startYear || a.id.localeCompare(b.id),
+);
+const nodeById = new Map(nodes.map((n) => [n.id, n]));
+const evidenceById = new Map(catalog.atlasEvidence.map((e) => [e.id, e]));
+const payload = JSON.stringify({
+  nodes,
+  relations: catalog.atlasRelations,
+}).replaceAll('<', '\\u003c');
+const edgesFor = (id: string) =>
+  catalog.atlasRelations.filter((r) => r.fromId === id || r.toId === id);
+const cellNodes = (track: string, start: number, end: number) =>
+  nodes.filter(
+    (n) => trackFor(n) === track && n.startYear >= start && n.startYear <= end,
+  );
+
+---
+<section class="history" data-history data-history-network={sitePath('atlas/network/')} aria-label="游戏创新历史地图">
+  <header class="history-intro">
+    <div><p class="plain-label">游戏史 · 机制 · 品类交汇</p><h1>Game Innovation Atlas</h1><p class="history-lede">看见游戏如何一路变化。</p></div>
+    <p class="history-scope">{nodes[0].startYear}—{nodes.at(-1)?.startYear} · {nodes.length} 个历史对象<br/>横读年代，纵览不同发展脉络。点选一个作品或创新，追踪它的关系与来源。</p>
+  </header>
+
+  <nav class="history-readings" aria-label="历史阅读线索">
+    <div class="history-readings__label">从一个问题开始<span>比较阅读，非必经路线</span></div>
+    {historyRoutes.map((route,i)=><button type="button" data-history-route={route.id} aria-pressed="false" disabled><span>0{i+1}</span>{route.title}<span aria-hidden="true">↗</span></button>)}
+  </nav>
+  <div class="history-toolbar">
+    <label class="history-search">查找游戏或机制<input type="search" data-history-search placeholder="例如：Rogue、自由、空间…" disabled /></label>
+    <label>发展脉络<select data-history-track disabled><option value="">全部脉络</option>{historyTracks.map(t=><option value={t.id}>{t.title}</option>)}</select></label>
+    <button type="button" data-history-reset disabled>回到总览</button>
+    <a href="#history-catalog">年代目录 ↓</a>
+  </div>
+  <div class="history-search-results" data-history-results hidden aria-label="匹配对象"></div>
+  <p class="history-status" data-history-status role="status">全图 {nodes.length} 个历史对象 · {catalog.atlasRelations.length} 条关系。选择后显示相邻连线，全部对象保留原位。</p>
+  <div class="history-workspace">
+    <div class="history-chart-section">
+      <div class="history-chart-note"><span>■ 作品 / 历史对象　◆ 创新观察　▱ 类别形成</span><span>按年代分列；列内按年份排序，间距不代表时长</span></div>
+      <div class="history-scroll" tabindex="0" aria-label="历史总览，窄屏可左右滚动" data-history-scroll>
+        <div class="history-matrix" data-history-matrix>
+          <div class="history-axis"><span>发展脉络 / 年代</span>{historyEras.map(era=><div><strong>{era.label}</strong><small>{era.title}</small></div>)}</div>
+          {historyTracks.map(track=><div class="history-track" data-history-row={track.id}>
+            <div class="history-track-title"><strong>{track.title}</strong><small>{track.subtitle}</small></div>
+            {historyEras.map(era=><div class="history-cell">
+              {cellNodes(track.id,era.start,era.end).map(node=><a href={`#atlas-node-detail-${node.id}`} class:list={['history-node',`history-node--${node.kind}`]} data-history-node={node.id} data-history-node-track={track.id} aria-label={`${node.startYear} ${node.name['zh-CN']}，${historyKindLabels[node.kind]}`}>
+                <time>{node.startYear}{node.endYear ? `–${node.endYear}` : ''}</time><span>{node.name['zh-CN']}</span>
+              </a>)}
+            </div>)}
+          </div>)}
+          <svg class="history-connections" data-history-connections aria-hidden="true"><defs><marker id="history-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" /></marker></defs><g data-history-lines></g></svg>
+        </div>
+      </div>
+      <p class="history-footnote">分区是阅读位置，不是排他品类。跨界作品只放一次，通过关系与标签连接其他脉络。空白表示当前未收录，不代表当时没有创新。</p>
+    </div>
+    <aside class="history-inspector" data-history-inspector aria-labelledby="history-inspector-title" tabindex="-1">
+      <div class="history-inspector-head"><span class="plain-label">上下文与证据</span><button type="button" data-history-close hidden>关闭</button></div>
+      <div data-history-inspector-content>
+        <h2 id="history-inspector-title">先看全貌，再追踪变化</h2>
+        <p>选择地图中的任一对象，这里会显示它做了什么、关系指向哪里，以及来源实际支持什么。</p>
+        <div class="history-reading-guide"><strong>如何读这张图</strong><p>横向比较同一脉络在不同时期的变化；纵向比较同一时期的不同尝试。</p><p>点选后，实线表示有向关系，虚线表示相似或推断等关系。具体类型、方向与证据状态在这里展开。</p></div>
+        <p class="history-coverage">当前是选择性历史：欧美与日本材料较多；格斗、竞速、节奏、移动与中国游戏史仍需补充。2020s 目前仅收录 Hades，不能据此判断近年的发展。</p>
+      </div>
+    </aside>
+  </div>
+  <noscript><p>当前为静态总览。下面的年代目录包含全部对象、关系与来源；启用 JavaScript 后可搜索和在图旁追踪关系。</p></noscript>
+
+  <p class="history-coverage-note">当前是选择性历史，非完整游戏史。格斗、竞速、节奏、移动与中国游戏史仍需扩充；2020s 目前仅有 Hades 相关条目。</p>
+  <section class="history-catalog" id="history-catalog" aria-labelledby="history-catalog-title">
+    <header><div><p class="plain-label">可追溯的历史对象</p><h2 id="history-catalog-title">年代目录与原始来源</h2></div><a href={sitePath('atlas/network/')}>打开精确年份坐标与完整证据网络 ↗</a></header>
+    <p>创新观察的年份指向本图讨论的具体实例，不宣称该机制在这一年首次出现。新增博物馆年表条目只补作品锚点，未据此生成影响连线。</p>
+    {historyEras.map(era=><details class="history-era" data-history-era>
+      <summary>{era.label} <span>{era.title}</span><small>{nodes.filter(n=>n.startYear>=era.start&&n.startYear<=era.end).length} 个对象</small></summary>
+      {nodes.filter(n=>n.startYear>=era.start&&n.startYear<=era.end).map(node=>(<details class="history-entry" id={`atlas-node-detail-${node.id}`} data-history-entry={node.id}>
+          <summary><time>{node.startYear}</time> {node.name['zh-CN']} <small>{historyKindLabels[node.kind]}</small></summary>
+          <div data-history-entry-body>
+            <p class="plain-label">{node.startYear}{node.endYear?`–${node.endYear}`:''} · {historyKindLabels[node.kind]}</p>
+            <h2>{node.name['zh-CN']}</h2>
+            {node.name.en && node.name.en!==node.name['zh-CN'] && <p lang="en">{node.name.en}</p>}
+            <p>{node.summary['zh-CN']}</p>
+            {node.kind === 'innovation' && <p>此日期标记本图讨论的实例，不是该机制最早出现的年份。</p>}
+            {node.mechanism && <p><strong>机制变化：</strong>{node.mechanism['zh-CN']}</p>}
+            <p class="history-tags">{node.tags.map(id=>catalog.atlasTags.find(t=>t.id===id)?.name['zh-CN']??id).join(' · ')}</p>
+            <h3>关系 · {edgesFor(node.id).length}</h3>
+            {!edgesFor(node.id).length && <p>当前未收录与该对象相连的关系。来源支持作品锚点，尚不能证明它影响了其他作品。</p>}
+            {edgesFor(node.id).map(edge=>{
+              const from=nodeById.get(edge.fromId)!;const to=nodeById.get(edge.toId)!;
+              return <article class="history-relation">
+                <p class="history-relation-type">{historyRelationLabels[edge.type]} · {historyStatusLabels[edge.status]}{edge.relationRole==='carrier'?' · 作品承载':edge.relationRole==='evolution'?' · 机制演变':''}</p>
+                <p><a href={`#atlas-node-detail-${from.id}`} data-history-jump={from.id}>{from.name['zh-CN']}</a> {edge.directionality==='directed'?'→':'↔'} <a href={`#atlas-node-detail-${to.id}`} data-history-jump={to.id}>{to.name['zh-CN']}</a></p>
+                <p>{edge.summary['zh-CN']}</p>
+                {edge.directionalityNote&&<p>{edge.directionalityNote['zh-CN']}</p>}
+                {edge.chronologyExplanation&&<p>{edge.chronologyExplanation['zh-CN']}</p>}
+                <ul class="history-source-links">{edge.evidenceIds.map(id=>{const e=evidenceById.get(id)!;return <li><a href={e.url} target="_blank" rel="noreferrer">{e.sourceTitle} ↗</a><small>{e.boundedClaim['zh-CN']}</small></li>})}</ul>
+              </article>
+            })}
+            <h3>对象来源</h3>
+            <ul class="history-source-links">{node.evidenceIds.map(id=>{const e=evidenceById.get(id)!;return <li><a href={e.url} target="_blank" rel="noreferrer">{e.sourceTitle} ↗</a><small>{e.institutionOrAuthor} · {e.originalLanguage} · 核查 {e.checkedAt}</small><p>{e.boundedClaim['zh-CN']}</p></li>})}</ul>
+          </div>
+        </details>
+      ))}
+    </details>)}
+  </section>
+  <script type="application/json" is:inline data-history-data set:html={payload} />
+</section>
+
+<script>
+import type { Catalog } from '../lib/catalog/validate';
+import { historyRoutes, historyNeighborhood } from '../lib/innovation-history';
+const root = document.querySelector<HTMLElement>('[data-history]');
+if (root) {
+  const data = JSON.parse(
+    root.querySelector('[data-history-data]')!.textContent!,
+  ) as { nodes: Catalog['atlasNodes']; relations: Catalog['atlasRelations'] };
+  const links = Array.from(
+    root.querySelectorAll<HTMLAnchorElement>('[data-history-node]'),
+  );
+  const search = root.querySelector<HTMLInputElement>('[data-history-search]')!;
+  const track = root.querySelector<HTMLSelectElement>('[data-history-track]')!;
+  const results = root.querySelector<HTMLElement>('[data-history-results]')!;
+  const status = root.querySelector<HTMLElement>('[data-history-status]')!;
+  const inspector = root.querySelector<HTMLElement>(
+    '[data-history-inspector]',
+  )!;
+  const content = root.querySelector<HTMLElement>(
+    '[data-history-inspector-content]',
+  )!;
+  const initial = content.innerHTML;
+  const close = root.querySelector<HTMLButtonElement>('[data-history-close]')!;
+  const matrix = root.querySelector<HTMLElement>('[data-history-matrix]')!;
+  const svg = root.querySelector<SVGSVGElement>('[data-history-connections]')!;
+  const lines = root.querySelector<SVGGElement>('[data-history-lines]')!;
+  const byId = new Map(data.nodes.map((n) => [n.id, n]));
+  const linkById = new Map(links.map((n) => [n.dataset.historyNode!, n]));
+  let selected = '';
+  let routeId = '';
+  let origin: HTMLElement | null = null;
+  root
+    .querySelectorAll<HTMLButtonElement | HTMLInputElement | HTMLSelectElement>(
+      '[disabled]',
+    )
+    .forEach((el) => (el.disabled = false));
+  const normalize = (s: string) => s.normalize('NFKC').toLocaleLowerCase();
+  function draw() {
+    lines.replaceChildren();
+    const route = historyRoutes.find((r) => r.id === routeId);
+    const activeEdges = selected
+      ? historyNeighborhood(selected, data.relations).edges
+      : route
+        ? data.relations.filter(
+            (r) => route.ids.includes(r.fromId) && route.ids.includes(r.toId),
+          )
+        : [];
+    if (!activeEdges.length) return;
+    const bounds = matrix.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+    for (const edge of activeEdges) {
+      const a = linkById.get(edge.fromId)!.getBoundingClientRect();
+      const b = linkById.get(edge.toId)!.getBoundingClientRect();
+      const forward = b.left >= a.left;
+      const x1 = (forward ? a.right : a.left) - bounds.left;
+      const y1 = a.top + a.height / 2 - bounds.top;
+      const x2 = (forward ? b.left : b.right) - bounds.left;
+      const y2 = b.top + b.height / 2 - bounds.top;
+      const bend = Math.max(28, Math.abs(x2 - x1) * 0.35) * (forward ? 1 : -1);
+      const path = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'path',
+      );
+      path.setAttribute(
+        'd',
+        `M${x1},${y1} C${x1 + bend},${y1} ${x2 - bend},${y2} ${x2},${y2}`,
+      );
+      path.dataset.historyEdge = edge.id;
+      if (edge.directionality === 'directed')
+        path.setAttribute('marker-end', 'url(#history-arrow)');
+      if (
+        edge.directionality === 'undirected' ||
+        edge.status === 'inferred' ||
+        edge.status === 'disputed'
+      )
+        path.setAttribute('stroke-dasharray', '5 4');
+      lines.append(path);
+    }
+  }
+  function emphasize() {
+    const route = historyRoutes.find((r) => r.id === routeId);
+    const neighborhood = selected
+      ? historyNeighborhood(selected, data.relations)
+      : null;
+    const q = normalize(search.value.trim());
+    let matches = 0;
+    results.replaceChildren();
+    results.hidden = !q && !track.value;
+    for (const link of links) {
+      const n = byId.get(link.dataset.historyNode!)!;
+      const match =
+        (!q ||
+          normalize(
+            [n.name['zh-CN'], n.name.en, n.summary['zh-CN'], ...n.tags].join(
+              ' ',
+            ),
+          ).includes(q)) &&
+        (!track.value || link.dataset.historyNodeTrack === track.value) &&
+        (!route || route.ids.includes(n.id)) &&
+        (!neighborhood || neighborhood.nodeIds.has(n.id));
+      link.dataset.emphasis = match ? 'true' : 'false';
+      if (n.id === selected) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+      if (match) {
+        matches++;
+        if (!results.hidden) {
+          const a = document.createElement('a');
+          a.href = link.href;
+          a.dataset.historyJump = n.id;
+          a.textContent = `${n.startYear} · ${n.name['zh-CN']}`;
+          results.append(a);
+        }
+      }
+    }
+    status.textContent = selected
+      ? `${byId.get(selected)!.name['zh-CN']} · ${neighborhood!.edges.length} 条相邻关系。点击关系端点继续追踪。`
+      : route
+        ? `${route.title} · ${matches} 个比较对象，全部历史对象保留原位。`
+        : q || track.value
+          ? `${matches} 个匹配对象 / 全图 ${data.nodes.length} 个；未匹配项保留原位。`
+          : `全图 ${data.nodes.length} 个历史对象 · ${data.relations.length} 条关系。选择后显示相邻连线，全部对象保留原位。`;
+    root!
+      .querySelectorAll<HTMLButtonElement>('[data-history-route]')
+      .forEach((b) =>
+        b.setAttribute(
+          'aria-pressed',
+          String(b.dataset.historyRoute === routeId),
+        ),
+      );
+    draw();
+  }
+  function select(id: string, changeUrl = true, focus = true) {
+    if (!byId.has(id)) return;
+    selected = id;
+    routeId = '';
+    search.value = '';
+    track.value = '';
+    root!.dataset.inspect = 'true';
+    const entry = document.getElementById(`atlas-node-detail-${id}`)!;
+    content.innerHTML = entry.querySelector(
+      '[data-history-entry-body]',
+    )!.innerHTML;
+    content.querySelector('h2')!.id = 'history-inspector-title';
+    close.hidden = false;
+    emphasize();
+    linkById
+      .get(id)
+      ?.scrollIntoView({
+        block: 'center',
+        inline: 'nearest',
+        behavior: 'instant',
+      });
+    root!
+      .querySelector<HTMLElement>('[data-history-scroll]')!
+      .scrollIntoView({ block: 'start', behavior: 'instant' });
+    inspector.scrollTop = 0;
+    if (changeUrl) history.pushState(null, '', `#atlas-node-detail-${id}`);
+    if (focus) inspector.focus({ preventScroll: true });
+  }
+  function reset(changeUrl = true) {
+    selected = '';
+    routeId = '';
+    search.value = '';
+    track.value = '';
+    content.innerHTML = initial;
+    close.hidden = true;
+    delete root!.dataset.inspect;
+    if (changeUrl && location.hash.startsWith('#atlas-node-detail-'))
+      history.pushState(null, '', location.pathname + location.search);
+    emphasize();
+  }
+  root.addEventListener('click', (event) => {
+    const target = (event.target as Element).closest<HTMLElement>(
+      '[data-history-node],[data-history-jump],[data-history-route],[data-history-reset],[data-history-close]',
+    );
+    if (!target) return;
+    if (
+      target.hasAttribute('data-history-node') ||
+      target.hasAttribute('data-history-jump')
+    ) {
+      if (
+        event instanceof MouseEvent &&
+        (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+      )
+        return;
+      event.preventDefault();
+      origin =
+        linkById.get(
+          target.dataset.historyNode ?? target.dataset.historyJump!,
+        ) ?? target;
+      select(target.dataset.historyNode ?? target.dataset.historyJump!);
+    } else if (target.hasAttribute('data-history-route')) {
+      const id = target.dataset.historyRoute!;
+      reset();
+      routeId = id;
+      origin = target;
+      const route = historyRoutes.find((r) => r.id === id)!;
+      content.replaceChildren();
+      const title = document.createElement('h2');
+      title.id = 'history-inspector-title';
+      title.textContent = route.title;
+      const p = document.createElement('p');
+      p.textContent = route.text;
+      content.append(title, p);
+      for (const nodeId of [...route.ids].sort(
+        (a, b) => byId.get(a)!.startYear - byId.get(b)!.startYear,
+      )) {
+        const n = byId.get(nodeId)!;
+        const a = document.createElement('a');
+        a.href = `#atlas-node-detail-${nodeId}`;
+        a.dataset.historyJump = nodeId;
+        a.className = 'history-route-stop';
+        a.textContent = `${n.startYear} · ${n.name['zh-CN']}`;
+        content.append(a);
+      }
+      close.hidden = false;
+      root!.dataset.inspect = 'true';
+      emphasize();
+      linkById
+        .get(route.ids[0])
+        ?.scrollIntoView({
+          block: 'center',
+          inline: 'nearest',
+          behavior: 'instant',
+        });
+      inspector.focus({ preventScroll: true });
+      inspector.scrollTop = 0;
+    } else {
+      reset();
+      origin?.focus({ preventScroll: true });
+    }
+  });
+  for (const input of [search, track])
+    input.addEventListener('input', () => {
+      selected = '';
+      routeId = '';
+      content.innerHTML = initial;
+      close.hidden = true;
+      delete root!.dataset.inspect;
+      if (location.hash.startsWith('#atlas-node-detail-'))
+        history.replaceState(null, '', location.pathname + location.search);
+      emphasize();
+    });
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      reset();
+      origin?.focus({ preventScroll: true });
+    }
+  });
+  function restore() {
+    if (
+      location.hash.startsWith('#atlas-relation-detail-') ||
+      location.hash.startsWith('#atlas-evidence-')
+    ) {
+      location.replace(root!.dataset.historyNetwork! + location.hash);
+      return;
+    }
+    const id = decodeURIComponent(
+      location.hash.slice(1).replace(/^atlas-node-detail-/, ''),
+    );
+    if (byId.has(id)) select(id, false, false);
+    else reset(false);
+  }
+  window.addEventListener('popstate', restore);
+  window.addEventListener('hashchange', restore);
+  new ResizeObserver(draw).observe(matrix);
+  restore();
+}
+</script>
+
+<style>
+.history {
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 1.5rem clamp(16px, 3vw, 48px) 4rem;
+}
+.history-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 1.3rem;
+}
+.history-intro h1 {
+  font-size: clamp(26px, 2.8vw, 40px);
+  max-width: none;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  margin: 0.4rem 0 0.8rem;
+}
+.history-lede {
+  font-size: clamp(18px, 2vw, 26px);
+  margin: 0;
+}
+.history-scope {
+  max-width: 360px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+}
+.history-readings {
+  display: grid;
+  grid-template-columns: 180px repeat(3, 1fr);
+  border-block: 1px solid var(--line);
+  margin-bottom: 1.25rem;
+}
+.history-readings__label {
+  padding: 1rem 0;
+  font-weight: 650;
+}
+.history-readings__label span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 5px;
+}
+.history-readings button {
+  background: none;
+  color: var(--ink);
+  border: 0;
+  border-left: 1px solid var(--line);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+}
+.history-readings button > span:first-child {
+  color: var(--muted);
+  font-size: 11px;
+}
+.history-readings button:hover,
+.history-readings button[aria-pressed='true'] {
+  background: var(--surface-strong);
+}
+.history-toolbar {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.history-toolbar label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 12px;
+  color: var(--muted);
+}
+.history-search {
+  flex: 1;
+  max-width: 410px;
+  min-width: 190px;
+}
+.history-toolbar input,
+.history-toolbar select {
+  width: 100%;
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 9px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+}
+.history-toolbar button,
+.history-inspector-head button {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 9px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.history-toolbar > a {
+  font-size: 13px;
+  padding: 10px 0;
+  margin-left: auto;
+}
+.history-status {
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 1.6em;
+  margin: 1rem 0;
+}
+.history-workspace {
+  display: block;
+}
+.history-chart-section {
+  min-width: 0;
+}
+.history-chart-note {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 0.65rem;
+}
+.history-scroll {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--page);
+  max-height: 74vh;
+  scrollbar-gutter: stable;
+}
+.history-matrix {
+  min-width: 1100px;
+  position: relative;
+  isolation: isolate;
+}
+.history-axis,
+.history-track {
+  display: grid;
+  grid-template-columns: 140px repeat(7, minmax(0, 1fr));
+}
+.history-axis {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: var(--surface-strong);
+  border-bottom: 1px solid var(--line);
+}
+.history-axis > div {
+  padding: 13px 8px;
+  border-left: 1px solid var(--line);
+}
+.history-axis > span {
+  padding: 15px 10px;
+  font-size: 11px;
+  position: sticky;
+  left: 0;
+  background: var(--surface-strong);
+  z-index: 2;
+}
+.history-axis strong {
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.history-axis small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 5px;
+}
+.history-track {
+  border-bottom: 1px solid var(--line);
+}
+.history-track:last-of-type {
+  border: 0;
+}
+.history-track-title {
+  padding: 18px 10px;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--surface);
+}
+.history-track-title strong {
+  font-size: 13px;
+}
+.history-track-title small {
+  display: block;
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 7px;
+  color: var(--muted);
+}
+.history-cell {
+  border-left: 1px solid var(--line);
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 85px;
+}
+.history-node {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 4px;
+  padding: 5px 4px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 11px;
+  line-height: 1.4;
+  position: relative;
+  z-index: 2;
+  background: var(--page);
+  overflow-wrap: anywhere;
+}
+.history-node time {
+  font-size: 9px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.75;
+}
+.history-node--innovation {
+  border-left: 2px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0;
+}
+.history-node--innovation span:before {
+  content: '◆ ';
+  font-size: 8px;
+  color: var(--accent);
+}
+.history-node--category {
+  border-bottom: 1px dashed var(--muted);
+}
+.history-node:hover,
+.history-node[aria-current] {
+  border: 1px solid var(--accent);
+  background: var(--surface-strong);
+  color: var(--accent-strong);
+}
+.history-node[data-emphasis='false'] {
+  color: var(--muted);
+  background: var(--page);
+  border-color: transparent;
+}
+.history-node[data-emphasis='true'] {
+  box-shadow: inset 0 -1px var(--line);
+}
+.history-node[aria-current] {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.history-connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  color: var(--accent);
+}
+.history-connections :global(g > path) {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.7;
+  opacity: 0.8;
+}
+.history-footnote {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.history-inspector {
+  display: none;
+}
+.history-inspector-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.history-inspector-head button {
+  font-size: 12px;
+  padding: 5px 9px;
+}
+.history-inspector h2,
+.history-inspector :global(h2) {
+  font-size: 22px;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0 1rem;
+}
+.history-inspector p,
+.history-inspector :global(p) {
+  font-size: 13px;
+  line-height: 1.85;
+}
+.history-inspector :global(h3) {
+  font-size: 14px;
+  margin-top: 1.5rem;
+}
+.history-reading-guide {
+  border-block: 1px solid var(--line);
+  margin: 1.5rem 0;
+  padding: 1rem 0;
+  font-size: 13px;
+}
+.history-coverage {
+  color: var(--muted);
+}
+.history-catalog {
+  margin-top: 3rem;
+}
+.history-catalog > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.history-catalog h2 {
+  font-size: 24px;
+  margin: 0.3rem 0;
+}
+.history-catalog > p {
+  font-size: 13px;
+  color: var(--muted);
+}
+.history-catalog > header a {
+  font-size: 13px;
+}
+.history-era {
+  border-top: 1px solid var(--line);
+}
+.history-era > summary {
+  padding: 1rem 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+.history-era > summary span {
+  font-size: 14px;
+  margin-left: 1rem;
+}
+.history-era > summary small {
+  font-size: 12px;
+  color: var(--muted);
+  float: right;
+}
+.history-entry {
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 1rem;
+}
+.history-entry > summary {
+  cursor: pointer;
+  font-size: 14px;
+}
+.history-entry > summary time {
+  color: var(--muted);
+  margin-right: 1rem;
+}
+.history-entry > summary small {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: 1rem;
+}
+.history-entry [data-history-entry-body] {
+  max-width: 760px;
+  padding: 1rem;
+}
+.history-relation,
+.history-inspector :global(.history-relation) {
+  border-top: 1px solid var(--line);
+  padding: 0.7rem 0;
+}
+.history-relation-type,
+.history-inspector :global(.history-relation-type) {
+  color: var(--muted);
+  font-size: 11px !important;
+}
+.history-tags,
+.history-inspector :global(.history-tags) {
+  color: var(--muted);
+  font-size: 11px !important;
+}
+.history-source-links,
+.history-inspector :global(.history-source-links) {
+  list-style: none;
+  padding: 0;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.history-source-links li,
+.history-inspector :global(.history-source-links li) {
+  margin: 0.7rem 0;
+}
+.history-source-links small,
+.history-inspector :global(.history-source-links small) {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+  margin-top: 0.35rem;
+}
+.history-inspector :global(.history-route-stop) {
+  display: block;
+  border-top: 1px solid var(--line);
+  padding: 0.8rem 0;
+  font-size: 13px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (min-width: 1550px) {
+  .history-workspace {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+  .history-matrix {
+    min-width: 1100px;
+  }
+}
+@media (max-width: 1100px) {
+  .history-workspace {
+    grid-template-columns: minmax(0, 1fr) 270px;
+  }
+  .history-readings {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .history-readings__label {
+    grid-column: 1/-1;
+    padding: 0.5rem 0;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .history-readings__label span {
+    margin: 0;
+  }
+  .history-readings button:first-of-type {
+    border-left: 0;
+  }
+}
+@media (max-width: 900px) {
+  .history-workspace {
+    grid-template-columns: 1fr;
+  }
+  .history-inspector {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .history-intro {
+    display: block;
+  }
+  .history-scope {
+    margin-top: 1rem;
+    max-width: none;
+  }
+  .history-readings {
+    display: flex;
+    flex-direction: column;
+  }
+  .history-readings button {
+    border: 0;
+    border-top: 1px solid var(--line);
+    padding: 0.8rem 0;
+  }
+  .history-toolbar > a {
+    margin: 0;
+  }
+  .history-scroll {
+    max-height: 65vh;
+  }
+  .history-catalog > header {
+    display: block;
+  }
+  .history-catalog > header > a {
+    display: inline-block;
+    margin-top: 1rem;
+  }
+  .history-era > summary {
+    font-size: 17px;
+  }
+  .history-era > summary span {
+    font-size: 12px;
+  }
+  .history-entry {
+    padding: 0.7rem 0;
+  }
+  .history-entry [data-history-entry-body] {
+    padding: 0.7rem 0;
+  }
+  .history-intro h1 {
+    font-size: 30px;
+  }
+}
+.history-search-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  max-height: 160px;
+  overflow: auto;
+  margin-top: 0.75rem;
+  font-size: 12px;
+}
+.history-search-results[hidden] {
+  display: none;
+}
+.history-node:not(.history-node--innovation):not(.history-node--category)
+  span::before {
+  content: '▪ ';
+  font-size: 9px;
+}
+.history-node--category span::before {
+  content: '▱ ';
+  font-size: 9px;
+}
+.history[data-inspect='true'] .history-inspector {
+  display: block;
+  position: fixed;
+  z-index: 20;
+  right: 24px;
+  bottom: 24px;
+  top: auto;
+  width: 370px;
+  max-width: calc(100% - 32px);
+  max-height: 65vh;
+  padding: 16px 20px;
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  box-shadow: 0 6px 28px #0003;
+  overflow: auto;
+}
+.history-inspector-head {
+  position: sticky;
+  top: -16px;
+  background: var(--page);
+  z-index: 1;
+  padding: 8px 0;
+}
+.history-coverage-note {
+  font-size: 12px;
+  color: var(--muted);
+  max-width: 900px;
+  line-height: 1.8;
+}
+@media (max-width: 900px) {
+  .history[data-inspect='true'] .history-inspector {
+    right: 16px;
+    bottom: 16px;
+    max-height: 45vh;
+  }
+  .history-intro h1 {
+    font-size: 30px;
+  }
+  .history-scroll {
+    max-height: 62vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+</style>

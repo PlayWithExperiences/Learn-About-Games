@@ -1,5 +1,10 @@
 # Learn About Games v0.2 会话记录
 
+## 2026-09-12 Innovation Map 重做
+
+更新于 2026-09-12 · 记录者 Codex。用户授权重做游戏史与创新发展的整体表达。新入口、数据范围、验证与未完成史料缺口，以 `ProjectInfo/sessions/2026-0912-innovation-history.md` 为当前接力记录；原始用户回合见 `ProjectInfo/dialogues/2026-0912.md`。以下保留历史，不作为本轮 UI 合同。
+
+
 ## 2026-09-10 续接记录
 
 本历史记录不是完整会话导出。最新用户要求、跨项目确认及发布证据见 `ProjectInfo/sessions/2026-0910-egds-v03-release.md`，session `01a089f3-8f52-7861-b050-c2f32e60e435`；不把旧版术语与 Private 限制作为最新决定。

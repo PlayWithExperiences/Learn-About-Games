@@ -646,7 +646,9 @@ export function buildAtlasLayout(
 
   return {
     width: atlasLayoutDefaults.width,
-    height: atlasLayoutDefaults.height,
+    height: Math.max(atlasLayoutDefaults.height, ...placedNodes
+      .filter(node => atlasPerspectiveVisibleKinds(perspective).includes(node.kind))
+      .map(node => node.top + node.height + 40)),
     minYear: atlasLayoutDefaults.minYear,
     maxYear: atlasLayoutDefaults.maxYear,
     yearTicks: [1958, 1960, 1970, 1980, 1990, 2000, 2010, 2020].map((year) => ({

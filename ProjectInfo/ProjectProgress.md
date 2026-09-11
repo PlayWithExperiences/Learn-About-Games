@@ -1,18 +1,20 @@
 # ProjectProgress
 
-更新于 2026-09-10 16:18:01 +0800 · 记录者 Codex
+更新于 2026-09-12 02:29:34 +0800 · 记录者 Codex
 
-## 当前主工作段：EGDS v0.3 公开版与依赖安全修复
+## 当前主工作段：Innovation Map 历史总览重做
 
-EGDS v0.3 已公开，依赖安全修复也已部署。仓库 PUBLIC，Pages workflow 活跃；[run 34453141646](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34453141646) 成功发布 runtime `7a101aa`。网站 https://playwithexperiences.github.io/Learn-About-Games/ 。
+用户授权重做游戏史与创新发展的整体表达。`/atlas/` 现以九个阅读区域与年代分列共显作品、机制观察和类别形成；三个比较问题入口、搜索、相邻关系与浮动来源面板支持继续追踪。精确年份网络保留于 `/atlas/network/`，与新入口消费同一份 catalog。
 
-原 12 条 Dependabot 告警（7 个包）全部为 fixed，发布后再次读取开放告警为 0；完整 npm audit 为 0。Astro 7.2.8、Vitest/@vitest/mocker 4.1.11、sharp 0.35.4、svgo 4.1.0、js-yaml 4.3.2、fast-uri 3.1.7。没有用忽略、强制关闭或删依赖来隐藏告警。
+数据：96 历史对象 / 86 关系 / 78 Evidence。新增 12 个对象来自 CHM 与 The Strong 本轮读取的年表条目，未新增影响边；原有证据核查日期保持原值。新页面明确年代列间距不是时长、观察年份不是首次发明，并公开格斗、竞速、节奏、移动、中国游戏史与 2020s 覆盖缺口。
 
-云端 206 单元测试与 141 Chromium 用例通过（4 项条件跳过），构建 152 页；本地另有 6 项移动端关键回归和 AVIF 转换控制通过。发布后首页、EGDS、地图、资源页 HTTP 200，四层定义、28 方法节点、5437 条资源和 68 条 Playtest 筛选正常；320px 无横向溢出，无脚本异常。
+当前为本地候选，预览 http://127.0.0.1:4321/Learn-About-Games/atlas/ 。本轮尚未推送或部署：开始时本地 main 领先 origin/main 15 个其他任务提交，另有其他任务未提交修改，不将它们一起发布。本轮按文件范围单独提交。
 
-下一步：依据真实使用反馈继续维护。当前已识别的依赖告警已修复；这不是全站安全审计声明。后续回执提交仅更新文档，skip-ci 不改变上述已部署 runtime。
+验证：209 单元测试、类型检查 0/0/0、154 页 fresh build 通过。最终新版桌面/手机 18/18 通过，含旧深链、键盘、无脚本与实际遮挡断言。全站 Chromium 为 149 passed / 4 skipped / 1 failed；唯一 README 旧数量失败修复内容后定向 1/1 通过，已通过的无关检查未重复运行。完整回执见 sessions/2026-0912-innovation-history.md。
 
-资源保持 5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics；地图 28 方法节点 / 42 能力 / 12 议题 / 64 关系；Atlas 84 节点 / 86 关系 / 76 Evidence。完整发布回执见 sessions/2026-0910-egds-v03-release.md。
+下一步：先评审本地新版。公开发布需从本轮提交中隔离相关改动，或在其他任务确认后整合现有未推送历史；不强推、不改写其他任务历史。内容继续按缺口做有界史料扩展；新增批量检索与付费调用仍需明确确认。
+
+EGDS 与资源生产未在本轮改动。上次已验证的发布仍以 sessions/2026-0910-egds-v03-release.md 为准（runtime `7a101aa`）；本轮没有把历史上线证据当作新版部署证明。资源目录 5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics。
 
 ## 资源生产工作段（保留原状态，独立于发布）
 

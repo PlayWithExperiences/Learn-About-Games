@@ -846,5 +846,233 @@
   "themeIds": ["open-world-lineage"],
   "mechanism": { "zh-CN": "用统一的物理与地形规则扩展玩家可到达的路径和解题方式。" },
   "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
-}
+},
+  {
+    "id": "mule",
+    "kind": "game",
+    "name": {
+      "zh-CN": "M.U.L.E.",
+      "en": "M.U.L.E."
+    },
+    "summary": {
+      "zh-CN": "殖民地资源竞争中的多人互动。"
+    },
+    "startYear": 1983,
+    "lane": 7,
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "strong-games-overview"
+    ]
+  },
+  {
+    "id": "tetris",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Tetris",
+      "en": "Tetris"
+    },
+    "summary": {
+      "zh-CN": "以拼块规则构成益智挑战。"
+    },
+    "startYear": 1984,
+    "lane": 7,
+    "tags": [
+      "puzzle-history"
+    ],
+    "evidenceIds": [
+      "strong-games-overview"
+    ]
+  },
+  {
+    "id": "john-madden-football",
+    "kind": "game",
+    "name": {
+      "zh-CN": "John Madden Football",
+      "en": "John Madden Football"
+    },
+    "summary": {
+      "zh-CN": "将美式橄榄球的拟真追求带入电脑游戏。"
+    },
+    "startYear": 1988,
+    "lane": 7,
+    "tags": [
+      "physical-play-history"
+    ],
+    "evidenceIds": [
+      "strong-games-overview"
+    ]
+  },
+  {
+    "id": "myst",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Myst",
+      "en": "Myst"
+    },
+    "summary": {
+      "zh-CN": "通过线索与谜题探索岛屿。"
+    },
+    "startYear": 1993,
+    "lane": 7,
+    "tags": [
+      "puzzle-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "grand-theft-auto",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Grand Theft Auto",
+      "en": "Grand Theft Auto"
+    },
+    "summary": {
+      "zh-CN": "城市中的自由行动与任务并存。"
+    },
+    "startYear": 1997,
+    "lane": 7,
+    "tags": [
+      "open-world-lineage"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "everquest",
+    "kind": "game",
+    "name": {
+      "zh-CN": "EverQuest",
+      "en": "EverQuest"
+    },
+    "summary": {
+      "zh-CN": "多人在线的奇幻角色扮演。"
+    },
+    "startYear": 1999,
+    "lane": 7,
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "the-sims",
+    "kind": "game",
+    "name": {
+      "zh-CN": "The Sims",
+      "en": "The Sims"
+    },
+    "summary": {
+      "zh-CN": "居所、工作和人际关系成为自由游玩的内容。"
+    },
+    "startYear": 2000,
+    "lane": 7,
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "eve-online",
+    "kind": "game",
+    "name": {
+      "zh-CN": "EVE Online",
+      "en": "EVE Online"
+    },
+    "summary": {
+      "zh-CN": "玩家结盟；技能在离线期间仍随时间成长。"
+    },
+    "startYear": 2003,
+    "lane": 7,
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "world-of-warcraft",
+    "kind": "game",
+    "name": {
+      "zh-CN": "World of Warcraft",
+      "en": "World of Warcraft"
+    },
+    "summary": {
+      "zh-CN": "公会与团队任务组织在线社交。"
+    },
+    "startYear": 2004,
+    "lane": 7,
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "nintendo-wii",
+    "kind": "commercial-hardware",
+    "name": {
+      "zh-CN": "Nintendo Wii",
+      "en": "Nintendo Wii"
+    },
+    "summary": {
+      "zh-CN": "体感控制让身体动作成为输入。"
+    },
+    "startYear": 2006,
+    "lane": 7,
+    "tags": [
+      "physical-play-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "portal",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Portal",
+      "en": "Portal"
+    },
+    "summary": {
+      "zh-CN": "以传送门装置解决空间谜题。"
+    },
+    "startYear": 2007,
+    "lane": 7,
+    "tags": [
+      "puzzle-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  },
+  {
+    "id": "minecraft",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Minecraft（早期公开版）",
+      "en": "Minecraft（早期公开版）"
+    },
+    "summary": {
+      "zh-CN": "建造与生存、创造模式。2009 标记早期公开版，不是 1.0 正式发行。"
+    },
+    "startYear": 2009,
+    "lane": 7,
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "chm-games-overview"
+    ]
+  }
 ]

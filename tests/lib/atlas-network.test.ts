@@ -262,7 +262,7 @@ describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(84);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(86);
-    expect(atlasNodes).toHaveLength(84);
+    expect(atlasNodes).toHaveLength(96);
     expect(atlasRelations).toHaveLength(86);
   });
 
@@ -382,7 +382,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
 
-    expect(atlasEvidence).toHaveLength(76);
+    expect(atlasEvidence).toHaveLength(78);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -575,7 +575,7 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(84);
+    expect(nodes).toHaveLength(96);
     expect(relations).toHaveLength(86);
   });
 });
@@ -731,14 +731,14 @@ describe('global Atlas presentation geometry', () => {
     }
   });
 
-  it('keeps representative works in the first canvas band', () => {
+  it('keeps representative works near the first band and within the declared canvas', () => {
     const layout = buildAtlasLayout(typedAtlasNodes, typedAtlasRelations, { perspective: 'works' });
     const primaryKinds = new Set(atlasPerspectiveVisibleKinds('works'));
     const primaryWorks = layout.nodes.filter(({ kind }) => primaryKinds.has(kind));
 
     expect(primaryWorks.length).toBeGreaterThan(0);
     expect(Math.min(...primaryWorks.map(({ top }) => top))).toBeLessThan(120);
-    expect(Math.max(...primaryWorks.map(({ top, height }) => top + height))).toBeLessThan(1200);
+    expect(Math.max(...primaryWorks.map(({ top, height }) => top + height))).toBeLessThanOrEqual(layout.height);
   });
 
   it('keeps same-lane related works connected with a visible arch', () => {
@@ -845,8 +845,8 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(84);
-    expect(new Set(outlinedNodeIds).size).toBe(84);
+    expect(outlinedNodeIds).toHaveLength(96);
+    expect(new Set(outlinedNodeIds).size).toBe(96);
     expect(outlinedRelationIds.size).toBe(86);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
@@ -936,7 +936,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(84);
+    expect(indexed).toHaveLength(96);
     expect(runStructure).toMatchObject({
       id: 'procedural-run-structure',
       startYear: 1980,

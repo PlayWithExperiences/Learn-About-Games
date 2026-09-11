@@ -954,5 +954,45 @@
   "boundedClaim": {
     "zh-CN": "支持 Warcraft 作为资源、基地与直接单位控制机制的后续承载作品；不把两作描述为完全相同。"
   }
-}
+},
+  {
+    "id": "chm-games-overview",
+    "sourceTitle": "Graphics & Games | Timeline of Computer History",
+    "originalLanguage": "en",
+    "title": {
+      "zh-CN": "Graphics & Games | Timeline of Computer History",
+      "en": "Graphics & Games | Timeline of Computer History"
+    },
+    "url": "https://www.computerhistory.org/timeline/graphics-games/",
+    "summary": {
+      "zh-CN": "支持 Myst、GTA、EverQuest、The Sims、EVE Online、World of Warcraft、Wii、Portal 与 Minecraft 的年表条目。Minecraft 的 2009 为早期公开版本；不支持这些作品之间的直接影响。"
+    },
+    "sourceKind": "institutional-history",
+    "institutionOrAuthor": "Computer History Museum",
+    "checkedAt": "2026-09-12",
+    "locator": "Named game entries under their listed years",
+    "boundedClaim": {
+      "zh-CN": "支持 Myst、GTA、EverQuest、The Sims、EVE Online、World of Warcraft、Wii、Portal 与 Minecraft 的年表条目。Minecraft 的 2009 为早期公开版本；不支持这些作品之间的直接影响。"
+    }
+  },
+  {
+    "id": "strong-games-overview",
+    "sourceTitle": "Video Game History Timeline",
+    "originalLanguage": "en",
+    "title": {
+      "zh-CN": "Video Game History Timeline",
+      "en": "Video Game History Timeline"
+    },
+    "url": "https://www.museumofplay.org/video-game-history-timeline/",
+    "summary": {
+      "zh-CN": "1980年代条目支持 M.U.L.E.（1983）、Tetris（1984）与 John Madden Football（1988）。只引用对应作品，不沿用年表中其他作品的地区混合日期。"
+    },
+    "sourceKind": "institutional-history",
+    "institutionOrAuthor": "The Strong National Museum of Play",
+    "checkedAt": "2026-09-12",
+    "locator": "Named game entries under their listed years",
+    "boundedClaim": {
+      "zh-CN": "1980年代条目支持 M.U.L.E.（1983）、Tetris（1984）与 John Madden Football（1988）。只引用对应作品，不沿用年表中其他作品的地区混合日期。"
+    }
+  }
 ]
