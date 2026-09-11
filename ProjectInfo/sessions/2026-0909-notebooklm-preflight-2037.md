@@ -64,3 +64,7 @@
 - salvage：对话历史无 Fallout 总结（仅 XCOM＋Breach 拒文）；旧三卡三定位法确认缺失。QBAM 需新总结＋三件全新建，但 Chat 线程粘 Breach（新请求被拒，pill/menu/新对话入口均失效）→ 本子内无法合规开工，非单条问题。
 - 复用面速查（loaded DOM）：Heaven/Vault、Sunless、Saints Row、Deus Ex、League 有 mentions；Titanfall/Horizon/Celeste 无。mentions≠总结，具体 salvage 留待逐条 retry 时深查。
 - 下一步需用户定夺：A 磨旧本 Chat 换源（低概率，不耗 claim 但烧时间）；B 轮换新本（单本承接剩余队列，需明确授权＋记录原因，复用策略变更）。
+
+## 9-10 22:45 用户授权轮换，新本已建（记录：muse-spark）
+- 轮换原因：旧本（880ad454）Chat 线程粘住 Breach 无法切换来源，新对话入口失效，逐条单源隔离不可验证；用户明确授权开新本承接剩余队列。单本复用、不逐条建本；旧本 52 源保留不动。
+- 新本：https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17（"创建笔记本" DOM 点击建成，落地 addSource 态）。
