@@ -408,3 +408,5 @@
 ## 2026-09-12：整理并上线
 
 决策：無涘（本轮明确要求整理上线）｜记录：Codex，2026-09-12 12:01:19 +0800。审核后发布现有已提交的项目内容与 Innovation Atlas；保留未提交工作，沿用已验证 runtime 的本地结果，由云端再次完成构建与 Chromium gate，再检查线上内容。
+
+发布回执（2026-09-12 12:30:16 +0800）：决策：無涘｜记录：Codex。Innovation Atlas runtime `1daa942` 已由 [run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872) 上线，云端及公开页面验证通过。NotebookLM生产状态继续独立保留，不由网站上线推断完成。

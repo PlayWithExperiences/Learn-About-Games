@@ -2,6 +2,8 @@
 
 ## 2026-09-12 Innovation Map 重做
 
+发布补充（2026-09-12 12:30:16 +0800，记录Codex）：用户要求整理上线，runtime `1daa942` 已由 [run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872) 成功部署。209单测、150浏览器检查通过（4跳过），公开页面与交互已复核；完整回执见 ProjectInfo/sessions/2026-0912-innovation-history.md。
+
 更新于 2026-09-12 · 记录者 Codex。用户授权重做游戏史与创新发展的整体表达。新入口、数据范围、验证与未完成史料缺口，以 `ProjectInfo/sessions/2026-0912-innovation-history.md` 为当前接力记录；原始用户回合见 `ProjectInfo/dialogues/2026-0912.md`。以下保留历史，不作为本轮 UI 合同。
 
 

@@ -1,26 +1,21 @@
 # ProjectProgress
 
-更新于 2026-09-12 02:29:34 +0800 · 记录者 Codex
+更新于 2026-09-12 12:30:16 +0800 · 记录者 Codex
 
-## 发布收尾：2026-09-12
+## 当前状态：Innovation Atlas 已公开上线
 
-更新于 2026-09-12 12:01:19 +0800 · 记录者 Codex。用户本轮明确授权整理并上线本项目。已核对待推送提交：网站 runtime 与上一轮验收一致，新增提交只含项目记录；浏览器诊断工具不进入网页运行。保留现有已提交项目历史，未提交自动化与旧记录仍保留本地。正在通过现有 GitHub Pages workflow 发布，结果未确认前不标记成功。
+用户授权“整理整理上线”后，已审核并推送本项目提交。runtime `1daa942f59f7490b1736ea5cb3579476bf3d92d6` 由 [GitHub Pages run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872) 成功部署。
 
-发布 gate 更新（2026-09-12 12:16:29 +0800）：首次 run 34671900746 因精确网络文献返回23px偏移停止，未部署；已修复 smooth 滚动干扰，本地探针对照及两项相关回归通过，准备重新发布。原断言未放宽。
+网站：https://playwithexperiences.github.io/Learn-About-Games/ 。新版历史总览：https://playwithexperiences.github.io/Learn-About-Games/atlas/ 。精确年份网络：同站 `/atlas/network/`。
 
-## 当前主工作段：Innovation Map 历史总览重做
+- 云端 209 单元测试、150 Chromium 检查通过，4 项条件跳过；构建 154 页。
+- 线上首页、历史总览、精确年份网络、资源页 HTTP 200；总览与网络各96对象，总览9个阅读区域，资源5437项，浏览器模块可取得。实际操作确认搜索 Hades、打开来源、跳转 Spelunky 正常；320px 视口中 Dead Cells 与详情面板可读。
+- 首轮发布因文献返回23px位置偏移停止，没有部署。已修复平滑滚动干扰，原误差断言保持不变；第二轮全量云端验证通过。两轮记录均保留。
+- 本地未提交的 NotebookLM 自动化和旧记录保留，不纳入本次新增提交；现有已提交历史已随发布推送。生产流水线的阻塞状态独立于网站上线。
 
-用户授权重做游戏史与创新发展的整体表达。`/atlas/` 现以九个阅读区域与年代分列共显作品、机制观察和类别形成；三个比较问题入口、搜索、相邻关系与浮动来源面板支持继续追踪。精确年份网络保留于 `/atlas/network/`，与新入口消费同一份 catalog。
+Atlas 为96对象 / 86关系 / 78 Evidence；新增12个博物馆年表锚点未生成影响边。地区、品类和2020s覆盖仍不完整，后续按有界专题核查来源。资源目录仍为5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics，EGDS 四层未在本轮改变。
 
-数据：96 历史对象 / 86 关系 / 78 Evidence。新增 12 个对象来自 CHM 与 The Strong 本轮读取的年表条目，未新增影响边；原有证据核查日期保持原值。新页面明确年代列间距不是时长、观察年份不是首次发明，并公开格斗、竞速、节奏、移动、中国游戏史与 2020s 覆盖缺口。
-
-当前为本地候选，预览 http://127.0.0.1:4321/Learn-About-Games/atlas/ 。本轮尚未推送或部署：开始时本地 main 领先 origin/main 15 个其他任务提交，另有其他任务未提交修改，不将它们一起发布。本轮按文件范围单独提交。
-
-验证：209 单元测试、类型检查 0/0/0、154 页 fresh build 通过。最终新版桌面/手机 18/18 通过，含旧深链、键盘、无脚本与实际遮挡断言。全站 Chromium 为 149 passed / 4 skipped / 1 failed；唯一 README 旧数量失败修复内容后定向 1/1 通过，已通过的无关检查未重复运行。完整回执见 sessions/2026-0912-innovation-history.md。
-
-下一步：先评审本地新版。公开发布需从本轮提交中隔离相关改动，或在其他任务确认后整合现有未推送历史；不强推、不改写其他任务历史。内容继续按缺口做有界史料扩展；新增批量检索与付费调用仍需明确确认。
-
-EGDS 与资源生产未在本轮改动。上次已验证的发布仍以 sessions/2026-0910-egds-v03-release.md 为准（runtime `7a101aa`）；本轮没有把历史上线证据当作新版部署证明。资源目录 5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics。
+下一步：依据公开版反馈迭代；批量史料扩展和新增付费调用仍需明确确认。发布详情与检查边界见 sessions/2026-0912-innovation-history.md、evidence/2026-0912-innovation-publication.json。收尾提交只更新仓库回执，使用 skip-ci，不替代上述已部署 runtime。
 
 ## 资源生产工作段（保留原状态，独立于发布）
 

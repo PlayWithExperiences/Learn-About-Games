@@ -51,3 +51,15 @@ trace-user-count: 2
 本地临时探针同时记录点击前、真实激活时、返回后及后续5帧位置；正常滚动中复现2px稳定偏移，reduced-motion对照3/3稳定。将文献跳转、页面与画布位置恢复改为显式 instant，避免全局 smooth 滚动干扰。修复后同一探针3/3各帧完全一致；原失败用例与全屏文献返回2/2通过，类型检查0/0/0、构建通过。探针归档 /tmp/lag-scroll-probe.spec.ts，证据日志 /tmp/lag-scroll-frames.log、lag-scroll-reduced.log、lag-scroll-fixed.log、lag-scroll-regression.log；没有通过扩大误差或仅重跑云端隐藏失败。下一次发布由同一 workflow 全量验证。
 
 原始对话：dialogues/2026-0912.md，本 session 后续发布回合。
+
+## 2026-09-12 12:30:16 +0800 发布完成
+
+决策：無涘｜记录：Codex。session 01a091a6-dbd8-7072-a821-27697dd08274
+trace-user-count: 2
+
+- 成功 [run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872)：runtime `1daa942f59f7490b1736ea5cb3579476bf3d92d6`，云端209单测、150 Chromium通过（4条件跳过），154页；build与deploy均成功。首次失败run34671900746未上传或部署，保留原始失败语义。
+- 线上常规URL读取：home / atlas / atlas/network / resources均200；两种Atlas各96对象，新总览9阅读区与Minecraft，浏览器脚本200，资源5437项。结构化回执在 `../evidence/2026-0912-innovation-publication.json`。
+- CUA实际交互：Hades搜索1匹配；打开Hades显示2条相邻关系与来源，点击Spelunky进入对应详情。320px视口实际可见Dead Cells及面板；注意该桌面浏览器模拟中classic scrollbar占15px，clientWidth305 / scrollWidth320，不能据此报告live的严格clientWidth相等；真正移动设备断点合同沿用已通过的Playwright检查。
+- 未提交自动化和其他旧记录未暂存。最终回执使用skip-ci推送，不再改变网站产物；当前网站runtime保持上述SHA。未进行新的大批外部采集或付费API调用。
+
+原始对话：dialogues/2026-0912.md，本session“这个项目感觉也可以整理整理上线”回合。

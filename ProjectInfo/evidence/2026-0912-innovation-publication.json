@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-12T04:27:32.169Z",
+  "results": [
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/",
+      "status": 200
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/atlas/",
+      "status": 200,
+      "objects": 96,
+      "territories": 9,
+      "minecraft": true,
+      "scriptStatus": 200
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/atlas/network/",
+      "status": 200,
+      "objects": 96
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/resources/",
+      "status": 200,
+      "resources": 5437
+    }
+  ],
+  "runtime": "1daa942f59f7490b1736ea5cb3579476bf3d92d6",
+  "runUrl": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872",
+  "unitTestsPassed": 209,
+  "chromiumPassed": 150,
+  "chromiumSkipped": 4,
+  "builtPages": 154
+}
