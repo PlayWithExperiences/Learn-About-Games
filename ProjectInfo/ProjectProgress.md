@@ -2,6 +2,10 @@
 
 更新于 2026-09-12 12:30:16 +0800 · 记录者 Codex
 
+## 内容补全（2026-09-12 12:38:17 +0800）
+
+用户要求继续补全。已完成本地基线与资源入口检查，首批候选及80任务检索上限在 docs/research/2026-09-12-atlas-coverage-expansion.md；批量检索待明确确认。仅做1次网页最小探针，未修改历史事实或启动批量采集。以下保留当前已上线状态。
+
 ## 当前状态：Innovation Atlas 已公开上线
 
 用户授权“整理整理上线”后，已审核并推送本项目提交。runtime `1daa942f59f7490b1736ea5cb3579476bf3d92d6` 由 [GitHub Pages run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872) 成功部署。
