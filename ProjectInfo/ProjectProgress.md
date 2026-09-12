@@ -17,6 +17,21 @@
 
 ## 资源生产工作段（保留原状态，独立于发布）
 
+### NotebookLM 生产：2026-09-12 23:59 +0800（最新）
+
+更新于 2026-09-12 23:59:00 +0800 · 记录者 DSH agent
+
+- 用户授权先试一条。本条为既有 `generating` 孤儿 `youtube-QBAM27YbKZg`（Fallout 4）的修复性重跑，不在本批 10 条预检清单内；其余 9 条未动。
+- **交付阻塞已解除**：AI-Life-Mentor `main` 与 `origin/main` 为纯分叉（远端 briefings/pkm-index、本地 CV/ProjectInfo/scripts，零文件重叠），安全合并后推送；原 non-fast-forward 拒绝消失。
+- **导出瓶颈根因已定位并修复**：三次历史失败同因——headless 下 viewer 下载 stall、页内 fetch 被 CSP/CORS 拦、canvas 跨域不可读、adapter 无 pageAssets 能力。新增 `automation/browser/asset-capture.cjs`（CDP Fetch 响应阶段＋流式 `takeResponseBodyAsStream`＋`IO.read`）直接取回 **lh3 原始字节**；思维导图沿用 SVG 抽取渲染；演示文稿浏览器重启后下载完成。实测坑（302 同 requestId、缓冲式 getResponseBody 死锁、缓存吞请求、clip scale>2 超时、fromSurface:false 忽略 clip）写入 `automation/browser/README.md`。
+- 产物均上传图床并回读 sha256 一致：信息图 5,662,026B/2752×1536；思维导图 995,618B/2664×4621（全部展开核验：折叠 0、内容节点 51、层级列 4、渲染稳定）；演示文稿 19,741,391B/13 页 PPTX（整页图片式，中文简体）。
+- 结果：attempted 1 / ready 1 / remote_delivered 1 / failed 0 / skipped 9；ledger **36 ready / 24 failed / 0 generating**；当日 remaining 9。inbox `2026-0912-2357-level-spatial-design.json` 提交 `ac64039` 并推送，远端 blob `ed7eaf90…` 与本地一致。注意：AI-Life-Mentor 为**私有**仓库，未认证 raw 读取对本仓库任何文件（含 README.md）均 404，交付判据须用 fetch 后的远端 ref＋blob 比对。
+- 运行级事件：headless Chrome 在 pptx 下载 stall 后崩溃，`launch.cjs` 重启复用登录态、notebook 状态无损。claim 记录晚于部分实际生成动作（先做不耗配额的根因定位再补 fail＋retry），run report 如实记录，未改写时间。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。下一批不从本条自动扩大额度；预检清单其余 9 条须另行确认。
+- 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-12T2344+0800-fallout-export-fix/report.json`；摘要 `sessions/2026-0912-notebooklm-fallout-export-fix.md`。
+
+### 历史快照
+
 更新于 2026-09-10 19:05:00 +0800 · 记录者 muse-spark
 
 ## 当前状态
