@@ -1391,16 +1391,13 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
 
     const restoreNetworkPosition = () => {
       if (!savedPosition) return;
-      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
-      document.documentElement.style.scrollBehavior = 'auto';
       window.history.replaceState(null, '', savedPosition.url);
       (detailOrigin as HTMLElement | null)?.focus({ preventScroll: true });
       if (canvas) {
-        canvas.scrollLeft = savedPosition.canvasX;
-        canvas.scrollTop = savedPosition.canvasY;
+        canvas.scrollTo({ left: savedPosition.canvasX, top: savedPosition.canvasY, behavior: 'instant' });
       }
-      window.scrollTo(savedPosition.pageX, savedPosition.pageY);
-      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      // Context restoration must not race the page's global smooth scrolling.
+      window.scrollTo({ left: savedPosition.pageX, top: savedPosition.pageY, behavior: 'instant' });
       detailOrigin = null;
       savedPosition = null;
     };
@@ -1470,7 +1467,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
         const returnButton = target.querySelector<HTMLButtonElement>('[data-atlas-evidence-return]');
         if (returnButton) returnButton.hidden = false;
         window.history.replaceState(null, '', `#${target.id}`);
-        target.scrollIntoView({ block: 'center' });
+        target.scrollIntoView({ block: 'center', behavior: 'instant' });
         target.focus({ preventScroll: true });
         return;
       }

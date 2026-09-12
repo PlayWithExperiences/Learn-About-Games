@@ -43,3 +43,11 @@ trace-user-count: 2
 用户原文：“这个项目感觉也可以整理整理上线”。当前 main 比 origin/main 多 17 提交；除上一轮已验收的 runtime 外，为项目记录与一个非网站运行路径的 OOPIF 诊断工具。完成待推送差异、工具语法及有限凭据模式检查；不含本地未提交自动化改动。复用上一轮本地验证，准备推送并等待云端 gate。
 
 原始对话：dialogues/2026-0912.md（本场自动采集原文，session 同上）。
+
+## 发布 gate 修复：2026-09-12 12:16:29 +0800
+
+决策：無涘（发布目标）｜记录：Codex。首次 run 34671900746 未部署：云端构建通过，Chromium 149 passed / 4 skipped / 1 failed，精确网络文献返回位置相差 23px。保持原 <=4px 断言不变。
+
+本地临时探针同时记录点击前、真实激活时、返回后及后续5帧位置；正常滚动中复现2px稳定偏移，reduced-motion对照3/3稳定。将文献跳转、页面与画布位置恢复改为显式 instant，避免全局 smooth 滚动干扰。修复后同一探针3/3各帧完全一致；原失败用例与全屏文献返回2/2通过，类型检查0/0/0、构建通过。探针归档 /tmp/lag-scroll-probe.spec.ts，证据日志 /tmp/lag-scroll-frames.log、lag-scroll-reduced.log、lag-scroll-fixed.log、lag-scroll-regression.log；没有通过扩大误差或仅重跑云端隐藏失败。下一次发布由同一 workflow 全量验证。
+
+原始对话：dialogues/2026-0912.md，本 session 后续发布回合。
