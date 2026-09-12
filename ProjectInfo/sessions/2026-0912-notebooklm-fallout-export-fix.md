@@ -12,7 +12,7 @@
 - **导出瓶颈根因与修复**：三次历史失败停在同一处——viewer 下载在 headless 下 stall、页内 `fetch` 被 CSP/CORS 拦、canvas 因跨域污染不可读、adapter 无 pageAssets/bundle 能力。修复为三条可用链路，沉淀在 `automation/browser/asset-capture.cjs` 与 `automation/browser/README.md`（含 302 同 requestId、缓冲式 `getResponseBody` 死锁、缓存吞请求、clip `scale>2` 超时等实测坑）。
 - **产物**（全部上传图床并回读 sha256 一致）：信息图 5,662,026B / 2752×1536（lh3 原始 PNG，两次运行字节一致）；思维导图 995,618B / 2664×4621（viewer 内「全部展开」＋DOM 核验：折叠指示 `>` 计 0、内容节点 51、4 个层级列、4 秒内渲染稳定；`observed_depth` 4、`collapsed_node_count` 0）；演示文稿 19,741,391B / 13 页 PPTX（每页为整页图片，无 `<a:t>` 文本 run；中文简体经目视核验）。
 - 长期本 880ad454（52 来源、来源混杂）未动；沿用 9-11 轮换本 2ce16a4b，全程仅 1 个来源。中文总结复用该本 9-11 已生成正文（同一唯一来源），补全来源边界后成稿。
-- **运行级事件**：headless Chrome 在 pptx 下载 stall 后崩溃（CDP 9222 失联），`launch.cjs` 重启复用登录态、notebook 状态无损，再下载即正常完成。claim 记录晚于部分实际生成动作（先做不耗配额的根因定位再补 fail＋retry），已在 run report 如实记录，未改写时间。
+- **运行级事件**：headless Chrome 在 pptx 下载 stall 后崩溃（CDP 9222 失联），`launch.cjs` 重启复用登录态、notebook 状态无损，再下载即正常完成。**次序偏差（如实记录，未改写时间）**：本轮生成动作（思维导图约 23:36 完成、演示文稿约 23:38 发起／约 23:46 完成）发生在 retry claim（23:44:14）之前——先做了不耗配额的根因定位（合并交付仓库、摸清导出链路）才补 fail＋retry；当日 claim 计数为 1。
 - 结果：attempted 1 / ready 1 / remote_delivered 1 / failed 0 / skipped 9（本批试点范围）/ 当日 remaining 9。ledger 35 ready / 24 failed / 1 generating → **36 ready / 24 failed / 0 generating**。
 - 交付：inbox `2026-0912-2357-level-spatial-design.json`，提交 `ac64039`，推送 `1e11120..ac64039`；`origin/main` blob `ed7eaf90586d50979bf63d69ecba470d7109a9c5` 与本地一致。AI-Life-Mentor 为**私有**仓库，未认证 raw 读取对本仓库任何文件（含 README.md、9-10 已推送文件）均返回 404，故交付判据取 fetch 后的远端 ref＋blob 比对。
 - 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站内容。批次未扩大：预检清单其余 9 条留待下一批，须另行确认。

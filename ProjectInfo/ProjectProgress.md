@@ -1,6 +1,6 @@
 # ProjectProgress
 
-更新于 2026-09-12T23:55:18+08:00 · 记录者 Codex
+更新于 2026-09-13T00:04:02+08:00 · 记录者 Codex
 
 ## 当前状态：Innovation Atlas主干补全，最终发布待验
 
@@ -10,7 +10,7 @@
 - 144电子游戏/版本、3桌面游戏、37创新观察、2类别与9实验/硬件对象分别表示。新增tabletop-game，不把D&D、Magic、Dominion冒充电子游戏。
 - BuildCraft/DDR/Guitar Hero、MUD与竞技模组、三维格斗/平台、赛车/体感、移动平台、更多中文作品及2025–2026实例已补入。6项新机制观察有版本载体；初始深链接回落年代目录的问题已修复。
 - 类型检查0/0/0、217单测、156页构建通过。最终地图检查初轮71通过/20条件跳过/3失败；桌游类型标签换行挤压年份已修复，两项多页/多透镜检查的整体时间预算按实际规模调至60秒（未放宽几何或语义断言），定向6/6通过；合并74通过/20条件跳过。
-- 最新已验证线上仍为第二批 f51efa3：run34701125156成功，214单测、153 Chromium通过/4跳过，155页；两图146节点及BuildCraft关联已在线复核。195版本即将推送，不能把本地结果当成线上验收。
+- 最新已验证线上仍为第二批 f51efa3：run34701125156成功，214单测、153 Chromium通过/4跳过，155页；两图146节点及BuildCraft关联已在线复核。195版本已推送 runtime 1b41f41328d4712649805f6a9c9d4c7f4857e8a6，Pages run 34703681445 已通过云端构建，正在全站Chromium检查；不能把本地结果当成线上验收。
 - 覆盖审计：docs/research/2026-09-12-atlas-completion-audit.md；当前盘点由 scripts/audit-atlas-coverage.mjs 直接复用前端分配，输出哈希与清单。第二至第五批请求回执保留失败、重定向、定位重读失败和版本语境。
 
 下一步：完成195版本云端及线上验收，再按原代表性主干标准逐项收口。目录不是穷尽所有游戏的历史，未收录作品和未核查影响仍显式保留。
@@ -26,7 +26,7 @@
 - **导出瓶颈根因已定位并修复**：三次历史失败同因——headless 下 viewer 下载 stall、页内 fetch 被 CSP/CORS 拦、canvas 跨域不可读、adapter 无 pageAssets 能力。新增 `automation/browser/asset-capture.cjs`（CDP Fetch 响应阶段＋流式 `takeResponseBodyAsStream`＋`IO.read`）直接取回 **lh3 原始字节**；思维导图沿用 SVG 抽取渲染；演示文稿浏览器重启后下载完成。实测坑（302 同 requestId、缓冲式 getResponseBody 死锁、缓存吞请求、clip scale>2 超时、fromSurface:false 忽略 clip）写入 `automation/browser/README.md`。
 - 产物均上传图床并回读 sha256 一致：信息图 5,662,026B/2752×1536；思维导图 995,618B/2664×4621（全部展开核验：折叠 0、内容节点 51、层级列 4、渲染稳定）；演示文稿 19,741,391B/13 页 PPTX（整页图片式，中文简体）。
 - 结果：attempted 1 / ready 1 / remote_delivered 1 / failed 0 / skipped 9；ledger **36 ready / 24 failed / 0 generating**；当日 remaining 9。inbox `2026-0912-2357-level-spatial-design.json` 提交 `ac64039` 并推送，远端 blob `ed7eaf90…` 与本地一致。注意：AI-Life-Mentor 为**私有**仓库，未认证 raw 读取对本仓库任何文件（含 README.md）均 404，交付判据须用 fetch 后的远端 ref＋blob 比对。
-- 运行级事件：headless Chrome 在 pptx 下载 stall 后崩溃，`launch.cjs` 重启复用登录态、notebook 状态无损。claim 记录晚于部分实际生成动作（先做不耗配额的根因定位再补 fail＋retry），run report 如实记录，未改写时间。
+- 运行级事件：headless Chrome 在 pptx 下载 stall 后崩溃，`launch.cjs` 重启复用登录态、notebook 状态无损。**次序偏差（如实记录，未改写时间）**：本轮生成动作（思维导图约 23:36、演示文稿约 23:38 发起）早于 retry claim（23:44:14），因先做不耗配额的根因定位；当日 claim 计数为 1。
 - 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。下一批不从本条自动扩大额度；预检清单其余 9 条须另行确认。
 - 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-12T2344+0800-fallout-export-fix/report.json`；摘要 `sessions/2026-0912-notebooklm-fallout-export-fix.md`。
 

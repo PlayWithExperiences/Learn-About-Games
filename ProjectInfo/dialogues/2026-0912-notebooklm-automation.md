@@ -21,7 +21,7 @@
 
 导出瓶颈根因与修复：图片产物直接从 lh3 CDN 取原始字节（新增 automation/browser/asset-capture.cjs：CDP Fetch 响应阶段＋takeResponseBodyAsStream＋IO.read 流式），信息图得 5,662,026B / 2752×1536 原始 PNG；思维导图在 viewer 内全部展开后经 DOM 核验（折叠 0、内容节点 51、4 个层级列、渲染稳定）再以 SVG 抽取渲染 2664×4621；演示文稿 13 页 PPTX 在浏览器重启后下载完成（此前 headless 下停在 43,977B 并崩溃）。三件均上传图床并回读校验一致。
 
-结果：attempted 1 / ready 1 / failed 0 / 跳过 9（本批单条试点范围）/ 当日 claimed 1、remaining 9。ledger 由 35 ready / 24 failed / 1 generating 变为 36 ready / 24 failed / 0 generating。inbox `2026-0912-2357-level-spatial-design.json` 已提交 ac64039 并推送，`origin/main` blob ed7eaf90 与本地一致。AI-Life-Mentor 为私有仓库，未认证 raw 读取对任何文件（含 README.md）均 404，故以 fetch 后的远端 ref＋blob 比对为准。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+结果：attempted 1 / ready 1 / failed 0 / 跳过 9（本批单条试点范围）/ 当日 claimed 1、remaining 9。次序偏差如实记录：本轮生成动作（思维导图约 23:36、演示文稿约 23:38 发起）早于 retry claim（23:44:14），因先做不耗配额的根因定位；未改写任何时间戳。ledger 由 35 ready / 24 failed / 1 generating 变为 36 ready / 24 failed / 0 generating。inbox `2026-0912-2357-level-spatial-design.json` 已提交 ac64039 并推送，`origin/main` blob ed7eaf90 与本地一致。AI-Life-Mentor 为私有仓库，未认证 raw 读取对任何文件（含 README.md）均 404，故以 fetch 后的远端 ref＋blob 比对为准。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
 
 证据：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-12T2344+0800-fallout-export-fix/report.json（含 preflight-after.json 与 artifacts/）
 时间：2026-09-12 23:59:00 +0800
