@@ -117,3 +117,14 @@ ledger 共 **26 条 failed**。以下是按失败阶段的分析，**分析不�
 - **演示文稿导出未完成**：`nblm-export-deck.cjs` 报 `cdp timeout Runtime.evaluate`，随后自动化 Chrome 连续两次崩溃（本会话第 3、4 次）。重启后 `notebook.google.com` 页面空白。
 - **根因＝本机网络**：`www.gstatic.com` / `ssl.gstatic.com` / `fonts.gstatic.com` 全部解析到 `198.18.x.x`（fake-ip 代理）并返回 **HTTP 404**，NotebookLM 实际 JS bundle 报 **HTTP/2 framing 错误**，前端因此无法挂载；同时 `api.github.com`、`raw.githubusercontent.com`、`notebook.google.com`、`accounts.google.com` 均正常。连续 4 次采样（06:54–06:56）稳定失败，不是瞬时抖动。**这是本项目外部环境问题，需要修复代理对 gstatic 的路由。**
 - 处置：item 3 按合同记 `failed`，阶段＝deck-export，原因写明上面的可核查现象；**两件已导出的产物保留在磁盘**，网络恢复后只需补演示文稿再用 `finish-notebooklm-item.py` 收尾（不必重做图像类产物，也不必重新生成演示文稿——卡片已在库）。ledger 回到 38 ready / 26 failed / 0 generating，无孤儿 claim。
+
+## 0740 自动化：NotebookLM 页面不可用
+
+决策：無涘（既有自动化授权） ｜ 记录：Codex
+
+- 2026-09-13T07:40:24+08:00：preflight ready_to_claim，今日已claim7、剩余3；本轮 attempted0 / ready0 / remote_delivered0 / candidate failed0 / run failed1 / skipped3。
+- 当前ledger38 ready / 26 failed / 0 generating。最新失败记录称04:46节流闸门已开，05:06重试后浏览器崩溃；这是既有记录，不计入本轮尝试。
+- 当前最小浏览器检查：probe退出1，slides create button not reachable；NotebookLM首页readyState complete但正文长度0、来源checkbox0、Studio不可见。browser-notebook-access unavailable，在claim前停止；不将通道失败写成无候选。当前未确认配额耗尽。
+- 未claim/retry、生成、上传、交付、改ledger、写PKM或触发Daily Check-in。修复浏览器后才可继续；旧失败不自动重试。
+- 原始预检与报告：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T073456+0800-automation/preflight.json、report.json。
+- 原始对话：dialogues/2026-0913-notebooklm-automation.md「0734 每日资源自动化」。

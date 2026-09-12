@@ -17,6 +17,18 @@
 
 ## 资源生产工作段（保留原状态，独立于发布）
 
+## 0740 自动化：NotebookLM 页面不可用
+
+决策：無涘（既有自动化授权） ｜ 记录：Codex
+
+- 2026-09-13T07:40:24+08:00：preflight ready_to_claim，今日已claim7、剩余3；本轮 attempted0 / ready0 / remote_delivered0 / candidate failed0 / run failed1 / skipped3。
+- 当前ledger38 ready / 26 failed / 0 generating。最新失败记录称04:46节流闸门已开，05:06重试后浏览器崩溃；这是既有记录，不计入本轮尝试。
+- 当前最小浏览器检查：probe退出1，slides create button not reachable；NotebookLM首页readyState complete但正文长度0、来源checkbox0、Studio不可见。browser-notebook-access unavailable，在claim前停止；不将通道失败写成无候选。当前未确认配额耗尽。
+- 未claim/retry、生成、上传、交付、改ledger、写PKM或触发Daily Check-in。修复浏览器后才可继续；旧失败不自动重试。
+- 原始预检与报告：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T073456+0800-automation/preflight.json、report.json。
+- 原始对话：dialogues/2026-0913-notebooklm-automation.md「0734 每日资源自动化」。
+
+
 ### NotebookLM 生产：2026-09-13 01:15 +0800（最新）
 
 更新于 2026-09-13 01:15:00 +0800 · 记录者 DSH agent
