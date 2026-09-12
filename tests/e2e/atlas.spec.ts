@@ -1,22 +1,24 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
 const atlasUrl = 'http://127.0.0.1:4321/Learn-About-Games/atlas/network/';
-const ATLAS_NODE_COUNT = 96;
-const ATLAS_RELATION_COUNT = 86;
-const ATLAS_WORK_PRIMARY_NODE_COUNT = 69;
-const ATLAS_CATEGORY_PRIMARY_NODE_COUNT = 27;
-const ATLAS_EVENT_PRIMARY_NODE_COUNT = 25;
-const ATLAS_PRIMARY_RELATION_COUNTS = {
-  works: 38,
-  category: 20,
-  events: 20,
-} as const;
-const ATLAS_EVENT_COUNT = 25;
-const ATLAS_EVOLUTION_RELATION_COUNT = 20;
-const ATLAS_EVIDENCE_COUNT = 78;
-const ATLAS_THEME_BUTTON_COUNT = 26;
-const ATLAS_THEME_ID_COUNT = 11;
-const ATLAS_SCOPE_NOTE_COUNT = 14;
+import atlasNodesData from '../../src/data/atlas-nodes.json' with { type: 'json' };
+import atlasRelationsData from '../../src/data/atlas-relations.json' with { type: 'json' };
+import atlasEvidenceData from '../../src/data/atlas-evidence.json' with { type: 'json' };
+import atlasThemesData from '../../src/data/atlas-themes.json' with { type: 'json' };
+const ATLAS_NODE_COUNT = atlasNodesData.length;
+const ATLAS_RELATION_COUNT = atlasRelationsData.length;
+const ATLAS_EVENT_COUNT = atlasNodesData.filter(n => n.kind === 'innovation').length;
+const ATLAS_EVENT_PRIMARY_NODE_COUNT = ATLAS_EVENT_COUNT;
+const ATLAS_CATEGORY_PRIMARY_NODE_COUNT = ATLAS_EVENT_COUNT + atlasNodesData.filter(n => n.kind === 'category').length;
+const ATLAS_WORK_PRIMARY_NODE_COUNT = ATLAS_NODE_COUNT - ATLAS_CATEGORY_PRIMARY_NODE_COUNT;
+const primaryKinds = { works: new Set(['game','experimental-apparatus','experimental-program','system-prototype','commercial-hardware']), category: new Set(['category','innovation']), events: new Set(['innovation']) };
+const ATLAS_PRIMARY_RELATION_COUNTS = Object.fromEntries(Object.entries(primaryKinds).map(([key,kinds]) => [key, atlasRelationsData.filter(r => kinds.has(atlasNodesData.find(n => n.id === r.fromId)!.kind) && kinds.has(atlasNodesData.find(n => n.id === r.toId)!.kind)).length])) as Record<'works'|'category'|'events',number>;
+const ATLAS_EVOLUTION_RELATION_COUNT = atlasRelationsData.filter(r => r.relationRole === 'evolution').length;
+const ATLAS_EVIDENCE_COUNT = atlasEvidenceData.length;
+const familyAssignments = atlasThemesData.filter(t => t.id !== 'early-electronic-games').reduce((sum,t) => sum + t.familyIds.length,0);
+const ATLAS_THEME_BUTTON_COUNT = 3 + atlasThemesData.length + familyAssignments;
+const ATLAS_THEME_ID_COUNT = atlasThemesData.length + 1;
+const ATLAS_SCOPE_NOTE_COUNT = familyAssignments + 1;
 
 const entityIds = async (locator: Locator) =>
   locator.evaluateAll((elements: Element[]) =>
@@ -155,7 +157,7 @@ test('server renders one fixed global event-and-carrier time network', async ({ 
   await expect(relations).toHaveCount(ATLAS_RELATION_COUNT);
   await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-node-count', String(await nodes.count()));
   await expect(page.locator('[data-atlas-explorer]')).toHaveAttribute('data-atlas-relation-count', String(await relations.count()));
-  const scrollNote = page.getByText('左右滚动查看 1958–2020', { exact: true });
+  const scrollNote = page.getByText('左右滚动查看 1958–2030', { exact: true });
   if (testInfo.project.name === 'mobile-chromium') {
     await expect(scrollNote).toBeHidden();
   } else {
@@ -163,7 +165,7 @@ test('server renders one fixed global event-and-carrier time network', async ({ 
   }
   expect(new Set(await entityIds(nodes)).size).toBe(ATLAS_NODE_COUNT);
   expect(new Set(await entityIds(relations)).size).toBe(ATLAS_RELATION_COUNT);
-  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(61);
+  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="game"]')).toHaveCount(atlasNodesData.filter(n => n.kind === 'game').length);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(ATLAS_EVENT_COUNT);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="category"]')).toHaveCount(2);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-apparatus"]')).toHaveCount(1);
@@ -273,7 +275,7 @@ test('renders innovation events as first-class details and preserves them in the
   if (testInfo.project.name === 'mobile-chromium') {
     await expect(page.locator('[data-atlas-mobile-outline] [data-atlas-outline-relation-ref="spelunky-to-dead-cells"]')).toHaveCount(2);
   }
-  await expect(page.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
+  await expect(page.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(atlasNodesData.filter(n => n.kind === 'innovation' && n.tags.includes('first-person-shooter-lens')).length);
 });
 
 test('view controls provide bounded zoom, fit, center anchoring, reset and map-mode wheel zoom', async ({ page }, testInfo) => {
@@ -294,11 +296,13 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and map-m
   for (const button of [fit, zoomOut, zoomIn, reset]) await expect(button).toBeEnabled();
   await expect(status).toHaveText('100%');
   await expect(stage).toHaveAttribute('data-scale', '1');
-  await expect(stage).toHaveCSS('width', '2200px');
+  const nativeWidth = Number(await scene.getAttribute('data-scene-width'));
+  expect(nativeWidth).toBeGreaterThan(2200);
+  expect(await stage.evaluate(el => parseFloat(getComputedStyle(el).width))).toBeCloseTo(nativeWidth, 1);
   const workSceneHeight = await scene.getAttribute('data-scene-work-height');
   expect(workSceneHeight).toBeTruthy();
   await expect(stage).toHaveCSS('height', `${workSceneHeight}px`);
-  await expect(scene).toHaveCSS('width', '2200px');
+  expect(await scene.evaluate(el => parseFloat(getComputedStyle(el).width))).toBeCloseTo(nativeWidth, 1);
   await expect(scene).toHaveCSS('height', `${workSceneHeight}px`);
   expect(await scene.evaluate((element) => element.style.transform)).toBe('scale(1)');
 
@@ -656,7 +660,7 @@ test('family directory and fullscreen theme controls stay synchronized and keybo
   const lensControl = network.locator('.atlas-lens-control');
   await expect(lensControl).toBeVisible();
   await expect(lensControl.locator('[data-atlas-family-directory]')).toBeHidden();
-  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(11);
+  await expect(lensControl.locator('[data-atlas-fullscreen-lenses] [data-atlas-theme-button]')).toHaveCount(ATLAS_THEME_ID_COUNT);
   await expect(explorer.locator('[data-atlas-theme-button]')).toHaveCount(ATLAS_THEME_BUTTON_COUNT);
   await expect(explorer.locator('#atlas-lens-status')).toHaveCount(1);
 
@@ -713,7 +717,7 @@ test('cross-Family lineages activate directly and fullscreen uses a compact lens
   const network = page.locator('[data-atlas-global-network][data-map-mode="true"]');
   const fullscreenLenses = network.locator('[data-atlas-fullscreen-lenses]');
   await expect(fullscreenLenses).toBeVisible();
-  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(11);
+  await expect(fullscreenLenses.locator('[data-atlas-theme-button]')).toHaveCount(ATLAS_THEME_ID_COUNT);
   await expect(network.locator('[data-atlas-family-directory]')).toBeHidden();
   await expect(fullscreenLenses.locator('[data-atlas-theme-button="roguelike"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('[data-atlas-canvas]')).toHaveAttribute('data-map-mode', 'true');
@@ -737,7 +741,7 @@ test('genre lenses promote innovation events and keep carrier games in reversibl
   await expect(primaryNetwork.locator('[data-atlas-relation="spelunky-to-dead-cells"]')).toBeAttached();
   const timeline = page.locator('[data-atlas-event-timeline]');
   await expect(timeline).toBeVisible();
-  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(7);
+  await expect(timeline.locator('[data-atlas-event-timeline-item]:not([hidden])')).toHaveCount(atlasNodesData.filter(n => n.kind === 'innovation' && n.tags.includes('first-person-shooter-lens')).length);
   await expect(timeline.locator('[data-atlas-event-timeline-item][data-atlas-event-role]:not([hidden])')).toHaveCount(7);
   await expect(page.locator('[data-atlas-primary-network] [data-atlas-event-relation][data-theme-match="true"]')).toHaveCount(7);
 
@@ -776,7 +780,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   const perspectives = network.locator('[data-atlas-perspective-controls]');
   await expect(network).toHaveAttribute('data-atlas-perspective', 'works');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'full');
-  await expect(page.locator('[data-atlas-lens-status]')).toContainText('代表作品视角：显示 69 个作品/载体节点与 38 条关系');
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText(`代表作品视角：显示 ${ATLAS_WORK_PRIMARY_NODE_COUNT} 个作品/载体节点与 ${ATLAS_PRIMARY_RELATION_COUNTS.works} 条关系`);
   await expect(perspectives.locator('[data-atlas-perspective="works"]')).toHaveAttribute('aria-pressed', 'true');
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_WORK_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).not.toHaveCount(0);
@@ -787,7 +791,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   await perspectives.locator('[data-atlas-perspective="category"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'category');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'category');
-  await expect(page.locator('[data-atlas-lens-status]')).toContainText('品类发展视角：显示 27 个品类/事件节点与 20 条关系');
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText(`品类发展视角：显示 ${ATLAS_CATEGORY_PRIMARY_NODE_COUNT} 个品类/事件节点与 ${ATLAS_PRIMARY_RELATION_COUNTS.category} 条关系`);
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_CATEGORY_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="innovation"]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="category"]:visible')).toHaveCount(2);
@@ -813,7 +817,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   await perspectives.locator('[data-atlas-perspective="events"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'events');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
-  await expect(page.locator('[data-atlas-lens-status]')).toContainText('创新事件视角：显示 25 个事件节点与 20 条演进关系');
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText(`创新事件视角：显示 ${ATLAS_EVENT_PRIMARY_NODE_COUNT} 个事件节点与 ${ATLAS_EVOLUTION_RELATION_COUNT} 条演进关系`);
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="innovation"]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).toHaveCount(0);
@@ -868,18 +872,18 @@ test('a genre without event evidence shows an honest empty state', async ({ page
 test('new Strategy lineage and empty Genre Families expose honest status', async ({ page }) => {
   await page.goto('./atlas/network/');
   const strategy = page.locator('[data-atlas-family="strategy"]');
-  await expect(strategy.locator('summary')).toContainText('1 条已核查谱系');
+  await expect(strategy.locator('summary')).toContainText('2 条已核查谱系');
   await strategy.locator('summary').click();
   await expect(strategy.locator('[data-atlas-theme-button="real-time-strategy-lineage"]')).toBeEnabled();
 
-  const simulation = page.locator('[data-atlas-family="simulation-management"]');
+  const simulation = page.locator('[data-atlas-family="rhythm-party"]');
   await expect(simulation.locator('summary')).toContainText('0 条已核查谱系，待研究');
   await expect(simulation.locator('[data-atlas-theme-button]')).toHaveCount(0);
   await simulation.locator('summary').click();
   await expect(simulation.locator('.atlas-family-directory__empty')).toContainText('尚无达到证据门槛的谱系');
 
   const puzzle = page.locator('[data-atlas-family="puzzle"]');
-  await expect(puzzle.locator('summary')).toContainText('1 条已核查谱系');
+  await expect(puzzle.locator('summary')).toContainText('2 条已核查谱系');
   await puzzle.locator('summary').click();
   await expect(puzzle.locator('[data-atlas-theme-button="puzzle-adventure-lineage"]')).toBeEnabled();
 });

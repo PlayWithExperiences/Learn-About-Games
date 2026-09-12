@@ -443,10 +443,11 @@ const atlasLayoutDefaults = {
   laneGap: 104,
 } as const;
 
-function projectAtlasYear(year: number): number {
-  const { width, minYear, maxYear, horizontalInset } = atlasLayoutDefaults;
-  const usableWidth = width - horizontalInset * 2;
-  return horizontalInset + ((year - minYear) / (maxYear - minYear)) * usableWidth;
+function projectAtlasYear(year: number, range: { minYear: number; maxYear: number } = atlasLayoutDefaults): number {
+  const { width, horizontalInset } = atlasLayoutDefaults;
+  // Adding later history extends the canvas instead of compressing old years.
+  const pixelsPerYear = (width - horizontalInset * 2) / (atlasLayoutDefaults.maxYear - atlasLayoutDefaults.minYear);
+  return horizontalInset + (year - range.minYear) * pixelsPerYear;
 }
 
 function relationPath(
@@ -523,6 +524,10 @@ export function buildAtlasLayout(
   options: { perspective?: AtlasLayoutPerspective } = {},
 ): AtlasLayout {
   const perspective = options.perspective ?? 'works';
+  const yearRange = {
+    minYear: Math.min(atlasLayoutDefaults.minYear, ...nodes.map(node => node.startYear)),
+    maxYear: Math.max(atlasLayoutDefaults.maxYear, ...nodes.map(node => Math.ceil((node.endYear ?? node.startYear) / 10) * 10)),
+  };
   const highestInnovationLane = Math.max(
     -1,
     ...nodes.filter(({ kind }) => kind === 'innovation').map(({ lane }) => lane),
@@ -547,7 +552,7 @@ export function buildAtlasLayout(
   const eventPlacements: Array<{ lane: number; yearX: number }> = [];
   for (const node of eventNodes) {
     let displayLane = 3 + Math.max(0, node.lane);
-    const yearX = projectAtlasYear(node.startYear);
+    const yearX = projectAtlasYear(node.startYear, yearRange);
     while (eventPlacements.some((placed) =>
       placed.lane === displayLane && Math.abs(placed.yearX - yearX) < 200,
     )) {
@@ -568,11 +573,11 @@ export function buildAtlasLayout(
     if (node.kind === 'game' && node.endYear !== undefined) {
       throw new Error(`Atlas Game ${node.id} cannot define a time range.`);
     }
-    const yearX = projectAtlasYear(node.startYear);
+    const yearX = projectAtlasYear(node.startYear, yearRange);
     const rangeEndYear = node.kind === 'game' ? undefined : node.endYear;
     const hasRange = rangeEndYear !== undefined;
     const spanEndX = hasRange
-      ? projectAtlasYear(rangeEndYear)
+      ? projectAtlasYear(rangeEndYear, yearRange)
       : yearX;
     const isEventNode = node.kind === 'innovation' && (!node.tags || node.tags.includes('innovation-event'));
     const displayLane = perspective === 'events'
@@ -645,16 +650,16 @@ export function buildAtlasLayout(
     });
 
   return {
-    width: atlasLayoutDefaults.width,
+    width: projectAtlasYear(yearRange.maxYear, yearRange) + atlasLayoutDefaults.horizontalInset,
     height: Math.max(atlasLayoutDefaults.height, ...placedNodes
       .filter(node => atlasPerspectiveVisibleKinds(perspective).includes(node.kind))
       .map(node => node.top + node.height + 40)),
-    minYear: atlasLayoutDefaults.minYear,
-    maxYear: atlasLayoutDefaults.maxYear,
-    yearTicks: [1958, 1960, 1970, 1980, 1990, 2000, 2010, 2020].map((year) => ({
-      year,
-      x: projectAtlasYear(year),
-    })),
+    minYear: yearRange.minYear,
+    maxYear: yearRange.maxYear,
+    yearTicks: [...new Set([yearRange.minYear, ...Array.from(
+      { length: (yearRange.maxYear - Math.ceil(yearRange.minYear / 10) * 10) / 10 + 1 },
+      (_, i) => Math.ceil(yearRange.minYear / 10) * 10 + i * 10,
+    )])].map(year => ({ year, x: projectAtlasYear(year, yearRange) })),
     nodes: placedNodes,
     relations: placedRelations,
   };

@@ -24,7 +24,7 @@ test("overview preserves the complete catalog and keeps positions stable while e
   await expect(page.locator(inspector)).toContainText("失败之后，什么留下来");
   await expect(
     page.locator('[data-history-node][data-emphasis="true"]'),
-  ).toHaveCount(8);
+  ).toHaveCount(12);
   expect(await positions()).toEqual(before);
   await page.locator("[data-history-reset]").click();
   await expect(
@@ -78,7 +78,7 @@ test("search has an honest empty state and reset recovers every object", async (
   await page.locator("[data-history-track]").selectOption("physical");
   await expect(
     page.locator('[data-history-node][data-emphasis="true"]'),
-  ).toHaveCount(2);
+  ).toHaveCount(3);
   await page.locator("[data-history-reset]").click();
   await expect(
     page.locator('[data-history-node][data-emphasis="true"]'),
@@ -91,7 +91,7 @@ test("new museum anchors expose their bounded source without claiming influence"
   await page.goto("./atlas/#atlas-node-detail-minecraft");
   await expect(page.locator(inspector)).toContainText("早期公开版");
   await expect(page.locator(inspector)).toContainText(
-    "当前未收录与该对象相连的关系",
+    "结构相似，影响未知",
   );
   await expect(
     page.locator(inspector).getByRole("link", { name: /Graphics & Games/ }),
@@ -99,7 +99,7 @@ test("new museum anchors expose their bounded source without claiming influence"
     "href",
     "https://www.computerhistory.org/timeline/graphics-games/",
   );
-  await expect(page.locator("[data-history-edge]")).toHaveCount(0);
+  await expect(page.locator("[data-history-edge]")).toHaveCount(1);
 });
 
 for (const theme of ["light", "dark"])
@@ -179,4 +179,27 @@ test('keyboard selection announces current object and Escape restores the map fo
   await expect(page.locator(inspector)).toBeHidden();
   await expect(node).toBeFocused();
   await expect(node).not.toHaveAttribute('aria-current','true');
+});
+
+test('new branches preserve Chinese sources and trace a recent documented influence', async({page})=>{
+  await page.goto('./atlas/#atlas-node-detail-jx3-yidai-zongshi');
+  await expect(page.locator(inspector)).toContainText('2011');
+  await expect(page.locator(inspector)).toContainText('剑网3官方版本大事记');
+  await page.locator('[data-history-close]').click();
+  await page.locator('[data-history-track]').selectOption('cards');
+  await expect(page.locator('[data-history-results]')).toContainText('Balatro');
+  await page.locator('[data-history-results] [data-history-jump="balatro"]').click();
+  await expect(page.locator(inspector)).toContainText('LocalThunk');
+  await page.locator(inspector).getByRole('link',{name:'Luck be a Landlord（早期版）',exact:true}).click();
+  await expect(page.locator('#history-inspector-title')).toHaveText('Luck be a Landlord（早期版）');
+});
+
+test('recent right-edge nodes stay visible beside the source inspector', async({page})=>{
+  await page.setViewportSize({width:1280,height:800});
+  await page.goto('./atlas/#atlas-node-detail-balatro');
+  const node=await page.locator('[data-history-node="balatro"]').boundingBox();
+  const panel=await page.locator(inspector).boundingBox();
+  expect(node).not.toBeNull(); expect(panel).not.toBeNull();
+  expect(node!.x >= panel!.x + panel!.width || node!.x + node!.width <= panel!.x || node!.y >= panel!.y + panel!.height || node!.y + node!.height <= panel!.y).toBe(true);
+  await expect(page.locator('#history-inspector-title')).toHaveText('Balatro');
 });

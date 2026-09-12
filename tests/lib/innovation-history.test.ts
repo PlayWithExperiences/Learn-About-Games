@@ -46,11 +46,31 @@ describe("history overview reading contract", () => {
       for (const id of route.ids)
         expect(nodes.some((n) => n.id === id)).toBe(true);
     expect(
-      historyNeighborhood("minecraft", relations as Catalog["atlasRelations"])
+      historyNeighborhood("tetris", relations as Catalog["atlasRelations"])
         .edges,
     ).toEqual([]);
     expect(nodes.find((n) => n.id === "minecraft")?.summary["zh-CN"]).toContain(
       "早期公开版",
     );
+  });
+});
+
+describe('approved expansion evidence boundaries', () => {
+  it('distinguishes declared edition dates from original releases', () => {
+    expect(nodes.find(n => n.id === 'disco-elysium-final-cut')).toMatchObject({startYear:2021});
+    expect(nodes.find(n => n.id === 'disco-elysium-final-cut')?.summary['zh-CN']).toContain('不是原作');
+    expect(nodes.find(n => n.id === 'jx3')?.startYear).toBe(2009);
+    expect(nodes.find(n => n.id === 'jx3-yidai-zongshi')?.startYear).toBe(2011);
+    expect(nodes.find(n => n.id === 'balatro')?.startYear).toBe(2024);
+  });
+  it('keeps documented influence separate from similarity and indirect references', () => {
+    const spire = nodes.find(n => n.id === 'slay-the-spire')!;
+    expect(spire.tags).toContain('roguelike-lens');
+    expect(trackFor(spire)).toBe('cards');
+    expect(relations.find(r => r.id === 'landlord-to-balatro')).toMatchObject({type:'direct-influence',status:'confirmed',directionality:'directed'});
+    expect(relations.find(r => r.id === 'ultima-to-dragon-quest')).toMatchObject({directionality:'undirected'});
+    expect(relations.find(r => r.id === 'ultima-online-and-minecraft')).toMatchObject({type:'structural-similarity',directionality:'undirected'});
+    expect(relations.some(r => r.fromId === 'slay-the-spire' && r.toId === 'balatro')).toBe(false);
+    expect(relations.some(r => r.fromId === 'minecraft' && r.toId === 'factorio')).toBe(false);
   });
 });

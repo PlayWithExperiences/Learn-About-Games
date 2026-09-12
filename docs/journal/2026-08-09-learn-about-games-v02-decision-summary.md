@@ -1,5 +1,7 @@
 # Learn About Games v0.2 决策摘要
 
+首批内容扩充（2026-09-12 13:47:17 +0800，Codex记录）：用户已批准批次，实际20查询/50读取；本地目录134对象/106关系/113来源，13阅读区，范围至2024年。已完成本地数据和浏览器验收，发布回执以ProjectInfo/sessions/2026-0912-innovation-history.md为准；不将未证实影响或未完成候选写成已补全。
+
 ## 2026-09-12 Innovation Map 重做
 
 发布补充（2026-09-12 12:30:16 +0800，记录Codex）：用户要求整理上线，runtime `1daa942` 已由 [run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872) 成功部署。209单测、150浏览器检查通过（4跳过），公开页面与交互已复核；完整回执见 ProjectInfo/sessions/2026-0912-innovation-history.md。

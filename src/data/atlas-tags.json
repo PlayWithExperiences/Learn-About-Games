@@ -242,5 +242,68 @@
     "name": {
       "zh-CN": "体育与身体输入"
     }, "summary": {"zh-CN":"用于历史阅读分组，不生成直接影响关系。"}
+  },
+  {
+    "id": "card-history",
+    "name": {
+      "zh-CN": "卡牌与单局构筑"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
+  },
+  {
+    "id": "fighting-history",
+    "name": {
+      "zh-CN": "格斗与对人竞技"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
+  },
+  {
+    "id": "music-history",
+    "name": {
+      "zh-CN": "音乐与表演"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
+  },
+  {
+    "id": "turn-based-strategy-history",
+    "name": {
+      "zh-CN": "回合策略"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
+  },
+  {
+    "id": "battle-royale-history",
+    "name": {
+      "zh-CN": "多人竞技生存"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
+  },
+  {
+    "id": "moba-history",
+    "name": {
+      "zh-CN": "团队英雄对抗"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
+  },
+  {
+    "id": "chinese-language-development",
+    "name": {
+      "zh-CN": "中文游戏开发语境"
+    },
+    "summary": {
+      "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
+    }
   }
 ]

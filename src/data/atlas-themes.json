@@ -78,5 +78,62 @@
     "familyIds": ["adventure", "sandbox-survival"],
     "scopeNote": { "zh-CN": "这是选择性开放世界路线，不把地图规模或时间相邻自动当作创新影响，也不主张某一作品是唯一绝对起点。" },
     "tags": ["open-world-lineage"]
+  },
+  {
+    "id": "simulation-history",
+    "title": {
+      "zh-CN": "模拟与玩家目标"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "familyIds": [
+      "simulation-management",
+      "sandbox-survival"
+    ],
+    "summary": {
+      "zh-CN": "在同一张网络中比较作品和有来源支持的机制；未建立关系的锚点仍保留。"
+    },
+    "scopeNote": {
+      "zh-CN": "选择性证据路线。并置不等于直接影响，官方商品页不作为影响关系的自动证据。"
+    }
+  },
+  {
+    "id": "online-worlds",
+    "title": {
+      "zh-CN": "在线世界的不同方向"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "familyIds": [
+      "role-playing",
+      "sandbox-survival"
+    ],
+    "summary": {
+      "zh-CN": "在同一张网络中比较作品和有来源支持的机制；未建立关系的锚点仍保留。"
+    },
+    "scopeNote": {
+      "zh-CN": "选择性证据路线。并置不等于直接影响，官方商品页不作为影响关系的自动证据。"
+    }
+  },
+  {
+    "id": "deckbuilding-history",
+    "title": {
+      "zh-CN": "卡牌与单局结构"
+    },
+    "tags": [
+      "card-history"
+    ],
+    "familyIds": [
+      "strategy",
+      "puzzle"
+    ],
+    "summary": {
+      "zh-CN": "在同一张网络中比较作品和有来源支持的机制；未建立关系的锚点仍保留。"
+    },
+    "scopeNote": {
+      "zh-CN": "选择性证据路线。并置不等于直接影响，官方商品页不作为影响关系的自动证据。"
+    }
   }
 ]

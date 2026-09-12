@@ -51,7 +51,7 @@ const cellNodes = (track: string, start: number, end: number) =>
   <p class="history-status" data-history-status role="status">全图 {nodes.length} 个历史对象 · {catalog.atlasRelations.length} 条关系。选择后显示相邻连线，全部对象保留原位。</p>
   <div class="history-workspace">
     <div class="history-chart-section">
-      <div class="history-chart-note"><span>■ 作品 / 历史对象　◆ 创新观察　▱ 类别形成</span><span>按年代分列；列内按年份排序，间距不代表时长</span></div>
+      <div class="history-chart-note"><span>■ 作品 / 历史对象　◆ 创新观察　▱ 类别形成</span><span>按年代分列；列内按版本年份排序，间距不代表时长</span></div>
       <div class="history-scroll" tabindex="0" aria-label="历史总览，窄屏可左右滚动" data-history-scroll>
         <div class="history-matrix" data-history-matrix>
           <div class="history-axis"><span>发展脉络 / 年代</span>{historyEras.map(era=><div><strong>{era.label}</strong><small>{era.title}</small></div>)}</div>
@@ -74,16 +74,16 @@ const cellNodes = (track: string, start: number, end: number) =>
         <h2 id="history-inspector-title">先看全貌，再追踪变化</h2>
         <p>选择地图中的任一对象，这里会显示它做了什么、关系指向哪里，以及来源实际支持什么。</p>
         <div class="history-reading-guide"><strong>如何读这张图</strong><p>横向比较同一脉络在不同时期的变化；纵向比较同一时期的不同尝试。</p><p>点选后，实线表示有向关系，虚线表示相似或推断等关系。具体类型、方向与证据状态在这里展开。</p></div>
-        <p class="history-coverage">当前是选择性历史：欧美与日本材料较多；格斗、竞速、节奏、移动与中国游戏史仍需补充。2020s 目前仅收录 Hades，不能据此判断近年的发展。</p>
+        <p class="history-coverage">当前覆盖到2024年，已补中文作品、卡牌、模拟与在线世界；仍是选择性历史。格斗和音乐路线较薄，模组、移动平台与2025年后的内容仍需补证。</p>
       </div>
     </aside>
   </div>
   <noscript><p>当前为静态总览。下面的年代目录包含全部对象、关系与来源；启用 JavaScript 后可搜索和在图旁追踪关系。</p></noscript>
 
-  <p class="history-coverage-note">当前是选择性历史，非完整游戏史。格斗、竞速、节奏、移动与中国游戏史仍需扩充；2020s 目前仅有 Hades 相关条目。</p>
+  <p class="history-coverage-note">当前覆盖到2024年，非完整游戏史。格斗、音乐、模组与移动平台仍较薄；中文作品间的影响关系及2025年后的发展尚需补证。</p>
   <section class="history-catalog" id="history-catalog" aria-labelledby="history-catalog-title">
     <header><div><p class="plain-label">可追溯的历史对象</p><h2 id="history-catalog-title">年代目录与原始来源</h2></div><a href={sitePath('atlas/network/')}>打开精确年份坐标与完整证据网络 ↗</a></header>
-    <p>创新观察的年份指向本图讨论的具体实例，不宣称该机制在这一年首次出现。新增博物馆年表条目只补作品锚点，未据此生成影响连线。</p>
+    <p>年份指向条目说明的版本：早期体验、资料片和重制版在详情注明，不统一视为最早发行日。创新观察不宣称机制首次发明；作品之间的直接影响需另有来源支持。</p>
     {historyEras.map(era=><details class="history-era" data-history-era>
       <summary>{era.label} <span>{era.title}</span><small>{nodes.filter(n=>n.startYear>=era.start&&n.startYear<=era.end).length} 个对象</small></summary>
       {nodes.filter(n=>n.startYear>=era.start&&n.startYear<=era.end).map(node=>(<details class="history-entry" id={`atlas-node-detail-${node.id}`} data-history-entry={node.id}>
@@ -250,6 +250,13 @@ if (root) {
       );
     draw();
   }
+  function positionInspector() {
+    const node = linkById.get(selected);
+    const rect = node?.getBoundingClientRect();
+    root!.dataset.dock = rect && window.innerWidth > 900 && rect.left + rect.width / 2 > window.innerWidth / 2 ? 'left' : 'right';
+  }
+  window.addEventListener('resize', positionInspector);
+  root.querySelector('[data-history-scroll]')!.addEventListener('scroll', positionInspector, { passive: true });
   function select(id: string, changeUrl = true, focus = true) {
     if (!byId.has(id)) return;
     selected = id;
@@ -275,6 +282,7 @@ if (root) {
       .querySelector<HTMLElement>('[data-history-scroll]')!
       .scrollIntoView({ block: 'start', behavior: 'instant' });
     inspector.scrollTop = 0;
+    positionInspector();
     if (changeUrl) history.pushState(null, '', `#atlas-node-detail-${id}`);
     if (focus) inspector.focus({ preventScroll: true });
   }
@@ -286,6 +294,7 @@ if (root) {
     content.innerHTML = initial;
     close.hidden = true;
     delete root!.dataset.inspect;
+    delete root!.dataset.dock;
     if (changeUrl && location.hash.startsWith('#atlas-node-detail-'))
       history.pushState(null, '', location.pathname + location.search);
     emphasize();
@@ -358,6 +367,7 @@ if (root) {
       content.innerHTML = initial;
       close.hidden = true;
       delete root!.dataset.inspect;
+    delete root!.dataset.dock;
       if (location.hash.startsWith('#atlas-node-detail-'))
         history.replaceState(null, '', location.pathname + location.search);
       emphasize();
@@ -952,6 +962,9 @@ select:focus-visible {
   color: var(--muted);
   max-width: 900px;
   line-height: 1.8;
+}
+@media (min-width: 901px) {
+  .history[data-inspect='true'][data-dock='left'] .history-inspector { left: 24px; right: auto; }
 }
 @media (max-width: 900px) {
   .history[data-inspect='true'] .history-inspector {

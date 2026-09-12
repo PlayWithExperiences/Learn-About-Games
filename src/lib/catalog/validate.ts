@@ -31,7 +31,7 @@ export type AtlasDirectionality = 'directed' | 'undirected';
 export type AtlasEventRole = 'definition' | 'mechanism' | 'transformation' | 'diffusion';
 export type AtlasRelationRole = 'evolution' | 'carrier';
 
-export type AtlasEvidenceOriginalLanguage = 'en' | 'ja' | 'fr' | 'es';
+export type AtlasEvidenceOriginalLanguage = 'en' | 'ja' | 'fr' | 'es' | 'zh-CN' | 'zh-TW';
 
 export type AtlasEvidenceSourceKind =
   | 'institutional-history'
@@ -343,6 +343,8 @@ const atlasEvidenceOriginalLanguages = new Set<AtlasEvidenceOriginalLanguage>([
   'ja',
   'fr',
   'es',
+  'zh-CN',
+  'zh-TW',
 ]);
 const atlasEvidenceSourceKinds = new Set<AtlasEvidenceSourceKind>([
   'institutional-history',

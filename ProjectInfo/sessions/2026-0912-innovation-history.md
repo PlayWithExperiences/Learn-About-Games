@@ -83,3 +83,17 @@ trace-user-count: 4
 基线未变。完成本地研究目录/资源入口检查，以及1次GDC作者复盘搜索探针；没有启动批量调用。研究清单 docs/research/2026-09-12-atlas-coverage-expansion.md 列出六类候选、证据标准及最多20查询+60页面、并发2、无自动重试、不使用外部付费模型API的边界。GlobalGuideline.md第37–38行明确一般继续授权不等于新的批量调用确认，故向用户请求本批确认。
 
 原始对话：dialogues/2026-0912.md，本session“继续补全”回合。
+
+## 2026-09-12 13:47:17 +0800 获批首批扩充与验收
+
+决策：無涘（“批准”上述调用边界及交付）｜记录：Codex。session 01a091a6-dbd8-7072-a821-27697dd08274
+trace-user-count: 5
+
+- 实际20查询/50页面任务，最大并发2；没有自动重试失败URL、额外付费模型、转写或视频下载。分段读取成功但截断的页面仍计入读取次数。原始工具返回临时存于 /tmp/lag-atlas-approved-research.json；版本化请求回执在 docs/research/2026-09-12-atlas-expansion-receipt.json。
+- 新增38对象（32游戏/版本、6机制观察）、20关系、35来源，目录134/106/113。RPG、模拟、在线世界、卡牌、格斗、竞速、音乐与中文作品进入同一图，时间至2024年。新日期清楚区分早期体验/资料片/重制版，中文来源支持zh-CN与zh-TW。
+- 关系审查：Ultima对Dragon Quest的具体代数未锁定，保留无向比较；UO–Minecraft相似且因果未证实；Luck be a Landlord→Balatro为作者明确启发；没有Slay→Balatro或Minecraft原版→Factorio的猜测边。BuildCraft日期、DDR、Guitar Hero和Magic继续延期；原计划中其他未形成条目的对象不声称已查完。
+- 本地初测发现时间轴延长后把旧年份挤近，导致一条SVG关系没有可点击段；现保持原每年像素间距、扩宽画布，并有回归测试。新增透镜导致全屏画布不足，改为单行不压缩横向滚动。右端Balatro被详情遮挡，实看后改成按位置左右停靠，并补不相交断言。
+- 最终 npm run build：213/213单测、0/0/0、155页；Atlas+History E2E：62 passed /20 skipped；此前base-path也通过。末轮24 passed覆盖新旧书签、中文来源、关联追踪、320px两主题、无脚本、面板避让与README。证据日志 /tmp/lag-expansion-ready-build.log、/tmp/lag-expansion-ready-e2e.log、/tmp/lag-expansion-final-ui.log。源码与主题/文档的目录数断言已更新；未放宽滚动位置或点击合同。
+- 网站更新仍待云端与live回执。未提交NotebookLM自动化与旧对话记录未修改或暂存。
+
+原始对话：dialogues/2026-0912.md，本session“批准”回合。

@@ -994,5 +994,705 @@
     "boundedClaim": {
       "zh-CN": "1980年代条目支持 M.U.L.E.（1983）、Tetris（1984）与 John Madden Football（1988）。只引用对应作品，不沿用年表中其他作品的地区混合日期。"
     }
+  },
+  {
+    "id": "batch-ultima",
+    "sourceTitle": "Ultima",
+    "title": {
+      "zh-CN": "Ultima",
+      "en": "Ultima"
+    },
+    "url": "https://www.museumofplay.org/games/ultima/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "1981年Ultima的大地图、城镇与第一人称地城；系列延伸到1997年Ultima Online。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1981年Ultima的大地图、城镇与第一人称地城；系列延伸到1997年Ultima Online。"
+    }
+  },
+  {
+    "id": "batch-wizardry",
+    "sourceTitle": "Wizardry: Proving Grounds of the Mad Overlord",
+    "title": {
+      "zh-CN": "Wizardry: Proving Grounds of the Mad Overlord",
+      "en": "Wizardry: Proving Grounds of the Mad Overlord"
+    },
+    "url": "https://www.digitaleclipse.com/games/wizardry",
+    "institutionOrAuthor": "Digital Eclipse",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "重制者明确原作代码来自1981年，并说明组队探险及对Dragon Quest/Final Fantasy系列的启发；不采用绝对第一款宣传。"
+    },
+    "boundedClaim": {
+      "zh-CN": "重制者明确原作代码来自1981年，并说明组队探险及对Dragon Quest/Final Fantasy系列的启发；不采用绝对第一款宣传。"
+    }
+  },
+  {
+    "id": "batch-dragon-quest",
+    "sourceTitle": "Dragon Quest",
+    "title": {
+      "zh-CN": "Dragon Quest",
+      "en": "Dragon Quest"
+    },
+    "url": "https://www.museumofplay.org/games/dragon-quest/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "1986年发售；将电脑RPG操作转为主机菜单，参考Ultima和Wizardry。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1986年发售；将电脑RPG操作转为主机菜单，参考Ultima和Wizardry。"
+    }
+  },
+  {
+    "id": "batch-final-fantasy",
+    "sourceTitle": "Final Fantasy VII",
+    "title": {
+      "zh-CN": "Final Fantasy VII",
+      "en": "Final Fantasy VII"
+    },
+    "url": "https://www.museumofplay.org/games/final-fantasy-vii/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "Final Fantasy始于1987年；十年后的VII采用光盘、三维图形与过场动画。只讨论系列内部转变。"
+    },
+    "boundedClaim": {
+      "zh-CN": "Final Fantasy始于1987年；十年后的VII采用光盘、三维图形与过场动画。只讨论系列内部转变。"
+    }
+  },
+  {
+    "id": "batch-simcity",
+    "sourceTitle": "SimCity",
+    "title": {
+      "zh-CN": "SimCity",
+      "en": "SimCity"
+    },
+    "url": "https://www.museumofplay.org/games/simcity/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "1989年SimCity的自定目标、城市模拟，以及后来包括The Sims在内的Sim作品发展；不把所有建造游戏都归为直接后继。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1989年SimCity的自定目标、城市模拟，以及后来包括The Sims在内的Sim作品发展；不把所有建造游戏都归为直接后继。"
+    }
+  },
+  {
+    "id": "batch-civ-museum",
+    "sourceTitle": "Sid Meier’s Civilization",
+    "title": {
+      "zh-CN": "Sid Meier’s Civilization",
+      "en": "Sid Meier’s Civilization"
+    },
+    "url": "https://www.museumofplay.org/games/sid-meiers-civilization/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "科技树、回合策略与不同胜利方式；明确列SimCity为Meier的灵感来源。"
+    },
+    "boundedClaim": {
+      "zh-CN": "科技树、回合策略与不同胜利方式；明确列SimCity为Meier的灵感来源。"
+    }
+  },
+  {
+    "id": "batch-civ-official",
+    "sourceTitle": "Sid Meier’s Civilization",
+    "title": {
+      "zh-CN": "Sid Meier’s Civilization",
+      "en": "Sid Meier’s Civilization"
+    },
+    "url": "https://civilization.2k.com/civ/",
+    "institutionOrAuthor": "Firaxis / 2K",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "原作1991年9月发行，玩家协调经济、政治、军事与科技，并可追求多种胜利路径。"
+    },
+    "boundedClaim": {
+      "zh-CN": "原作1991年9月发行，玩家协调经济、政治、军事与科技，并可追求多种胜利路径。"
+    }
+  },
+  {
+    "id": "batch-street-fighter",
+    "sourceTitle": "Street Fighter II",
+    "title": {
+      "zh-CN": "Street Fighter II",
+      "en": "Street Fighter II"
+    },
+    "url": "https://www.museumofplay.org/games/street-fighter-ii/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "搜索索引返回的馆方条目正文；不是直读成功回执",
+    "summary": {
+      "zh-CN": "1991年作品以八名差异化角色、必杀技与连击支撑对人竞技。本轮通过搜索索引读取馆方正文；直读工具返回内部错误。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1991年作品以八名差异化角色、必杀技与连击支撑对人竞技。本轮通过搜索索引读取馆方正文；直读工具返回内部错误。"
+    }
+  },
+  {
+    "id": "batch-gran-turismo",
+    "sourceTitle": "Gran Turismo",
+    "title": {
+      "zh-CN": "Gran Turismo",
+      "en": "Gran Turismo"
+    },
+    "url": "https://www.gran-turismo.com/us/products/gt/",
+    "institutionOrAuthor": "Polyphony Digital / Sony",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "官网产品页标1997-12-22；驾驶物理、购车改装与模拟模式相结合。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官网产品页标1997-12-22；驾驶物理、购车改装与模拟模式相结合。"
+    }
+  },
+  {
+    "id": "batch-dwarf-fortress",
+    "sourceTitle": "Dwarf Fortress development log, 2006",
+    "title": {
+      "zh-CN": "Dwarf Fortress development log, 2006",
+      "en": "Dwarf Fortress development log, 2006"
+    },
+    "url": "https://www.bay12games.com/dwarves/dev_2006.html",
+    "institutionOrAuthor": "Tarn Adams / Bay 12 Games",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2006-08-08 release及同年8月开发记录",
+    "summary": {
+      "zh-CN": "2006-08-08公开0.21.93.19a；同期开发记录包含世界生成、要塞经营、角色需求与冒险模式。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2006-08-08公开0.21.93.19a；同期开发记录包含世界生成、要塞经营、角色需求与冒险模式。"
+    }
+  },
+  {
+    "id": "batch-factorio",
+    "sourceTitle": "Factorio Presskit",
+    "title": {
+      "zh-CN": "Factorio Presskit",
+      "en": "Factorio Presskit"
+    },
+    "url": "https://www.factorio.com/support/press-kit",
+    "institutionOrAuthor": "Wube Software",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "工厂建设与自动化生产；2016年2月进入Steam、2020年8月1.0。Related games列表不能当作直接影响清单。"
+    },
+    "boundedClaim": {
+      "zh-CN": "工厂建设与自动化生产；2016年2月进入Steam、2020年8月1.0。Related games列表不能当作直接影响清单。"
+    }
+  },
+  {
+    "id": "batch-factorio-buildcraft",
+    "sourceTitle": "Friday Facts #50 – Growing secretly",
+    "title": {
+      "zh-CN": "Friday Facts #50 – Growing secretly",
+      "en": "Friday Facts #50 – Growing secretly"
+    },
+    "url": "https://www.factorio.com/blog/post/fff-50",
+    "institutionOrAuthor": "kovarex / Wube Software",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Automation genre",
+    "summary": {
+      "zh-CN": "作者明确Factorio受BuildCraft启发。此次未核定模组早期发布日期，因此保留文字依据，不把这条边改接到Minecraft原版。"
+    },
+    "boundedClaim": {
+      "zh-CN": "作者明确Factorio受BuildCraft启发。此次未核定模组早期发布日期，因此保留文字依据，不把这条边改接到Minecraft原版。"
+    }
+  },
+  {
+    "id": "batch-mmo-lineage",
+    "sourceTitle": "Ten Years of World of Warcraft",
+    "title": {
+      "zh-CN": "Ten Years of World of Warcraft",
+      "en": "Ten Years of World of Warcraft"
+    },
+    "url": "https://www.raphkoster.com/2014/11/21/ten-years-of-world-of-warcraft/",
+    "institutionOrAuthor": "Raph Koster",
+    "sourceKind": "historical-analysis",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "开篇DikuMUD历史至WoW设计讨论，不采用评论区",
+    "summary": {
+      "zh-CN": "1991年DikuMUD公告、职业/等级/组队结构，及EverQuest到WoW的设计承接；为行业设计师的历史分析，不声称代码直接继承。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1991年DikuMUD公告、职业/等级/组队结构，及EverQuest到WoW的设计承接；为行业设计师的历史分析，不声称代码直接继承。"
+    }
+  },
+  {
+    "id": "batch-ultima-online",
+    "sourceTitle": "Ultima Online’s influence",
+    "title": {
+      "zh-CN": "Ultima Online’s influence",
+      "en": "Ultima Online’s influence"
+    },
+    "url": "https://www.raphkoster.com/2017/09/28/ultima-onlines-influence/",
+    "institutionOrAuthor": "Raph Koster",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "LegendMUD背景、UO模拟与经济、文章后段影响边界；不采用评论区",
+    "summary": {
+      "zh-CN": "LegendMUD于1994年正式开放；其设计经验进入UO。UO强调可交互物件、制作与玩家经济；作者将Minecraft资源系统与其比较，同时明确未确认直接影响。"
+    },
+    "boundedClaim": {
+      "zh-CN": "LegendMUD于1994年正式开放；其设计经验进入UO。UO强调可交互物件、制作与玩家经济；作者将Minecraft资源系统与其比较，同时明确未确认直接影响。"
+    }
+  },
+  {
+    "id": "batch-lol-date",
+    "sourceTitle": "Where to Watch the League of Legends Origins Doc",
+    "title": {
+      "zh-CN": "Where to Watch the League of Legends Origins Doc",
+      "en": "Where to Watch the League of Legends Origins Doc"
+    },
+    "url": "https://www.leagueoflegends.com/en-au/news/media/where-to-watch-the-league-of-legends-origins-doc/",
+    "institutionOrAuthor": "Riot Games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2019-10-22与10 year anniversary正文",
+    "summary": {
+      "zh-CN": "2019年官方十周年回顾提供2009年的作品起点；不把纪录片介绍当作已读取影片。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2019年官方十周年回顾提供2009年的作品起点；不把纪录片介绍当作已读取影片。"
+    }
+  },
+  {
+    "id": "batch-lol-play",
+    "sourceTitle": "League of Legends – How to Play",
+    "title": {
+      "zh-CN": "League of Legends – How to Play",
+      "en": "League of Legends – How to Play"
+    },
+    "url": "https://www.leagueoflegends.com/en-us/how-to-play/",
+    "institutionOrAuthor": "Riot Games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "五对五英雄对抗、推塔摧毁基地、经验与金币成长。描述当前核心玩法，不把当前全部系统倒填至2009年。"
+    },
+    "boundedClaim": {
+      "zh-CN": "五对五英雄对抗、推塔摧毁基地、经验与金币成长。描述当前核心玩法，不把当前全部系统倒填至2009年。"
+    }
+  },
+  {
+    "id": "batch-dota2",
+    "sourceTitle": "Dota 2",
+    "title": {
+      "zh-CN": "Dota 2",
+      "en": "Dota 2"
+    },
+    "url": "https://store.steampowered.com/app/570/Dota_2/",
+    "institutionOrAuthor": "Valve",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2013-07-09发行；英雄、物品与角色组合构成团队策略。商品页不证明其与LoL的影响方向。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2013-07-09发行；英雄、物品与角色组合构成团队策略。商品页不证明其与LoL的影响方向。"
+    }
+  },
+  {
+    "id": "batch-fortnite",
+    "sourceTitle": "Announcing Fortnite Battle Royale",
+    "title": {
+      "zh-CN": "Announcing Fortnite Battle Royale",
+      "en": "Announcing Fortnite Battle Royale"
+    },
+    "url": "https://www.fortnite.com/news/announcing-fortnite-battle-royale?lang=en-US",
+    "institutionOrAuthor": "Epic Games",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2017-09公告：百人对抗结合建造和可破坏环境，并明确提到PUBG启发。PUBG端点只标该文引用的2017年公开版本。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2017-09公告：百人对抗结合建造和可破坏环境，并明确提到PUBG启发。PUBG端点只标该文引用的2017年公开版本。"
+    }
+  },
+  {
+    "id": "batch-pal",
+    "sourceTitle": "《仙劍奇俠傳七》正式立項 並攜手皖新傳媒共同發行",
+    "title": {
+      "zh-CN": "《仙劍奇俠傳七》正式立項 並攜手皖新傳媒共同發行",
+      "en": "《仙劍奇俠傳七》正式立項 並攜手皖新傳媒共同發行"
+    },
+    "url": "https://km.softstar.com.tw/topic.aspx?tid=722",
+    "institutionOrAuthor": "大宇資訊",
+    "sourceKind": "official-statement",
+    "originalLanguage": "zh-TW",
+    "checkedAt": "2026-09-12",
+    "locator": "2017-05-24正文对1995年系列起点的回顾",
+    "summary": {
+      "zh-CN": "官方回顾说明仙剑系列1995年推出，为仙侠单机RPG；不采用宣传性首创或销量断言。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方回顾说明仙剑系列1995年推出，为仙侠单机RPG；不采用宣传性首创或销量断言。"
+    }
+  },
+  {
+    "id": "batch-jx3",
+    "sourceTitle": "剑网3官方版本大事记",
+    "title": {
+      "zh-CN": "剑网3官方版本大事记",
+      "en": "剑网3官方版本大事记"
+    },
+    "url": "https://jx3.xoyo.com/zl/records.html",
+    "institutionOrAuthor": "西山居 / 金山",
+    "sourceKind": "official-statement",
+    "originalLanguage": "zh-CN",
+    "checkedAt": "2026-09-12",
+    "locator": "2009年风起稻香与2011年一代宗师条目",
+    "summary": {
+      "zh-CN": "2009年8月公测、9月商业运营；2011年11月一代宗师资料片引入萍踪侠影轻功。不采用绝对首创用语。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2009年8月公测、9月商业运营；2011年11月一代宗师资料片引入萍踪侠影轻功。不采用绝对首创用语。"
+    }
+  },
+  {
+    "id": "batch-genshin",
+    "sourceTitle": "Your journey in Genshin Impact begins now",
+    "title": {
+      "zh-CN": "Your journey in Genshin Impact begins now",
+      "en": "Your journey in Genshin Impact begins now"
+    },
+    "url": "https://blog.playstation.com/2020/09/28/your-journey-in-genshin-impact-begins-now/",
+    "institutionOrAuthor": "Jason Chuang / miHoYo",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Combat basics与Welcome to the party",
+    "summary": {
+      "zh-CN": "2020-09-28 PS4上线；角色切换与不同元素效果组合产生反应。本文没有证明与塞尔达的直接影响。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2020-09-28 PS4上线；角色切换与不同元素效果组合产生反应。本文没有证明与塞尔达的直接影响。"
+    }
+  },
+  {
+    "id": "batch-wukong",
+    "sourceTitle": "Black Myth: Wukong",
+    "title": {
+      "zh-CN": "Black Myth: Wukong",
+      "en": "Black Myth: Wukong"
+    },
+    "url": "https://www.playstation.com/en-us/games/black-myth-wukong/",
+    "institutionOrAuthor": "Game Science / PlayStation",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2024-08-20；以西游记为叙事基础，棍术、法术与变化结合。未证明与其他动作RPG的具体影响关系。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2024-08-20；以西游记为叙事基础，棍术、法术与变化结合。未证明与其他动作RPG的具体影响关系。"
+    }
+  },
+  {
+    "id": "batch-baldurs-gate",
+    "sourceTitle": "Baldur’s Gate: Enhanced Edition",
+    "title": {
+      "zh-CN": "Baldur’s Gate: Enhanced Edition",
+      "en": "Baldur’s Gate: Enhanced Edition"
+    },
+    "url": "https://www.beamdog.com/games/baldurs-gate-enhanced/",
+    "institutionOrAuthor": "Beamdog",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "发行方回顾原作1998年推出；自定义角色、招募队友和探索。增强版新增内容不倒填至原作。"
+    },
+    "boundedClaim": {
+      "zh-CN": "发行方回顾原作1998年推出；自定义角色、招募队友和探索。增强版新增内容不倒填至原作。"
+    }
+  },
+  {
+    "id": "batch-bg3-faq",
+    "sourceTitle": "Baldur’s Gate 3 FAQ",
+    "title": {
+      "zh-CN": "Baldur’s Gate 3 FAQ",
+      "en": "Baldur’s Gate 3 FAQ"
+    },
+    "url": "https://forums.larian.com/ubbthreads.php?Number=874803&ubb=showflat",
+    "institutionOrAuthor": "Salo / Larian Studios",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "PC正式版2023-08-03；沿用被遗忘国度与部分熟悉人物，但讲述新角色的新冒险。"
+    },
+    "boundedClaim": {
+      "zh-CN": "PC正式版2023-08-03；沿用被遗忘国度与部分熟悉人物，但讲述新角色的新冒险。"
+    }
+  },
+  {
+    "id": "batch-bg3-systems",
+    "sourceTitle": "Baldur’s Gate 3 – About",
+    "title": {
+      "zh-CN": "Baldur’s Gate 3 – About",
+      "en": "Baldur’s Gate 3 – About"
+    },
+    "url": "https://baldursgate3.game/about",
+    "institutionOrAuthor": "Larian Studios",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "D&D 5e回合战斗、环境互动和起源角色共同支持玩家选择；不把多职业数等更新数值归为首发特征。"
+    },
+    "boundedClaim": {
+      "zh-CN": "D&D 5e回合战斗、环境互动和起源角色共同支持玩家选择；不把多职业数等更新数值归为首发特征。"
+    }
+  },
+  {
+    "id": "batch-disco",
+    "sourceTitle": "Disco Elysium – The Final Cut",
+    "title": {
+      "zh-CN": "Disco Elysium – The Final Cut",
+      "en": "Disco Elysium – The Final Cut"
+    },
+    "url": "https://www.playstation.com/en-us/games/disco-elysium/",
+    "institutionOrAuthor": "ZA/UM / PlayStation",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2021-03-30为所引PS版The Final Cut日期；技能与Thought Cabinet影响玩家处理情境的方式，不代表原作首发年份。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2021-03-30为所引PS版The Final Cut日期；技能与Thought Cabinet影响玩家处理情境的方式，不代表原作首发年份。"
+    }
+  },
+  {
+    "id": "batch-spire",
+    "sourceTitle": "Slay the Spire",
+    "title": {
+      "zh-CN": "Slay the Spire",
+      "en": "Slay the Spire"
+    },
+    "url": "https://store.steampowered.com/app/646570/Slay_the_Spire/",
+    "institutionOrAuthor": "Mega Crit",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2019-01-23为所引发行日期；开发者明确卡牌与Roguelike融合，逐局选牌、遗物和变化路线。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2019-01-23为所引发行日期；开发者明确卡牌与Roguelike融合，逐局选牌、遗物和变化路线。"
+    }
+  },
+  {
+    "id": "batch-vampire",
+    "sourceTitle": "Vampire Survivors",
+    "title": {
+      "zh-CN": "Vampire Survivors",
+      "en": "Vampire Survivors"
+    },
+    "url": "https://store.steampowered.com/app/1794680/Vampire_Survivors/",
+    "institutionOrAuthor": "poncle",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "页面明确itch早期版2021-03-31、Steam EA 2021-12-17、正式版2022-10-20；单局收集金币可支持后续升级。"
+    },
+    "boundedClaim": {
+      "zh-CN": "页面明确itch早期版2021-03-31、Steam EA 2021-12-17、正式版2022-10-20；单局收集金币可支持后续升级。"
+    }
+  },
+  {
+    "id": "batch-landlord",
+    "sourceTitle": "Luck be a Landlord",
+    "title": {
+      "zh-CN": "Luck be a Landlord",
+      "en": "Luck be a Landlord"
+    },
+    "url": "https://store.steampowered.com/app/1404850/Luck_be_a_Landlord/",
+    "institutionOrAuthor": "TrampolineTales",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2021-01-08抢先体验、2023-01-06正式发行；每局加入不同符号和物品构建组合。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2021-01-08抢先体验、2023-01-06正式发行；每局加入不同符号和物品构建组合。"
+    }
+  },
+  {
+    "id": "batch-balatro",
+    "sourceTitle": "Balatro",
+    "title": {
+      "zh-CN": "Balatro",
+      "en": "Balatro"
+    },
+    "url": "https://www.playstation.com/en-us/games/balatro/",
+    "institutionOrAuthor": "Playstack / PlayStation",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2024-02-20；以扑克牌型、小丑牌和其他组合形成单局构筑。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2024-02-20；以扑克牌型、小丑牌和其他组合形成单局构筑。"
+    }
+  },
+  {
+    "id": "batch-balatro-influences",
+    "sourceTitle": "Balatro Interview: LocalThunk on the Concept and Design",
+    "title": {
+      "zh-CN": "Balatro Interview: LocalThunk on the Concept and Design",
+      "en": "Balatro Interview: LocalThunk on the Concept and Design"
+    },
+    "url": "https://toucharcade.com/2024/03/18/balatro-interview-mobile-port-localthunk-dlc-plans-updates-new-jokers-demo-feedback/",
+    "institutionOrAuthor": "LocalThunk / TouchArcade",
+    "sourceKind": "interview",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "TA询问游戏概念的首个问答",
+    "summary": {
+      "zh-CN": "作者明确概念受到Big 2和观看Luck be a Landlord视频启发；不以类型相似推断Slay the Spire直接影响。"
+    },
+    "boundedClaim": {
+      "zh-CN": "作者明确概念受到Big 2和观看Luck be a Landlord视频启发；不以类型相似推断Slay the Spire直接影响。"
+    }
+  },
+  {
+    "id": "batch-harmonix-history",
+    "sourceTitle": "Harmonix Timeline",
+    "title": {
+      "zh-CN": "Harmonix Timeline",
+      "en": "Harmonix Timeline"
+    },
+    "url": "https://www.harmonixmusic.com/about/timeline",
+    "institutionOrAuthor": "Harmonix",
+    "sourceKind": "project-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2017年Super Beat Sports发行；公告描述随音乐挥击、截击与得分。时间线没有为本轮提供Guitar Hero初代的充分资料。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2017年Super Beat Sports发行；公告描述随音乐挥击、截击与得分。时间线没有为本轮提供Guitar Hero初代的充分资料。"
+    }
+  },
+  {
+    "id": "batch-rock-band",
+    "sourceTitle": "A Special Gift for Rock Band 10: 10 Free Songs!",
+    "title": {
+      "zh-CN": "A Special Gift for Rock Band 10: 10 Free Songs!",
+      "en": "A Special Gift for Rock Band 10: 10 Free Songs!"
+    },
+    "url": "https://www.harmonixmusic.com/blog/a-special-gift-for-rock-band-10-10-free-songs/",
+    "institutionOrAuthor": "Daniel Sussman / Harmonix",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2017-11作者纪念北美初代发行十周年，即2007年；回顾玩家和创作者社群。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2017-11作者纪念北美初代发行十周年，即2007年；回顾玩家和创作者社群。"
+    }
+  },
+  {
+    "id": "batch-harmonix-play",
+    "sourceTitle": "Harmonix – About",
+    "title": {
+      "zh-CN": "Harmonix – About",
+      "en": "Harmonix – About"
+    },
+    "url": "https://www.harmonixmusic.com/about",
+    "institutionOrAuthor": "Harmonix",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "工作室将Rock Band描述为与亲友一起体验现场表演的音乐游戏；不将此描述自动转成其他作品的影响边。"
+    },
+    "boundedClaim": {
+      "zh-CN": "工作室将Rock Band描述为与亲友一起体验现场表演的音乐游戏；不将此描述自动转成其他作品的影响边。"
+    }
+  },
+  {
+    "id": "batch-minecraft",
+    "sourceTitle": "Minecraft",
+    "title": {
+      "zh-CN": "Minecraft",
+      "en": "Minecraft"
+    },
+    "url": "https://www.museumofplay.org/games/minecraft/",
+    "institutionOrAuthor": "The Strong",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "正文中对应作品、日期与机制说明",
+    "summary": {
+      "zh-CN": "2009年公开；程序生成世界中的方块建造与玩家自定目标。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2009年公开；程序生成世界中的方块建造与玩家自定目标。"
+    }
   }
 ]

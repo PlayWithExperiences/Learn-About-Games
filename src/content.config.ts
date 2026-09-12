@@ -260,7 +260,7 @@ const atlasEvidence = defineCollection({
       id: z.string().trim().min(1),
       title: localizedText,
       sourceTitle: z.string().trim().min(1),
-      originalLanguage: z.enum(['en', 'ja', 'fr', 'es']),
+      originalLanguage: z.enum(['en', 'ja', 'fr', 'es', 'zh-CN', 'zh-TW']),
       url: httpUrl,
       summary: localizedText,
       sourceKind: z.enum([

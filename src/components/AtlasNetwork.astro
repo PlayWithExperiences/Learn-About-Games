@@ -137,6 +137,8 @@ const languageLabels: Record<AtlasEvidence['originalLanguage'], string> = {
   ja: '日本語',
   fr: 'Français',
   es: 'Español',
+  'zh-CN': '简体中文',
+  'zh-TW': '繁體中文',
 };
 
 const evidenceFor = (ids: string[]) => ids
@@ -319,7 +321,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     <noscript>
       <p class="script-required-note" data-atlas-view-no-js-note>启用 JavaScript 后可以缩放和拖拽平移；完整网络与时期大纲仍可阅读。</p>
     </noscript>
-    <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 1958–2020</p>
+    <p class="atlas-network__scroll-note" data-atlas-scroll-note>左右滚动查看 {layout.minYear}–{layout.maxYear}</p>
     <div data-atlas-primary-network data-atlas-route-mode="full" data-atlas-perspective="works">
     <div class="atlas-network__viewport" data-atlas-canvas tabindex="0" aria-label="可缩放和平移的全局时间网络">
       <div

@@ -47,20 +47,24 @@ export const historyTracks = [
     id: "fps",
     title: "射击与第一人称",
     subtitle: "视角、对抗与沉浸",
-    tags: ["first-person-shooter-lens"],
+    tags: ["first-person-shooter-lens", "battle-royale-history"],
   },
   {
     id: "strategy",
-    title: "策略与实时调度",
-    subtitle: "经济、单位与阵营",
-    tags: ["real-time-strategy-lens"],
+    title: "策略与团队对抗",
+    subtitle: "回合规划、实时调度与英雄对抗",
+    tags: ["real-time-strategy-lens", "turn-based-strategy-history", "moba-history"],
   },
   {
     id: "simulation",
-    title: "模拟与在线世界",
-    subtitle: "经营、建造与社会互动",
-    tags: ["simulation-history", "social-worlds-history"],
+    title: "模拟与建造",
+    subtitle: "自定目标、资源与生产",
+    tags: ["simulation-history"],
   },
+  { id: "online", title: "在线世界", subtitle: "持续世界、制作与玩家社会", tags: ["social-worlds-history"] },
+  { id: "cards", title: "卡牌与单局构筑", subtitle: "规则组合、风险与重新开始", tags: ["card-history"] },
+  { id: "fighting", title: "格斗与对人竞技", subtitle: "角色差异、必杀技与连击", tags: ["fighting-history"] },
+  { id: "music", title: "音乐与表演", subtitle: "节奏与共同表演", tags: ["music-history"] },
   {
     id: "physical",
     title: "体育与身体输入",
@@ -72,6 +76,7 @@ export const historyTracks = [
 export function trackFor(
   node: Pick<Catalog["atlasNodes"][number], "id" | "tags">,
 ): string {
+  if (node.tags.includes("card-history")) return "cards";
   // Hybrids appear once in the area best suited to their reading context.
   if (node.id === "dead-cells" || node.id === "spelunky") return "rpg";
   return (
@@ -95,6 +100,10 @@ export const historyRoutes = [
       "spelunky",
       "dead-cells",
       "hades",
+      "slay-the-spire",
+      "vampire-survivors",
+      "luck-be-a-landlord",
+      "balatro",
     ],
   },
   {
@@ -106,6 +115,9 @@ export const historyRoutes = [
       "super-metroid",
       "castlevania-symphony-of-the-night",
       "ocarina-of-time",
+      "ultima",
+      "jx3-yidai-zongshi",
+      "genshin-impact",
       "grand-theft-auto",
       "breath-of-the-wild",
       "hollow-knight",
@@ -115,9 +127,16 @@ export const historyRoutes = [
   {
     id: "worlds",
     title: "从通关到生活在世界里",
-    text: "资源竞争、日常模拟、在线社群和自由建造让目标来源变得多样。年表提供作品锚点；相邻作品之间的直接影响仍需专门证据。",
+    text: "资源竞争、日常模拟、在线社群和自由建造让目标来源变得多样。有来源的影响与相似关系分别标记；未连线的对象仍可比较阅读。",
     ids: [
       "mule",
+      "simcity",
+      "civilization",
+      "dikumud",
+      "legendmud",
+      "ultima-online",
+      "dwarf-fortress",
+      "factorio",
       "the-sims",
       "everquest",
       "eve-online",

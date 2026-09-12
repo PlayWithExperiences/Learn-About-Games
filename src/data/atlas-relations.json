@@ -945,5 +945,365 @@
   "tags": ["innovation-event", "first-person-shooter-lens"],
   "relationRole": "evolution",
   "summary": { "zh-CN": "高速射击循环继续吸收垂直空间与更复杂的武器反馈。" }
-}
+},
+  {
+    "id": "ultima-to-dragon-quest",
+    "fromId": "ultima",
+    "toId": "dragon-quest",
+    "type": "structural-similarity",
+    "status": "credible",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "馆方将Ultima传统作为Dragon Quest的参考，但未在该段区分具体代数；这里比较初代电脑RPG与主机转译实例，不核定1981原作到1986作品的直接影响。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-dragon-quest"
+    ],
+    "directionalityNote": {
+      "zh-CN": "来源对系列与具体版本的指称不足以锁定直接影响，因此保留无向比较。"
+    }
+  },
+  {
+    "id": "wizardry-to-dragon-quest",
+    "fromId": "wizardry",
+    "toId": "dragon-quest",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "馆方明确Dragon Quest借鉴Wizardry；以主机菜单转译电脑RPG的操作要求。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-dragon-quest",
+      "batch-wizardry"
+    ]
+  },
+  {
+    "id": "final-fantasy-to-vii",
+    "fromId": "final-fantasy",
+    "toId": "final-fantasy-vii",
+    "type": "derived-variant",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "同系列从1987年早期作品发展到1997年VII的光盘与三维/影像表现；不表示中间没有其他作品。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-final-fantasy"
+    ]
+  },
+  {
+    "id": "simcity-to-civilization",
+    "fromId": "simcity",
+    "toId": "civilization",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "馆方明确SimCity是Sid Meier的灵感来源之一；Civilization将决策组织到回合与长时段历史中。"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-civ-museum"
+    ]
+  },
+  {
+    "id": "simcity-to-the-sims",
+    "fromId": "simcity",
+    "toId": "the-sims",
+    "type": "derived-variant",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "馆方将The Sims放在Maxis从SimCity扩展的模拟作品中；观察尺度从城市转向人物生活。"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-simcity"
+    ]
+  },
+  {
+    "id": "legendmud-to-ultima-online",
+    "fromId": "legendmud",
+    "toId": "ultima-online",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Koster回顾本人在LegendMUD积累的互动世界设计经验如何进入UO团队；不是代码直接移植的声明。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-ultima-online"
+    ]
+  },
+  {
+    "id": "dikumud-to-everquest",
+    "fromId": "dikumud",
+    "toId": "everquest",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Koster将EverQuest放在Diku式职业/组队玩法的传统中，并指出Sojourn这一中间来源；不是两者直接代码继承。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-mmo-lineage"
+    ]
+  },
+  {
+    "id": "everquest-to-world-of-warcraft",
+    "fromId": "everquest",
+    "toId": "world-of-warcraft",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Koster明确WoW直接参考EverQuest，并分析任务、可进入性与组队结构的调整。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-mmo-lineage"
+    ]
+  },
+  {
+    "id": "ultima-online-and-minecraft",
+    "fromId": "ultima-online",
+    "toId": "minecraft",
+    "type": "structural-similarity",
+    "status": "credible",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "UO设计者比较两者的资源与制作系统，同时明确未确认直接影响；因此不画因果箭头。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-ultima-online",
+      "batch-minecraft"
+    ],
+    "directionalityNote": {
+      "zh-CN": "只表示资料支持的结构比较；没有核定直接影响方向。"
+    }
+  },
+  {
+    "id": "dwarf-fortress-and-factorio",
+    "fromId": "dwarf-fortress",
+    "toId": "factorio",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "Wube将Dwarf Fortress列入Related games；本图据系统模拟与建设进行比较，不将推荐关联冒充开发影响。"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-factorio",
+      "batch-dwarf-fortress"
+    ],
+    "directionalityNote": {
+      "zh-CN": "只表示资料支持的结构比较；没有核定直接影响方向。"
+    }
+  },
+  {
+    "id": "pubg-to-fortnite-battle-royale",
+    "fromId": "pubg",
+    "toId": "fortnite-battle-royale",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Epic在2017年公告中明确因喜欢PUBG等Battle Royale作品而尝试自己的版本，并融合Fortnite建造规则。"
+    },
+    "tags": [
+      "battle-royale-history"
+    ],
+    "evidenceIds": [
+      "batch-fortnite"
+    ]
+  },
+  {
+    "id": "jx3-to-yidai-zongshi",
+    "fromId": "jx3",
+    "toId": "jx3-yidai-zongshi",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "官方大事记将一代宗师列为2011年资料片；把版本引入的轻功变化放在其实际年份。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-jx3"
+    ]
+  },
+  {
+    "id": "baldurs-gate-to-3",
+    "fromId": "baldurs-gate",
+    "toId": "baldurs-gate-3",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "官方FAQ说明新作沿用部分熟悉地点与人物，但讲述新角色的新冒险；不宣称玩法规则原样继承。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-bg3-faq"
+    ]
+  },
+  {
+    "id": "landlord-to-balatro",
+    "fromId": "luck-be-a-landlord",
+    "toId": "balatro",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "LocalThunk明确概念受观看Luck be a Landlord视频启发；不是按类型标签推断的影响。"
+    },
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-balatro-influences"
+    ]
+  },
+  {
+    "id": "simulation-self-authored-goals-carrier",
+    "fromId": "simulation-self-authored-goals",
+    "toId": "simcity",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该作品承载上述机制观察；日期指向所讨论的版本，不宣称首次发明。"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-simcity"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "online-world-crafting-economy-carrier",
+    "fromId": "online-world-crafting-economy",
+    "toId": "ultima-online",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该作品承载上述机制观察；日期指向所讨论的版本，不宣称首次发明。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-ultima-online"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "run-deck-construction-carrier",
+    "fromId": "run-deck-construction",
+    "toId": "slay-the-spire",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该作品承载上述机制观察；日期指向所讨论的版本，不宣称首次发明。"
+    },
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-spire"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "wuxia-qinggong-traversal-carrier",
+    "fromId": "wuxia-qinggong-traversal",
+    "toId": "jx3-yidai-zongshi",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该作品承载上述机制观察；日期指向所讨论的版本，不宣称首次发明。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-jx3"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "elemental-party-combinations-carrier",
+    "fromId": "elemental-party-combinations",
+    "toId": "genshin-impact",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该作品承载上述机制观察；日期指向所讨论的版本，不宣称首次发明。"
+    },
+    "tags": [
+      "open-world-lineage"
+    ],
+    "evidenceIds": [
+      "batch-genshin"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "rpg-environment-and-role-choice-carrier",
+    "fromId": "rpg-environment-and-role-choice",
+    "toId": "baldurs-gate-3",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该作品承载上述机制观察；日期指向所讨论的版本，不宣称首次发明。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-bg3-systems"
+    ],
+    "relationRole": "carrier"
+  }
 ]

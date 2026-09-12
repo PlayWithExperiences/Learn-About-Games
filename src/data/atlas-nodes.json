@@ -1074,5 +1074,787 @@
     "evidenceIds": [
       "chm-games-overview"
     ]
+  },
+  {
+    "id": "ultima",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Ultima",
+      "en": "Ultima"
+    },
+    "startYear": 1981,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "地城第一人称探索与地表大地图、城镇往返，扩展了电脑RPG的空间结构。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-ultima"
+    ]
+  },
+  {
+    "id": "wizardry",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Wizardry",
+      "en": "Wizardry"
+    },
+    "startYear": 1981,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "组建冒险队伍深入地城；1981年原作与后来的三维重制版分开理解。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-wizardry"
+    ]
+  },
+  {
+    "id": "dragon-quest",
+    "kind": "game",
+    "name": {
+      "zh-CN": "勇者斗恶龙",
+      "en": "Dragon Quest"
+    },
+    "startYear": 1986,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "将电脑RPG的复杂输入转为主机菜单，结合角色叙事、音乐与美术。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-dragon-quest"
+    ]
+  },
+  {
+    "id": "final-fantasy",
+    "kind": "game",
+    "name": {
+      "zh-CN": "最终幻想",
+      "en": "Final Fantasy"
+    },
+    "startYear": 1987,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以队伍角色展开冒险，是本图观察Final Fantasy系列转变的早期锚点。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-final-fantasy"
+    ]
+  },
+  {
+    "id": "final-fantasy-vii",
+    "kind": "game",
+    "name": {
+      "zh-CN": "最终幻想VII",
+      "en": "Final Fantasy VII"
+    },
+    "startYear": 1997,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "系列转向光盘、三维图形与过场动画；这里讨论表现与叙事承载方式，不宣称RPG首次使用这些技术。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-final-fantasy"
+    ]
+  },
+  {
+    "id": "simcity",
+    "kind": "game",
+    "name": {
+      "zh-CN": "SimCity",
+      "en": "SimCity"
+    },
+    "startYear": 1989,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "通过城市系统反馈让玩家自行设定理想结果，建设本身成为游玩目标。"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-simcity"
+    ]
+  },
+  {
+    "id": "civilization",
+    "kind": "game",
+    "name": {
+      "zh-CN": "文明",
+      "en": "Sid Meier’s Civilization"
+    },
+    "startYear": 1991,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以回合决策协调科技、经济与军事，并提供不同胜利路径。"
+    },
+    "tags": [
+      "turn-based-strategy-history"
+    ],
+    "evidenceIds": [
+      "batch-civ-official",
+      "batch-civ-museum"
+    ]
+  },
+  {
+    "id": "street-fighter-ii",
+    "kind": "game",
+    "name": {
+      "zh-CN": "街头霸王II",
+      "en": "Street Fighter II"
+    },
+    "startYear": 1991,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "差异化角色、必杀技与连击支持面对面竞技。"
+    },
+    "tags": [
+      "fighting-history"
+    ],
+    "evidenceIds": [
+      "batch-street-fighter"
+    ]
+  },
+  {
+    "id": "gran-turismo",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Gran Turismo",
+      "en": "Gran Turismo"
+    },
+    "startYear": 1997,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "把驾驶模拟、购车与车辆调整组织为长期游玩；年份按官网产品条目标记。"
+    },
+    "tags": [
+      "physical-play-history"
+    ],
+    "evidenceIds": [
+      "batch-gran-turismo"
+    ]
+  },
+  {
+    "id": "dwarf-fortress",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Dwarf Fortress",
+      "en": "Dwarf Fortress"
+    },
+    "startYear": 2006,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "程序生成世界中的要塞经营与冒险并置。2006年指早期公开版，不能等同于2022年Steam版。"
+    },
+    "tags": [
+      "simulation-history",
+      "procedural-generation"
+    ],
+    "evidenceIds": [
+      "batch-dwarf-fortress"
+    ]
+  },
+  {
+    "id": "factorio",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Factorio（Steam早期版）",
+      "en": "Factorio"
+    },
+    "startYear": 2016,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "把采矿、运输和加工逐步自动化；2016为Steam入口，开发始于2012，1.0在2020。开发者明确提到BuildCraft启发；模组早期日期仍待核定。"
+    },
+    "tags": [
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-factorio",
+      "batch-factorio-buildcraft"
+    ]
+  },
+  {
+    "id": "dikumud",
+    "kind": "game",
+    "name": {
+      "zh-CN": "DikuMUD",
+      "en": "DikuMUD"
+    },
+    "startYear": 1991,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以职业、等级、区域与组队构成文本在线冒险；日期按1991年公开公告的历史记录。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-mmo-lineage"
+    ]
+  },
+  {
+    "id": "legendmud",
+    "kind": "game",
+    "name": {
+      "zh-CN": "LegendMUD",
+      "en": "LegendMUD"
+    },
+    "startYear": 1994,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "脚本化物件、车辆和角色互动拓展文本世界；1994年正式开放，作者另记1993年试开放。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-ultima-online"
+    ]
+  },
+  {
+    "id": "ultima-online",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Ultima Online",
+      "en": "Ultima Online"
+    },
+    "startYear": 1997,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "将制作、交易与可交互物件组织为多人持续世界，让战斗之外的角色也有活动空间。"
+    },
+    "tags": [
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-ultima",
+      "batch-ultima-online"
+    ]
+  },
+  {
+    "id": "league-of-legends",
+    "kind": "game",
+    "name": {
+      "zh-CN": "英雄联盟",
+      "en": "League of Legends"
+    },
+    "startYear": 2009,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以英雄团队对抗、经济成长和基地目标构成策略。本条2009起点据官方十周年回顾；玩法描述取当前官方指南，不将当前所有系统倒填首发。"
+    },
+    "tags": [
+      "moba-history"
+    ],
+    "evidenceIds": [
+      "batch-lol-date",
+      "batch-lol-play"
+    ]
+  },
+  {
+    "id": "dota-2",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Dota 2",
+      "en": "Dota 2"
+    },
+    "startYear": 2013,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "英雄、角色职责和物品组合构成团队策略；2013为正式发行，商品页不证明对其他MOBA的影响方向。"
+    },
+    "tags": [
+      "moba-history"
+    ],
+    "evidenceIds": [
+      "batch-dota2"
+    ]
+  },
+  {
+    "id": "pubg",
+    "kind": "game",
+    "name": {
+      "zh-CN": "PUBG（2017年公开版本）",
+      "en": "PUBG: BATTLEGROUNDS"
+    },
+    "startYear": 2017,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "作为Epic在2017年明确引用的Battle Royale参考作品进入网络；本批未独立核定最早发行日，不把引用日期当作首创日期。"
+    },
+    "tags": [
+      "battle-royale-history"
+    ],
+    "evidenceIds": [
+      "batch-fortnite"
+    ]
+  },
+  {
+    "id": "fortnite-battle-royale",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Fortnite Battle Royale",
+      "en": "Fortnite Battle Royale"
+    },
+    "startYear": 2017,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "把百人最后存活规则与Fortnite的建造、可破坏环境结合；2017年公告明确提到PUBG作为参考。"
+    },
+    "tags": [
+      "battle-royale-history"
+    ],
+    "evidenceIds": [
+      "batch-fortnite"
+    ]
+  },
+  {
+    "id": "pal-1995",
+    "kind": "game",
+    "name": {
+      "zh-CN": "仙剑奇侠传",
+      "en": "The Legend of Sword and Fairy"
+    },
+    "startYear": 1995,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以仙侠题材组织单机角色扮演；年份标记初代/系列起点，不表示武侠RPG机制首次出现。"
+    },
+    "tags": [
+      "role-playing-lineage",
+      "chinese-language-development"
+    ],
+    "evidenceIds": [
+      "batch-pal"
+    ]
+  },
+  {
+    "id": "jx3",
+    "kind": "game",
+    "name": {
+      "zh-CN": "剑网3",
+      "en": "JX Online 3"
+    },
+    "startYear": 2009,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "2009年公测并商业运营的在线武侠世界；门派、秘境与社交构成其早期内容。"
+    },
+    "tags": [
+      "social-worlds-history",
+      "chinese-language-development"
+    ],
+    "evidenceIds": [
+      "batch-jx3"
+    ]
+  },
+  {
+    "id": "jx3-yidai-zongshi",
+    "kind": "game",
+    "name": {
+      "zh-CN": "剑网3：一代宗师",
+      "en": "JX3: Yidai Zongshi expansion"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "2011年资料片引入萍踪侠影轻功；作为原作后续版本独立标记，避免把新机制倒填至2009年。"
+    },
+    "tags": [
+      "social-worlds-history",
+      "chinese-language-development"
+    ],
+    "evidenceIds": [
+      "batch-jx3"
+    ]
+  },
+  {
+    "id": "genshin-impact",
+    "kind": "game",
+    "name": {
+      "zh-CN": "原神",
+      "en": "Genshin Impact"
+    },
+    "startYear": 2020,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以探索、队伍角色切换和元素反应组织开放世界动作RPG；本条日期对应2020年PS4上线。"
+    },
+    "tags": [
+      "open-world-lineage",
+      "chinese-language-development",
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-genshin"
+    ]
+  },
+  {
+    "id": "black-myth-wukong",
+    "kind": "game",
+    "name": {
+      "zh-CN": "黑神话：悟空",
+      "en": "Black Myth: Wukong"
+    },
+    "startYear": 2024,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "将西游叙事背景与棍术、法术、变化组合为动作角色扮演；本批未证明与其他动作游戏的直接影响关系。"
+    },
+    "tags": [
+      "role-playing-lineage",
+      "chinese-language-development"
+    ],
+    "evidenceIds": [
+      "batch-wukong"
+    ]
+  },
+  {
+    "id": "baldurs-gate",
+    "kind": "game",
+    "name": {
+      "zh-CN": "博德之门",
+      "en": "Baldur’s Gate"
+    },
+    "startYear": 1998,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "在D&D世界中自定义角色、招募队伍并探索；增强版新增内容不自动归入1998年原作。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-baldurs-gate"
+    ]
+  },
+  {
+    "id": "baldurs-gate-3",
+    "kind": "game",
+    "name": {
+      "zh-CN": "博德之门3",
+      "en": "Baldur’s Gate 3"
+    },
+    "startYear": 2023,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以D&D 5e战斗、环境互动与角色选择构成冒险；2023为PC正式版，早期体验另有历史。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-bg3-faq",
+      "batch-bg3-systems"
+    ]
+  },
+  {
+    "id": "disco-elysium-final-cut",
+    "kind": "game",
+    "name": {
+      "zh-CN": "极乐迪斯科：最终剪辑版",
+      "en": "Disco Elysium – The Final Cut"
+    },
+    "startYear": 2021,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "技能和思维阁改变侦探理解与处理情境的方式。2021仅指所引PS版Final Cut，不是原作最早发行年份。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-disco"
+    ]
+  },
+  {
+    "id": "slay-the-spire",
+    "kind": "game",
+    "name": {
+      "zh-CN": "杀戮尖塔",
+      "en": "Slay the Spire"
+    },
+    "startYear": 2019,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "逐局选牌、遗物与变化路线相互作用；2019是所引商品页的正式发行日期，不排除更早的抢先体验。"
+    },
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-spire"
+    ]
+  },
+  {
+    "id": "vampire-survivors",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Vampire Survivors（早期版）",
+      "en": "Vampire Survivors"
+    },
+    "startYear": 2021,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "以生存、局内选择与后续升级组织短局循环；2021为itch/Steam早期版，正式版在2022年。"
+    },
+    "tags": [
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-vampire"
+    ]
+  },
+  {
+    "id": "luck-be-a-landlord",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Luck be a Landlord（早期版）",
+      "en": "Luck be a Landlord"
+    },
+    "startYear": 2021,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "每局选择符号和物品建立组合；2021为抢先体验，正式版在2023年。"
+    },
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-landlord"
+    ]
+  },
+  {
+    "id": "balatro",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Balatro",
+      "en": "Balatro"
+    },
+    "startYear": 2024,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "把扑克牌型和小丑牌效果组织为单局构筑；作者明确提到Big 2和Luck be a Landlord视频的启发。"
+    },
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-balatro",
+      "batch-balatro-influences"
+    ]
+  },
+  {
+    "id": "rock-band",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Rock Band",
+      "en": "Rock Band"
+    },
+    "startYear": 2007,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "让亲友共同体验音乐表演；2007按开发者对北美初代发行十周年的回顾确定。"
+    },
+    "tags": [
+      "music-history"
+    ],
+    "evidenceIds": [
+      "batch-rock-band",
+      "batch-harmonix-play"
+    ]
+  },
+  {
+    "id": "super-beat-sports",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Super Beat Sports",
+      "en": "Super Beat Sports"
+    },
+    "startYear": 2017,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "将挥击、截击与得分动作放进音乐节奏中；此处补音乐与体育玩法交叉的作品锚点。"
+    },
+    "tags": [
+      "music-history"
+    ],
+    "evidenceIds": [
+      "batch-harmonix-history"
+    ]
+  },
+  {
+    "id": "simulation-self-authored-goals",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "模拟反馈与玩家自定目标"
+    },
+    "startYear": 1989,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "系统持续反馈建设后果，玩家自行决定什么结果值得追求。此处以SimCity为实例。"
+    },
+    "mechanism": {
+      "zh-CN": "系统持续反馈建设后果，玩家自行决定什么结果值得追求。此处以SimCity为实例。"
+    },
+    "tags": [
+      "innovation-event",
+      "simulation-history"
+    ],
+    "evidenceIds": [
+      "batch-simcity"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "simulation-history"
+    ]
+  },
+  {
+    "id": "online-world-crafting-economy",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "持续世界中的制作与玩家经济"
+    },
+    "startYear": 1997,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "可交互物件、制作与交易让多人世界容纳战斗之外的角色和目标。"
+    },
+    "mechanism": {
+      "zh-CN": "可交互物件、制作与交易让多人世界容纳战斗之外的角色和目标。"
+    },
+    "tags": [
+      "innovation-event",
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-ultima-online"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "online-worlds"
+    ]
+  },
+  {
+    "id": "run-deck-construction",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "在单局中构筑卡组"
+    },
+    "startYear": 2019,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "将选牌、遗物与变化路线组成同一局中的构筑决策；这是所引发行版的机制观察。"
+    },
+    "mechanism": {
+      "zh-CN": "将选牌、遗物与变化路线组成同一局中的构筑决策；这是所引发行版的机制观察。"
+    },
+    "tags": [
+      "innovation-event",
+      "card-history",
+      "roguelike-lens"
+    ],
+    "evidenceIds": [
+      "batch-spire"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "deckbuilding-history"
+    ]
+  },
+  {
+    "id": "wuxia-qinggong-traversal",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "武侠轻功作为移动体验"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "通过一代宗师资料片的萍踪侠影轻功改变移动与空间体验；不把“首创”宣传当作史实。"
+    },
+    "mechanism": {
+      "zh-CN": "通过一代宗师资料片的萍踪侠影轻功改变移动与空间体验；不把“首创”宣传当作史实。"
+    },
+    "tags": [
+      "innovation-event",
+      "social-worlds-history"
+    ],
+    "evidenceIds": [
+      "batch-jx3"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "online-worlds"
+    ]
+  },
+  {
+    "id": "elemental-party-combinations",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "角色切换与元素反应"
+    },
+    "startYear": 2020,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "通过队伍切换组合不同元素效果，把角色选择、时机与环境作用联系起来。"
+    },
+    "mechanism": {
+      "zh-CN": "通过队伍切换组合不同元素效果，把角色选择、时机与环境作用联系起来。"
+    },
+    "tags": [
+      "innovation-event",
+      "open-world-lineage"
+    ],
+    "evidenceIds": [
+      "batch-genshin"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "open-world-lineage"
+    ]
+  },
+  {
+    "id": "rpg-environment-and-role-choice",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "规则、环境与角色选择的结合"
+    },
+    "startYear": 2023,
+    "lane": 0,
+    "summary": {
+      "zh-CN": "用回合规则和环境互动支持不同解法，同时让角色选择影响故事中的回应。"
+    },
+    "mechanism": {
+      "zh-CN": "用回合规则和环境互动支持不同解法，同时让角色选择影响故事中的回应。"
+    },
+    "tags": [
+      "innovation-event",
+      "role-playing-lineage"
+    ],
+    "evidenceIds": [
+      "batch-bg3-systems"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "role-playing-lineage"
+    ]
   }
 ]

@@ -262,8 +262,8 @@ describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(84);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(86);
-    expect(atlasNodes).toHaveLength(96);
-    expect(atlasRelations).toHaveLength(86);
+    expect(atlasNodes).toHaveLength(134);
+    expect(atlasRelations).toHaveLength(106);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -380,9 +380,9 @@ describe('global Atlas graph contract', () => {
   });
 
   it('preserves the original source title and language for every evidence item', () => {
-    const originalLanguages = new Set(['en', 'ja', 'fr', 'es']);
+    const originalLanguages = new Set(['en', 'ja', 'fr', 'es', 'zh-CN', 'zh-TW']);
 
-    expect(atlasEvidence).toHaveLength(78);
+    expect(atlasEvidence).toHaveLength(113);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -390,7 +390,7 @@ describe('global Atlas graph contract', () => {
       expect(originalLanguages.has(evidence.originalLanguage), evidence.id).toBe(true);
     }
     expect(new Set(atlasEvidence.map(({ originalLanguage }) => originalLanguage))).toEqual(
-      new Set(['en', 'ja', 'fr', 'es']),
+      new Set(['en', 'ja', 'fr', 'es', 'zh-CN', 'zh-TW']),
     );
     expect(atlasEvidence).toContainEqual(
       expect.objectContaining({
@@ -425,6 +425,9 @@ describe('global Atlas graph contract', () => {
       'puzzle-adventure-lineage',
       'role-playing-lineage',
       'open-world-lineage',
+      'simulation-history',
+      'online-worlds',
+      'deckbuilding-history',
     ]);
     expect(
       atlasThemes.every((theme) => !('nodeIds' in theme) && !('relationIds' in theme)),
@@ -575,8 +578,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(96);
-    expect(relations).toHaveLength(86);
+    expect(nodes).toHaveLength(134);
+    expect(relations).toHaveLength(106);
   });
 });
 
@@ -593,6 +596,7 @@ describe('global Atlas presentation geometry', () => {
       2000,
       2010,
       2020,
+      2030,
     ]);
   });
 
@@ -845,9 +849,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(96);
-    expect(new Set(outlinedNodeIds).size).toBe(96);
-    expect(outlinedRelationIds.size).toBe(86);
+    expect(outlinedNodeIds).toHaveLength(134);
+    expect(new Set(outlinedNodeIds).size).toBe(134);
+    expect(outlinedRelationIds.size).toBe(106);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -936,7 +940,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(96);
+    expect(indexed).toHaveLength(134);
     expect(runStructure).toMatchObject({
       id: 'procedural-run-structure',
       startYear: 1980,
@@ -1004,4 +1008,26 @@ describe('Atlas node index helpers', () => {
     expect(sortAtlasNodeIndex(reversed, 'time')).toEqual(timeSorted);
     expect(sortAtlasNodeIndex(reversed, 'name')).toEqual(sortAtlasNodeIndex(indexed, 'name'));
   });
+});
+
+describe('expanded historical time range', () => {
+  it('keeps post-2020 nodes inside the precise year projection', () => {
+    const layout = buildAtlasLayout(typedAtlasNodes,typedAtlasRelations);
+    expect(layout.maxYear).toBeGreaterThanOrEqual(2024);
+    const recent=layout.nodes.filter(n=>n.startYear>2020);
+    expect(recent.length).toBeGreaterThan(2);
+    for(const node of recent){
+      expect(node.left).toBeGreaterThanOrEqual(0);
+      expect(node.left+node.width).toBeLessThanOrEqual(layout.width);
+    }
+  });
+});
+
+
+it('extends the time canvas without squeezing existing year spacing', () => {
+  const earlier=typedAtlasNodes.filter(n=>n.startYear<=2020);
+  const old=buildAtlasLayout(earlier,[]);
+  const expanded=buildAtlasLayout(typedAtlasNodes,[]);
+  expect(expanded.width).toBeGreaterThan(old.width);
+  for(const node of old.nodes) expect(expanded.nodes.find(n=>n.id===node.id)?.yearX).toBe(node.yearX);
 });

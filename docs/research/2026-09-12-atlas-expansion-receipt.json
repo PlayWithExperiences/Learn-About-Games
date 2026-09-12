@@ -1,0 +1,658 @@
+{
+  "updatedAt": "2026-09-12T13:23:16.117571+08:00",
+  "authorization": "User approved 20 searches and 60 page-reading tasks; concurrency <=2; no automatic retries.",
+  "used": {
+    "searchQueries": 20,
+    "pageReads": 50
+  },
+  "tasks": [
+    {
+      "kind": "search",
+      "query": "site.museumofplay.org \"World Video Game Hall of Fame\" \"SimCity\" \"Civilization\"",
+      "result": "returned",
+      "note": "initial query, original response retained in task transcript"
+    },
+    {
+      "kind": "search",
+      "query": "site.museumofplay.org \"World Video Game Hall of Fame\" \"Street Fighter II\" \"Final Fantasy VII\"",
+      "result": "returned",
+      "note": "initial query, original response retained in task transcript"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/exhibits/world-video-game-hall-of-fame/inducted-games/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/exhibits/world-video-game-hall-of-fame/inducted-games/",
+        "https://www.gdcvault.com/play/1024294/Classic-Game-Postmortem-Sid-Meier"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.gdcvault.com/play/1024294/Classic-Game-Postmortem-Sid-Meier",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/exhibits/world-video-game-hall-of-fame/inducted-games/",
+        "https://www.gdcvault.com/play/1024294/Classic-Game-Postmortem-Sid-Meier"
+      ]
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/ultima/",
+        "https://www.museumofplay.org/games/dragon-quest/"
+      ],
+      "result": "returned_or_partial"
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/ultima/",
+        "https://www.museumofplay.org/games/dragon-quest/"
+      ],
+      "result": "returned_or_partial"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/dragon-quest/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/dragon-quest/",
+        "https://www.museumofplay.org/games/simcity/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/simcity/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/dragon-quest/",
+        "https://www.museumofplay.org/games/simcity/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/sid-meiers-civilization/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/sid-meiers-civilization/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/street-fighter-ii/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/sid-meiers-civilization/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://civilization.2k.com/civ-i/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/final-fantasy-vii/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/final-fantasy-vii/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/final-fantasy-vii/"
+      ]
+    },
+    {
+      "kind": "search",
+      "query": "site.playstation.com \"Balatro\" \"2024\" LocalThunk",
+      "domains": [],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "site.blog.playstation.com \"Street Fighter II\" \"1991\"",
+      "domains": [],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Street Fighter II 1991 history",
+      "domains": [
+        "capcom.com",
+        "streetfighter.com",
+        "museumofplay.org"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Civilization 1991 anniversary",
+      "domains": [
+        "civilization.2k.com",
+        "firaxis.com",
+        "2k.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "read",
+      "url": "https://civilization.2k.com/civ/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://civilization.2k.com/civ/",
+        "https://www.playstation.com/en-us/games/balatro/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.playstation.com/en-us/games/balatro/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://civilization.2k.com/civ/",
+        "https://www.playstation.com/en-us/games/balatro/"
+      ]
+    },
+    {
+      "kind": "search",
+      "query": "Ultima Online influences MUD DikuMUD",
+      "domains": [
+        "raphkoster.com",
+        "uo.com",
+        "mud.co.uk"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Factorio inspiration Minecraft Buildcraft release 2020",
+      "domains": [
+        "factorio.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.raphkoster.com/2014/11/21/ten-years-of-world-of-warcraft/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.raphkoster.com/2014/11/21/ten-years-of-world-of-warcraft/",
+        "https://www.factorio.com/blog/post/fff-50"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.factorio.com/blog/post/fff-50",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.raphkoster.com/2014/11/21/ten-years-of-world-of-warcraft/",
+        "https://www.factorio.com/blog/post/fff-50"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.factorio.com/blog/post/fff-50",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.factorio.com/blog/post/fff-50"
+      ]
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [],
+      "result": "tool_error"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.digitaleclipse.com/games/wizardry",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.digitaleclipse.com/games/wizardry"
+      ]
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [
+        "https://www.factorio.com/presskit"
+      ],
+      "result": "returned_or_partial"
+    },
+    {
+      "kind": "search",
+      "query": "League of Legends 2009 DotA Warcraft III origins",
+      "domains": [
+        "riotgames.com",
+        "leagueoflegends.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Fortnite Battle Royale 2017 PUBG inspiration",
+      "domains": [
+        "epicgames.com",
+        "fortnite.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "仙劍奇俠傳 1995 發行 大宇",
+      "domains": [
+        "softstar.com.tw",
+        "softstar.com",
+        "pal.jx3.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Genshin Impact September 28 2020 elemental combat Black Myth Wukong August 20 2024",
+      "domains": [
+        "blog.playstation.com",
+        "playstation.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "剑网3 2009 8月28日 武侠",
+      "domains": [
+        "jx3.xoyo.com",
+        "xoyo.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Baldur's Gate 3 August 3 2023 turn based Dungeons Dragons",
+      "domains": [
+        "baldursgate3.game",
+        "larian.com",
+        "blog.playstation.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "read",
+      "url": "https://baldursgate3.game/about",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://baldursgate3.game/about"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://forums.larian.com/ubbthreads.php?Number=874803&ubb=showflat",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://forums.larian.com/ubbthreads.php?Number=874803&ubb=showflat"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://km.softstar.com.tw/topic.aspx?tid=722",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://km.softstar.com.tw/topic.aspx?tid=722"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://jx3.xoyo.com/zl/records.html",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://jx3.xoyo.com/zl/records.html"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://blog.playstation.com/2020/09/28/your-journey-in-genshin-impact-begins-now/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://blog.playstation.com/2020/09/28/your-journey-in-genshin-impact-begins-now/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.playstation.com/en-us/games/black-myth-wukong/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.playstation.com/en-us/games/black-myth-wukong/"
+      ]
+    },
+    {
+      "kind": "search",
+      "query": "Gran Turismo 1997 Guitar Hero 2005 Dance Dance Revolution 1998",
+      "domains": [
+        "gran-turismo.com",
+        "museumofplay.org",
+        "konami.com",
+        "harmonixmusic.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "Dota 2 original Warcraft III mod 2013",
+      "domains": [
+        "dota2.com",
+        "store.steampowered.com",
+        "valvesoftware.com",
+        "blizzard.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.gran-turismo.com/us/products/gt/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.gran-turismo.com/us/products/gt/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/guitar-hero/",
+      "result": "tool_error",
+      "sourceUrls": []
+    },
+    {
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/646570/Slay_the_Spire/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://store.steampowered.com/app/646570/Slay_the_Spire/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/1794680/Vampire_Survivors/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://store.steampowered.com/app/1794680/Vampire_Survivors/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.fortnite.com/news/announcing-fortnite-battle-royale?lang=en-US",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.fortnite.com/news/announcing-fortnite-battle-royale?lang=en-US"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://nexus.leagueoflegends.com/en-us/2009/10/what-is-league-of-legends/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://nexus.leagueoflegends.com/en-us/2009/10/what-is-league-of-legends/"
+      ]
+    },
+    {
+      "kind": "search",
+      "query": "Dwarf Fortress first release August 2006",
+      "domains": [
+        "bay12games.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "BuildCraft first release 2011 Minecraft",
+      "domains": [
+        "mod-buildcraft.com",
+        "github.com"
+      ],
+      "result": "returned"
+    },
+    {
+      "kind": "search",
+      "query": "\"Guitar Hero\" \"2005\" \"Dance Dance Revolution\"",
+      "domains": [
+        "museumofplay.org",
+        "harmonixmusic.com",
+        "konami.com"
+      ],
+      "result": "empty"
+    },
+    {
+      "kind": "search",
+      "query": "BuildCraft \"2011\" \"anniversary\"",
+      "domains": [
+        "mod-buildcraft.com"
+      ],
+      "result": "empty"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.konami.com/games/corporate/en/history/",
+      "result": "tool_error",
+      "sourceUrls": []
+    },
+    {
+      "kind": "read",
+      "url": "https://www.harmonixmusic.com/games/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.harmonixmusic.com/games/"
+      ]
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [
+        "https://www.harmonixmusic.com/about/timeline"
+      ],
+      "result": "returned_or_partial"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.bay12games.com/dwarves/dev_2006.html",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.bay12games.com/dwarves/dev_2006.html"
+      ]
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [
+        "https://www.harmonixmusic.com/blog/a-special-gift-for-rock-band-10-10-free-songs/"
+      ],
+      "result": "returned_or_partial"
+    },
+    {
+      "kind": "read-linked-page",
+      "sourceUrls": [
+        "https://www.harmonixmusic.com/about"
+      ],
+      "result": "returned_or_partial"
+    },
+    {
+      "kind": "read",
+      "url": "https://www.riotgames.com/en/who-we-are",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.riotgames.com/en/who-we-are"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/570/Dota_2/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://store.steampowered.com/app/570/Dota_2/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.leagueoflegends.com/en-au/news/media/where-to-watch-the-league-of-legends-origins-doc/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.leagueoflegends.com/en-au/news/media/where-to-watch-the-league-of-legends-origins-doc/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://captown.capcom.com/en/classic_games/23",
+      "result": "tool_error",
+      "sourceUrls": []
+    },
+    {
+      "kind": "read",
+      "url": "https://toucharcade.com/2024/03/18/balatro-interview-mobile-port-localthunk-dlc-plans-updates-new-jokers-demo-feedback/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://toucharcade.com/2024/03/18/balatro-interview-mobile-port-localthunk-dlc-plans-updates-new-jokers-demo-feedback/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.bay12games.com/dwarves/dev_2006.html",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.bay12games.com/dwarves/dev_2006.html"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://krafton.com/en/games/pubg-battlegrounds/",
+      "result": "tool_error",
+      "sourceUrls": []
+    },
+    {
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/1404850/Luck_be_a_Landlord/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://store.steampowered.com/app/1404850/Luck_be_a_Landlord/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.raphkoster.com/2017/09/28/ultima-onlines-influence/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.raphkoster.com/2017/09/28/ultima-onlines-influence/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.museumofplay.org/games/minecraft/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.museumofplay.org/games/minecraft/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.leagueoflegends.com/en-us/how-to-play/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.leagueoflegends.com/en-us/how-to-play/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.beamdog.com/games/baldurs-gate-enhanced/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.beamdog.com/games/baldurs-gate-enhanced/"
+      ]
+    },
+    {
+      "kind": "read",
+      "url": "https://www.playstation.com/en-us/games/disco-elysium/",
+      "result": "returned_or_partial",
+      "sourceUrls": [
+        "https://www.playstation.com/en-us/games/disco-elysium/"
+      ]
+    }
+  ],
+  "acceptedNodeIds": [
+    "ultima",
+    "wizardry",
+    "dragon-quest",
+    "final-fantasy",
+    "final-fantasy-vii",
+    "simcity",
+    "civilization",
+    "street-fighter-ii",
+    "gran-turismo",
+    "dwarf-fortress",
+    "factorio",
+    "dikumud",
+    "legendmud",
+    "ultima-online",
+    "league-of-legends",
+    "dota-2",
+    "pubg",
+    "fortnite-battle-royale",
+    "pal-1995",
+    "jx3",
+    "jx3-yidai-zongshi",
+    "genshin-impact",
+    "black-myth-wukong",
+    "baldurs-gate",
+    "baldurs-gate-3",
+    "disco-elysium-final-cut",
+    "slay-the-spire",
+    "vampire-survivors",
+    "luck-be-a-landlord",
+    "balatro",
+    "rock-band",
+    "super-beat-sports",
+    "simulation-self-authored-goals",
+    "online-world-crafting-economy",
+    "run-deck-construction",
+    "wuxia-qinggong-traversal",
+    "elemental-party-combinations",
+    "rpg-environment-and-role-choice"
+  ],
+  "acceptedRelationIds": [
+    "ultima-to-dragon-quest",
+    "wizardry-to-dragon-quest",
+    "final-fantasy-to-vii",
+    "simcity-to-civilization",
+    "simcity-to-the-sims",
+    "legendmud-to-ultima-online",
+    "dikumud-to-everquest",
+    "everquest-to-world-of-warcraft",
+    "ultima-online-and-minecraft",
+    "dwarf-fortress-and-factorio",
+    "pubg-to-fortnite-battle-royale",
+    "jx3-to-yidai-zongshi",
+    "baldurs-gate-to-3",
+    "landlord-to-balatro",
+    "simulation-self-authored-goals-carrier",
+    "online-world-crafting-economy-carrier",
+    "run-deck-construction-carrier",
+    "wuxia-qinggong-traversal-carrier",
+    "elemental-party-combinations-carrier",
+    "rpg-environment-and-role-choice-carrier"
+  ],
+  "deferred": [
+    {
+      "object": "BuildCraft",
+      "reason": "Author influence statement found; early release date not established. Do not reroute its influence to unmodified Minecraft."
+    },
+    {
+      "object": "Dance Dance Revolution",
+      "reason": "Chosen official history read failed and scoped query returned no results; not evidence of absence."
+    },
+    {
+      "object": "Guitar Hero",
+      "reason": "Candidate museum read failed; retrieved creator pages did not establish sufficient original-game facts."
+    },
+    {
+      "object": "Magic: The Gathering",
+      "reason": "Tabletop precursor requires a distinct object representation; not inserted as a video game."
+    }
+  ]
+}

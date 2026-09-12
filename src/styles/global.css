@@ -4024,6 +4024,8 @@ h2 {
 }
 
 [data-atlas-global-network][data-map-mode='true'] .atlas-fullscreen-lenses button {
+  flex: 0 0 auto;
+  white-space: nowrap;
   min-height: 2.25rem;
   padding: 0.35rem 0.6rem;
   font-size: 0.75rem;
