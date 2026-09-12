@@ -9,6 +9,7 @@
 //
 // Usage: LAG_CDP_PORT=9222 node nblm-export-deck.cjs "<card title fragment>" <out-dir> [--timeout-sec=240]
 const fs = require('fs');
+const { execFileSync } = require('child_process');
 const path = require('path');
 const port = process.env.LAG_CDP_PORT || '9222';
 const cardTitle = process.argv[2];
@@ -57,6 +58,14 @@ fs.mkdirSync(outDir, { recursive: true });
 
   await send('Browser.setDownloadBehavior', { behavior: 'allow', downloadPath: path.resolve(outDir), eventsEnabled: true });
   await send('Page.enable');
+
+  // Normalise the Studio panel to list mode. Viewers differ in how they close (the
+  // image viewer only exposes an ✕), so the specific close buttons below are not
+  // enough on their own — a leftover viewer makes the card lookup fail misleadingly.
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, 'nblm-studio-list.cjs')],
+      { env: process.env, stdio: 'pipe', timeout: 120000 });
+  } catch { /* carry on; the lookup below reports the real problem */ }
 
   // return to the list, then open the deck card
   const opened = await evaluate(`(async () => {

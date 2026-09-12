@@ -101,7 +101,34 @@ def main() -> int:
         "mindmap": arts / "mindmap.png",
         "slides": arts / "slides.pptx",
     }
-    run(["node", str(BROWSER / "nblm-export-image-artifact.cjs"), args.infographic, str(files["infographic"])])
+    # Reuse an already-exported artifact: a retry after a later stage failed should not
+    # re-download a multi-megabyte image that is already on disk and verified.
+    def valid_png(path: Path) -> bool:
+        if not path.exists() or path.stat().st_size < 50000:
+            return False
+        with open(path, "rb") as fh:
+            return fh.read(8) == b"\x89PNG\r\n\x1a\n"
+
+    if valid_png(files["infographic"]):
+        print(f"  infographic already exported, reusing: {files['infographic'].stat().st_size} bytes", flush=True)
+    else:
+        # Page-asset route first (original bytes, no download). If the viewer's inline
+        # image never loads there is nothing to stream, so fall back to the visible
+        # download control — the skill's documented second path.
+        try:
+            run(["node", str(BROWSER / "nblm-export-image-artifact.cjs"), args.infographic, str(files["infographic"])])
+        except Exception as exc:
+            print(f"  asset route failed ({str(exc)[:120]}); falling back to the download control", flush=True)
+            # A FRESH directory per attempt: the download tool looks for a file that was
+            # not present before it clicked, so reusing a directory that already holds the
+            # previous download makes it wait forever for a file that never appears.
+            dl_dir = item_dir / f"imgdl-{stamp()}"
+            run(["node", str(BROWSER / "nblm-export-image-download.cjs"), args.infographic, str(dl_dir), "--timeout-sec=180"])
+            got = [q for q in dl_dir.glob("*") if q.suffix.lower() in (".png", ".jpg", ".jpeg")]
+            if not got:
+                raise
+            shutil.copy(got[0], files["infographic"])
+            print(f"  recovered infographic via download: {got[0].name} {got[0].stat().st_size} bytes", flush=True)
     run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), args.mindmap, str(files["mindmap"]), "2664"])
     deck_dir = item_dir / "deck"
     run(["node", str(BROWSER / "nblm-export-deck.cjs"), args.slides, str(deck_dir), "--timeout-sec=300"], timeout=600)

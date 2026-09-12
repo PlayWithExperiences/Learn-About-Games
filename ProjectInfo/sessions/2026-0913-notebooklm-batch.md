@@ -108,3 +108,12 @@ ledger 共 **26 条 failed**。以下是按失败阶段的分析，**分析不�
   4. 目视核验该演示文稿为中文简体后再交付；
   5. 再以 `run-notebooklm-batch.sh 3` 跑剩余候选（当日 claim 余量 4，扣掉第 2 步后为 3）。
 - 第 4 轮复核：`claimed_today=6`、`remaining_today=4`、ledger 38 ready / 26 failed / 0 generating，均未变动。
+
+## 闸门开启后的收尾尝试（2026-09-13 04:46–07:00 +0800）
+
+- **演示文稿时间闸门在 04:46:27 开启**（后台作业 `bash-10` 报 `rc=0`），与「4上午之后生成」的排期相符。item 3 排队中的演示文稿随后自动生成（卡片 `Narrative Driven Retention`，基于 1 个来源），隔离状态在排队期间保持不变。
+- 按计划 retry item 3（`run-20260913050617-68281`）并走 `finish-notebooklm-item.py`。**信息图与思维导图已导出**：信息图 5,752,164B / 2752×1536（目视核验为中文简体横向手绘，对应「Getting Players to Care」来源），思维导图 954,363B / 2664×5631。
+- 信息图的页面资产路径本次失效（viewer 打开但内嵌 `<img>` 始终不加载、画布空白），改用**可见下载控件**取回（新增 `nblm-export-image-download.cjs`，并在 finish 脚本里做成自动回退）。踩到并修掉一个自身缺陷：下载工具以「点击前不存在的文件」判定结果，复用同一目录会永远等不到文件——现在每次用带时间戳的新目录。
+- **演示文稿导出未完成**：`nblm-export-deck.cjs` 报 `cdp timeout Runtime.evaluate`，随后自动化 Chrome 连续两次崩溃（本会话第 3、4 次）。重启后 `notebook.google.com` 页面空白。
+- **根因＝本机网络**：`www.gstatic.com` / `ssl.gstatic.com` / `fonts.gstatic.com` 全部解析到 `198.18.x.x`（fake-ip 代理）并返回 **HTTP 404**，NotebookLM 实际 JS bundle 报 **HTTP/2 framing 错误**，前端因此无法挂载；同时 `api.github.com`、`raw.githubusercontent.com`、`notebook.google.com`、`accounts.google.com` 均正常。连续 4 次采样（06:54–06:56）稳定失败，不是瞬时抖动。**这是本项目外部环境问题，需要修复代理对 gstatic 的路由。**
+- 处置：item 3 按合同记 `failed`，阶段＝deck-export，原因写明上面的可核查现象；**两件已导出的产物保留在磁盘**，网络恢复后只需补演示文稿再用 `finish-notebooklm-item.py` 收尾（不必重做图像类产物，也不必重新生成演示文稿——卡片已在库）。ledger 回到 38 ready / 26 failed / 0 generating，无孤儿 claim。
