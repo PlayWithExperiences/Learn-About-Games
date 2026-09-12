@@ -16,7 +16,19 @@
 
 ## 资源生产工作段（保留原状态，独立于发布）
 
-### NotebookLM 生产：2026-09-12 23:59 +0800（最新）
+### NotebookLM 生产：2026-09-13 01:15 +0800（最新）
+
+更新于 2026-09-13 01:15:00 +0800 · 记录者 DSH agent
+
+- 用户授权连续跑批（「跑吧，后续也无需确认」）。本轮 attempted 4 / ready 2 / 远端交付 2 / failed 2 / skipped 4；当日 claim 用 6（含第 2 条的 2 次 bug 重试），**remaining 4 未消耗**。
+- 交付：`youtube-hc8_W2PERZE`（HITMAN 关卡设计）→ `2026-0913-0044-level-spatial-design.json`（远端 blob `b9b5d75d…`）；`youtube-U-dtYFPoDlU`（叙事导师计划）→ `2026-0913-0102-narrative-expression.json`（远端 blob `b533aa35…`）。均经 fetch 后 blob 比对。ledger **38 ready / 26 failed / 0 generating**。
+- **停止原因＝演示文稿容量节流**：演示文稿对话框出现「此内容将在几小时后生成。或者，升级可缩短等待时间。」且「立即生成」按钮消失（两次独立打开均复现）。演示文稿是必填三件之一，剩余候选都无法完成，故批次整体停止，未再消耗 claim。
+- 流水线已工程化：新增单条端到端 `run-notebooklm-item.py`、串行跑批 `run-notebooklm-batch.sh`、只补导出发布的 `finish-notebooklm-item.py`、`notebooklm-split-answer.py`，以及 `automation/browser/` 下 11 个步骤工具。修掉 7 个会伪装成其他症状的致错点，最严重的是 **Studio 生成对话框有独立来源选择器且默认全选**，会静默产出「基于 N 个来源」的串源产物（已删卡重生成，并加提交前「必须 1 个来源」断言）。
+- `youtube-gPV0qmyGs-o`（叙事驱动留存）信息图与思维导图已生成并留在 notebook，节流解除后只需补演示文稿再用 finish 脚本收尾；`youtube-ykPZcG8_mPU` 在停止时刚导入来源、无产物，已按阶段记 failed。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站内容。
+- 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T0115+0800-batch-report.json`；摘要 `sessions/2026-0913-notebooklm-batch.md`。
+
+### NotebookLM 生产：2026-09-12 23:59 +0800
 
 更新于 2026-09-12 23:59:00 +0800 · 记录者 DSH agent
 
