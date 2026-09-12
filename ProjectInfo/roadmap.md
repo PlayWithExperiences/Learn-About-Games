@@ -424,3 +424,7 @@
 ## 2026-09-12T23:01:38+08:00：后续自主补全授权
 
 决策：無涘（原文：“后续都不需要确认了，你直接推进就可以了。”）｜记录：Codex。此明确指令覆盖本项目先前逐批确认安排：后续史料检索、内容实现、验证和既有公开发布直接推进，继续保留范围、用量和失败记录。本次未启用新增付费服务。完整补全目标未缩小，第二批先交付模组与音乐的可读路线，其余覆盖维度继续推进。
+
+## 2026-09-12T23:59:00+08:00：NotebookLM 生产恢复交付（单条试点）
+
+决策：無涘（原文：交付仓库「搞清楚是什么地方没有对齐，然后安全地合并」；遗留 claim「搞清楚是为什么失败了，然后解决之后正常跑」；本批「你可以先试一条」）｜记录：DSH agent。三项处置同时落地：(1) 交付仓库 AI-Life-Mentor 的分叉定性为纯新增（远端 briefings/pkm-index、本地 CV/ProjectInfo/scripts，零文件重叠），安全合并后推送，原 non-fast-forward 拒绝消失；(2) 9-11 遗留的 `generating` 孤儿 claim 查明为「领取后未执行、无报告无产物」，记 failed 关闭后按显式 retry 重跑，旧 4 次尝试保留在 attempt_history；(3) 三次历史失败共用的导出瓶颈定位为 headless 下 viewer 下载 stall＋页内 fetch 被 CSP/CORS 拦＋canvas 跨域不可读＋adapter 无 pageAssets 能力，改以 CDP Fetch 响应阶段流式取回原始字节（新增 `automation/browser/asset-capture.cjs`），信息图取得 2752×1536 原始 PNG 且两次运行字节一致。本条 ready 并远端交付（inbox `2026-0912-2357-level-spatial-design.json`，远端 blob `ed7eaf90`）。批次未扩大：预检清单其余 9 条留待下一批，须另行确认；本条不自动扩大额度。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站内容。
