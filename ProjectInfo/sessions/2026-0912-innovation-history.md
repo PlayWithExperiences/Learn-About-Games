@@ -97,3 +97,14 @@ trace-user-count: 5
 - 网站更新仍待云端与live回执。未提交NotebookLM自动化与旧对话记录未修改或暂存。
 
 原始对话：dialogues/2026-0912.md，本session“批准”回合。
+
+## 2026-09-12 14:04:27 +0800 首批上线回执
+
+决策：無涘｜记录：Codex。session 01a091a6-dbd8-7072-a821-27697dd08274
+trace-user-count: 5
+
+成功 [run 34676484044](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34676484044) 部署 `887c09afccc5b2ae0024ea33dc93358ae7e0e41b`；云端213单测、152浏览器用例通过，4条件跳过，155页。线上4条关键路由与模块请求200；总览134对象/13区、精确图134对象/2522.58px宽度、资源5437条。CUA验证Balatro→Luck be a Landlord继续追踪、一代宗师2011年与官方中文来源；面板与选中右端节点同时可见。
+
+结构化回执在 ../evidence/2026-0912-atlas-expansion-publication.json；日志 /tmp/lag-expansion-cloud-success.log、/tmp/lag-expansion-live-report.json。研究统计保持20查询/50读取，网站发布复核单列，不把研究失败来源改为成功。最终metadata回执skip-ci推送，网站runtime不变。
+
+原始对话：dialogues/2026-0912.md，本session“批准”回合。

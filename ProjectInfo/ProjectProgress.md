@@ -1,27 +1,20 @@
 # ProjectProgress
 
-更新于 2026-09-12 12:30:16 +0800 · 记录者 Codex
+更新于 2026-09-12 14:04:27 +0800 · 记录者 Codex
 
-## 首批内容补全（2026-09-12 13:47:17 +0800）
+## 当前状态：第一批历史证据扩充已上线
 
-用户已批准20搜索+60页面读取、并发最多2、无自动重试。实际采集20查询、50页面读取；新增32游戏/版本、6机制观察、20关系、35来源。当前本地目录134对象 / 106关系 / 113来源，13阅读区，最新对象到2024年。来源及失败/延期记录见 docs/research/2026-09-12-atlas-expansion-receipt.json。
+用户批准的首批检索和网站更新已完成。runtime `887c09afccc5b2ae0024ea33dc93358ae7e0e41b` 由 [Pages run 34676484044](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34676484044) 成功部署。总览：https://playwithexperiences.github.io/Learn-About-Games/atlas/ ，精确年份网络位于 `/atlas/network/`。
 
-已通过213单元测试、类型检查0/0/0、155页构建、地图桌面/手机62检查（20设备条件跳过）；另有末轮24检查覆盖近期节点面板避让和README。已修复时间轴扩展压缩旧年份间距、全屏透镜按钮挤压画布、右端对象被面板遮挡三个实见问题。现在准备发布，以下为先前上线基线。
+- 目录134对象（93游戏/版本、31机制观察、2类别、8其他对象）/ 106关系 / 113来源。新增32游戏/版本、6机制观察、20关系、35来源；13阅读区，日期实例至2024年。
+- 采集实际20搜索/50页面读取任务，未超批准的20/60上限；并发最多2，无自动重试失败URL，无外部付费模型、转写或视频下载。来源、失败与延期记录在 docs/research/2026-09-12-atlas-expansion-receipt.json。
+- 云端213单测、152 Chromium检查通过（4条件跳过），155页构建与部署成功；本地地图桌面/手机62检查通过（20设备条件跳过）。
+- 线上首页、总览、精确网络、资源页均200；两图各134对象，总览13阅读区，新作品存在，精确画布宽2522.58px，资源5437项。实际操作确认Balatro→Luck be a Landlord关联追踪及一代宗师的2011年资料片与中文来源。
+- 保持旧年份每年像素间距，延长精确画布；全屏透镜单行滚动；右端节点的来源面板自动停靠到另一侧。中文来源支持简体/繁体，不将抢先体验、资料片与重制版年份倒填成原作诞生。
 
-## 当前状态：Innovation Atlas 已公开上线
+仍待补全：BuildCraft的早期日期、DDR/Guitar Hero原始材料、桌游前身的独立建模，以及更多格斗、音乐、模组、移动平台、中文作品之间的影响证据和2025年后的内容。本批不冒充完整游戏史，后续批次不自动扩大额度。
 
-用户授权“整理整理上线”后，已审核并推送本项目提交。runtime `1daa942f59f7490b1736ea5cb3579476bf3d92d6` 由 [GitHub Pages run 34672575872](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34672575872) 成功部署。
-
-网站：https://playwithexperiences.github.io/Learn-About-Games/ 。新版历史总览：https://playwithexperiences.github.io/Learn-About-Games/atlas/ 。精确年份网络：同站 `/atlas/network/`。
-
-- 云端 209 单元测试、150 Chromium 检查通过，4 项条件跳过；构建 154 页。
-- 线上首页、历史总览、精确年份网络、资源页 HTTP 200；总览与网络各96对象，总览9个阅读区域，资源5437项，浏览器模块可取得。实际操作确认搜索 Hades、打开来源、跳转 Spelunky 正常；320px 视口中 Dead Cells 与详情面板可读。
-- 首轮发布因文献返回23px位置偏移停止，没有部署。已修复平滑滚动干扰，原误差断言保持不变；第二轮全量云端验证通过。两轮记录均保留。
-- 本地未提交的 NotebookLM 自动化和旧记录保留，不纳入本次新增提交；现有已提交历史已随发布推送。生产流水线的阻塞状态独立于网站上线。
-
-Atlas 为96对象 / 86关系 / 78 Evidence；新增12个博物馆年表锚点未生成影响边。地区、品类和2020s覆盖仍不完整，后续按有界专题核查来源。资源目录仍为5437 Work Items / 5590 Access Versions / 44 Sources / 16 Topics，EGDS 四层未在本轮改变。
-
-下一步：依据公开版反馈迭代；批量史料扩展和新增付费调用仍需明确确认。发布详情与检查边界见 sessions/2026-0912-innovation-history.md、evidence/2026-0912-innovation-publication.json。收尾提交只更新仓库回执，使用 skip-ci，不替代上述已部署 runtime。
+未提交NotebookLM自动化与旧记录原样保留；网页上线不代表生产流水线完成。EGDS与5437资源目录未作内容改动。回执：sessions/2026-0912-innovation-history.md、evidence/2026-0912-atlas-expansion-publication.json。最终仓库回执用skip-ci推送，不改变上述已部署runtime。
 
 ## 资源生产工作段（保留原状态，独立于发布）
 

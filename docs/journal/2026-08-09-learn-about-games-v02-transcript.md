@@ -1,5 +1,7 @@
 # Learn About Games v0.2 会话记录
 
+首批上线回执（2026-09-12 14:04:27 +0800）：`887c09a` 由 [run 34676484044](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34676484044) 部署，目录134/106/113，213单测与152浏览器用例通过（4跳过），live已核对。
+
 首批内容扩充（2026-09-12 13:47:17 +0800，Codex记录）：用户已批准批次，实际20查询/50读取；本地目录134对象/106关系/113来源，13阅读区，范围至2024年。已完成本地数据和浏览器验收，发布回执以ProjectInfo/sessions/2026-0912-innovation-history.md为准；不将未证实影响或未完成候选写成已补全。
 
 ## 2026-09-12 Innovation Map 重做

@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-12T06:00:49.254Z",
+  "results": [
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/",
+      "status": 200
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/atlas/",
+      "status": 200,
+      "objects": 134,
+      "territories": 13,
+      "minecraft": true,
+      "balatro": true,
+      "jx3Expansion": true,
+      "scriptStatus": 200
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/atlas/network/",
+      "status": 200,
+      "objects": 134,
+      "sceneWidth": 2522.5806451612902
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/resources/",
+      "status": 200,
+      "resources": 5437
+    }
+  ],
+  "runtime": "887c09afccc5b2ae0024ea33dc93358ae7e0e41b",
+  "runUrl": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34676484044",
+  "unitTestsPassed": 213,
+  "chromiumPassed": 152,
+  "chromiumSkipped": 4,
+  "builtPages": 155,
+  "researchUsage": {
+    "searchQueries": 20,
+    "pageReads": 50
+  },
+  "interactiveChecks": [
+    "Balatro to Luck be a Landlord",
+    "JX3 Yidai Zongshi 2011 and Chinese official source"
+  ]
+}
