@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-12 模组与音乐发展路线
+
+- 新增12作品/版本、14关系、14来源，总量146/120/127；补入BuildCraft、DDR、Guitar Hero、Warcraft III/DotA和早期射击模组。
+- 新增模组、音乐表演两个比较入口；保留创作/公开版本和结构相似/直接影响边界。研究记录见 [第二批补全](docs/research/2026-09-12-atlas-mods-performance.md)。
+
 Learn About Games 的上线行为记录在这里。未来计划请看 [ROADMAP.md](ROADMAP.md)。
 
 ## 2026-09-12 · 第一批证据扩充

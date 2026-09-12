@@ -1694,5 +1694,285 @@
     "boundedClaim": {
       "zh-CN": "2009年公开；程序生成世界中的方块建造与玩家自定目标。"
     }
+  },
+  {
+    "id": "asie-buildcraft-history",
+    "title": {
+      "zh-CN": "BuildCraft History and Design",
+      "en": "BuildCraft History and Design"
+    },
+    "sourceTitle": "BuildCraft History and Design",
+    "url": "https://blog.asie.pl/2015/01/buildcraft-history-and-design/",
+    "institutionOrAuthor": "asie / BuildCraft 维护者",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2015-01-30；开篇至2.0.0版本段落",
+    "summary": {
+      "zh-CN": "维护者回顾将1.4.1首版记于2011-04-25，仅有五类管道；采矿、自动合成与动力系统由后续版本加入。"
+    },
+    "boundedClaim": {
+      "zh-CN": "维护者回顾将1.4.1首版记于2011-04-25，仅有五类管道；采矿、自动合成与动力系统由后续版本加入。"
+    }
+  },
+  {
+    "id": "factorio-buildcraft-inspiration",
+    "title": {
+      "zh-CN": "Friday Facts #50 — Growing secretly",
+      "en": "Friday Facts #50 — Growing secretly"
+    },
+    "sourceTitle": "Friday Facts #50 — Growing secretly",
+    "url": "https://www.factorio.com/blog/post/fff-50",
+    "institutionOrAuthor": "Wube / Factorio",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Automation genre 段落",
+    "summary": {
+      "zh-CN": "作者明确表示Factorio受到BuildCraft启发；没有锁定某个BuildCraft子版本。"
+    },
+    "boundedClaim": {
+      "zh-CN": "作者明确表示Factorio受到BuildCraft启发；没有锁定某个BuildCraft子版本。"
+    }
+  },
+  {
+    "id": "konami-ddr-anniversary",
+    "title": {
+      "zh-CN": "DanceDanceRevolution 25周年企画",
+      "en": "DanceDanceRevolution 25周年企画"
+    },
+    "sourceTitle": "DanceDanceRevolution 25周年企画",
+    "url": "https://www.konami.com/amusement/corporate/ja/topics/20230706/",
+    "institutionOrAuthor": "Konami Amusement",
+    "sourceKind": "official-statement",
+    "originalLanguage": "ja",
+    "checkedAt": "2026-09-12",
+    "locator": "2023-07-06；正文与文末系列介绍",
+    "summary": {
+      "zh-CN": "官方说明系列1998年9月在日本街机厅开始运营；按音乐与箭头提示踩脚下踏板。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方说明系列1998年9月在日本街机厅开始运营；按音乐与箭头提示踩脚下踏板。"
+    }
+  },
+  {
+    "id": "harmonix-guitar-band-reflection",
+    "title": {
+      "zh-CN": "A Reflection on Harmonix’s Guitar Hero Days",
+      "en": "A Reflection on Harmonix’s Guitar Hero Days"
+    },
+    "sourceTitle": "A Reflection on Harmonix’s Guitar Hero Days",
+    "url": "https://www.harmonixmusic.com/blog/rb4-product-manager-looks-back",
+    "institutionOrAuthor": "Daniel Sussman / Harmonix",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2015-04-14；第1–7段及作品年份段",
+    "summary": {
+      "zh-CN": "初代制作人回顾2005 Guitar Hero与2007 Rock Band；明确将只弹吉他到鼓、贝斯和人声的乐队协作描述为自然演进。"
+    },
+    "boundedClaim": {
+      "zh-CN": "初代制作人回顾2005 Guitar Hero与2007 Rock Band；明确将只弹吉他到鼓、贝斯和人声的乐队协作描述为自然演进。"
+    }
+  },
+  {
+    "id": "harmonix-frequency-amplitude",
+    "title": {
+      "zh-CN": "Amplitude on PS4 and PS3: Help Make it Happen",
+      "en": "Amplitude on PS4 and PS3: Help Make it Happen"
+    },
+    "sourceTitle": "Amplitude on PS4 and PS3: Help Make it Happen",
+    "url": "https://blog.playstation.com/2014/05/05/amplitude-on-ps4-and-ps3-help-make-it-happen/",
+    "institutionOrAuthor": "Ryan Lesser / Harmonix",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2014-05-05；Thirteen years ago及原版玩法段；不采用重制计划为原版事实",
+    "summary": {
+      "zh-CN": "原作美术总监回顾2001 FreQuency与2003续作Amplitude；原版在不同乐器轨道间移动、击中音符并组成音乐。"
+    },
+    "boundedClaim": {
+      "zh-CN": "原作美术总监回顾2001 FreQuency与2003续作Amplitude；原版在不同乐器轨道间移动、击中音符并组成音乐。"
+    }
+  },
+  {
+    "id": "blizzard-warcraft3-original",
+    "title": {
+      "zh-CN": "Warcraft III: Reforged Announced at BlizzCon",
+      "en": "Warcraft III: Reforged Announced at BlizzCon"
+    },
+    "sourceTitle": "Warcraft III: Reforged Announced at BlizzCon",
+    "url": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon",
+    "institutionOrAuthor": "Blizzard Entertainment",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "开篇原作年份",
+    "summary": {
+      "zh-CN": "公告将Reign of Chaos原作定位于2002年；重制版的新增功能不能倒填至原作。"
+    },
+    "boundedClaim": {
+      "zh-CN": "公告将Reign of Chaos原作定位于2002年；重制版的新增功能不能倒填至原作。"
+    }
+  },
+  {
+    "id": "blizzard-frozen-throne-year",
+    "title": {
+      "zh-CN": "Jaina Hero Week",
+      "en": "Jaina Hero Week"
+    },
+    "sourceTitle": "Jaina Hero Week",
+    "url": "https://news.blizzard.com/en-us/article/16887806/jaina-hero-week",
+    "institutionOrAuthor": "Blizzard Entertainment",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "作品列表；只取作品年份",
+    "summary": {
+      "zh-CN": "官方角色作品列表分别记载Reign of Chaos为2002年、The Frozen Throne为2003年。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方角色作品列表分别记载Reign of Chaos为2002年、The Frozen Throne为2003年。"
+    }
+  },
+  {
+    "id": "dota-creation-record",
+    "title": {
+      "zh-CN": "DotA development history — 2017 court record",
+      "en": "DotA development history — 2017 court record"
+    },
+    "sourceTitle": "DotA development history — 2017 court record",
+    "url": "https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_15-cv-04084/pdf/USCOURTS-cand-3_15-cv-04084-6.pdf",
+    "institutionOrAuthor": "U.S. District Court / 开发者证词摘录",
+    "sourceKind": "archival-record",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Document 162, 2017-05-16；印刷页4–8，Factual Background",
+    "summary": {
+      "zh-CN": "事实背景引述证词：Eul于2002年末创作；2003年Meian/Madcow整合Allstars，Guinsoo随后发展它。此为特定程序中的背景材料，不是全部事实终局认定。"
+    },
+    "boundedClaim": {
+      "zh-CN": "事实背景引述证词：Eul于2002年末创作；2003年Meian/Madcow整合Allstars，Guinsoo随后发展它。此为特定程序中的背景材料，不是全部事实终局认定。"
+    }
+  },
+  {
+    "id": "mescon-dota-postmortem",
+    "title": {
+      "zh-CN": "Postmortem: Defense of the Ancients",
+      "en": "Postmortem: Defense of the Ancients"
+    },
+    "sourceTitle": "Postmortem: Defense of the Ancients",
+    "url": "https://www.gamedeveloper.com/design/postmortem-i-defense-of-the-ancients-i-",
+    "institutionOrAuthor": "Steve Mescon / DotA社区、Riot",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2009-03-19；Introduction、Items、Focus on PVP、Conclusion",
+    "summary": {
+      "zh-CN": "2009回顾将Eul公开版本记于2003年；描述Allstars的装备合成和PvP调整。文章给出的冰封王座具体首发日不采用。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2009回顾将Eul公开版本记于2003年；描述Allstars的装备合成和PvP调整。文章给出的冰封王座具体首发日不采用。"
+    }
+  },
+  {
+    "id": "riot-dota-design-response",
+    "title": {
+      "zh-CN": "Riot Games On The Birth Of League Of Legends",
+      "en": "Riot Games On The Birth Of League Of Legends"
+    },
+    "sourceTitle": "Riot Games On The Birth Of League Of Legends",
+    "url": "https://www.gamedeveloper.com/game-platforms/interview-riot-games-on-the-birth-of-i-league-of-legends-i-",
+    "institutionOrAuthor": "Tom Cadwell、Steve Mescon / 受访者",
+    "sourceKind": "interview",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2009-05-22；开篇设计问答",
+    "summary": {
+      "zh-CN": "2009开发中访谈明确保留DotA核心并回应匹配、界面、安装与局外成长问题；计划不等于全部首发实装。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2009开发中访谈明确保留DotA核心并回应匹配、界面、安装与局外成长问题；计划不等于全部首发实装。"
+    }
+  },
+  {
+    "id": "valve-dota-sequel",
+    "title": {
+      "zh-CN": "The Valve Way: Gabe Newell And Erik Johnson Speak",
+      "en": "The Valve Way: Gabe Newell And Erik Johnson Speak"
+    },
+    "sourceTitle": "The Valve Way: Gabe Newell And Erik Johnson Speak",
+    "url": "https://www.gamedeveloper.com/design/the-valve-way-gabe-newell-and-erik-johnson-speak",
+    "institutionOrAuthor": "Gabe Newell、Erik Johnson / 受访者",
+    "sourceKind": "interview",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2011-08-29；开篇至IceFrog合作问答",
+    "summary": {
+      "zh-CN": "Valve受访者明确称Dota 2源于对DotA与IceFrog的欣赏和续作合作；2011访谈不作为2013正式发行日期。"
+    },
+    "boundedClaim": {
+      "zh-CN": "Valve受访者明确称Dota 2源于对DotA与IceFrog的欣赏和续作合作；2011访谈不作为2013正式发行日期。"
+    }
+  },
+  {
+    "id": "valve-counter-strike-mod",
+    "title": {
+      "zh-CN": "Counter-Strike History",
+      "en": "Counter-Strike History"
+    },
+    "sourceTitle": "Counter-Strike History",
+    "url": "https://blog.counter-strike.net/history/",
+    "institutionOrAuthor": "Valve",
+    "sourceKind": "project-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "History首段",
+    "summary": {
+      "zh-CN": "官方记录Counter-Strike于1999年作为Half-Life模组发布，其后从beta演变为正式作品。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方记录Counter-Strike于1999年作为Half-Life模组发布，其后从beta演变为正式作品。"
+    }
+  },
+  {
+    "id": "walker-team-fortress-origin",
+    "title": {
+      "zh-CN": "A History of Violence",
+      "en": "A History of Violence"
+    },
+    "sourceTitle": "A History of Violence",
+    "url": "https://www.teamfortress.com/post.php?id=5992",
+    "institutionOrAuthor": "Robin Walker / Valve",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2011-08-04；首段及Quake回顾",
+    "summary": {
+      "zh-CN": "作者回顾1996年8月首版：五种职业，当时还没有团队功能；后续才补入。也回顾Quake对团队的影响。"
+    },
+    "boundedClaim": {
+      "zh-CN": "作者回顾1996年8月首版：五种职业，当时还没有团队功能；后续才补入。也回顾Quake对团队的影响。"
+    }
+  },
+  {
+    "id": "valve-team-fortress2-release",
+    "title": {
+      "zh-CN": "Team Fortress 2 — Steam",
+      "en": "Team Fortress 2 — Steam"
+    },
+    "sourceTitle": "Team Fortress 2 — Steam",
+    "url": "https://store.steampowered.com/app/440/Team_Fortress_2/",
+    "institutionOrAuthor": "Valve",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Release Date与职业说明",
+    "summary": {
+      "zh-CN": "商店记载2007-10-10发行及九种职业；持续更新后的模式、物品和免费化不能全部归到2007年。"
+    },
+    "boundedClaim": {
+      "zh-CN": "商店记载2007-10-10发行及九种职业；持续更新后的模式、物品和免费化不能全部归到2007年。"
+    }
   }
 ]

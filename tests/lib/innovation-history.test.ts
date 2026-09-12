@@ -74,3 +74,15 @@ describe('approved expansion evidence boundaries', () => {
     expect(relations.some(r => r.fromId === 'minecraft' && r.toId === 'factorio')).toBe(false);
   });
 });
+
+describe('mod and performance history boundaries', () => {
+  it('locates creation and release contexts without turning hosts into inspirations', () => {
+    expect(nodes.find(n => n.id === 'dota-eul')?.summary['zh-CN']).toContain('创作阶段');
+    expect(nodes.find(n => n.id === 'buildcraft')?.summary['zh-CN']).toContain('仅有管道');
+    expect(nodes.find(n => n.id === 'team-fortress-quake')?.summary['zh-CN']).toContain('尚无团队');
+    expect(relations.find(r => r.id === 'minecraft-to-buildcraft')).toMatchObject({type:'derived-variant'});
+    expect(relations.find(r => r.id === 'buildcraft-to-factorio')).toMatchObject({type:'direct-influence'});
+    expect(relations.find(r => r.id === 'ddr-and-guitar-hero')).toMatchObject({type:'structural-similarity',directionality:'undirected',status:'inferred'});
+    expect(relations.find(r => r.id === 'allstars-to-league')).toMatchObject({type:'design-response'});
+  });
+});

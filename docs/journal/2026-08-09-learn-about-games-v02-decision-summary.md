@@ -762,3 +762,7 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 - 边界：AI。本次没有重新调用 NotebookLM、模型、Chrome 下载或 PicGo；Learn-About-Games 仍 Private，未推送或部署。
 
 原始对话：dialogues/2026-0830.md「1617 补齐历史 PKM 缺口」
+
+## 2026-09-12T23:01:38+08:00 第二批补全与后续授权
+
+用户确认第二批，并明确后续直接推进，无须逐批确认。Codex新增模组、音乐表演两条比较阅读路线，12个作品/版本、14条关系、14项来源，共146/120/127。保留DotA创作/公开版本、BuildCraft逐版本机制和结构比较/直接影响边界。研究详情：docs/research/2026-09-12-atlas-mods-performance.md；发布状态以ProjectInfo/ProjectProgress.md及独立发布回执为准。此处为可见回合摘要，不声称导出完整原始对话。

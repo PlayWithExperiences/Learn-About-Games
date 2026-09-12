@@ -99,7 +99,9 @@ test("new museum anchors expose their bounded source without claiming influence"
     "href",
     "https://www.computerhistory.org/timeline/graphics-games/",
   );
-  await expect(page.locator("[data-history-edge]")).toHaveCount(1);
+  await expect(page.locator("[data-history-edge]")).toHaveCount(
+    relations.filter(r => r.fromId === "minecraft" || r.toId === "minecraft").length,
+  );
 });
 
 for (const theme of ["light", "dark"])
@@ -202,4 +204,19 @@ test('recent right-edge nodes stay visible beside the source inspector', async({
   expect(node).not.toBeNull(); expect(panel).not.toBeNull();
   expect(node!.x >= panel!.x + panel!.width || node!.x + node!.width <= panel!.x || node!.y >= panel!.y + panel!.height || node!.y + node!.height <= panel!.y).toBe(true);
   await expect(page.locator('#history-inspector-title')).toHaveText('Balatro');
+});
+
+test('mod and music routes expose version context and source-backed transitions', async ({ page }) => {
+  await page.goto('./atlas/');
+  await page.locator('[data-history-route="mods"]').click();
+  await expect(page.locator(inspector)).toContainText('数条分支');
+  await page.locator(inspector).locator('[data-history-jump="buildcraft"]').click();
+  await expect(page.locator(inspector)).toContainText('仅有管道');
+  await page.locator(inspector).locator('[data-history-jump="factorio"]').click();
+  await expect(page).toHaveURL(/#atlas-node-detail-factorio$/);
+  await page.locator('[data-history-route="performance"]').click();
+  await page.locator(inspector).locator('[data-history-jump="guitar-hero"]').click();
+  await expect(page.locator(inspector)).toContainText('设计回应');
+  await page.locator(inspector).getByRole('link', { name: 'Rock Band', exact: true }).click();
+  await expect(page).toHaveURL(/#atlas-node-detail-rock-band$/);
 });

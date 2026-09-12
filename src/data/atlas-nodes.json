@@ -1856,5 +1856,244 @@
     "themeIds": [
       "role-playing-lineage"
     ]
+  },
+  {
+    "id": "buildcraft",
+    "kind": "game",
+    "name": {
+      "zh-CN": "BuildCraft（Minecraft 模组）",
+      "en": "BuildCraft（Minecraft 模组）"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "tags": [
+      "simulation-history",
+      "mod-history"
+    ],
+    "summary": {
+      "zh-CN": "2011-04-25首版1.4.1仅有管道。采矿与自动合成随后加入，2.0.0才引入动力系统；这里以首版标定整个模组的发展起点。"
+    },
+    "evidenceIds": [
+      "asie-buildcraft-history"
+    ]
+  },
+  {
+    "id": "dance-dance-revolution",
+    "kind": "game",
+    "name": {
+      "zh-CN": "DanceDanceRevolution",
+      "en": "DanceDanceRevolution"
+    },
+    "startYear": 1998,
+    "lane": 0,
+    "tags": [
+      "music-history",
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "1998年9月日本街机版：按音乐和箭头提示踩踏板，让脚步成为节奏输入；不是后来的家用移植日期。"
+    },
+    "evidenceIds": [
+      "konami-ddr-anniversary"
+    ]
+  },
+  {
+    "id": "guitar-hero",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Guitar Hero",
+      "en": "Guitar Hero"
+    },
+    "startYear": 2005,
+    "lane": 0,
+    "tags": [
+      "music-history"
+    ],
+    "summary": {
+      "zh-CN": "2005初代，以吉他演奏体验为中心；制作人随后将其发展为多人乐队协作。"
+    },
+    "evidenceIds": [
+      "harmonix-guitar-band-reflection"
+    ]
+  },
+  {
+    "id": "frequency",
+    "kind": "game",
+    "name": {
+      "zh-CN": "FreQuency",
+      "en": "FreQuency"
+    },
+    "startYear": 2001,
+    "lane": 0,
+    "tags": [
+      "music-history"
+    ],
+    "summary": {
+      "zh-CN": "2001年PS2作品；在Harmonix节奏游戏探索中先于Amplitude，日期由原作参与者回顾支持。"
+    },
+    "evidenceIds": [
+      "harmonix-frequency-amplitude"
+    ]
+  },
+  {
+    "id": "amplitude-2003",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Amplitude（PS2 原版）",
+      "en": "Amplitude（PS2 原版）"
+    },
+    "startYear": 2003,
+    "lane": 0,
+    "tags": [
+      "music-history"
+    ],
+    "summary": {
+      "zh-CN": "2003续作：在乐器轨道间移动并击中音符以组合音乐。此处不是2014年宣布筹资的重制版。"
+    },
+    "evidenceIds": [
+      "harmonix-frequency-amplitude"
+    ]
+  },
+  {
+    "id": "warcraft-iii",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Warcraft III: Reign of Chaos",
+      "en": "Warcraft III: Reign of Chaos"
+    },
+    "startYear": 2002,
+    "lane": 0,
+    "tags": [
+      "real-time-strategy-lens"
+    ],
+    "summary": {
+      "zh-CN": "2002原作把英雄成长放进军队调度，并提供World Editor，成为自定义地图发展的基础。"
+    },
+    "evidenceIds": [
+      "blizzard-warcraft3-original",
+      "dota-creation-record"
+    ]
+  },
+  {
+    "id": "warcraft-iii-frozen-throne",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Warcraft III: The Frozen Throne",
+      "en": "Warcraft III: The Frozen Throne"
+    },
+    "startYear": 2003,
+    "lane": 0,
+    "tags": [
+      "real-time-strategy-lens",
+      "mod-history"
+    ],
+    "summary": {
+      "zh-CN": "2003资料片及其编辑工具成为Allstars迭代平台；不要把资料片年份写成Warcraft III原作年份。"
+    },
+    "evidenceIds": [
+      "blizzard-frozen-throne-year",
+      "mescon-dota-postmortem"
+    ]
+  },
+  {
+    "id": "dota-eul",
+    "kind": "game",
+    "name": {
+      "zh-CN": "DotA（Eul 早期地图）",
+      "en": "DotA（Eul 早期地图）"
+    },
+    "startYear": 2002,
+    "lane": 0,
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ],
+    "summary": {
+      "zh-CN": "2002指证词中的年末创作阶段；2009社区回顾记公开版本于2003年。不是精确首发定论，也不是后来的Allstars。"
+    },
+    "evidenceIds": [
+      "dota-creation-record",
+      "mescon-dota-postmortem"
+    ]
+  },
+  {
+    "id": "dota-allstars",
+    "kind": "game",
+    "name": {
+      "zh-CN": "DotA Allstars",
+      "en": "DotA Allstars"
+    },
+    "startYear": 2003,
+    "lane": 0,
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ],
+    "summary": {
+      "zh-CN": "2003整合不同DotA版本的英雄，后经Guinsoo、Neichus、IceFrog等持续迭代；装备合成与PvP调整不能全算作初版功能。"
+    },
+    "evidenceIds": [
+      "dota-creation-record",
+      "mescon-dota-postmortem"
+    ]
+  },
+  {
+    "id": "counter-strike-mod",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Counter-Strike（早期模组）",
+      "en": "Counter-Strike（早期模组）"
+    },
+    "startYear": 1999,
+    "lane": 0,
+    "tags": [
+      "first-person-shooter-lens",
+      "mod-history"
+    ],
+    "summary": {
+      "zh-CN": "1999年Half-Life模组beta起点，之后逐步发展为正式作品；不把后来的CS:GO机制倒填至首版。"
+    },
+    "evidenceIds": [
+      "valve-counter-strike-mod"
+    ]
+  },
+  {
+    "id": "team-fortress-quake",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Team Fortress（Quake 模组）",
+      "en": "Team Fortress（Quake 模组）"
+    },
+    "startYear": 1996,
+    "lane": 0,
+    "tags": [
+      "first-person-shooter-lens",
+      "mod-history"
+    ],
+    "summary": {
+      "zh-CN": "1996年8月首版有五种职业，作者特别指出当时尚无团队功能，后续版本才加入。"
+    },
+    "evidenceIds": [
+      "walker-team-fortress-origin"
+    ]
+  },
+  {
+    "id": "team-fortress-2",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Team Fortress 2",
+      "en": "Team Fortress 2"
+    },
+    "startYear": 2007,
+    "lane": 0,
+    "tags": [
+      "first-person-shooter-lens"
+    ],
+    "summary": {
+      "zh-CN": "2007-10-10发行，以九种职业组织战术差异；商店的后续模式、物品与免费化不全部视为首发内容。"
+    },
+    "evidenceIds": [
+      "valve-team-fortress2-release"
+    ]
   }
 ]

@@ -305,5 +305,15 @@
     "summary": {
       "zh-CN": "历史阅读标签，可与其他标签交叉；不自动生成影响关系。"
     }
+  },
+  {
+    "id": "mod-history",
+    "name": {
+      "zh-CN": "模组与玩家改作",
+      "en": "Mods and player modifications"
+    },
+    "summary": {
+      "zh-CN": "标记宿主、模组及相关作品；不自动主张直接影响或类别成员关系。"
+    }
   }
 ]

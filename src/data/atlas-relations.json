@@ -1305,5 +1305,257 @@
       "batch-bg3-systems"
     ],
     "relationRole": "carrier"
+  },
+  {
+    "id": "minecraft-to-buildcraft",
+    "fromId": "minecraft",
+    "toId": "buildcraft",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "BuildCraft是Minecraft模组；将物流和后续自动化加入宿主世界。"
+    },
+    "evidenceIds": [
+      "asie-buildcraft-history"
+    ],
+    "tags": [
+      "simulation-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "buildcraft-to-factorio",
+    "fromId": "buildcraft",
+    "toId": "factorio",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Factorio作者明确提到BuildCraft启发；没有锁定具体子版本，也不等同于原版Minecraft的直接影响。"
+    },
+    "evidenceIds": [
+      "factorio-buildcraft-inspiration"
+    ],
+    "tags": [
+      "simulation-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "frequency-to-amplitude",
+    "fromId": "frequency",
+    "toId": "amplitude-2003",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "原作参与者明确称Amplitude为FreQuency续作。"
+    },
+    "evidenceIds": [
+      "harmonix-frequency-amplitude"
+    ],
+    "tags": [
+      "music-history"
+    ]
+  },
+  {
+    "id": "guitar-hero-to-rock-band",
+    "fromId": "guitar-hero",
+    "toId": "rock-band",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "制作人说明从只弹吉他扩展到乐队协作，包括鼓、贝斯和人声。"
+    },
+    "evidenceIds": [
+      "harmonix-guitar-band-reflection"
+    ],
+    "tags": [
+      "music-history"
+    ]
+  },
+  {
+    "id": "ddr-and-guitar-hero",
+    "fromId": "dance-dance-revolution",
+    "toId": "guitar-hero",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "比较脚步输入与吉他表演；只比较身体和音乐互动，不主张两作直接影响。"
+    },
+    "evidenceIds": [
+      "konami-ddr-anniversary",
+      "harmonix-guitar-band-reflection"
+    ],
+    "tags": [
+      "music-history"
+    ]
+  },
+  {
+    "id": "warcraft3-to-frozen-throne",
+    "fromId": "warcraft-iii",
+    "toId": "warcraft-iii-frozen-throne",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "The Frozen Throne是Warcraft III资料片，不是另一个原作起点。"
+    },
+    "evidenceIds": [
+      "blizzard-warcraft3-original",
+      "blizzard-frozen-throne-year"
+    ],
+    "tags": [
+      "real-time-strategy-lens"
+    ]
+  },
+  {
+    "id": "warcraft3-to-dota",
+    "fromId": "warcraft-iii",
+    "toId": "dota-eul",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Eul使用World Editor创作早期DotA地图。"
+    },
+    "evidenceIds": [
+      "dota-creation-record"
+    ],
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "dota-to-allstars",
+    "fromId": "dota-eul",
+    "toId": "dota-allstars",
+    "type": "derived-variant",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Allstars经其他DotA变体汇集英雄，不宣称是直接复制Eul代码或由一人独创。"
+    },
+    "evidenceIds": [
+      "dota-creation-record"
+    ],
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "frozen-throne-to-allstars",
+    "fromId": "warcraft-iii-frozen-throne",
+    "toId": "dota-allstars",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "资料片编辑工具支持Allstars的持续内容迭代。"
+    },
+    "evidenceIds": [
+      "mescon-dota-postmortem"
+    ],
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "allstars-to-league",
+    "fromId": "dota-allstars",
+    "toId": "league-of-legends",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Riot保留DotA核心，回应匹配、操作界面与安装门槛；这里记录开发意图。"
+    },
+    "evidenceIds": [
+      "riot-dota-design-response"
+    ],
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "allstars-to-dota2",
+    "fromId": "dota-allstars",
+    "toId": "dota-2",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Valve说明与IceFrog合作将其持续开发的DotA发展为续作。"
+    },
+    "evidenceIds": [
+      "valve-dota-sequel",
+      "dota-creation-record"
+    ],
+    "tags": [
+      "moba-history",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "half-life-to-counter-strike",
+    "fromId": "half-life",
+    "toId": "counter-strike-mod",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Counter-Strike以Half-Life模组形式起步。"
+    },
+    "evidenceIds": [
+      "valve-counter-strike-mod"
+    ],
+    "tags": [
+      "first-person-shooter-lens",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "quake-to-team-fortress",
+    "fromId": "quake",
+    "toId": "team-fortress-quake",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "作者回顾Quake上的职业玩法与后续团队功能。"
+    },
+    "evidenceIds": [
+      "walker-team-fortress-origin"
+    ],
+    "tags": [
+      "first-person-shooter-lens",
+      "mod-history"
+    ]
+  },
+  {
+    "id": "team-fortress-and-tf2",
+    "fromId": "team-fortress-quake",
+    "toId": "team-fortress-2",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "对照早期五职业与TF2九职业；中间版本尚未收录，此边不代表直接相邻的版本继承。"
+    },
+    "evidenceIds": [
+      "walker-team-fortress-origin",
+      "valve-team-fortress2-release"
+    ],
+    "tags": [
+      "first-person-shooter-lens",
+      "mod-history"
+    ]
   }
 ]

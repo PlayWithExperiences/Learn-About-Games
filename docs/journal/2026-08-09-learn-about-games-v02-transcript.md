@@ -1055,3 +1055,7 @@ Learn 自动化 6/6、生产器 16/16、发布合同 4/4、AI-Life-Mentor 消费
 ## 2026-09-10 14:45:21 +0800 · 恢复公开结果
 
 仓库 PUBLIC，Pages run [34445710700](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34445710700) 成功，runtime `66a5e8c`。原始用户要求与答复见 ProjectInfo/dialogues/2026-0910.md「1415 （未分类）」；完整验收与边界见 ProjectInfo/sessions/2026-0910-egds-v03-release.md。
+
+## 2026-09-12T23:01:38+08:00 第二批补全与后续授权
+
+用户确认第二批，并明确后续直接推进，无须逐批确认。Codex新增模组、音乐表演两条比较阅读路线，12个作品/版本、14条关系、14项来源，共146/120/127。保留DotA创作/公开版本、BuildCraft逐版本机制和结构比较/直接影响边界。研究详情：docs/research/2026-09-12-atlas-mods-performance.md；发布状态以ProjectInfo/ProjectProgress.md及独立发布回执为准。此处为可见回合摘要，不声称导出完整原始对话。

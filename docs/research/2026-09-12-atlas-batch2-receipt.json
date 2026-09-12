@@ -1,0 +1,319 @@
+{
+  "batch": "2026-09-12-mods-performance",
+  "counts": {
+    "queries": 16,
+    "reads": 32
+  },
+  "authorization": "User confirmed batch 24 queries / 60 reads, then explicitly authorized subsequent research, completion, verification and publication without per-batch confirmation. No paid service initiated.",
+  "requests": [
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.mod-buildcraft.com BuildCraft first release 2011"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.konami.com Dance Dance Revolution 1998 history"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.harmonixmusic.com Guitar Hero 2005"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "BuildCraft Spacetoad April 2011 first release minecraft forum"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.blizzard.com Dota Warcraft III mod history"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.counter-strike.net 1999 mod June 19 history"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.harmonixmusic.com/blog/rb4-product-manager-looks-back"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.konami.com/corporate/en/history/index.html"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.konami.com/sustainability/en/culture/ddr.html"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://blog.asie.pl/2015/01/buildcraft-history-and-design/"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://www.factorio.com/blog/post/fff-50"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://blog.counter-strike.net/history/"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "lineno": 35,
+      "url": "https://www.harmonixmusic.com/blog/rb4-product-manager-looks-back"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "lineno": 45,
+      "url": "https://www.konami.com/corporate/en/history/index.html"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://www.konami.com/sustainability/en/culture/ddr.html"
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.konami.com DDR \"1998\" \"25\""
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.news.blizzard.com \"Warcraft III\" \"2002\" anniversary"
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.dota2.com \"original\" \"mod\""
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.riotgames.com \"DotA\" \"Guinsoo\""
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "lineno": 10,
+      "url": "https://www.factorio.com/blog/post/fff-50"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "lineno": 0,
+      "url": "https://www.konami.com/sustainability/en/culture/ddr.html"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.dota2.com \"IceFrog\" \"2010\""
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.gamedeveloper.com Eul Dota 2003 2002 interview"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.blizzard.com \"Warcraft III\" \"heroes\" \"2002\""
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://www.konami.com/amusement/corporate/ja/topics/20230706/"
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "lineno": 28,
+      "url": "https://www.factorio.com/blog/post/fff-50"
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://www.pcgamer.com/riot-games-dev-counter-files-dota-trademark/"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.gamedeveloper.com/design/postmortem-i-defense-of-the-ancients-i-"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.gamedeveloper.com/design/the-valve-way-gabe-newell-and-erik-johnson-speak"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.gamedeveloper.com/game-platforms/interview-riot-games-on-the-birth-of-i-league-of-legends-i-"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "lineno": 36,
+      "url": "https://www.gamedeveloper.com/design/the-valve-way-gabe-newell-and-erik-johnson-speak"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "lineno": 25,
+      "url": "https://www.gamedeveloper.com/game-platforms/interview-riot-games-on-the-birth-of-i-league-of-legends-i-"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "lineno": 8,
+      "url": "https://www.konami.com/amusement/corporate/ja/topics/20230706/"
+    },
+    {
+      "call": 7,
+      "kind": "search",
+      "q": "site.blizzard.com \"Frozen Throne\" \"July 1, 2003\""
+    },
+    {
+      "call": 7,
+      "kind": "search",
+      "q": "site.harmonixmusic.com \"FreQuency\" \"Amplitude\" \"sequel\""
+    },
+    {
+      "call": 7,
+      "kind": "search",
+      "q": "site.teamfortress.com \"1996\" \"Quake\""
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_15-cv-04084/pdf/USCOURTS-cand-3_15-cv-04084-6.pdf"
+    },
+    {
+      "call": 8,
+      "kind": "read",
+      "url": "https://blog.playstation.com/2014/05/05/amplitude-on-ps4-and-ps3-help-make-it-happen/"
+    },
+    {
+      "call": 8,
+      "kind": "read",
+      "url": "https://www.teamfortress.com/post.php?id=5992"
+    },
+    {
+      "call": 8,
+      "kind": "read",
+      "url": "https://news.blizzard.com/en-us/article/16887806/jaina-hero-week"
+    },
+    {
+      "call": 8,
+      "kind": "find",
+      "pattern": "2002",
+      "url": "https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_15-cv-04084/pdf/USCOURTS-cand-3_15-cv-04084-6.pdf"
+    },
+    {
+      "call": 8,
+      "kind": "find",
+      "pattern": "2004",
+      "url": "https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_15-cv-04084/pdf/USCOURTS-cand-3_15-cv-04084-6.pdf"
+    },
+    {
+      "call": 9,
+      "kind": "read",
+      "lineno": 35,
+      "url": "https://blog.playstation.com/2014/05/05/amplitude-on-ps4-and-ps3-help-make-it-happen/"
+    },
+    {
+      "call": 9,
+      "kind": "read",
+      "lineno": 18,
+      "url": "https://www.teamfortress.com/post.php?id=5992"
+    },
+    {
+      "call": 9,
+      "kind": "read",
+      "lineno": 386,
+      "url": "https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_15-cv-04084/pdf/USCOURTS-cand-3_15-cv-04084-6.pdf"
+    },
+    {
+      "call": 9,
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/440/Team_Fortress_2/"
+    },
+    {
+      "call": 10,
+      "kind": "find",
+      "pattern": "2007",
+      "url": "https://store.steampowered.com/app/440/Team_Fortress_2/"
+    }
+  ],
+  "accepted": {
+    "nodes": [
+      "buildcraft",
+      "dance-dance-revolution",
+      "guitar-hero",
+      "frequency",
+      "amplitude-2003",
+      "warcraft-iii",
+      "warcraft-iii-frozen-throne",
+      "dota-eul",
+      "dota-allstars",
+      "counter-strike-mod",
+      "team-fortress-quake",
+      "team-fortress-2"
+    ],
+    "relations": [
+      "minecraft-to-buildcraft",
+      "buildcraft-to-factorio",
+      "frequency-to-amplitude",
+      "guitar-hero-to-rock-band",
+      "ddr-and-guitar-hero",
+      "warcraft3-to-frozen-throne",
+      "warcraft3-to-dota",
+      "dota-to-allstars",
+      "frozen-throne-to-allstars",
+      "allstars-to-league",
+      "allstars-to-dota2",
+      "half-life-to-counter-strike",
+      "quake-to-team-fortress",
+      "team-fortress-and-tf2"
+    ],
+    "evidence": [
+      "asie-buildcraft-history",
+      "factorio-buildcraft-inspiration",
+      "konami-ddr-anniversary",
+      "harmonix-guitar-band-reflection",
+      "harmonix-frequency-amplitude",
+      "blizzard-warcraft3-original",
+      "blizzard-frozen-throne-year",
+      "dota-creation-record",
+      "mescon-dota-postmortem",
+      "riot-dota-design-response",
+      "valve-dota-sequel",
+      "valve-counter-strike-mod",
+      "walker-team-fortress-origin",
+      "valve-team-fortress2-release"
+    ]
+  },
+  "limitations": [
+    "Konami corporate history contained no DDR game history",
+    "Konami sustainability page returned only a short shell; not used for historical claims",
+    "No claim that initial TF already supported teams",
+    "Creation and public-version dates for DotA remain distinct",
+    "No external paid service, video download or transcription"
+  ]
+}

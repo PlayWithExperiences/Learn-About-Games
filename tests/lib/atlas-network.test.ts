@@ -262,8 +262,8 @@ describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(84);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(86);
-    expect(atlasNodes).toHaveLength(134);
-    expect(atlasRelations).toHaveLength(106);
+    expect(atlasNodes).toHaveLength(146);
+    expect(atlasRelations).toHaveLength(120);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -382,7 +382,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es', 'zh-CN', 'zh-TW']);
 
-    expect(atlasEvidence).toHaveLength(113);
+    expect(atlasEvidence).toHaveLength(127);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -578,8 +578,8 @@ describe('global Atlas graph contract', () => {
     expect(nodes).toEqual(beforeNodes);
     expect(relations).toEqual(beforeRelations);
     expect(buildAtlasLayout(typedAtlasNodes, typedAtlasRelations)).toEqual(layoutsBefore);
-    expect(nodes).toHaveLength(134);
-    expect(relations).toHaveLength(106);
+    expect(nodes).toHaveLength(atlasNodes.length);
+    expect(relations).toHaveLength(atlasRelations.length);
   });
 });
 
@@ -849,9 +849,9 @@ describe('global Atlas presentation geometry', () => {
       '2010-2019',
       '2020-2029',
     ]);
-    expect(outlinedNodeIds).toHaveLength(134);
-    expect(new Set(outlinedNodeIds).size).toBe(134);
-    expect(outlinedRelationIds.size).toBe(106);
+    expect(outlinedNodeIds).toHaveLength(atlasNodes.length);
+    expect(new Set(outlinedNodeIds).size).toBe(atlasNodes.length);
+    expect(outlinedRelationIds.size).toBe(atlasRelations.length);
     expect(adjacency.get('super-metroid')?.undirected.map(({ id }) => id)).toContain(
       'super-metroid-and-sotn',
     );
@@ -940,7 +940,7 @@ describe('Atlas node index helpers', () => {
     const indexed = buildAtlasNodeIndex(atlasNodes, atlasTags);
     const runStructure = indexed.find(({ id }) => id === 'procedural-run-structure');
 
-    expect(indexed).toHaveLength(134);
+    expect(indexed).toHaveLength(atlasNodes.length);
     expect(runStructure).toMatchObject({
       id: 'procedural-run-structure',
       startYear: 1980,

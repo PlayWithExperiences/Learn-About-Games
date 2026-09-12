@@ -88,6 +88,18 @@ export function trackFor(
 
 export const historyRoutes = [
   {
+    id: "mods",
+    title: "玩家怎样把游戏改成另一种游戏？",
+    text: "从射击模组、英雄地图到工厂自动化，对照宿主工具如何支持不同玩法。DotA的创作与公开版本分开标年；这里有数条分支，不是一条单线进化史。",
+    ids: ["quake", "team-fortress-quake", "team-fortress-2", "half-life", "counter-strike-mod", "warcraft-iii", "warcraft-iii-frozen-throne", "dota-eul", "dota-allstars", "league-of-legends", "dota-2", "minecraft", "buildcraft", "factorio"],
+  },
+  {
+    id: "performance",
+    title: "跟上音乐，还是一起成为乐队？",
+    text: "比较脚步、音轨切换、吉他演奏与乐队协作。FreQuency到Amplitude、Guitar Hero到Rock Band各有作者依据；DDR的并置不代表直接影响其他作品。",
+    ids: ["dance-dance-revolution", "frequency", "amplitude-2003", "guitar-hero", "rock-band", "super-beat-sports"],
+  },
+  {
     id: "runs",
     title: "失败之后，什么留下来？",
     text: "从每局重建的地城，经动作与平台结构的转译，到让角色记住死亡的叙事。点选节点查看具体变化；只把有来源支持的关系画成连线。",
