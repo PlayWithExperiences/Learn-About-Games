@@ -1,0 +1,43 @@
+{
+  "nodes": {
+    "baseline": 134,
+    "current": 195,
+    "added": 61,
+    "priorRecordsUnchanged": true,
+    "receiptIdsReconcile": true
+  },
+  "relations": {
+    "baseline": 106,
+    "current": 160,
+    "added": 54,
+    "priorRecordsUnchanged": true,
+    "receiptIdsReconcile": true
+  },
+  "evidence": {
+    "baseline": 113,
+    "current": 172,
+    "added": 59,
+    "priorRecordsUnchanged": true,
+    "receiptIdsReconcile": true
+  },
+  "mechanismRefinement": {
+    "nodes": [
+      "ensemble-performance",
+      "three-dimensional-goal-guidance",
+      "curiosity-in-changing-world",
+      "shared-touch-play",
+      "driving-data-feedback",
+      "cooperative-run-deckbuilding"
+    ],
+    "relations": [
+      "ensemble-performance-carrier",
+      "three-dimensional-goal-guidance-carrier",
+      "curiosity-in-changing-world-carrier",
+      "shared-touch-play-carrier",
+      "driving-data-feedback-carrier",
+      "cooperative-run-deckbuilding-carrier",
+      "run-deckbuilding-to-cooperation"
+    ]
+  },
+  "runtime": "1b41f41328d4712649805f6a9c9d4c7f4857e8a6"
+}

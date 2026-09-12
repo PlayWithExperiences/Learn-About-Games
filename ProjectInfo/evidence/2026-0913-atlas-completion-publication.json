@@ -1,0 +1,61 @@
+{
+  "verifiedAt": "2026-09-13T00:10:32+08:00",
+  "runtime": "1b41f41328d4712649805f6a9c9d4c7f4857e8a6",
+  "runId": 34703681445,
+  "runUrl": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34703681445",
+  "conclusion": "success",
+  "unitTests": 217,
+  "chromiumPassed": 158,
+  "chromiumSkipped": 4,
+  "pagesBuilt": 156,
+  "localAtlasPassed": 74,
+  "localAtlasSkipped": 20,
+  "catalog": {
+    "objects": 195,
+    "relations": 160,
+    "evidence": 172,
+    "territories": 13,
+    "routes": 7,
+    "themes": 15
+  },
+  "httpChecks": [
+    {
+      "path": "atlas/",
+      "status": 200,
+      "nodes": 195,
+      "tabletop": true,
+      "spire2026": true
+    },
+    {
+      "path": "atlas/network/",
+      "status": 200,
+      "nodes": 195,
+      "tabletop": true,
+      "spire2026": true
+    },
+    {
+      "path": "resources/",
+      "status": 200,
+      "nodes": null,
+      "tabletop": true,
+      "spire2026": false
+    }
+  ],
+  "browserChecks": {
+    "mobileViewport": [
+      390,
+      844
+    ],
+    "initialDeepLink": {
+      "object": "slay-the-spire-2-ea",
+      "nodeTop": 232.4765625,
+      "nodeBottom": 275.2734375,
+      "inspectorTop": 448.203125,
+      "earlyAccessContextVisible": true
+    },
+    "tabletopTypeVisible": true,
+    "dominionToSlayTheSpireNavigation": true,
+    "viewportOverrideReset": true
+  },
+  "scope": "Representative history backbone with explicit evidence and version boundaries; not an exhaustive history of all games."
+}

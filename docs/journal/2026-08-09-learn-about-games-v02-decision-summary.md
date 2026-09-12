@@ -770,3 +770,5 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 ## 2026-09-12T23:55:18+08:00 代表性主干补全
 
 用户后续直接推进授权下，目录扩充为195对象/160关系/172来源；桌游前身独立类型、37创新观察、13阅读区7比较入口，版本实例至2026。已完成本地构建、217单测及地图验收；最终发布回执以ProjectProgress为准。原目标按有证据的代表性主干验收，不穷举所有游戏，关系、版本和未收录边界保留。详细审计：docs/research/2026-09-12-atlas-completion-audit.md。
+
+发布回执（2026-09-13T00:10:32+08:00，记录Codex）：runtime `1b41f41328d4712649805f6a9c9d4c7f4857e8a6` 经 [run34703681445](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34703681445) 上线。217单测、158 Chromium/4跳过，156页；线上195对象、桌游跳转及手机深链接通过。代表性主干按逐项审计验收，非穷举全部游戏史。

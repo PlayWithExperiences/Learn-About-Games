@@ -8,7 +8,11 @@
 
 # Project entrypoint
 
-Current deployment (verified 2026-09-12 14:04:27 +0800): `887c09afccc5b2ae0024ea33dc93358ae7e0e41b`, [run 34676484044](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34676484044); 213 unit tests / 152 Chromium tests passed (4 skips), 155 pages. Live checks confirmed both atlas views at 134 objects, 13 overview territories, Chinese source details, and cross-object navigation.
+Current deployment (verified 2026-09-13T00:10:32+08:00): `1b41f41328d4712649805f6a9c9d4c7f4857e8a6`, [run 34703681445](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34703681445); 217 unit tests / 158 Chromium tests passed (4 skips), 156 pages. Catalog 195 objects / 160 relations / 172 sources; 13 reading territories, seven comparison routes, 15 lenses, dated instances through 2026. Both live maps show 195 objects; live tabletop navigation and mobile initial deep links verified.
+
+Tabletop predecessors use `tabletop-game` (D&D, Magic, Dominion), distinct from video games, experiments and hardware. Preserve prototype/public-version/early-access dates and explicit causal vs comparative relations. User explicitly authorized subsequent research, implementation and publication without per-batch confirmation on 2026-09-12; no paid service was initiated. Representative backbone acceptance: `docs/research/2026-09-12-atlas-completion-audit.md`; publication receipt: `ProjectInfo/evidence/2026-0913-atlas-completion-publication.json`. This is not an exhaustive history certification.
+
+Previous deployment (verified 2026-09-12 14:04:27 +0800): `887c09afccc5b2ae0024ea33dc93358ae7e0e41b`, [run 34676484044](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34676484044); 213 unit tests / 152 Chromium tests passed (4 skips), 155 pages. Live checks confirmed both atlas views at 134 objects, 13 overview territories, Chinese source details, and cross-object navigation.
 
 Evidence expansion release (2026-09-12, published): catalog 134 objects / 106 relations / 113 evidence, 13 reading territories, dated instances through 2024. Approved research used 20 queries and 50 page reads. The precise canvas now extends without compressing older years, Chinese evidence languages are supported, and the inspector avoids the selected right-edge node. Source boundaries and deferred candidates: `docs/research/2026-09-12-atlas-coverage-expansion.md` and its JSON receipt. Current acceptance: `ProjectInfo/sessions/2026-0912-innovation-history.md`.
 
