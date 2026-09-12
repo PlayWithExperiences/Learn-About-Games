@@ -1,0 +1,524 @@
+{
+  "updatedAt": "2026-09-12T18:02:53+08:00",
+  "method": "Local catalog inventory. Home territories follow current trackFor ordering and special cases; they are not exclusive genres. Relation counts include observation carriers, inferred comparisons and historical relations, not just influence.",
+  "inputSha256": {
+    "src/data/atlas-nodes.json": "0772209a8c510eca375a303480dad8b92dd0207330899d6f7294ca0675241f3e",
+    "src/data/atlas-relations.json": "1bf81333d013d6ee30ec44de52d0e6aa50d854b5a172ad1b74de4bfeedd4fb6e",
+    "src/data/atlas-evidence.json": "0486a5faecfc8e798ebc52172314f674f53e636786634e5876bd65943d22a630",
+    "src/lib/innovation-history.ts": "196822bb2ce773627702f9815fb1fdc6d167d2c4e68936bbae01ba95438d4eb6"
+  },
+  "counts": {
+    "nodes": 134,
+    "relations": 106,
+    "evidence": 113,
+    "isolated": 25
+  },
+  "territories": [
+    {
+      "id": "origins",
+      "title": "媒介与实验",
+      "count": 9,
+      "gameCount": 2,
+      "minYear": 1958,
+      "maxYear": 1975,
+      "nodeIds": [
+        "tennis-for-two",
+        "spacewar",
+        "brown-box",
+        "galaxy-game",
+        "computer-space",
+        "magnavox-odyssey",
+        "odyssey-table-tennis",
+        "pong",
+        "home-pong"
+      ],
+      "isolatedIds": [
+        "tennis-for-two"
+      ],
+      "internalRelationIds": [
+        "spacewar-to-galaxy-game",
+        "spacewar-to-computer-space",
+        "brown-box-to-odyssey",
+        "odyssey-table-tennis-to-pong",
+        "pong-to-home-pong"
+      ],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "platform",
+      "title": "动作与平台",
+      "count": 6,
+      "gameCount": 6,
+      "minYear": 1980,
+      "maxYear": 2018,
+      "nodeIds": [
+        "space-panic",
+        "donkey-kong",
+        "mario-bros",
+        "super-mario-bros",
+        "sonic-the-hedgehog",
+        "celeste"
+      ],
+      "isolatedIds": [
+        "celeste",
+        "sonic-the-hedgehog",
+        "space-panic"
+      ],
+      "internalRelationIds": [
+        "donkey-kong-to-super-mario-bros",
+        "mario-bros-to-super-mario-bros"
+      ],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "exploration",
+      "title": "探索与开放空间",
+      "count": 28,
+      "gameCount": 19,
+      "minYear": 1986,
+      "maxYear": 2020,
+      "nodeIds": [
+        "metroid",
+        "zelda-ii-adventure-of-link",
+        "castlevania-ii-simons-quest",
+        "faxanadu",
+        "metroid-ii-return-of-samus",
+        "zelda-a-link-to-the-past",
+        "super-metroid",
+        "castlevania-symphony-of-the-night",
+        "castlevania-circle-of-the-moon",
+        "metroidvania-term-category-formation",
+        "cave-story",
+        "indie-metroidvania-expansion",
+        "shadow-complex",
+        "axiom-verge",
+        "ori-and-the-blind-forest",
+        "hollow-knight",
+        "bloodstained-ritual-of-the-night",
+        "lock-on-targeting-combat",
+        "open-world-nonlinear-exploration",
+        "ocarina-of-time",
+        "breath-of-the-wild",
+        "open-world-connected-expanse",
+        "open-world-systemic-rules",
+        "open-world-self-directed-goals",
+        "open-world-physics-and-climb",
+        "grand-theft-auto",
+        "genshin-impact",
+        "elemental-party-combinations"
+      ],
+      "isolatedIds": [
+        "castlevania-circle-of-the-moon",
+        "castlevania-ii-simons-quest",
+        "grand-theft-auto",
+        "metroidvania-term-category-formation"
+      ],
+      "internalRelationIds": [
+        "metroid-to-metroid-ii",
+        "metroid-ii-to-super-metroid",
+        "zelda-link-to-past-to-sotn",
+        "super-metroid-and-sotn",
+        "metroid-to-cave-story",
+        "cave-story-to-indie-expansion",
+        "super-metroid-to-shadow-complex",
+        "shadow-complex-to-indie-expansion",
+        "metroid-to-axiom-verge",
+        "super-metroid-to-ori",
+        "sotn-to-ori",
+        "faxanadu-to-hollow-knight",
+        "zelda-ii-to-hollow-knight",
+        "metroid-to-hollow-knight",
+        "sotn-to-bloodstained",
+        "lock-on-targeting-to-ocarina-of-time",
+        "open-world-exploration-to-breath-of-the-wild",
+        "open-world-connected-to-nonlinear",
+        "open-world-nonlinear-to-systemic",
+        "open-world-systemic-to-self-directed",
+        "open-world-self-directed-to-physics",
+        "open-world-connected-to-ocarina",
+        "open-world-systemic-to-breath",
+        "open-world-goals-to-breath",
+        "open-world-physics-to-breath",
+        "elemental-party-combinations-carrier"
+      ],
+      "crossingRelationIds": [
+        "sotn-to-dead-cells"
+      ]
+    },
+    {
+      "id": "adventure",
+      "title": "叙事与解谜",
+      "count": 9,
+      "gameCount": 9,
+      "minYear": 1976,
+      "maxYear": 2007,
+      "nodeIds": [
+        "colossal-cave-adventure",
+        "zork",
+        "mystery-house",
+        "kings-quest",
+        "maniac-mansion",
+        "secret-of-monkey-island",
+        "tetris",
+        "myst",
+        "portal"
+      ],
+      "isolatedIds": [
+        "myst",
+        "portal",
+        "tetris"
+      ],
+      "internalRelationIds": [
+        "colossal-cave-to-zork",
+        "colossal-cave-to-mystery-house",
+        "kings-quest-to-maniac-mansion",
+        "maniac-mansion-to-secret-of-monkey-island"
+      ],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "rpg",
+      "title": "角色与单局循环",
+      "count": 27,
+      "gameCount": 20,
+      "minYear": 1974,
+      "maxYear": 2024,
+      "nodeIds": [
+        "rogue",
+        "procedural-run-structure",
+        "hack",
+        "moria",
+        "nethack",
+        "angband",
+        "diablo",
+        "spelunky",
+        "dead-cells",
+        "hades",
+        "rpg-character-progression",
+        "rpg-party-and-quest-identity",
+        "rpg-procedural-character-risk",
+        "rpg-real-time-action-progression",
+        "rpg-cross-run-narrative-continuity",
+        "ultima",
+        "wizardry",
+        "dragon-quest",
+        "final-fantasy",
+        "final-fantasy-vii",
+        "pal-1995",
+        "black-myth-wukong",
+        "baldurs-gate",
+        "baldurs-gate-3",
+        "disco-elysium-final-cut",
+        "vampire-survivors",
+        "rpg-environment-and-role-choice"
+      ],
+      "isolatedIds": [
+        "black-myth-wukong",
+        "disco-elysium-final-cut",
+        "pal-1995",
+        "vampire-survivors"
+      ],
+      "internalRelationIds": [
+        "rogue-to-hack",
+        "hack-to-nethack",
+        "rogue-to-moria",
+        "moria-to-angband",
+        "angband-to-diablo",
+        "run-structure-to-spelunky",
+        "spelunky-to-hades",
+        "run-structure-to-dead-cells",
+        "spelunky-to-dead-cells",
+        "rpg-progression-to-diablo",
+        "rpg-progression-to-party-identity",
+        "rpg-party-to-procedural-risk",
+        "rpg-procedural-to-realtime-action",
+        "rpg-realtime-to-cross-run-narrative",
+        "rpg-party-identity-to-diablo",
+        "rpg-procedural-risk-to-rogue",
+        "rpg-realtime-to-diablo",
+        "rpg-cross-run-to-hades",
+        "ultima-to-dragon-quest",
+        "wizardry-to-dragon-quest",
+        "final-fantasy-to-vii",
+        "baldurs-gate-to-3",
+        "rpg-environment-and-role-choice-carrier"
+      ],
+      "crossingRelationIds": [
+        "sotn-to-dead-cells"
+      ]
+    },
+    {
+      "id": "fps",
+      "title": "射击与第一人称",
+      "count": 15,
+      "gameCount": 8,
+      "minYear": 1973,
+      "maxYear": 2017,
+      "nodeIds": [
+        "maze-war",
+        "catacomb-3d",
+        "wolfenstein-3d",
+        "doom",
+        "quake",
+        "half-life",
+        "first-person-shooter-perspective",
+        "fps-vertical-space-combat",
+        "fps-networked-combat-space",
+        "fps-early-networked-space",
+        "fps-texture-mapped-first-person",
+        "fps-fast-run-and-gun",
+        "fps-open-modding-and-deathmatch",
+        "pubg",
+        "fortnite-battle-royale"
+      ],
+      "isolatedIds": [],
+      "internalRelationIds": [
+        "catacomb-3d-to-wolfenstein-3d",
+        "wolfenstein-3d-to-doom",
+        "doom-to-quake",
+        "quake-to-half-life",
+        "fps-perspective-to-wolfenstein-3d",
+        "fps-perspective-to-vertical-space-combat",
+        "vertical-space-combat-to-networked-space",
+        "fps-vertical-space-to-doom",
+        "fps-networked-space-to-half-life",
+        "fps-early-space-to-perspective",
+        "fps-perspective-to-texture-space",
+        "fps-vertical-to-open-modding",
+        "fps-early-space-to-maze-war",
+        "fps-texture-space-to-catacomb-3d",
+        "fps-run-and-gun-to-wolfenstein-3d",
+        "fps-open-modding-to-doom",
+        "fps-texture-to-fast-run-and-gun",
+        "fps-fast-to-vertical-space",
+        "pubg-to-fortnite-battle-royale"
+      ],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "strategy",
+      "title": "策略与团队对抗",
+      "count": 13,
+      "gameCount": 7,
+      "minYear": 1991,
+      "maxYear": 2013,
+      "nodeIds": [
+        "dune-ii",
+        "warcraft-orcs-humans",
+        "warcraft-ii",
+        "starcraft",
+        "rts-resource-and-base-production",
+        "rts-direct-unit-control",
+        "rts-asymmetric-faction-design",
+        "rts-fog-of-war-map-control",
+        "rts-worker-economy-feedback",
+        "rts-global-faction-counterplay",
+        "civilization",
+        "league-of-legends",
+        "dota-2"
+      ],
+      "isolatedIds": [
+        "dota-2",
+        "league-of-legends"
+      ],
+      "internalRelationIds": [
+        "dune-ii-to-warcraft",
+        "warcraft-ii-to-starcraft",
+        "rts-resource-to-direct-control",
+        "rts-direct-control-to-asymmetric-factions",
+        "rts-resource-to-dune-ii",
+        "rts-direct-control-to-warcraft",
+        "rts-asymmetric-factions-to-starcraft",
+        "rts-resource-to-fog-control",
+        "rts-direct-to-worker-economy",
+        "rts-worker-to-global-counterplay",
+        "rts-fog-to-dune-ii",
+        "rts-worker-to-warcraft",
+        "rts-global-to-starcraft"
+      ],
+      "crossingRelationIds": [
+        "simcity-to-civilization"
+      ]
+    },
+    {
+      "id": "simulation",
+      "title": "模拟与建造",
+      "count": 7,
+      "gameCount": 6,
+      "minYear": 1983,
+      "maxYear": 2016,
+      "nodeIds": [
+        "mule",
+        "the-sims",
+        "minecraft",
+        "simcity",
+        "dwarf-fortress",
+        "factorio",
+        "simulation-self-authored-goals"
+      ],
+      "isolatedIds": [
+        "mule"
+      ],
+      "internalRelationIds": [
+        "simcity-to-the-sims",
+        "dwarf-fortress-and-factorio",
+        "simulation-self-authored-goals-carrier"
+      ],
+      "crossingRelationIds": [
+        "simcity-to-civilization",
+        "ultima-online-and-minecraft"
+      ]
+    },
+    {
+      "id": "online",
+      "title": "在线世界",
+      "count": 10,
+      "gameCount": 8,
+      "minYear": 1991,
+      "maxYear": 2011,
+      "nodeIds": [
+        "everquest",
+        "eve-online",
+        "world-of-warcraft",
+        "dikumud",
+        "legendmud",
+        "ultima-online",
+        "jx3",
+        "jx3-yidai-zongshi",
+        "online-world-crafting-economy",
+        "wuxia-qinggong-traversal"
+      ],
+      "isolatedIds": [
+        "eve-online"
+      ],
+      "internalRelationIds": [
+        "legendmud-to-ultima-online",
+        "dikumud-to-everquest",
+        "everquest-to-world-of-warcraft",
+        "jx3-to-yidai-zongshi",
+        "online-world-crafting-economy-carrier",
+        "wuxia-qinggong-traversal-carrier"
+      ],
+      "crossingRelationIds": [
+        "ultima-online-and-minecraft"
+      ]
+    },
+    {
+      "id": "cards",
+      "title": "卡牌与单局构筑",
+      "count": 4,
+      "gameCount": 3,
+      "minYear": 2019,
+      "maxYear": 2024,
+      "nodeIds": [
+        "slay-the-spire",
+        "luck-be-a-landlord",
+        "balatro",
+        "run-deck-construction"
+      ],
+      "isolatedIds": [],
+      "internalRelationIds": [
+        "landlord-to-balatro",
+        "run-deck-construction-carrier"
+      ],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "fighting",
+      "title": "格斗与对人竞技",
+      "count": 1,
+      "gameCount": 1,
+      "minYear": 1991,
+      "maxYear": 1991,
+      "nodeIds": [
+        "street-fighter-ii"
+      ],
+      "isolatedIds": [
+        "street-fighter-ii"
+      ],
+      "internalRelationIds": [],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "music",
+      "title": "音乐与表演",
+      "count": 2,
+      "gameCount": 2,
+      "minYear": 2007,
+      "maxYear": 2017,
+      "nodeIds": [
+        "rock-band",
+        "super-beat-sports"
+      ],
+      "isolatedIds": [
+        "rock-band",
+        "super-beat-sports"
+      ],
+      "internalRelationIds": [],
+      "crossingRelationIds": []
+    },
+    {
+      "id": "physical",
+      "title": "体育与身体输入",
+      "count": 3,
+      "gameCount": 2,
+      "minYear": 1988,
+      "maxYear": 2006,
+      "nodeIds": [
+        "john-madden-football",
+        "nintendo-wii",
+        "gran-turismo"
+      ],
+      "isolatedIds": [
+        "gran-turismo",
+        "john-madden-football",
+        "nintendo-wii"
+      ],
+      "internalRelationIds": [],
+      "crossingRelationIds": []
+    }
+  ],
+  "isolatedNodeIds": [
+    "castlevania-ii-simons-quest",
+    "castlevania-circle-of-the-moon",
+    "metroidvania-term-category-formation",
+    "tennis-for-two",
+    "space-panic",
+    "sonic-the-hedgehog",
+    "celeste",
+    "mule",
+    "tetris",
+    "john-madden-football",
+    "myst",
+    "grand-theft-auto",
+    "eve-online",
+    "nintendo-wii",
+    "portal",
+    "street-fighter-ii",
+    "gran-turismo",
+    "league-of-legends",
+    "dota-2",
+    "pal-1995",
+    "black-myth-wukong",
+    "disco-elysium-final-cut",
+    "vampire-survivors",
+    "rock-band",
+    "super-beat-sports"
+  ],
+  "decades": {
+    "1950": 1,
+    "1960": 2,
+    "1970": 12,
+    "1980": 26,
+    "1990": 46,
+    "2000": 16,
+    "2010": 20,
+    "2020": 11
+  },
+  "unmeasured": [
+    "development region",
+    "release platform",
+    "completeness of historical influence"
+  ],
+  "post2024NodeIds": []
+}
