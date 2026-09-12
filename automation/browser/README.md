@@ -83,3 +83,33 @@ node automation/browser/launch.cjs https://notebook.google.com/
 且随后 headless Chrome 崩溃（CDP 9222 失联）。`launch.cjs` 重启后复用登录态、notebook 状态无损，
 再点同一下载即正常完成（19,741,391B / 13 页）。结论：图片优先走 `asset-capture.cjs`，
 文件类下载失败时先重启浏览器再试一次，不要反复点击。
+
+## 2026-09-13 补记：整条流水线的步骤工具与「会伪装成别的症状」的坑
+
+单条材料现在由 `automation/run-notebooklm-item.py` 端到端驱动（导入来源→隔离→总结→三产物→导出→上传→发布→远端交付），
+批量由 `automation/run-notebooklm-batch.sh` 串行推进，产物已在时用 `automation/finish-notebooklm-item.py` 只补导出与发布。
+本目录下的步骤工具：
+
+| 工具 | 作用 |
+| --- | --- |
+| `nblm-add-youtube.cjs` | 经「网站」对话框导入一个 YouTube 来源，按集合差识别新来源 |
+| `nblm-list-sources.cjs` / `nblm-isolate-source.cjs` | 列出/取消勾选来源，只留当前候选（按 aria-label 原子寻址＋每步重查） |
+| `nblm-set-sources.cjs` | 在生成对话框的来源浮层里选择来源并确认 |
+| `nblm-ask.cjs` / `nblm-extract-answer.cjs` | 提问并**只取最新一条**回答（旧回答仍在屏上，取错就会张冠李戴） |
+| `nblm-generate-artifact.cjs` | 生成 信息图／思维导图／演示文稿，提交前断言对话框必须是「1 个来源」 |
+| `nblm-studio-list.cjs` | 把 Studio 面板归位到列表（查看器各有各的关法，兜底重载页面） |
+| `nblm-export-image-artifact.cjs` / `nblm-export-mindmap.cjs` / `nblm-export-deck.cjs` | 三类产物的导出 |
+| `nblm-deck-available.cjs` | 生成前探测演示文稿是否可用（**不消耗 claim**） |
+
+**最容易踩、也最该记住的一条**：Studio 生成对话框**有自己独立的来源选择器，默认全选**，
+和左侧来源面板的勾选是两套状态。它会静默产出「基于 N 个来源」的串源产物。此外**页面重载会把来源勾选重置为全选**，
+而对话框只在**打开那一刻**快照当前选择。所以：重载后必须重新隔离，生成前必须断言对话框显示「1 个来源」。
+
+其余同年实测坑：产物卡片文本含相对时间（`· N 分钟前`），整串比较会漏判已知卡片，须按 (图标, 标题) 稳定键比较；
+信息图查看器只有 ✕、没有「关闭网页查看器」；演示文稿对话框的语言是 mat-select，点击会弹出遮罩并遮住提交按钮（应校验默认值而非点击）；
+批量时未等笔记本空闲就取卡片基线，上一候选的卡片可能在基线之后完成并被误认成新产物。
+
+**演示文稿容量节流**：2026-09-13 01:06 起，演示文稿对话框出现「此内容将在几小时后生成。或者，升级可缩短等待时间。」
+且「立即生成」按钮消失，只剩「稍后生成」。已在长期本 880ad454 复核，**同一账号下同样被节流 → 属账号级容量限制，换 notebook 无用**。
+演示文稿是三件必填产物之一，因此流水线在 **claim 之前**先跑 `nblm-deck-available.cjs`，不可用就不领取，
+避免把当天的 10 次 claim 浪费在做不完的材料上。

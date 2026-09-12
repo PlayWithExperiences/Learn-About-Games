@@ -41,6 +41,11 @@ while [[ "$processed" -lt "$MAX_ITEMS" ]]; do
   rc=${PIPESTATUS[0]}
   echo "=== ITEM $rid finished rc=$rc ($(date '+%H:%M:%S'))"
 
+  if [[ "$rc" == "3" ]]; then
+    echo "BATCH_STOP deck_unavailable (no claim consumed)"
+    break
+  fi
+
   processed=$((processed + 1))
   sleep 5
 done

@@ -214,8 +214,22 @@ def main() -> int:
     item = Item(args.resource_id, item_dir)
     print(f"ITEM {args.resource_id} | {title} | topic={topic} | dir={item_dir}", flush=True)
 
-    stage = "claim"
+    stage = "deck-availability"
     try:
+        # 0) Refuse to spend a claim when the deck feature cannot generate right now.
+        # A deck is one of the three required artifacts, so a throttled deck makes the
+        # item impossible; finding that out after claiming wastes one of ten daily claims
+        # (observed 2026-09-13). This probe opens and closes a dialog only.
+        if not args.generation_run_id:
+            probe = run(["node", str(BROWSER / "nblm-deck-available.cjs")], timeout=180, check=False)
+            try:
+                avail = json.loads(probe.stdout.strip().splitlines()[-1])
+            except Exception:
+                avail = {"available": False, "reason": f"deck probe unreadable: {probe.stdout[-200:]}{probe.stderr[-200:]}"}
+            item.note(stage, avail)
+            if not avail.get("available"):
+                raise StageError("deck feature unavailable before claim: " + str(avail.get("reason")), stage)
+
         # 1) claim (or resume a claim opened by an explicit retry)
         if args.generation_run_id:
             run_id = args.generation_run_id
@@ -392,6 +406,15 @@ def main() -> int:
         detail = str(exc)
         failing_stage = getattr(exc, "stage", None) or stage
         print(f"ITEM_FAIL stage={failing_stage}: {detail}", flush=True)
+        if failing_stage == "deck-availability":
+            # No claim was taken, so this is a run-level capacity block, not an item failure.
+            (item.dir / "report.json").write_text(json.dumps({
+                "resource_id": args.resource_id, "title": title, "topic": topic,
+                "stage": failing_stage, "error": detail[:2000], "claim_consumed": False,
+                "log": item.log, "recorded_at": now(),
+            }, ensure_ascii=False, indent=1), encoding="utf-8")
+            print("ITEM_BLOCKED_DECK", args.resource_id, flush=True)
+            return 3
         run_id = item.claim.get("generation_run_id")
         if run_id:
             run([sys.executable, str(PRODUCER), "fail", "--catalog", str(CATALOG), "--state-dir", str(state),
