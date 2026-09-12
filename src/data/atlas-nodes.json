@@ -2095,5 +2095,1006 @@
     "evidenceIds": [
       "valve-team-fortress2-release"
     ]
+  },
+  {
+    "id": "virtua-fighter",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Virtua Fighter（街机版）",
+      "en": "Virtua Fighter（街机版）"
+    },
+    "startYear": 1993,
+    "lane": 0,
+    "tags": [
+      "fighting-history"
+    ],
+    "summary": {
+      "zh-CN": "1993街机作品，用多边形角色探索三维格斗；此处不采用“绝对第一”的宣传措辞。"
+    },
+    "evidenceIds": [
+      "sega-vf-history"
+    ]
+  },
+  {
+    "id": "virtua-fighter-2",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Virtua Fighter 2（街机版）",
+      "en": "Virtua Fighter 2（街机版）"
+    },
+    "startYear": 1994,
+    "lane": 0,
+    "tags": [
+      "fighting-history"
+    ],
+    "summary": {
+      "zh-CN": "1994年11月街机版，在三维格斗中增加新招式、投技与失衡变化。"
+    },
+    "evidenceIds": [
+      "sega-vf-history"
+    ]
+  },
+  {
+    "id": "virtua-fighter-4",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Virtua Fighter 4（街机版）",
+      "en": "Virtua Fighter 4（街机版）"
+    },
+    "startYear": 2001,
+    "lane": 0,
+    "tags": [
+      "fighting-history"
+    ],
+    "summary": {
+      "zh-CN": "2001年8月街机版，以VF.NET服务和卡片系统记录、管理玩家数据。"
+    },
+    "evidenceIds": [
+      "sega-vf-history"
+    ]
+  },
+  {
+    "id": "tekken",
+    "kind": "game",
+    "name": {
+      "zh-CN": "铁拳（街机初代）",
+      "en": "铁拳（街机初代）"
+    },
+    "startYear": 1994,
+    "lane": 0,
+    "tags": [
+      "fighting-history"
+    ],
+    "summary": {
+      "zh-CN": "1994年街机起点，代表另一条三维格斗传统；没有把同年代或相似画面写成VF对它的直接影响。"
+    },
+    "evidenceIds": [
+      "namco-tekken-history"
+    ]
+  },
+  {
+    "id": "tekken-8",
+    "kind": "game",
+    "name": {
+      "zh-CN": "铁拳8",
+      "en": "铁拳8"
+    },
+    "startYear": 2024,
+    "lane": 0,
+    "tags": [
+      "fighting-history"
+    ],
+    "summary": {
+      "zh-CN": "2024年1月：系列转向全球家用平台同步推出，改变先街机后家用的发布与玩家聚集路径。"
+    },
+    "evidenceIds": [
+      "namco-tekken-history"
+    ]
+  },
+  {
+    "id": "street-fighter-6",
+    "kind": "game",
+    "name": {
+      "zh-CN": "街头霸王6",
+      "en": "街头霸王6"
+    },
+    "startYear": 2023,
+    "lane": 0,
+    "tags": [
+      "fighting-history"
+    ],
+    "summary": {
+      "zh-CN": "2023年6月作品以现代操作和World Tour帮助玩家进入对战，回应长期存在的操作与入门门槛。"
+    },
+    "evidenceIds": [
+      "capcom-sf6-design"
+    ]
+  },
+  {
+    "id": "super-mario-world",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Super Mario World",
+      "en": "Super Mario World"
+    },
+    "startYear": 1990,
+    "lane": 0,
+    "tags": [
+      "platform-jumping-lens"
+    ],
+    "summary": {
+      "zh-CN": "1990年11月日本SFC版；后来的3D Land开发者以它与Mario 64之间的差异讨论二维与三维玩法。"
+    },
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ]
+  },
+  {
+    "id": "super-mario-64",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Super Mario 64",
+      "en": "Super Mario 64"
+    },
+    "startYear": 1996,
+    "lane": 0,
+    "tags": [
+      "platform-jumping-lens"
+    ],
+    "summary": {
+      "zh-CN": "1996年6月日本N64版；在三维场地中寻找星星，使终点从关卡末端转为探索对象。"
+    },
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ]
+  },
+  {
+    "id": "super-mario-3d-land",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Super Mario 3D Land",
+      "en": "Super Mario 3D Land"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "tags": [
+      "platform-jumping-lens"
+    ],
+    "summary": {
+      "zh-CN": "2011欧洲3DS卡带版：以旗杆提供明确方向，以隐藏收集保留三维探索；不是2012下载版。"
+    },
+    "evidenceIds": [
+      "nintendo-3d-land-release",
+      "nintendo-mario-2d-3d"
+    ]
+  },
+  {
+    "id": "virtua-racing",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Virtua Racing（街机版）",
+      "en": "Virtua Racing（街机版）"
+    },
+    "startYear": 1992,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "1992年8月街机版，以多边形赛道、视角切换与轮胎磨损组织驾驶体验。"
+    },
+    "evidenceIds": [
+      "sega-virtua-racing"
+    ]
+  },
+  {
+    "id": "daytona-usa",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Daytona USA（街机版）",
+      "en": "Daytona USA（街机版）"
+    },
+    "startYear": 1994,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "按SEGA档案的1994年3月运营日期定位；贴图三维赛道中，漂移、碰撞和车辆表现共同影响驾驶。"
+    },
+    "evidenceIds": [
+      "sega-daytona-history"
+    ]
+  },
+  {
+    "id": "trackmania",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Trackmania",
+      "en": "Trackmania"
+    },
+    "startYear": 2003,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "2003系列起点；积木式赛道创作把玩家从驾驶者扩展为赛道制作者，不倒填后来的商业模式。"
+    },
+    "evidenceIds": [
+      "ubisoft-trackmania-origin"
+    ]
+  },
+  {
+    "id": "gran-turismo-7",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Gran Turismo 7",
+      "en": "Gran Turismo 7"
+    },
+    "startYear": 2022,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "2022-03-04原版；延续购车、比赛、改装循环，Music Rally又把音乐节拍引入驾驶。后续更新功能另列日期。"
+    },
+    "evidenceIds": [
+      "gt7-release-date",
+      "gt7-driving-culture"
+    ]
+  },
+  {
+    "id": "gt7-spec-iii",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Gran Turismo 7：Spec III",
+      "en": "Gran Turismo 7：Spec III"
+    },
+    "startYear": 2025,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "2025-12-04更新实例：Data Logger让玩家比较驾驶回放中的速度、操作与调校；不主张它首创赛车遥测。"
+    },
+    "evidenceIds": [
+      "gt7-driving-culture",
+      "gt7-spec3-data-logger"
+    ]
+  },
+  {
+    "id": "wii-sports",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Wii Sports",
+      "en": "Wii Sports"
+    },
+    "startYear": 2006,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "2006年12月日本版随Wii推出；用挥动动作参与体育项目，区别于主机硬件本身。"
+    },
+    "evidenceIds": [
+      "nintendo-wii-sports-iteration"
+    ]
+  },
+  {
+    "id": "wii-sports-resort",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Wii Sports Resort",
+      "en": "Wii Sports Resort"
+    },
+    "startYear": 2009,
+    "lane": 0,
+    "tags": [
+      "physical-play-history"
+    ],
+    "summary": {
+      "zh-CN": "2009欧洲版；MotionPlus支持更细致的旋转和停手检测，将动作表达扩展到新的运动项目。"
+    },
+    "evidenceIds": [
+      "nintendo-resort-release",
+      "nintendo-wii-sports-iteration"
+    ]
+  },
+  {
+    "id": "narbacular-drop",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Narbacular Drop",
+      "en": "Narbacular Drop"
+    },
+    "startYear": 2005,
+    "lane": 0,
+    "tags": [
+      "puzzle-history"
+    ],
+    "summary": {
+      "zh-CN": "2005学生作品，玩家用一对连通的传送门穿越地牢；团队及概念随后进入Portal开发。"
+    },
+    "evidenceIds": [
+      "digipen-portal-predecessors"
+    ]
+  },
+  {
+    "id": "tag-power-of-paint",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Tag: The Power of Paint",
+      "en": "Tag: The Power of Paint"
+    },
+    "startYear": 2008,
+    "lane": 0,
+    "tags": [
+      "puzzle-history"
+    ],
+    "summary": {
+      "zh-CN": "2008学生作品，涂色表面改变弹跳、速度与附着；后续作品只吸收相似玩法，不意味着全部机制照搬。"
+    },
+    "evidenceIds": [
+      "digipen-portal-predecessors"
+    ]
+  },
+  {
+    "id": "portal-2",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Portal 2",
+      "en": "Portal 2"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "tags": [
+      "puzzle-history"
+    ],
+    "summary": {
+      "zh-CN": "2011作品，在传送门解谜上扩展合作与表面交互；关卡编辑等后续功能不视为首发事实。"
+    },
+    "evidenceIds": [
+      "valve-portal2-release",
+      "digipen-portal-predecessors"
+    ]
+  },
+  {
+    "id": "outer-wilds",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Outer Wilds",
+      "en": "Outer Wilds"
+    },
+    "startYear": 2019,
+    "lane": 0,
+    "tags": [
+      "puzzle-history"
+    ],
+    "summary": {
+      "zh-CN": "2019-05-30版本：在随时间变化的手工太阳系中探索，以线索和理解推动下一次行动。"
+    },
+    "evidenceIds": [
+      "mobius-outer-wilds-release",
+      "mobius-outer-wilds-references"
+    ]
+  },
+  {
+    "id": "dark-souls",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Dark Souls（主机原版）",
+      "en": "Dark Souls（主机原版）"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "summary": {
+      "zh-CN": "2011欧洲主机版，篝火恢复与敌人重生、连接区域和反复挑战共同组织风险。"
+    },
+    "evidenceIds": [
+      "bandai-dark-souls-original"
+    ]
+  },
+  {
+    "id": "metroid-prime-jp",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Metroid Prime（日本GC版）",
+      "en": "Metroid Prime（日本GC版）"
+    },
+    "startYear": 2003,
+    "lane": 0,
+    "tags": [
+      "metroidvania-lens"
+    ],
+    "summary": {
+      "zh-CN": "这里定位2003-02-28日本GameCube版，不作为全球最早发行日期；扫描环境的设计是后来探索作品讨论的参照。"
+    },
+    "evidenceIds": [
+      "nintendo-prime-jp-date",
+      "mobius-outer-wilds-references"
+    ]
+  },
+  {
+    "id": "tetris-game-boy",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Tetris（Game Boy版）",
+      "en": "Tetris（Game Boy版）"
+    },
+    "startYear": 1989,
+    "lane": 0,
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "1989掌机版本将已有规则带到随身设备；不把捆绑销售方式或日期推广至所有地区。"
+    },
+    "evidenceIds": [
+      "tetris-handheld-history"
+    ]
+  },
+  {
+    "id": "snake-nokia",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Snake（Nokia版）",
+      "en": "Snake（Nokia版）"
+    },
+    "startYear": 1997,
+    "lane": 0,
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "1997年Nokia设备上的版本，把已有蛇形移动玩法带入手机；不是整个Snake玩法的起源。"
+    },
+    "evidenceIds": [
+      "nokia-snake-history"
+    ]
+  },
+  {
+    "id": "angry-birds",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Angry Birds（原版）",
+      "en": "Angry Birds（原版）"
+    },
+    "startYear": 2009,
+    "lane": 0,
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "2009移动游戏，以弹弓和物理解谜组织短关卡；不是2021年Reloaded重作。"
+    },
+    "evidenceIds": [
+      "rovio-angry-birds-return"
+    ]
+  },
+  {
+    "id": "angry-birds-reloaded",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Angry Birds Reloaded",
+      "en": "Angry Birds Reloaded"
+    },
+    "startYear": 2021,
+    "lane": 0,
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "2021-07-16 Apple Arcade版本，在原有弹弓物理解谜上扩展内容，并采用订阅服务内无广告、无内购的体验。"
+    },
+    "evidenceIds": [
+      "rovio-angry-birds-return"
+    ]
+  },
+  {
+    "id": "fruit-ninja",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Fruit Ninja（iPhone版）",
+      "en": "Fruit Ninja（iPhone版）"
+    },
+    "startYear": 2010,
+    "lane": 0,
+    "tags": [
+      "physical-play-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "2010年4月iPhone版，以手指划动切水果；iPad多人和多指扩展另作日期实例。"
+    },
+    "evidenceIds": [
+      "halfbrick-fruit-launch",
+      "halfbrick-fruit-hd"
+    ]
+  },
+  {
+    "id": "fruit-ninja-hd-2012",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Fruit Ninja HD（2012实例）",
+      "en": "Fruit Ninja HD（2012实例）"
+    },
+    "startYear": 2012,
+    "lane": 0,
+    "tags": [
+      "physical-play-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "以2012年官方公告定位iPad多人分屏和多指划动；这个年份不是HD版本首次发行。"
+    },
+    "evidenceIds": [
+      "halfbrick-fruit-hd"
+    ]
+  },
+  {
+    "id": "monument-valley",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Monument Valley（iOS原版）",
+      "en": "Monument Valley（iOS原版）"
+    },
+    "startYear": 2014,
+    "lane": 0,
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "2014-04-03 iOS版，以视觉错觉与不可能建筑构成通路谜题；不是后来的PC全景版。"
+    },
+    "evidenceIds": [
+      "ustwo-monument-anniversary",
+      "ustwo-monument-geometry"
+    ]
+  },
+  {
+    "id": "ingress",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Ingress（早期版）",
+      "en": "Ingress（早期版）"
+    },
+    "startYear": 2012,
+    "lane": 0,
+    "tags": [
+      "social-worlds-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "2012上线的现实位置游戏，探索与社交经验后来进入Pokémon GO。"
+    },
+    "evidenceIds": [
+      "hanke-ingress-pokemon"
+    ]
+  },
+  {
+    "id": "pokemon-go",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Pokémon GO（首批地区版）",
+      "en": "Pokémon GO（首批地区版）"
+    },
+    "startYear": 2016,
+    "lane": 0,
+    "tags": [
+      "social-worlds-history",
+      "mobile-history"
+    ],
+    "summary": {
+      "zh-CN": "2016年7月首批在澳大利亚、新西兰和美国推出，把现实位置、户外探索与宝可梦收集结合。"
+    },
+    "evidenceIds": [
+      "pokemon-go-launch",
+      "nintendo-pokemon-go-world"
+    ]
+  },
+  {
+    "id": "gujian",
+    "kind": "game",
+    "name": {
+      "zh-CN": "古剑奇谭",
+      "en": "古剑奇谭"
+    },
+    "startYear": 2010,
+    "lane": 0,
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "summary": {
+      "zh-CN": "2010年7月原作，融合架空历史、人文地理和角色叙事；不用发行商的绝对首创措辞。"
+    },
+    "evidenceIds": [
+      "gujian-original"
+    ]
+  },
+  {
+    "id": "gujian3",
+    "kind": "game",
+    "name": {
+      "zh-CN": "古剑奇谭三（Steam版）",
+      "en": "古剑奇谭三（Steam版）"
+    },
+    "startYear": 2018,
+    "lane": 0,
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "summary": {
+      "zh-CN": "2018-12-14为这里定位的Steam版日期，全即时战斗延展系列东方幻想世界；不代表最早中国原版发售日。"
+    },
+    "evidenceIds": [
+      "gujian3-steam"
+    ]
+  },
+  {
+    "id": "dyson-sphere-program",
+    "kind": "game",
+    "name": {
+      "zh-CN": "戴森球计划（早期版）",
+      "en": "戴森球计划（早期版）"
+    },
+    "startYear": 2021,
+    "lane": 0,
+    "tags": [
+      "simulation-history"
+    ],
+    "summary": {
+      "zh-CN": "2021年1月抢先体验，把自动化生产布局扩展至球面与星际物流；黑雾战斗等后续内容不倒填首发。"
+    },
+    "evidenceIds": [
+      "dyson-sphere-program-release"
+    ]
+  },
+  {
+    "id": "hades-ii-v1",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Hades II（v1.0）",
+      "en": "Hades II（v1.0）"
+    },
+    "startYear": 2025,
+    "lane": 0,
+    "tags": [
+      "roguelike-lens"
+    ],
+    "summary": {
+      "zh-CN": "2025-09-25正式版，巫术、新角色和结局扩展每次成败推进故事的结构；与2024年抢先体验分开。"
+    },
+    "evidenceIds": [
+      "hades2-v1-release",
+      "hades2-design"
+    ]
+  },
+  {
+    "id": "expedition-33",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Clair Obscur: Expedition 33",
+      "en": "Clair Obscur: Expedition 33"
+    },
+    "startYear": 2025,
+    "lane": 0,
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "summary": {
+      "zh-CN": "2025年作品，法国团队将回合决策和实时闪避、格挡结合；类型参考不等于某一作品的直接影响。"
+    },
+    "evidenceIds": [
+      "expedition33-combat",
+      "sandfall-rpg-combination"
+    ]
+  },
+  {
+    "id": "slay-the-spire-2-ea",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Slay the Spire 2（抢先体验）",
+      "en": "Slay the Spire 2（抢先体验）"
+    },
+    "startYear": 2026,
+    "lane": 0,
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ],
+    "summary": {
+      "zh-CN": "2026-03-05抢先体验，卡组构筑加入多人合作及新角色；不是完整1.0版本。"
+    },
+    "evidenceIds": [
+      "megacrit-spire2-facts",
+      "megacrit-spire2-early-access"
+    ]
+  },
+  {
+    "id": "ensemble-performance",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "从单件演奏到乐队协作"
+    },
+    "summary": {
+      "zh-CN": "把不同乐器与人声分配给共同演奏的玩家，改变人与音乐、人与人的关系。 日期指向讨论实例，不宣称首创。"
+    },
+    "startYear": 2007,
+    "lane": 0,
+    "tags": [
+      "innovation-event",
+      "music-history"
+    ],
+    "evidenceIds": [
+      "harmonix-guitar-band-reflection"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "music-performance-history"
+    ],
+    "mechanism": {
+      "zh-CN": "把不同乐器与人声分配给共同演奏的玩家，改变人与音乐、人与人的关系。"
+    }
+  },
+  {
+    "id": "three-dimensional-goal-guidance",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "三维空间中的明确目标"
+    },
+    "summary": {
+      "zh-CN": "用关卡终点引导方向，同时通过隐藏收集保留探索，回应三维空间中的迷路感。 日期指向讨论实例，不宣称首创。"
+    },
+    "startYear": 2011,
+    "lane": 0,
+    "tags": [
+      "innovation-event",
+      "platform-jumping-lens"
+    ],
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "platform-lineage"
+    ],
+    "mechanism": {
+      "zh-CN": "用关卡终点引导方向，同时通过隐藏收集保留探索，回应三维空间中的迷路感。"
+    }
+  },
+  {
+    "id": "curiosity-in-changing-world",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "变化世界中的好奇心探索"
+    },
+    "summary": {
+      "zh-CN": "以线索、时间变化和手工空间推动探索，而不是把危险旅途或程序生成作为核心。 日期指向讨论实例，不宣称首创。"
+    },
+    "startYear": 2019,
+    "lane": 0,
+    "tags": [
+      "innovation-event",
+      "puzzle-history"
+    ],
+    "evidenceIds": [
+      "mobius-outer-wilds-release",
+      "mobius-outer-wilds-references"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "puzzle-adventure-lineage"
+    ],
+    "mechanism": {
+      "zh-CN": "以线索、时间变化和手工空间推动探索，而不是把危险旅途或程序生成作为核心。"
+    }
+  },
+  {
+    "id": "shared-touch-play",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "共享触屏中的多人操作"
+    },
+    "summary": {
+      "zh-CN": "在同一触屏中安排多人分区与多指操作；2012是此处引用的功能实例。 日期指向讨论实例，不宣称首创。"
+    },
+    "startYear": 2012,
+    "lane": 0,
+    "tags": [
+      "innovation-event",
+      "physical-play-history",
+      "mobile-history"
+    ],
+    "evidenceIds": [
+      "halfbrick-fruit-hd"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "physical-input-history"
+    ],
+    "mechanism": {
+      "zh-CN": "在同一触屏中安排多人分区与多指操作；2012是此处引用的功能实例。"
+    }
+  },
+  {
+    "id": "driving-data-feedback",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "以驾驶数据定位练习差异"
+    },
+    "summary": {
+      "zh-CN": "通过驾驶回放的数据对照定位操作与调校差异，不将赛车遥测描述为首次发明。 日期指向讨论实例，不宣称首创。"
+    },
+    "startYear": 2025,
+    "lane": 0,
+    "tags": [
+      "innovation-event",
+      "physical-play-history"
+    ],
+    "evidenceIds": [
+      "gt7-spec3-data-logger"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "physical-input-history"
+    ],
+    "mechanism": {
+      "zh-CN": "通过驾驶回放的数据对照定位操作与调校差异，不将赛车遥测描述为首次发明。"
+    }
+  },
+  {
+    "id": "cooperative-run-deckbuilding",
+    "kind": "innovation",
+    "name": {
+      "zh-CN": "合作中的单局卡组构筑"
+    },
+    "summary": {
+      "zh-CN": "单局卡组构筑扩展到多人合作；观察定位于2026抢先体验，不代表最终版本。 日期指向讨论实例，不宣称首创。"
+    },
+    "startYear": 2026,
+    "lane": 0,
+    "tags": [
+      "innovation-event",
+      "card-history"
+    ],
+    "evidenceIds": [
+      "megacrit-spire2-facts",
+      "megacrit-spire2-early-access"
+    ],
+    "eventRole": "mechanism",
+    "themeIds": [
+      "deckbuilding-history"
+    ],
+    "mechanism": {
+      "zh-CN": "单局卡组构筑扩展到多人合作；观察定位于2026抢先体验，不代表最终版本。"
+    }
+  },
+  {
+    "id": "dungeons-and-dragons-1974",
+    "kind": "tabletop-game",
+    "name": {
+      "zh-CN": "Dungeons & Dragons（桌面原版）",
+      "en": "Dungeons & Dragons（桌面原版）"
+    },
+    "startYear": 1974,
+    "lane": 0,
+    "tags": [
+      "role-playing-lineage"
+    ],
+    "summary": {
+      "zh-CN": "1974桌面角色扮演游戏；作为持续角色成长的历史语境，不与电子游戏或2024史料集混淆。"
+    },
+    "evidenceIds": [
+      "wizards-original-dnd",
+      "gamedeveloper-dd-rpg-history"
+    ]
+  },
+  {
+    "id": "magic-the-gathering",
+    "kind": "tabletop-game",
+    "name": {
+      "zh-CN": "Magic: The Gathering（实体卡牌）",
+      "en": "Magic: The Gathering（实体卡牌）"
+    },
+    "startYear": 1993,
+    "lane": 0,
+    "tags": [
+      "card-history"
+    ],
+    "summary": {
+      "zh-CN": "1993实体集换卡牌起点，以卡牌选择、色轮与法术力组织策略；后续影响不限定为初版某张卡。"
+    },
+    "evidenceIds": [
+      "rosewater-magic-origin"
+    ]
+  },
+  {
+    "id": "dominion",
+    "kind": "tabletop-game",
+    "name": {
+      "zh-CN": "Dominion（桌游第一版）",
+      "en": "Dominion（桌游第一版）"
+    },
+    "startYear": 2008,
+    "lane": 0,
+    "tags": [
+      "card-history"
+    ],
+    "summary": {
+      "zh-CN": "2008桌游第一版，把构筑牌组放进对局过程；不使用第二版的替换卡牌说明原版。"
+    },
+    "evidenceIds": [
+      "rio-dominion-first",
+      "rio-dominion-deckbuilding"
+    ]
+  },
+  {
+    "id": "mud-1978-prototype",
+    "kind": "experimental-program",
+    "name": {
+      "zh-CN": "MUD（1978原型）",
+      "en": "MUD（1978原型）"
+    },
+    "startYear": 1978,
+    "lane": 0,
+    "tags": [
+      "social-worlds-history"
+    ],
+    "summary": {
+      "zh-CN": "1978秋原型主要支持房间间移动与聊天；尚不是后来成熟的BCPL版本。"
+    },
+    "evidenceIds": [
+      "bartle-early-mud"
+    ]
+  },
+  {
+    "id": "mud-bcpl",
+    "kind": "game",
+    "name": {
+      "zh-CN": "MUD（BCPL阶段）",
+      "en": "MUD（BCPL阶段）"
+    },
+    "startYear": 1980,
+    "lane": 0,
+    "tags": [
+      "social-worlds-history"
+    ],
+    "summary": {
+      "zh-CN": "1979末至1980重写的第三版阶段，随后扩充玩法并接入外部玩家；不把1978原型与成熟版本合为一体。"
+    },
+    "evidenceIds": [
+      "bartle-early-mud"
+    ]
+  },
+  {
+    "id": "lineage",
+    "kind": "game",
+    "name": {
+      "zh-CN": "Lineage（天堂）",
+      "en": "Lineage（天堂）"
+    },
+    "startYear": 1998,
+    "lane": 0,
+    "tags": [
+      "social-worlds-history"
+    ],
+    "summary": {
+      "zh-CN": "1998年9月正式运营的持续在线世界；官方回顾按章节展示地区与故事扩展，不把后续区域算作首发内容。"
+    },
+    "evidenceIds": [
+      "ncsoft-lineage-origin"
+    ]
   }
 ]

@@ -173,7 +173,7 @@ export type Catalog = {
   }>;
   atlasNodes: Array<{
     id: string;
-    kind: 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
+    kind: 'game' | 'tabletop-game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
     name: LocalizedText;
     summary: LocalizedText;
     startYear: number;
@@ -1242,7 +1242,7 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
   for (const node of catalog.atlasNodes) {
     const hasInvalidDateRange =
       !Number.isInteger(node.startYear) ||
-      (node.kind === 'game' && node.endYear !== undefined) ||
+      ((node.kind === 'game' || node.kind === 'tabletop-game') && node.endYear !== undefined) ||
       (node.kind === 'category' &&
         (node.endYear === undefined || !Number.isInteger(node.endYear) || node.endYear <= node.startYear)) ||
       (node.endYear !== undefined &&
@@ -1400,7 +1400,7 @@ export function validateCatalog(catalog: Catalog): CatalogValidationError[] {
         appendError(errors, 'ATLAS_RELATION_ROLE_REQUIRED', 'atlasRelations', relation.id, 'relationRole', '');
       } else if (
         relation.relationRole === 'carrier' &&
-        !(fromNode?.kind === 'innovation' && fromNode.tags.includes('innovation-event') && toNode?.kind === 'game')
+        !(fromNode?.kind === 'innovation' && fromNode.tags.includes('innovation-event') && (toNode?.kind === 'game' || toNode?.kind === 'tabletop-game'))
       ) {
         appendError(errors, 'ATLAS_RELATION_ROLE_INVALID', 'atlasRelations', relation.id, 'relationRole', 'carrier');
       } else if (

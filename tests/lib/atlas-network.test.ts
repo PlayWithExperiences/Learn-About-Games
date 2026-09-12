@@ -51,6 +51,7 @@ describe('global Atlas graph contract', () => {
   it('assigns one primary entity family to each Atlas perspective', () => {
     expect(atlasPerspectiveVisibleKinds('works')).toEqual([
       'game',
+      'tabletop-game',
       'experimental-apparatus',
       'experimental-program',
       'system-prototype',
@@ -78,7 +79,7 @@ describe('global Atlas graph contract', () => {
         .filter(({ kind, tags }) => kind === 'innovation' && tags.includes('innovation-event'))
         .map(({ id }) => id),
     );
-    const gameIds = new Set(atlasNodes.filter(({ kind }) => kind === 'game').map(({ id }) => id));
+    const gameIds = new Set(atlasNodes.filter(({ kind }) => kind === 'game' || kind === 'tabletop-game').map(({ id }) => id));
     const eventRelations = atlasRelations.filter(({ fromId, toId }) => eventIds.has(fromId) || eventIds.has(toId)) as EventRelationContract[];
 
     expect(eventRelations.length).toBeGreaterThan(0);
@@ -103,7 +104,7 @@ describe('global Atlas graph contract', () => {
     );
     const shooterEvents = (atlasNodes as Array<EventNodeContract & { themeIds?: string[] }>)
       .filter((node) => eventIds.has(node.id) && node.themeIds?.includes('first-person-shooter-lineage'));
-    const gameIds = new Set(atlasNodes.filter(({ kind }) => kind === 'game').map(({ id }) => id));
+    const gameIds = new Set(atlasNodes.filter(({ kind }) => kind === 'game' || kind === 'tabletop-game').map(({ id }) => id));
     const carrierRelations = (atlasRelations as EventRelationContract[])
       .filter(({ relationRole, fromId }) => relationRole === 'carrier' && shooterEvents.some((event) => event.id === fromId));
 
@@ -262,8 +263,8 @@ describe('global Atlas graph contract', () => {
   it('keeps the release-sized union graph within the approved bounds', () => {
     expect(atlasNodes.length).toBeGreaterThanOrEqual(84);
     expect(atlasRelations.length).toBeGreaterThanOrEqual(86);
-    expect(atlasNodes).toHaveLength(146);
-    expect(atlasRelations).toHaveLength(120);
+    expect(atlasNodes).toHaveLength(195);
+    expect(atlasRelations).toHaveLength(160);
   });
 
   it('adds bounded first-person shooter and RTS development lineages', () => {
@@ -382,7 +383,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es', 'zh-CN', 'zh-TW']);
 
-    expect(atlasEvidence).toHaveLength(127);
+    expect(atlasEvidence).toHaveLength(172);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');
@@ -412,7 +413,7 @@ describe('global Atlas graph contract', () => {
     }
   });
 
-  it('defines foundation and seven evidence lineages as tag-only lenses', () => {
+  it('defines foundation and evidence lineages as tag-only lenses', () => {
     expect(atlasGenreFamilies).toHaveLength(10);
     expect(atlasThemes.map(({ id }) => id)).toEqual([
       'early-electronic-games',
@@ -428,6 +429,8 @@ describe('global Atlas graph contract', () => {
       'simulation-history',
       'online-worlds',
       'deckbuilding-history',
+      'music-performance-history',
+      'physical-input-history',
     ]);
     expect(
       atlasThemes.every((theme) => !('nodeIds' in theme) && !('relationIds' in theme)),

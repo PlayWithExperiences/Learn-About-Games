@@ -1,83 +1,196 @@
 [
   {
     "id": "early-electronic-games",
-    "title": { "zh-CN": "早期电子游戏与商业化", "en": "Early electronic games and commercialization" },
-    "summary": { "zh-CN": "高亮 1958 至 1975 年实验装置、程序、系统原型与商业产品之间有证据支持的联系。" },
+    "title": {
+      "zh-CN": "早期电子游戏与商业化",
+      "en": "Early electronic games and commercialization"
+    },
+    "summary": {
+      "zh-CN": "高亮 1958 至 1975 年实验装置、程序、系统原型与商业产品之间有证据支持的联系。"
+    },
     "familyIds": [],
-    "scopeNote": { "zh-CN": "这是基础历史透镜，不是类型 Family；它不主张唯一第一款电子游戏，也不以时间相邻代替影响证据。" },
-    "tags": ["early-electronic-games-lens"]
+    "scopeNote": {
+      "zh-CN": "这是基础历史透镜，不是类型 Family；它不主张唯一第一款电子游戏，也不以时间相邻代替影响证据。"
+    },
+    "tags": [
+      "early-electronic-games-lens"
+    ]
   },
   {
     "id": "roguelike",
-    "title": { "zh-CN": "Roguelike", "en": "Roguelike" },
-    "summary": { "zh-CN": "高亮与 Roguelike 历史、run-based 结构及跨类型转译有证据关系的节点与边；不隐藏全局上下文。" },
-    "familyIds": ["action", "role-playing"],
-    "scopeNote": { "zh-CN": "追踪可核查的单局结构、直接影响与跨类型转译；不主张 Rogue 是第一款 Roguelike，也不将所有 run-based 游戏视为同一类型。" },
-    "tags": ["roguelike-lens"]
+    "title": {
+      "zh-CN": "Roguelike",
+      "en": "Roguelike"
+    },
+    "summary": {
+      "zh-CN": "高亮与 Roguelike 历史、run-based 结构及跨类型转译有证据关系的节点与边；不隐藏全局上下文。"
+    },
+    "familyIds": [
+      "action",
+      "role-playing"
+    ],
+    "scopeNote": {
+      "zh-CN": "追踪可核查的单局结构、直接影响与跨类型转译；不主张 Rogue 是第一款 Roguelike，也不将所有 run-based 游戏视为同一类型。"
+    },
+    "tags": [
+      "roguelike-lens"
+    ]
   },
   {
     "id": "metroidvania",
-    "title": { "zh-CN": "Metroidvania", "en": "Metroidvania" },
-    "summary": { "zh-CN": "高亮命名史、探索结构、直接影响、融合与类别形成；不寻找唯一第一款，也不隐藏全局上下文。" },
-    "familyIds": ["action", "adventure"],
-    "scopeNote": { "zh-CN": "追踪探索平台结构、作品间直接证据与类别形成；不主张 Metroid 或其他单一作品发明了这一类型。" },
-    "tags": ["metroidvania-lens"]
+    "title": {
+      "zh-CN": "Metroidvania",
+      "en": "Metroidvania"
+    },
+    "summary": {
+      "zh-CN": "高亮命名史、探索结构、直接影响、融合与类别形成；不寻找唯一第一款，也不隐藏全局上下文。"
+    },
+    "familyIds": [
+      "action",
+      "adventure"
+    ],
+    "scopeNote": {
+      "zh-CN": "追踪探索平台结构、作品间直接证据与类别形成；不主张 Metroid 或其他单一作品发明了这一类型。"
+    },
+    "tags": [
+      "metroidvania-lens"
+    ]
   },
   {
     "id": "platform-lineage",
-    "title": { "zh-CN": "平台与跳跃游戏", "en": "Platform and jumping games" },
-    "summary": { "zh-CN": "高亮固定画面攀爬、跳跃、横向卷轴、速度与精密平台设计之间有证据支持的关系。" },
-    "familyIds": ["action"],
-    "scopeNote": { "zh-CN": "纳入不同历史阶段的平台与跳跃作品，但不声明唯一第一款 platform game，也不因同类标签或时间相邻自动连边。" },
-    "tags": ["platform-jumping-lens"]
+    "title": {
+      "zh-CN": "平台与跳跃游戏",
+      "en": "Platform and jumping games"
+    },
+    "summary": {
+      "zh-CN": "高亮固定画面攀爬、跳跃、横向卷轴、速度与精密平台设计之间有证据支持的关系。"
+    },
+    "familyIds": [
+      "action"
+    ],
+    "scopeNote": {
+      "zh-CN": "纳入不同历史阶段的平台与跳跃作品，但不声明唯一第一款 platform game，也不因同类标签或时间相邻自动连边。"
+    },
+    "tags": [
+      "platform-jumping-lens"
+    ]
   },
   {
     "id": "adventure-lineage",
-    "title": { "zh-CN": "解析器冒险到图形冒险", "en": "Parser adventure to graphical adventure" },
-    "summary": { "zh-CN": "高亮文本解析器、图形呈现、指向点击界面与 SCUMM 技术沿用之间有证据支持的关系。" },
-    "familyIds": ["adventure"],
-    "scopeNote": { "zh-CN": "追踪两条相交的演化路径，不主张单一作品发明 adventure 或 graphical adventure，也不把界面相似当作直接影响。" },
-    "tags": ["parser-graphical-adventure-lens"]
+    "title": {
+      "zh-CN": "解析器冒险到图形冒险",
+      "en": "Parser adventure to graphical adventure"
+    },
+    "summary": {
+      "zh-CN": "高亮文本解析器、图形呈现、指向点击界面与 SCUMM 技术沿用之间有证据支持的关系。"
+    },
+    "familyIds": [
+      "adventure"
+    ],
+    "scopeNote": {
+      "zh-CN": "追踪两条相交的演化路径，不主张单一作品发明 adventure 或 graphical adventure，也不把界面相似当作直接影响。"
+    },
+    "tags": [
+      "parser-graphical-adventure-lens"
+    ]
   },
   {
     "id": "first-person-shooter-lineage",
-    "title": { "zh-CN": "第一人称射击开发谱系", "en": "First-person shooter development lineage" },
-    "summary": { "zh-CN": "高亮早期第一人称网络空间，以及 id Software 与 Valve 的可核查开发响应；不把年代相邻当作影响。" },
-    "familyIds": ["shooter"],
-    "scopeNote": { "zh-CN": "这是选择性开发谱系，不主张 Maze War、Wolfenstein 3D 或 Doom 是唯一第一款 FPS，也不把 Spacewar! 直接连到 1990 年代作品。" },
-    "tags": ["first-person-shooter-lens"]
+    "title": {
+      "zh-CN": "第一人称射击开发谱系",
+      "en": "First-person shooter development lineage"
+    },
+    "summary": {
+      "zh-CN": "高亮早期第一人称网络空间，以及 id Software 与 Valve 的可核查开发响应；不把年代相邻当作影响。"
+    },
+    "familyIds": [
+      "shooter"
+    ],
+    "scopeNote": {
+      "zh-CN": "这是选择性开发谱系，不主张 Maze War、Wolfenstein 3D 或 Doom 是唯一第一款 FPS，也不把 Spacewar! 直接连到 1990 年代作品。"
+    },
+    "tags": [
+      "first-person-shooter-lens"
+    ]
   },
   {
     "id": "real-time-strategy-lineage",
-    "title": { "zh-CN": "即时战略开发谱系", "en": "Real-time strategy development lineage" },
-    "summary": { "zh-CN": "高亮 Dune II、Warcraft 与 StarCraft 之间由参与者明确记录的开发响应。" },
-    "familyIds": ["strategy"],
-    "scopeNote": { "zh-CN": "这是 RTS 的选择性谱系，不等于全部策略游戏史，也不主张 Dune II 是无争议的绝对起点。" },
-    "tags": ["real-time-strategy-lens"]
+    "title": {
+      "zh-CN": "即时战略开发谱系",
+      "en": "Real-time strategy development lineage"
+    },
+    "summary": {
+      "zh-CN": "高亮 Dune II、Warcraft 与 StarCraft 之间由参与者明确记录的开发响应。"
+    },
+    "familyIds": [
+      "strategy"
+    ],
+    "scopeNote": {
+      "zh-CN": "这是 RTS 的选择性谱系，不等于全部策略游戏史，也不主张 Dune II 是无争议的绝对起点。"
+    },
+    "tags": [
+      "real-time-strategy-lens"
+    ]
   },
   {
     "id": "puzzle-adventure-lineage",
-    "title": { "zh-CN": "解谜冒险结构谱系", "en": "Puzzle-adventure structure lineage" },
-    "summary": { "zh-CN": "把文本解析、图形冒险与指向点击中的解谜结构作为益智 Family 的研究入口；不把所有冒险作品重新归类为益智游戏。" },
-    "familyIds": ["puzzle", "adventure"],
-    "scopeNote": { "zh-CN": "当前沿用已核查的解析器到图形冒险证据，强调问题求解结构而非宣称一个唯一的益智游戏起点；后续继续补充纯益智谱系。" },
-    "tags": ["parser-graphical-adventure-lens"]
+    "title": {
+      "zh-CN": "解谜冒险结构谱系",
+      "en": "Puzzle-adventure structure lineage"
+    },
+    "summary": {
+      "zh-CN": "比较文本、图形、空间与时间变化中的问题求解；包括已有作品关系与来源支持的机制观察。"
+    },
+    "familyIds": [
+      "puzzle",
+      "adventure"
+    ],
+    "scopeNote": {
+      "zh-CN": "这些作品有不同传统。只按具体证据区分影响、设计回应与相似，不把解谜作品排列成单一继承链。"
+    },
+    "tags": [
+      "parser-graphical-adventure-lens",
+      "puzzle-history"
+    ]
   },
   {
     "id": "role-playing-lineage",
-    "title": { "zh-CN": "角色扮演发展谱系", "en": "Role-playing development lineage" },
-    "summary": { "zh-CN": "把角色身份、成长、队伍与持续叙事作为一条可核查的角色扮演创新路线；Roguelike 仍保留为交叉透镜。" },
-    "familyIds": ["role-playing"],
-    "scopeNote": { "zh-CN": "这是选择性角色扮演发展路线，不主张单一作品发明 RPG，也不把所有带成长数值的作品视为同一类型。" },
-    "tags": ["role-playing-lineage"]
+    "title": {
+      "zh-CN": "角色扮演发展谱系",
+      "en": "Role-playing development lineage"
+    },
+    "summary": {
+      "zh-CN": "把角色身份、成长、队伍与持续叙事作为一条可核查的角色扮演创新路线；Roguelike 仍保留为交叉透镜。"
+    },
+    "familyIds": [
+      "role-playing"
+    ],
+    "scopeNote": {
+      "zh-CN": "这是选择性角色扮演发展路线，不主张单一作品发明 RPG，也不把所有带成长数值的作品视为同一类型。"
+    },
+    "tags": [
+      "role-playing-lineage"
+    ]
   },
   {
     "id": "open-world-lineage",
-    "title": { "zh-CN": "开放世界发展谱系", "en": "Open-world development lineage" },
-    "summary": { "zh-CN": "把连接空间、非线性目标、系统规则与玩家自定路线作为开放世界创新事件来观察；作品只是承载证据。" },
-    "familyIds": ["adventure", "sandbox-survival"],
-    "scopeNote": { "zh-CN": "这是选择性开放世界路线，不把地图规模或时间相邻自动当作创新影响，也不主张某一作品是唯一绝对起点。" },
-    "tags": ["open-world-lineage"]
+    "title": {
+      "zh-CN": "开放世界发展谱系",
+      "en": "Open-world development lineage"
+    },
+    "summary": {
+      "zh-CN": "把连接空间、非线性目标、系统规则与玩家自定路线作为开放世界创新事件来观察；作品只是承载证据。"
+    },
+    "familyIds": [
+      "adventure",
+      "sandbox-survival"
+    ],
+    "scopeNote": {
+      "zh-CN": "这是选择性开放世界路线，不把地图规模或时间相邻自动当作创新影响，也不主张某一作品是唯一绝对起点。"
+    },
+    "tags": [
+      "open-world-lineage"
+    ]
   },
   {
     "id": "simulation-history",
@@ -134,6 +247,42 @@
     },
     "scopeNote": {
       "zh-CN": "选择性证据路线。并置不等于直接影响，官方商品页不作为影响关系的自动证据。"
+    }
+  },
+  {
+    "id": "music-performance-history",
+    "title": {
+      "zh-CN": "音乐与共同表演"
+    },
+    "tags": [
+      "music-history"
+    ],
+    "familyIds": [
+      "rhythm-party"
+    ],
+    "summary": {
+      "zh-CN": "比较有具体来源支持的作品、输入方式与机制变化。"
+    },
+    "scopeNote": {
+      "zh-CN": "机制日期是讨论实例；同属输入或表演问题不等于有直接影响。"
+    }
+  },
+  {
+    "id": "physical-input-history",
+    "title": {
+      "zh-CN": "体育、输入与练习反馈"
+    },
+    "tags": [
+      "physical-play-history"
+    ],
+    "familyIds": [
+      "sports-racing"
+    ],
+    "summary": {
+      "zh-CN": "比较有具体来源支持的作品、输入方式与机制变化。"
+    },
+    "scopeNote": {
+      "zh-CN": "机制日期是讨论实例；同属输入或表演问题不等于有直接影响。"
     }
   }
 ]

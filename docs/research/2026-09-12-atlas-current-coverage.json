@@ -1,0 +1,384 @@
+{
+  "updatedAt": "2026-09-12T15:44:58.752Z",
+  "counts": {
+    "nodes": 195,
+    "relations": 160,
+    "evidence": 172
+  },
+  "territories": [
+    {
+      "id": "origins",
+      "title": "媒介与实验",
+      "count": 9,
+      "kinds": {
+        "experimental-apparatus": 1,
+        "experimental-program": 1,
+        "system-prototype": 1,
+        "commercial-hardware": 4,
+        "game": 2
+      },
+      "years": [
+        1958,
+        1975
+      ],
+      "isolated": [
+        "tennis-for-two"
+      ]
+    },
+    {
+      "id": "platform",
+      "title": "动作与平台",
+      "count": 10,
+      "kinds": {
+        "game": 9,
+        "innovation": 1
+      },
+      "years": [
+        1980,
+        2018
+      ],
+      "isolated": [
+        "space-panic",
+        "sonic-the-hedgehog",
+        "celeste"
+      ]
+    },
+    {
+      "id": "exploration",
+      "title": "探索与开放空间",
+      "count": 29,
+      "kinds": {
+        "game": 20,
+        "category": 2,
+        "innovation": 7
+      },
+      "years": [
+        1986,
+        2020
+      ],
+      "isolated": [
+        "castlevania-ii-simons-quest",
+        "castlevania-circle-of-the-moon",
+        "metroidvania-term-category-formation",
+        "grand-theft-auto"
+      ]
+    },
+    {
+      "id": "adventure",
+      "title": "叙事与解谜",
+      "count": 19,
+      "kinds": {
+        "game": 18,
+        "innovation": 1
+      },
+      "years": [
+        1976,
+        2021
+      ],
+      "isolated": [
+        "myst",
+        "snake-nokia"
+      ]
+    },
+    {
+      "id": "rpg",
+      "title": "角色与单局循环",
+      "count": 33,
+      "kinds": {
+        "game": 25,
+        "innovation": 7,
+        "tabletop-game": 1
+      },
+      "years": [
+        1974,
+        2025
+      ],
+      "isolated": [
+        "pal-1995",
+        "black-myth-wukong",
+        "disco-elysium-final-cut",
+        "vampire-survivors",
+        "expedition-33"
+      ]
+    },
+    {
+      "id": "fps",
+      "title": "射击与第一人称",
+      "count": 18,
+      "kinds": {
+        "game": 11,
+        "innovation": 7
+      },
+      "years": [
+        1973,
+        2017
+      ],
+      "isolated": []
+    },
+    {
+      "id": "strategy",
+      "title": "策略与团队对抗",
+      "count": 17,
+      "kinds": {
+        "game": 11,
+        "innovation": 6
+      },
+      "years": [
+        1991,
+        2013
+      ],
+      "isolated": []
+    },
+    {
+      "id": "simulation",
+      "title": "模拟与建造",
+      "count": 9,
+      "kinds": {
+        "game": 8,
+        "innovation": 1
+      },
+      "years": [
+        1983,
+        2021
+      ],
+      "isolated": [
+        "mule"
+      ]
+    },
+    {
+      "id": "online",
+      "title": "在线世界",
+      "count": 15,
+      "kinds": {
+        "game": 12,
+        "innovation": 2,
+        "experimental-program": 1
+      },
+      "years": [
+        1978,
+        2016
+      ],
+      "isolated": [
+        "eve-online",
+        "lineage"
+      ]
+    },
+    {
+      "id": "cards",
+      "title": "卡牌与单局构筑",
+      "count": 8,
+      "kinds": {
+        "game": 4,
+        "innovation": 2,
+        "tabletop-game": 2
+      },
+      "years": [
+        1993,
+        2026
+      ],
+      "isolated": []
+    },
+    {
+      "id": "fighting",
+      "title": "格斗与对人竞技",
+      "count": 7,
+      "kinds": {
+        "game": 7
+      },
+      "years": [
+        1991,
+        2024
+      ],
+      "isolated": []
+    },
+    {
+      "id": "music",
+      "title": "音乐与表演",
+      "count": 7,
+      "kinds": {
+        "game": 6,
+        "innovation": 1
+      },
+      "years": [
+        1998,
+        2017
+      ],
+      "isolated": [
+        "super-beat-sports"
+      ]
+    },
+    {
+      "id": "physical",
+      "title": "体育与身体输入",
+      "count": 14,
+      "kinds": {
+        "game": 11,
+        "commercial-hardware": 1,
+        "innovation": 2
+      },
+      "years": [
+        1988,
+        2025
+      ],
+      "isolated": [
+        "john-madden-football",
+        "nintendo-wii",
+        "trackmania"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "mobile",
+      "title": "游戏装进口袋，玩法怎样改变？",
+      "nodeIds": [
+        "tetris",
+        "tetris-game-boy",
+        "snake-nokia",
+        "angry-birds",
+        "angry-birds-reloaded",
+        "fruit-ninja",
+        "fruit-ninja-hd-2012",
+        "shared-touch-play",
+        "monument-valley",
+        "ingress",
+        "pokemon-go"
+      ]
+    },
+    {
+      "id": "practice",
+      "title": "技巧，怎样变得可学可练？",
+      "nodeIds": [
+        "street-fighter-ii",
+        "virtua-fighter",
+        "virtua-fighter-2",
+        "virtua-fighter-4",
+        "tekken",
+        "street-fighter-6",
+        "virtua-racing",
+        "daytona-usa",
+        "trackmania",
+        "gran-turismo",
+        "gran-turismo-7",
+        "gt7-spec-iii",
+        "driving-data-feedback",
+        "wii-sports",
+        "wii-sports-resort"
+      ]
+    },
+    {
+      "id": "mods",
+      "title": "玩家怎样把游戏改成另一种游戏？",
+      "nodeIds": [
+        "quake",
+        "team-fortress-quake",
+        "team-fortress-2",
+        "half-life",
+        "counter-strike-mod",
+        "warcraft-iii",
+        "warcraft-iii-frozen-throne",
+        "dota-eul",
+        "dota-allstars",
+        "league-of-legends",
+        "dota-2",
+        "minecraft",
+        "buildcraft",
+        "factorio"
+      ]
+    },
+    {
+      "id": "performance",
+      "title": "跟上音乐，还是一起成为乐队？",
+      "nodeIds": [
+        "dance-dance-revolution",
+        "frequency",
+        "amplitude-2003",
+        "guitar-hero",
+        "rock-band",
+        "ensemble-performance",
+        "super-beat-sports"
+      ]
+    },
+    {
+      "id": "runs",
+      "title": "失败之后，什么留下来？",
+      "nodeIds": [
+        "magic-the-gathering",
+        "dominion",
+        "rogue",
+        "moria",
+        "angband",
+        "diablo",
+        "procedural-run-structure",
+        "spelunky",
+        "dead-cells",
+        "hades",
+        "slay-the-spire",
+        "vampire-survivors",
+        "luck-be-a-landlord",
+        "balatro",
+        "hades-ii-v1",
+        "slay-the-spire-2-ea",
+        "cooperative-run-deckbuilding"
+      ]
+    },
+    {
+      "id": "space",
+      "title": "空间怎样成为玩法？",
+      "nodeIds": [
+        "metroid",
+        "super-metroid",
+        "castlevania-symphony-of-the-night",
+        "ocarina-of-time",
+        "super-mario-64",
+        "super-mario-3d-land",
+        "metroid-prime-jp",
+        "narbacular-drop",
+        "portal",
+        "portal-2",
+        "dark-souls",
+        "outer-wilds",
+        "monument-valley",
+        "three-dimensional-goal-guidance",
+        "curiosity-in-changing-world",
+        "ultima",
+        "jx3-yidai-zongshi",
+        "genshin-impact",
+        "grand-theft-auto",
+        "breath-of-the-wild",
+        "hollow-knight",
+        "dead-cells"
+      ]
+    },
+    {
+      "id": "worlds",
+      "title": "从通关到生活在世界里",
+      "nodeIds": [
+        "mule",
+        "simcity",
+        "civilization",
+        "mud-1978-prototype",
+        "mud-bcpl",
+        "dikumud",
+        "lineage",
+        "legendmud",
+        "ultima-online",
+        "dwarf-fortress",
+        "factorio",
+        "dyson-sphere-program",
+        "the-sims",
+        "everquest",
+        "eve-online",
+        "world-of-warcraft",
+        "minecraft"
+      ]
+    }
+  ],
+  "inputs": {
+    "src/data/atlas-nodes.json": "e44d9df6a9b40ff28a5ed9f4a8f63b893b3c781a89e21355f275df3bba88686c",
+    "src/data/atlas-relations.json": "ee4feb8731d185f07e308bff0f9bfcd9a6044e1f15ea811535ead55b530d22ab",
+    "src/data/atlas-evidence.json": "07816fb61e76431b5b3f63ba9ee01d978d192323ece07ab2b044e73bed020aec",
+    "src/lib/innovation-history.ts": "e2d00780027a7485f4c379179f72da3ac02b101fdb7d5181e1f3ed3fb0bbe694"
+  },
+  "note": "Catalog inventory, not a percentage of all game history. No recorded relation does not imply no historical influence. Geography is not inferred from language."
+}

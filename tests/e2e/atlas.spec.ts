@@ -11,7 +11,7 @@ const ATLAS_EVENT_COUNT = atlasNodesData.filter(n => n.kind === 'innovation').le
 const ATLAS_EVENT_PRIMARY_NODE_COUNT = ATLAS_EVENT_COUNT;
 const ATLAS_CATEGORY_PRIMARY_NODE_COUNT = ATLAS_EVENT_COUNT + atlasNodesData.filter(n => n.kind === 'category').length;
 const ATLAS_WORK_PRIMARY_NODE_COUNT = ATLAS_NODE_COUNT - ATLAS_CATEGORY_PRIMARY_NODE_COUNT;
-const primaryKinds = { works: new Set(['game','experimental-apparatus','experimental-program','system-prototype','commercial-hardware']), category: new Set(['category','innovation']), events: new Set(['innovation']) };
+const primaryKinds = { works: new Set(['game','tabletop-game','experimental-apparatus','experimental-program','system-prototype','commercial-hardware']), category: new Set(['category','innovation']), events: new Set(['innovation']) };
 const ATLAS_PRIMARY_RELATION_COUNTS = Object.fromEntries(Object.entries(primaryKinds).map(([key,kinds]) => [key, atlasRelationsData.filter(r => kinds.has(atlasNodesData.find(n => n.id === r.fromId)!.kind) && kinds.has(atlasNodesData.find(n => n.id === r.toId)!.kind)).length])) as Record<'works'|'category'|'events',number>;
 const ATLAS_EVOLUTION_RELATION_COUNT = atlasRelationsData.filter(r => r.relationRole === 'evolution').length;
 const ATLAS_EVIDENCE_COUNT = atlasEvidenceData.length;
@@ -169,7 +169,7 @@ test('server renders one fixed global event-and-carrier time network', async ({ 
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="innovation"]')).toHaveCount(ATLAS_EVENT_COUNT);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="category"]')).toHaveCount(2);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-apparatus"]')).toHaveCount(1);
-  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-program"]')).toHaveCount(1);
+  await expect(network.locator('[data-atlas-node][data-atlas-node-kind="experimental-program"]')).toHaveCount(2);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="system-prototype"]')).toHaveCount(1);
   await expect(network.locator('[data-atlas-node][data-atlas-node-kind="commercial-hardware"]')).toHaveCount(5);
 
@@ -390,6 +390,8 @@ test('view controls provide bounded zoom, fit, center anchoring, reset and map-m
 });
 
 test('keeps Atlas desktop controls independent from the wider EGDS map breakpoint', async ({ page }) => {
+  // This checks several pages/lenses; the whole-loop budget is not a UI latency assertion.
+  test.setTimeout(60_000);
   for (const width of [320, 1150]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto('./atlas/network/');
@@ -869,18 +871,17 @@ test('a genre without event evidence shows an honest empty state', async ({ page
   await expect(page.locator('[data-atlas-event-index-status]')).toContainText('0 个创新事件');
 });
 
-test('new Strategy lineage and empty Genre Families expose honest status', async ({ page }) => {
+test('Strategy, music and puzzle Families expose their evidence-backed entries', async ({ page }) => {
   await page.goto('./atlas/network/');
   const strategy = page.locator('[data-atlas-family="strategy"]');
   await expect(strategy.locator('summary')).toContainText('2 条已核查谱系');
   await strategy.locator('summary').click();
   await expect(strategy.locator('[data-atlas-theme-button="real-time-strategy-lineage"]')).toBeEnabled();
 
-  const simulation = page.locator('[data-atlas-family="rhythm-party"]');
-  await expect(simulation.locator('summary')).toContainText('0 条已核查谱系，待研究');
-  await expect(simulation.locator('[data-atlas-theme-button]')).toHaveCount(0);
-  await simulation.locator('summary').click();
-  await expect(simulation.locator('.atlas-family-directory__empty')).toContainText('尚无达到证据门槛的谱系');
+  const music = page.locator('[data-atlas-family="rhythm-party"]');
+  await expect(music.locator('summary')).toContainText('1 条已核查谱系');
+  await music.locator('summary').click();
+  await expect(music.locator('[data-atlas-theme-button="music-performance-history"]')).toBeEnabled();
 
   const puzzle = page.locator('[data-atlas-family="puzzle"]');
   await expect(puzzle.locator('summary')).toContainText('2 条已核查谱系');
@@ -1060,6 +1061,8 @@ test('pan inputs preserve graph identity, interactive targets and dialog return 
 });
 
 test('theme controls only change emphasis without changing graph identity or geometry', async ({ page }) => {
+  // This checks several pages/lenses; the whole-loop budget is not a UI latency assertion.
+  test.setTimeout(60_000);
   await page.setViewportSize({ width: 1200, height: 800 });
   await page.goto('./atlas/network/');
 
@@ -1372,9 +1375,9 @@ test('node index searches bilingual metadata, sorts locally and preserves the fi
   await expect(page.locator('[data-atlas-node][data-search-match="true"]')).toHaveCount(4);
 
   await search.fill('ＭＥＴＲＯＩＤＶＡＮＩＡ');
-  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(18);
-  await expect(index.locator('output[data-atlas-node-count]')).toHaveText('18 个节点');
-  await expect(page.locator('[data-atlas-outline-node][data-search-match="true"]')).toHaveCount(18);
+  await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(19);
+  await expect(index.locator('output[data-atlas-node-count]')).toHaveText('19 个节点');
+  await expect(page.locator('[data-atlas-outline-node][data-search-match="true"]')).toHaveCount(19);
 
   await search.fill('单局永久死亡');
   await expect.poll(() => visibleAtlasIndexItemCount(items)).toBe(6);

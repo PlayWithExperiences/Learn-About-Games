@@ -51,7 +51,7 @@ const cellNodes = (track: string, start: number, end: number) =>
   <p class="history-status" data-history-status role="status">全图 {nodes.length} 个历史对象 · {catalog.atlasRelations.length} 条关系。选择后显示相邻连线，全部对象保留原位。</p>
   <div class="history-workspace">
     <div class="history-chart-section">
-      <div class="history-chart-note"><span>■ 作品 / 历史对象　◆ 创新观察　▱ 类别形成</span><span>按年代分列；列内按版本年份排序，间距不代表时长</span></div>
+      <div class="history-chart-note"><span>■ 作品 / 历史对象　▣ 桌面游戏　◆ 创新观察　▱ 类别形成</span><span>按年代分列；列内按版本年份排序，间距不代表时长</span></div>
       <div class="history-scroll" tabindex="0" aria-label="历史总览，窄屏可左右滚动" data-history-scroll>
         <div class="history-matrix" data-history-matrix>
           <div class="history-axis"><span>发展脉络 / 年代</span>{historyEras.map(era=><div><strong>{era.label}</strong><small>{era.title}</small></div>)}</div>
@@ -80,7 +80,7 @@ const cellNodes = (track: string, start: number, end: number) =>
   </div>
   <noscript><p>当前为静态总览。下面的年代目录包含全部对象、关系与来源；启用 JavaScript 后可搜索和在图旁追踪关系。</p></noscript>
 
-  <p class="history-coverage-note">当前覆盖到2024年，非完整游戏史。格斗、音乐、模组与移动平台仍较薄；中文作品间的影响关系及2025年后的发展尚需补证。</p>
+  <p class="history-coverage-note">当前日期实例覆盖到{nodes.at(-1)?.startYear}年，非完整游戏史。已加入掌机、手机、中文与近期作品；更多地区、早期前身及作品间关系仍待补证，比较路线不等于完整谱系。</p>
   <section class="history-catalog" id="history-catalog" aria-labelledby="history-catalog-title">
     <header><div><p class="plain-label">可追溯的历史对象</p><h2 id="history-catalog-title">年代目录与原始来源</h2></div><a href={sitePath('atlas/network/')}>打开精确年份坐标与完整证据网络 ↗</a></header>
     <p>年份指向条目说明的版本：早期体验、资料片和重制版在详情注明，不统一视为最早发行日。创新观察不宣称机制首次发明；作品之间的直接影响需另有来源支持。</p>
@@ -396,6 +396,13 @@ if (root) {
   window.addEventListener('hashchange', restore);
   new ResizeObserver(draw).observe(matrix);
   restore();
+  // Initial fragment navigation can reveal the no-JS details after module setup.
+  // Once loading finishes, restore the selected object in its map context.
+  const initialHash = location.hash;
+  if (document.readyState !== 'complete' && initialHash.startsWith('#atlas-node-detail-'))
+    window.addEventListener('load', () => requestAnimationFrame(() => {
+      if (location.hash === initialHash) restore();
+    }), { once: true });
 }
 </script>
 
@@ -437,6 +444,7 @@ if (root) {
   margin-bottom: 1.25rem;
 }
 .history-readings__label {
+  grid-column: 1 / -1;
   padding: 1rem 0;
   font-weight: 650;
 }
@@ -984,4 +992,6 @@ select:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+.history-node--tabletop-game { border-style: double; border-width: 3px; }
+.history-node--tabletop-game span:before { content: "▣ "; font-size: 8px; }
 </style>

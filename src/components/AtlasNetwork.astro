@@ -93,10 +93,11 @@ const carrierNodeIds = new Set(
 const carriersFor = (eventId: string) => relations
   .filter((relation) => relation.fromId === eventId)
   .map((relation) => nodeById.get(relation.toId))
-  .filter((node): node is AtlasNode => node?.kind === 'game');
+  .filter((node): node is AtlasNode => (node?.kind === 'game' || node?.kind === 'tabletop-game'));
 
 const kindLabels: Record<AtlasNode['kind'], string> = {
   game: 'Game',
+  'tabletop-game': 'Tabletop Game',
   innovation: 'Innovation',
   category: 'Category Formation',
   'experimental-apparatus': 'Experimental Apparatus',
@@ -178,6 +179,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     </div>
     <ul>
       <li><span class="atlas-legend__shape atlas-legend__shape--game" aria-hidden="true"></span><strong>Game / Carrier</strong><span>承载创新事件的作品</span></li>
+      <li><span class="atlas-legend__shape atlas-legend__shape--tabletop" aria-hidden="true"></span><strong>Tabletop Game</strong><span>实体桌游与卡牌</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--innovation" aria-hidden="true"></span><strong>Innovation event</strong><span>被证据支持的机制或结构事件</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--category" aria-hidden="true"></span><strong>Category Formation</strong><span>真实时间范围</span></li>
       <li><span class="atlas-legend__shape atlas-legend__shape--apparatus" aria-hidden="true"></span><strong>Experimental Apparatus</strong><span>实验装置</span></li>

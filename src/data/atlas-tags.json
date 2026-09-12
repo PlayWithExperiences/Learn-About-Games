@@ -315,5 +315,15 @@
     "summary": {
       "zh-CN": "标记宿主、模组及相关作品；不自动主张直接影响或类别成员关系。"
     }
+  },
+  {
+    "id": "mobile-history",
+    "name": {
+      "zh-CN": "掌机与移动平台",
+      "en": "Handheld and mobile platforms"
+    },
+    "summary": {
+      "zh-CN": "跨品类的设备与输入语境；不把掌机、按键手机和触屏等同。"
+    }
   }
 ]

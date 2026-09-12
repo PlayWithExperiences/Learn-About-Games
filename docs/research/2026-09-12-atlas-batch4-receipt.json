@@ -1,0 +1,338 @@
+{
+  "counts": {
+    "queries": 24,
+    "reads": 27
+  },
+  "requests": [
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.rovio.com Angry Birds 2009 physics 15 years"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.halfbrick.com Fruit Ninja 2010 touchscreen anniversary"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.ustwogames.co.uk Monument Valley 2014 impossible architecture"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.nianticlabs.com Pokemon GO 2016 real world"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.pokemongolive.com \"2016\" \"first\" anniversary"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.supergiantgames.com \"Hades II\" \"v1.0\" 2025"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.sandfall.co \"Expedition 33\" 2025"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.youthcatstudio.com 戴森球计划 2021"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.rovio.com/rovio-history/"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.halfbrick.com/blog/fruit-ninja-6-million"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://ustwogames.co.uk/news/10-years-of-illusions-with-monument-valley/"
+    },
+    {
+      "call": 2,
+      "kind": "search",
+      "q": "戴森球计划 官方 Steam 2021 柚子猫"
+    },
+    {
+      "call": 2,
+      "kind": "search",
+      "q": "古剑奇谭三 官方 2018 即时 战斗"
+    },
+    {
+      "call": 2,
+      "kind": "search",
+      "q": "site.pokemon.com \"Pokémon GO\" \"2016\" launch"
+    },
+    {
+      "call": 2,
+      "kind": "search",
+      "q": "site.megacrit.com \"Slay the Spire 2\" \"2026\""
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "古剑奇谭三 site.store.steampowered.com 2018"
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.halfbrick.com \"Fruit Ninja\" \"swipe\""
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.rovio.com \"Angry Birds\" \"Crush the Castle\""
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://www.megacrit.com/press-kits/slay-the-spire-2/"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://pokemongo.com/post/launch/"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/1366540/_/?l=schinese"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://www.expedition33.com/overview"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://www.supergiantgames.com/blog/hades2-now-available/"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.nokia.com Snake 1997 game"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.tetris.com 1989 Game Boy history"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "古剑奇谭 2010 site.aurogon.com"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.pokemongo.com Ingress inspiration"
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://www.halfbrick.com/blog/fruit-ninja-hd-sale"
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/994280/Gujian3/?l=schinese"
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://ustwogames.co.uk/our-games/monument-valley/"
+    },
+    {
+      "call": 5,
+      "kind": "search",
+      "q": "site.blogs.windows.com \"Snake\" \"1997\" \"Taneli\""
+    },
+    {
+      "call": 5,
+      "kind": "search",
+      "q": "site.supergiantgames.com \"Hades II\" \"witchcraft\""
+    },
+    {
+      "call": 5,
+      "kind": "search",
+      "q": "site.expedition33.com \"real-time\" \"turn-based\""
+    },
+    {
+      "call": 5,
+      "kind": "search",
+      "q": "site.store.steampowered.com \"古剑奇谭(GuJian)\""
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.aurogon.com/"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://time.com/4404282/pokemon-go-john-hanke/"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://tetris.com/news/the-history-of-tetris"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "url": "https://blogs.windows.com/devices/2009/01/20/history-of-nokia-part-2-snake/"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "url": "https://www.supergiantgames.com/blog/hades2-faq/"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "url": "https://www.expedition33.com/post/news-expedition-33-announce"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/570780/GuJian?l=schinese"
+    },
+    {
+      "call": 6,
+      "kind": "read",
+      "url": "https://www.megacrit.com/faq/"
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://pokemongo.com/news/launch",
+      "lineno": 10
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://www.megacrit.com/press-kits/slay-the-spire-2/",
+      "lineno": 8
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://time.com/4404282/pokemon-go-john-hanke/",
+      "lineno": 55
+    },
+    {
+      "call": 7,
+      "kind": "find",
+      "url": "https://www.rovio.com/rovio-history/",
+      "pattern": "2009"
+    },
+    {
+      "call": 7,
+      "kind": "find",
+      "url": "https://store.steampowered.com/app/1366540/_/?l=schinese",
+      "pattern": "2021"
+    },
+    {
+      "call": 7,
+      "kind": "find",
+      "url": "https://www.expedition33.com/overview",
+      "pattern": "April"
+    },
+    {
+      "call": 8,
+      "kind": "search",
+      "q": "site.rovio.com \"2009\" \"slingshot\""
+    },
+    {
+      "call": 8,
+      "kind": "read",
+      "url": "https://www.nintendo.com/en-gb/Games/Smart-device-games/Pokemon-GO-1112517.html"
+    },
+    {
+      "call": 9,
+      "kind": "read",
+      "url": "https://www.rovio.com/articles/angry-birds-reloaded-now-available-on-apple-arcade/"
+    }
+  ],
+  "authorization": "User authorized continued research and publication without per-batch confirmation. No paid services used.",
+  "failures": [
+    {
+      "url": "https://www.aurogon.com/",
+      "status": "tool_error",
+      "resolution": "Used publisher-authored Steam description to confirm original 2010 release"
+    },
+    {
+      "url": "https://pokemongo.com/news/launch",
+      "status": "positioned_read_error_after_initial_read",
+      "resolution": "Use initially obtained launch announcement; Nintendo page additionally supports gameplay"
+    },
+    {
+      "url": "https://time.com/4404282/pokemon-go-john-hanke/",
+      "status": "positioned_read_error_after_initial_read",
+      "resolution": "Use already returned primary interview search body; no retry"
+    }
+  ],
+  "accepted": {
+    "nodes": [
+      "tetris-game-boy",
+      "snake-nokia",
+      "angry-birds",
+      "angry-birds-reloaded",
+      "fruit-ninja",
+      "fruit-ninja-hd-2012",
+      "monument-valley",
+      "ingress",
+      "pokemon-go",
+      "gujian",
+      "gujian3",
+      "dyson-sphere-program",
+      "hades-ii-v1",
+      "expedition-33",
+      "slay-the-spire-2-ea"
+    ],
+    "relations": [
+      "tetris-to-game-boy",
+      "angry-birds-to-reloaded",
+      "fruit-ninja-to-hd",
+      "ingress-to-pokemon-go",
+      "gujian-to-three",
+      "factorio-and-dyson",
+      "hades-to-two",
+      "spire-to-two",
+      "portal-and-monument-valley"
+    ],
+    "evidence": [
+      "tetris-handheld-history",
+      "nokia-snake-history",
+      "rovio-angry-birds-return",
+      "halfbrick-fruit-launch",
+      "halfbrick-fruit-hd",
+      "ustwo-monument-anniversary",
+      "ustwo-monument-geometry",
+      "hanke-ingress-pokemon",
+      "pokemon-go-launch",
+      "nintendo-pokemon-go-world",
+      "gujian-original",
+      "gujian3-steam",
+      "dyson-sphere-program-release",
+      "hades2-v1-release",
+      "hades2-design",
+      "expedition33-combat",
+      "sandfall-rpg-combination",
+      "megacrit-spire2-facts",
+      "megacrit-spire2-early-access"
+    ]
+  }
+}

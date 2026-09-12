@@ -1974,5 +1974,905 @@
     "boundedClaim": {
       "zh-CN": "商店记载2007-10-10发行及九种职业；持续更新后的模式、物品和免费化不能全部归到2007年。"
     }
+  },
+  {
+    "id": "sega-vf-history",
+    "title": {
+      "zh-CN": "Virtua Fighter 30th — History",
+      "en": "Virtua Fighter 30th — History"
+    },
+    "sourceTitle": "Virtua Fighter 30th — History",
+    "url": "https://virtua-fighter.com/30th/en/history/",
+    "institutionOrAuthor": "SEGA",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "1993、1994、2001条目",
+    "summary": {
+      "zh-CN": "1993街机初代使用多边形；1994 VF2增加招式、投技和失衡；2001 VF4引入VF.NET记录服务。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1993街机初代使用多边形；1994 VF2增加招式、投技和失衡；2001 VF4引入VF.NET记录服务。"
+    }
+  },
+  {
+    "id": "namco-tekken-history",
+    "title": {
+      "zh-CN": "Bandai Namco Integrated Report 2024 — TEKKEN",
+      "en": "Bandai Namco Integrated Report 2024 — TEKKEN"
+    },
+    "sourceTitle": "Bandai Namco Integrated Report 2024 — TEKKEN",
+    "url": "https://www.bandainamco.co.jp/en/ir/library/assets/pdf/2024/integratedreports2024_en_46-49.pdf",
+    "institutionOrAuthor": "Bandai Namco",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "第1页；系列起点与TEKKEN 8段落",
+    "summary": {
+      "zh-CN": "铁拳始于1994年街机；2024年1月铁拳8采用全球家用平台同步发布，不再先行街机。"
+    },
+    "boundedClaim": {
+      "zh-CN": "铁拳始于1994年街机；2024年1月铁拳8采用全球家用平台同步发布，不再先行街机。"
+    }
+  },
+  {
+    "id": "capcom-sf6-design",
+    "title": {
+      "zh-CN": "Capcom Integrated Report 2023 — Street Fighter 6",
+      "en": "Capcom Integrated Report 2023 — Street Fighter 6"
+    },
+    "sourceTitle": "Capcom Integrated Report 2023 — Street Fighter 6",
+    "url": "https://www.capcom.co.jp/ir/english/data/pdf/annual/2023/annual_2023_teach.pdf",
+    "institutionOrAuthor": "辻本良三、松本脩平、中山貴之 / Capcom",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "印刷页47–48；Modern Controls及开发者寄语",
+    "summary": {
+      "zh-CN": "2023年6月作品通过现代操作及World Tour回应入门门槛；制作人明确回顾街霸II的街机体验。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2023年6月作品通过现代操作及World Tour回应入门门槛；制作人明确回顾街霸II的街机体验。"
+    }
+  },
+  {
+    "id": "nintendo-mario-2d-3d",
+    "title": {
+      "zh-CN": "社長が訊く：2Dマリオと3Dマリオのミッシングリンク",
+      "en": "社長が訊く：2Dマリオと3Dマリオのミッシングリンク"
+    },
+    "sourceTitle": "社長が訊く：2Dマリオと3Dマリオのミッシングリンク",
+    "url": "https://www.nintendo.co.jp/3ds/interview/arej/vol1/index2.html",
+    "institutionOrAuthor": "岩田聡、林田宏一、辻村元等 / Nintendo",
+    "sourceKind": "interview",
+    "originalLanguage": "ja",
+    "checkedAt": "2026-09-12",
+    "locator": "脚注5–7与旗杆/星星讨论",
+    "summary": {
+      "zh-CN": "回顾1990日本Mario World、1996日本Mario 64；3D Land以终点旗杆回应三维探索的迷路感，同时保留收集探索。"
+    },
+    "boundedClaim": {
+      "zh-CN": "回顾1990日本Mario World、1996日本Mario 64；3D Land以终点旗杆回应三维探索的迷路感，同时保留收集探索。"
+    }
+  },
+  {
+    "id": "nintendo-3d-land-release",
+    "title": {
+      "zh-CN": "Super Mario 3D Land — European Game Card",
+      "en": "Super Mario 3D Land — European Game Card"
+    },
+    "sourceTitle": "Super Mario 3D Land — European Game Card",
+    "url": "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/SUPER-MARIO-3D-LAND-274908.html",
+    "institutionOrAuthor": "Nintendo",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Game Card发行日期",
+    "summary": {
+      "zh-CN": "欧洲3DS卡带2011-11-18；后来的下载版为2012年，不能混淆。"
+    },
+    "boundedClaim": {
+      "zh-CN": "欧洲3DS卡带2011-11-18；后来的下载版为2012年，不能混淆。"
+    }
+  },
+  {
+    "id": "sega-virtua-racing",
+    "title": {
+      "zh-CN": "バーチャレーシング",
+      "en": "バーチャレーシング"
+    },
+    "sourceTitle": "バーチャレーシング",
+    "url": "https://www.sega.jp/history/arcade/product/7792/",
+    "institutionOrAuthor": "SEGA",
+    "sourceKind": "official-statement",
+    "originalLanguage": "ja",
+    "checkedAt": "2026-09-12",
+    "locator": "作品正文与稼働年月",
+    "summary": {
+      "zh-CN": "1992年8月街机；多边形赛道、可切换视角和轮胎磨损。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1992年8月街机；多边形赛道、可切换视角和轮胎磨损。"
+    }
+  },
+  {
+    "id": "sega-daytona-history",
+    "title": {
+      "zh-CN": "デイトナUSA",
+      "en": "デイトナUSA"
+    },
+    "sourceTitle": "デイトナUSA",
+    "url": "https://www.sega.jp/history/arcade/product/9116/",
+    "institutionOrAuthor": "SEGA",
+    "sourceKind": "official-statement",
+    "originalLanguage": "ja",
+    "checkedAt": "2026-09-12",
+    "locator": "作品正文与稼働年月",
+    "summary": {
+      "zh-CN": "官方档案记1994年3月；贴图多边形与漂移驾驶，明确称尾流及长赛程模式承自Virtua Racing。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方档案记1994年3月；贴图多边形与漂移驾驶，明确称尾流及长赛程模式承自Virtua Racing。"
+    }
+  },
+  {
+    "id": "ubisoft-trackmania-origin",
+    "title": {
+      "zh-CN": "Trackmania — Our Brands",
+      "en": "Trackmania — Our Brands"
+    },
+    "sourceTitle": "Trackmania — Our Brands",
+    "url": "https://www.ubisoft.com/en-us/company/about-us/our-brands/trackmania",
+    "institutionOrAuthor": "Ubisoft",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "系列介绍",
+    "summary": {
+      "zh-CN": "系列起点2003年，突出积木式赛道创作和多人技术；不据此倒填后续订阅制或模式。"
+    },
+    "boundedClaim": {
+      "zh-CN": "系列起点2003年，突出积木式赛道创作和多人技术；不据此倒填后续订阅制或模式。"
+    }
+  },
+  {
+    "id": "gt7-driving-culture",
+    "title": {
+      "zh-CN": "Gran Turismo 7 — Driving and collecting",
+      "en": "Gran Turismo 7 — Driving and collecting"
+    },
+    "sourceTitle": "Gran Turismo 7 — Driving and collecting",
+    "url": "https://www.gran-turismo.com/gb/products/gt7/",
+    "institutionOrAuthor": "Polyphony Digital",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "系列回顾、World Map与Music Rally段落",
+    "summary": {
+      "zh-CN": "将初代购车、比赛、改装循环延续到GT7，并以Music Rally比较音乐节拍与驾驶；当前页面含后续更新，数量不作首发事实。"
+    },
+    "boundedClaim": {
+      "zh-CN": "将初代购车、比赛、改装循环延续到GT7，并以Music Rally比较音乐节拍与驾驶；当前页面含后续更新，数量不作首发事实。"
+    }
+  },
+  {
+    "id": "gt7-release-date",
+    "title": {
+      "zh-CN": "Gran Turismo 7 — Product Information",
+      "en": "Gran Turismo 7 — Product Information"
+    },
+    "sourceTitle": "Gran Turismo 7 — Product Information",
+    "url": "https://www.gran-turismo.com/us/products/gt7/",
+    "institutionOrAuthor": "Polyphony Digital",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Product Information发行日期",
+    "summary": {
+      "zh-CN": "发行日期2022-03-04；只用于定位原版。"
+    },
+    "boundedClaim": {
+      "zh-CN": "发行日期2022-03-04；只用于定位原版。"
+    }
+  },
+  {
+    "id": "gt7-spec3-data-logger",
+    "title": {
+      "zh-CN": "Introducing the New Data Logger Feature",
+      "en": "Introducing the New Data Logger Feature"
+    },
+    "sourceTitle": "Introducing the New Data Logger Feature",
+    "url": "https://www.gran-turismo.com/gb/news/00_5736734.html",
+    "institutionOrAuthor": "Polyphony Digital",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2025-12-03；Data Logger正文",
+    "summary": {
+      "zh-CN": "Spec III增加驾驶数据比较：对照自己的圈速或其他玩家回放，分析操作与调校差异。"
+    },
+    "boundedClaim": {
+      "zh-CN": "Spec III增加驾驶数据比较：对照自己的圈速或其他玩家回放，分析操作与调校差异。"
+    }
+  },
+  {
+    "id": "nintendo-wii-sports-iteration",
+    "title": {
+      "zh-CN": "社長が訊く：Wii Sports Resort",
+      "en": "社長が訊く：Wii Sports Resort"
+    },
+    "sourceTitle": "社長が訊く：Wii Sports Resort",
+    "url": "https://www.nintendo.co.jp/wii/interview/rztj/vol1/index.html",
+    "institutionOrAuthor": "岩田聡与Wii Sports Resort开发团队 / Nintendo",
+    "sourceKind": "interview",
+    "originalLanguage": "ja",
+    "checkedAt": "2026-09-12",
+    "locator": "脚注1及感应器讨论",
+    "summary": {
+      "zh-CN": "日本Wii Sports于2006年12月随主机推出；团队说明MotionPlus相对原加速度感应改善旋转、响应与停手检测。"
+    },
+    "boundedClaim": {
+      "zh-CN": "日本Wii Sports于2006年12月随主机推出；团队说明MotionPlus相对原加速度感应改善旋转、响应与停手检测。"
+    }
+  },
+  {
+    "id": "nintendo-resort-release",
+    "title": {
+      "zh-CN": "Wii Sports Resort — European release",
+      "en": "Wii Sports Resort — European release"
+    },
+    "sourceTitle": "Wii Sports Resort — European release",
+    "url": "https://www.nintendo.com/en-gb/Games/Wii/Wii-Sports-Resort-283982.html",
+    "institutionOrAuthor": "Nintendo",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "发行日期与控制器介绍",
+    "summary": {
+      "zh-CN": "欧洲版2009-07-24，以MotionPlus捕捉更细致动作。"
+    },
+    "boundedClaim": {
+      "zh-CN": "欧洲版2009-07-24，以MotionPlus捕捉更细致动作。"
+    }
+  },
+  {
+    "id": "digipen-portal-predecessors",
+    "title": {
+      "zh-CN": "DigiPen Student Games — Narbacular Drop and Tag",
+      "en": "DigiPen Student Games — Narbacular Drop and Tag"
+    },
+    "sourceTitle": "DigiPen Student Games — Narbacular Drop and Tag",
+    "url": "https://www.digipen.edu/showcase/news/digipen-all-time-top-20-student-game-downloads-part-1",
+    "institutionOrAuthor": "DigiPen",
+    "sourceKind": "institutional-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "第18与第12条",
+    "summary": {
+      "zh-CN": "2005 Narbacular Drop的传送门概念发展为Portal；2008 Tag团队受聘将相似表面玩法带入Portal 2。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2005 Narbacular Drop的传送门概念发展为Portal；2008 Tag团队受聘将相似表面玩法带入Portal 2。"
+    }
+  },
+  {
+    "id": "valve-portal2-release",
+    "title": {
+      "zh-CN": "Portal 2 — Steam",
+      "en": "Portal 2 — Steam"
+    },
+    "sourceTitle": "Portal 2 — Steam",
+    "url": "https://store.steampowered.com/app/620/Portal_2/",
+    "institutionOrAuthor": "Valve",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Release Date与About This Game",
+    "summary": {
+      "zh-CN": "2011年作品延伸传送门解谜并加入独立合作体验；后续关卡编辑更新不倒填首发。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2011年作品延伸传送门解谜并加入独立合作体验；后续关卡编辑更新不倒填首发。"
+    }
+  },
+  {
+    "id": "mobius-outer-wilds-release",
+    "title": {
+      "zh-CN": "Outer Wilds",
+      "en": "Outer Wilds"
+    },
+    "sourceTitle": "Outer Wilds",
+    "url": "https://www.mobiusdigitalgames.com/outer-wilds.html",
+    "institutionOrAuthor": "Mobius Digital",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "游戏介绍及发行声明",
+    "summary": {
+      "zh-CN": "2019-05-30发行；手工构建、随时间变化的太阳系与循环中的探索。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2019-05-30发行；手工构建、随时间变化的太阳系与循环中的探索。"
+    }
+  },
+  {
+    "id": "mobius-outer-wilds-references",
+    "title": {
+      "zh-CN": "Alex & The Nomai!",
+      "en": "Alex & The Nomai!"
+    },
+    "sourceTitle": "Alex & The Nomai!",
+    "url": "https://www.mobiusdigitalgames.com/news/alex-the-nomai",
+    "institutionOrAuthor": "Alex Beachum / Mobius Digital",
+    "sourceKind": "interview",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2016-04-20；设计参考及非线性问题",
+    "summary": {
+      "zh-CN": "作者将早期Dark Souls式危险旅途转向好奇心探索；在访谈中才意识到扫描设计与Metroid Prime接近。"
+    },
+    "boundedClaim": {
+      "zh-CN": "作者将早期Dark Souls式危险旅途转向好奇心探索；在访谈中才意识到扫描设计与Metroid Prime接近。"
+    }
+  },
+  {
+    "id": "bandai-dark-souls-original",
+    "title": {
+      "zh-CN": "Dark Souls — Original console release",
+      "en": "Dark Souls — Original console release"
+    },
+    "sourceTitle": "Dark Souls — Original console release",
+    "url": "https://en.bandainamcoent.eu/dark-souls/dark-souls",
+    "institutionOrAuthor": "Bandai Namco",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "PS3/Xbox360日期及Bonfires/Seamless World",
+    "summary": {
+      "zh-CN": "欧洲主机版2011-10-07；篝火恢复也使敌人重新出现，连接区域与反复挑战。"
+    },
+    "boundedClaim": {
+      "zh-CN": "欧洲主机版2011-10-07；篝火恢复也使敌人重新出现，连接区域与反复挑战。"
+    }
+  },
+  {
+    "id": "nintendo-prime-jp-date",
+    "title": {
+      "zh-CN": "Nintendo GameCube — Metroid Prime Japanese release",
+      "en": "Nintendo GameCube — Metroid Prime Japanese release"
+    },
+    "sourceTitle": "Nintendo GameCube — Metroid Prime Japanese release",
+    "url": "https://www.nintendo.co.jp/ngc/before/n2005_b.html",
+    "institutionOrAuthor": "Nintendo",
+    "sourceKind": "catalog-record",
+    "originalLanguage": "ja",
+    "checkedAt": "2026-09-12",
+    "locator": "メトロイドプライム条目",
+    "summary": {
+      "zh-CN": "日本GameCube版2003-02-28；不据此声称全球最早发行日期。"
+    },
+    "boundedClaim": {
+      "zh-CN": "日本GameCube版2003-02-28；不据此声称全球最早发行日期。"
+    }
+  },
+  {
+    "id": "tetris-handheld-history",
+    "title": {
+      "zh-CN": "The History of Tetris",
+      "en": "The History of Tetris"
+    },
+    "sourceTitle": "The History of Tetris",
+    "url": "https://tetris.com/news/the-history-of-tetris",
+    "institutionOrAuthor": "The Tetris Company",
+    "sourceKind": "project-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "1989条目",
+    "summary": {
+      "zh-CN": "1989掌机授权给Nintendo，Tetris进入Game Boy；不将随主机捆绑推广至所有地区。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1989掌机授权给Nintendo，Tetris进入Game Boy；不将随主机捆绑推广至所有地区。"
+    }
+  },
+  {
+    "id": "nokia-snake-history",
+    "title": {
+      "zh-CN": "History of Nokia part 2: Snake",
+      "en": "History of Nokia part 2: Snake"
+    },
+    "sourceTitle": "History of Nokia part 2: Snake",
+    "url": "https://blogs.windows.com/devices/2009/01/20/history-of-nokia-part-2-snake/",
+    "institutionOrAuthor": "Nokia / Microsoft Devices Blog",
+    "sourceKind": "project-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2009-01-20；首段及事实列表",
+    "summary": {
+      "zh-CN": "1997由Taneli Armanto带到Nokia设备；存在更早电脑版本，不能视为Snake机制诞生。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1997由Taneli Armanto带到Nokia设备；存在更早电脑版本，不能视为Snake机制诞生。"
+    }
+  },
+  {
+    "id": "rovio-angry-birds-return",
+    "title": {
+      "zh-CN": "Angry Birds Reloaded — now available on Apple Arcade",
+      "en": "Angry Birds Reloaded — now available on Apple Arcade"
+    },
+    "sourceTitle": "Angry Birds Reloaded — now available on Apple Arcade",
+    "url": "https://www.rovio.com/articles/angry-birds-reloaded-now-available-on-apple-arcade/",
+    "institutionOrAuthor": "Rovio",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "开篇与Apple Arcade说明",
+    "summary": {
+      "zh-CN": "回顾2009弹弓物理解谜；2021-07-16 Reloaded加入Apple Arcade及新内容，不回填到原作。"
+    },
+    "boundedClaim": {
+      "zh-CN": "回顾2009弹弓物理解谜；2021-07-16 Reloaded加入Apple Arcade及新内容，不回填到原作。"
+    }
+  },
+  {
+    "id": "halfbrick-fruit-launch",
+    "title": {
+      "zh-CN": "Fruit Ninja sells 6 million on iPhone",
+      "en": "Fruit Ninja sells 6 million on iPhone"
+    },
+    "sourceTitle": "Fruit Ninja sells 6 million on iPhone",
+    "url": "https://www.halfbrick.com/blog/fruit-ninja-6-million",
+    "institutionOrAuthor": "Halfbrick",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2011-02-18首段",
+    "summary": {
+      "zh-CN": "官方回顾iPhone版本2010-04-21发行；只用于定位版本。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方回顾iPhone版本2010-04-21发行；只用于定位版本。"
+    }
+  },
+  {
+    "id": "halfbrick-fruit-hd",
+    "title": {
+      "zh-CN": "Fruit Ninja HD Sale",
+      "en": "Fruit Ninja HD Sale"
+    },
+    "sourceTitle": "Fruit Ninja HD Sale",
+    "url": "https://www.halfbrick.com/blog/fruit-ninja-hd-sale",
+    "institutionOrAuthor": "Halfbrick",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2012-05-14；HD Exclusives",
+    "summary": {
+      "zh-CN": "2012公告说明iPad版多人分屏及多指划动；不是HD首次发行日期。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2012公告说明iPad版多人分屏及多指划动；不是HD首次发行日期。"
+    }
+  },
+  {
+    "id": "ustwo-monument-anniversary",
+    "title": {
+      "zh-CN": "Celebrate Monument Valley’s 10th Anniversary",
+      "en": "Celebrate Monument Valley’s 10th Anniversary"
+    },
+    "sourceTitle": "Celebrate Monument Valley’s 10th Anniversary",
+    "url": "https://ustwogames.co.uk/news/10-years-of-illusions-with-monument-valley/",
+    "institutionOrAuthor": "ustwo games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2024周年正文",
+    "summary": {
+      "zh-CN": "官方正文记iOS初次推出于2014-04-03；不采用后来的PC全景版年份。"
+    },
+    "boundedClaim": {
+      "zh-CN": "官方正文记iOS初次推出于2014-04-03；不采用后来的PC全景版年份。"
+    }
+  },
+  {
+    "id": "ustwo-monument-geometry",
+    "title": {
+      "zh-CN": "Monument Valley",
+      "en": "Monument Valley"
+    },
+    "sourceTitle": "Monument Valley",
+    "url": "https://ustwogames.co.uk/our-games/monument-valley/",
+    "institutionOrAuthor": "ustwo games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Impossible Geometry与游戏介绍",
+    "summary": {
+      "zh-CN": "通过不可能的建筑、视觉错觉与隐藏通路引导Ida前行。"
+    },
+    "boundedClaim": {
+      "zh-CN": "通过不可能的建筑、视觉错觉与隐藏通路引导Ida前行。"
+    }
+  },
+  {
+    "id": "hanke-ingress-pokemon",
+    "title": {
+      "zh-CN": "Niantic CEO John Hanke on Pokémon Go",
+      "en": "Niantic CEO John Hanke on Pokémon Go"
+    },
+    "sourceTitle": "Niantic CEO John Hanke on Pokémon Go",
+    "url": "https://time.com/4404282/pokemon-go-john-hanke/",
+    "institutionOrAuthor": "John Hanke / TIME访谈",
+    "sourceKind": "interview",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2016-07-13访谈；From our perspective段；定位重读失败，采用已取得的检索正文",
+    "summary": {
+      "zh-CN": "确认Ingress于2012年上线；现实探索与社交经验用于Pokémon GO。"
+    },
+    "boundedClaim": {
+      "zh-CN": "确认Ingress于2012年上线；现实探索与社交经验用于Pokémon GO。"
+    }
+  },
+  {
+    "id": "pokemon-go-launch",
+    "title": {
+      "zh-CN": "Break out the sneakers and Poké Balls",
+      "en": "Break out the sneakers and Poké Balls"
+    },
+    "sourceTitle": "Break out the sneakers and Poké Balls",
+    "url": "https://pokemongo.com/news/launch",
+    "institutionOrAuthor": "Pokémon GO官方团队",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2016-07-06发布公告；定位重读失败，采用先前取得的公告正文",
+    "summary": {
+      "zh-CN": "2016-07-06在澳大利亚、新西兰、美国推出；不是同日全球发行。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2016-07-06在澳大利亚、新西兰、美国推出；不是同日全球发行。"
+    }
+  },
+  {
+    "id": "nintendo-pokemon-go-world",
+    "title": {
+      "zh-CN": "Pokémon GO — Smart device games",
+      "en": "Pokémon GO — Smart device games"
+    },
+    "sourceTitle": "Pokémon GO — Smart device games",
+    "url": "https://www.nintendo.com/en-gb/Games/Smart-device-games/Pokemon-GO-1112517.html",
+    "institutionOrAuthor": "Nintendo",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "游戏介绍；不将后续玩法倒填首发",
+    "summary": {
+      "zh-CN": "现实位置和智能设备将寻找、捕捉宝可梦带入户外探索。"
+    },
+    "boundedClaim": {
+      "zh-CN": "现实位置和智能设备将寻找、捕捉宝可梦带入户外探索。"
+    }
+  },
+  {
+    "id": "gujian-original",
+    "title": {
+      "zh-CN": "古剑奇谭 — 发行商介绍",
+      "en": "古剑奇谭 — 发行商介绍"
+    },
+    "sourceTitle": "古剑奇谭 — 发行商介绍",
+    "url": "https://store.steampowered.com/app/570780/GuJian?l=schinese",
+    "institutionOrAuthor": "上海烛龙 / 网元圣唐",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "zh-CN",
+    "checkedAt": "2026-09-12",
+    "locator": "发行日期与介绍",
+    "summary": {
+      "zh-CN": "发行商正文记2010年7月原作发行，融合架空历史与人文地理；不采用绝对首创宣传。"
+    },
+    "boundedClaim": {
+      "zh-CN": "发行商正文记2010年7月原作发行，融合架空历史与人文地理；不采用绝对首创宣传。"
+    }
+  },
+  {
+    "id": "gujian3-steam",
+    "title": {
+      "zh-CN": "古剑奇谭三 — Steam版",
+      "en": "古剑奇谭三 — Steam版"
+    },
+    "sourceTitle": "古剑奇谭三 — Steam版",
+    "url": "https://store.steampowered.com/app/994280/Gujian3/?l=schinese",
+    "institutionOrAuthor": "上海烛龙 / 网元圣唐",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "zh-CN",
+    "checkedAt": "2026-09-12",
+    "locator": "发行日期与关于此游戏",
+    "summary": {
+      "zh-CN": "Steam版2018-12-14；全即时战斗、东方幻想与前作世界观延展。日期不代表中国原版最早发售。"
+    },
+    "boundedClaim": {
+      "zh-CN": "Steam版2018-12-14；全即时战斗、东方幻想与前作世界观延展。日期不代表中国原版最早发售。"
+    }
+  },
+  {
+    "id": "dyson-sphere-program-release",
+    "title": {
+      "zh-CN": "戴森球计划 — 抢先体验",
+      "en": "戴森球计划 — 抢先体验"
+    },
+    "sourceTitle": "戴森球计划 — 抢先体验",
+    "url": "https://store.steampowered.com/app/1366540/_/?l=schinese",
+    "institutionOrAuthor": "Youthcat Studio / Gamirror Games",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "zh-CN",
+    "checkedAt": "2026-09-12",
+    "locator": "抢先体验日期、开发者说明与游戏介绍",
+    "summary": {
+      "zh-CN": "2021年1月抢先体验，自动化生产延伸至球形地表与星际物流；不把后续黑雾战斗视为首发功能。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2021年1月抢先体验，自动化生产延伸至球形地表与星际物流；不把后续黑雾战斗视为首发功能。"
+    }
+  },
+  {
+    "id": "hades2-v1-release",
+    "title": {
+      "zh-CN": "Hades II: v1.0 Now Available",
+      "en": "Hades II: v1.0 Now Available"
+    },
+    "sourceTitle": "Hades II: v1.0 Now Available",
+    "url": "https://www.supergiantgames.com/blog/hades2-now-available/",
+    "institutionOrAuthor": "Supergiant Games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "发布日期与Launch Update",
+    "summary": {
+      "zh-CN": "2025-09-25结束抢先体验并推出v1.0，补入故事结局及事件。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2025-09-25结束抢先体验并推出v1.0，补入故事结局及事件。"
+    }
+  },
+  {
+    "id": "hades2-design",
+    "title": {
+      "zh-CN": "Hades II FAQ",
+      "en": "Hades II FAQ"
+    },
+    "sourceTitle": "Hades II FAQ",
+    "url": "https://www.supergiantgames.com/blog/hades2-faq/",
+    "institutionOrAuthor": "Supergiant Games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "What is Hades II、launch、relationship段落",
+    "summary": {
+      "zh-CN": "直接续作以巫术与新角色扩展每次成败推进故事的结构；2024抢先体验与2025正式版分开。"
+    },
+    "boundedClaim": {
+      "zh-CN": "直接续作以巫术与新角色扩展每次成败推进故事的结构；2024抢先体验与2025正式版分开。"
+    }
+  },
+  {
+    "id": "expedition33-combat",
+    "title": {
+      "zh-CN": "Clair Obscur: Expedition 33 — Overview",
+      "en": "Clair Obscur: Expedition 33 — Overview"
+    },
+    "sourceTitle": "Clair Obscur: Expedition 33 — Overview",
+    "url": "https://www.expedition33.com/overview",
+    "institutionOrAuthor": "Sandfall Interactive",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "日期、Reactive turn-based combat、Available Now",
+    "summary": {
+      "zh-CN": "页面列2025-04-24；回合制中结合即时动作。旧预购按钮仍存，不单靠该按钮判断发行状态。"
+    },
+    "boundedClaim": {
+      "zh-CN": "页面列2025-04-24；回合制中结合即时动作。旧预购按钮仍存，不单靠该按钮判断发行状态。"
+    }
+  },
+  {
+    "id": "sandfall-rpg-combination",
+    "title": {
+      "zh-CN": "Clair Obscur: Expedition 33 announcement",
+      "en": "Clair Obscur: Expedition 33 announcement"
+    },
+    "sourceTitle": "Clair Obscur: Expedition 33 announcement",
+    "url": "https://www.expedition33.com/post/news-expedition-33-announce",
+    "institutionOrAuthor": "Sandfall Interactive",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2024-06-09；Reactive Turn-Based Battle System与团队介绍",
+    "summary": {
+      "zh-CN": "法国蒙彼利埃团队说明将回合策略与即时闪避、格挡结合；只承认类型参考，不指定未经证实的单部前作。"
+    },
+    "boundedClaim": {
+      "zh-CN": "法国蒙彼利埃团队说明将回合策略与即时闪避、格挡结合；只承认类型参考，不指定未经证实的单部前作。"
+    }
+  },
+  {
+    "id": "megacrit-spire2-facts",
+    "title": {
+      "zh-CN": "Slay the Spire 2 — Press Kit",
+      "en": "Slay the Spire 2 — Press Kit"
+    },
+    "sourceTitle": "Slay the Spire 2 — Press Kit",
+    "url": "https://www.megacrit.com/press-kits/slay-the-spire-2/",
+    "institutionOrAuthor": "Mega Crit",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Factsheet与Features",
+    "summary": {
+      "zh-CN": "2026-03-05，新增合作模式、角色与可修改性；发布阶段由FAQ另核对。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2026-03-05，新增合作模式、角色与可修改性；发布阶段由FAQ另核对。"
+    }
+  },
+  {
+    "id": "megacrit-spire2-early-access",
+    "title": {
+      "zh-CN": "Mega Crit FAQ",
+      "en": "Mega Crit FAQ"
+    },
+    "sourceTitle": "Mega Crit FAQ",
+    "url": "https://www.megacrit.com/faq/",
+    "institutionOrAuthor": "Mega Crit",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Slay the Spire 2发行问答",
+    "summary": {
+      "zh-CN": "2026-03-05为Slay the Spire 2的抢先体验，平台为PC、macOS和Linux，不当成1.0。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2026-03-05为Slay the Spire 2的抢先体验，平台为PC、macOS和Linux，不当成1.0。"
+    }
+  },
+  {
+    "id": "bartle-early-mud",
+    "title": {
+      "zh-CN": "Early MUD History",
+      "en": "Early MUD History"
+    },
+    "sourceTitle": "Early MUD History",
+    "url": "https://mud.co.uk/richard/mudhist.htm",
+    "institutionOrAuthor": "Richard Bartle",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "1990-11-15回顾；开篇至1980外部玩家段",
+    "summary": {
+      "zh-CN": "1978秋MACRO-10原型只支持位置移动与聊天；1979–1980重写为BCPL第三版，随后扩充玩法并接入外部玩家。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1978秋MACRO-10原型只支持位置移动与聊天；1979–1980重写为BCPL第三版，随后扩充玩法并接入外部玩家。"
+    }
+  },
+  {
+    "id": "wizards-original-dnd",
+    "title": {
+      "zh-CN": "The Making of Original D&D: 1970–1977",
+      "en": "The Making of Original D&D: 1970–1977"
+    },
+    "sourceTitle": "The Making of Original D&D: 1970–1977",
+    "url": "https://wpn.wizards.com/en/products/the-making-of-original-d-and-d-1970-1977",
+    "institutionOrAuthor": "Wizards of the Coast",
+    "sourceKind": "catalog-record",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "产品介绍与Contents",
+    "summary": {
+      "zh-CN": "2024史料集明确收录1974原版D&D及Gygax/Arneson早期资料；本图定位原版，不是史料集发行年。"
+    },
+    "boundedClaim": {
+      "zh-CN": "2024史料集明确收录1974原版D&D及Gygax/Arneson早期资料；本图定位原版，不是史料集发行年。"
+    }
+  },
+  {
+    "id": "rosewater-magic-origin",
+    "title": {
+      "zh-CN": "Looking Back, Part 1",
+      "en": "Looking Back, Part 1"
+    },
+    "sourceTitle": "Looking Back, Part 1",
+    "url": "https://magic.wizards.com/en/news/making-magic/looking-back-part-1",
+    "institutionOrAuthor": "Mark Rosewater / Wizards",
+    "sourceKind": "creator-account",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2024-03-11；1993段",
+    "summary": {
+      "zh-CN": "作者回顾1993 Magic的集换卡牌、色轮与法术力系统；不采用绝对首创或设计优劣判断。"
+    },
+    "boundedClaim": {
+      "zh-CN": "作者回顾1993 Magic的集换卡牌、色轮与法术力系统；不采用绝对首创或设计优劣判断。"
+    }
+  },
+  {
+    "id": "rio-dominion-first",
+    "title": {
+      "zh-CN": "Dominion 1st Edition",
+      "en": "Dominion 1st Edition"
+    },
+    "sourceTitle": "Dominion 1st Edition",
+    "url": "https://www.riograndegames.com/games/dominion1stedition/",
+    "institutionOrAuthor": "Rio Grande Games",
+    "sourceKind": "publisher-release",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "First published in 2008段",
+    "summary": {
+      "zh-CN": "明确记录第一版2008年出版，并与第二版区分。"
+    },
+    "boundedClaim": {
+      "zh-CN": "明确记录第一版2008年出版，并与第二版区分。"
+    }
+  },
+  {
+    "id": "rio-dominion-deckbuilding",
+    "title": {
+      "zh-CN": "Dominion — Deckbuilding",
+      "en": "Dominion — Deckbuilding"
+    },
+    "sourceTitle": "Dominion — Deckbuilding",
+    "url": "https://www.riograndegames.com/games/dominion/",
+    "institutionOrAuthor": "Rio Grande Games",
+    "sourceKind": "official-statement",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Game Components及版本说明",
+    "summary": {
+      "zh-CN": "对局从小牌组开始，通过购入新牌改变后续抽牌与行动；第二版替换的具体卡牌不倒填第一版。"
+    },
+    "boundedClaim": {
+      "zh-CN": "对局从小牌组开始，通过购入新牌改变后续抽牌与行动；第二版替换的具体卡牌不倒填第一版。"
+    }
+  },
+  {
+    "id": "giovannetti-physical-deckbuilders",
+    "title": {
+      "zh-CN": "Slay the Spire Interview — Mega Crit Games",
+      "en": "Slay the Spire Interview — Mega Crit Games"
+    },
+    "sourceTitle": "Slay the Spire Interview — Mega Crit Games",
+    "url": "https://www.screenhype.co.uk/slay-the-spire-interview-mega-crit-games/",
+    "institutionOrAuthor": "Anthony Giovannetti / Screen Hype访谈",
+    "sourceKind": "interview",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "2021-08-13；第一个问题",
+    "summary": {
+      "zh-CN": "开发者明确提到Dominion与Ascension等实体构筑游戏是灵感来源。"
+    },
+    "boundedClaim": {
+      "zh-CN": "开发者明确提到Dominion与Ascension等实体构筑游戏是灵感来源。"
+    }
+  },
+  {
+    "id": "ncsoft-lineage-origin",
+    "title": {
+      "zh-CN": "Lineage Digital Artbook",
+      "en": "Lineage Digital Artbook"
+    },
+    "sourceTitle": "Lineage Digital Artbook",
+    "url": "https://about.ncsoft.com/artbook/en/lineage/",
+    "institutionOrAuthor": "NCSOFT",
+    "sourceKind": "project-history",
+    "originalLanguage": "en",
+    "checkedAt": "2026-09-12",
+    "locator": "Season 1 EP1–EP2",
+    "summary": {
+      "zh-CN": "1998年9月正式运营；从Whispering Isle到后续区域的持续世界扩展，基于原漫画世界。"
+    },
+    "boundedClaim": {
+      "zh-CN": "1998年9月正式运营；从Whispering Isle到后续区域的持续世界扩展，基于原漫画世界。"
+    }
   }
 ]

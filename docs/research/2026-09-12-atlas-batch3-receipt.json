@@ -1,0 +1,335 @@
+{
+  "counts": {
+    "queries": 20,
+    "reads": 29
+  },
+  "requests": [
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.virtua-fighter.com history 1993 3D"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.bandainamcoent.com Tekken 1994 3D history"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.nintendo.com Super Mario 64 1996 developers interview 3D"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.sega.com Daytona USA 1994 racing"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.blog.playstation.com Daytona USA 1994 2011 Sega"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.iwataasks.nintendo.com Wii Sports 2006 motion controls interview"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.streetfighter.com \"Street Fighter 6\" \"Modern\" \"2023\""
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://virtua-fighter.com/30th/en/history/"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.nintendo.co.jp/3ds/interview/arej/vol1/index2.html"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.bandainamco.co.jp/en/ir/library/assets/pdf/2024/integratedreports2024_en_46-49.pdf"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://virtua-fighter.com/30th/en/history/",
+      "lineno": 20
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://www.nintendo.co.jp/3ds/interview/arej/vol1/index2.html",
+      "lineno": 30
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://www.capcom.co.jp/ir/english/data/pdf/annual/2023/annual_2023_teach.pdf"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://iwataasks.nintendo.com/interviews/wii/wii_sports/0/0/"
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.nintendo.com \"Super Mario 3D Land\" \"2011\" release"
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.gran-turismo.com \"Gran Turismo 7\" \"2022\" \"25\""
+    },
+    {
+      "call": 3,
+      "kind": "search",
+      "q": "site.trackmania.com \"2003\" \"editor\""
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://www.nintendo.co.jp/wii/interview/rztj/vol1/index.html"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://blog.playstation.com/?p=62580"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://www.bandainamco.co.jp/en/ir/library/assets/pdf/2024/integratedreports2024_en_46-49.pdf",
+      "lineno": 30
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.sega.jp \"デイトナUSA\" \"1994\""
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.ubisoft.com Trackmania 20 anniversary 2003 editor"
+    },
+    {
+      "call": 4,
+      "kind": "search",
+      "q": "site.nintendo.com \"Wii Sports Resort\" \"2009\""
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://www.gran-turismo.com/gb/products/gt7/"
+    },
+    {
+      "call": 4,
+      "kind": "read",
+      "url": "https://www.nintendo.com/en-gb/Games/Nintendo-3DS-games/SUPER-MARIO-3D-LAND-274908.html"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.sega.jp/history/arcade/product/9116/"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.ubisoft.com/en-us/company/about-us/our-brands/trackmania"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.nintendo.com/en-gb/Games/Wii/Wii-Sports-Resort-283982.html"
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.nintendo.co.jp/wii/interview/rztj/vol1/index.html",
+      "lineno": 60
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.bandainamco.co.jp/en/ir/library/assets/pdf/2024/integratedreports2024_en_46-49.pdf",
+      "lineno": 0
+    },
+    {
+      "call": 5,
+      "kind": "read",
+      "url": "https://www.gran-turismo.com/gb/products/gt7/",
+      "lineno": 30
+    },
+    {
+      "call": 6,
+      "kind": "search",
+      "q": "site.sega.jp/history \"バーチャレーシング\" \"1992\""
+    },
+    {
+      "call": 6,
+      "kind": "search",
+      "q": "site.mobiusdigitalgames.com outer wilds 2019 curiosity exploration"
+    },
+    {
+      "call": 6,
+      "kind": "search",
+      "q": "site.dukope.com Obra Dinn 2018 insurance"
+    },
+    {
+      "call": 6,
+      "kind": "search",
+      "q": "site.digipen.edu Narbacular Drop 2005 Portal"
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://www.sega.jp/history/arcade/product/7792/"
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://www.mobiusdigitalgames.com/outer-wilds.html"
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://www.mobiusdigitalgames.com/news/alex-the-nomai"
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://www.digipen.edu/showcase/news/digipen-all-time-top-20-student-game-downloads-part-1"
+    },
+    {
+      "call": 7,
+      "kind": "read",
+      "url": "https://arcade.digipen.edu/downloads/drop"
+    },
+    {
+      "call": 8,
+      "kind": "search",
+      "q": "site.nintendo.com \"Metroid Prime\" \"2002\" scanning"
+    },
+    {
+      "call": 8,
+      "kind": "search",
+      "q": "site.bandainamcoent.com \"Dark Souls\" \"2011\""
+    },
+    {
+      "call": 8,
+      "kind": "read",
+      "url": "https://store.steampowered.com/app/620/Portal_2/"
+    },
+    {
+      "call": 8,
+      "kind": "read",
+      "url": "https://www.gran-turismo.com/us/products/gt7/"
+    },
+    {
+      "call": 9,
+      "kind": "search",
+      "q": "site.nintendo.co.jp \"メトロイドプライム\" \"2003年2月28日\""
+    },
+    {
+      "call": 9,
+      "kind": "read",
+      "url": "https://en.bandainamcoent.eu/dark-souls/dark-souls"
+    },
+    {
+      "call": 9,
+      "kind": "find",
+      "url": "https://store.steampowered.com/app/620/Portal_2/",
+      "pattern": "2011"
+    },
+    {
+      "call": 10,
+      "kind": "read",
+      "url": "https://www.nintendo.co.jp/ngc/before/n2005_b.html"
+    },
+    {
+      "call": 10,
+      "kind": "read-linked-page",
+      "url": "https://www.gran-turismo.com/gb/news/00_5736734.html"
+    }
+  ],
+  "failures": [
+    {
+      "url": "https://iwataasks.nintendo.com/interviews/wii/wii_sports/0/0/",
+      "status": "tool_error",
+      "resolution": "Used Japanese developer interview instead; no automatic retry"
+    }
+  ],
+  "authorization": "User explicitly authorized continued research and publishing without per-batch confirmation; no paid service used",
+  "accepted": {
+    "nodes": [
+      "virtua-fighter",
+      "virtua-fighter-2",
+      "virtua-fighter-4",
+      "tekken",
+      "tekken-8",
+      "street-fighter-6",
+      "super-mario-world",
+      "super-mario-64",
+      "super-mario-3d-land",
+      "virtua-racing",
+      "daytona-usa",
+      "trackmania",
+      "gran-turismo-7",
+      "gt7-spec-iii",
+      "wii-sports",
+      "wii-sports-resort",
+      "narbacular-drop",
+      "tag-power-of-paint",
+      "portal-2",
+      "outer-wilds",
+      "dark-souls",
+      "metroid-prime-jp"
+    ],
+    "relations": [
+      "vf-to-vf2",
+      "vf2-and-vf4",
+      "vf-and-tekken",
+      "tekken-to-eight",
+      "sf2-to-six",
+      "mario-world-and-64",
+      "mario64-to-3d-land",
+      "mario-bros-to-3d-land",
+      "virtua-racing-to-daytona",
+      "daytona-and-gran-turismo",
+      "gran-turismo-to-seven",
+      "gt7-to-spec3",
+      "wii-sports-to-resort",
+      "narbacular-to-portal",
+      "tag-to-portal2",
+      "portal-to-portal2",
+      "dark-souls-to-outer-wilds",
+      "prime-and-outer-wilds"
+    ],
+    "evidence": [
+      "sega-vf-history",
+      "namco-tekken-history",
+      "capcom-sf6-design",
+      "nintendo-mario-2d-3d",
+      "nintendo-3d-land-release",
+      "sega-virtua-racing",
+      "sega-daytona-history",
+      "ubisoft-trackmania-origin",
+      "gt7-driving-culture",
+      "gt7-release-date",
+      "gt7-spec3-data-logger",
+      "nintendo-wii-sports-iteration",
+      "nintendo-resort-release",
+      "digipen-portal-predecessors",
+      "valve-portal2-release",
+      "mobius-outer-wilds-release",
+      "mobius-outer-wilds-references",
+      "bandai-dark-souls-original",
+      "nintendo-prime-jp-date"
+    ]
+  }
+}

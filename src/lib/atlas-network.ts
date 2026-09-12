@@ -7,7 +7,7 @@ type AtlasThemeLens = {
   tags: readonly string[];
 };
 
-export type AtlasNodeKind = 'game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
+export type AtlasNodeKind = 'game' | 'tabletop-game' | 'innovation' | 'category' | 'experimental-apparatus' | 'experimental-program' | 'system-prototype' | 'commercial-hardware';
 
 type AtlasNodeForLayout = {
   id: string;
@@ -76,7 +76,7 @@ export type AtlasLayout = {
 export type AtlasLayoutPerspective = 'works' | 'category' | 'events';
 
 const atlasPerspectiveKinds: Record<AtlasLayoutPerspective, readonly AtlasNodeKind[]> = {
-  works: ['game', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware'],
+  works: ['game', 'tabletop-game', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware'],
   category: ['category', 'innovation'],
   events: ['innovation'],
 };
@@ -228,7 +228,7 @@ export function buildAtlasEventPerspective(
     carriersByEvent[event.id] = sortedRelations
       .filter(({ relationRole, fromId }) => relationRole === 'carrier' && fromId === event.id)
       .map(({ toId }) => nodeById.get(toId))
-      .filter((node): node is AtlasEventPerspectiveNode => node?.kind === 'game')
+      .filter((node): node is AtlasEventPerspectiveNode => (node?.kind === 'game' || node?.kind === 'tabletop-game'))
       .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id))
       .map(({ id }) => id);
   }
@@ -275,7 +275,7 @@ export function buildAtlasEventTimeline(
     carriersByEvent[event.id] = relations
       .filter(({ relationRole, fromId }) => relationRole === 'carrier' && fromId === event.id)
       .map(({ toId }) => nodeById.get(toId))
-      .filter((node): node is AtlasEventTimelineNode => node?.kind === 'game')
+      .filter((node): node is AtlasEventTimelineNode => (node?.kind === 'game' || node?.kind === 'tabletop-game'))
       .sort((left, right) => left.startYear - right.startYear || left.id.localeCompare(right.id));
   }
 
@@ -570,11 +570,11 @@ export function buildAtlasLayout(
   const categoryWorkBase = categoryEventBase + Math.max(0, highestInnovationLane) + 2;
 
   const placedNodes = resolveAtlasLaneCollisions(nodes.map((node): AtlasPlacedNode => {
-    if (node.kind === 'game' && node.endYear !== undefined) {
+    if ((node.kind === 'game' || node.kind === 'tabletop-game') && node.endYear !== undefined) {
       throw new Error(`Atlas Game ${node.id} cannot define a time range.`);
     }
     const yearX = projectAtlasYear(node.startYear, yearRange);
-    const rangeEndYear = node.kind === 'game' ? undefined : node.endYear;
+    const rangeEndYear = (node.kind === 'game' || node.kind === 'tabletop-game') ? undefined : node.endYear;
     const hasRange = rangeEndYear !== undefined;
     const spanEndX = hasRange
       ? projectAtlasYear(rangeEndYear, yearRange)

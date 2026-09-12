@@ -1557,5 +1557,716 @@
       "first-person-shooter-lens",
       "mod-history"
     ]
+  },
+  {
+    "id": "vf-to-vf2",
+    "fromId": "virtua-fighter",
+    "toId": "virtua-fighter-2",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "系列从多边形角色继续扩展招式与失衡变化。"
+    },
+    "evidenceIds": [
+      "sega-vf-history"
+    ],
+    "tags": [
+      "fighting-history"
+    ]
+  },
+  {
+    "id": "vf2-and-vf4",
+    "fromId": "virtua-fighter-2",
+    "toId": "virtua-fighter-4",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "比较对战招式与跨局记录；中间版本未全收录，不视为直接相邻续作。"
+    },
+    "evidenceIds": [
+      "sega-vf-history"
+    ],
+    "tags": [
+      "fighting-history"
+    ]
+  },
+  {
+    "id": "vf-and-tekken",
+    "fromId": "virtua-fighter",
+    "toId": "tekken",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "两条三维格斗传统的并置；未据此确认直接影响。"
+    },
+    "evidenceIds": [
+      "sega-vf-history",
+      "namco-tekken-history"
+    ],
+    "tags": [
+      "fighting-history"
+    ]
+  },
+  {
+    "id": "tekken-to-eight",
+    "fromId": "tekken",
+    "toId": "tekken-8",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "系列从街机起点走向全球家用同步发布；是长期路径对照，不是相邻版本。"
+    },
+    "evidenceIds": [
+      "namco-tekken-history"
+    ],
+    "tags": [
+      "fighting-history"
+    ]
+  },
+  {
+    "id": "sf2-to-six",
+    "fromId": "street-fighter-ii",
+    "toId": "street-fighter-6",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "制作人回顾街霸II的街机乐趣，并以现代操作和学习模式回应入门问题。"
+    },
+    "evidenceIds": [
+      "capcom-sf6-design"
+    ],
+    "tags": [
+      "fighting-history"
+    ]
+  },
+  {
+    "id": "mario-world-and-64",
+    "fromId": "super-mario-world",
+    "toId": "super-mario-64",
+    "type": "structural-similarity",
+    "status": "confirmed",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "开发者对照二维关卡与三维探索之间的设计间隙。"
+    },
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ],
+    "tags": [
+      "platform-jumping-lens"
+    ]
+  },
+  {
+    "id": "mario64-to-3d-land",
+    "fromId": "super-mario-64",
+    "toId": "super-mario-3d-land",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "3D Land回应探索式目标的迷路感，恢复明确终点并保留隐藏收集。"
+    },
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ],
+    "tags": [
+      "platform-jumping-lens"
+    ]
+  },
+  {
+    "id": "mario-bros-to-3d-land",
+    "fromId": "super-mario-bros",
+    "toId": "super-mario-3d-land",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "开发者明确将初代旗杆目标带入三维关卡。"
+    },
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ],
+    "tags": [
+      "platform-jumping-lens"
+    ]
+  },
+  {
+    "id": "virtua-racing-to-daytona",
+    "fromId": "virtua-racing",
+    "toId": "daytona-usa",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "SEGA档案说明Daytona承接尾流与长赛程模式，发展漂移和车辆反馈。"
+    },
+    "evidenceIds": [
+      "sega-daytona-history"
+    ],
+    "tags": [
+      "physical-play-history"
+    ]
+  },
+  {
+    "id": "daytona-and-gran-turismo",
+    "fromId": "daytona-usa",
+    "toId": "gran-turismo",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "比较街机漂移驾驶与购车改装循环；不据此主张影响方向。"
+    },
+    "evidenceIds": [
+      "sega-daytona-history",
+      "batch-gran-turismo"
+    ],
+    "tags": [
+      "physical-play-history"
+    ]
+  },
+  {
+    "id": "gran-turismo-to-seven",
+    "fromId": "gran-turismo",
+    "toId": "gran-turismo-7",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "官方明确延续初代购车、比赛和改装循环，并扩展汽车文化体验。"
+    },
+    "evidenceIds": [
+      "gt7-driving-culture"
+    ],
+    "tags": [
+      "physical-play-history"
+    ]
+  },
+  {
+    "id": "gt7-to-spec3",
+    "fromId": "gran-turismo-7",
+    "toId": "gt7-spec-iii",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Spec III更新加入驾驶数据比较，让练习可以定位具体差异。"
+    },
+    "evidenceIds": [
+      "gt7-driving-culture",
+      "gt7-spec3-data-logger"
+    ],
+    "tags": [
+      "physical-play-history"
+    ]
+  },
+  {
+    "id": "wii-sports-to-resort",
+    "fromId": "wii-sports",
+    "toId": "wii-sports-resort",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "原作团队通过MotionPlus回应动作检测限制。"
+    },
+    "evidenceIds": [
+      "nintendo-wii-sports-iteration"
+    ],
+    "tags": [
+      "physical-play-history"
+    ]
+  },
+  {
+    "id": "narbacular-to-portal",
+    "fromId": "narbacular-drop",
+    "toId": "portal",
+    "type": "prototype-to-product",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "学生团队受聘后将连通传送门概念发展为Portal。"
+    },
+    "evidenceIds": [
+      "digipen-portal-predecessors"
+    ],
+    "tags": [
+      "puzzle-history"
+    ]
+  },
+  {
+    "id": "tag-to-portal2",
+    "fromId": "tag-power-of-paint",
+    "toId": "portal-2",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Tag团队进入Valve，将相似的表面交互带入Portal 2。"
+    },
+    "evidenceIds": [
+      "digipen-portal-predecessors"
+    ],
+    "tags": [
+      "puzzle-history"
+    ]
+  },
+  {
+    "id": "portal-to-portal2",
+    "fromId": "portal",
+    "toId": "portal-2",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "续作在原有传送门解谜基础上扩展独立合作体验。"
+    },
+    "evidenceIds": [
+      "valve-portal2-release"
+    ],
+    "tags": [
+      "puzzle-history"
+    ]
+  },
+  {
+    "id": "dark-souls-to-outer-wilds",
+    "fromId": "dark-souls",
+    "toId": "outer-wilds",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "早期危险旅途参考Dark Souls，后来转向好奇心、手工空间和时间循环。"
+    },
+    "evidenceIds": [
+      "mobius-outer-wilds-references"
+    ],
+    "tags": [
+      "puzzle-history",
+      "role-playing-lineage"
+    ]
+  },
+  {
+    "id": "prime-and-outer-wilds",
+    "fromId": "metroid-prime-jp",
+    "toId": "outer-wilds",
+    "type": "structural-similarity",
+    "status": "confirmed",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "作者在访谈中才意识到扫描/外星技术的相近之处；不改写为已证实的预先借鉴。"
+    },
+    "evidenceIds": [
+      "mobius-outer-wilds-references"
+    ],
+    "tags": [
+      "puzzle-history",
+      "metroidvania-lens"
+    ]
+  },
+  {
+    "id": "tetris-to-game-boy",
+    "fromId": "tetris",
+    "toId": "tetris-game-boy",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "通过掌机授权把Tetris带到Game Boy，不是新规则的发明声明。"
+    },
+    "evidenceIds": [
+      "tetris-handheld-history"
+    ],
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ]
+  },
+  {
+    "id": "angry-birds-to-reloaded",
+    "fromId": "angry-birds",
+    "toId": "angry-birds-reloaded",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "在经典弹弓解谜上扩展内容，并改变广告/内购体验。"
+    },
+    "evidenceIds": [
+      "rovio-angry-birds-return"
+    ],
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ]
+  },
+  {
+    "id": "fruit-ninja-to-hd",
+    "fromId": "fruit-ninja",
+    "toId": "fruit-ninja-hd-2012",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "iPad版本拓展分屏对战和多指输入；2012只是已核查的功能实例。"
+    },
+    "evidenceIds": [
+      "halfbrick-fruit-hd"
+    ],
+    "tags": [
+      "physical-play-history",
+      "mobile-history"
+    ]
+  },
+  {
+    "id": "ingress-to-pokemon-go",
+    "fromId": "ingress",
+    "toId": "pokemon-go",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "Hanke明确说明将Ingress的现实探索与社交经验带入Pokémon GO。"
+    },
+    "evidenceIds": [
+      "hanke-ingress-pokemon"
+    ],
+    "tags": [
+      "social-worlds-history",
+      "mobile-history"
+    ]
+  },
+  {
+    "id": "gujian-to-three",
+    "fromId": "gujian",
+    "toId": "gujian3",
+    "type": "derived-variant",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "系列延展到全即时战斗；跨代对照，不把中间作品删除为“直接下一部”。"
+    },
+    "evidenceIds": [
+      "gujian-original",
+      "gujian3-steam"
+    ],
+    "tags": [
+      "role-playing-lineage"
+    ]
+  },
+  {
+    "id": "factorio-and-dyson",
+    "fromId": "factorio",
+    "toId": "dyson-sphere-program",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "对照自动化生产与星际物流的空间尺度；未核实作者直接影响。"
+    },
+    "evidenceIds": [
+      "batch-factorio",
+      "dyson-sphere-program-release"
+    ],
+    "tags": [
+      "simulation-history"
+    ]
+  },
+  {
+    "id": "hades-to-two",
+    "fromId": "hades",
+    "toId": "hades-ii-v1",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "官方明确的续作，以新角色与巫术扩展循环叙事。"
+    },
+    "evidenceIds": [
+      "hades2-design"
+    ],
+    "tags": [
+      "roguelike-lens"
+    ]
+  },
+  {
+    "id": "spire-to-two",
+    "fromId": "slay-the-spire",
+    "toId": "slay-the-spire-2-ea",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "续作在卡组构筑中加入多人合作；当前定位抢先体验。"
+    },
+    "evidenceIds": [
+      "megacrit-spire2-facts",
+      "megacrit-spire2-early-access"
+    ],
+    "tags": [
+      "card-history",
+      "roguelike-lens"
+    ]
+  },
+  {
+    "id": "portal-and-monument-valley",
+    "fromId": "portal",
+    "toId": "monument-valley",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "比较两种改写空间通路的解谜方式，不声称直接影响。"
+    },
+    "evidenceIds": [
+      "digipen-portal-predecessors",
+      "ustwo-monument-geometry"
+    ],
+    "tags": [
+      "puzzle-history",
+      "mobile-history"
+    ]
+  },
+  {
+    "id": "ensemble-performance-carrier",
+    "fromId": "ensemble-performance",
+    "toId": "rock-band",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该版本承载此处机制观察；不是绝对首创声明。"
+    },
+    "tags": [
+      "music-history"
+    ],
+    "evidenceIds": [
+      "harmonix-guitar-band-reflection"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "three-dimensional-goal-guidance-carrier",
+    "fromId": "three-dimensional-goal-guidance",
+    "toId": "super-mario-3d-land",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该版本承载此处机制观察；不是绝对首创声明。"
+    },
+    "tags": [
+      "platform-jumping-lens"
+    ],
+    "evidenceIds": [
+      "nintendo-mario-2d-3d"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "curiosity-in-changing-world-carrier",
+    "fromId": "curiosity-in-changing-world",
+    "toId": "outer-wilds",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该版本承载此处机制观察；不是绝对首创声明。"
+    },
+    "tags": [
+      "puzzle-history"
+    ],
+    "evidenceIds": [
+      "mobius-outer-wilds-release",
+      "mobius-outer-wilds-references"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "shared-touch-play-carrier",
+    "fromId": "shared-touch-play",
+    "toId": "fruit-ninja-hd-2012",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该版本承载此处机制观察；不是绝对首创声明。"
+    },
+    "tags": [
+      "physical-play-history",
+      "mobile-history"
+    ],
+    "evidenceIds": [
+      "halfbrick-fruit-hd"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "driving-data-feedback-carrier",
+    "fromId": "driving-data-feedback",
+    "toId": "gt7-spec-iii",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该版本承载此处机制观察；不是绝对首创声明。"
+    },
+    "tags": [
+      "physical-play-history"
+    ],
+    "evidenceIds": [
+      "gt7-spec3-data-logger"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "cooperative-run-deckbuilding-carrier",
+    "fromId": "cooperative-run-deckbuilding",
+    "toId": "slay-the-spire-2-ea",
+    "type": "design-response",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "该版本承载此处机制观察；不是绝对首创声明。"
+    },
+    "tags": [
+      "card-history"
+    ],
+    "evidenceIds": [
+      "megacrit-spire2-facts",
+      "megacrit-spire2-early-access"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "run-deckbuilding-to-cooperation",
+    "fromId": "run-deck-construction",
+    "toId": "cooperative-run-deckbuilding",
+    "type": "derived-variant",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "开发者说明续作在单局构筑中增加多人合作；此边概括同系列的机制扩展。"
+    },
+    "tags": [
+      "card-history"
+    ],
+    "evidenceIds": [
+      "megacrit-spire2-facts",
+      "megacrit-spire2-early-access"
+    ],
+    "relationRole": "evolution"
+  },
+  {
+    "id": "dnd-progression-carrier",
+    "fromId": "rpg-character-progression",
+    "toId": "dungeons-and-dragons-1974",
+    "type": "design-response",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "原版桌面角色扮演提供这一历史语境，不宣称唯一发明。"
+    },
+    "evidenceIds": [
+      "gamedeveloper-dd-rpg-history",
+      "wizards-original-dnd"
+    ],
+    "tags": [
+      "rpg-progression"
+    ],
+    "relationRole": "carrier"
+  },
+  {
+    "id": "dominion-to-spire",
+    "fromId": "dominion",
+    "toId": "slay-the-spire",
+    "type": "direct-influence",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "开发者明确提到Dominion等实体构筑游戏；不是从相似卡牌界面推断。"
+    },
+    "evidenceIds": [
+      "giovannetti-physical-deckbuilders"
+    ],
+    "tags": [
+      "card-history"
+    ]
+  },
+  {
+    "id": "magic-to-dota",
+    "fromId": "magic-the-gathering",
+    "toId": "dota-eul",
+    "type": "direct-influence",
+    "status": "credible",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "证词背景提及Magic对英雄设计的启发；不限定为1993初版卡牌。"
+    },
+    "evidenceIds": [
+      "dota-creation-record"
+    ],
+    "tags": [
+      "card-history",
+      "moba-history"
+    ]
+  },
+  {
+    "id": "magic-and-dominion",
+    "fromId": "magic-the-gathering",
+    "toId": "dominion",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "比较自由选择卡牌与在对局中逐步构筑；没有把两作排列为已证实的直接继承。"
+    },
+    "evidenceIds": [
+      "rosewater-magic-origin",
+      "rio-dominion-deckbuilding"
+    ],
+    "tags": [
+      "card-history"
+    ]
+  },
+  {
+    "id": "mud-prototype-to-bcpl",
+    "fromId": "mud-1978-prototype",
+    "toId": "mud-bcpl",
+    "type": "prototype-to-product",
+    "status": "confirmed",
+    "directionality": "directed",
+    "summary": {
+      "zh-CN": "从移动/聊天原型到重写与扩充后的多人游戏。"
+    },
+    "evidenceIds": [
+      "bartle-early-mud"
+    ],
+    "tags": [
+      "social-worlds-history"
+    ]
+  },
+  {
+    "id": "mud-and-dikumud",
+    "fromId": "mud-bcpl",
+    "toId": "dikumud",
+    "type": "structural-similarity",
+    "status": "inferred",
+    "directionality": "undirected",
+    "summary": {
+      "zh-CN": "对照早期共享文本世界与后来的战斗导向MUD；未核实直接代码继承。"
+    },
+    "evidenceIds": [
+      "bartle-early-mud",
+      "batch-mmo-lineage"
+    ],
+    "tags": [
+      "social-worlds-history"
+    ]
   }
 ]

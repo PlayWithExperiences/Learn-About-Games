@@ -48,7 +48,7 @@ describe("history overview reading contract", () => {
     expect(
       historyNeighborhood("tetris", relations as Catalog["atlasRelations"])
         .edges,
-    ).toEqual([]);
+    ).toEqual([expect.objectContaining({id:"tetris-to-game-boy",type:"derived-variant"})]);
     expect(nodes.find((n) => n.id === "minecraft")?.summary["zh-CN"]).toContain(
       "早期公开版",
     );
@@ -84,5 +84,34 @@ describe('mod and performance history boundaries', () => {
     expect(relations.find(r => r.id === 'buildcraft-to-factorio')).toMatchObject({type:'direct-influence'});
     expect(relations.find(r => r.id === 'ddr-and-guitar-hero')).toMatchObject({type:'structural-similarity',directionality:'undirected',status:'inferred'});
     expect(relations.find(r => r.id === 'allstars-to-league')).toMatchObject({type:'design-response'});
+  });
+});
+
+describe('spatial and practice history evidence', () => {
+  it('separates a retrospective similarity from an explicit design response', () => {
+    expect(relations.find(r => r.id === 'prime-and-outer-wilds')).toMatchObject({type:'structural-similarity',directionality:'undirected'});
+    expect(relations.find(r => r.id === 'dark-souls-to-outer-wilds')).toMatchObject({type:'design-response',directionality:'directed'});
+    expect(nodes.find(n => n.id === 'metroid-prime-jp')?.summary['zh-CN']).toContain('日本');
+    expect(nodes.find(n => n.id === 'gt7-spec-iii')?.startYear).toBe(2025);
+    expect(relations.find(r => r.id === 'gt7-to-spec3')).toMatchObject({fromId:'gran-turismo-7',toId:'gt7-spec-iii',type:'derived-variant'});
+  });
+});
+
+describe('mobile and contemporary release boundaries', () => {
+  it('keeps later editions and early access explicit', () => {
+    expect(nodes.find(n => n.id === 'fruit-ninja-hd-2012')?.summary['zh-CN']).toContain('不是HD版本首次发行');
+    expect(nodes.find(n => n.id === 'slay-the-spire-2-ea')?.summary['zh-CN']).toContain('不是完整1.0');
+    expect(nodes.find(n => n.id === 'hades-ii-v1')?.startYear).toBe(2025);
+    expect(relations.find(r => r.id === 'ingress-to-pokemon-go')).toMatchObject({type:'direct-influence',status:'confirmed'});
+    expect(relations.find(r => r.id === 'factorio-and-dyson')).toMatchObject({directionality:'undirected',status:'inferred'});
+  });
+});
+
+describe('tabletop and prototype identity', () => {
+  it('preserves tabletop predecessors and separates the early MUD prototype', () => {
+    for (const id of ['dungeons-and-dragons-1974','magic-the-gathering','dominion'])
+      expect(nodes.find(n => n.id === id)?.kind).toBe('tabletop-game');
+    expect(nodes.find(n => n.id === 'mud-1978-prototype')?.kind).toBe('experimental-program');
+    expect(relations.find(r => r.id === 'dominion-to-spire')).toMatchObject({type:'direct-influence',status:'confirmed'});
   });
 });

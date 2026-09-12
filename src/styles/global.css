@@ -5626,3 +5626,7 @@ h2 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Physical tabletop artifacts stay distinct from digital works. */
+.atlas-legend__shape--tabletop,
+.atlas-network-node--tabletop-game a { border-style: double; border-width: 3px; }

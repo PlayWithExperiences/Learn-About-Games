@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-09-12T23:42:37+08:00",
+  "runtime": "f51efa30d2a21bf5eb0c9608bda153b537bd4794",
+  "runId": 34701125156,
+  "conclusion": "success",
+  "unitTests": 214,
+  "chromiumPassed": 153,
+  "chromiumSkipped": 4,
+  "pagesBuilt": 155,
+  "live": {
+    "overviewNodes": 146,
+    "preciseNetworkNodes": 146,
+    "overviewStatus": 200,
+    "preciseNetworkStatus": 200,
+    "buildcraftSourceInspector": "verified in CUA"
+  }
+}

@@ -24,7 +24,7 @@ test("overview preserves the complete catalog and keeps positions stable while e
   await expect(page.locator(inspector)).toContainText("失败之后，什么留下来");
   await expect(
     page.locator('[data-history-node][data-emphasis="true"]'),
-  ).toHaveCount(12);
+  ).toHaveCount(17);
   expect(await positions()).toEqual(before);
   await page.locator("[data-history-reset]").click();
   await expect(
@@ -78,7 +78,7 @@ test("search has an honest empty state and reset recovers every object", async (
   await page.locator("[data-history-track]").selectOption("physical");
   await expect(
     page.locator('[data-history-node][data-emphasis="true"]'),
-  ).toHaveCount(3);
+  ).toHaveCount(14);
   await page.locator("[data-history-reset]").click();
   await expect(
     page.locator('[data-history-node][data-emphasis="true"]'),
@@ -219,4 +219,25 @@ test('mod and music routes expose version context and source-backed transitions'
   await expect(page.locator(inspector)).toContainText('设计回应');
   await page.locator(inspector).getByRole('link', { name: 'Rock Band', exact: true }).click();
   await expect(page).toHaveURL(/#atlas-node-detail-rock-band$/);
+});
+
+test('practice route reaches dated updates and spatial route preserves comparison semantics', async ({ page }) => {
+  await page.goto('./atlas/');
+  await page.locator('[data-history-route="practice"]').click();
+  await page.locator(inspector).locator('[data-history-jump="gt7-spec-iii"]').click();
+  await expect(page.locator(inspector)).toContainText('2025-12-04');
+  await expect(page.locator(inspector)).toContainText('Data Logger');
+  await page.goto('./atlas/#atlas-node-detail-outer-wilds');
+  await expect(page.locator(inspector)).toContainText('设计回应');
+  await expect(page.locator(inspector)).toContainText('结构相似，影响未知');
+});
+
+test('mobile route and recent cards preserve platform and early-access context', async ({ page }) => {
+  await page.goto('./atlas/');
+  await page.locator('[data-history-route="mobile"]').click();
+  await expect(page.locator(inspector)).toContainText('跨品类的平台比较');
+  await page.locator(inspector).locator('[data-history-jump="pokemon-go"]').click();
+  await expect(page.locator(inspector)).toContainText('澳大利亚');
+  await page.goto('./atlas/#atlas-node-detail-slay-the-spire-2-ea');
+  await expect(page.locator(inspector)).toContainText('不是完整1.0');
 });

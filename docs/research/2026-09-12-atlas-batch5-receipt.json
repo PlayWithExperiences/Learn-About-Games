@@ -1,0 +1,136 @@
+{
+  "counts": {
+    "queries": 7,
+    "reads": 11
+  },
+  "requests": [
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.richardbartle.com MUD 1978 Roy Trubshaw"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.magic.wizards.com Magic first released 1993 Richard Garfield"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.gamedeveloper.com Slay Spire Dominion inspiration"
+    },
+    {
+      "call": 0,
+      "kind": "search",
+      "q": "site.riograndegames.com Dominion 2008 deck building"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.dnd.wizards.com \"1974\" \"Dungeons\" history"
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.riograndegames.com Dominion \"2008\""
+    },
+    {
+      "call": 1,
+      "kind": "search",
+      "q": "site.ncsoft.com Lineage \"1998\""
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://mud.co.uk/richard/mudhist.htm"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.screenhype.co.uk/slay-the-spire-interview-mega-crit-games/"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://magic.wizards.com/en/news/making-magic/looking-back-part-1"
+    },
+    {
+      "call": 1,
+      "kind": "read",
+      "url": "https://www.riograndegames.com/games/dominion/"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://mud.co.uk/richard/mudhist.htm",
+      "lineno": 0
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://www.screenhype.co.uk/slay-the-spire-interview-mega-crit-games/",
+      "lineno": 22
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://www.riograndegames.com/games/dominion1stedition/"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://wpn.wizards.com/en/products/the-making-of-original-d-and-d-1970-1977"
+    },
+    {
+      "call": 2,
+      "kind": "read",
+      "url": "https://kr.ncsoft.com/cn/whatWeCreate/lineage.do"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://about.ncsoft.com/artbook/en/lineage/"
+    },
+    {
+      "call": 3,
+      "kind": "read",
+      "url": "https://magic.wizards.com/en/news/making-magic/looking-back-part-1",
+      "lineno": 55
+    }
+  ],
+  "failures": [
+    {
+      "url": "https://kr.ncsoft.com/cn/whatWeCreate/lineage.do",
+      "status": "redirected_without_product_content",
+      "resolution": "Official digital artbook used instead"
+    }
+  ],
+  "authorization": "Continued under explicit user authorization; no paid service",
+  "accepted": {
+    "nodes": [
+      "dungeons-and-dragons-1974",
+      "magic-the-gathering",
+      "dominion",
+      "mud-1978-prototype",
+      "mud-bcpl",
+      "lineage"
+    ],
+    "relations": [
+      "dnd-progression-carrier",
+      "dominion-to-spire",
+      "magic-to-dota",
+      "magic-and-dominion",
+      "mud-prototype-to-bcpl",
+      "mud-and-dikumud"
+    ],
+    "evidence": [
+      "bartle-early-mud",
+      "wizards-original-dnd",
+      "rosewater-magic-origin",
+      "rio-dominion-first",
+      "rio-dominion-deckbuilding",
+      "giovannetti-physical-deckbuilders",
+      "ncsoft-lineage-origin"
+    ]
+  }
+}

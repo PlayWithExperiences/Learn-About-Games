@@ -238,7 +238,7 @@ const atlasNodes = defineCollection({
   schema: z
     .object({
       id: z.string().trim().min(1),
-      kind: z.enum(['game', 'innovation', 'category', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware']),
+      kind: z.enum(['game', 'tabletop-game', 'innovation', 'category', 'experimental-apparatus', 'experimental-program', 'system-prototype', 'commercial-hardware']),
       name: localizedText,
       summary: localizedText,
       startYear: z.number().int(),
