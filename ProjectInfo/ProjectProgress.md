@@ -14,6 +14,8 @@
 - CUA本地目视195对象、Tekken创作者来源、实际箭头和上下文详情；JSON回执校验与当前三份catalog hash一致。
 - 审计：docs/research/2026-09-13-atlas-full-verification.md / .json；公开说明：docs/devlog/2026-09-13-atlas-full-verification.md。
 
+- 2026-09-13T01:33:05+08:00：首轮云端run34707876487因README仍写172而失败（158浏览器通过/4跳过/1失败），未部署；已同步公开文档198并修正手机目视发现的比较徽标，4项定向复验通过，等待新run。
+
 ## 上次已发布基线
 
 runtime `1b41f41328d4712649805f6a9c9d4c7f4857e8a6`，Pages run34703681445；217单测、158 Chromium/4跳过、156页、195/160/172。本轮只有收到新Pages成功回执并检查live后才更新为已上线。

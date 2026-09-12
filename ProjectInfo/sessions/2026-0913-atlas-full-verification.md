@@ -26,3 +26,16 @@ trace-user-count: 11
 当前待commit/push、云端工作流和live验证；不是已上线声明。未混入NotebookLM/历史dialogue改动。
 
 原始对话：本文件首节直接保存当前请求；早期回合见同session的已有dialogues及2026-0912-atlas-mods-performance摘要。
+
+## 2026-09-13T01:33:05+08:00 发布门与目视回归修复
+
+决策：無涘（既有自主推进授权） ｜ 记录：Codex
+
+session 01a091a6-dbd8-7072-a821-27697dd08274
+trace-user-count: 11
+
+首轮runtime883323f的run34707876487构建219单测通过，但全站浏览器检查158通过/4跳过/1失败：README仍有旧172来源，真实catalog198。未部署。README与公开ROADMAP已同步，保留原精确计数断言。
+
+Cua手机目视还发现无向比较出现“机制演变”徽标。新增负向断言两设备失败，模板按方向显示观察关联/机制演变后两设备通过，Cua回读及截图再确认并恢复默认视口。最终针对来源/反例及项目文档的4项复验通过。另修正研究回执：Alcorn原本就是credible，只补证据边界，并未降低等级。
+
+原始对话：本文件首节当前请求及同session既有dialogues。

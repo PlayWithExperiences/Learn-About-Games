@@ -766,7 +766,7 @@
         "zh-CN": "支持 Odyssey Table Tennis 对 Pong 项目构成直接设计触发；这是参与者回忆。"
       },
       "state": "corrected-boundary",
-      "review": "已修正文案并降为历史综合：Alcorn未参加演示亦未问来源，其直接影响判断是回忆中的推断。",
+      "review": "保持原有历史综合等级，补明Alcorn未参加演示亦未问来源；其直接影响判断是回忆中的推断，未发生等级下调。",
       "reviewedAt": "2026-09-13",
       "method": "original-page-text; exceptions described in review",
       "urlAfter": "https://archive.computerhistory.org/resources/access/text/2012/09/102658257-05-01-acc.pdf",
@@ -12420,6 +12420,24 @@
       "initialFailures": "two device instances of a new test had ambiguous duplicate source-link locator; fixed and rerun, no application change"
     },
     "visual": "CUA local overview: 195 objects, Tekken source and directed links, context readable",
-    "publication": "pending"
+    "publication": "pending",
+    "firstCloudRun": {
+      "id": 34707876487,
+      "head": "883323f6b7b2cdcabf0437d3aeb463c2f6fd85f2",
+      "outcome": "failed-before-deploy",
+      "passedBrowserTests": 158,
+      "skips": 4,
+      "failure": "README retained 172 Evidence; catalog and assertion correctly expected 198. Fixed README and ROADMAP, did not weaken assertion."
+    },
+    "badgeRegression": {
+      "observation": "Mobile CUA found comparison still labelled 机制演变",
+      "before": "new negative assertion failed on both devices",
+      "fix": "undirected observation relationship badge is now 观察关联",
+      "after": "both devices passed; CUA mobile reread and screenshot confirmed"
+    },
+    "targetedFollowup": {
+      "passed": 4,
+      "scope": "creator/counterexample + repository README scope, desktop and mobile"
+    }
   }
 }

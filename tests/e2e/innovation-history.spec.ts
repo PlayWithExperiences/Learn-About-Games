@@ -252,5 +252,7 @@ test('verified creator sources and the Dominion counterexample reach the reader'
   await expect(page.locator(inspector)).toContainText('机制比较');
   await page.goto('./atlas/#atlas-node-detail-rpg-party-and-quest-identity');
   await expect(page.locator(inspector)).toContainText('1981');
+  await expect(page.locator(inspector)).not.toContainText('机制演变');
+  await expect(page.locator(inspector)).toContainText('观察关联');
   await expect(page.locator(inspector).locator('[data-history-jump="wizardry"]')).toBeVisible();
 });

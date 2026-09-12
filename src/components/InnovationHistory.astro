@@ -101,7 +101,7 @@ const cellNodes = (track: string, start: number, end: number) =>
             {edgesFor(node.id).map(edge=>{
               const from=nodeById.get(edge.fromId)!;const to=nodeById.get(edge.toId)!;
               return <article class="history-relation">
-                <p class="history-relation-type">{historyRelationLabels[edge.type]} · {historyStatusLabels[edge.status]}{edge.relationRole==='carrier'?' · 作品承载':edge.relationRole==='evolution'?' · 机制演变':''}</p>
+                <p class="history-relation-type">{historyRelationLabels[edge.type]} · {historyStatusLabels[edge.status]}{edge.relationRole==='carrier'?' · 作品承载':edge.relationRole==='evolution'?(edge.directionality==='undirected'?' · 观察关联':' · 机制演变'):''}</p>
                 <p><a href={`#atlas-node-detail-${from.id}`} data-history-jump={from.id}>{from.name['zh-CN']}</a> {edge.directionality==='directed'?'→':'↔'} <a href={`#atlas-node-detail-${to.id}`} data-history-jump={to.id}>{to.name['zh-CN']}</a></p>
                 <p>{edge.summary['zh-CN']}</p>
                 {edge.directionalityNote&&<p>{edge.directionalityNote['zh-CN']}</p>}
