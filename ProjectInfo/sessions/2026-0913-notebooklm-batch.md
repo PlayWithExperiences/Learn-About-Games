@@ -16,3 +16,11 @@
 - 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T0115+0800-batch-report.json`；各条明细在同目录 `batch-*-youtube-*.log` 与 `*-item-*/report.json`。
 
 原始对话：dialogues/2026-0913-notebooklm-automation.md「0023 批量生产与演示文稿节流」
+
+## 补充：节流范围确认与 claim 闸门（2026-09-13 01:14–01:26 +0800）
+
+- **节流是账号级、不是单 notebook**：在长期本 `880ad454` 复核，同样显示「此内容将在几小时后生成。」且无「立即生成」按钮。**换 notebook 绕不开**，因此没有采用轮换笔记本的做法。
+- 01:16–01:26 每 90 秒采样一次，连续 6 次均为节流；文案为「几小时后」，不适合在本轮内等待。
+- **新增 claim 前闸门**：`automation/browser/nblm-deck-available.cjs` 在生成前探测演示文稿能否立即生成（只开关对话框，不消耗配额也不消耗 claim）；`run-notebooklm-item.py` 把它放在 **claim 之前**，不可用则直接返回 rc=3 且不写 ledger；`run-notebooklm-batch.sh` 收到 rc=3 即停止批次。
+- 实测：`claimed_today` 在整次批次尝试前后均为 **6**，**未消耗任何 claim**。此前第 3、4 条正是在 claim 之后才发现节流而被白白占用的。
+- 结论：在节流解除前不再重复领取；解除后先为 `youtube-gPV0qmyGs-o` 补演示文稿收尾，再继续预检清单（当日剩余 4 次 claim 保留）。

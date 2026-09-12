@@ -30,6 +30,7 @@ runtime `1b41f41328d4712649805f6a9c9d4c7f4857e8a6`，Pages run34703681445；217�
 - 流水线已工程化：新增单条端到端 `run-notebooklm-item.py`、串行跑批 `run-notebooklm-batch.sh`、只补导出发布的 `finish-notebooklm-item.py`、`notebooklm-split-answer.py`，以及 `automation/browser/` 下 11 个步骤工具。修掉 7 个会伪装成其他症状的致错点，最严重的是 **Studio 生成对话框有独立来源选择器且默认全选**，会静默产出「基于 N 个来源」的串源产物（已删卡重生成，并加提交前「必须 1 个来源」断言）。
 - `youtube-gPV0qmyGs-o`（叙事驱动留存）信息图与思维导图已生成并留在 notebook，节流解除后只需补演示文稿再用 finish 脚本收尾；`youtube-ykPZcG8_mPU` 在停止时刚导入来源、无产物，已按阶段记 failed。
 - 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站内容。
+- **节流范围已确认＝账号级**：长期本 `880ad454` 同样被节流，换 notebook 无用；01:16–01:26 连续 6 次采样均未恢复（文案「几小时后」）。已新增 **claim 前闸门** `nblm-deck-available.cjs`：不可用则不领取（实测 claimed_today 前后均为 6，未浪费 claim）。
 - 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T0115+0800-batch-report.json`；摘要 `sessions/2026-0913-notebooklm-batch.md`。
 
 ### NotebookLM 生产：2026-09-12 23:59 +0800
