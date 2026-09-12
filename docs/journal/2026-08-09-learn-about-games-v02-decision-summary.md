@@ -776,3 +776,5 @@ Evidence provenance 审查提交 `7893272` 将 `sourceKind`、`institutionOrAuth
 ## 2026-09-13T01:18:13+08:00 全量主张核查
 
 用户可见原话：“未核实的是为什么，请想办法全量核实”。Codex逐项检查既有195对象/160关系/172证据，补26来源、修正版本和引用范围、将19条编辑比较从因果箭头改为无向。95直接来源支持/65历史综合，仍有五组不能证实直接影响。219单测、157页与地图76通过/20条件跳过；发布待云端和live回执。该节为当前可见回合摘要，不声称导出了完整对话。详见ProjectInfo/sessions/2026-0913-atlas-full-verification.md及研究回执。
+
+发布收口（2026-09-13T01:50:02+08:00，记录Codex）：`dfe63a3`经[run34708564937](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34708564937)上线，219单测、159 Chromium/4条件跳过、157页；live新来源、关系、198证据及Wizardry跳转通过。首次README计数失败已修复，边界仍保留，见最终发布回执。

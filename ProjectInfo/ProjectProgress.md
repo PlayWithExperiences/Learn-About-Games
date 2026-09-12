@@ -1,24 +1,19 @@
 # ProjectProgress
 
-更新于 2026-09-13T01:18:13+08:00 · 记录者 Codex
+更新于 2026-09-13T01:50:02+08:00 · 记录者 Codex
 
-## 当前状态：Innovation Atlas 全量主张复核完成，等待本轮发布回执
+## 当前状态：Innovation Atlas 全量主张复核已上线
 
-用户要求“未核实的是为什么，请想办法全量核实”。已按现有195对象、160关系、172原证据（168去重URL）逐项复核；不指全部游戏配对。后续直接推进授权持续有效，没有新增付费服务。
+- runtime `dfe63a33a9b971b1efa2518275b69eb7c6ffef40` 经 [Pages run34708564937](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34708564937) 成功部署。云端219单测、159 Chromium通过（4条件跳过），157页。上一轮因README旧计数失败、没有部署；已修复并由此成功run收口。
+- 已逐项复核现有195对象、160关系与172原证据（168原URL），补26材料，现为195/160/198。42对象、56关系补证或勘误；95关系直接来源支持、65历史综合。复核完成不等于所有历史影响都可证实。
+- 补正VF→Tekken、Portal→Monument Valley、TF→TF2、VF2→VF4、MUD经AberMUD到Diku及Ultima→DQ的引用与范围；保留Magic/Dominion作者明确的反例。19条编辑比较撤去因果箭头，且观察关系徽标与其方向一致。
+- 修正MazeWar1973/74、BrownBox1967–68、队伍RPG1981Wizardry、DuneII揭图与HalfLife叙事。GDC摘要/元数据不冒充完整演讲；版本、早期体验、更新日期与最早发明分开。
+- 5组直接影响仍证据不足，保留已核对机制的无向比较；4原来源入口无法直接读取，但相应主张已有可读替代论证，限制逐项保留，不写成“没有影响”。
+- 本地图谱检查合并76通过/20设备条件跳过，项目说明另2设备通过。CUA本地390px核验与线上回读确认；临时视口已复原。
+- live总览与精确网络各195对象、精确证据索引198；新来源/关系ID、观察关联标签和README198均生效。线上从1981队伍观察跳到Wizardry成功，原版与重制边界仍可读。
+- 逐项核查：docs/research/2026-09-13-atlas-full-verification.md / .json；发布回执：evidence/2026-0913-atlas-full-verification-publication.json。原始请求与过程：sessions/2026-0913-atlas-full-verification.md。
 
-- 补26项证据，目录195/160/198；95条关系直接来源支持、65条历史综合。全量复核不等于全部因果都已证明。
-- 补正VF→Tekken、Portal→Monument Valley、TF→TF2、VF2→VF4、MUD经AberMUD到Diku及Ultima→DQ；Magic/Dominion保留作者明确的反例边界。
-- 19条观察间比较撤去因果箭头。修正MazeWar1973/74、BrownBox1967–68、队伍RPG1981Wizardry、DuneII揭图与HalfLife叙事；GDC只读取摘要/元数据的范围明示。
-- 原来源144支持、9补证、5替代入口、4不可读取但已有替代论证；其他为摘要、概念、索引原文或更正范围，精确逐条状态见研究JSON。五组比较仍未证实直接影响，报告列清已查内容，不写成“没有影响”。
-- 本地Astro检查零错误/警告，219单测，157页构建；地图浏览器验收合并76通过/20设备条件跳过。新增测试首次因对象与关系各有同一链接而选择器不唯一，修正测试后桌面/手机均通过，非产品故障。
-- CUA本地目视195对象、Tekken创作者来源、实际箭头和上下文详情；JSON回执校验与当前三份catalog hash一致。
-- 审计：docs/research/2026-09-13-atlas-full-verification.md / .json；公开说明：docs/devlog/2026-09-13-atlas-full-verification.md。
-
-- 2026-09-13T01:33:05+08:00：首轮云端run34707876487因README仍写172而失败（158浏览器通过/4跳过/1失败），未部署；已同步公开文档198并修正手机目视发现的比较徽标，4项定向复验通过，等待新run。
-
-## 上次已发布基线
-
-runtime `1b41f41328d4712649805f6a9c9d4c7f4857e8a6`，Pages run34703681445；217单测、158 Chromium/4跳过、156页、195/160/172。本轮只有收到新Pages成功回执并检查live后才更新为已上线。
+范围为当前目录全部主张，不是穷举全部游戏、地区或潜在配对。NotebookLM资源生产及其他未提交历史记录与此独立；本次只提交Atlas相关改动。后续直接推进授权持续有效，没有新增付费服务。
 
 ## 资源生产工作段（保留原状态，独立于发布）
 

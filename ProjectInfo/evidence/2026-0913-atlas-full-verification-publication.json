@@ -1,0 +1,68 @@
+{
+  "runtime": "dfe63a33a9b971b1efa2518275b69eb7c6ffef40",
+  "runId": 34708564937,
+  "checkedAt": "2026-09-13T01:46:49.681406+08:00",
+  "pages": [
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/atlas/?v=dfe63a3",
+      "status": 200,
+      "objects": 195,
+      "newContentMarkers": {
+        "ishii-vf-tekken-design": true,
+        "vaccarino-dominion-origin": true,
+        "rpg-party-identity-to-wizardry": true,
+        "horii-ultima-wizardry-interview": true
+      }
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/atlas/network/?v=dfe63a3",
+      "status": 200,
+      "objects": 195,
+      "newContentMarkers": {
+        "ishii-vf-tekken-design": true,
+        "vaccarino-dominion-origin": true,
+        "rpg-party-identity-to-wizardry": true,
+        "horii-ultima-wizardry-interview": true
+      },
+      "evidenceRows": 198
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/devlog/2026-09-13-atlas-full-verification/?v=dfe63a3",
+      "status": 200
+    },
+    {
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/project/readme/?v=dfe63a3",
+      "status": 200
+    }
+  ],
+  "recordedAt": "2026-09-13T01:50:02+08:00",
+  "workflow": {
+    "url": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34708564937",
+    "conclusion": "success",
+    "unitTests": 219,
+    "chromiumPassed": 159,
+    "conditionalSkips": 4,
+    "builtPages": 157
+  },
+  "localAtlasChecks": {
+    "passed": 76,
+    "conditionalSkips": 20,
+    "additionalReadmeChecks": 2
+  },
+  "liveBrowser": {
+    "objects": 195,
+    "selected": "rpg-party-and-quest-identity",
+    "correctedYear": 1981,
+    "comparisonBadge": "观察关联",
+    "followedCarrierTo": "wizardry",
+    "result": "1981 Wizardry visible with original/remake distinction",
+    "viewport": "temporary 390px override reset before final live check"
+  },
+  "previousRun": {
+    "id": 34707876487,
+    "conclusion": "failure",
+    "cause": "README retained old source count",
+    "deployed": false,
+    "resolvedBy": "dfe63a33a9b971b1efa2518275b69eb7c6ffef40"
+  }
+}

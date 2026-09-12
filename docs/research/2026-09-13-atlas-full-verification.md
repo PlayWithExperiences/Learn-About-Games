@@ -45,3 +45,5 @@
 2026-09-13T01:18:13+08:00：本地Astro检查零错误/警告，219单测、157页；地图76通过/20设备条件跳过。逐项回执与当前catalog hash一致。等待云端及live发布验收。
 
 2026-09-13T01:33:05+08:00：首轮云端158浏览器检查通过/4跳过，README仍写172导致1项失败，未部署。已同步README/ROADMAP198。手机目视发现比较仍挂“机制演变”徽标，先以两设备失败断言复现，改为“观察关联”后通过；连同项目说明共4项定向复验通过。待新发布回执。
+
+2026-09-13T01:50:02+08:00：最终runtime `dfe63a33a9b971b1efa2518275b69eb7c6ffef40` 经 [run34708564937](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34708564937) 成功上线。219单测、159 Chromium通过/4跳过、157页；live四页200，两图各195对象、证据索引198、新来源与新关系ID生效。Cua线上确认1981队伍观察、“观察关联”标签及跳到Wizardry。完整发布回执：ProjectInfo/evidence/2026-0913-atlas-full-verification-publication.json。

@@ -11708,7 +11708,7 @@
   },
   "reviewCompletedAt": "2026-09-13T01:10:01+08:00",
   "reviewStatus": "all-existing-records-reviewed-with-explicit-boundaries",
-  "publicationStatus": "not-yet-published",
+  "publicationStatus": "published",
   "currentScope": {
     "objects": 195,
     "relations": 160,
@@ -12420,7 +12420,17 @@
       "initialFailures": "two device instances of a new test had ambiguous duplicate source-link locator; fixed and rerun, no application change"
     },
     "visual": "CUA local overview: 195 objects, Tekken source and directed links, context readable",
-    "publication": "pending",
+    "publication": {
+      "runtime": "dfe63a33a9b971b1efa2518275b69eb7c6ffef40",
+      "runId": 34708564937,
+      "url": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34708564937",
+      "result": "success",
+      "unitTests": 219,
+      "chromiumPassed": 159,
+      "conditionalSkips": 4,
+      "pages": 157,
+      "liveReceipt": "ProjectInfo/evidence/2026-0913-atlas-full-verification-publication.json"
+    },
     "firstCloudRun": {
       "id": 34707876487,
       "head": "883323f6b7b2cdcabf0437d3aeb463c2f6fd85f2",
