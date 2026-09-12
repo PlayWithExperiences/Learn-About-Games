@@ -30,20 +30,31 @@ describe('content targets', () => {
     )).toBe(true);
   });
 
-  it('keeps at least three complete, evidenced Atlas routes', () => {
+  it('keeps source-linked reading routes without inventing complete causal chains', () => {
     const audits = auditAtlasRoutes(
       typedAtlasNodes,
       typedAtlasRelations,
       atlasEvidence.map(({ id }) => id),
       routeThemeIds,
     );
-    const completeRouteIds = audits.filter(({ complete }) => complete).map(({ themeId }) => themeId);
-
-    expect(completeRouteIds.length).toBeGreaterThanOrEqual(3);
-    expect(completeRouteIds).toEqual(expect.arrayContaining([
-      'first-person-shooter-lineage',
-      'role-playing-lineage',
-      'real-time-strategy-lineage',
-    ]));
+    // The old directed-chain audit must not count editorial comparisons as causes.
+    for (const themeId of ['first-person-shooter-lineage', 'real-time-strategy-lineage']) {
+      expect(audits.find(audit => audit.themeId === themeId)?.complete).toBe(false);
+    }
+    const evidenceIds = new Set(atlasEvidence.map(({ id }) => id));
+    for (const themeId of routeThemeIds) {
+      const events = typedAtlasNodes.filter(node => node.themeIds?.includes(themeId));
+      expect(events.length, themeId).toBeGreaterThanOrEqual(3);
+      for (const event of events) {
+        expect(event.mechanism?.['zh-CN']?.trim(), event.id).toBeTruthy();
+        expect(event.evidenceIds.length, event.id).toBeGreaterThan(0);
+        expect(event.evidenceIds.every(id => evidenceIds.has(id)), event.id).toBe(true);
+        expect(typedAtlasRelations.some(relation =>
+          relation.relationRole === 'carrier' && relation.fromId === event.id &&
+          typedAtlasNodes.some(node => node.id === relation.toId &&
+            (node.kind === 'game' || node.kind === 'tabletop-game')),
+        ), event.id).toBe(true);
+      }
+    }
   });
 });

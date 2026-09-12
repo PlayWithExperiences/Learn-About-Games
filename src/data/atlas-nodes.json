@@ -3,11 +3,11 @@
     "id": "rogue",
     "kind": "game",
     "name": { "zh-CN": "Rogue", "en": "Rogue" },
-    "summary": { "zh-CN": "以程序生成地城与单局死亡为主题起点之一；这里不把它写成绝对第一款。" },
+    "summary": { "zh-CN": "1980年前后开始的Rogue传统，把随机地城与单局角色风险结合；存档规则据后续BSD作者指南，不把所有原型版本视为同一套功能。" },
     "startYear": 1980,
     "lane": 2,
     "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
-    "evidenceIds": ["wichman-rogue-history"]
+    "evidenceIds": ["wichman-rogue-history", "rogue-original-guide"]
   },
   {
     "id": "procedural-run-structure",
@@ -20,7 +20,7 @@
     "eventRole": "definition",
     "themeIds": ["roguelike"],
     "mechanism": { "zh-CN": "把程序生成、单局失败与重新开始组织成可重复的运行结构。" },
-    "evidenceIds": ["wichman-rogue-history"]
+    "evidenceIds": ["wichman-rogue-history", "rogue-original-guide"]
   },
   {
     "id": "hack",
@@ -36,7 +36,7 @@
     "id": "moria",
     "kind": "game",
     "name": { "zh-CN": "Moria", "en": "Moria" },
-    "summary": { "zh-CN": "作者回顾称其直接受 Rogue 启发，早期版本与 Rogue 很相似。" },
+    "summary": { "zh-CN": "以1983年Pascal Moria1.0为观察版本；作者此前在1981年前后试做过BASIC原型，明确受到Rogue启发。" },
     "startYear": 1983,
     "lane": 4,
     "tags": ["roguelike-lens", "run-based-structure", "procedural-generation", "permadeath"],
@@ -50,7 +50,7 @@
     "startYear": 1986,
     "lane": 2,
     "tags": ["metroidvania-lens", "metroid-lineage", "ability-gated-exploration", "map-exploration", "platform-adventure"],
-    "evidenceIds": ["nintendo-metroid-dread-report-vol-4"]
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4", "metroid-dread-report3"]
   },
   {
     "id": "zelda-ii-adventure-of-link",
@@ -80,7 +80,7 @@
     "startYear": 1987,
     "lane": 5,
     "tags": ["metroidvania-lens", "action-rpg", "platform-adventure"],
-    "evidenceIds": ["nintendo-faxanadu", "mobygames-faxanadu-release"]
+    "evidenceIds": ["nintendo-faxanadu", "nintendo-faxanadu-jp"]
   },
   {
     "id": "nethack",
@@ -110,7 +110,7 @@
     "startYear": 1991,
     "lane": 4,
     "tags": ["metroidvania-lens", "metroid-lineage", "story-continuity", "platform-adventure"],
-    "evidenceIds": ["nintendo-metroid-dread-report-vol-4"]
+    "evidenceIds": ["nintendo-metroid-dread-report-vol-4", "metroid-dread-report3"]
   },
   {
     "id": "zelda-a-link-to-the-past",
@@ -140,7 +140,7 @@
     "startYear": 1996,
     "lane": 3,
     "tags": ["roguelike-lens", "fusion", "real-time-action"],
-    "evidenceIds": ["rpgfan-brevik-interview"]
+    "evidenceIds": ["rpgfan-brevik-interview", "blizzard-diablo-original-date"]
   },
   {
     "id": "castlevania-symphony-of-the-night",
@@ -156,11 +156,11 @@
     "id": "castlevania-circle-of-the-moon",
     "kind": "game",
     "name": { "zh-CN": "Castlevania: Circle of the Moon", "en": "Castlevania: Circle of the Moon" },
-    "summary": { "zh-CN": "2001 年存档帖将 Metroidvania 一词用于这款作品；这证明一个用例，不证明发帖者创造了该词。" },
+    "summary": { "zh-CN": "据词源调查，2001年存档帖将Metroidvania用于这款作品；它证明用例而非词语首创。本次原帖读取限流，调查原文可查。" },
     "startYear": 2001,
     "lane": 2,
     "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "term-history", "map-exploration"],
-    "evidenceIds": ["konami-circle-of-the-moon-history", "metroidvania-2001-usenet"]
+    "evidenceIds": ["konami-circle-of-the-moon-history", "metroidvania-2001-usenet", "critical-hit-metroidvania-term-history"]
   },
   {
     "id": "metroidvania-term-category-formation",
@@ -181,7 +181,7 @@
     "startYear": 2004,
     "lane": 3,
     "tags": ["metroidvania-lens", "indie", "platform-adventure", "map-exploration"],
-    "evidenceIds": ["cave-story-amaya-interview", "gdc-cave-story"]
+    "evidenceIds": ["cave-story-amaya-interview", "gdc-cave-story", "gamedeveloper-metroidvania-allure"]
   },
   {
     "id": "indie-metroidvania-expansion",
@@ -202,7 +202,7 @@
     "startYear": 2008,
     "lane": 2,
     "tags": ["roguelike-lens", "cross-theme", "run-based-structure", "platform-adventure", "fusion"],
-    "evidenceIds": ["rps-spelunky-interview"]
+    "evidenceIds": ["rps-spelunky-interview", "spelunky-original-year"]
   },
   {
     "id": "shadow-complex",
@@ -242,7 +242,7 @@
     "startYear": 2017,
     "lane": 3,
     "tags": ["metroidvania-lens", "indie", "platform-adventure", "map-exploration"],
-    "evidenceIds": ["team-cherry-nintendo-interview", "team-cherry-nintendolife-interview", "team-cherry-release"]
+    "evidenceIds": ["team-cherry-nintendo-interview", "team-cherry-nintendolife-interview", "team-cherry-release", "team-cherry-steam-release"]
   },
   {
     "id": "dead-cells",
@@ -262,7 +262,7 @@
     "startYear": 2019,
     "lane": 4,
     "tags": ["metroidvania-lens", "castlevania-exploration-lineage", "revival-context", "rpg-progression", "self-description"],
-    "evidenceIds": ["bloodstained-kickstarter", "igarashi-bloodstained-interview", "bloodstained-launch-trailer"]
+    "evidenceIds": ["igarashi-bloodstained-interview", "505-bloodstained-release"]
   },
   {
     "id": "hades",
@@ -275,14 +275,14 @@
     "evidenceIds": ["gamedeveloper-kasavin-interview", "supergiant-hades-faq"]
   },
   { "id": "tennis-for-two", "kind": "experimental-apparatus", "name": { "zh-CN": "Tennis for Two", "en": "Tennis for Two" }, "summary": { "zh-CN": "1958 年 Brookhaven 为访客日制作的示波器互动装置；这里不建立它到 Pong 的因果边。" }, "startYear": 1958, "lane": 0, "tags": ["early-electronic-games-lens"], "evidenceIds": ["bnl-tennis-for-two"] },
-  { "id": "spacewar", "kind": "experimental-program", "name": { "zh-CN": "Spacewar!", "en": "Spacewar!" }, "summary": { "zh-CN": "1962 年 MIT PDP-1 程序，后来被分别改作投币系统。" }, "startYear": 1962, "lane": 1, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-spacewar"] },
-  { "id": "brown-box", "kind": "system-prototype", "name": { "zh-CN": "Brown Box / TV Game Unit #7", "en": "Brown Box / TV Game Unit #7" }, "summary": { "zh-CN": "Ralph Baer 团队的电视游戏系统原型，是 Magnavox Odyssey 产品链的一部分。" }, "startYear": 1968, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-brown-box"] },
+  { "id": "spacewar", "kind": "experimental-program", "name": {"zh-CN": "Spacewar!", "en": "Spacewar!"}, "summary": {"zh-CN": "1962 年 MIT PDP-1 程序，后来被分别改作投币系统。"}, "startYear": 1962, "lane": 1, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-spacewar", "stanford-galaxy-game"] },
+  { "id": "brown-box", "kind": "system-prototype", "name": {"zh-CN": "Brown Box / TV Game Unit #7", "en": "Brown Box / TV Game Unit #7"}, "summary": {"zh-CN": "Smithsonian将原型制作标为1967–1968；Ralph Baer团队的电视游戏系统后来授权成为Magnavox Odyssey。"}, "startYear": 1967, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-brown-box"], "endYear": 1968 },
   { "id": "galaxy-game", "kind": "commercial-hardware", "name": { "zh-CN": "Galaxy Game", "en": "Galaxy Game" }, "summary": { "zh-CN": "1971 年在 Stanford 运行的投币式 Spacewar! 改作。" }, "startYear": 1971, "lane": 2, "tags": ["early-electronic-games-lens"], "evidenceIds": ["stanford-galaxy-game"] },
   { "id": "computer-space", "kind": "commercial-hardware", "name": { "zh-CN": "Computer Space", "en": "Computer Space" }, "summary": { "zh-CN": "1971 年面向商业街机环境的 Spacewar! 改作。" }, "startYear": 1971, "lane": 3, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-computer-space"] },
   { "id": "magnavox-odyssey", "kind": "commercial-hardware", "name": { "zh-CN": "Magnavox Odyssey", "en": "Magnavox Odyssey" }, "summary": { "zh-CN": "1972 年商业化的家庭电视游戏硬件，源自 Baer 团队原型链。" }, "startYear": 1972, "lane": 4, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-odyssey"] },
   { "id": "odyssey-table-tennis", "kind": "game", "name": { "zh-CN": "Odyssey Table Tennis", "en": "Odyssey Table Tennis" }, "summary": { "zh-CN": "Magnavox Odyssey 的桌上网球游戏；Alcorn 口述史把其演示置于 Pong 项目之前。" }, "startYear": 1972, "lane": 5, "tags": ["early-electronic-games-lens"], "evidenceIds": ["smithsonian-odyssey", "alcorn-oral-history"] },
   { "id": "pong", "kind": "game", "name": { "zh-CN": "Pong", "en": "Pong" }, "summary": { "zh-CN": "1972 年由 Al Alcorn 制作的投币式网球游戏原型；本图不称它为第一款电子游戏。" }, "startYear": 1972, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-pong-prototype", "alcorn-oral-history"] },
-  { "id": "home-pong", "kind": "commercial-hardware", "name": { "zh-CN": "Home Pong", "en": "Home Pong" }, "summary": { "zh-CN": "1975 年面向家庭市场的 Pong 专用硬件版本。" }, "startYear": 1975, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-home-pong"] },
+  { "id": "home-pong", "kind": "commercial-hardware", "name": {"zh-CN": "Home Pong", "en": "Home Pong"}, "summary": {"zh-CN": "1975 年面向家庭市场的 Pong 专用硬件版本。"}, "startYear": 1975, "lane": 6, "tags": ["early-electronic-games-lens"], "evidenceIds": ["chm-home-pong", "baer-home-pong-year"] },
   {
     "id": "space-panic",
     "kind": "game",
@@ -406,7 +406,7 @@
   {
     "id": "maze-war", "kind": "game",
     "name": { "zh-CN": "Maze War", "en": "Maze War" },
-    "summary": { "zh-CN": "1973 年的第一人称三维迷宫与网络游玩实验；作为早期语境节点，不据年代推断它直接影响后来的 FPS。" },
+    "summary": { "zh-CN": "约1973年开始的第一人称三维迷宫实验；ACMI把射击与联网扩展记在1974年。此节点保留早期程序起点，不把后续功能倒填为首版。" },
     "startYear": 1973, "lane": 7,
     "tags": ["first-person-shooter-lens"], "evidenceIds": ["acmi-maze-war"]
   },
@@ -420,21 +420,21 @@
   {
     "id": "wolfenstein-3d", "kind": "game",
     "name": { "zh-CN": "Wolfenstein 3D", "en": "Wolfenstein 3D" },
-    "summary": { "zh-CN": "John Romero 的 GDC 回顾将其置于 Catacomb 3-D 之后的七个月开发过程。" },
+    "summary": { "zh-CN": "John Romero 的 GDC 会议摘要将其置于 Catacomb 3-D 之后的七个月开发过程。" },
     "startYear": 1992, "lane": 8,
     "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-wolfenstein-postmortem"]
   },
   {
     "id": "doom", "kind": "game",
     "name": { "zh-CN": "DOOM", "en": "DOOM" },
-    "summary": { "zh-CN": "id Software 在 Wolfenstein 3D 经验之后重新构建引擎与设计目标的作品。" },
+    "summary": { "zh-CN": "1993年id Software作品，以台阶与平台组织高差空间，并通过WAD分离游戏数据支持内容改造；不把这些特征统称为绝对首创。" },
     "startYear": 1993, "lane": 3,
-    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-doom-postmortem"]
+    "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-doom-postmortem", "bethesda-doom-verticality", "bethesda-doom-modding", "bethesda-doom-deathmatch"]
   },
   {
     "id": "quake", "kind": "game",
     "name": { "zh-CN": "Quake", "en": "Quake" },
-    "summary": { "zh-CN": "John Romero 的 GDC 回顾把 Quake 放在 DOOM 与 DOOM II 后的 id Software 开发历程中。" },
+    "summary": { "zh-CN": "John Romero 的 GDC 会议摘要把 Quake 放在 DOOM 与 DOOM II 后的 id Software 开发历程中。" },
     "startYear": 1996, "lane": 5,
     "tags": ["first-person-shooter-lens"], "evidenceIds": ["gdc-quake-postmortem"]
   },
@@ -457,14 +457,14 @@
     "name": { "zh-CN": "Warcraft: Orcs & Humans", "en": "Warcraft: Orcs & Humans" },
     "summary": { "zh-CN": "Patrick Wyatt 的开发回顾明确记录 Warcraft 原型受到 Dune II 启发。" },
     "startYear": 1994, "lane": 4,
-    "tags": ["real-time-strategy-lens"], "evidenceIds": ["patrick-wyatt-making-warcraft"]
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["patrick-wyatt-making-warcraft", "blizzard-warcraft-original-date"]
   },
   {
     "id": "warcraft-ii", "kind": "game",
     "name": { "zh-CN": "Warcraft II: Tides of Darkness", "en": "Warcraft II: Tides of Darkness" },
     "summary": { "zh-CN": "Blizzard 在 StarCraft 回顾中将 Warcraft II 列为此前的 RTS 开发基础与早期引擎来源。" },
     "startYear": 1995, "lane": 6,
-    "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20"]
+    "tags": ["real-time-strategy-lens"], "evidenceIds": ["blizzard-starcraft-20", "blizzard-warcraft2-original-date"]
   },
   {
     "id": "starcraft", "kind": "game",
@@ -503,27 +503,27 @@
     "id": "fps-vertical-space-combat",
     "kind": "innovation",
     "name": { "zh-CN": "垂直空间与武器反馈", "en": "Vertical space and weapon feedback" },
-    "summary": { "zh-CN": "把高度差、武器反馈与更复杂的空间压迫组合成第一人称射击的后续设计事件；不把单一作品写成绝对起点。" },
+    "summary": { "zh-CN": "以DOOM1993的台阶、平台和不同高度敌人为观察实例；它仍是具有高度限制的2.5D空间，不是完整任意三维几何。" },
     "startYear": 1993,
     "lane": 1,
     "tags": ["innovation-event", "first-person-shooter-lens"],
     "eventRole": "mechanism",
     "themeIds": ["first-person-shooter-lineage"],
-    "mechanism": { "zh-CN": "以高度差、速度与武器反馈扩展第一人称空间的可读性和压迫感。" },
-    "evidenceIds": ["gdc-doom-postmortem"]
+    "mechanism": { "zh-CN": "通过台阶、平台与高差敌人改变射击空间的组织。" },
+    "evidenceIds": ["gdc-doom-postmortem", "bethesda-doom-verticality"]
   },
   {
     "id": "fps-networked-combat-space",
     "kind": "innovation",
-    "name": { "zh-CN": "网络化战斗空间与沉浸叙事", "en": "Networked combat space and situated narrative" },
-    "summary": { "zh-CN": "记录第一人称射击从纯竞技空间向网络化、可探索且承载叙事的场景转译；关系只表达有来源支持的响应。" },
+    "name": { "zh-CN": "连续场景中的情境叙事", "en": "Situated narrative across connected scenes" },
+    "summary": { "zh-CN": "以Half-Life1998为实例，考察关卡、敌人与叙事如何组成连贯体验；Quake引擎来源不等于叙事来自联网对战。" },
     "startYear": 1998,
     "lane": 2,
     "tags": ["innovation-event", "first-person-shooter-lens"],
     "eventRole": "transformation",
     "themeIds": ["first-person-shooter-lineage"],
-    "mechanism": { "zh-CN": "将网络化对战、可探索场景与情境叙事编织到同一第一人称空间中。" },
-    "evidenceIds": ["gdc-quake-postmortem", "valve-cabal-half-life"]
+    "mechanism": { "zh-CN": "把关卡与局部事件协调成连贯的第一人称体验。" },
+    "evidenceIds": ["valve-cabal-half-life"]
   },
   {
     "id": "rpg-character-progression",
@@ -549,7 +549,7 @@
     "eventRole": "transformation",
     "themeIds": ["metroidvania"],
     "mechanism": { "zh-CN": "让玩家在大尺度空间中自行决定路线、顺序与目标，并以系统交互维持探索动力。" },
-    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes", "nintendo-botw-explorers-guide", "nintendo-botw-freedom"]
   },
   {
     "id": "ocarina-of-time",
@@ -559,7 +559,7 @@
     "startYear": 1998,
     "lane": 9,
     "tags": ["zelda-lineage", "action-adventure", "innovation-event"],
-    "evidenceIds": ["nintendo-ocarina-z-targeting"]
+    "evidenceIds": ["nintendo-ocarina-z-targeting", "nintendo-zelda-history"]
   },
   {
     "id": "breath-of-the-wild",
@@ -569,7 +569,7 @@
     "startYear": 2017,
     "lane": 8,
     "tags": ["zelda-lineage", "nonlinear-world", "innovation-event"],
-    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+    "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes", "nintendo-botw-explorers-guide", "nintendo-zelda-history"]
   },
   {
     "id": "rts-resource-and-base-production",
@@ -649,15 +649,16 @@
     "zh-CN": "用阵营差异制造选择、反制与长期学习，而不是只换一套美术主题。"
   },
   "evidenceIds": [
-    "blizzard-starcraft-faction-design"
+    "blizzard-starcraft-faction-design",
+    "starcraft-race-differences"
   ]
 },
 {
   "id": "fps-early-networked-space",
   "kind": "innovation",
   "name": { "zh-CN": "第一人称空间与网络视角", "en": "First-person networked space" },
-  "summary": { "zh-CN": "把可共享的第一人称空间与对手位置作为一种可持续扩展的设计问题。" },
-  "startYear": 1973,
+  "summary": { "zh-CN": "以Maze War在1974年的射击与联网扩展为观察实例，讨论共享第一人称空间；约1973年的初期迷宫程序另有版本边界。" },
+  "startYear": 1974,
   "lane": 0,
   "tags": ["innovation-event", "first-person-shooter-lens"],
   "eventRole": "definition",
@@ -702,20 +703,20 @@
   "eventRole": "diffusion",
   "themeIds": ["first-person-shooter-lineage"],
   "mechanism": { "zh-CN": "用网络对战、可改造内容与可复制的工具链把作品变成平台。" },
-  "evidenceIds": ["gdc-doom-postmortem"]
+  "evidenceIds": ["gdc-doom-postmortem", "bethesda-doom-modding", "bethesda-doom-deathmatch"]
 },
 {
   "id": "rpg-party-and-quest-identity",
   "kind": "innovation",
   "name": { "zh-CN": "队伍身份与任务结构", "en": "Party identity and quest structure" },
-  "summary": { "zh-CN": "将角色身份、队伍分工与任务推进组合成可持续的角色扮演体验。" },
-  "startYear": 1979,
+  "summary": { "zh-CN": "以1981年Wizardry的自建冒险队伍和地城目标为实例，观察角色分工与任务组织；不把1979或Diablo当作队伍设计的证据。" },
+  "startYear": 1981,
   "lane": 2,
   "tags": ["innovation-event", "role-playing-lineage", "rpg-progression"],
   "eventRole": "mechanism",
   "themeIds": ["role-playing-lineage"],
-  "mechanism": { "zh-CN": "以角色身份、队伍互补与任务选择承载长期成长。" },
-  "evidenceIds": ["gamedeveloper-dd-rpg-history"]
+  "mechanism": { "zh-CN": "组建互补的冒险队伍，协同探索地城。" },
+  "evidenceIds": ["batch-wizardry"]
 },
 {
   "id": "rpg-procedural-character-risk",
@@ -728,7 +729,7 @@
   "eventRole": "transformation",
   "themeIds": ["role-playing-lineage", "roguelike"],
   "mechanism": { "zh-CN": "通过程序生成与永久死亡把角色成长转化为每局都不同的风险。" },
-  "evidenceIds": ["nethack-license-history", "umoria-history"]
+  "evidenceIds": ["nethack-license-history", "umoria-history", "rogue-original-guide"]
 },
 {
   "id": "rpg-real-time-action-progression",
@@ -759,15 +760,15 @@
 {
   "id": "rts-fog-of-war-map-control",
   "kind": "innovation",
-  "name": { "zh-CN": "战争迷雾与地图控制", "en": "Fog of war and map control" },
-  "summary": { "zh-CN": "把信息不完整、侦察与空间控制变成实时战略的核心决策层。" },
+  "name": { "zh-CN": "侦察与未知地图", "en": "Scouting and unexplored terrain" },
+  "summary": { "zh-CN": "以Dune II1992的单位探索和Outpost雷达为实例，观察发现地形与资源的决策；不混同于后来动态再遮蔽的战争迷雾。" },
   "startYear": 1992,
   "lane": 6,
   "tags": ["innovation-event", "real-time-strategy-lens"],
   "eventRole": "mechanism",
   "themeIds": ["real-time-strategy-lineage"],
-  "mechanism": { "zh-CN": "用可见范围、侦察成本与地图位置制造持续的信息决策。" },
-  "evidenceIds": ["acmi-dune-ii", "acmi-dune-ii-rts-mechanics"]
+  "mechanism": { "zh-CN": "单位探索揭开地形，雷达提供更大范围的信息。" },
+  "evidenceIds": ["acmi-dune-ii", "acmi-dune-ii-rts-mechanics", "dune2-manual-exploration"]
 },
 {
   "id": "rts-worker-economy-feedback",
@@ -785,7 +786,7 @@
 {
   "id": "rts-global-faction-counterplay",
   "kind": "innovation",
-  "name": { "zh-CN": "全球阵营反制", "en": "Global faction counterplay" },
+  "name": { "zh-CN": "三种阵营的对抗取舍", "en": "Trade-offs across three factions" },
   "summary": { "zh-CN": "把多个阵营的能力差异、限制与反制关系提升为长期学习结构。" },
   "startYear": 1998,
   "lane": 8,
@@ -793,33 +794,33 @@
   "eventRole": "transformation",
   "themeIds": ["real-time-strategy-lineage"],
   "mechanism": { "zh-CN": "用阵营差异与可学习的反制关系扩展实时战略的决策深度。" },
-  "evidenceIds": ["blizzard-starcraft-20", "blizzard-starcraft-faction-design"]
+  "evidenceIds": ["blizzard-starcraft-20", "blizzard-starcraft-faction-design", "starcraft-race-differences"]
 },
 {
   "id": "open-world-connected-expanse",
   "kind": "innovation",
-  "name": { "zh-CN": "连接空间与自由路线", "en": "Connected expanse and free routes" },
-  "summary": { "zh-CN": "把连续空间、目标顺序与玩家自定路线组织为开放世界的设计问题。" },
+  "name": { "zh-CN": "三维空间中的目标辨识", "en": "Identifying targets in a 3D world" },
+  "summary": { "zh-CN": "以Ocarina of Time的目标与镜头协同为实例，观察三维世界中的空间辨识；此来源不证明主线目标可以任意排序。" },
   "startYear": 1998,
   "lane": 9,
   "tags": ["innovation-event", "open-world-lineage", "zelda-lineage"],
   "eventRole": "definition",
   "themeIds": ["open-world-lineage"],
-  "mechanism": { "zh-CN": "通过连接区域、非线性目标与可回访空间让路线成为玩家选择。" },
+  "mechanism": { "zh-CN": "用目标锁定协调角色、镜头与对象之间的空间关系。" },
   "evidenceIds": ["nintendo-ocarina-z-targeting"]
 },
 {
   "id": "open-world-systemic-rules",
   "kind": "innovation",
   "name": { "zh-CN": "系统规则驱动的开放世界", "en": "Systemic rules in an open world" },
-  "summary": { "zh-CN": "让天气、物理、材料与敌人行为在同一世界规则中相互作用。" },
+  "summary": { "zh-CN": "符文对金属、动量和水面的作用，以及雨天对攀爬的影响，让环境规则参与解题；以Nintendo指南中的具体机制为依据。" },
   "startYear": 2017,
   "lane": 10,
   "tags": ["innovation-event", "open-world-lineage"],
   "eventRole": "mechanism",
   "themeIds": ["open-world-lineage"],
-  "mechanism": { "zh-CN": "以一致的系统规则支持多种解法，而不是为每个任务单独写一条脚本。" },
-  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+  "mechanism": { "zh-CN": "物体属性、符文与天气改变可行的行动。" },
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes", "nintendo-botw-explorers-guide", "nintendo-botw-freedom"]
 },
 {
   "id": "open-world-self-directed-goals",
@@ -832,7 +833,7 @@
   "eventRole": "transformation",
   "themeIds": ["open-world-lineage"],
   "mechanism": { "zh-CN": "让玩家在大尺度空间中自行决定先后顺序与行动目标。" },
-  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes", "nintendo-botw-explorers-guide", "nintendo-botw-freedom"]
 },
 {
   "id": "open-world-physics-and-climb",
@@ -845,7 +846,7 @@
   "eventRole": "transformation",
   "themeIds": ["open-world-lineage"],
   "mechanism": { "zh-CN": "用统一的物理与地形规则扩展玩家可到达的路径和解题方式。" },
-  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes"]
+  "evidenceIds": ["nintendo-breath-of-the-wild-behind-scenes", "nintendo-botw-explorers-guide"]
 },
   {
     "id": "mule",
@@ -1091,7 +1092,8 @@
       "role-playing-lineage"
     ],
     "evidenceIds": [
-      "batch-ultima"
+      "batch-ultima",
+      "horii-ultima-wizardry-interview"
     ]
   },
   {
@@ -1129,7 +1131,8 @@
       "role-playing-lineage"
     ],
     "evidenceIds": [
-      "batch-dragon-quest"
+      "batch-dragon-quest",
+      "horii-ultima-wizardry-interview"
     ]
   },
   {
@@ -1277,7 +1280,7 @@
     "startYear": 2016,
     "lane": 0,
     "summary": {
-      "zh-CN": "把采矿、运输和加工逐步自动化；2016为Steam入口，开发始于2012，1.0在2020。开发者明确提到BuildCraft启发；模组早期日期仍待核定。"
+      "zh-CN": "把采矿、运输和加工逐步自动化；2016为Steam入口，开发始于2012，1.0在2020。作者确认BuildCraft启发；模组首版2011已核，具体受影响子版本未指明。"
     },
     "tags": [
       "simulation-history"
@@ -1394,13 +1397,14 @@
     "startYear": 2017,
     "lane": 0,
     "summary": {
-      "zh-CN": "作为Epic在2017年明确引用的Battle Royale参考作品进入网络；本批未独立核定最早发行日，不把引用日期当作首创日期。"
+      "zh-CN": "2017年正式版作为本图的发行锚点；Epic同年明确把PUBG列为Fortnite Battle Royale参考之一，不据此宣称PUBG首创该规则。"
     },
     "tags": [
       "battle-royale-history"
     ],
     "evidenceIds": [
-      "batch-fortnite"
+      "batch-fortnite",
+      "pubg-official-release"
     ]
   },
   {
@@ -2166,10 +2170,11 @@
       "fighting-history"
     ],
     "summary": {
-      "zh-CN": "1994年街机起点，代表另一条三维格斗传统；没有把同年代或相似画面写成VF对它的直接影响。"
+      "zh-CN": "1994年街机起点；石井精一的访谈确认部分世界观、故事与角色创作方法承接Virtua Fighter，战斗系统仍需分别分析。"
     },
     "evidenceIds": [
-      "namco-tekken-history"
+      "namco-tekken-history",
+      "ishii-vf-tekken-design"
     ]
   },
   {

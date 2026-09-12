@@ -112,7 +112,7 @@ const relationLabels: Record<AtlasRelation['type'], string> = {
   fusion: '结构融合',
   revival: '复兴或重新流行',
   'parallel-origin': '平行或独立产生',
-  'structural-similarity': '结构相似，影响未知',
+  'structural-similarity': '机制比较',
   'prototype-to-product': '原型到产品',
   'commercialized-as': '商业化改作',
   'design-response': '设计回应',
@@ -199,7 +199,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
     </div>
     <div class="atlas-event-index__summary">
       <p class="atlas-event-index__status" data-atlas-event-index-status aria-live="polite">当前地图包含 {eventTimeline.events.length} 个创新事件节点。</p>
-      <p class="atlas-event-index__map-note">点击地图中的事件节点查看引入方式、演进关系与承载作品；这里的索引只用于快速定位。</p>
+      <p class="atlas-event-index__map-note">点击地图中的事件节点查看引入方式、观察间关系与承载作品；这里的索引只用于快速定位。</p>
     </div>
     <details class="atlas-event-index__navigator" data-atlas-event-navigator>
       <summary>打开事件节点索引 <span>{eventTimeline.events.length}</span></summary>
@@ -617,7 +617,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                     {node.mechanism && <div><dt>引入方式</dt><dd>{node.mechanism['zh-CN']}</dd></div>}
                   </dl>
                   <p>这个节点记录的是可讨论、可核查的设计事件；游戏是它在时间线上可观察的承载作品。</p>
-                  <h5>演进关系</h5>
+                  <h5>观察间关系</h5>
                   {relatedRelations.filter(({ relationRole }) => relationRole === 'evolution').length > 0 ? (
                     <ul data-atlas-event-evolution-links>
                       {relatedRelations
@@ -630,7 +630,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
                           </li>
                         ))}
                     </ul>
-                  ) : <p>当前事件尚未记录前后演进关系。</p>}
+                  ) : <p>当前事件尚未记录观察间关系。</p>}
                   <h5>承载作品</h5>
                   {carriersFor(node.id).length > 0 ? (
                     <ul>
@@ -1070,7 +1070,7 @@ const serializedNodeIndex = JSON.stringify(nodeIndex).replaceAll('<', '\\u003c')
           status.textContent = nextPerspective === 'category'
             ? `品类发展视角：显示 ${visibleCounts.nodeCount} 个品类/事件节点与 ${visibleCounts.relationCount} 条关系；作品在节点详情中作为承载证据。${lensNote}`
             : nextPerspective === 'events'
-              ? `创新事件视角：显示 ${visibleCounts.nodeCount} 个事件节点与 ${visibleCounts.relationCount} 条演进关系；承载作品在节点详情中展开。${lensNote}`
+              ? `创新事件视角：显示 ${visibleCounts.nodeCount} 个事件节点与 ${visibleCounts.relationCount} 条观察间关系；承载作品在节点详情中展开。${lensNote}`
               : `代表作品视角：显示 ${visibleCounts.nodeCount} 个作品/载体节点与 ${visibleCounts.relationCount} 条关系。${lensNote}`;
         }
       };

@@ -68,7 +68,7 @@ describe('approved expansion evidence boundaries', () => {
     expect(spire.tags).toContain('roguelike-lens');
     expect(trackFor(spire)).toBe('cards');
     expect(relations.find(r => r.id === 'landlord-to-balatro')).toMatchObject({type:'direct-influence',status:'confirmed',directionality:'directed'});
-    expect(relations.find(r => r.id === 'ultima-to-dragon-quest')).toMatchObject({directionality:'undirected'});
+    expect(relations.find(r => r.id === 'ultima-to-dragon-quest')).toMatchObject({type:'direct-influence',directionality:'directed',status:'credible'});
     expect(relations.find(r => r.id === 'ultima-online-and-minecraft')).toMatchObject({type:'structural-similarity',directionality:'undirected'});
     expect(relations.some(r => r.fromId === 'slay-the-spire' && r.toId === 'balatro')).toBe(false);
     expect(relations.some(r => r.fromId === 'minecraft' && r.toId === 'factorio')).toBe(false);
@@ -82,7 +82,7 @@ describe('mod and performance history boundaries', () => {
     expect(nodes.find(n => n.id === 'team-fortress-quake')?.summary['zh-CN']).toContain('尚无团队');
     expect(relations.find(r => r.id === 'minecraft-to-buildcraft')).toMatchObject({type:'derived-variant'});
     expect(relations.find(r => r.id === 'buildcraft-to-factorio')).toMatchObject({type:'direct-influence'});
-    expect(relations.find(r => r.id === 'ddr-and-guitar-hero')).toMatchObject({type:'structural-similarity',directionality:'undirected',status:'inferred'});
+    expect(relations.find(r => r.id === 'ddr-and-guitar-hero')).toMatchObject({type:'structural-similarity',directionality:'undirected',status:'credible'});
     expect(relations.find(r => r.id === 'allstars-to-league')).toMatchObject({type:'design-response'});
   });
 });
@@ -103,7 +103,7 @@ describe('mobile and contemporary release boundaries', () => {
     expect(nodes.find(n => n.id === 'slay-the-spire-2-ea')?.summary['zh-CN']).toContain('不是完整1.0');
     expect(nodes.find(n => n.id === 'hades-ii-v1')?.startYear).toBe(2025);
     expect(relations.find(r => r.id === 'ingress-to-pokemon-go')).toMatchObject({type:'direct-influence',status:'confirmed'});
-    expect(relations.find(r => r.id === 'factorio-and-dyson')).toMatchObject({directionality:'undirected',status:'inferred'});
+    expect(relations.find(r => r.id === 'factorio-and-dyson')).toMatchObject({directionality:'undirected',status:'credible'});
   });
 });
 
@@ -113,5 +113,23 @@ describe('tabletop and prototype identity', () => {
       expect(nodes.find(n => n.id === id)?.kind).toBe('tabletop-game');
     expect(nodes.find(n => n.id === 'mud-1978-prototype')?.kind).toBe('experimental-program');
     expect(relations.find(r => r.id === 'dominion-to-spire')).toMatchObject({type:'direct-influence',status:'confirmed'});
+  });
+});
+
+
+describe('full claim verification corrections', () => {
+  it('preserves source-confirmed influence and separates the Dominion counterexample', () => {
+    for (const id of ['vf-and-tekken', 'portal-and-monument-valley']) {
+      expect(relations.find(r => r.id === id)).toMatchObject({ type: 'direct-influence', status: 'confirmed', directionality: 'directed' });
+    }
+    expect(relations.find(r => r.id === 'magic-and-dominion')).toMatchObject({ type: 'structural-similarity', status: 'confirmed', directionality: 'undirected' });
+    expect(relations.find(r => r.id === 'magic-and-dominion')?.evidenceIds).toContain('vaccarino-dominion-origin');
+  });
+  it('does not turn editorial comparisons into causal arrows', () => {
+    for (const id of ['rpg-party-to-procedural-risk', 'fps-vertical-to-open-modding', 'open-world-systemic-to-self-directed']) {
+      expect(relations.find(r => r.id === id)).toMatchObject({ type: 'structural-similarity', directionality: 'undirected' });
+    }
+    expect(relations.find(r => r.id === 'rpg-party-identity-to-wizardry')?.toId).toBe('wizardry');
+    expect(relations.find(r => r.id === 'rpg-party-identity-to-diablo')).toBeUndefined();
   });
 });

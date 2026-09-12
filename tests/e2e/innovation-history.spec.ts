@@ -91,7 +91,7 @@ test("new museum anchors expose their bounded source without claiming influence"
   await page.goto("./atlas/#atlas-node-detail-minecraft");
   await expect(page.locator(inspector)).toContainText("早期公开版");
   await expect(page.locator(inspector)).toContainText(
-    "结构相似，影响未知",
+    "机制比较",
   );
   await expect(
     page.locator(inspector).getByRole("link", { name: /Graphics & Games/ }),
@@ -229,7 +229,7 @@ test('practice route reaches dated updates and spatial route preserves compariso
   await expect(page.locator(inspector)).toContainText('Data Logger');
   await page.goto('./atlas/#atlas-node-detail-outer-wilds');
   await expect(page.locator(inspector)).toContainText('设计回应');
-  await expect(page.locator(inspector)).toContainText('结构相似，影响未知');
+  await expect(page.locator(inspector)).toContainText('机制比较');
 });
 
 test('mobile route and recent cards preserve platform and early-access context', async ({ page }) => {
@@ -240,4 +240,17 @@ test('mobile route and recent cards preserve platform and early-access context',
   await expect(page.locator(inspector)).toContainText('澳大利亚');
   await page.goto('./atlas/#atlas-node-detail-slay-the-spire-2-ea');
   await expect(page.locator(inspector)).toContainText('不是完整1.0');
+});
+
+
+test('verified creator sources and the Dominion counterexample reach the reader', async ({ page }) => {
+  await page.goto('./atlas/#atlas-node-detail-tekken');
+  await expect(page.locator(inspector)).toContainText('石井精一');
+  await expect(page.locator(inspector).getByRole('link', { name: /第38部/ }).first()).toHaveAttribute('href', 'https://www.4gamer.net/games/999/G999905/20240705060/');
+  await page.goto('./atlas/#atlas-node-detail-dominion');
+  await expect(page.locator(inspector)).toContainText('Spirit Warriors II');
+  await expect(page.locator(inspector)).toContainText('机制比较');
+  await page.goto('./atlas/#atlas-node-detail-rpg-party-and-quest-identity');
+  await expect(page.locator(inspector)).toContainText('1981');
+  await expect(page.locator(inspector).locator('[data-history-jump="wizardry"]')).toBeVisible();
 });

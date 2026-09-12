@@ -357,7 +357,7 @@ describe('global Atlas graph contract', () => {
       expect(evidence.sourceKind, evidence.id).toBeTruthy();
       expect(evidence.institutionOrAuthor?.trim().length, evidence.id).toBeGreaterThan(0);
       expect(evidence.publicationDate?.trim().length, evidence.id).toBeGreaterThan(0);
-      expect(evidence.checkedAt, evidence.id).toBe('2026-08-11');
+      expect(evidence.checkedAt >= '2026-08-11', evidence.id).toBe(true);
       expect(evidence.stableId?.trim().length, evidence.id).toBeGreaterThan(0);
       expect(evidence.locator?.trim().length, evidence.id).toBeGreaterThan(0);
       expect(evidence.boundedClaim?.['zh-CN']?.trim().length, evidence.id).toBeGreaterThan(0);
@@ -383,7 +383,7 @@ describe('global Atlas graph contract', () => {
   it('preserves the original source title and language for every evidence item', () => {
     const originalLanguages = new Set(['en', 'ja', 'fr', 'es', 'zh-CN', 'zh-TW']);
 
-    expect(atlasEvidence).toHaveLength(172);
+    expect(atlasEvidence).toHaveLength(198);
     for (const evidence of atlasEvidence) {
       expect(evidence).toHaveProperty('sourceTitle');
       expect(evidence).toHaveProperty('originalLanguage');

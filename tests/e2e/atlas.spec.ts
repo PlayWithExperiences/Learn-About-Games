@@ -819,7 +819,7 @@ test('Atlas offers representative-work, event-history, and category-development 
   await perspectives.locator('[data-atlas-perspective="events"]').click();
   await expect(network).toHaveAttribute('data-atlas-perspective', 'events');
   await expect(network).toHaveAttribute('data-atlas-route-mode', 'events');
-  await expect(page.locator('[data-atlas-lens-status]')).toContainText(`创新事件视角：显示 ${ATLAS_EVENT_PRIMARY_NODE_COUNT} 个事件节点与 ${ATLAS_EVOLUTION_RELATION_COUNT} 条演进关系`);
+  await expect(page.locator('[data-atlas-lens-status]')).toContainText(`创新事件视角：显示 ${ATLAS_EVENT_PRIMARY_NODE_COUNT} 个事件节点与 ${ATLAS_EVOLUTION_RELATION_COUNT} 条观察间关系`);
   await expect(primary.locator('[data-atlas-node]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-node-kind="innovation"]:visible')).toHaveCount(ATLAS_EVENT_PRIMARY_NODE_COUNT);
   await expect(primary.locator('[data-atlas-node][data-atlas-game-node]:visible')).toHaveCount(0);
@@ -1320,7 +1320,7 @@ test('selected detail dialog preserves the network position and returns focus to
   await clickVisibleRelationSegment(page, 'super-metroid-and-sotn');
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('[data-atlas-dialog-title]')).toContainText('Super Metroid');
-  await expect(dialog.locator('[data-relation-detail-type]')).toContainText('结构相似');
+  await expect(dialog.locator('[data-relation-detail-type]')).toContainText('机制比较');
   await expect(dialog.locator('[data-relation-detail-status]')).toContainText('已直接支持');
   await expect(dialog.locator('[data-relation-detail-direction]')).toContainText('无向');
   await expect(dialog.locator('[data-relation-detail-summary]')).not.toBeEmpty();

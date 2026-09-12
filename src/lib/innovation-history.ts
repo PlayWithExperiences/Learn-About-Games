@@ -196,7 +196,7 @@ export const historyRelationLabels: Record<string, string> = {
   fusion: "结构融合",
   revival: "复兴",
   "parallel-origin": "平行产生",
-  "structural-similarity": "结构相似，影响未知",
+  "structural-similarity": "机制比较",
   "prototype-to-product": "原型到产品",
   "commercialized-as": "商业化改作",
   "design-response": "设计回应",

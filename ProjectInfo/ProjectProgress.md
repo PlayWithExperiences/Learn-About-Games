@@ -1,18 +1,22 @@
 # ProjectProgress
 
-更新于 2026-09-13T00:10:32+08:00 · 记录者 Codex
+更新于 2026-09-13T01:18:13+08:00 · 记录者 Codex
 
-## 当前状态：Innovation Atlas代表性主干补全已上线
+## 当前状态：Innovation Atlas 全量主张复核完成，等待本轮发布回执
 
-验收判断：Codex。按用户设立的“主要维度有可读、有证据的代表性发展路线”标准完成本轮补全；不以穷尽所有游戏或节点数本身作为完成标准。用户后续直接推进授权持续适用于本项目，无新增付费服务。
+用户要求“未核实的是为什么，请想办法全量核实”。已按现有195对象、160关系、172原证据（168去重URL）逐项复核；不指全部游戏配对。后续直接推进授权持续有效，没有新增付费服务。
 
-- runtime `1b41f41328d4712649805f6a9c9d4c7f4857e8a6` 经 [Pages run 34703681445](https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/34703681445) 成功部署；云端217单测、158 Chromium通过（4条件跳过），156页构建。
-- 目录195对象 / 160关系 / 172来源；13阅读区、7比较入口、15证据透镜。相对134基线新增61对象、54关系、59来源；旧数据值完整保留并与研究回执对齐。144电子游戏/版本、3桌面游戏、37创新观察、2类别及9实验/硬件对象分别表示。
-- BuildCraft、DDR、Guitar Hero、早期MUD与竞技模组、三维格斗/平台、赛车/体感、移动平台、中文作品、2025–2026版本及桌游前身都有明确语境。创新、作品和关系不混淆；具体版本、抢先体验和不确定影响继续明示。
-- 本地地图验收合并74通过/20设备条件跳过。线上总览与精确网络均HTTP200并各195对象；资源页200。CUA线上验证Dominion的桌游标记与跳到Slay the Spire；390px初始深链接选中节点完整处于视野和详情面板上方，保留“不是完整1.0”说明，之后已恢复默认视口。
-- 审计与复现：docs/research/2026-09-12-atlas-completion-audit.md；`node scripts/audit-atlas-coverage.mjs`；evidence/2026-0912-atlas-catalog-reconciliation.json；最终上线回执 evidence/2026-0913-atlas-completion-publication.json。
+- 补26项证据，目录195/160/198；95条关系直接来源支持、65条历史综合。全量复核不等于全部因果都已证明。
+- 补正VF→Tekken、Portal→Monument Valley、TF→TF2、VF2→VF4、MUD经AberMUD到Diku及Ultima→DQ；Magic/Dominion保留作者明确的反例边界。
+- 19条观察间比较撤去因果箭头。修正MazeWar1973/74、BrownBox1967–68、队伍RPG1981Wizardry、DuneII揭图与HalfLife叙事；GDC只读取摘要/元数据的范围明示。
+- 原来源144支持、9补证、5替代入口、4不可读取但已有替代论证；其他为摘要、概念、索引原文或更正范围，精确逐条状态见研究JSON。五组比较仍未证实直接影响，报告列清已查内容，不写成“没有影响”。
+- 本地Astro检查零错误/警告，219单测，157页构建；地图浏览器验收合并76通过/20设备条件跳过。新增测试首次因对象与关系各有同一链接而选择器不唯一，修正测试后桌面/手机均通过，非产品故障。
+- CUA本地目视195对象、Tekken创作者来源、实际箭头和上下文详情；JSON回执校验与当前三份catalog hash一致。
+- 审计：docs/research/2026-09-13-atlas-full-verification.md / .json；公开说明：docs/devlog/2026-09-13-atlas-full-verification.md。
 
-后续可继续扩展未收录的作品、地区与细分传统，不能将未研究项写成“已证明不存在”。这不是完整游戏史认证。NotebookLM生产与旧未提交工作独立保留，网站上线不代表资源生产完成。
+## 上次已发布基线
+
+runtime `1b41f41328d4712649805f6a9c9d4c7f4857e8a6`，Pages run34703681445；217单测、158 Chromium/4跳过、156页、195/160/172。本轮只有收到新Pages成功回执并检查live后才更新为已上线。
 
 ## 资源生产工作段（保留原状态，独立于发布）
 
