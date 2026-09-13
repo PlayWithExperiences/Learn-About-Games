@@ -113,3 +113,19 @@ node automation/browser/launch.cjs https://notebook.google.com/
 且「立即生成」按钮消失，只剩「稍后生成」。已在长期本 880ad454 复核，**同一账号下同样被节流 → 属账号级容量限制，换 notebook 无用**。
 演示文稿是三件必填产物之一，因此流水线在 **claim 之前**先跑 `nblm-deck-available.cjs`，不可用就不领取，
 避免把当天的 10 次 claim 浪费在做不完的材料上。
+
+## 2026-09-13 补记：来源卡片标题的**元数据占位窗口**（害了整整一批）
+
+新加进去的链接来源，NotebookLM **先拿原始 URL 当卡片标题**（`https://www.youtube.com/watch?v=…`），
+等 YouTube 元数据解析完才换成真实标题。`nblm-add-youtube.cjs` 从 `[class*=source-title]` 读到的
+就是当时那一刻的文本，所以：
+
+- 落在窗口内 → 读到 URL；落在窗口外 → 读到真实标题。同一条来源，两次读可以不一样。
+- 20:04–20:06 三条候选因此被 runner 的标题模糊匹配判成「导入的不是这个候选」，
+  **但三条来源其实都导入成功了**（两条的卡片在几分钟后已显示真实标题，第三条仍显示 URL）。
+  三条各消耗 1 次 claim，当天 10 次 claim 全部用尽。
+- **判据**：URL 形态的卡片不能当标题比对，要**从 URL 里取 video id 做精确匹配**——它比任何标题比对都更准。
+  已落在 `automation/run-notebooklm-item.py` 的 `source_identity_ok()`，并有
+  `tests/lib/notebooklm-source-identity.test.ts` 守住（走 `--identity-check` 调真身，不复制规则）。
+- 教训的通用形态：**「读到的东西不对」与「这件事没做成」是两回事**。读不到标题时不要改判业务结论，
+  要换一个能证明身份的判据再判。

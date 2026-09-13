@@ -17,6 +17,18 @@
 
 ## 资源生产工作段（保留原状态，独立于发布）
 
+## 2005 自动化：3 条「假失败」耗尽当日 claim（环境已恢复）
+
+决策：無涘（既有连续跑批授权） ｜ 记录：DSH agent
+
+- 2026-09-13T19:55–20:14+08:00：预检 ready_to_claim（2454 候选、在列 3、当日已 claim 7、剩余 3）。本轮 **attempted 3 / ready 0 / remote_delivered 0 / failed 3 / skipped 0**，**停止原因＝当日 10 次 claim 用尽**（`remaining_today: 0`）。
+- 环境较清晨恢复：06:54–07:40 的 gstatic fake-ip／404 故障不再复现，浏览器就绪 **available**（notebook `2ce16a4b` 正文 26,107 字、来源 checkbox 6、Studio 三件控件齐全、无登录墙），演示文稿闸门 **available**；两项都在 claim 前完成。
+- **三条失败是假失败**：来源卡片在元数据解析前先显示原始 URL，runner 拿 URL 与目录标题模糊匹配＝0 重叠，把**已成功导入**的来源判成错来源。复核来源面板：三条来源都在生产 notebook 中。**不是**网络、节流、配额或来源问题。
+- **已修**并加回归测试：`automation/run-notebooklm-item.py` 新增 `source_identity_ok()`（URL 卡片只认精确 video id）＋ claim 前只读来源查找；`tests/lib/notebooklm-source-identity.test.ts` 走 `--identity-check` 调真身，6 用例（含反向对照）通过。全量 **225 单测通过**（原 219）、`astro check` 0 错。
+- ledger **38 ready / 29 failed / 0 generating**（账目闭合，无孤儿 claim）。三条失败的来源已在生产 notebook，重跑只需生成＋导出，不再碰导入。未产出 ready／上传／交付；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- **下一步需你明确授权**：重跑这三条 failed（skill 规定 failed 重跑须显式授权），且须等北京时间自然日翻转 claim 上限。上一场遗留的 `youtube-gPV0qmyGs-o` 补演示文稿收尾同样未做。
+- 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T1955+0800-import-identity-fix/report.json`；摘要 `sessions/2026-0913-notebooklm-batch.md`「1955 自动化」；原始对话 `dialogues/2026-0913-notebooklm-automation.md`「1955 收集端跑批」。
+
 ## 0740 自动化：NotebookLM 页面不可用
 
 决策：無涘（既有自动化授权） ｜ 记录：Codex

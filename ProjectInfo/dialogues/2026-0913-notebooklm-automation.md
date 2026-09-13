@@ -27,3 +27,19 @@
 用户自动化请求（任务内容摘录，非完整聊天转录）：执行共享collect-resources-about-game skill；北京时间每日最多10次claim，串行、重试0；完整验证后逐条ready并立即单文件远端交付；报告preflight、尝试、ready、交付、失败、跳过、额度与停止原因；不得触发消费者。
 
 Codex实际结果：预检ready_to_claim，今日已用7、剩余3；页面正文为空且来源/Studio不可用；claim前停止。本轮attempted0、ready0、交付0、候选失败0、运行失败1、跳过3。完整机器回执：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T073456+0800-automation/report.json。
+
+## 1955 收集端跑批：3 条「假失败」，当日 claim 用尽
+
+更新于 2026-09-13T20:10:00+08:00 · 记录者 DSH agent
+
+用户请求（任务内容摘录，非完整聊天转录）：按共享 collect-resources-about-game skill 继续跑收集端批次；北京时间每日最多 10 次 distinct claim、串行 1、自动重试 0；每条完整验证后 ready 并立即单文件远端交付；报告 preflight／尝试／ready／交付／失败／跳过／额度／停止原因；不得触发消费端。
+
+DSH agent 实际结果：预检 ready_to_claim（2454 候选、在列 3、当日已 claim 7、剩余 3）。环境较清晨恢复——06:54–07:40 的 gstatic 故障不再复现，浏览器就绪检查 available、演示文稿闸门 available，两项都在 claim 前完成。随后 attempted 3 / ready 0 / 远端交付 0 / failed 3 / skipped 0，**停止原因＝当日 10 次 claim 用尽**（remaining_today 0）。
+
+三条失败都在 `import-source` 阶段，但经复核是**假失败**：NotebookLM 对新加链接来源先显示原始 URL 作卡片标题，元数据解析完才换成真实标题；`title_matches()` 用 URL 与目录标题模糊匹配得 0 重叠，于是把已成功导入的来源判成错来源。实际上三条的来源都已在生产 notebook 中。代价是当日 claim 全部用尽。
+
+已修 `automation/run-notebooklm-item.py`：新增 `source_identity_ok()`（URL 卡片只认精确 video id；真实标题仍模糊匹配；反向对照全部拒绝），并加 claim 前只读来源查找。9 用例全通过。
+
+未产出 ready／上传／交付；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。重跑这三条 failed 需用户明确授权，且受当日 claim 上限约束。
+
+机器回执：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T1955+0800-import-identity-fix/report.json

@@ -118,6 +118,19 @@ ledger 共 **26 条 failed**。以下是按失败阶段的分析，**分析不�
 - **根因＝本机网络**：`www.gstatic.com` / `ssl.gstatic.com` / `fonts.gstatic.com` 全部解析到 `198.18.x.x`（fake-ip 代理）并返回 **HTTP 404**，NotebookLM 实际 JS bundle 报 **HTTP/2 framing 错误**，前端因此无法挂载；同时 `api.github.com`、`raw.githubusercontent.com`、`notebook.google.com`、`accounts.google.com` 均正常。连续 4 次采样（06:54–06:56）稳定失败，不是瞬时抖动。**这是本项目外部环境问题，需要修复代理对 gstatic 的路由。**
 - 处置：item 3 按合同记 `failed`，阶段＝deck-export，原因写明上面的可核查现象；**两件已导出的产物保留在磁盘**，网络恢复后只需补演示文稿再用 `finish-notebooklm-item.py` 收尾（不必重做图像类产物，也不必重新生成演示文稿——卡片已在库）。ledger 回到 38 ready / 26 failed / 0 generating，无孤儿 claim。
 
+## 1955 自动化：3 条全部倒在「假失败」，当日 claim 用尽（2026-09-13 19:55–20:10 +0800）
+
+- 环境恢复：清晨 06:54–07:40 的 gstatic fake-ip／404 故障（NotebookLM JS bundle 挂载失败）本轮**不再复现**；`www.gstatic.com` 仍解析到 198.18.0.81，但页面正常渲染。浏览器就绪检查＝**available**（notebook `2ce16a4b` 正文 26,107 字、来源 checkbox 6、Studio 三件控件齐全、无登录墙）。演示文稿闸门＝**available**（`immediate generation offered`），均在 claim 前完成。
+- 预检 `ready_to_claim`（2454 候选、在列 3 条、当日已 claim 7、剩余 3）。本轮 attempted 3 / ready 0 / 远端交付 0 / failed 3 / skipped 0。
+- **三条全部倒在 `import-source`，但这是假失败**：`nblm-add-youtube.cjs` 从来源卡读到的标题是原始 URL（`https://www.youtube.com/watch?v=…`），而 `title_matches()` 拿 URL 与目录标题做 token 模糊匹配＝0 重叠，于是把**已经成功导入的来源**判成「导入的不是这个候选」。20:06 复核来源面板：三条的 YouTube 来源**都在 notebook 里**，其中两条卡片已解析出真实标题，第三条仍显示 URL 占位。
+- 机制：NotebookLM 对新加链接来源先以原始 URL 当卡片标题，等 YouTube 元数据解析完再换成真实标题。读取落在窗口中段就会看到占位符。**不是**网络故障、不是节流、不是配额耗尽、不是来源不可用。
+- 代价：3 条各消耗 1 次 claim，当日 10 次 claim 用尽（`remaining_today: 0`），本日无法再用 NotebookLM 生产。
+- **已修**（`automation/run-notebooklm-item.py`）：新增 `source_identity_ok()`——URL 形态的卡片只认**精确 video id 匹配**才通过；真实标题仍走模糊匹配；不同 video id 的 URL 卡、别人的真实标题、空卡片一律拒绝。复用处与导入后断言都改用它。另加**claim 前只读来源查找**（`pre-claim-source-lookup`），把「来源已在生产 notebook」变成领取前可见的信息，查找失败记为 unknown，不写成「不存在」。9 个用例（含 4 个反向对照）对真实观测串全部通过。
+- 附带状态：三条失败的来源已在生产 notebook，重跑时会被复用而不是重新导入；重跑只需生成＋导出，不再碰导入。ledger 38 ready / 29 failed / 0 generating（本轮新增 3 failed，账目闭合，无孤儿 generating）。
+- 未产出任何 ready／上传／交付；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- **下一步需你明确授权**：重跑这三条 failed（skill 规定 failed 重跑必须显式授权）。当前 claim 上限也是一道硬闸门，须等北京时间自然日翻转。
+- 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-13T1955+0800-import-identity-fix/report.json`（preflight.json 与 scope.json 同目录）。
+
 ## 0740 自动化：NotebookLM 页面不可用
 
 决策：無涘（既有自动化授权） ｜ 记录：Codex

@@ -113,6 +113,32 @@ def title_matches(catalog_title: str, source_title: str, threshold: float = 0.6)
     return len(want & got) / len(want) >= threshold
 
 
+def source_identity_ok(catalog_title: str, video_id: str, source_title: str) -> bool:
+    """Decide whether a source-list entry is THIS candidate.
+
+    NotebookLM renders a freshly added link source with its raw URL as the card title
+    and only swaps in the real YouTube title once metadata resolves. Reading the card
+    during that window is not a mis-import: the URL carries the candidate's video id,
+    which identifies the source more precisely than any title comparison.
+
+    Observed 2026-09-13 20:04-20:05: three consecutive items were recorded as
+    `import-source` failures on that placeholder, although every source HAD been
+    imported correctly, and the ledger still holds all three as `failed`. Fuzzy-matching
+    the placeholder against the catalog title returns 0 overlap, so the guard converted
+    a correct import into a false failure and spent one daily claim per item.
+    """
+    raw = (source_title or "").strip()
+    if not raw:
+        return False
+    if title_matches(catalog_title, raw):
+        return True
+    # A URL-shaped card is the metadata placeholder: accept only an exact video-id match.
+    if re.match(r"^https?://", raw, re.I):
+        found = re.search(r"(?:v=|youtu\.be/|/shorts/|/embed/)([A-Za-z0-9_-]{6,})", raw)
+        return bool(found) and bool(video_id) and found.group(1) == video_id
+    return False
+
+
 def list_sources() -> list[str]:
     proc = run(["node", str(BROWSER / "nblm-list-sources.cjs")], check=False)
     try:
@@ -195,13 +221,33 @@ def verify_remote(url: str, local: Path) -> dict:
     }
 
 
+def identity_check_command() -> int:
+    """Answer identity questions from stdin so tests exercise THIS rule, not a copy.
+
+    Reads [{"catalog_title","video_id","source_title"}...], writes a boolean per entry.
+    Deliberately dependency-free: no browser, no network, no state, no ledger.
+    """
+    cases = json.loads(sys.stdin.read() or "[]")
+    results = [source_identity_ok(c["catalog_title"], c["video_id"], c["source_title"]) for c in cases]
+    json.dump(results, sys.stdout)
+    sys.stdout.write("\n")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--resource-id", required=True)
+    ap.add_argument("--resource-id")
+    ap.add_argument("--identity-check", action="store_true",
+                    help="read identity cases as JSON on stdin and print booleans; does not touch the ledger")
     ap.add_argument("--state-dir", default=os.environ.get("LAG_NOTEBOOKLM_STATE_DIR", str(Path.home() / ".local/state/learn-about-games/notebooklm-daily")))
     ap.add_argument("--item-dir")
     ap.add_argument("--generation-run-id", help="resume an already-claimed run instead of claiming again")
     args = ap.parse_args()
+
+    if args.identity_check:
+        return identity_check_command()
+    if not args.resource_id:
+        ap.error("--resource-id is required unless --identity-check is used")
 
     state = Path(args.state_dir)
     cand = catalog_candidate(args.resource_id)
@@ -221,6 +267,20 @@ def main() -> int:
         # item impossible; finding that out after claiming wastes one of ten daily claims
         # (observed 2026-09-13). This probe opens and closes a dialog only.
         if not args.generation_run_id:
+            # 0a) Is the source already in the production notebook? Never spend a claim to
+            # re-import one. This is a read-only lookup and never fails the item: a failed
+            # lookup is reported as unknown rather than as "source absent".
+            pre_state = "unknown"
+            try:
+                pre_sources = list_sources()
+                if any(source_identity_ok(title, video_id, t) for t in pre_sources):
+                    pre_state = "present"
+                elif pre_sources:
+                    pre_state = "absent"
+            except Exception as exc:  # noqa: BLE001 - advisory only, must not abort the item
+                pre_state = f"unknown: {exc}"
+            item.note("pre-claim-source-lookup", {"state": pre_state})
+
             probe = run(["node", str(BROWSER / "nblm-deck-available.cjs")], timeout=180, check=False)
             try:
                 avail = json.loads(probe.stdout.strip().splitlines()[-1])
@@ -262,7 +322,7 @@ def main() -> int:
         # 3) ensure the YouTube source is present (reuse it if a previous attempt already
         #    imported it, so a retry cannot duplicate the source or mismatch its identity)
         stage = "import-source"
-        existing = [t for t in list_sources() if title_matches(title, t)]
+        existing = [t for t in list_sources() if source_identity_ok(title, video_id, t)]
         if existing:
             item.imported_title = existing[0]
             item.note(stage, {"imported_title": item.imported_title, "reused": True})
@@ -272,11 +332,12 @@ def main() -> int:
             if not m:
                 raise StageError("source import produced no ADDED line", stage)
             item.imported_title = m.group(1).strip()
-            if not title_matches(title, item.imported_title):
+            if not source_identity_ok(title, video_id, item.imported_title):
                 raise StageError(
                     f"imported source does not match the candidate: catalog={title!r} imported={item.imported_title!r}",
                     stage)
-            item.note(stage, {"imported_title": item.imported_title, "reused": False})
+            item.note(stage, {"imported_title": item.imported_title, "reused": False,
+                              "title_is_url_placeholder": bool(re.match(r"^https?://", item.imported_title, re.I))})
 
         # 4) isolate: only the new source stays selected (chat + generation dialogs)
         stage = "isolate-source"
