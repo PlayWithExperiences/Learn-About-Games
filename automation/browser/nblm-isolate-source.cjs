@@ -82,7 +82,14 @@ if (!keep) {
     return 'clicked';
   })()`);
 
-  const before = await state();
+  // Imported titles can appear before their selectable checkbox is rendered.
+  // Wait for readiness without importing again or choosing a different source.
+  let before = await state();
+  const readyDeadline = Date.now() + 60000;
+  while (!before.some(matchesKeep) && Date.now() < readyDeadline) {
+    await new Promise((r) => setTimeout(r, 1500));
+    before = await state();
+  }
   console.log('BEFORE:', JSON.stringify(before.map(s => (s.checked ? '+' : '-') + nameOf(s.label).slice(0, 32))));
 
   const keepMatches = before.filter(matchesKeep);
