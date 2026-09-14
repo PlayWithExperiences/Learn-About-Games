@@ -15,3 +15,34 @@
 - 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站内容；未重试其他 failed 条目。
 - **建议**：在代理修好 `lh3.google.com/rd-notebooklm` 下载之前，不要用剩余 7 次 claim 跑新候选——每一条都会停在同一个阶段。
 - 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-14T1140+0800-isolate-fix/report.json`；本条明细 `runs/2026-09-14T130758-item-K_H6Bl4_qH0/`。
+
+## 补充：按"修好再跑完"继续排查的完整记录（14:00–15:00 +0800）
+
+用户要求把问题修好后跑完。以下是把演示文稿下载当成可修缺陷继续排查的结果，**结论是没修好，但找到了一个真缺陷并排除了六个假设**。
+
+### 找到并修掉的真缺陷：`--no-sandbox`
+
+`launch.cjs` 一直硬传 `--no-sandbox`。**在 macOS 上它会让 Chrome 的下载路径崩溃**：同一个 Chrome、同一个自动化脚本，从本机 `127.0.0.1:8799` 下 3,000,000 B 文件，带 `--no-sandbox` 时浏览器死亡、文件不落盘；去掉后**完整下完 3,000,000 B**。现已改为按需开启（`LAG_NO_SANDBOX=1`）。
+
+### 演示文稿下载仍未解决：7 个假设全部对照实验后排除
+
+- headless 特有 → 有头模式同样停（0 B）
+- 选择器/面板状态写错 → `OPEN: opened` / `MENU: clicked` 正常
+- `Browser.setDownloadBehavior` 的 bug → 换 `Page.setDownloadBehavior` 表现一致
+- 本机 Chrome 下载整体坏了 → 本机 3 MB 能下完（见上）
+- 代理/fake-IP 是主因 → `--no-proxy-server` 直连仍停在 11,772 B
+- HTTP/2 或 QUIC → `--disable-http2 --disable-quic` 仍停在 41,250 B
+- 需要连 OOPIF 帧一起拦 → 浏览器级 `Target.setAutoAttach` + Fetch 证明**导出请求不经过页面网络栈**（是浏览器进程发起的下载导航），无法用 Fetch 拦截
+
+停点（字节）：PPTX 23,480 / 8,259 / 45,375 / 59,004 / 15,452 / 11,772 / 41,250；PDF 43,999（240 秒零增长）。
+停住后 `lsof` 无进程持有、100 秒内字节数完全不变——传输死在半路，不是"还在下"。
+
+**判断**：这是本机网络（TUN 模式，`utun2/4/5/6` mtu 仅 1380/1000/1380）对该大响应的中途切断，属环境问题，仓库代码修不了。
+排查建议：调 TUN 的 MTU/TCP 参数，或换一条出口再试一次同一条目——下载链路一旦通，本条只需补导出与交付（总结、信息图、思维导图都已在库）。
+
+### 本轮最终状态
+
+- ledger **38 ready / 30 failed / 0 generating**；`youtube-K_H6Bl4_qH0` 保持 `failed`（阶段 deck-export），失败原因含可核查字节数。
+- 本轮累计 claim 用 2，**当日剩余 7 未动**。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站、未消耗任何付费服务。
+- 未发布 ready：合同要求三件产物齐备，演示文稿缺失即不发布（不写 partial、不写空链接）。
+- 两个失败原型工具已删除，不留半成品；`launch.cjs` 的 `--no-sandbox` 修复与 README 实验记录保留。

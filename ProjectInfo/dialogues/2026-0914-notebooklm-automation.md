@@ -35,3 +35,19 @@ DSH agent 实际结果：预检 ready_to_claim（2454 候选、在列 9、当日
 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。建议在下载链路修好前不要消耗剩余 7 次 claim：新候选会停在同一阶段。
 
 机器回执：/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-14T1140+0800-isolate-fix/report.json
+
+## 1500 继续排查：修掉 --no-sandbox，演示文稿下载仍未解决
+
+更新于 2026-09-14T15:00:00+08:00 · 记录者 DSH agent
+
+用户请求（任务内容摘录，非完整聊天转录）：「把问题修复后跑完」——要求先把阻断修好，再把批次跑完。
+
+DSH agent 实际结果：**找到并修掉一个真缺陷，但演示文稿下载未能修复**。
+
+真缺陷：`launch.cjs` 一直硬传 `--no-sandbox`，在 macOS 上会让 Chrome 下载路径崩溃——同一脚本、同一浏览器，从本机 `127.0.0.1:8799` 下 3,000,000 B 文件，带该参数时浏览器死亡且文件不落盘，去掉后完整下完。现已改为按需（`LAG_NO_SANDBOX=1`）。
+
+未解决：演示文稿（PPTX 与 PDF）下载仍在 8–59 KB 区间停在半路。已用对照实验排除 7 个假设：headless 特有（有头同样失败）、选择器写错、`setDownloadBehavior` bug、本机下载整体损坏（本机 3 MB 能下完）、代理/fake-IP（`--no-proxy-server` 仍停）、HTTP/2 与 QUIC（`--disable-http2 --disable-quic` 仍停）、需要拦 OOPIF 帧（浏览器级 Fetch 证明该请求不经页面网络栈，是浏览器进程发起的下载导航）。停住后无进程持有文件、100 秒零增长。
+
+结论与建议：属本机 TUN 网络（部分 utun 的 mtu 仅 1000–1380）对该大响应的中途切断，仓库代码无法修复；建议调整 TUN 的 MTU/TCP 或换出口后重试同一条目。
+
+最终状态：ledger 38 ready / 30 failed / 0 generating；本条保持 failed（阶段 deck-export），总结与两件产物留在库中。本轮 claim 用 2，当日剩余 7 未动。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站；两个失败原型工具已删除。
