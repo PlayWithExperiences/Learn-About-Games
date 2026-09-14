@@ -98,9 +98,41 @@ function makeSend(ws) {
   if (opened !== 'opened') { console.error('MINDMAP_FAIL: ' + opened); process.exit(1); }
 
   // ---- 2) talk to the OOPIF viewer ----
-  list = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
-  const oopif = list.find((t) => (t.url || '').includes('scf.usercontent'));
-  if (!oopif) { console.error('MINDMAP_FAIL: no OOPIF viewer target'); process.exit(1); }
+  // Do not grab the first *.scf.usercontent target: right after the card is clicked the
+  // list still holds a shim frame whose body is "The connection is blocked because it
+  // was initiated by a public page...", so the toolbar lookup ran against an unrelated
+  // document and reported "no expand button" while the viewer was still loading
+  // (observed 2026-09-14). Poll until a target actually contains the mind-map document.
+  const findViewerTarget = async (timeoutMs = 90000) => {
+    const deadline = Date.now() + timeoutMs;
+    let seen = [];
+    while (Date.now() < deadline) {
+      const targets = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+      const candidates = targets.filter((t) => (t.url || '').includes('scf.usercontent'));
+      seen = candidates.map((t) => (t.url || '').split('?')[0].split('/').pop());
+      for (const cand of candidates) {
+        let ws;
+        try {
+          ws = await connect(cand.webSocketDebuggerUrl);
+          const send = makeSend(ws);
+          const r = await send('Runtime.evaluate', {
+            expression: `!!document.querySelector('svg') || !!document.querySelector('button[aria-label="Expand all nodes"], button[aria-label="Collapse all nodes"]')`,
+            returnByValue: true,
+          });
+          ws.close();
+          if (r && r.result && r.result.value) return cand;
+        } catch {
+          try { if (ws) ws.close(); } catch { /* already gone */ }
+        }
+      }
+      await new Promise((r) => setTimeout(r, 3000));
+    }
+    console.error('MINDMAP_FAIL: no mind-map viewer frame appeared; frames seen: ' + JSON.stringify(seen));
+    process.exit(1);
+  };
+
+  const oopif = await findViewerTarget();
+  console.log('VIEWER_TARGET:', (oopif.url || '').split('?')[0].split('/').pop());
   const vWs = await connect(oopif.webSocketDebuggerUrl);
   const vSend = makeSend(vWs);
   const vEval = async (expression) => {

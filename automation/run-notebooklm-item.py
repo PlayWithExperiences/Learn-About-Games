@@ -139,6 +139,21 @@ def source_identity_ok(catalog_title: str, video_id: str, source_title: str) -> 
     return False
 
 
+def isolate_name(imported_title: str, video_id: str) -> str:
+    """The exact name the source-list checkbox carries, for the isolation step.
+
+    The isolate adapter matches the name exactly, so a fragment must never be passed:
+    two lectures can share a prefix and the wrong one would then be kept. When the card
+    is still an unresolved URL placeholder, the video id is used instead — truncating
+    "https://www.youtube.com/watch?v=..." to 28 characters would collide across every
+    unresolved source in the notebook.
+    """
+    raw = (imported_title or "").strip()
+    if re.match(r"^https?://", raw, re.I):
+        return video_id
+    return raw
+
+
 def list_sources() -> list[str]:
     proc = run(["node", str(BROWSER / "nblm-list-sources.cjs")], check=False)
     try:
@@ -173,9 +188,22 @@ def parse_card(card: str) -> tuple[str, str]:
     return ("", card.strip())
 
 
-def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int = 1200) -> str:
+def card_timeout() -> int:
+    """Seconds to wait for one artifact card, overridable per run.
+
+    1200s was the original guess. On 2026-09-14 all three cards for one item were still
+    "正在生成" 30 minutes after submission with no throttle message, so the cap expired
+    while the server was still working and the item was recorded as a generation failure
+    even though nothing had actually failed.
+    """
+    return int(os.environ.get("LAG_CARD_TIMEOUT_SEC", "1200"))
+
+
+def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = None) -> str:
     """Wait until a NEW card of the given icon type finishes generating; return its title."""
+    timeout = card_timeout() if timeout is None else timeout
     deadline = time.time() + timeout
+    last_seen = "no card of this type appeared"
     while time.time() < deadline:
         for c in studio_cards():
             card_icon, title = parse_card(c)
@@ -184,11 +212,14 @@ def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int = 1200) -
             if (card_icon, title) in known:
                 continue
             if re.search(r"正在生成|生成中|Generating", c):
+                last_seen = "still generating"
                 continue
             if title:
                 return title
         time.sleep(15)
-    raise StageError(f"{icon} card did not finish generating within {timeout}s", "generation")
+    # Say what was actually observed: a card that is still generating has not failed,
+    # it is unfinished, and the distinction matters when deciding whether to re-run.
+    raise StageError(f"{icon} card was not ready after {timeout}s ({last_seen})", "generation")
 
 
 def picgo_upload(path: Path) -> str:
@@ -341,9 +372,9 @@ def main() -> int:
 
         # 4) isolate: only the new source stays selected (chat + generation dialogs)
         stage = "isolate-source"
-        keep = item.imported_title[:28]
-        run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=240)
-        item.note(stage, {"kept": keep})
+        keep = isolate_name(item.imported_title, video_id)
+        run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=420)
+        item.note(stage, {"kept": keep, "imported_title": item.imported_title})
 
         # 5) content summary
         stage = "summary"
@@ -376,12 +407,12 @@ def main() -> int:
         stage = "generation"
         # re-assert isolation immediately before generating: the dialog snapshots the
         # selection when it opens, so this is the last safe moment to guarantee grounding
-        run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=240)
+        run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=420)
         for kind in ("infographic", "mindmap", "slides"):
             run(["node", str(BROWSER / "nblm-generate-artifact.cjs"), kind, prompts[kind], keep], timeout=900)
             item.note(f"generate-{kind}", {"submitted": True})
         for kind in ("infographic", "mindmap", "slides"):
-            card_title = wait_for_card(ICON[kind], cards_before, timeout=1200)
+            card_title = wait_for_card(ICON[kind], cards_before, timeout=card_timeout())
             item.cards[kind] = card_title
             item.note(f"ready-{kind}", {"card": card_title})
 

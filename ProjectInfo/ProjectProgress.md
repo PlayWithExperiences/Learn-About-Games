@@ -1,6 +1,6 @@
 # ProjectProgress
 
-更新于 2026-09-14T07:34:07.665459+08:00 · 记录者 Codex
+更新于 2026-09-14T13:42:23+08:00 · 记录者 DSH agent
 
 ## 当前状态：Innovation Atlas 全量主张复核已上线
 
@@ -16,6 +16,19 @@
 范围为当前目录全部主张，不是穷举全部游戏、地区或潜在配对。NotebookLM资源生产及其他未提交历史记录与此独立；本次只提交Atlas相关改动。后续直接推进授权持续有效，没有新增付费服务。
 
 ## 资源生产工作段（保留原状态，独立于发布）
+
+## 1342 自动化：隔离缺陷已修，卡在演示文稿下载
+
+决策：無涘（既有连续跑批授权） ｜ 记录：DSH agent
+
+- 2026-09-14T11:42–13:42+08:00：预检 ready_to_claim（2454 候选、在列 9、当日已 claim 1、剩余 9）。本轮 **attempted 1 / ready 0 / remote_delivered 0 / failed 1 / skipped 0**，当日 claim 用 2，**剩余 7 未动**。
+- **早上 07:34 的阻断已修**：`nblm-isolate-source.cjs` 的 `pass < 6` 是硬编码上限，8 来源的 notebook 需 7 轮才能取消 7 个非目标来源，第 7 个（Hitman）从未被点到。现改为按实测框数推导轮数、目标名**全名精确匹配**（原来传 28 字符片段，同前缀卡片会认错、未解析的 URL 卡会全部撞成同一段）、匹配数不为 1 时拒绝执行。实测 8 来源 7 轮完成隔离；同类缺陷在 `nblm-set-sources.cjs` 一并修正。
+- **产物卡片曾被 UI 冻结误导**：三张卡连续 80+ 分钟显示「正在生成」，刷新后立刻显示真实标题（产物一小时前已完成）。`wait_for_card` 超时文案改为如实描述，并支持 `LAG_CARD_TIMEOUT_SEC`。
+- 已生成并校验：总结 6,167 B＋边界 813 B；信息图 5,810,545 B / 2752×1536；思维导图 851,452 B / 2664×4896（折叠 0、层级 3、渲染稳定）。**停止原因＝演示文稿下载阻断**：PPTX 与 PDF 两条路径都在约 44–45 KB 处停滞，且该下载稳定导致自动化 Chrome 崩溃（本轮 5 次）；下载 host 与工作正常的图片导出相同，故非域问题。已排除节流、来源与卡片误读。演示文稿为三件必填之一，故按合同记 `failed`（阶段 deck-export），未写任何 ready/partial；产物与总结留在 notebook 与磁盘，环境修好后只需补导出与交付。
+- 环境发现（已绕开）：viewer 帧报 `ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS`（代理把 `*.scf.usercontent.goog` 解析成 fake-IP 198.18.5.x），`launch.cjs` 新增 `LAG_CHROME_ARGS` 透传，加 `--disable-features=LocalNetworkAccessChecks` 后 viewer 正常、导出成功。根治仍需代理/DNS。`gstatic` 404 仍在，但页面可渲染。
+- ledger **38 ready / 30 failed / 0 generating**。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- **建议：在 `lh3.google.com/rd-notebooklm` 下载链路修好前，不要用剩余 7 次 claim 跑新候选**——每条都会停在同一阶段。
+- 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-14T1140+0800-isolate-fix/report.json`；摘要 `sessions/2026-0914-notebooklm-download-blocked.md`；原始对话 `dialogues/2026-0914-notebooklm-automation.md`「1140 收集端跑批」。
 
 ## 0734 每日资源生产：来源隔离脚本阻断
 

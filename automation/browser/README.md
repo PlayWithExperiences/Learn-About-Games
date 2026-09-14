@@ -129,3 +129,26 @@ node automation/browser/launch.cjs https://notebook.google.com/
   `tests/lib/notebooklm-source-identity.test.ts` 守住（走 `--identity-check` 调真身，不复制规则）。
 - 教训的通用形态：**「读到的东西不对」与「这件事没做成」是两回事**。读不到标题时不要改判业务结论，
   要换一个能证明身份的判据再判。
+
+## 2026-09-14 补记①：viewer 帧被 Chrome 本地网络访问检查挡住
+
+- 现象：`nblm-export-mindmap.cjs` 报 `EXPAND: no expand button`，但并非没有按钮——OOPIF 目标里是一张
+  Chrome 错误页，错误码 **`ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS`**。本机代理把
+  `*.scf.usercontent.goog` 解析成 **198.18.5.x**（fake-IP），Chrome 因此把这台"服务器"当成局域网设备而拦截。
+- **误判风险**：脚本原先取"第一个 `*.scf.usercontent` 目标"，而卡片刚点开时列表里往往只有 `shim.html`，
+  于是拿一张错误页当 viewer 查工具栏。现已改为**轮询直到某个帧里真的有 `svg` 或展开/折叠按钮**
+  （`findViewerTarget`），找不到就打印实际见过的帧名再失败。
+- 绕开方式：`launch.cjs` 新增 `LAG_CHROME_ARGS` 透传，用
+  `LAG_CHROME_ARGS="--disable-features=LocalNetworkAccessChecks"` 启动即可让 viewer 正常加载并导出成功。
+- 根治仍在代理/DNS：让 `*.scf.usercontent.goog` 走真实 DNS，或把 fake-IP 段移出 `198.18.0.0/15`。
+
+## 2026-09-14 补记②：演示文稿下载在本机不可用（未解决）
+
+- PPTX 与 PDF **两条导出路径都会在约 44–45 KB 处停下**：实测 PPTX 停在 23,480 / 8,259 / 45,375 B，
+  PDF 停在 43,999 B 并连续 240 秒零增长；且该下载会**稳定导致自动化 Chrome 崩溃**（一轮内 5 次）。
+- 下载地址是 `lh3.google.com/rd-notebooklm/…`——与**工作正常的图片导出同一个 host**，所以问题不在域本身，
+  更像下载响应的这条链路被代理/本地网络策略截断。
+- `nblm-export-deck.cjs` 的停滞判据（10 秒无增长即判 stall）对 20 MB 文件偏短；本次先实测了真实增长曲线，
+  确认停滞属实后才停止，未无限重试。
+- **结论**：演示文稿是合同三件必填之一，拿不到就不发布 `ready`；产物与总结都留在 notebook/磁盘，
+  环境修好后这一条只需补导出与交付。

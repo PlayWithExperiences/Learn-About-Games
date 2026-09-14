@@ -12,6 +12,11 @@ const { chromium } = require('@playwright/test');
   const headless = process.argv.includes('--headless');
   const startUrl = process.argv.find((a) => /^https?:\/\//.test(a))
     || 'https://notebook.google.com/';
+  // Extra Chrome switches, space separated. Needed on this machine because the local
+  // proxy answers DNS with fake-IP addresses inside 198.18.0.0/15, which Chrome treats as
+  // a local-network destination and blocks for the NotebookLM viewer origin with
+  // ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS (observed 2026-09-14).
+  const extraArgs = (process.env.LAG_CHROME_ARGS || '').split(' ').filter(Boolean);
   const ctx = await chromium.launchPersistentContext(profile, {
     channel: 'chrome',
     headless,
@@ -19,6 +24,7 @@ const { chromium } = require('@playwright/test');
       '--no-sandbox',
       `--remote-debugging-port=${port}`,
       '--disable-blink-features=AutomationControlled',
+      ...extraArgs,
     ],
   });
   const page = ctx.pages()[0] || await ctx.newPage();

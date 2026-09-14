@@ -56,11 +56,23 @@ if (!keep) {
     return boxes.map(c => ({ label: c.getAttribute('aria-label'), checked: c.checked }));
   })()`);
 
+  // aria-label form is 选择“<name>”, so strip the wrapper before comparing
+  const nameOf = (label) => (label || '').replace(/^选择“/, '').replace(/”$/, '').trim();
+
   console.log('BEFORE:', JSON.stringify((await state()).map(s => (s.checked ? '+' : '-') + s.label.slice(0, 30))));
 
-  for (let pass = 0; pass < 8; pass++) {
+  // The generation dialog has its own source selector and defaults to everything
+  // selected, so this loop is what keeps an artifact grounded in one lecture.
+  // The pass budget is derived from the observed box count: a fixed budget silently
+  // runs out as the notebook grows (the sibling script's constant 6 failed on
+  // 2026-09-14 with eight sources, after deselecting six of seven).
+  const initialState = await state();
+  const budget = initialState.filter((s) => s.checked).length + 2;
+  console.log('PLAN: deselect up to', budget, 'of', initialState.length, 'boxes');
+
+  for (let pass = 0; pass < budget; pass++) {
     const cur = await state();
-    const victims = cur.filter((s) => s.checked && /^选择“/.test(s.label) && !s.label.includes(keep));
+    const victims = cur.filter((s) => s.checked && /^选择“/.test(s.label) && !nameOf(s.label).includes(keep));
     const allBox = cur.find((s) => /选择所有来源/.test(s.label));
     if (!victims.length && (!allBox || !allBox.checked)) break;
     const target = victims.length ? victims[0].label : allBox.label;
@@ -77,7 +89,7 @@ if (!keep) {
 
   // make sure the keeper is ON
   const cur = await state();
-  const mine = cur.find((s) => s.label.includes(keep));
+  const mine = cur.find((s) => nameOf(s.label).includes(keep));
   if (!mine) { console.error('SET_SOURCES_FAIL: no source matches "' + keep + '"'); process.exit(1); }
   if (!mine.checked) {
     await evaluate(`(() => {
@@ -105,7 +117,7 @@ if (!keep) {
   })()`);
   console.log('CONFIRM:', confirmed);
 
-  if (checked.length === 1 && checked[0].label.includes(keep)) {
+  if (checked.length === 1 && nameOf(checked[0].label).includes(keep)) {
     console.log('SET_OK:', checked[0].label.slice(2));
     ws.close();
     process.exit(0);
