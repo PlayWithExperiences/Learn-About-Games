@@ -1,5 +1,7 @@
 # 本机浏览器通道（DSH/NotebookLM 共用）
 
+> 2026-09-14 18:05 更正：演示文稿下载已修复。必须显式设置 `chromiumSandbox: true` 才能阻止 Playwright 默认注入 `--no-sandbox`。下方早期“无法修复 / TUN 根因”的结论已被实测推翻，详见文末。
+
 给没有浏览器适配器的客户端用的最小可用通道：一个带持久登录态的
 自动化 Chrome + 原生 CDP 驱动脚本。已在 2026-09-03 的 Shadow Complex
 交付中验证通过（读总结/边界正文 → publish → 远端交付）。
@@ -178,3 +180,14 @@ PPTX 23,480 / 8,259 / 45,375 / 59,004 / 15,452 / 11,772 / 41,250；PDF 43,999 �
 **结论**：演示文稿的传输在本机网络环境里被中途切断，属于环境问题，不是仓库代码能修的。可用于后续排查的方向：
 TUN 模式的 MTU/TCP 参数（`utun2/4/5/6` 的 mtu 分别只有 1380/1000/1380/1380），或代理对该大响应的处理。
 在它修好之前，合同要求的三件产物无法齐备，因此本收集端**不能**发布 ready。
+
+## 1805 下载修复复核（2026-09-14）
+
+决策：無涘（要求检查并修复采集流程） ｜ 记录：Codex
+
+- **已修复并实测通过**：旧改动只删 `args` 中的 `--no-sandbox`，但 Playwright 1.62.1 默认又加入它。现在通过 `chromiumSandbox: process.env.LAG_NO_SANDBOX !== '1'` 在实际 API 边界启用沙箱；运行中的 Chrome 参数已确认不含该开关。
+- 同一长期 notebook、同一卡片 The Long Dark Narrative Blueprint，默认 `nblm-export-deck.cjs` 单次导出成功：18,559,684 B，14 slides / 14 media，ZIP CRC 与全部 slide XML 解析通过，Chrome 下载后仍可达。SHA-256 `ffe24bbfd481de6696b77e6c747031b039cacfcbfe50d1ffb34bf77e44b14437`。
+- **更正旧结论**：“仓库修不了、必须调 TUN/MTU”证据不足，已被本次成功下载反驳。本次未改系统网络；沿用既有 viewer 的 LocalNetworkAccessChecks 绕开配置。不能由一次成功断言所有网络条件均无问题，也不能把旧实验视为已排除未被隔离的因素。
+- 新增两项入口回归测试，直接执行真实 launch.cjs 并检查传给 Playwright 的选项，覆盖默认启用及显式禁用；已通过。
+- 修复验证未 claim/retry、生成、上传、publish 或远端交付，既有 failed 未伪改为 ready。下载已保存在本机 `notebooklm-daily/runs/2026-09-14T1805-sandbox-fix/`，可供后续恢复验收；本次完成的是下载缺陷修复，不是生产交付。
+- 本机证据：上述目录 report.json；完整 PPTX 留在同目录，不提交私人生成材料。

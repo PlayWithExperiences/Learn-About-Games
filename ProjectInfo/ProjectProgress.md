@@ -1,6 +1,6 @@
 # ProjectProgress
 
-更新于 2026-09-14T15:00:00+08:00 · 记录者 DSH agent
+更新于 2026-09-14T18:06:39+08:00 · 记录者 Codex
 
 ## 当前状态：Innovation Atlas 全量主张复核已上线
 
@@ -15,7 +15,20 @@
 
 范围为当前目录全部主张，不是穷举全部游戏、地区或潜在配对。NotebookLM资源生产及其他未提交历史记录与此独立；本次只提交Atlas相关改动。后续直接推进授权持续有效，没有新增付费服务。
 
-## 资源生产工作段（保留原状态，独立于发布）
+## 资源生产最新：下载修复已验证，历史 failed 尚未重新交付
+
+## 1805 下载修复复核（2026-09-14）
+
+决策：無涘（要求检查并修复采集流程） ｜ 记录：Codex
+
+- **已修复并实测通过**：旧改动只删 `args` 中的 `--no-sandbox`，但 Playwright 1.62.1 默认又加入它。现在通过 `chromiumSandbox: process.env.LAG_NO_SANDBOX !== '1'` 在实际 API 边界启用沙箱；运行中的 Chrome 参数已确认不含该开关。
+- 同一长期 notebook、同一卡片 The Long Dark Narrative Blueprint，默认 `nblm-export-deck.cjs` 单次导出成功：18,559,684 B，14 slides / 14 media，ZIP CRC 与全部 slide XML 解析通过，Chrome 下载后仍可达。SHA-256 `ffe24bbfd481de6696b77e6c747031b039cacfcbfe50d1ffb34bf77e44b14437`。
+- **更正旧结论**：“仓库修不了、必须调 TUN/MTU”证据不足，已被本次成功下载反驳。本次未改系统网络；沿用既有 viewer 的 LocalNetworkAccessChecks 绕开配置。不能由一次成功断言所有网络条件均无问题，也不能把旧实验视为已排除未被隔离的因素。
+- 新增两项入口回归测试，直接执行真实 launch.cjs 并检查传给 Playwright 的选项，覆盖默认启用及显式禁用；已通过。
+- 修复验证未 claim/retry、生成、上传、publish 或远端交付，既有 failed 未伪改为 ready。下载已保存在本机 `notebooklm-daily/runs/2026-09-14T1805-sandbox-fix/`，可供后续恢复验收；本次完成的是下载缺陷修复，不是生产交付。
+- 本机证据：上述目录 report.json；完整 PPTX 留在同目录，不提交私人生成材料。
+
+以下为早期状态，下载阻断与 TUN 根因判断已由上述复核更正。
 
 ## 1342 自动化：隔离缺陷已修，卡在演示文稿下载
 

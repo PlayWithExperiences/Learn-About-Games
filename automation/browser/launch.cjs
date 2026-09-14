@@ -20,10 +20,9 @@ const { chromium } = require('@playwright/test');
   const ctx = await chromium.launchPersistentContext(profile, {
     channel: 'chrome',
     headless,
+    // Playwright adds --no-sandbox by default unless this option is explicitly true.
+    chromiumSandbox: process.env.LAG_NO_SANDBOX !== '1',
     args: [
-      // --no-sandbox is opt-in: it destabilises Chrome on macOS (a plain download was
-      // enough to kill the browser on 2026-09-14), so it is off unless asked for.
-      ...(process.env.LAG_NO_SANDBOX === '1' ? ['--no-sandbox'] : []),
       `--remote-debugging-port=${port}`,
       '--disable-blink-features=AutomationControlled',
       ...extraArgs,
