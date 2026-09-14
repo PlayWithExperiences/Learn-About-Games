@@ -51,3 +51,21 @@ DSH agent 实际结果：**找到并修掉一个真缺陷，但演示文稿下�
 结论与建议：属本机 TUN 网络（部分 utun 的 mtu 仅 1000–1380）对该大响应的中途切断，仓库代码无法修复；建议调整 TUN 的 MTU/TCP 或换出口后重试同一条目。
 
 最终状态：ledger 38 ready / 30 failed / 0 generating；本条保持 failed（阶段 deck-export），总结与两件产物留在库中。本轮 claim 用 2，当日剩余 7 未动。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站；两个失败原型工具已删除。
+
+## 2030 复核 Codex 修复并交付 4 条
+
+更新于 2026-09-14T20:30:00+08:00 · 记录者 DSH agent
+
+用户请求（任务内容摘录，非完整聊天转录）：「codex 说修好了，你再试试」——要求先复核 Codex 的修复，再继续把批次跑完。
+
+DSH agent 实际结果：**Codex 的修复成立，我此前的结论是错的**。我上次只从 `args` 删掉 `--no-sandbox`，但 Playwright 1.62.1 会默认再注入一次，所以参数看着干净、实际仍带该开关；正解是显式 `chromiumSandbox`。实测运行中 Chrome 已无该开关，演示文稿一次导出成功 18,559,684 B，SHA-256 与 Codex 那份逐字节一致（`ffe24bbf…`）。我先前"仓库修不了、根因在 TUN/MTU"的判断已被实测推翻并更正——错在只验证了传参意图，没有验证 Playwright 实际传了什么。
+
+随后交付 4 条（三件产物齐备、逐个回读 sha256 一致、远端 blob 比对通过）：`youtube-K_H6Bl4_qH0`、`youtube-Vre9qqoEBpE`、`youtube--skDiuvH56E`、`youtube-pa6fsPMqAmU`；ledger 42 ready / 29 failed / 0 generating，当日 10 次 claim 用尽。
+
+过程中又找到两个会把成功记成失败的缺陷并修掉：①未读徽标 `未读` 被 `\w+` 并进图标（`\w` 不匹配中日韩字符），使刚生成的未读卡片永远匹配不上 ICON，第 1、2 条因此白等 1200 秒并各花 1 次 claim——两条产物其实都已生成，本轮用既有产物补收尾，未重新生成；②deck 闸门采样一次就报"按钮不可达"，实测数秒后即可用，已改为轮询。两处修复均有回归测试，229 单测通过、`astro check` 0 错。
+
+交付通道另修一次分叉：AI-Life-Mentor 的 `main` 与远端各有独立提交（远端为 briefings，本地为资源文件与健康快照），零文件重叠，合并后推送并逐条比对 blob，4 条全部一致。
+
+批次第 4 条预检时命中真实的演示文稿容量节流，claim 前闸门拦住，未浪费 claim。
+
+未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站内容。

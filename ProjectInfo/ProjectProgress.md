@@ -1,6 +1,6 @@
 # ProjectProgress
 
-更新于 2026-09-14T18:06:39+08:00 · 记录者 Codex
+更新于 2026-09-14T20:30:00+08:00 · 记录者 DSH agent
 
 ## 当前状态：Innovation Atlas 全量主张复核已上线
 
@@ -15,7 +15,17 @@
 
 范围为当前目录全部主张，不是穷举全部游戏、地区或潜在配对。NotebookLM资源生产及其他未提交历史记录与此独立；本次只提交Atlas相关改动。后续直接推进授权持续有效，没有新增付费服务。
 
-## 资源生产最新：下载修复已验证，历史 failed 尚未重新交付
+## 资源生产最新：下载修复已验证并交付 4 条
+
+决策：無涘（既有连续跑批授权） ｜ 记录：DSH agent
+
+- 2026-09-14T19:01–20:30+08:00：**复核 Codex 的修复，结论是他对、我先前错**。正解是 `chromiumSandbox: true`——Playwright 1.62.1 会默认再注入 `--no-sandbox`，我上次只从 `args` 删除并没有真正去掉它。实测演示文稿一次导出成功 18,559,684 B，SHA-256 `ffe24bbf…` 与 Codex 那份逐字节一致。**先前"仓库修不了、根因在 TUN/MTU"的结论已推翻并更正**（错在只验证传参意图，未验证 Playwright 实际传了什么）。
+- **交付 4 条**，每条三件产物齐备、上传后逐个回读 sha256 一致、远端 blob 比对通过：`youtube-K_H6Bl4_qH0`（`2026-0914-1906-narrative-expression.json`）、`youtube-Vre9qqoEBpE`（`2026-0914-2022-design-fundamentals.json`）、`youtube--skDiuvH56E`（`2026-0914-2026-playtesting.json`）、`youtube-pa6fsPMqAmU`（`2026-0914-2028-research-player-experience.json`）。ledger **42 ready / 29 failed / 0 generating**，当日 10 次 claim 用尽。
+- **修掉两个会把成功记成失败的缺陷**：①未读徽标 `未读` 被 `\w+` 并进图标（`\w` 不匹配中日韩字符），刚生成的未读卡片永远匹配不上 `ICON`，第 1、2 条因此白等 1200 秒并各花 1 次 claim——两条产物其实都已生成，本轮用既有产物补收尾、未重新生成；②deck 闸门导出后采样一次即报"按钮不可达"，实测数秒后即可用，已改为轮询。均加回归测试：**229 单测通过**、`astro check` 0 错。
+- 交付通道另修一次分叉：AI-Life-Mentor `main` 与远端各有独立提交（远端 briefings、本地资源文件＋健康快照），**零文件重叠**，合并推送后逐条比对 blob，4 条全部一致。
+- 批次第 4 条预检命中**真实的演示文稿容量节流**（「此内容将在几小时后生成」），claim 前闸门拦住，**未浪费 claim**。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- 证据：`runs/2026-09-14T190455-item-K_H6Bl4_qH0/` 等；摘要 `sessions/2026-0914-notebooklm-four-delivered.md`；原始对话 `dialogues/2026-0914-notebooklm-automation.md`「2030 复核 Codex 修复并交付 4 条」。
+
 
 ## 1805 下载修复复核（2026-09-14）
 
