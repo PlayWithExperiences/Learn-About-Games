@@ -1,6 +1,6 @@
 # ProjectProgress
 
-更新于 2026-09-14T13:42:23+08:00 · 记录者 DSH agent
+更新于 2026-09-14T15:00:00+08:00 · 记录者 DSH agent
 
 ## 当前状态：Innovation Atlas 全量主张复核已上线
 
@@ -29,6 +29,14 @@
 - ledger **38 ready / 30 failed / 0 generating**。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
 - **建议：在 `lh3.google.com/rd-notebooklm` 下载链路修好前，不要用剩余 7 次 claim 跑新候选**——每条都会停在同一阶段。
 - 证据：`/Users/haodong/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-14T1140+0800-isolate-fix/report.json`；摘要 `sessions/2026-0914-notebooklm-download-blocked.md`；原始对话 `dialogues/2026-0914-notebooklm-automation.md`「1140 收集端跑批」。
+
+### 1500 追加：修掉 `--no-sandbox`，演示文稿下载仍未解决
+
+- 按「把问题修复后跑完」继续排查。**找到并修掉一个真缺陷**：`launch.cjs` 一直硬传 `--no-sandbox`，在 macOS 上会让 Chrome 下载路径崩溃——同一脚本同一浏览器，从本机 `127.0.0.1:8799` 下 3,000,000 B，带该参数时浏览器死亡且文件不落盘，去掉后**完整下完**。现改为按需 `LAG_NO_SANDBOX=1`。
+- **演示文稿下载仍未修复**：PPTX/PDF 都在 8–59 KB 处中断（PPTX 实测 23,480 / 8,259 / 45,375 / 59,004 / 15,452 / 11,772 / 41,250 B；PDF 43,999 B）。停住后 `lsof` 无进程持有、100 秒字节数不变。
+- 已用对照实验排除 7 个假设：headless 特有（有头同样失败）、选择器写错（`OPEN/MENU` 正常）、`setDownloadBehavior` bug（两种 API 一致）、本机下载整体损坏（本机 3 MB 能下完）、代理/fake-IP（`--no-proxy-server` 仍停 11,772 B）、HTTP/2 与 QUIC（`--disable-http2 --disable-quic` 仍停 41,250 B）、需拦 OOPIF（浏览器级 Fetch 证明该请求不经页面网络栈，是浏览器进程发起的下载导航）。
+- 判断：属本机 TUN 网络（部分 utun 的 mtu 仅 1000–1380）对该大响应的中途切断，仓库代码修不了。建议调 TUN 的 MTU/TCP 或换出口后重试；链路一通，本条只需补导出与交付。
+- 最终：ledger **38 ready / 30 failed / 0 generating**；本轮 claim 用 2，**当日剩余 7 未动**；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站；两个失败原型工具已删除。提交 `e99d85f` 已推送。
 
 ## 0734 每日资源生产：来源隔离脚本阻断
 
