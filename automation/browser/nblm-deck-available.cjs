@@ -46,18 +46,30 @@ const port = process.env.LAG_CDP_PORT || '9222';
       awaitPromise: true,
       expression: `(async () => {
         const txt = (el) => (el && el.textContent || '').replace(/\\s+/g,' ').trim();
+        const findBtn = () => [...document.querySelectorAll('button,[role=button]')]
+          .find(b => txt(b).includes('演示文稿') && /create-artifact/.test((b.className||'').toString()));
         // ensure list mode; a viewer left open hides the create buttons
         const back = [...document.querySelectorAll('button,[role=button]')]
           .find(b => /关闭网页查看器/.test(b.getAttribute('aria-label') || ''));
         if (back) { back.click(); await new Promise(r => setTimeout(r, 2500)); }
-        let btn = [...document.querySelectorAll('button,[role=button]')]
-          .find(b => txt(b).includes('演示文稿') && /create-artifact/.test((b.className||'').toString()));
+        // The Studio panel re-renders asynchronously after a viewer closes, so poll
+        // instead of sampling once. Sampling once reported "slides create button not
+        // reachable" on 2026-09-14 immediately after a successful export, even though
+        // the feature was offered seconds later — a false negative that would stop a
+        // batch for the wrong reason.
+        let btn = findBtn();
+        for (let i = 0; i < 20 && !btn; i++) {
+          await new Promise(r => setTimeout(r, 1500));
+          btn = findBtn();
+        }
         if (!btn) {
           const x = [...document.querySelectorAll('button,[role=button]')]
             .find(b => /^(关闭|close)$/i.test((b.getAttribute('aria-label')||'').trim()));
           if (x) { x.click(); await new Promise(r => setTimeout(r, 2500)); }
-          btn = [...document.querySelectorAll('button,[role=button]')]
-            .find(b => txt(b).includes('演示文稿') && /create-artifact/.test((b.className||'').toString()));
+          for (let i = 0; i < 10 && !btn; i++) {
+            await new Promise(r => setTimeout(r, 1500));
+            btn = findBtn();
+          }
         }
         if (!btn) return { available: false, reason: 'slides create button not reachable', generateButtons: -1 };
         btn.click();

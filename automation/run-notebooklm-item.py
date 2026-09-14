@@ -171,7 +171,7 @@ def studio_cards() -> list[str]:
         return []
 
 
-CARD_RE = re.compile(r"^(?P<icon>\w+)\s*(?:未读)?\s*(?P<title>.*?)\s*\d+\s*个来源")
+CARD_RE = re.compile(r"^(?P<icon>[a-z_]+)(?:未读)?\s*(?P<title>.*?)\s*\d+\s*个来源")
 
 
 def parse_card(card: str) -> tuple[str, str]:
@@ -181,6 +181,13 @@ def parse_card(card: str) -> tuple[str, str]:
     differ as text. Comparing raw strings therefore fails to recognise already-known
     cards, and a stale card from the previous item gets mistaken for the new one
     (observed 2026-09-13, where item 2's export targeted item 1's artifacts).
+
+    The unread badge sits between the icon and the title, and it only appears on cards
+    the operator has not opened — which is exactly the case for a card this run just
+    generated. The icon class is ASCII, so restricting it to [a-z_]+ keeps 未读 out of
+    the icon: leaving it in made the icon '<icon>未读', which never equals ICON[kind],
+    so every freshly generated card looked like it did not exist and two items were
+    recorded as generation failures on 2026-09-14 while their artifacts were fine.
     """
     m = CARD_RE.match(card.strip())
     if m:
@@ -204,6 +211,12 @@ def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = 
     timeout = card_timeout() if timeout is None else timeout
     deadline = time.time() + timeout
     last_seen = "no card of this type appeared"
+    # The Studio list can freeze on "正在生成" long after the server finished (observed
+    # 2026-09-14: three cards read as generating for 80+ minutes and showed real titles
+    # immediately after a reload). Re-reading through a reload is therefore part of
+    # waiting, not a recovery step, and it costs nothing.
+    reread_every = int(os.environ.get("LAG_CARD_REREAD_SEC", "300"))
+    next_reread = time.time() + reread_every
     while time.time() < deadline:
         for c in studio_cards():
             card_icon, title = parse_card(c)
@@ -216,6 +229,9 @@ def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = 
                 continue
             if title:
                 return title
+        if time.time() >= next_reread:
+            next_reread = time.time() + reread_every
+            run(["node", str(BROWSER / "nblm-studio-list.cjs")], timeout=180, check=False)
         time.sleep(15)
     # Say what was actually observed: a card that is still generating has not failed,
     # it is unfinished, and the distinction matters when deciding whether to re-run.
@@ -265,11 +281,21 @@ def identity_check_command() -> int:
     return 0
 
 
+def parse_cards_command() -> int:
+    """Parse raw Studio card strings from stdin; used by tests to exercise parse_card."""
+    cards = json.loads(sys.stdin.read() or "[]")
+    json.dump([list(parse_card(c)) for c in cards], sys.stdout)
+    sys.stdout.write("\n")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--resource-id")
     ap.add_argument("--identity-check", action="store_true",
                     help="read identity cases as JSON on stdin and print booleans; does not touch the ledger")
+    ap.add_argument("--parse-cards", action="store_true",
+                    help="read raw Studio card strings as JSON on stdin and print [icon, title] pairs")
     ap.add_argument("--state-dir", default=os.environ.get("LAG_NOTEBOOKLM_STATE_DIR", str(Path.home() / ".local/state/learn-about-games/notebooklm-daily")))
     ap.add_argument("--item-dir")
     ap.add_argument("--generation-run-id", help="resume an already-claimed run instead of claiming again")
@@ -277,8 +303,10 @@ def main() -> int:
 
     if args.identity_check:
         return identity_check_command()
+    if args.parse_cards:
+        return parse_cards_command()
     if not args.resource_id:
-        ap.error("--resource-id is required unless --identity-check is used")
+        ap.error("--resource-id is required unless --identity-check or --parse-cards is used")
 
     state = Path(args.state_dir)
     cand = catalog_candidate(args.resource_id)

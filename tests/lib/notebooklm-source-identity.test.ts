@@ -134,3 +134,62 @@ describe('NotebookLM source identity', () => {
     expect(shorts).toBe(true);
   });
 });
+
+describe('Studio card parsing', () => {
+  /**
+   * The unread badge sits between the icon class and the title. `parse_card` used to
+   * capture it as part of the icon (`\w` does not match CJK), so a card this run had
+   * just generated came back as icon `stacked_bar_chart未读` and never matched
+   * ICON['infographic'] = 'stacked_bar_chart'. Two items were recorded as generation
+   * failures on 2026-09-14 while their artifacts were actually complete.
+   */
+  const CASES = [
+    {
+      raw: 'stacked_bar_chart未读 沙盒生存游戏叙事平衡指南 1 个来源 · 7 小时前 more_vert',
+      icon: 'stacked_bar_chart',
+      title: '沙盒生存游戏叙事平衡指南',
+    },
+    {
+      raw: 'flowchart未读 漫漫长路思维导图 1 个来源 · 1 小时前 more_vert',
+      icon: 'flowchart',
+      title: '漫漫长路思维导图',
+    },
+    {
+      raw: 'tablet未读 The Long Dark Narrative Blueprint 1 个来源 · 1 小时前 more_vert',
+      icon: 'tablet',
+      title: 'The Long Dark Narrative Blueprint',
+    },
+    // A card that was already opened has no badge and must keep parsing as before.
+    {
+      raw: 'tablet Hitman Sandbox Guidance 1 个来源 · 1 天前 more_vert',
+      icon: 'tablet',
+      title: 'Hitman Sandbox Guidance',
+    },
+    // A card still generating carries the sync icon and no title.
+    { raw: 'sync 正在生成演示文稿… 基于 1 个来源', icon: 'sync', title: '正在生成演示文稿… 基于' },
+  ];
+
+  it('keeps the unread badge out of the icon so freshly generated cards match their type', () => {
+    const stdout = execFileSync('python3', [RUNNER, '--parse-cards'], {
+      input: JSON.stringify(CASES.map((c) => c.raw)),
+      encoding: 'utf8',
+    });
+    const parsed = JSON.parse(stdout) as Array<[string, string]>;
+
+    expect(parsed).toHaveLength(CASES.length);
+    CASES.forEach((expected, i) => {
+      expect(parsed[i][0]).toBe(expected.icon);
+      expect(parsed[i][1]).toBe(expected.title);
+    });
+  });
+
+  it('parses an unread infographic card as the infographic icon', () => {
+    const stdout = execFileSync('python3', [RUNNER, '--parse-cards'], {
+      input: JSON.stringify(['stacked_bar_chart未读 测试标题 1 个来源 · 2 分钟前']),
+      encoding: 'utf8',
+    });
+    const [[icon]] = JSON.parse(stdout) as Array<[string, string]>;
+
+    expect(icon).toBe('stacked_bar_chart');
+  });
+});

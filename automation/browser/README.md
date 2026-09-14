@@ -191,3 +191,18 @@ TUN 模式的 MTU/TCP 参数（`utun2/4/5/6` 的 mtu 分别只有 1380/1000/1380
 - 新增两项入口回归测试，直接执行真实 launch.cjs 并检查传给 Playwright 的选项，覆盖默认启用及显式禁用；已通过。
 - 修复验证未 claim/retry、生成、上传、publish 或远端交付，既有 failed 未伪改为 ready。下载已保存在本机 `notebooklm-daily/runs/2026-09-14T1805-sandbox-fix/`，可供后续恢复验收；本次完成的是下载缺陷修复，不是生产交付。
 - 本机证据：上述目录 report.json；完整 PPTX 留在同目录，不提交私人生成材料。
+
+## 2026-09-14 补记④：未读徽标会污染卡片图标（代价＝两条白跑）
+
+Studio 卡片字符串里，未读徽标 `未读` 夹在图标类名和标题之间：`stacked_bar_chart未读 标题 1 个来源 · …`。
+`run-notebooklm-item.py` 的 `parse_card` 原来用 `\w+` 抓图标，而 `\w` **不匹配中日韩字符**，于是 `未读`
+被并进图标，得到 `icon='stacked_bar_chart未读'`；它与 `ICON['infographic']='stacked_bar_chart'` 永不相等，
+`wait_for_card` 便认定"该类卡片从未出现"。
+
+- 后果：2026-09-14 第 1、2 条**产物其实都已生成**，却各等了 1200 秒后记 `failed`；两条的 claim 白花。
+- 关键点：**刚生成的卡片必然是未读的**，所以这个 bug 专门打击"本该成功"的情况，已读的旧卡片反而正常——
+  这也是它藏了这么久的原因。
+- 修法：图标类名限制为 ASCII（`[a-z_]+`），未读徽标单独匹配；并加 `--parse-cards` 入口让
+  `tests/lib/notebooklm-source-identity.test.ts` 直接跑真函数（现 8 例）。
+- 同时给 `wait_for_card` 加了每 5 分钟"重读列表"（`LAG_CARD_REREAD_SEC`），因为 Studio 列表也会长时间
+  卡在「正在生成」而服务端早已完成；重读属于等待的一部分，不是补救步骤。
