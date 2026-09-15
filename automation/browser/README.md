@@ -101,6 +101,7 @@ node automation/browser/launch.cjs https://notebook.google.com/
 | `nblm-generate-artifact.cjs` | 生成 信息图／思维导图／演示文稿，提交前断言对话框必须是「1 个来源」 |
 | `nblm-studio-list.cjs` | 把 Studio 面板归位到列表（查看器各有各的关法，兜底重载页面） |
 | `nblm-export-image-artifact.cjs` / `nblm-export-mindmap.cjs` / `nblm-export-deck.cjs` | 三类产物的导出 |
+| `nblm-capture-deck.cjs` | 演示文稿的**首选**导出路径：经页面网络栈取回原始 PPTX（下载控件在本机不可靠，见 0915 补记） |
 | `nblm-deck-available.cjs` | 生成前探测演示文稿是否可用（**不消耗 claim**） |
 
 **最容易踩、也最该记住的一条**：Studio 生成对话框**有自己独立的来源选择器，默认全选**，
@@ -206,3 +207,33 @@ Studio 卡片字符串里，未读徽标 `未读` 夹在图标类名和标题之
   `tests/lib/notebooklm-source-identity.test.ts` 直接跑真函数（现 8 例）。
 - 同时给 `wait_for_card` 加了每 5 分钟"重读列表"（`LAG_CARD_REREAD_SEC`），因为 Studio 列表也会长时间
   卡在「正在生成」而服务端早已完成；重读属于等待的一部分，不是补救步骤。
+
+## 2026-09-15 补记：演示文稿改走**页面网络栈**取字节（下载控件在本机再次不可用）
+
+09-14 的下载修复（`chromiumSandbox`）当天有效并交付了 4 条，但 09-15 同一路径再次失败，且这次
+每一发都**把浏览器一起带走**：
+
+- 5 次尝试的停滞点：0 / 16,685 / 16,686 / 31,408 / 39,985 B；有头与无头都复现；换一张 09-14
+  刚成功下过 18.5 MB 的旧卡片（The Long Dark Narrative Blueprint）同样停在 0 B。
+- 已排除"下载机制坏了"：同一浏览器、同一沙箱配置，从本机 `127.0.0.1:8799` 下 6,000,000 B
+  **完整成功**，`Browser.downloadProgress` 一路到 completed。所以坏的是那条资产传输，不是下载能力。
+- 运行中的 Chrome 参数已核对：无 `--no-sandbox`，带 `--disable-features=LocalNetworkAccessChecks`。
+
+**可用路径**（`nblm-capture-deck.cjs`，已实测 17,526,368 B、两次运行 sha256 一致、`unzip -t` 零错误）：
+
+1. 在**浏览器级** CDP 会话设 `Browser.setDownloadBehavior {behavior:'deny', eventsEnabled:true}`，
+   再点卡片的「更多选项 → 下载 PowerPoint (.pptx)」。`Browser.downloadWillBegin` 会给出那条签名 URL，
+   而浏览器自己取消传输——不落半截文件，也不崩。
+2. 用页面自己的网络栈请求该 URL：`Fetch.enable(requestStage:'Response')` ＋ 一次 `<img>` 触发
+   （`img-src` 允许该域，`fetch()` 被 CSP `connect-src` 拦），`takeResponseBodyAsStream` + `IO.read` 取回字节。
+3. 落盘后按 ZIP 签名 + `[Content_Types].xml`/`ppt/` 成员 + 字节下限校验，错误页或截断容器一律拒绝。
+
+踩过的两个坑：`Browser.downloadWillBegin` 只发给**浏览器级**会话（页面级会话收到 0 个事件）；
+下载 URL 的 `c=` 令牌是 protobuf（`notebooklm` / `artifacts_media` / 工件 UUID），但卡片 DOM 里那个 UUID
+**不是**工件 UUID，凭它拼 URL 会 404——只能从真实下载事件里取。
+
+流水线据此改为"先页面路径、失败才回退到下载控件"，并在 claim 前先跑一次 `nblm-studio-list.cjs`：
+上一条材料导出后留下的查看器会遮住 create 按钮，让 `nblm-deck-available.cjs` 报假 `unavailable`
+（09-15 实测把整批停在 claim 之前）。卡片上限默认也从 1200s 提到 2700s：本账号的演示文稿
+生成实测约 27 分钟才完成；同时 `wait_for_card` 现在遇到「未能生成演示文稿」这类错误卡片会带真实原因立即失败，
+不再空等到上限。

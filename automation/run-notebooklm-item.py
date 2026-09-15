@@ -40,6 +40,9 @@ INBOX = AI_ROOT / "notebooklm-resources"
 PICGO = os.environ.get("LAG_PICGO_URL", "http://127.0.0.1:36677/upload")
 
 ICON = {"infographic": "stacked_bar_chart", "mindmap": "flowchart", "slides": "tablet"}
+# Wording NotebookLM uses in an artifact card that failed to generate; used to fail fast
+# with the real reason instead of waiting out the card cap.
+KIND_WORDS = {"stacked_bar_chart": "信息图", "flowchart": "思维导图", "tablet": "演示文稿"}
 
 
 def now() -> str:
@@ -75,6 +78,7 @@ class Item:
         self.imported_title = ""
         self.cards: dict[str, str] = {}
         self.uploads: dict[str, dict] = {}
+        self.deck_route = "page-asset-capture"
 
     def note(self, stage: str, detail) -> None:
         entry = {"stage": stage, "at": now(), "detail": detail}
@@ -201,9 +205,13 @@ def card_timeout() -> int:
     1200s was the original guess. On 2026-09-14 all three cards for one item were still
     "正在生成" 30 minutes after submission with no throttle message, so the cap expired
     while the server was still working and the item was recorded as a generation failure
-    even though nothing had actually failed.
+    even though nothing had actually failed. On 2026-09-15 a slide deck that had produced a
+    complete summary, infographic and mind map was still generating at 1200s too (that one
+    later reported a server-side failure, which the card loop below now surfaces directly
+    instead of waiting). Completed decks on this account have taken about 27 minutes, so the
+    cap must sit above that; the periodic re-read keeps a frozen list from being trusted.
     """
-    return int(os.environ.get("LAG_CARD_TIMEOUT_SEC", "1200"))
+    return int(os.environ.get("LAG_CARD_TIMEOUT_SEC", "2700"))
 
 
 def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = None) -> str:
@@ -220,6 +228,18 @@ def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = 
     while time.time() < deadline:
         for c in studio_cards():
             card_icon, title = parse_card(c)
+            # A server-side generation failure replaces the card with an error row and
+            # never becomes a card of the requested type, so waiting out the whole cap
+            # reports "no card of this type appeared" and hides the real reason (observed
+            # 2026-09-15: the deck card read "未能生成演示文稿。请试试其他内容。"). Only cards
+            # that were not in the pre-generation baseline count, so an older error row
+            # cannot fail a fresh item.
+            if re.search(r"未能生成|生成失败|Failed to generate", c) and (card_icon, title) not in known:
+                word = KIND_WORDS.get(icon, "")
+                if word and word in c:
+                    raise StageError(f"{icon} card reported a generation failure: {c.strip()[:200]}", "generation")
+                last_seen = f"a card of another kind failed: {c.strip()[:120]}"
+                continue
             if card_icon != icon:
                 continue
             if (card_icon, title) in known:
@@ -340,6 +360,14 @@ def main() -> int:
                 pre_state = f"unknown: {exc}"
             item.note("pre-claim-source-lookup", {"state": pre_state})
 
+            # 0b) Put the Studio panel back in list mode first. The previous item's export
+            # leaves one of its artifact viewers open, and an open viewer hides the create
+            # buttons, so the deck probe below reports a false "unavailable" and stops the
+            # whole batch for a UI reason (observed 2026-09-15). Normalising here is free
+            # and happens before any claim.
+            normalise = run(["node", str(BROWSER / "nblm-studio-list.cjs")], timeout=180, check=False)
+            item.note("pre-claim-studio-list", {"exit": normalise.returncode})
+
             probe = run(["node", str(BROWSER / "nblm-deck-available.cjs")], timeout=180, check=False)
             try:
                 avail = json.loads(probe.stdout.strip().splitlines()[-1])
@@ -437,7 +465,24 @@ def main() -> int:
         # selection when it opens, so this is the last safe moment to guarantee grounding
         run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=420)
         for kind in ("infographic", "mindmap", "slides"):
-            run(["node", str(BROWSER / "nblm-generate-artifact.cjs"), kind, prompts[kind], keep], timeout=900)
+            try:
+                run(["node", str(BROWSER / "nblm-generate-artifact.cjs"), kind, prompts[kind], keep], timeout=900)
+            except StageError as exc:
+                # The deck feature can go from "available" to throttled inside one item
+                # (observed 2026-09-15: the pre-claim gate said available at 12:29 and the
+                # submission at 12:32 offered only the multi-hour queue). Re-probe so the
+                # ledger and the run report name the throttle instead of an opaque command
+                # failure — that is the signal that stops the rest of the day's batch.
+                if kind == "slides" and re.search(r"no generate button|GEN_FAIL", str(exc)):
+                    gate = run(["node", str(BROWSER / "nblm-deck-available.cjs")], timeout=180, check=False)
+                    try:
+                        state = json.loads(gate.stdout.strip().splitlines()[-1])
+                    except Exception:  # noqa: BLE001 - classification is advisory
+                        state = {}
+                    if "throttled" in str(state.get("reason", "")):
+                        item.note("deck-throttle", state)
+                        raise StageError("deck feature throttled mid-item: " + str(state.get("reason")), "generation")
+                raise
             item.note(f"generate-{kind}", {"submitted": True})
         for kind in ("infographic", "mindmap", "slides"):
             card_title = wait_for_card(ICON[kind], cards_before, timeout=card_timeout())
@@ -453,16 +498,30 @@ def main() -> int:
         }
         run(["node", str(BROWSER / "nblm-export-image-artifact.cjs"), item.cards["infographic"], str(files["infographic"])], timeout=900)
         run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), item.cards["mindmap"], str(files["mindmap"]), "2664"], timeout=900)
+        # The deck goes through the page-asset route first: the card's own download control
+        # is a browser-process download navigation that, on this machine (2026-09-15),
+        # stalled a few KB in on every attempt and then killed the browser. The viewer
+        # download stays as the fallback for environments where the page route is blocked.
         deck_dir = item.dir / "deck"
-        run(["node", str(BROWSER / "nblm-export-deck.cjs"), item.cards["slides"], str(deck_dir), "--timeout-sec=300"], timeout=600)
-        downloaded = [p for p in deck_dir.glob("*.pptx") if not p.name.endswith(".crdownload")]
-        if not downloaded:
-            raise StageError("deck download produced no pptx", stage)
-        shutil.copy(downloaded[0], files["slides"])
+        deck_route = "page-asset-capture"
+        try:
+            run(["node", str(BROWSER / "nblm-capture-deck.cjs"), item.cards["slides"], str(files["slides"]),
+                 "--timeout-sec=300"], timeout=600)
+        except StageError as exc:
+            item.note("export-deck-capture", {"fell_back_to_viewer_download": True, "reason": str(exc)[:300]})
+            deck_route = "viewer-download"
+            run(["node", str(BROWSER / "nblm-export-deck.cjs"), item.cards["slides"], str(deck_dir), "--timeout-sec=300"], timeout=600)
+            downloaded = [p for p in deck_dir.glob("*.pptx") if not p.name.endswith(".crdownload")]
+            if not downloaded:
+                raise StageError("deck download produced no pptx", stage)
+            shutil.copy(downloaded[0], files["slides"])
         for k, p in files.items():
             if not p.exists() or p.stat().st_size < 50000:
                 raise StageError(f"{k} export looks empty: {p}", stage)
-        item.note(stage, {k: p.stat().st_size for k, p in files.items()})
+        sizes = {k: p.stat().st_size for k, p in files.items()}
+        sizes["deck_route"] = deck_route
+        item.note(stage, sizes)
+        item.deck_route = deck_route
 
         # 7) upload + readback
         stage = "upload"
@@ -496,8 +555,11 @@ def main() -> int:
             },
             "notebook_url": "https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17",
             "export_note": ("信息图：CDP Fetch 流式取回 lh3 原始字节（asset-capture.cjs）；思维导图：viewer 内 Expand all nodes "
-                            "+ DOM 核验（折叠 0、层级不少于三级、渲染稳定）后以 SVG 抽取渲染；演示文稿：viewer ⋮ 下载 PPTX。"
-                            "三件均经 PicGo 上传并回读 sha256 校验。"),
+                            "+ DOM 核验（折叠 0、层级不少于三级、渲染稳定）后以 SVG 抽取渲染；演示文稿："
+                            + ("页面网络栈取回原始 PPTX（nblm-capture-deck.cjs，浏览器的下载控件在本机不可靠）"
+                               if item.deck_route == "page-asset-capture"
+                               else "viewer ⋮ 下载 PPTX（页面资产路径不可用时的回退）")
+                            + "。三件均经 PicGo 上传并回读 sha256 校验。"),
         }
         result_path = item.dir / "result.json"
         result_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

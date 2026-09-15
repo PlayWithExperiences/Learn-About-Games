@@ -1,6 +1,19 @@
 # ProjectProgress
 
-更新于 2026-09-15 · 记录者 codex（2026-09-15T07:51:05.382593+08:00）
+更新于 2026-09-15 · 记录者 DSH agent（2026-09-15T12:45:00+08:00）
+
+## 资源生产最新：2026-09-15 演示文稿改走页面网络栈，交付 2 条后止于节流
+
+决策：無涘（既有连续跑批授权：每日最多 10 次 distinct claim、串行 1、自动重试 0；未扩大范围） ｜ 记录：DSH agent
+
+- preflight `ready_to_claim`（2454 候选、在列 8、当日已 claim 2、剩余 8）。本轮 attempted 4 / ready 2 / remote_delivered 2 / failed 2 / skipped 0，另 1 次在 claim 前被闸门拦下（0 消耗）。当日 claim 用 6，**剩余 4 未动**。
+- 交付：`youtube-aX8f1lE09uY`（Albion Online 经济平衡 → `2026-0915-1213-balance-economy.json`）、`youtube-o2C4z_apu2I`（Offworld Trading Company → `2026-0915-1228-systems-mechanics.json`）；三件产物上传后 sha256 回读一致、远端 blob 逐字节一致。
+- **修掉早上两条阻断**：①导图 viewer 的 `ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS` 以 `LAG_CHROME_ARGS="--disable-features=LocalNetworkAccessChecks"` 启动即恢复，用现成旧卡做零配额探针得 `MINDMAP_OK`（49 内容节点、折叠 0、层级 3）；②演示文稿下载控件当天连崩 5 次（停滞 0/16,685/16,686/31,408/39,985 B，有头无头都复现，含 09-14 刚成功下过的旧卡），而本机 6,000,000 B 下载完整成功 → 坏的是那条资产传输，不是下载机制。新增 `automation/browser/nblm-capture-deck.cjs` 改走页面网络栈取字节（实测 17,526,368 B、两次 sha256 一致、`unzip -t` 零错误）。
+- 流水线三处修正：deck 先页面路径、失败才回退下载控件并在 `export_note` 记录实际路径；claim 前先跑 `nblm-studio-list.cjs` 归位 Studio 面板（上一条留下的查看器会让闸门报假 `unavailable`，11:21 实测把整批停在 claim 之前）；卡片上限 1200→2700s，错误卡片与"提交时无生成按钮"两处改为带真实原因失败。
+- **停止原因＝演示文稿账号级容量节流**（「此内容将在几小时后生成」）：12:29 闸门仍 available，12:32 提交已不可用，同一 item 内翻转；按 skill 记 `quota_block` 语义并停止当天剩余批次，未再消耗 claim。不是无候选、不是通道失败、不是浏览器不可用。
+- 失败 2 条都与 deck 有关且**不是内容失败**：`youtube-gd_Qe9uATA`（deck 服务端「未能生成演示文稿」）、`youtube-IiDPa50bgNg`（deck 节流）。ledger 44 ready / 33 failed / 0 generating。
+- 未重试任何既有 failed（skill 要求显式授权，含早上两条与本轮两条）；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- 验证：234 单测通过（新增 `tests/lib/notebooklm-deck-capture.test.ts` 3 例）；`astro check` 106 文件 0 错误。证据：`runs/2026-09-15T115158-item-aX8f1lE09uY/` 等；摘要 `sessions/2026-0915-notebooklm-deck-capture-fix.md`；原始对话 `dialogues/2026-0915-notebooklm-automation.md`。
 
 ## 当前状态：Innovation Atlas 全量主张复核已上线
 
