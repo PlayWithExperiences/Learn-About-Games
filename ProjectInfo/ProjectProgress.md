@@ -1,6 +1,19 @@
 # ProjectProgress
 
-更新于 2026-09-16T07:56:34.889399+08:00 · 记录者 Codex
+更新于 2026-09-16 · 记录者 DSH agent（2026-09-16T14:05:00+08:00）
+
+## 资源生产最新：2026-09-16 带上内容验收门，交付 3 条、拦下 1 条
+
+决策：無涘（既有连续跑批授权：每日最多 10 次 distinct claim、串行 1、自动重试 0；未扩大范围） ｜ 记录：DSH agent
+
+- preflight `ready_to_claim`（2454 候选、在列 9、当日已 claim 1、剩余 9）。本轮 attempted 4 / **ready 3 / remote_delivered 3** / failed 1；当日 claim 用 5、**剩余 5 未动**；ledger 47 ready / 35 failed / 0 generating。
+- 交付：`youtube-oCwQtZcLrVs`（Astroneer 合成系统 → `2026-0916-1120-systems-mechanics.json`）、`youtube-djJO1XSOwuI`（星球大战 Galaxies 复盘 → `2026-0916-1254-criticism-values-history.json`）、`youtube-Mrr4lNF7-OU`（游戏产出项目实证研究 → `2026-0916-1356-criticism-values-history.json`）；三件产物上传后 sha256 回读一致、远端 blob 逐字节一致，deck 全走页面网络栈。
+- **每条都在上传前做内容验收**（沿用早上 Codex 的门）：用 NotebookLM 对话索取来源原句核对统计数字/人名/机制，并目视信息图、导图与抽查 deck。验收记录写在各 item 目录 `content-review.json`。
+- **验收拦下 1 条**：`youtube-Xv5EtQHZCnI`（技术美术与 VR 渲染）总结写「GPU 单帧预算约 15 毫秒」，而来源唯一表述是 "about 50 milliseconds Budget on GPU"，二次追问确认全篇无 15ms；60fps 单帧约 16.7ms 使 50ms 不可能，最可能是转写 fifteen→fifty，但那是推断不是来源事实，按合同记 `failed(content-validation)`、未上传未发布（产物留在 notebook，授权后重跑只需重生成总结）。
+- **新增 claim 前对话闸门** `automation/browser/nblm-chat-available.cjs`：对话被 AI 用量限额挡住时总结阶段必然做不完，而限额只在提问时才暴露；探针只读页面、发 0 个问题，只在明确限额文案时阻断。本轮条目 2 因此在验收门等待额度恢复约 70 分钟，未浪费 claim。提交 `949caa3` 已推送；234 单测通过、`astro check` 106 文件 0 错误。
+- 交付通道一次失败并已修复：条目 1 推送被拒（消费端仓库被别的进程推了新提交），核对零文件重叠后合并、单独重跑交付脚本、远端 blob 回读一致；未重新调用 NotebookLM。
+- **复核方法的前提**：向 notebook 索取来源引句前必须重新隔离为单一来源（页面重载会把勾选重置为全选），否则回答会混入别的来源原句；隔离脚本打印的 `ISOLATED:` 名可作确认。
+- 未重试任何既有 failed；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。证据：`runs/2026-09-16T1024-collect2/item-1…item-4/`；摘要 `sessions/2026-0916-notebooklm-reviewed-batch.md`；原始对话 `dialogues/2026-0916-notebooklm-automation.md`。
 
 ## 0732 NotebookLM 每日自动化：内容验收失败（2026-09-16）
 

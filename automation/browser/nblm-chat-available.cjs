@@ -53,7 +53,11 @@ const port = process.env.LAG_CDP_PORT || '9222';
         if (limit) return { available: false, reason: 'chat rate limited: ' + limit[0], quota: true };
         return {
           available: true,
-          reason: enabled ? 'composer ready' : 'composer not visible (layout only, not treated as blocked)',
+          reason: enabled
+            ? 'composer ready'
+            : (composer
+              ? 'composer present but disabled and no limit notice found (normal while an artifact generates)'
+              : 'composer not in the DOM and no limit notice found'),
           composerVisible: !!composer,
         };
       })()`,
