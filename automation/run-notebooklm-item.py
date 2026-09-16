@@ -377,6 +377,21 @@ def main() -> int:
             if not avail.get("available"):
                 raise StageError("deck feature unavailable before claim: " + str(avail.get("reason")), stage)
 
+            # 0c) Can the chat answer? The summary stage asks the notebook a question, so a
+            # rate limited chat makes the item impossible — and the limit only becomes
+            # visible when the question is sent, i.e. after the claim is spent (observed
+            # 2026-09-16: "已达到 AI 用量限额。12:38 PM 之后，所有功能都将可用。"). This probe
+            # is a page read: it sends nothing and consumes no quota.
+            chat = run(["node", str(BROWSER / "nblm-chat-available.cjs")], timeout=120, check=False)
+            try:
+                chat_state = json.loads(chat.stdout.strip().splitlines()[-1])
+            except Exception:
+                chat_state = {"available": False,
+                              "reason": f"chat probe unreadable: {chat.stdout[-200:]}{chat.stderr[-200:]}"}
+            item.note("chat-availability", chat_state)
+            if not chat_state.get("available"):
+                raise StageError("chat unavailable before claim: " + str(chat_state.get("reason")), "chat-availability")
+
         # 1) claim (or resume a claim opened by an explicit retry)
         if args.generation_run_id:
             run_id = args.generation_run_id
