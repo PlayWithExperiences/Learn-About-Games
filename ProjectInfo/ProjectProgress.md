@@ -1,6 +1,25 @@
 # ProjectProgress
 
-更新于 2026-09-18T10:09:00.609192+08:00 · 记录者 Codex
+更新于 2026-09-18T15:50:17+0800 · 记录者 DSH agent
+
+## 1300 收集端：卡片观测、来源身份、隔离取名、deck 捕捉四处缺陷已修并交付 3 条
+
+决策：無涘（既有每日 10 次 claim、串行 1、自动重试 0；另明确授权恢复 2 条 failed） ｜ 记录：DSH agent ｜ 2026-09-18T14:41:19+0800
+
+- 修复四处导致生产停摆/白花 claim 的缺陷：①`wait_for_card` 认不出「生成中」行、也不处理面板冻结/空读（09-17 卡片观测问题）；②`title_matches` 只比 token 重合度，GDC 同模板标题会误匹配（09-18 早上 Codex 停批的原因）；③隔离用的来源名取自导入时刻，元数据解析后名字已变（`youtube-lnnsDi7Sxq0` 14:25 失败原因）；④`nblm-capture-deck.cjs` 取了第一个下载事件，拿到的是缩略图而不是 PPTX。
+- 每条都配了回归测试（`--wait-plan` / `--identity-check` / `--isolate-name` / capture 事件选择），全量单测 246 通过、`astro check` 0 错。
+- 交付 3 条并远端逐字节核对：`youtube-NW4b6gP9_VY`（珠峰 VR，09-17）、`youtube-0zfm5_YqzYw`（独立游戏共享空间，恢复）、`youtube-mnIsv2ps31U`（Stugan，09-18）。内容验收拦下 2 处（信息图杜撰照片张数、总结把 16,000 美元统称押金并加加强词），重生成/重问后通过。
+- `youtube-lnnsDi7Sxq0`（Ultima Online）恢复运行中：来源身份与隔离取名修复后已正常生成，三条产物已提交，待演示文稿与内容验收。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-17T1030-collect/`；机制见 `automation/browser/README.md` 09-17/09-18 两节。
+
+## 1540 收集端现状：3 条已交付，Ultima Online 内容通过但卡在上传体积上限
+
+更新于 2026-09-18T15:50:17+0800 · 记录者 DSH agent
+
+- 已交付（远端 blob 逐字节核对）：`youtube-NW4b6gP9_VY`、`youtube-0zfm5_YqzWw`、`youtube-mnIsv2ps31U`。ledger 50 ready / 36 failed / 0 generating。
+- `youtube-lnnsDi7Sxq0`（Ultima Online）：三件产物已生成并**通过内容验收**（三轮来源原句核对；第一轮两个“未出现”经定向复核确认来源确有原句），但 21,883,508 B 的演示文稿被 PicGo 的 GitHub contents API 以 400 拒绝（同日 17.2 MB 与 20.55 MB 的 deck 均可上传），故按 `failed(upload)` 留痕、未发布。换用能传更大文件的上传方式后，用 `finish-notebooklm-item.py --reuse-artifacts` 只需再开一张票即可补完，不必重新生成。
+- 本段修掉的缺陷（均已加回归）：卡片观测（生成中行识别、面板冻结/空读刷新、严格读取）、来源身份（token 重合 + 字符相似度 ≥0.75）、隔离取名（隔离前按当前来源列表现算）、deck 捕捉（优先取 `.pptx` 文件的下载事件）。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
 
 ## 0738 NotebookLM 每日生产：来源身份误匹配，已停止
 

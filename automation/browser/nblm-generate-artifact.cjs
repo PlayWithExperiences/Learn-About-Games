@@ -17,6 +17,8 @@ const port = process.env.LAG_CDP_PORT || '9222';
 const type = process.argv[2];
 const prompt = process.argv[3];
 const keepSource = process.argv[4];
+const { execFile } = require('node:child_process');
+const path = require('node:path');
 
 const LABELS = { infographic: '信息图', mindmap: '思维导图', slides: '演示文稿' };
 if (!LABELS[type] || !prompt || !keepSource) {
@@ -87,33 +89,27 @@ const label = LABELS[type];
     console.log('CREAT_BUTTONS_AFTER_RELOAD:', await hasCreateButtons());
   }
 
-  // 2) isolation must be re-applied after a reload, because the reload resets it
+  // 2) isolation must be re-applied after a reload, because the reload resets it.
+  //
+  // This used to be a second copy of the deselect loop with a hardcoded 8-pass budget.
+  // That copy silently ran out once the production notebook grew past nine selected
+  // sources (2026-09-17: a reload left 16 of 24 sources checked, the dialog then reported
+  // more than one source and generation was refused — the artifact was never submitted and
+  // the wait that followed could only time out). The standalone script derives its pass
+  // budget from the observed checkbox list and verifies the result, so delegate to it
+  // instead of keeping a copy that drifts.
   if (reloaded) {
-    const iso = await evaluate(`(async () => {
-      const boxes = () => [...document.querySelectorAll('input[type=checkbox]')]
-        .filter(c => /^选择/.test(c.getAttribute('aria-label') || ''));
-      const clickLabel = (lb) => {
-        const box = boxes().find(c => c.getAttribute('aria-label') === lb);
-        if (!box) return 'gone';
-        (box.closest('label') || box).click();
-        return 'clicked';
-      };
-      for (let i = 0; i < 8; i++) {
-        const cur = boxes();
-        const victim = cur.find(s => s.checked && /^选择“/.test(s.getAttribute('aria-label')) && !s.getAttribute('aria-label').includes(${JSON.stringify(keepSource)}));
-        const all = cur.find(s => /选择所有来源/.test(s.getAttribute('aria-label')) && s.checked);
-        if (!victim && !all) break;
-        clickLabel(victim ? victim.getAttribute('aria-label') : all.getAttribute('aria-label'));
-        await new Promise(r => setTimeout(r, 1200));
-      }
-      const cur = boxes();
-      const mine = cur.find(s => s.getAttribute('aria-label').includes(${JSON.stringify(keepSource)}));
-      if (mine && !mine.checked) { clickLabel(mine.getAttribute('aria-label')); await new Promise(r => setTimeout(r, 1200)); }
-      const checked = boxes().filter(s => s.checked && /^选择“/.test(s.getAttribute('aria-label')));
-      return { n: checked.length, label: checked[0] ? checked[0].getAttribute('aria-label') : null };
-    })()`);
-    console.log('REISOLATED:', JSON.stringify(iso));
-    if (!iso || iso.n !== 1) { console.error('GEN_FAIL: could not re-isolate to one source after reload'); process.exit(1); }
+    const iso = await new Promise((resolve, reject) => {
+      execFile('node', [path.join(__dirname, 'nblm-isolate-source.cjs'), keepSource, '--settle-ms=2500'],
+        { timeout: 900000, maxBuffer: 8 * 1024 * 1024 },
+        (err, stdout, stderr) => {
+          if (/^ISOLATED:/m.test(stdout)) return resolve(stdout.trim().split('\n')
+            .filter((l) => /^(PLAN|PASSES_USED|ISOLATED):/.test(l)).join(' | '));
+          reject(new Error('re-isolate failed: ' + (err ? err.message : 'no ISOLATED line')
+            + ' :: ' + stdout.slice(-300) + ' ' + stderr.slice(-300)));
+        });
+    });
+    console.log('REISOLATED:', iso);
   }
 
   const before = await evaluate(ARTIFACTS);

@@ -69,9 +69,23 @@ if (!keep) {
   // aria-label form is 选择“<name>”, so strip the wrapper to compare against the real name
   const nameOf = (label) => (label || '').replace(/^选择“/, '').replace(/”$/, '').trim();
 
+  // A freshly imported link source carries its raw URL as the card name until metadata
+  // resolves. The runner passes just the video id for that case — truncating the URL to a
+  // prefix would collide across every unresolved source — so resolve the id against the
+  // URL cards by exact video id. Matching stays exact; nothing here is a prefix match.
+  const looksLikeVideoId = /^[A-Za-z0-9_-]{6,}$/.test(keep) && !/^https?:/i.test(keep);
+  const videoIdOf = (name) => {
+    const m = /(?:v=|youtu\.be\/|\/shorts\/|\/embed\/)([A-Za-z0-9_-]{6,})/.exec(name || '');
+    return m ? m[1] : null;
+  };
+
   // exact match only: a fragment would also match a neighbouring lecture whose title
   // shares a prefix, and then isolation would keep the wrong source
-  const matchesKeep = (s) => nameOf(s.label) === keep;
+  const matchesKeep = (s) => {
+    const name = nameOf(s.label);
+    if (name === keep) return true;
+    return looksLikeVideoId && videoIdOf(name) === keep;
+  };
   const toggle = (label) => evaluate(`(() => {
     const boxes = [...document.querySelectorAll('input[type=checkbox]')]
       .filter(c => /^选择“/.test(c.getAttribute('aria-label') || ''));

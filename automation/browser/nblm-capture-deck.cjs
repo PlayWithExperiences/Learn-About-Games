@@ -105,11 +105,25 @@ function verifyPptx(file) {
   };
 
   let assetUrl = null;
+  // Collect every download the menu produces and prefer the one that names a .pptx.
+  // Taking the FIRST event blindly captured a 128x128 PNG thumbnail on 2026-09-18: the
+  // capture then "succeeded" at fetching bytes and only failed the container check, which
+  // reads like a network problem instead of a wrong-event problem.
+  const downloadEvents = [];
   browser.ws.addEventListener('message', (ev) => {
     let m;
     try { m = JSON.parse(typeof ev.data === 'string' ? ev.data : Buffer.from(ev.data).toString()); } catch { return; }
-    if (m.method === 'Browser.downloadWillBegin' && !assetUrl) assetUrl = m.params.url;
+    if (m.method === 'Browser.downloadWillBegin') {
+      downloadEvents.push({ url: m.params.url, file: m.params.suggestedFilename || '' });
+    }
   });
+
+  const pickAsset = () => {
+    const pptx = downloadEvents.filter((d) => /\.pptx$/i.test(d.file));
+    if (pptx.length) return pptx[pptx.length - 1];
+    const notImage = downloadEvents.filter((d) => !/\.(png|jpe?g|webp|gif)$/i.test(d.file));
+    return notImage.length ? notImage[notImage.length - 1] : null;
+  };
 
   // Deny the transfer itself: the URL is all we need from this step, and letting it start
   // is what stalls the browser on this machine.
@@ -167,9 +181,12 @@ function verifyPptx(file) {
     if (clicked !== 'clicked') { console.error('DECK_FAIL: ' + clicked); process.exit(1); }
 
     const urlDeadline = Date.now() + Math.min(timeoutSec, 90) * 1000;
-    while (!assetUrl && Date.now() < urlDeadline) await sleep(500);
-    if (!assetUrl) { console.error('DECK_FAIL: the browser reported no download for this card'); process.exit(1); }
-    console.log('ASSET_HOST:', host4(assetUrl));
+    while (!pickAsset() && Date.now() < urlDeadline) await sleep(500);
+    const asset = pickAsset();
+    if (!asset) { console.error('DECK_FAIL: the browser reported no download for this card'); process.exit(1); }
+    assetUrl = asset.url;
+    console.log('ASSET_HOST:', host4(assetUrl), '| file:', asset.file,
+                '| events:', JSON.stringify(downloadEvents.map((d) => d.file)));
   } finally {
     try { await browser.send('Browser.setDownloadBehavior', { behavior: 'default', eventsEnabled: false }); } catch { /* best effort */ }
   }

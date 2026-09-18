@@ -35,6 +35,16 @@ PICGO = os.environ.get("LAG_PICGO_URL", "http://127.0.0.1:36677/upload")
 sys.path.insert(0, str(ROOT / "scripts"))
 import notebooklm_producer as producer  # noqa: E402
 
+# The card-wait / verification rules live in the item runner; reuse them instead of
+# keeping a second copy that can drift (the module has a dash in its name, so it is loaded
+# by path).
+import importlib.util  # noqa: E402
+
+_spec = importlib.util.spec_from_file_location(
+    "lag_item_runner", Path(__file__).resolve().parent / "run-notebooklm-item.py")
+_runner = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_runner)
+
 
 def stamp() -> str:
     return dt.datetime.now().strftime("%Y%m%d%H%M%S")
@@ -79,6 +89,9 @@ def main() -> int:
     ap.add_argument("--infographic", required=True)
     ap.add_argument("--mindmap", required=True)
     ap.add_argument("--slides", required=True)
+    ap.add_argument("--reuse-artifacts", action="store_true",
+                    help="skip exporting; use the verified files already in <item-dir>/artifacts "
+                         "(requires <item-dir>/mindmap-verification.json from the export that produced them)")
     ap.add_argument("--state-dir", default=os.environ.get("LAG_NOTEBOOKLM_STATE_DIR",
                                                           str(Path.home() / ".local/state/learn-about-games/notebooklm-daily")))
     args = ap.parse_args()
@@ -109,7 +122,27 @@ def main() -> int:
         with open(path, "rb") as fh:
             return fh.read(8) == b"\x89PNG\r\n\x1a\n"
 
-    if valid_png(files["infographic"]):
+    if args.reuse_artifacts:
+        # A run that already exported and verified all three artifacts should not re-render
+        # them: the rasteriser is not deterministic (a blank-text mindmap passed every gate
+        # on 2026-09-18), so re-exporting can replace a verified file with a broken one.
+        for kind, path_ in files.items():
+            if not path_.exists() or path_.stat().st_size < 50000:
+                raise SystemExit(f"{kind} missing or empty for --reuse-artifacts: {path_}")
+        if files["infographic"].read_bytes()[:8] != b"\x89PNG\r\n\x1a\n":
+            raise SystemExit("infographic is not a PNG")
+        if files["mindmap"].read_bytes()[:8] != b"\x89PNG\r\n\x1a\n":
+            raise SystemExit("mindmap is not a PNG")
+        if files["slides"].read_bytes()[:2] != b"PK":
+            raise SystemExit("slides is not a ZIP/PPTX container")
+        verification_path = item_dir / "mindmap-verification.json"
+        if not verification_path.exists():
+            raise SystemExit("--reuse-artifacts needs mindmap-verification.json from the export that ran")
+        mindmap_verification = json.loads(verification_path.read_text(encoding="utf-8"))
+        deck_route = "page-asset-capture (captured before this upload-only run)"
+        for kind, path_ in files.items():
+            print(f"  reusing {kind}: {path_.stat().st_size} bytes", flush=True)
+    elif valid_png(files["infographic"]):
         print(f"  infographic already exported, reusing: {files['infographic'].stat().st_size} bytes", flush=True)
     else:
         # Page-asset route first (original bytes, no download). If the viewer's inline
@@ -129,17 +162,31 @@ def main() -> int:
                 raise
             shutil.copy(got[0], files["infographic"])
             print(f"  recovered infographic via download: {got[0].name} {got[0].stat().st_size} bytes", flush=True)
-    run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), args.mindmap, str(files["mindmap"]), "2664"])
-    deck_dir = item_dir / "deck"
-    run(["node", str(BROWSER / "nblm-export-deck.cjs"), args.slides, str(deck_dir), "--timeout-sec=300"], timeout=600)
-    dl = [p for p in deck_dir.glob("*.pptx") if not p.name.endswith(".crdownload")]
-    if not dl:
-        raise SystemExit("no pptx downloaded")
-    shutil.copy(dl[0], files["slides"])
-    for k, p in files.items():
-        if not p.exists() or p.stat().st_size < 50000:
-            raise SystemExit(f"{k} export empty: {p}")
-        print(f"  exported {k}: {p.stat().st_size} bytes", flush=True)
+    if not args.reuse_artifacts:
+        mindmap_proc = run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), args.mindmap, str(files["mindmap"]), "2664"])
+        # The contract's expansion_verification must be what the viewer actually showed, so it
+        # comes from the export step that performs it instead of being written as a constant.
+        mindmap_verification = _runner.mindmap_verification(mindmap_proc.stdout)
+        print(f"  mindmap verification: {mindmap_verification}", flush=True)
+        deck_dir = item_dir / "deck"
+        # Page-asset route first: the card's own download control is a browser-process download
+        # navigation that stalls a few KB in on this machine (2026-09-15) and then kills Chrome.
+        deck_route = "page-asset-capture"
+        try:
+            run(["node", str(BROWSER / "nblm-capture-deck.cjs"), args.slides, str(files["slides"]),
+                 "--timeout-sec=300"], timeout=600)
+        except Exception as exc:
+            print(f"  deck capture failed ({str(exc)[:120]}); falling back to the viewer download", flush=True)
+            deck_route = "viewer-download"
+            run(["node", str(BROWSER / "nblm-export-deck.cjs"), args.slides, str(deck_dir), "--timeout-sec=300"], timeout=600)
+            dl = [p for p in deck_dir.glob("*.pptx") if not p.name.endswith(".crdownload")]
+            if not dl:
+                raise SystemExit("no pptx downloaded")
+            shutil.copy(dl[0], files["slides"])
+        for k, p in files.items():
+            if not p.exists() or p.stat().st_size < 50000:
+                raise SystemExit(f"{k} export empty: {p}")
+            print(f"  exported {k}: {p.stat().st_size} bytes", flush=True)
 
     uploads = {}
     for kind, p in files.items():
@@ -162,14 +209,15 @@ def main() -> int:
         "artifacts": {
             "infographic": {"label": "中文简体横向手绘信息图（详细）", "url": uploads["infographic"]["url"]},
             "mind_map": {"label": "中文简体完整思维导图（查看器内全部展开）", "url": uploads["mindmap"]["url"],
-                         "expansion_verification": {"method": "notebooklm-viewer", "action": "全部展开",
-                                                    "observed_depth": 3, "collapsed_node_count": 0}},
+                         "expansion_verification": mindmap_verification},
             "slide_deck": {"label": "中文简体详细演示文稿（PPTX）", "url": uploads["slides"]["url"]},
         },
         "notebook_url": "https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17",
         "export_note": ("信息图：CDP Fetch 流式取回 lh3 原始字节；思维导图：viewer 内 Expand all nodes + DOM 核验"
-                        "（折叠 0、层级不少于三级、渲染稳定）后 SVG 抽取渲染；演示文稿：viewer ⋮ 下载 PPTX。"
-                        "三件均经 PicGo 上传并回读 sha256 校验。"),
+                        "（折叠 0、层级不少于三级、渲染稳定）后 SVG 抽取渲染；演示文稿："
+                        + ("页面网络栈取回原始 PPTX（nblm-capture-deck.cjs）" if deck_route == "page-asset-capture"
+                           else "viewer ⋮ 下载 PPTX（页面资产路径不可用时的回退）")
+                        + "。三件均经 PicGo 上传并回读 sha256 校验。"),
     }
     result_path = item_dir / "result.json"
     result_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import difflib
 import json
 import os
 import re
@@ -43,6 +44,8 @@ ICON = {"infographic": "stacked_bar_chart", "mindmap": "flowchart", "slides": "t
 # Wording NotebookLM uses in an artifact card that failed to generate; used to fail fast
 # with the real reason instead of waiting out the card cap.
 KIND_WORDS = {"stacked_bar_chart": "信息图", "flowchart": "思维导图", "tablet": "演示文稿"}
+GENERATING_RE = re.compile(r"正在生成|生成中|Generating", re.I)
+FAILURE_RE = re.compile(r"未能生成|生成失败|Failed to generate", re.I)
 
 
 def now() -> str:
@@ -79,6 +82,7 @@ class Item:
         self.cards: dict[str, str] = {}
         self.uploads: dict[str, dict] = {}
         self.deck_route = "page-asset-capture"
+        self.mindmap_verification: dict = {}
 
     def note(self, stage: str, detail) -> None:
         entry = {"stage": stage, "at": now(), "detail": detail}
@@ -99,22 +103,39 @@ def catalog_candidate(resource_id: str):
     raise SystemExit(f"resource_id is not a YouTube candidate in the catalog: {resource_id}")
 
 
+def normalize_title(text: str) -> str:
+    """Lower-case a title and collapse everything non-alphanumeric into single spaces."""
+    return re.sub(r"[^a-z0-9\u4e00-\u9fff]+", " ", (text or "").lower()).strip()
+
+
 def norm_tokens(text: str) -> set[str]:
-    text = text.lower()
-    text = re.sub(r"[^a-z0-9\u4e00-\u9fff]+", " ", text)
     stop = {"the", "a", "an", "of", "in", "and", "to", "for", "on", "with", "how", "your", "you"}
-    return {w for w in text.split() if len(w) > 2 and w not in stop}
+    return {w for w in normalize_title(text).split() if len(w) > 2 and w not in stop}
 
 
 def title_matches(catalog_title: str, source_title: str, threshold: float = 0.6) -> bool:
     """Fuzzy match: YouTube source titles are usually the catalog title, sometimes with
     punctuation or subtitle differences. Used both to reuse an already-imported source
-    and to refuse a mis-identified import."""
+    and to refuse a mis-identified import.
+
+    Token overlap alone is not identity. GDC titles come in templates, and on 2026-09-18
+    "Classic Game Postmortem: Ultima Online" overlapped "Classic Game Postmortem: 'Star Wars
+    Galaxies'" on classic/game/postmortem — exactly 3 of the candidate's 5 tokens, i.e. the
+    0.6 threshold — so the runner treated a different lecture as this candidate's source and
+    stopped in the isolation stage. The character-level similarity is required as well, so a
+    shared series prefix can never stand in for the distinctive part of the title.
+    """
     want = norm_tokens(catalog_title)
     got = norm_tokens(source_title)
     if not want or not got:
         return catalog_title.strip() == source_title.strip()
-    return len(want & got) / len(want) >= threshold
+    if len(want & got) / len(want) < threshold:
+        return False
+    # Measured on the real cases: every source currently in the production notebook matches
+    # its candidate at 1.0, the documented punctuation/subtitle variant sits at 0.81, and the
+    # 2026-09-18 series-template clash at 0.68 — 0.75 keeps a ~0.06 margin on both sides.
+    return difflib.SequenceMatcher(None, normalize_title(catalog_title),
+                                   normalize_title(source_title)).ratio() >= 0.75
 
 
 def source_identity_ok(catalog_title: str, video_id: str, source_title: str) -> bool:
@@ -158,6 +179,25 @@ def isolate_name(imported_title: str, video_id: str) -> str:
     return raw
 
 
+def resolve_isolate_name(title: str, video_id: str, sources: list[str]) -> str:
+    """The exact name to hand the isolate step, re-resolved from the LIVE source list.
+
+    A freshly imported link source renders as its raw URL first and swaps in the real
+    YouTube title once metadata resolves — and that swap can happen between the import step
+    and the isolation step. On 2026-09-18 the runner passed the video id it captured at
+    import time while the card had already become "Classic Game Postmortem: Ultima Online":
+    the id matched nothing, isolation refused, and the item was recorded failed with a claim
+    spent and no artifact attempted. Resolving the name here also means a card that resolved
+    late is isolated by its real title, not by a placeholder.
+    """
+    matches = [s for s in sources if source_identity_ok(title, video_id, s)]
+    if len(matches) != 1:
+        raise StageError(
+            f"expected exactly one source for this candidate before isolation, found {len(matches)}: "
+            f"{json.dumps(matches, ensure_ascii=False)[:400]}", "isolate-source")
+    return isolate_name(matches[0], video_id)
+
+
 def list_sources() -> list[str]:
     proc = run(["node", str(BROWSER / "nblm-list-sources.cjs")], check=False)
     try:
@@ -166,13 +206,59 @@ def list_sources() -> list[str]:
         return []
 
 
-def studio_cards() -> list[str]:
-    proc = run(["node", str(BROWSER / "nblm-studio-list.cjs"), "--json"], check=False)
-    try:
-        payload = json.loads(proc.stdout.strip().splitlines()[-1])
-        return payload.get("artifacts", [])
-    except Exception:
-        return []
+def studio_payload(proc: subprocess.CompletedProcess, what: str) -> dict:
+    """Return the Studio list JSON a browser step printed, or raise StageError.
+
+    A read that failed must never be reported as an empty list. On 2026-09-17 the runner
+    waited out the whole card cap and reported "no card of this type appeared" while all
+    three artifacts were in the notebook; swallowing a channel error into `[]` is exactly
+    how an observation failure turns into a fabricated "the server produced nothing".
+    """
+    for line in reversed(proc.stdout.strip().splitlines()):
+        try:
+            payload = json.loads(line)
+        except Exception:  # noqa: BLE001 - not every output line is JSON
+            continue
+        if isinstance(payload, dict) and isinstance(payload.get("artifacts"), list):
+            return payload
+    raise StageError(
+        f"{what} could not be read (rc={proc.returncode}): "
+        f"{proc.stdout[-300:]} {proc.stderr[-300:]}", "studio-read")
+
+
+def studio_cards(*, require_items: bool = False, what: str = "studio card list") -> list[str]:
+    """Read the Studio artifact cards; raise instead of returning a fake empty list.
+
+    "The panel answered with zero cards" is not the same fact as "the notebook has no
+    artifacts". On 2026-09-17 the wait spent its whole 1200s cap reading an empty list from
+    a panel that was not rendering its list at all, reported "no card of this type
+    appeared", and left a finished artifact in the notebook. A payload that says the panel
+    itself is missing is therefore an unreadable channel, and the pre-generation baseline
+    refuses an empty answer outright: an empty baseline makes every older card look new.
+    """
+    proc = run(["node", str(BROWSER / "nblm-studio-list.cjs"), "--json"], timeout=180, check=False)
+    payload = studio_payload(proc, what)
+    cards = payload["artifacts"]
+    detail = json.dumps({k: v for k, v in payload.items() if k != "artifacts"},
+                        ensure_ascii=False)[:220]
+    if not cards and payload.get("panel") is False:
+        raise StageError(f"{what}: the Studio panel is not rendering ({detail})", "studio-read")
+    if not cards and require_items:
+        raise StageError(f"{what}: the panel returned no artifact cards ({detail})", "studio-read")
+    return cards
+
+
+def refresh_studio_list(*, settle_ms: int = 12000) -> list[str]:
+    """Force a page reload, then return the freshly rendered card list."""
+    proc = run(["node", str(BROWSER / "nblm-studio-list.cjs"), "--json", "--reload",
+                f"--settle-ms={settle_ms}"], timeout=300, check=False)
+    payload = studio_payload(proc, "studio card list after reload")
+    if not payload.get("reloaded"):
+        # The script only reloads on request; if it says otherwise the panel state is not
+        # the one this function promises, so do not pretend the freeze was cleared.
+        raise StageError(f"studio reload did not happen: {json.dumps(payload, ensure_ascii=False)[:200]}",
+                         "studio-read")
+    return payload["artifacts"]
 
 
 CARD_RE = re.compile(r"^(?P<icon>[a-z_]+)(?:未读)?\s*(?P<title>.*?)\s*\d+\s*个来源")
@@ -209,53 +295,177 @@ def card_timeout() -> int:
     complete summary, infographic and mind map was still generating at 1200s too (that one
     later reported a server-side failure, which the card loop below now surfaces directly
     instead of waiting). Completed decks on this account have taken about 27 minutes, so the
-    cap must sit above that; the periodic re-read keeps a frozen list from being trusted.
+    cap must sit above that; the periodic refresh keeps a frozen list from being trusted.
     """
     return int(os.environ.get("LAG_CARD_TIMEOUT_SEC", "2700"))
 
 
-def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = None) -> str:
-    """Wait until a NEW card of the given icon type finishes generating; return its title."""
-    timeout = card_timeout() if timeout is None else timeout
-    deadline = time.time() + timeout
+def classify_cards(icon: str, known: set[tuple[str, str]], cards: list[str]) -> tuple[str, str]:
+    """Turn one Studio snapshot into a decision for the artifact we are waiting for.
+
+    Returns (state, detail) with state in {ready, generating, failure, absent}.
+
+    A still-generating artifact is NOT rendered in the finished card shape. On 2026-09-17
+    the panel showed "sync正在生成信息图…基于 1 个来源": icon `sync`, with the artifact type
+    inside the title. The old code compared the icon first and `continue`d on every
+    mismatch, so the "still generating" branch underneath was unreachable for our own
+    artifact: the wait ran out and reported "no card of this type appeared", which reads as
+    "the server produced nothing" and is the opposite of what the page said. Match the
+    generating and failure rows by their type word BEFORE matching the finished card.
+    """
+    detail = "no card of this type appeared"
+    word = KIND_WORDS.get(icon, "")
+    for raw in cards:
+        text = raw.strip()
+        if GENERATING_RE.search(text):
+            if word and word in text:
+                detail = f"still generating: {text[:120]}"
+            continue
+        parsed = parse_card(text)
+        if FAILURE_RE.search(text):
+            # A server-side failure replaces the card and never becomes a card of the
+            # requested type, so waiting out the cap would hide the real reason (observed
+            # 2026-09-15: "未能生成演示文稿。请试试其他内容。"). Only rows that were not in the
+            # pre-generation baseline count, so an older error row cannot fail a fresh item.
+            if word and word in text and parsed not in known:
+                return ("failure", text[:200])
+            continue
+        card_icon, title = parsed
+        if card_icon != icon or not title or parsed in known:
+            continue
+        return ("ready", title)
+    return ("generating" if detail.startswith("still generating") else "absent", detail)
+
+
+def wait_for_card_events(icon: str, known: set[tuple[str, str]], *, timeout: float,
+                         stale_after: float, poll: float, read_cards, refresh_cards,
+                         clock=time.time, sleep=time.sleep, on_event=None) -> str:
+    """Card wait as a pure decision walk, so tests replay it without a browser.
+
+    Two observation defects produced false generation failures and each burned daily
+    claims; both are handled here:
+
+    * 2026-09-14 — a freshly generated card carries a "未读" badge, which the icon regex
+      folded into the icon, so no new card ever matched (fixed in parse_card).
+    * 2026-09-17 — the Studio list can stop reflecting the server. The panel kept showing
+      the snapshot from while the artifact was still generating; the read immediately
+      after the failure returned all three finished cards from the same list. Only a page
+      reload has ever cleared that, so a list whose parsed card set has not moved for
+      `stale_after` seconds is reloaded, and the timeout path reloads once more before
+      giving up. Generation is server-side: a reload cannot cancel it. It DOES reset the
+      source-panel selection to ALL sources, which is safe here because it only happens
+      after the three generations were submitted — the caller logs every reload.
+    """
+    deadline = clock() + timeout
     last_seen = "no card of this type appeared"
-    # The Studio list can freeze on "正在生成" long after the server finished (observed
-    # 2026-09-14: three cards read as generating for 80+ minutes and showed real titles
-    # immediately after a reload). Re-reading through a reload is therefore part of
-    # waiting, not a recovery step, and it costs nothing.
-    reread_every = int(os.environ.get("LAG_CARD_REREAD_SEC", "300"))
-    next_reread = time.time() + reread_every
-    while time.time() < deadline:
-        for c in studio_cards():
-            card_icon, title = parse_card(c)
-            # A server-side generation failure replaces the card with an error row and
-            # never becomes a card of the requested type, so waiting out the whole cap
-            # reports "no card of this type appeared" and hides the real reason (observed
-            # 2026-09-15: the deck card read "未能生成演示文稿。请试试其他内容。"). Only cards
-            # that were not in the pre-generation baseline count, so an older error row
-            # cannot fail a fresh item.
-            if re.search(r"未能生成|生成失败|Failed to generate", c) and (card_icon, title) not in known:
-                word = KIND_WORDS.get(icon, "")
-                if word and word in c:
-                    raise StageError(f"{icon} card reported a generation failure: {c.strip()[:200]}", "generation")
-                last_seen = f"a card of another kind failed: {c.strip()[:120]}"
-                continue
-            if card_icon != icon:
-                continue
-            if (card_icon, title) in known:
-                continue
-            if re.search(r"正在生成|生成中|Generating", c):
-                last_seen = "still generating"
-                continue
-            if title:
-                return title
-        if time.time() >= next_reread:
-            next_reread = time.time() + reread_every
-            run(["node", str(BROWSER / "nblm-studio-list.cjs")], timeout=180, check=False)
-        time.sleep(15)
-    # Say what was actually observed: a card that is still generating has not failed,
-    # it is unfinished, and the distinction matters when deciding whether to re-run.
-    raise StageError(f"{icon} card was not ready after {timeout}s ({last_seen})", "generation")
+    fingerprint: frozenset | None = None
+    unchanged_since = clock()
+    refreshes = 0
+    last_refresh = 0.0
+    last_read_error = ""
+
+    while True:
+        try:
+            cards = read_cards()
+            last_read_error = ""
+        except StageError as exc:
+            # An unreadable panel is not evidence about the artifact. Keep trying through
+            # the refresh path and say so if the cap runs out.
+            cards = []
+            last_read_error = str(exc)
+        state, detail = classify_cards(icon, known, cards)
+        if state == "ready":
+            if on_event:
+                on_event("card-ready", {"card": detail, "refreshes": refreshes})
+            return detail
+        if state == "failure":
+            raise StageError(f"{icon} card reported a generation failure: {detail}", "generation")
+        last_seen = detail or last_seen
+
+        observed = frozenset(parse_card(c) for c in cards)
+        if observed != fingerprint:
+            fingerprint = observed
+            unchanged_since = clock()
+        expired = clock() >= deadline
+        # An empty list is a panel that is not showing its artifacts, not a panel that has
+        # none, so it must not buy four quiet minutes: refresh it as soon as it is seen.
+        blank = not cards
+        stale = clock() - unchanged_since >= stale_after
+        if blank and clock() - last_refresh < 60:
+            blank = False  # already refreshed a moment ago; give the app time to finish
+        if expired or stale or blank:
+            if on_event:
+                on_event("studio-refresh", {
+                    "reason": ("timeout-final-refresh" if expired else
+                               "studio list empty" if blank else "list unchanged"),
+                    "unchanged_sec": int(clock() - unchanged_since),
+                    "cards": len(cards), "read_error": last_read_error or None,
+                    "source_selection_reset": True})
+            try:
+                refreshed = refresh_cards()
+                last_read_error = ""
+            except StageError as exc:
+                refreshed = []
+                last_read_error = str(exc)
+            refreshes += 1
+            last_refresh = clock()
+            state, detail = classify_cards(icon, known, refreshed)
+            if state == "ready":
+                if on_event:
+                    on_event("card-ready", {"card": detail, "refreshes": refreshes, "after_refresh": True})
+                return detail
+            if state == "failure":
+                raise StageError(f"{icon} card reported a generation failure: {detail}", "generation")
+            last_seen = detail or last_seen
+            fingerprint = frozenset(parse_card(c) for c in refreshed)
+            unchanged_since = clock()
+            if expired:
+                # Say what was actually observed: a card that is still generating has not
+                # failed, it is unfinished, and the distinction decides how it is handled.
+                detail_note = f"; last read error: {last_read_error}" if last_read_error else ""
+                raise StageError(
+                    f"{icon} card was not ready after {int(timeout)}s ({last_seen}; "
+                    f"cards={len(refreshed)} after {refreshes} forced studio refresh(es){detail_note})",
+                    "generation")
+
+        sleep(poll)
+
+
+def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = None,
+                  on_event=None) -> str:
+    """Wait until a NEW card of the given icon type finishes generating; return its title."""
+    return wait_for_card_events(
+        icon, known,
+        timeout=card_timeout() if timeout is None else timeout,
+        stale_after=float(os.environ.get("LAG_CARD_STALE_SEC", "240")),
+        poll=float(os.environ.get("LAG_CARD_POLL_SEC", "15")),
+        read_cards=studio_cards, refresh_cards=refresh_studio_list, on_event=on_event)
+
+
+def mindmap_verification(stdout: str) -> dict:
+    """Read the real expand-all evidence out of nblm-export-mindmap.cjs output.
+
+    The published contract's `expansion_verification` must describe what the viewer
+    actually showed. Writing "observed_depth": 3 as a constant would assert a check nobody
+    performed, so the numbers come from the export step that performs it: it clicks
+    "Expand all nodes", counts the remaining collapse affordances, counts the text columns
+    (depth below the root), and re-counts to prove the render settled.
+    """
+    m = re.search(r"^VERIFY: (\{.*\})$", stdout, re.M)
+    d = re.search(r"^DEPTH_BELOW_ROOT: (\d+)$", stdout, re.M)
+    if not m or not d:
+        raise StageError("mindmap export did not report its viewer verification", "export")
+    verify = json.loads(m.group(1))
+    if verify.get("expandAffordances") != 0 or not verify.get("renderStable"):
+        raise StageError(f"mindmap viewer verification incomplete: {verify}", "export")
+    return {
+        "method": "notebooklm-viewer",
+        "action": "全部展开",
+        "observed_depth": int(d.group(1)),
+        "collapsed_node_count": int(verify["expandAffordances"]),
+        "content_node_count": int(verify.get("contentNodes", 0)),
+        "render_stable": bool(verify.get("renderStable")),
+    }
 
 
 def picgo_upload(path: Path) -> str:
@@ -309,6 +519,86 @@ def parse_cards_command() -> int:
     return 0
 
 
+def isolate_name_command() -> int:
+    """Resolve the isolation name from stdin; used by tests to exercise THIS rule.
+
+    Input: [{"catalog_title","video_id","sources":[...]}...]
+    Output: [{"name": "..."}] or [{"error": "..."}] per case. No browser, no ledger.
+    """
+    cases = json.loads(sys.stdin.read() or "[]")
+    out: list[dict] = []
+    for case in cases:
+        try:
+            out.append({"name": resolve_isolate_name(case["catalog_title"], case["video_id"],
+                                                      case.get("sources") or [])})
+        except StageError as exc:
+            out.append({"error": str(exc)})
+    json.dump(out, sys.stdout, ensure_ascii=False)
+    sys.stdout.write("\n")
+    return 0
+
+
+def wait_plan_command() -> int:
+    """Replay the card wait over recorded Studio snapshots; used by tests.
+
+    Input (stdin): {"icon", "known": [[icon,title]...], "reads": [[card,...], ...],
+                    "timeout_sec", "stale_after_sec", "poll_sec"}
+    A "read" is one whole Studio snapshot. `refresh` re-reads the current snapshot (the
+    page reload itself is what production does; the snapshot index still advances, which
+    is how a frozen panel is modelled). Output: what the production decision walk did.
+    No browser, no network, no ledger.
+    """
+    plan = json.loads(sys.stdin.read() or "{}")
+    reads = plan.get("reads") or []
+    events: list[dict] = []
+    clock = {"t": 1000.0, "i": 0, "refreshes": 0}
+    seen: list[str] = []
+
+    def current() -> list[str]:
+        # Each read/refresh consumes the next recorded snapshot; once the recording is
+        # exhausted the panel keeps showing the last one, which is what a frozen list is.
+        if not reads:
+            return []
+        idx = min(clock["i"], len(reads) - 1)
+        clock["i"] += 1
+        return list(reads[idx])
+
+    def read_cards() -> list[str]:
+        cards = current()
+        seen.append("read")
+        return cards
+
+    def refresh_cards() -> list[str]:
+        clock["refreshes"] += 1
+        cards = current()
+        seen.append("refresh")
+        return cards
+
+    def sleep(seconds: float) -> None:
+        clock["t"] += float(seconds)
+
+    def fake_clock() -> float:
+        return clock["t"]
+
+    payload: dict = {"reads": 0, "refreshes": 0, "events": events}
+    try:
+        title = wait_for_card_events(
+            plan["icon"], {tuple(x) for x in plan.get("known", [])},
+            timeout=float(plan.get("timeout_sec", 900)),
+            stale_after=float(plan.get("stale_after_sec", 240)),
+            poll=float(plan.get("poll_sec", 15)),
+            read_cards=read_cards, refresh_cards=refresh_cards, clock=fake_clock, sleep=sleep,
+            on_event=lambda name, detail: events.append({"event": name, **detail}))
+        payload.update({"result": "ready", "title": title, "reads": seen.count("read"),
+                        "refreshes": seen.count("refresh")})
+    except StageError as exc:
+        payload.update({"result": "failure", "stage": exc.stage, "message": str(exc),
+                        "reads": seen.count("read"), "refreshes": seen.count("refresh")})
+    json.dump(payload, sys.stdout, ensure_ascii=False)
+    sys.stdout.write("\n")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--resource-id")
@@ -316,6 +606,10 @@ def main() -> int:
                     help="read identity cases as JSON on stdin and print booleans; does not touch the ledger")
     ap.add_argument("--parse-cards", action="store_true",
                     help="read raw Studio card strings as JSON on stdin and print [icon, title] pairs")
+    ap.add_argument("--isolate-name", action="store_true",
+                    help="resolve the isolation name for source lists given as JSON on stdin")
+    ap.add_argument("--wait-plan", action="store_true",
+                    help="replay the card-wait decision over recorded Studio snapshots on stdin")
     ap.add_argument("--state-dir", default=os.environ.get("LAG_NOTEBOOKLM_STATE_DIR", str(Path.home() / ".local/state/learn-about-games/notebooklm-daily")))
     ap.add_argument("--item-dir")
     ap.add_argument("--generation-run-id", help="resume an already-claimed run instead of claiming again")
@@ -325,8 +619,12 @@ def main() -> int:
         return identity_check_command()
     if args.parse_cards:
         return parse_cards_command()
+    if args.isolate_name:
+        return isolate_name_command()
+    if args.wait_plan:
+        return wait_plan_command()
     if not args.resource_id:
-        ap.error("--resource-id is required unless --identity-check or --parse-cards is used")
+        ap.error("--resource-id is required unless --identity-check, --parse-cards or --wait-plan is used")
 
     state = Path(args.state_dir)
     cand = catalog_candidate(args.resource_id)
@@ -360,13 +658,15 @@ def main() -> int:
                 pre_state = f"unknown: {exc}"
             item.note("pre-claim-source-lookup", {"state": pre_state})
 
-            # 0b) Put the Studio panel back in list mode first. The previous item's export
-            # leaves one of its artifact viewers open, and an open viewer hides the create
-            # buttons, so the deck probe below reports a false "unavailable" and stops the
-            # whole batch for a UI reason (observed 2026-09-15). Normalising here is free
-            # and happens before any claim.
-            normalise = run(["node", str(BROWSER / "nblm-studio-list.cjs")], timeout=180, check=False)
-            item.note("pre-claim-studio-list", {"exit": normalise.returncode})
+            # 0b) Put the Studio panel back in list mode first, AND prove the card list is
+            # actually readable. The previous item's export leaves one of its artifact
+            # viewers open, and an open viewer hides the create buttons, so the deck probe
+            # below reports a false "unavailable" and stops the whole batch for a UI reason
+            # (observed 2026-09-15). Reading strictly also keeps the 2026-09-17 failure
+            # honest: an unreadable panel is a run-level channel problem and must stop the
+            # item BEFORE a claim, not surface later as "the server made no card".
+            normalised = studio_cards(require_items=True, what="pre-claim studio card list")
+            item.note("pre-claim-studio-list", {"cards": len(normalised)})
 
             probe = run(["node", str(BROWSER / "nblm-deck-available.cjs")], timeout=180, check=False)
             try:
@@ -413,10 +713,14 @@ def main() -> int:
         # finish AFTER our baseline is taken, and wait_for_card would then claim it as
         # ours, exporting the wrong lecture's artifact.
         idle_deadline = time.time() + 900
-        cards = studio_cards()
+        # An empty baseline would make every older card look like this item's new card, so
+        # the baseline read refuses an empty answer (that is the 2026-09-13 wrong-artifact
+        # failure mode). A long-term notebook that suddenly reports no artifacts at all is
+        # an observation problem, not an empty notebook.
+        cards = studio_cards(require_items=True, what="pre-generation studio baseline")
         while any(re.search(r"正在生成|生成中|Generating", c) for c in cards) and time.time() < idle_deadline:
             time.sleep(20)
-            cards = studio_cards()
+            cards = studio_cards(require_items=True, what="pre-generation studio baseline")
         cards_before = {parse_card(c) for c in cards}
         item.note(stage, {"cards": len(cards_before),
                           "idle": not any(re.search(r"正在生成|生成中", c) for c in cards)})
@@ -443,7 +747,9 @@ def main() -> int:
 
         # 4) isolate: only the new source stays selected (chat + generation dialogs)
         stage = "isolate-source"
-        keep = isolate_name(item.imported_title, video_id)
+        # Resolve against the live source list: the card may have swapped its URL
+        # placeholder for the real title since the import step.
+        keep = resolve_isolate_name(title, video_id, list_sources())
         run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=420)
         item.note(stage, {"kept": keep, "imported_title": item.imported_title})
 
@@ -500,7 +806,8 @@ def main() -> int:
                 raise
             item.note(f"generate-{kind}", {"submitted": True})
         for kind in ("infographic", "mindmap", "slides"):
-            card_title = wait_for_card(ICON[kind], cards_before, timeout=card_timeout())
+            card_title = wait_for_card(ICON[kind], cards_before, timeout=card_timeout(),
+                                       on_event=lambda name, detail, k=kind: item.note(f"{k}-{name}", detail))
             item.cards[kind] = card_title
             item.note(f"ready-{kind}", {"card": card_title})
 
@@ -512,7 +819,9 @@ def main() -> int:
             "slides": item.artifacts_dir / "slides.pptx",
         }
         run(["node", str(BROWSER / "nblm-export-image-artifact.cjs"), item.cards["infographic"], str(files["infographic"])], timeout=900)
-        run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), item.cards["mindmap"], str(files["mindmap"]), "2664"], timeout=900)
+        mindmap_proc = run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), item.cards["mindmap"], str(files["mindmap"]), "2664"], timeout=900)
+        item.mindmap_verification = mindmap_verification(mindmap_proc.stdout)
+        item.note("mindmap-verification", item.mindmap_verification)
         # The deck goes through the page-asset route first: the card's own download control
         # is a browser-process download navigation that, on this machine (2026-09-15),
         # stalled a few KB in on every attempt and then killed the browser. The viewer
@@ -564,8 +873,7 @@ def main() -> int:
             "artifacts": {
                 "infographic": {"label": "中文简体横向手绘信息图（详细）", "url": item.uploads["infographic"]["url"]},
                 "mind_map": {"label": "中文简体完整思维导图（查看器内全部展开）", "url": item.uploads["mindmap"]["url"],
-                             "expansion_verification": {"method": "notebooklm-viewer", "action": "全部展开",
-                                                        "observed_depth": 3, "collapsed_node_count": 0}},
+                             "expansion_verification": item.mindmap_verification},
                 "slide_deck": {"label": "中文简体详细演示文稿（PPTX）", "url": item.uploads["slides"]["url"]},
             },
             "notebook_url": "https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17",
@@ -611,6 +919,18 @@ def main() -> int:
                 "log": item.log, "recorded_at": now(),
             }, ensure_ascii=False, indent=1), encoding="utf-8")
             print("ITEM_BLOCKED_DECK", args.resource_id, flush=True)
+            return 3
+        if failing_stage == "studio-read" and not item.claim.get("generation_run_id"):
+            # The browser channel could not even read the artifact list, so nothing about
+            # this candidate was attempted. Stopping here keeps the daily claim for a run
+            # where the panel is readable again (the 2026-09-17 batch burned a claim on
+            # exactly this class of observation problem).
+            (item.dir / "report.json").write_text(json.dumps({
+                "resource_id": args.resource_id, "title": title, "topic": topic,
+                "stage": failing_stage, "error": detail[:2000], "claim_consumed": False,
+                "log": item.log, "recorded_at": now(),
+            }, ensure_ascii=False, indent=1), encoding="utf-8")
+            print("ITEM_BLOCKED_STUDIO", args.resource_id, flush=True)
             return 3
         run_id = item.claim.get("generation_run_id")
         if run_id:

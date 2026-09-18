@@ -133,6 +133,81 @@ describe('NotebookLM source identity', () => {
     expect(short).toBe(true);
     expect(shorts).toBe(true);
   });
+
+  it('refuses a different lecture that shares a GDC series template', () => {
+    // 2026-09-18: "Classic Game Postmortem: Ultima Online" overlapped the Star Wars
+    // Galaxies source on classic/game/postmortem — 3 of the candidate's 5 tokens, exactly
+    // the 0.6 threshold — so the runner accepted another lecture as this candidate's
+    // source and stopped in the isolation stage, spending a claim and generating nothing.
+    // Character-level similarity is now required on top of token overlap.
+    const [template, sameTemplateRightEpisode] = identity([
+      {
+        catalog_title: 'Classic Game Postmortem: Ultima Online',
+        video_id: 'lnnsDi7Sxq0',
+        source_title: "Classic Game Postmortem: 'Star Wars Galaxies'",
+      },
+      {
+        catalog_title: 'Classic Game Postmortem: Ultima Online',
+        video_id: 'lnnsDi7Sxq0',
+        source_title: 'Classic Game Postmortem: Ultima Online',
+      },
+    ]);
+
+    expect(template).toBe(false);
+    expect(sameTemplateRightEpisode).toBe(true);
+    // A series-prefix-only card ("Classic Game Postmortem") measures 0.77 and is still
+    // accepted on purpose: pushing the line above it would sit within 0.04 of the
+    // documented punctuation/subtitle case below (0.81). Source cards carry full titles in
+    // the DOM, so a prefix-only card means a different, partial source, and the exact-name
+    // isolation step refuses it loudly rather than grounding an artifact in the wrong one.
+    const [seriesOnly] = identity([
+      {
+        catalog_title: 'Classic Game Postmortem: Ultima Online',
+        video_id: 'lnnsDi7Sxq0',
+        source_title: 'Classic Game Postmortem',
+      },
+    ]);
+    expect(seriesOnly).toBe(true);
+  });
+
+  it('resolves the isolation name from the live source list, not from import time', () => {
+    // 2026-09-18: the card swapped its URL placeholder for the real title between the
+    // import step and the isolation step. The runner still passed the video id it captured
+    // at import time, the id matched nothing, and the item was recorded failed with a claim
+    // spent and no artifact attempted.
+    const stdout = execFileSync('python3', [RUNNER, '--isolate-name'], {
+      input: JSON.stringify([
+        {
+          catalog_title: 'Classic Game Postmortem: Ultima Online',
+          video_id: 'lnnsDi7Sxq0',
+          sources: [
+            "Classic Game Postmortem: 'Star Wars Galaxies'",
+            'Classic Game Postmortem: Ultima Online',
+            'Games Accelerators for the Arts, Not for Monetization',
+          ],
+        },
+        {
+          catalog_title: 'Classic Game Postmortem: Ultima Online',
+          video_id: 'lnnsDi7Sxq0',
+          sources: [
+            'https://www.youtube.com/watch?v=lnnsDi7Sxq0',
+            "Classic Game Postmortem: 'Star Wars Galaxies'",
+          ],
+        },
+        {
+          catalog_title: 'Classic Game Postmortem: Ultima Online',
+          video_id: 'lnnsDi7Sxq0',
+          sources: ["Classic Game Postmortem: 'Star Wars Galaxies'"],
+        },
+      ]),
+      encoding: 'utf8',
+    });
+    const results = JSON.parse(stdout) as Array<{ name?: string; error?: string }>;
+
+    expect(results[0].name).toBe('Classic Game Postmortem: Ultima Online');
+    expect(results[1].name).toBe('lnnsDi7Sxq0');
+    expect(results[2].error).toBeTruthy();
+  });
 });
 
 describe('Studio card parsing', () => {
