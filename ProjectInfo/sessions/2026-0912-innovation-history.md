@@ -108,3 +108,9 @@ trace-user-count: 5
 结构化回执在 ../evidence/2026-0912-atlas-expansion-publication.json；日志 /tmp/lag-expansion-cloud-success.log、/tmp/lag-expansion-live-report.json。研究统计保持20查询/50读取，网站发布复核单列，不把研究失败来源改为成功。最终metadata回执skip-ci推送，网站runtime不变。
 
 原始对话：dialogues/2026-0912.md，本session“批准”回合。
+
+## 持续目标设立：2026-09-12 18:00:47 +0800
+
+决策：無涘｜记录：Codex。session 01a091a6-dbd8-7072-a821-27697dd08274；trace-user-count: 6。用户原文：“设立目标补全”。create_goal 成功，状态 active，无 token 预算。目标为系统补全主要品类的创新发展路线与证据，先形成覆盖矩阵，保持研究批次及费用审批边界。此次只设立目标和更新接力记录，未开展新外部检索，未声称补全完成。原始回合由 dialogues/2026-0912.md 自动归档。
+
+（事后据 Codex transcript 重建，未经原在场确认：原场 session 01a091a6-dbd8-7072-a821-27697dd08274 写入后未提交，2026-09-12 被留痕兜底整节覆盖；标题中的 {now} 以该 tool-call 时刻 2026-09-12 18:00:47 +0800 代入。重建：Claude，2026-09-19。）
