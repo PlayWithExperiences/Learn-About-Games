@@ -1,6 +1,16 @@
 # ProjectProgress
 
-更新于 2026-09-18T15:50:17+0800 · 记录者 DSH agent
+更新于 2026-09-19T12:05:00+0800 · 记录者 DSH agent
+
+## 1205 收集端：串行交付 3 条，deck 限流触发 quota_block 停止
+
+决策：無涘（既有每日 10 次 claim、串行 1、自动重试 0；本批按预检顺序串行已确认） ｜ 记录：DSH agent ｜ 2026-09-19T12:05:00+0800
+
+- attempted 4 / **ready 3 / remote_delivered 3** / failed 0（本批）；当日 claim 用 4（含早前 `youtube-hG9SzQxaCm8` failed(generation) 1）、**剩余 6 未动**；ledger 无遗留 generating。
+- 交付：`youtube-58WUEtoAlSw`（Level Design in a Day → `2026-0919-1118-level-spatial-design.json`）、`youtube-38xLmlomvyE`（Galak-Z → `2026-0919-1133-game-feel-feedback.json`）、`youtube-Lu-RjxeDpU8`（Idle Games → `2026-0919-1149-balance-economy.json`）；导图全展开验证（3 级、折叠 0；35/51/65 节点），三件后台导出 + sha256 回读一致，远端 blob 逐字节一致。
+- 条目 1 首次推送被远端 `a37376b`（仅改 `pkm-index.json`）拒绝；零文件重叠核对后合并（`4dffe06`），只重跑交付脚本成功，未重调 NotebookLM，未动消费端工作区无关脏文件。
+- 第 4 条 `youtube-errqsFUApIk` 在 claim 前 deck-availability 门被限流（“此内容将在几小时后生成”，`claim_consumed=false`，未写 ledger）；只读重探针确认系统性，按 skill 记 `quota_block(deck)` 并停止当天剩余批次。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-19T0000-collect/`（preflight.json、item-1…4.log、report.json）及各条目 `runs/2026-09-19T*-item-*/` 目录；摘要 `sessions/2026-0919-notebooklm-collect.md`；原始对话 `dialogues/2026-0919.md`。
 
 ## 1300 收集端：卡片观测、来源身份、隔离取名、deck 捕捉四处缺陷已修并交付 3 条
 
