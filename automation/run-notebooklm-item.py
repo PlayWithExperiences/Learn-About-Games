@@ -198,6 +198,42 @@ def resolve_isolate_name(title: str, video_id: str, sources: list[str]) -> str:
     return isolate_name(matches[0], video_id)
 
 
+# Terms that once caught a real cross-source mix (2026-09-13: a Fallout 4 lecture shared
+# the production notebook with the item being produced). A keyword hit is only a
+# tripwire, never a verdict: on 2026-09-20 the Darkest Dungeon lecture "A Torch in the
+# Dark" legitimately used Fallout 4 as an example, and the old hard fail burned a daily
+# claim on a correct summary. A hit now triggers one verification question against the
+# same isolated single source; only a denial (or an evasive answer) fails the item.
+SUSPECT_SOURCE_TERMS = ["辐射4", "Fallout"]
+
+DENIAL_RE = re.compile(r"未提到|没有提到|未提及|没有提及|不包含|does not mention|not mentioned|no mention", re.I)
+
+
+def find_suspect_terms(summary: str, boundary: str) -> list[str]:
+    """Return the tripwire terms present in the summary/boundary (order-stable)."""
+    text = (summary or "") + (boundary or "")
+    return [t for t in SUSPECT_SOURCE_TERMS if t in text]
+
+
+def suspect_evidence_verdict(probe_answer: str, terms: list[str]) -> tuple[bool, str]:
+    """Judge the source's own answer about whether it mentions the suspect terms.
+
+    Pass only when the answer quotes the term back with no denial: the isolated source
+    itself then confirms the mention is source-supported (the 2026-09-20 Darkest Dungeon
+    case). Denial, or an answer that neither confirms nor denies, fails safe — a failed
+    item keeps its evidence and can be retried explicitly, while a contaminated ready
+    would enter the consumer pipeline.
+    """
+    answer = probe_answer or ""
+    quoted = [t for t in terms if t in answer]
+    denied = bool(DENIAL_RE.search(answer))
+    if quoted and not denied:
+        return True, f"source confirms with verbatim mention: {'/'.join(quoted)}"
+    if denied:
+        return False, "source denies the mention (cross-source contamination)"
+    return False, "answer neither confirms nor denies the mention (unverified)"
+
+
 def list_sources() -> list[str]:
     proc = run(["node", str(BROWSER / "nblm-list-sources.cjs")], check=False)
     try:
@@ -599,6 +635,44 @@ def wait_plan_command() -> int:
     return 0
 
 
+def suspect_verdict_command() -> int:
+    """Judge suspect-term verification answers from stdin; used by tests to exercise THIS rule.
+
+    Input: [{"summary","boundary","probe_answer"}...]
+    Output per case: {"terms": [...], "passed": bool, "reason": "..."}.
+    No browser, no network, no ledger.
+    """
+    cases = json.loads(sys.stdin.read() or "[]")
+    out: list[dict] = []
+    for case in cases:
+        terms = find_suspect_terms(case.get("summary") or "", case.get("boundary") or "")
+        if not terms:
+            out.append({"terms": [], "passed": True, "reason": "no suspect term, nothing to verify"})
+            continue
+        passed, reason = suspect_evidence_verdict(case.get("probe_answer") or "", terms)
+        out.append({"terms": terms, "passed": passed, "reason": reason})
+    json.dump(out, sys.stdout, ensure_ascii=False)
+    sys.stdout.write("\n")
+    return 0
+
+
+def ask_single_source(item: Item, prompt: str, outfile: str, stage: str) -> str:
+    """Ask the isolated single-source chat one question; return the extracted answer text.
+
+    The ask/extract pair is the same one the summary stage uses, factored out so the
+    suspect-term verification below questions the identical grounding instead of
+    re-implementing the channel read.
+    """
+    ask = run(["node", str(BROWSER / "nblm-ask.cjs"), prompt, "--timeout-sec=300"], timeout=400, check=False)
+    before = int(re.search(r"ANSWERS_BEFORE=(\d+)", ask.stdout).group(1)) if "ANSWERS_BEFORE=" in ask.stdout else 0
+    if ask.returncode not in (0, 2):
+        raise StageError(f"ask failed: {ask.stdout[-400:]} {ask.stderr[-400:]}", stage)
+    out = item.dir / outfile
+    run(["node", str(BROWSER / "nblm-extract-answer.cjs"), str(out),
+         f"--min-count={before + 1}", "--timeout-sec=420"], timeout=600)
+    return out.read_text(encoding="utf-8")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--resource-id")
@@ -610,6 +684,8 @@ def main() -> int:
                     help="resolve the isolation name for source lists given as JSON on stdin")
     ap.add_argument("--wait-plan", action="store_true",
                     help="replay the card-wait decision over recorded Studio snapshots on stdin")
+    ap.add_argument("--suspect-verdict", action="store_true",
+                    help="judge suspect-term verification answers given as JSON on stdin")
     ap.add_argument("--state-dir", default=os.environ.get("LAG_NOTEBOOKLM_STATE_DIR", str(Path.home() / ".local/state/learn-about-games/notebooklm-daily")))
     ap.add_argument("--item-dir")
     ap.add_argument("--generation-run-id", help="resume an already-claimed run instead of claiming again")
@@ -623,8 +699,10 @@ def main() -> int:
         return isolate_name_command()
     if args.wait_plan:
         return wait_plan_command()
+    if args.suspect_verdict:
+        return suspect_verdict_command()
     if not args.resource_id:
-        ap.error("--resource-id is required unless --identity-check, --parse-cards or --wait-plan is used")
+        ap.error("--resource-id is required unless a test-only mode (--identity-check, --parse-cards, --isolate-name, --wait-plan, --suspect-verdict) is used")
 
     state = Path(args.state_dir)
     cand = catalog_candidate(args.resource_id)
@@ -758,18 +836,28 @@ def main() -> int:
         prompt = (f"只基于当前唯一来源'{item.imported_title}'（{source_url}）完整转写，用中文简体按原演讲顺序完整写一份"
                   f"面向游戏设计师的详细内容总结：核心问题、案例与迭代、设计取舍、玩家影响、可迁移方法；"
                   f"不要逐字稿，不要补充外部事实。最后单独写\"来源边界：\"，说明来源未覆盖或无法确认的内容。")
-        ask = run(["node", str(BROWSER / "nblm-ask.cjs"), prompt, "--timeout-sec=300"], timeout=400, check=False)
-        before = int(re.search(r"ANSWERS_BEFORE=(\d+)", ask.stdout).group(1)) if "ANSWERS_BEFORE=" in ask.stdout else 0
-        if ask.returncode not in (0, 2):
-            raise StageError(f"ask failed: {ask.stdout[-400:]} {ask.stderr[-400:]}", stage)
-        raw = item.dir / "summary-raw.txt"
-        run(["node", str(BROWSER / "nblm-extract-answer.cjs"), str(raw),
-             f"--min-count={before + 1}", "--timeout-sec=420"], timeout=600)
-        run([sys.executable, str(SPLITTER), str(raw), str(item.dir / "summary.txt"), str(item.dir / "boundary.txt")])
+        ask_single_source(item, prompt, "summary-raw.txt", stage)
+        run([sys.executable, str(SPLITTER), str(item.dir / "summary-raw.txt"),
+             str(item.dir / "summary.txt"), str(item.dir / "boundary.txt")])
         summary = (item.dir / "summary.txt").read_text(encoding="utf-8")
         boundary = (item.dir / "boundary.txt").read_text(encoding="utf-8")
-        if any(x in summary + boundary for x in ["辐射4", "Fallout"]):
-            raise StageError("summary mentions a different source (cross-source contamination)", stage)
+        suspects = find_suspect_terms(summary, boundary)
+        if suspects:
+            # A keyword hit alone does not prove contamination (2026-09-20: the Darkest
+            # Dungeon lecture itself uses Fallout 4 as an example). Ask the same isolated
+            # single source for verbatim proof and decide on that evidence; only a denial
+            # or an evasive answer fails the item. The probe answer stays in the local
+            # item dir — the ledger note below records only the verdict, never the
+            # private source text.
+            probe = (f"只基于当前唯一来源'{item.imported_title}'回答：来源是否提到{'、'.join(suspects)}？"
+                     f"如果提到，请引用来源中的原句（含该词）证明；如果没有提到，请明确回答\"来源未提到\"。"
+                     f"不要补充外部事实。")
+            probe_answer = ask_single_source(item, probe, "suspect-verify-raw.txt", stage)
+            passed, reason = suspect_evidence_verdict(probe_answer, suspects)
+            item.note("summary-suspect-verify", {"terms": suspects, "passed": passed,
+                                                 "reason": reason, "answer_chars": len(probe_answer)})
+            if not passed:
+                raise StageError(f"summary suspect-term check failed: {reason} (terms={suspects})", stage)
         item.note(stage, {"summary_chars": len(summary), "boundary_chars": len(boundary)})
 
         # 5) three artifacts

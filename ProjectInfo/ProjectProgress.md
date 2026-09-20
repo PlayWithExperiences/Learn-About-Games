@@ -1,6 +1,14 @@
 # ProjectProgress
 
-更新于 2026-09-20T07:40:04.446177+08:00 · 记录者 Codex
+更新于 2026-09-20T11:40:00+08:00 · 记录者 DSH agent
+
+## 1140 收集端：总结嫌疑词校验已修复，待确认后跑批
+
+- 修掉 0730 停批的根因：总结出现“辐射4”/“Fallout”即硬失败的规则改为“触发词只是嫌疑”——命中后向同一隔离单来源追问来源原句引文，有引文即通过，否认或回避才记 `summary` 失败。验证问答只留本机 item 目录，ledger 只记 verdict，不入仓库。
+- `automation/run-notebooklm-item.py` 新增 `find_suspect_terms` / `suspect_evidence_verdict` / `ask_single_source` 与 `--suspect-verdict` 自测入口；总结主路径复用同一 ask/extract 通道。新增 `tests/lib/notebooklm-summary-guard.test.ts` 6 例（含 09-20 Darkest Dungeon 误报原文复现、否认优先、回避失败、无词直通）。全量单测 252 通过（原 246）。
+- 09-20 两条 failed（`youtube-errqsFUApIk` 来源不可导入、`youtube-k4ETK1C1KNs` 误报）未自动重跑，无明确授权不调用 retry。
+- preflight（11:29）`ready_to_claim`：当日已 claim 2、剩余 8，候选 8 条（`youtube-VIgHW4ddHLc` 起按目录顺序）。生产批次未启动：首次真实调用前按 skill 确认范围，浏览器当前已关闭。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
 
 ## 0730 每日生产：来源失败与总结误报，停止新领取
 
