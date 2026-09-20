@@ -18,6 +18,20 @@
 - 仍须先确认的异常：扩大数量/换服务或模型/重试与重跑 failed/任何付费操作、配额外的新增费用、偏离既有合同的新动作。
 - 本轮即按此执行 8 条；09-20 两条既有 failed 仍不自动重跑（属需明确授权的重试）。
 
+## 1240 收集端：一次重启竞态烧掉 5 次 claim，已止血并如实落账
+
+- 1145 批次启动时，我先用 nohup 起 driver 又为改 supervised 而 kill——kill 只杀了 driver，其 item 进程存活并已 claim，随后 supervisd driver 又 claim 下一条：**两个 item 进程同驾一个浏览器**（12:29:32–12:32:43）。这是我的编排失误，不是 pipeline 缺陷。
+- 后果：attempted 5 / ready 0 / failed 5 / 当日已用 7 / 剩余 3。`gDva` 在 isolate 失败（孤儿留 Bootcamp 单选，14 轮解不掉）、`Q5tyX` 在 summary 失败（composer 被争用）；孤儿 `VIgHW` 在争用下提交了信息图+导图（两卡 suspect，永不导出）；`HsmY`（summary 问到一半）、`VM7j`（claim 后数秒）被我 SIGKILL 止损。三条无 runner 记录的 claim 已用 producer fail 手工落账，原因如实写“restart race + 实际停在的阶段”。
+- 止血确认：item/browser 进程零残留、driver 已停、浏览器健康（panel=true、78 卡、deck/chat available）。suspect 卡列入本批 report.json，永不导出。
+- 五条 failed 不自动重跑（含被竞态污染的两条，需你明确授权才 retry）。残余 3 次 claim 按既有授权继续常规串行。
+- 证据：`runs/2026-09-20T1145-batch/`（preflight.json、browser-readiness.json、batch-driver.log、report.json）。教训：下次启停 driver 前先 `ps` 确认 `run-notebooklm-item` 单实例。
+
+决策：無涘 ｜ 记录：DSH agent ｜ 2026-09-20T11:45:00+08:00
+
+- 用户批准跑满今日剩余 8 条，并授权：今后常规收集批次（每日 ≤10 distinct claim、串行 1、自动重试 0、同一 NotebookLM/PicGo/GitHub 服务、无付费操作）默认执行，不再逐批确认。
+- 仍须先确认的异常：扩大数量/换服务或模型/重试与重跑 failed/任何付费操作、配额外的新增费用、偏离既有合同的新动作。
+- 本轮即按此执行 8 条；09-20 两条既有 failed 仍不自动重跑（属需明确授权的重试）。
+
 ## 0730 每日生产：来源失败与总结误报，停止新领取
 
 决策：無涘（每日最多 10 次 distinct claim、串行 1、自动重试 0） ｜ 记录：Codex ｜ 2026-09-20T07:40:04.446177+08:00
