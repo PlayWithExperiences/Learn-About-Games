@@ -1,6 +1,13 @@
 # ProjectProgress
 
-更新于 2026-09-20T11:40:00+08:00 · 记录者 DSH agent
+更新于 2026-09-20T13:20:00+08:00 · 记录者 DSH agent
+
+## 1320 收集端收官：resume 3/3 交付，当日 10/10 用尽
+
+- resume 批次（`runs/2026-09-20T1240-resume/`）attempted 3 / **ready 3 / remote_delivered 3** / failed 0；单 runner 全程 verified，1145 残留 suspect 卡未碰。远端 blob 三份独立回读一致（`152ef977` / `d27c058f` / `511dd0f`）。
+- 交付：`youtube-9aOrz-CHIpE`（Turing Tantrums → `2026-0920-1247-game-feel-feedback.json`，导图 53 节点）、`youtube-jARbugWnrB0`（Disney 叙事 → `2026-0920-1302-narrative-expression.json`，56 节点）、`youtube-OIOitNx9RHI`（触屏触觉 → `2026-0920-1317-design-fundamentals.json`，52 节点）；导图均为全部展开 3 级、折叠 0，三件皆页面资产后台路径 + sha256 回读一致。
+- 全日：claim 10/10 用尽（早 2 failed + 1145 竞态 5 failed + resume 3 ready）；ledger **56 ready / 44 failed / 0 generating**，账目闭合。竞态 5 条与早上 2 条均不自动重跑。
+- 浏览器已关。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。消费端（Daily Check-in 每天最多选一条）自行处理，与生产端无关。
 
 ## 1140 收集端：总结嫌疑词校验已修复，待确认后跑批
 
