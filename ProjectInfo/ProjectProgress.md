@@ -1,6 +1,16 @@
 # ProjectProgress
 
-更新于 2026-09-21T10:35:00+08:00 · 记录者 DSH agent
+更新于 2026-09-21T11:20:00+08:00 · 记录者 DSH agent
+
+## 1120 收集端收官：2 条交付，deck 节流触发 quota_block 停止
+
+决策：無涘（2026-09-20 常规批次默认执行授权） ｜ 记录：DSH agent
+
+- 本批 attempted 2 / **ready 2 / remote_delivered 2** / failed 0；第 3 条 deck-available 明确节流（“此内容将在几小时后生成”，`claim_consumed=false`），按 skill 记 `quota_block(deck)` 并停止当天剩余批次。全日 claim 3/10（早 1 failed + 本批 2），剩余 7 未动；ledger 早晚两条 failed 均不自动重跑。
+- 交付：`youtube-8dinUbg2h70`（Braid 回溯 → `2026-0921-1044-level-spatial-design.json`，导图 47 节点）、`youtube-DVMs5_B611E`（Sims 3 个性 → `2026-0921-1101-research-player-experience.json`，39 节点）；导图均为全部展开 3 级、折叠 0，两件皆页面资产后台路径 + sha256 回读一致，远端 blob 逐字节核对通过。
+- 两次首推被远端 `pkm-index.json`（消费端自有改动，零文件重叠）拒绝；合并远端后**只重跑交付脚本**（脚本识别已提交、直接 push + 回读 blob），未重调 NotebookLM，未动消费端工作区无关脏文件。
+- 早 07:33 viewer 阻断根因确认：启动漏了 `LAG_CHROME_ARGS="--disable-features=LocalNetworkAccessChecks"`（运维回归）；带 flag 重启 + 零配额旧卡探针 `MINDMAP_OK` 后恢复。浏览器已关，无残留 item/driver 进程。
+- 未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-21T0800-manual/`（preflight.json、browser-readiness.json、probe-artifacts/、batch-driver.log、report.json）及两条 `runs/2026-09-21T*-item-*/` 目录。
 
 ## 1030 收集端：viewer 根因找到并修复，剩余 9 条跑批中（勿另起 driver）
 
