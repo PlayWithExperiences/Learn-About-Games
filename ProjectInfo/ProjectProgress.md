@@ -1,6 +1,16 @@
 # ProjectProgress
 
-更新于 2026-09-21T07:49:02.031872+08:00 · 记录者 Codex
+更新于 2026-09-21T10:35:00+08:00 · 记录者 DSH agent
+
+## 1030 收集端：viewer 根因找到并修复，剩余 9 条跑批中（勿另起 driver）
+
+决策：無涘（2026-09-20 常规批次默认执行授权：每日 ≤10 distinct claim、串行 1、自动重试 0、同服务、无付费） ｜ 记录：DSH agent
+
+- 早 07:33 那条 `failed(export)` 的根因是**运维回归，不是新缺陷**：启动自动化 Chrome 时漏了 `LAG_CHROME_ARGS="--disable-features=LocalNetworkAccessChecks"`（09-14/09-15 两次验证过的绕开），viewer 帧被 `ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS` 挡住（仅 shim.html）。
+- 本轮零配额修复验证：带 flag 重启 headless Chrome（长期 notebook `2ce16a4b…`，无登录墙，来源 41、deck/chat 均 available），用失败条现成导图卡做探针 → `MINDMAP_OK`（55 节点、全部展开、层级 3、PNG 2664x7199 已验签名）。未 claim、未动 ledger 失败条（`youtube-6ezc_4KapiM` 仍 failed，不自动重跑；其总结/信息图内容问题也未获上传批准）。
+- preflight（10:2x，只读）`ready_to_claim`：当日已 claim 1、剩余 9，在列 9 条（`youtube-8dinUbg2h70`《Braid 回溯》起按目录顺序）。证据目录 `~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-21T0800-manual/`（preflight.json、browser-readiness.json、probe-artifacts/、batch-driver.log）。
+- **跑批中：`automation/run-notebooklm-batch.sh 9` 已启动（job bash-10），第 1 条 `youtube-8dinUbg2h70` 10:29 claim 并导入成功。同一时间只允许这一个 driver——启停前先确认无存活 `run-notebooklm-item` 进程（09-20 重启竞态烧掉 5 次 claim 的教训）。**
+- 后续：跟进 driver 日志收尾（quota_block 即停、deck 节流只记不重试），收工后写最终报告 + sessions/dialogues 留痕 + git 备份；未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
 
 ## 0748 每日生产：导图查看器被阻断，未交付
 
