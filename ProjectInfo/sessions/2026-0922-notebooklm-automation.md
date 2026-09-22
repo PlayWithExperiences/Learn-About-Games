@@ -15,3 +15,15 @@
 session 01a0c650-010b-74c3-b3ca-cf64b979c8aa
 trace-user-count: 1
 原始对话：dialogues/2026-0922.md「0732 （未分类）」；该文件已由本机trace采集保留用户原文。本节是本轮实际结果摘要。
+
+## 1200 收集端收官：解析器已修，2 条交付，deck 节流触发 quota_block 停止
+
+决策：無涘（2026-09-20 常规批次默认执行授权：每日 ≤10 distinct claim、串行 1、自动重试 0、同服务、无付费） ｜ 记录：DSH agent ｜ 2026-09-22T11:40:00+08:00
+
+- 先修后跑：早 0756 停批的根因（splitter 只认“来源边界：”冒号写法）已修——`automation/notebooklm-split-answer.py` 保留精确匹配优先，新增全行标题回退（`^(?:#{1,6}\s*)?来源边界\s*[:：]?\s*$`），5 本地用例验证（精确/无冒号独立标题/markdown 标题通过；无标记与正文内提及仍正确拒绝）。未动 ledger、未重试旧 failed。
+- preflight ready_to_claim（claimed3、剩余7）；浏览器可用（headless + LocalNetworkAccessChecks flag，来源面板/Studio/deck即时生成/chat 均可用；零配额 viewer 探针 MINDMAP_OK 55节点/3级/折叠0）。证据 `runs/2026-09-22T1200-manual/`（preflight.json、browser-readiness.json、probe-artifacts/、batch-driver.log、report.json）。
+- attempted5 / **ready2 / remote_delivered2** / failed3 / skipped2 / remaining_today2；全日 claim 8/10。ledger 结束 **60 ready / 51 failed / 0 generating**，账目闭合。
+- 交付：`youtube-pXGWJRV1Zoc`（Dead Space UI → `2026-0922-1116-leadership-creative-direction.json`，导图 52 节点）、`youtube-wt2yYnBRD3U`（Journey 沙渲染 → `2026-0922-1132-narrative-expression.json`，30 节点）；皆 contract v2、全部展开 3 级折叠 0、页面资产后台路径 + sha256 回读一致，远端 blob（`dc6a83a3` / `891f600f`）逐字节核对通过。item3 首推被远端超前拒绝，合并后**只重跑交付脚本**（识别已提交、直接 push + 回读），未重调 NotebookLM。
+- 失败：`youtube-P4Um97AUqp4` / `youtube-7Fl3so0Z5Tc` 在 import-source 标题不匹配（同 URL/video_id，catalog 短标题 vs 导入的完整标题，疑似模糊匹配过严——列为下一步修复候选，未中途改代码）；`youtube-t9WMNuyjm4w` 在 generation（信息图卡片明确生成失败）。三条 failed 不自动重跑。
+- 第 6 条 deck-available 明确节流（“此内容将在几小时后生成”，`claim_consumed=false`），按 skill 记 `quota_block(deck)` 并停止当天剩余批次；第 7 条未尝试。
+- 浏览器已关，无残留 item/driver 进程。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。

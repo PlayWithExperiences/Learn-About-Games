@@ -14,6 +14,10 @@ import sys
 from pathlib import Path
 
 BOUNDARY_MARKER = "来源边界："
+# Fallback: model sometimes writes a standalone heading line ("来源边界",
+# "来源边界:", "## 来源边界" etc.) instead of the exact inline "来源边界：".
+# Accept it only as a full-line heading to avoid guessing inside body text.
+BOUNDARY_HEADING_RE = re.compile(r"^(?:#{1,6}\s*)?来源边界\s*[:：]?\s*$", re.MULTILINE)
 # An offer-to-continue line: starts with an emoji/symbol, or uses second-person
 # follow-up phrasing. Cut from there to the end.
 SUGGESTION_RE = re.compile(
@@ -29,10 +33,15 @@ def split_answer(raw: str) -> tuple[str, str]:
 
     idx = text.find(BOUNDARY_MARKER)
     if idx < 0:
-        raise SystemExit("no 来源边界 marker: refusing to guess the boundary split")
-
-    summary = text[:idx].strip()
-    rest = text[idx + len(BOUNDARY_MARKER):]
+        m = BOUNDARY_HEADING_RE.search(text)
+        if m:
+            summary = text[:m.start()].strip()
+            rest = text[m.end():]
+        else:
+            raise SystemExit("no 来源边界 marker: refusing to guess the boundary split")
+    else:
+        summary = text[:idx].strip()
+        rest = text[idx + len(BOUNDARY_MARKER):]
 
     # keep only up to the first offer-to-continue line
     kept: list[str] = []

@@ -1,6 +1,18 @@
 # ProjectProgress
 
-更新于 2026-09-22T07:57:14.595397+08:00 · 记录者 Codex
+更新于 2026-09-22T11:40:00+08:00 · 记录者 DSH agent
+
+## 1200 收集端收官：解析器已修，2 条交付，deck 节流触发 quota_block 停止
+
+决策：無涘（2026-09-20 常规批次默认执行授权：每日 ≤10 distinct claim、串行 1、自动重试 0、同服务、无付费） ｜ 记录：DSH agent ｜ 2026-09-22T11:40:00+08:00
+
+- 先修后跑：0756 停批根因（splitter 只认“来源边界：”）已修——精确匹配优先 + 全行标题回退，5 本地用例验证；未动 ledger、未重试旧 failed。
+- preflight ready_to_claim（剩余7）；浏览器可用，零配额 viewer 探针 MINDMAP_OK。证据 `runs/2026-09-22T1200-manual/`。
+- attempted5 / **ready2 / remote_delivered2** / failed3 / skipped2 / remaining_today2；全日 claim 8/10；ledger **60 ready / 51 failed / 0 generating**。
+- 交付：`youtube-pXGWJRV1Zoc`（Dead Space UI，导图 52 节点，blob `dc6a83a3`）、`youtube-wt2yYnBRD3U`（Journey 沙渲染，30 节点，blob `891f600f`）；皆 contract v2、全部展开 3 级折叠 0、sha256 回读一致。item3 首推被远端超前拒绝，合并后只重跑交付脚本，未重调 NotebookLM。
+- 失败：两条 import-source 标题不匹配（同 URL，catalog 短标题 vs 完整导入标题，疑似匹配过严，待修，未中途改代码；不自动重跑）；一条 generation 信息图卡片明确失败。
+- 第 6 条 deck 明确节流（几小时后生成，`claim_consumed=false`）→ `quota_block(deck)` 停止当天；浏览器已关，无残留进程。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- 下一步：核查 import-source 模糊匹配阈值（两条证据在 item report.json）；明日按常规批次继续（`youtube-oG83i_ZvDYE` 起）。
 
 ## 0756 每日生产：三条失败，摘要解析器误报后停批
 
