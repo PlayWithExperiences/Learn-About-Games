@@ -45,6 +45,7 @@ interface WaitEvent {
   event: string;
   reason?: string;
   card?: string;
+  match_n?: number;
   refreshes?: number;
   after_refresh?: boolean;
   source_selection_reset?: boolean;
@@ -160,6 +161,58 @@ describe('NotebookLM artifact card wait', () => {
       icon: 'stacked_bar_chart',
       known: [['stacked_bar_chart', '旧标题']],
       reads: [['stacked_bar_chart 旧标题 1 个来源 · 3 天前 more_vert']],
+      timeout_sec: 60,
+      stale_after_sec: 3600,
+      poll_sec: 15,
+    });
+    expect(result.result).toBe('failure');
+    expect(result.message).toContain('was not ready after 60s');
+  });
+
+  // 2026-09-23 artifact-identity: a fresh mind map arrived with the exact (icon, title)
+  // of a three-day-old card in a 114-card notebook, and the (icon, title) dedup read it
+  // as "no card of this type appeared". A known key with a surplus live occurrence is a
+  // new card; the unread, youngest occurrence is picked and positioned for --match-n.
+  it('finds a new card that shares its exact title with a historical card (newest first)', () => {
+    const oldCard = 'flowchart 关卡设计思维导图 1 个来源 · 3 天前 more_vert';
+    const newCard = 'flowchart未读 关卡设计思维导图 1 个来源 · 1 分钟前 more_vert';
+    const result = waitPlan({
+      icon: 'flowchart',
+      known: [['flowchart', '关卡设计思维导图']],
+      reads: [[newCard, 'tablet未读 另一演示文稿 1 个来源 · 5 分钟前 more_vert', oldCard]],
+      timeout_sec: 60,
+      stale_after_sec: 3600,
+      poll_sec: 15,
+    });
+    expect(result.result).toBe('ready');
+    expect(result.title).toBe('关卡设计思维导图');
+    expect(result.refreshes).toBe(0);
+    const ready = result.events.find((e) => e.event === 'card-ready');
+    expect(ready?.match_n).toBe(1);
+  });
+
+  it('positions the new card when the historical same-title card renders first', () => {
+    const oldCard = 'flowchart 关卡设计思维导图 1 个来源 · 3 天前 more_vert';
+    const newCard = 'flowchart未读 关卡设计思维导图 1 个来源 · 1 分钟前 more_vert';
+    const result = waitPlan({
+      icon: 'flowchart',
+      known: [['flowchart', '关卡设计思维导图']],
+      reads: [[oldCard, 'tablet未读 另一演示文稿 1 个来源 · 5 分钟前 more_vert', newCard]],
+      timeout_sec: 60,
+      stale_after_sec: 3600,
+      poll_sec: 15,
+    });
+    expect(result.result).toBe('ready');
+    expect(result.title).toBe('关卡设计思维导图');
+    const ready = result.events.find((e) => e.event === 'card-ready');
+    expect(ready?.match_n).toBe(2);
+  });
+
+  it('still reports absent when only the historical same-title card is present', () => {
+    const result = waitPlan({
+      icon: 'flowchart',
+      known: [['flowchart', '关卡设计思维导图']],
+      reads: [['flowchart 关卡设计思维导图 1 个来源 · 3 天前 more_vert']],
       timeout_sec: 60,
       stale_after_sec: 3600,
       poll_sec: 15,

@@ -80,6 +80,7 @@ class Item:
         self.claim: dict = {}
         self.imported_title = ""
         self.cards: dict[str, str] = {}
+        self.match_n: dict[str, int] = {}
         self.uploads: dict[str, dict] = {}
         self.deck_route = "page-asset-capture"
         self.mindmap_verification: dict = {}
@@ -321,6 +322,67 @@ def parse_card(card: str) -> tuple[str, str]:
     return ("", card.strip())
 
 
+AGE_RE = re.compile(r"·\s*(?P<age>刚刚|(?P<num>\d+)\s*(?P<unit>分钟|小时|天)前)")
+
+
+def card_age_minutes(text: str) -> float | None:
+    """Parse a Studio card's relative age into minutes, or None when unknown.
+
+    Only relative ages young enough to appear in the panel are parsed; absolute dates
+    ("2026年9月20日"), "昨天" and anything truncated off the 90-char card string read
+    as old, which is exactly what they are next to a card this run just generated.
+    """
+    m = AGE_RE.search(text)
+    if not m:
+        return None
+    if m.group("age") == "刚刚":
+        return 0.0
+    num = int(m.group("num"))
+    return float(num) * {"分钟": 1, "小时": 60, "天": 1440}[m.group("unit")]
+
+
+def find_new_card(icon: str, known: set[tuple[str, str]], cards: list[str]) -> tuple[str, int] | None:
+    """Locate this run's new artifact card and its position among same-title matches.
+
+    Returns (title, match_n) where match_n is 1-based: the new card is the match_n-th
+    Studio card whose text contains the title, which is exactly what the export scripts
+    open when given --match-n. None when no new card of this icon type is present.
+
+    A new card can share its exact (icon, title) with a historical card (observed
+    2026-09-23: a fresh mind map titled exactly like one from three days earlier, in a
+    notebook holding 114 cards). The baseline is a set, so a known key with one more
+    live occurrence than the baseline held means a new card arrived; the occurrence is
+    picked by the unread badge first (a fresh card was never opened) and by youngest
+    relative age second. Without a surplus occurrence an old same-title card is never
+    mistaken for the new one.
+    """
+    occurrences: dict[tuple[str, str], list[str]] = {}
+    for raw in cards:
+        text = raw.strip()
+        if GENERATING_RE.search(text):
+            continue
+        parsed = parse_card(text)
+        if FAILURE_RE.search(text):
+            continue  # fresh failures are classify_cards' business, not a finished card
+        if parsed[0] != icon or not parsed[1]:
+            continue
+        occurrences.setdefault(parsed, []).append(text)
+    for key, raws in occurrences.items():
+        if len(raws) - (1 if key in known else 0) < 1:
+            continue
+        title = key[1]
+        if key not in known:
+            chosen = raws[0]
+        else:
+            unread = [r for r in raws if "未读" in r.split(title)[0]]
+            pool = unread or raws
+            ages = [(card_age_minutes(r), i) for i, r in enumerate(pool)]
+            chosen = pool[min(ages, key=lambda a: (a[0] is None, a[0] or 0.0))[1]]
+        matches = [c.strip() for c in cards if title in c.strip()]
+        return (title, matches.index(chosen) + 1)
+    return None
+
+
 def card_timeout() -> int:
     """Seconds to wait for one artifact card, overridable per run.
 
@@ -366,10 +428,9 @@ def classify_cards(icon: str, known: set[tuple[str, str]], cards: list[str]) -> 
             if word and word in text and parsed not in known:
                 return ("failure", text[:200])
             continue
-        card_icon, title = parsed
-        if card_icon != icon or not title or parsed in known:
-            continue
-        return ("ready", title)
+    found = find_new_card(icon, known, cards)
+    if found is not None:
+        return ("ready", found[0])
     return ("generating" if detail.startswith("still generating") else "absent", detail)
 
 
@@ -411,8 +472,10 @@ def wait_for_card_events(icon: str, known: set[tuple[str, str]], *, timeout: flo
             last_read_error = str(exc)
         state, detail = classify_cards(icon, known, cards)
         if state == "ready":
+            found = find_new_card(icon, known, cards)
+            match_n = found[1] if found is not None else 1
             if on_event:
-                on_event("card-ready", {"card": detail, "refreshes": refreshes})
+                on_event("card-ready", {"card": detail, "refreshes": refreshes, "match_n": match_n})
             return detail
         if state == "failure":
             raise StageError(f"{icon} card reported a generation failure: {detail}", "generation")
@@ -447,8 +510,11 @@ def wait_for_card_events(icon: str, known: set[tuple[str, str]], *, timeout: flo
             last_refresh = clock()
             state, detail = classify_cards(icon, known, refreshed)
             if state == "ready":
+                found = find_new_card(icon, known, refreshed)
+                match_n = found[1] if found is not None else 1
                 if on_event:
-                    on_event("card-ready", {"card": detail, "refreshes": refreshes, "after_refresh": True})
+                    on_event("card-ready", {"card": detail, "refreshes": refreshes,
+                                            "after_refresh": True, "match_n": match_n})
                 return detail
             if state == "failure":
                 raise StageError(f"{icon} card reported a generation failure: {detail}", "generation")
@@ -468,14 +534,28 @@ def wait_for_card_events(icon: str, known: set[tuple[str, str]], *, timeout: flo
 
 
 def wait_for_card(icon: str, known: set[tuple[str, str]], timeout: int | None = None,
-                  on_event=None) -> str:
-    """Wait until a NEW card of the given icon type finishes generating; return its title."""
-    return wait_for_card_events(
+                  on_event=None) -> tuple[str, int]:
+    """Wait until a NEW card of the given icon type finishes generating.
+
+    Returns (title, match_n): match_n positions the card among same-title matches for
+    the export scripts' --match-n, so a new card sharing its exact title with a
+    historical card still exports the right one (2026-09-23 artifact-identity).
+    """
+    holder: dict = {}
+
+    def capture(name: str, detail: dict) -> None:
+        if name == "card-ready":
+            holder["match_n"] = detail.get("match_n", 1)
+        if on_event:
+            on_event(name, detail)
+
+    title = wait_for_card_events(
         icon, known,
         timeout=card_timeout() if timeout is None else timeout,
         stale_after=float(os.environ.get("LAG_CARD_STALE_SEC", "240")),
         poll=float(os.environ.get("LAG_CARD_POLL_SEC", "15")),
-        read_cards=studio_cards, refresh_cards=refresh_studio_list, on_event=on_event)
+        read_cards=studio_cards, refresh_cards=refresh_studio_list, on_event=capture)
+    return (title, holder.get("match_n", 1))
 
 
 def mindmap_verification(stdout: str) -> dict:
@@ -894,10 +974,11 @@ def main() -> int:
                 raise
             item.note(f"generate-{kind}", {"submitted": True})
         for kind in ("infographic", "mindmap", "slides"):
-            card_title = wait_for_card(ICON[kind], cards_before, timeout=card_timeout(),
-                                       on_event=lambda name, detail, k=kind: item.note(f"{k}-{name}", detail))
+            card_title, match_n = wait_for_card(ICON[kind], cards_before, timeout=card_timeout(),
+                                                on_event=lambda name, detail, k=kind: item.note(f"{k}-{name}", detail))
             item.cards[kind] = card_title
-            item.note(f"ready-{kind}", {"card": card_title})
+            item.match_n[kind] = match_n
+            item.note(f"ready-{kind}", {"card": card_title, "match_n": match_n})
 
         # 6) export real bytes
         stage = "export"
@@ -906,8 +987,10 @@ def main() -> int:
             "mindmap": item.artifacts_dir / "mindmap.png",
             "slides": item.artifacts_dir / "slides.pptx",
         }
-        run(["node", str(BROWSER / "nblm-export-image-artifact.cjs"), item.cards["infographic"], str(files["infographic"])], timeout=900)
-        mindmap_proc = run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), item.cards["mindmap"], str(files["mindmap"]), "2664"], timeout=900)
+        run(["node", str(BROWSER / "nblm-export-image-artifact.cjs"), item.cards["infographic"], str(files["infographic"]),
+               f"--match-n={item.match_n.get('infographic', 1)}"], timeout=900)
+        mindmap_proc = run(["node", str(BROWSER / "nblm-export-mindmap.cjs"), item.cards["mindmap"], str(files["mindmap"]), "2664",
+                            f"--match-n={item.match_n.get('mindmap', 1)}"], timeout=900)
         item.mindmap_verification = mindmap_verification(mindmap_proc.stdout)
         item.note("mindmap-verification", item.mindmap_verification)
         # The deck goes through the page-asset route first: the card's own download control
@@ -918,11 +1001,12 @@ def main() -> int:
         deck_route = "page-asset-capture"
         try:
             run(["node", str(BROWSER / "nblm-capture-deck.cjs"), item.cards["slides"], str(files["slides"]),
-                 "--timeout-sec=300"], timeout=600)
+                 "--timeout-sec=300", f"--match-n={item.match_n.get('slides', 1)}"], timeout=600)
         except StageError as exc:
             item.note("export-deck-capture", {"fell_back_to_viewer_download": True, "reason": str(exc)[:300]})
             deck_route = "viewer-download"
-            run(["node", str(BROWSER / "nblm-export-deck.cjs"), item.cards["slides"], str(deck_dir), "--timeout-sec=300"], timeout=600)
+            run(["node", str(BROWSER / "nblm-export-deck.cjs"), item.cards["slides"], str(deck_dir), "--timeout-sec=300",
+                 f"--match-n={item.match_n.get('slides', 1)}"], timeout=600)
             downloaded = [p for p in deck_dir.glob("*.pptx") if not p.name.endswith(".crdownload")]
             if not downloaded:
                 raise StageError("deck download produced no pptx", stage)

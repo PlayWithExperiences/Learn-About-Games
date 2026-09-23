@@ -7,7 +7,9 @@
 // The first click triggered by a stale browser is the usual failure, so this script
 // reports a clear STALL verdict instead of a vague timeout.
 //
-// Usage: LAG_CDP_PORT=9222 node nblm-export-deck.cjs "<card title fragment>" <out-dir> [--timeout-sec=240]
+// Usage: LAG_CDP_PORT=9222 node nblm-export-deck.cjs "<card title fragment>" <out-dir> [--timeout-sec=240] [--match-n=N]
+// A new card can share its exact title with a historical card (2026-09-23); --match-n
+// opens the Nth title-matching card (1-based, default 1 = previous behaviour).
 const fs = require('fs');
 const { execFileSync } = require('child_process');
 const path = require('path');
@@ -15,6 +17,7 @@ const port = process.env.LAG_CDP_PORT || '9222';
 const cardTitle = process.argv[2];
 const outDir = process.argv[3];
 const timeoutSec = Number((process.argv.find((a) => a.startsWith('--timeout-sec=')) || '').split('=')[1] || 240);
+const matchN = Math.max(1, Number((process.argv.find((a) => a.startsWith('--match-n=')) || '').split('=')[1] || 1));
 
 if (!cardTitle || !outDir) {
   console.error('usage: node nblm-export-deck.cjs "<card title fragment>" <out-dir> [--timeout-sec=240]');
@@ -74,17 +77,24 @@ fs.mkdirSync(outDir, { recursive: true });
       .find(b => /关闭网页查看器/.test(b.getAttribute('aria-label') || ''));
     if (back) { back.click(); await new Promise(r => setTimeout(r, 3000)); }
     let panel = document.querySelector('studio-panel');
-    let card = panel && [...panel.querySelectorAll('[class*=artifact-item]')]
-      .find(e => t(e).includes(${JSON.stringify(cardTitle)}));
-    if (!card) {
+    const pick = () => {
+      const matches = panel ? [...panel.querySelectorAll('[class*=artifact-item]')]
+        .filter(e => t(e).includes(${JSON.stringify(cardTitle)})) : [];
+      if (!matches.length) return { card: null, error: 'card not found' };
+      if (matches.length < ${matchN}) return { card: null, error: 'only ' + matches.length + ' card(s) match title' };
+      return { card: matches[${matchN} - 1], error: null };
+    };
+    let picked = pick();
+    let card = picked.card;
+    if (!card && picked.error === 'card not found') {
       const x = [...document.querySelectorAll('button,[role=button]')]
         .find(b => /^(关闭|close)$/i.test((b.getAttribute('aria-label')||'').trim()));
       if (x) { x.click(); await new Promise(r => setTimeout(r, 3000)); }
       panel = document.querySelector('studio-panel');
-      card = panel && [...panel.querySelectorAll('[class*=artifact-item]')]
-        .find(e => t(e).includes(${JSON.stringify(cardTitle)}));
+      picked = pick();
+      card = picked.card;
     }
-    if (!card) return 'card not found';
+    if (!card) return picked.error;
     if (/正在生成|生成中/.test(t(card))) return 'still generating';
     const btn = card.querySelector('button.artifact-stretched-button') || card.querySelector('button');
     if (!btn) return 'no open button';

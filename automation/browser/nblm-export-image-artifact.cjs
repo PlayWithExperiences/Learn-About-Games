@@ -6,13 +6,16 @@
 // (curl gets the Google sign-in page; in-page fetch is CSP/CORS-blocked; the viewer's
 // own download stalls in headless). No re-render, no screenshot.
 //
-// Usage: LAG_CDP_PORT=9222 node nblm-export-image-artifact.cjs "<card title fragment>" <out.png>
+// Usage: LAG_CDP_PORT=9222 node nblm-export-image-artifact.cjs "<card title fragment>" <out.png> [--match-n=N]
+// A new card can share its exact title with a historical card (2026-09-23); --match-n
+// opens the Nth title-matching card (1-based, default 1 = previous behaviour).
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const port = process.env.LAG_CDP_PORT || '9222';
 const cardTitle = process.argv[2];
 const outPng = process.argv[3];
+const matchN = Math.max(1, Number((process.argv.find((a) => a.startsWith('--match-n=')) || '').split('=')[1] || 1));
 
 if (!cardTitle || !outPng) {
   console.error('usage: node nblm-export-image-artifact.cjs "<card title fragment>" <out.png>');
@@ -64,9 +67,11 @@ if (!cardTitle || !outPng) {
     const t = (e) => (e && e.textContent || '').replace(/\\s+/g,' ').trim();
     const panel = document.querySelector('studio-panel');
     if (!panel) return 'no studio panel';
-    const card = [...panel.querySelectorAll('[class*=artifact-item]')]
-      .find(e => t(e).includes(${JSON.stringify(cardTitle)}));
-    if (!card) return 'card not found';
+    const matches = [...panel.querySelectorAll('[class*=artifact-item]')]
+      .filter(e => t(e).includes(${JSON.stringify(cardTitle)}));
+    if (!matches.length) return 'card not found';
+    if (matches.length < ${matchN}) return 'only ' + matches.length + ' card(s) match title';
+    const card = matches[${matchN} - 1];
     if (/正在生成|生成中/.test(t(card))) return 'still generating';
     const btn = card.querySelector('button.artifact-stretched-button') || card.querySelector('button');
     if (!btn) return 'no open button';
