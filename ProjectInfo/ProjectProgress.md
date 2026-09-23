@@ -1,6 +1,13 @@
 # ProjectProgress
 
-更新于 2026-09-23T08:16:51.419772+08:00 · 记录者 Codex
+更新于 2026-09-23T10:20:00+08:00 · 记录者 DSH agent
+
+## 1020 收集端检查：同名资产缺陷未修，未领取新候选
+
+- preflight `ready_to_claim`（当日已 claim 3、剩余 7；在列 7 条，首条 `youtube-McIXKUujg8Y`）。本轮 attempted0 / ready0 / failed0 / skipped7；无 ledger 写、无浏览器启动、无上传交付、无 PKM/Issue/Daily Check-in/网站动作。
+- 未领取原因：0732 批次 `artifact-identity` 缺陷仍未修——其后只有 docs 提交（`bf40666`），`automation/browser/cdp.cjs` 的差异是既有本地增强（clickxy/dlto），与 (icon,title) 去重无关。0732 定下的“先修复并验证资产唯一身份识别与精确导出，再继续新候选”仍有效；此时 claim 有同名错导出风险且消耗配额。
+- ledger 账目沿用 0817 数据（60 ready / 54 failed），本次未动。证据在本机：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-23T1020-check/`（preflight.json、report.json）。
+- 下一步待無涘定：修 runner（新身份信号+回归验证）后再跑批，或另行安排；三条既有 failed 不自动重跑。
 
 ## 0817 每日生产：内容校验拒绝两条，同名资产识别缺陷停止批次
 
