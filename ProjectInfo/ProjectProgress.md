@@ -1,5 +1,14 @@
 # ProjectProgress
 
+更新于 2026-09-24T07:32:29+08:00 · 记录者 Codex
+
+## 0732 收集端：CDP 启动后失联，未领取候选
+
+- 只读 preflight 为 `ready_to_claim`：目录候选 2454、在列 10、当日已 claim 0、剩余 10；未重新预检或改写 ledger。
+- 启动带既有 `--disable-features=LocalNetworkAccessChecks` 的隔离浏览器后曾记录 `BROWSER_UP`，但 CDP `9222` 随即不可连接；deck、chat 与 state 三个零配额探针均为 `fetch failed`。因此浏览器就绪是 `unavailable`，不能证明 NotebookLM 页面可编辑。
+- 本轮 attempted 0 / ready 0 / remote_delivered 0 / failed 0 / skipped 10 / remaining 10；未 claim、未调用 NotebookLM、未上传或交付，也未写 PKM、建 Issue、触发 Daily Check-in 或发布网站。
+- 停止原因：`browser-notebook-access`。证据与结构化报告：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-24T073229+0800-automation/`；下次先恢复并验证 CDP 浏览器通道，再做一次新的当日预检。
+
 更新于 2026-09-23T12:10:00+08:00 · 记录者 DSH agent
 
 ## 1210 收集端收官：同名缺陷已修，3 条交付，deck 节流触发 quota_block 停止
