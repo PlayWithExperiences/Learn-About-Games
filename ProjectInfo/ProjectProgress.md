@@ -1,6 +1,18 @@
 # ProjectProgress
 
-更新于 2026-09-23T10:20:00+08:00 · 记录者 DSH agent
+更新于 2026-09-23T12:10:00+08:00 · 记录者 DSH agent
+
+## 1210 收集端收官：同名缺陷已修，3 条交付，deck 节流触发 quota_block 停止
+
+决策：無涘（先修 runner 再跑批；常规批次默认执行授权：每日 ≤10 distinct claim、串行 1、自动重试 0、同服务、无付费） ｜ 记录：DSH agent ｜ 2026-09-23T12:10:00+08:00
+
+- 修：`find_new_card`（基线 surplus 计数 + 未读优先 + 最年轻年龄）定位新卡并给出同名匹配序号，`wait_for_card` 回传 `(title, match_n)`，四件导出脚本支持 `--match-n`（默认 1，旧行为不变）。提交 `96171be`；全量单测 255 通过（+3 同名回归）；本机复演 0732 同名用例由 absent 转为 ready/match_n=1。
+- 跑：preflight ready_to_claim（剩余 7）；浏览器可用（Studio 117 卡、deck/chat 可用）。attempted5 / **ready3 / remote_delivered3** / failed2 / skipped1；全日 claim 8/10；ledger **63 ready / 56 failed / 0 generating**。
+- 交付：`youtube-UCtSk6wcMIo`（古墓丽影重启 → `2026-0923-1132-collaboration-teams.json`，blob `699afca`）、`youtube-vrxz3s0L8F8`（视觉小说叙事 → `2026-0923-1149-narrative-expression.json`）、`youtube-6uX6ye66NK0`（五大人格 → `2026-0923-1205-design-fundamentals.json`）；导图均为全部展开 3 级折叠 0（40/43/35 节点），三件皆后台导出 + sha256 回读一致。
+- 首件首推被远端消费端 `pkm-index.json` 提交拒绝；合并后**只重跑交付脚本**（未重调 NotebookLM），远端 HEAD 一致。后两件一次推送成功。
+- 失败：两条 isolate-source（`McIXKUujg8Y`、`nP5ypIUmpz0`）导入标题为 URL 占位、隔离匹配失败；同签名两次，疑似来源元数据未解析，非 runner 回归（同批另三条正常导入），计 per-candidate failed，不自动重跑。
+- 第 6 条 `eZfj7LEFT98` deck 明确节流（几小时后生成，`claim_consumed=false`，未写 ledger）→ `quota_block(deck)` 停止当天；第 7 条未试。浏览器已关，无残留进程。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。
+- 证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-23T1130-fixbatch/`（preflight.json、browser-readiness.json、batch-driver.log、report.json）及各条目 `runs/2026-09-23T*-item-*/` 目录。
 
 ## 1020 收集端检查：同名资产缺陷未修，未领取新候选
 
