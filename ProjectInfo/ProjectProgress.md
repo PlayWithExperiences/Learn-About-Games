@@ -1,5 +1,19 @@
 # ProjectProgress
 
+更新于 2026-09-24T12:20:00+08:00 · 记录者 DSH agent
+
+## 1218 收集端收官：3 条交付，deck 限流触发 quota_block 停止
+
+决策：無涘（2026-09-20 常规批次默认执行授权：每日 ≤10 distinct claim、串行 1、自动重试 0、同服务、无付费） ｜ 记录：DSH agent ｜ 2026-09-24T12:20:00+08:00
+
+- 上午 1130 的 `browser-notebook-access` 阻塞经無涘确认环境已恢复后重跑：隔离 Chrome 正常落到 `notebook.google.com`，长期本 `2ce16a4b…` 可编辑，Studio 126 卡、deck/chat 三探针全过。
+- 本批 attempted 4 / **ready 3 / remote_delivered 3** / failed 1 / skipped 6；当日 claim 用 4（含失败 1）、**剩余 6 未动**；ledger 无遗留 generating。
+- 交付：`youtube-eZfj7LEFT98`（SimCity 探索 → `2026-0924-1144-leadership-creative-direction.json`，导图 45 节点）、`youtube-63UOLVP4dYk`（Retro/Grade 复盘 → `2026-0924-1159-game-feel-feedback.json`，47 节点）、`youtube-lH7gL3ivgFA`（SpaceChem 复盘 → `2026-0924-1218-production-iteration.json`，62 节点）；导图均为全部展开 3 级折叠 0，三件皆后台导出 + sha256 回读一致，远端逐字节核对通过（一次推送成功）。
+- 失败：`youtube-A7ejh3YUbac`（Mark of the Ninja）导入标题长驻 URL 占位、隔离无唯一匹配，记 per-candidate failed，不自动重跑。
+- 第 5 条 `youtube-iVBCBcEANBc` 在 claim 前 deck 门被限流（“此内容将在几小时后生成”，`claim_consumed=false`，未写 ledger）→ 按 skill 记 `quota_block(deck)` 并停止当天剩余批次。
+- 浏览器已关，无残留进程。未写 PKM、未建 Issue、未触发 Daily Check-in、未发布网站。证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-24T113000-retry2/`（preflight.json、browser-readiness.json、report.json）及各条目 `runs/2026-09-24T*-item-*/` 目录。
+- 另：無涘指正——阻塞轮次应明确报失败而非写成正常完成；本轮起停止原因凡阻塞一律记 `result: FAILED/BLOCKED` 语义，本次成功记 `SUCCESS`。
+
 更新于 2026-09-24T11:15:00+08:00 · 记录者 DSH agent
 
 ## 1130 收集端：CDP 已恢复但工作台仍不可写，未领取候选
