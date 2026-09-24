@@ -1,5 +1,15 @@
 # ProjectProgress
 
+更新于 2026-09-24T11:15:00+08:00 · 记录者 DSH agent
+
+## 1130 收集端：CDP 已恢复但工作台仍不可写，未领取候选
+
+- 只读 preflight 为 `ready_to_claim`：目录候选 2454、在列 10、当日已 claim 0、剩余 10；首条 `youtube-eZfj7LEFT98`；未改写 ledger。
+- 浏览器就绪是 `unavailable`：带 `LAG_CHROME_ARGS="--disable-features=LocalNetworkAccessChecks"` 的隔离 Chrome 能启动且 CDP `9222` 可达（Chrome/153.0.8010.53），但长期本直链与 `notebooklm.google.com/` 均停在 `https://notebook.google/?location=unsupported` 营销页（`Gemini Notebook`）；`nblm-studio-list` 报 `NO_PAGE_TARGET`，来源面板与 Studio 均不可验证。直连 curl 亦 `302 → https://notebooklm.google?location=unsupported`，非单纯 automation 匹配问题。
+- 本轮 attempted 0 / ready 0 / remote_delivered 0 / failed 0 / skipped 10 / remaining 10；未 claim、未调用 NotebookLM、未上传或交付，也未写 PKM、建 Issue、触发 Daily Check-in 或发布网站。浏览器已关，无残留进程。
+- 停止原因：`browser-notebook-access`。与今日 0732（CDP 失联）及 0823（旧本只读、同一 unsupported 落点）同源：当前无可写工作台。新增发现：全部步骤脚本硬匹配 `notebook.google.com`，而服务端现落点为 `notebook.google`/`notebooklm.google`；下一批前先评审域名迁移与可写本恢复，再做新的当日预检。
+- 证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-24T113000-manual/`（preflight.json、browser-readiness.json、report.json）。
+
 更新于 2026-09-24T07:34:13+08:00 · 记录者 codex
 
 ## 0732 收集端：CDP 启动后失联，未领取候选

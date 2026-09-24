@@ -12,3 +12,14 @@ trace-user-count: 1
 - 没有上传、ready JSON、远端交付、PKM 写入、Issue 或 Daily Check-in 动作。运行报告和浏览器日志保存在本机状态目录 `runs/2026-09-24T073229+0800-automation/`。下一步先恢复并验证 CDP 浏览器通道，再做新的预检。
 
 原始对话：dialogues/2026-0924.md「0732 NotebookLM 浏览器通道不可用」
+
+## 1130 CDP 已恢复但工作台仍不可写
+
+决策：無涘（2026-09-20 常规批次默认执行授权范围内；browser unavailable 时不得 claim） ｜ 记录：DSH agent ｜ 2026-09-24T11:15:00+08:00
+
+- 只读预检 `ready_to_claim`（2454 候选、在列 10、当日已 claim 0、剩余 10；首条 `youtube-eZfj7LEFT98`），证据 `runs/2026-09-24T113000-manual/preflight.json`；未 claim、未写 ledger。
+- 浏览器零配额就绪检查：隔离 Chrome（`--disable-features=LocalNetworkAccessChecks`）`BROWSER_UP` 且 CDP 可达，但长期本 `2ce16a4b…` 与 `notebooklm.google.com/` 均落到 `https://notebook.google/?location=unsupported`（Gemini Notebook 营销页）；`nblm-studio-list` 为 `NO_PAGE_TARGET`，deck/chat 探针无可用 page target，直连 curl 亦 302 到同一落点。判 `unavailable`，停止原因 `browser-notebook-access`。
+- 本轮 attempted 0 / ready 0 / remote_delivered 0 / failed 0 / skipped 10 / remaining 10；无上传、ready、远端交付、PKM、Issue、Daily Check-in 或网站动作。浏览器已关，无残留 item/driver 进程。
+- 与今日 0732（CDP 启动后失联）及 0823（旧本写时 access request、同一 unsupported 落点）同源；新增可核查点是步骤脚本只认 `notebook.google.com` 而服务端落点已变为 `notebook.google`/`notebooklm.google`。下一步先评审域名迁移与可写工作台恢复，再做新的当日预检。
+
+原始对话：dialogues/2026-0924.md「1130 收集端：CDP 已恢复但工作台仍不可写」
