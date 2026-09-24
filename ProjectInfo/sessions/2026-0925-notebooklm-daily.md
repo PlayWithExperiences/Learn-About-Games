@@ -2,7 +2,8 @@
 
 ## 0731 浏览器通道阻塞，未领取候选
 
-决策：沿用無涘已授权的常规批次上限（每日 ≤10 distinct claim、串行 1、自动重试 0） ｜ 记录：Codex ｜ 2026-09-25T07:33:19+08:00
+决策：無涘 ｜ 记录：codex ｜ session 01a0d5c1-f74b-76d3-9a57-325995953c94
+trace-user-count: 1
 
 - 只读 preflight 成功：`ready_to_claim`，目录候选 2454、选中 10、当日已 claim 0、剩余 10；首条为 `youtube-iVBCBcEANBc`。
 - 按既有长期 Notebook URL 启动隔离 Chrome，并携带已验证的 `--disable-features=LocalNetworkAccessChecks`。CDP 的 state、Studio、deck、chat 四项零配额探针均为 `fetch failed`，不能证明页面可编辑或 Studio 可用。
