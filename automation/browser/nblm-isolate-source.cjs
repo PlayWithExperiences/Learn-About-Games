@@ -6,7 +6,13 @@
 // DOM after every toggle instead of trusting a cached list, and verifies the final
 // state by re-reading rather than assuming the clicks worked.
 //
-// Usage: LAG_CDP_PORT=9222 node nblm-isolate-source.cjs "<exact source name to KEEP>"
+// Usage: LAG_CDP_PORT=9222 node nblm-isolate-source.cjs "<exact source name to KEEP>" [--keep-alias="<exact alternate name>"] [--settle-ms=3000]
+//
+// --keep-alias covers the metadata-flip race (2026-09-27): a freshly imported card swaps
+// its URL placeholder for the real YouTube title while the long deselect loop is still
+// running, so the primary keep (often just the video id) stops matching mid-run. The alias
+// is a second EXACT name — usually the catalog title — accepted on every pass alongside the
+// primary keep. Exact-only is preserved: a fragment must never keep the wrong lecture.
 //
 // The pass budget is derived from the checkbox count. It used to be the constant 6,
 // which silently ran out once the production notebook grew past seven sources
@@ -15,6 +21,8 @@
 // selected, failing the whole item and costing a claim).
 const port = process.env.LAG_CDP_PORT || '9222';
 const keep = process.argv[2];
+const aliasArg = process.argv.find((a) => a.startsWith('--keep-alias='));
+const alias = aliasArg ? aliasArg.slice('--keep-alias='.length) : '';
 // 3s default keeps a single toggle under ~3s; several sources take proportionally longer
 // because each toggle is verified by re-reading the DOM.
 const settleMs = Number((process.argv.find((a) => a.startsWith('--settle-ms=')) || '').split('=')[1] || 3000);
@@ -80,10 +88,12 @@ if (!keep) {
   };
 
   // exact match only: a fragment would also match a neighbouring lecture whose title
-  // shares a prefix, and then isolation would keep the wrong source
+  // shares a prefix, and then isolation would keep the wrong source. The alias is exact
+  // for the same reason: it names one specific card, never a prefix.
   const matchesKeep = (s) => {
     const name = nameOf(s.label);
     if (name === keep) return true;
+    if (alias && name === alias) return true;
     return looksLikeVideoId && videoIdOf(name) === keep;
   };
   const toggle = (label) => evaluate(`(() => {
@@ -105,6 +115,7 @@ if (!keep) {
     before = await state();
   }
   console.log('BEFORE:', JSON.stringify(before.map(s => (s.checked ? '+' : '-') + nameOf(s.label).slice(0, 32))));
+  if (alias) console.log('ALIAS:', JSON.stringify(alias));
 
   const keepMatches = before.filter(matchesKeep);
   if (keepMatches.length !== 1) {

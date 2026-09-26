@@ -199,6 +199,48 @@ def resolve_isolate_name(title: str, video_id: str, sources: list[str]) -> str:
     return isolate_name(matches[0], video_id)
 
 
+def placeholder_present(video_id: str, sources: list[str]) -> bool:
+    """Whether this candidate's card is still an unresolved URL placeholder.
+
+    Pure predicate over one source-list snapshot; the waiting loop below is the only
+    caller in production. Kept separate so the decision is reviewable without a browser.
+    """
+    for s in sources:
+        if not re.match(r"^https?://", (s or "").strip(), re.I):
+            continue
+        found = re.search(r"(?:v=|youtu\.be/|/shorts/|/embed/)([A-Za-z0-9_-]{6,})", s)
+        if found and found.group(1) == video_id:
+            return True
+    return False
+
+
+def await_source_settled(title: str, video_id: str, deadline_s: float = 180.0,
+                         poll_s: float = 10.0) -> list[str]:
+    """Wait out the URL-placeholder window and return a fresh source list.
+
+    Observed 2026-09-27 00:45-00:49: two consecutive items imported as URL placeholders,
+    resolved keep=video-id against the live list, then watched the card swap to its real
+    YouTube title ("Tokyo Jungle and Japan" -> "Tokyo Jungle and Japan's Gaming Potential")
+    during the minutes-long deselect loop — the video-id keep matched nothing anymore and
+    isolation refused with the claim already spent. The real title never changes again once
+    set, so isolating against it is stable: poll until this candidate's URL card is gone
+    (fast path — an already-resolved import returns immediately), then hand back a freshly
+    read list for resolve_isolate_name. Empty reads are panel glitches, not settled state;
+    at the deadline the last non-empty list is returned and the old behavior applies.
+    """
+    last: list[str] = []
+    end = time.time() + deadline_s
+    while True:
+        sources = list_sources()
+        if sources:
+            last = sources
+            if not placeholder_present(video_id, sources):
+                return list_sources() or sources
+        if time.time() >= end:
+            return last
+        time.sleep(poll_s)
+
+
 # Terms that once caught a real cross-source mix (2026-09-13: a Fallout 4 lecture shared
 # the production notebook with the item being produced). A keyword hit is only a
 # tripwire, never a verdict: on 2026-09-20 the Darkest Dungeon lecture "A Torch in the
@@ -905,11 +947,18 @@ def main() -> int:
 
         # 4) isolate: only the new source stays selected (chat + generation dialogs)
         stage = "isolate-source"
-        # Resolve against the live source list: the card may have swapped its URL
-        # placeholder for the real title since the import step.
-        keep = resolve_isolate_name(title, video_id, list_sources())
-        run(["node", str(BROWSER / "nblm-isolate-source.cjs"), keep], timeout=420)
-        item.note(stage, {"kept": keep, "imported_title": item.imported_title})
+        # Wait out the URL-placeholder window first (2026-09-27: the card can swap to its
+        # real title DURING the minutes-long deselect loop, orphaning a video-id keep).
+        # Then resolve against that fresh list. The catalog title rides along as a second
+        # exact --keep-alias identity in case the swap lands exactly on it mid-run.
+        settled = await_source_settled(title, video_id)
+        keep = resolve_isolate_name(title, video_id, settled)
+        isolate_args = ["node", str(BROWSER / "nblm-isolate-source.cjs"), keep]
+        alias = title if keep != title else ""
+        if alias:
+            isolate_args.append(f"--keep-alias={alias}")
+        run(isolate_args, timeout=600)
+        item.note(stage, {"kept": keep, "keep_alias": alias, "imported_title": item.imported_title})
 
         # 5) content summary
         stage = "summary"

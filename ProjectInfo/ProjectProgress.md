@@ -1,5 +1,39 @@
 # ProjectProgress
 
+更新于 2026-09-27 · 记录者 DSH agent（本会话）
+
+## 0055 收集端：首条 isolate 同签名失败，确认并发归属后停批
+
+决策：無涘（本批 ≤10/串行1/重试0，已批准） ｜ 记录：DSH agent ｜ 2026-09-27T00:55:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪 `available`（Studio 135 卡、deck 即时可生成、chat 可用）。DSH 后台作业式 Chrome 会随作业退出，必须用 nohup-detached 方式保活；runner 随后用同 profile 在 9222 另起浏览器并挤掉了本会话的 9223 实例（该关闭经無涘授权，见 0047 条）。
+- 本会话 attempted1 / ready0 / remote_delivered0 / **failed1** / skipped9：`youtube-iVBCBcEANBc`（run-20260927004349-36353，claim 已耗）在 `isolate-source` 失败，与 0047 条的两条同签名——导入 URL 占位 → 隔离中途翻牌为真实标题 → keep 失效 0 匹配。runner 已记 producer failed；无授权不重跑。
+- 全日账（ledger 实证）：claimed 3（本会话 1 + sibling 会话 2）、剩余 7、generating 0、ready 66 / failed 60。预检阻塞的一次 studio-read 未耗 claim，已重检确认。
+- 笔记本现状：61 来源、0 URL 占位（元数据已解析）；三条新导入均未隔离，后续隔离须处理。未做上传/交付/PKM/Issue/Daily Check-in/网站动作。
+- 停止原因：`isolate-source` 系统性失败 + 跨会话 claim 池须单主认领。证据：`runs/2026-09-25T153000-manual/`（目录名日期为旧，内为 09-27 实际时间戳）及 `runs/2026-09-27T004342-item-iVBCBcEANBc/`。下一步待無涘定（修 runner keep 双身份 / 单会话认领 / 留待明日），failed 不自动重跑。
+
+更新于 2026-09-27 · 记录者 DSH agent
+
+## 0047 收集端收官：系统性 isolate 缺陷连败两条，停批保剩余额度
+
+决策：無涘（批准本批 ≤10/串行1/重试0；并发浏览器属無涘另一任务，已授权关闭） ｜ 记录：DSH agent ｜ 2026-09-27T00:47:00+08:00
+
+- preflight ready_to_claim（2454 候选/选中 10）；首条 `youtube-iVBCBcEANBc` 因 ledger 已 failed 被 producer 拒领（不耗 claim，未动旧记录）。
+- 浏览器可用：授权关闭并发 9223 浏览器后，全新 headless 9222 长期本完整渲染（59 来源、chat、Studio 134 卡），deck/chat 零配额探针皆可用。空白渲染根因为 2 天残留浏览器，与服务端无关。
+- attempted2 / ready0 / remote_delivered0 / **failed2** / skipped8；全日 claim 2/10，**剩余 8**；ledger 无遗留 generating。
+- 两条同签名失败（`isolate-source`）：导入时卡片为 URL 占位（keep=video-id），约 1 分钟内解析出真实标题（Tokyo Jungle…/RPG Development…），60 来源逐个取消勾选的数分钟窗口内 keep 失效，isolate 拒判（0 匹配），runner 已记 producer failed。不是单条噪音，是 09-18 resolve 修法未覆盖的“隔离中途翻牌”竞态。
+- 未做 NotebookLM 生成/上传/交付/PKM/Issue/Daily Check-in/网站动作。浏览器已关，无残留。证据：`runs/2026-09-27T0003-manual/`（report.json、browser-readiness.json）及两条 `2026-09-27T004*-item-*/`。
+- 下一步待無涘定：修 runner（keep 双身份：video-id + catalog 标题，隔离全程重判）并验证后再跑批，或收批留待明日；两条 failed 不自动重跑。
+
+## 0003 收集端：长期本空白渲染 + 并发自动化浏览器，未领取候选
+
+- preflight 成功为 `ready_to_claim`：目录候选 2454、选中 10、当日已 claim 0、剩余 10；首条 `youtube-iVBCBcEANBc`；未改写 ledger。
+- 浏览器就绪是 `unavailable`：09-25 残留的隔离 Chrome（CDP 9222）长期本只剩空白页（仅头像），已按 profile  Kill 残留自动化 Chrome（未动用户主 Chrome）；重启动被 profile 锁拒绝，发现并发自动化 Chrome（node launch.cjs PPID 1，Chrome 端口 9223，同 profile 同长期本，00:07:31 启动，非本轮作业），未触碰。
+- 只读探针（未导航、未点击）：并发浏览器标签页 URL 确为长期本，但截图同样空白零内容；来源面板与 Studio 均不可验证。curl 直连落点与既往一致（notebooklm.google.com→301，notebook 链接→302 登录）。
+- 本轮 attempted 0 / ready 0 / remote_delivered 0 / failed 0 / skipped 10 / remaining 10；未 claim、未调用 NotebookLM、未上传或交付，也未写 PKM、建 Issue、触发 Daily Check-in 或发布网站。
+- 停止原因：`browser-notebook-access`，记 `result: BLOCKED`。证据：`~/.local/state/learn-about-games/notebooklm-daily/runs/2026-09-27T0003-manual/`（preflight.json、browser-readiness.json、report.json）。
+- 下一步待無涘定：①确认并发浏览器归属（是否另一会话正在跑批；并发 claim 会违反串行 1）；②查长期本空白渲染原因（登录态有效但应用零内容）；③按 skill 补批次授权确认后再 claim。
+
 更新于 2026-09-25 · 记录者 codex
 
 ## 0731 收集端：CDP 探针失联，未领取候选

@@ -14,8 +14,14 @@ import { describe, expect, it } from 'vitest';
  *
  * The rule now lives in `matchesKeep()` in `automation/browser/nblm-isolate-source.cjs`.
  * These tests load that function out of the real file (no browser, no copy of the rule) and
- * assert both halves: the placeholder is matched by exact video id, and nothing is ever
+ * assert all three halves: the placeholder is matched by exact video id, an exact title
+ * matches, the `--keep-alias` second identity matches exactly, and nothing is ever
  * matched by prefix.
+ *
+ * Guard for the 2026-09-27 mid-isolation flip: the card swaps its URL placeholder for the
+ * real title while the deselect loop is still running, so the runner hands both the
+ * video id (primary keep) and the catalog title (`--keep-alias`). The flip simulation
+ * below asserts the same card is kept in either form.
  */
 
 const source = readFileSync(
@@ -37,12 +43,13 @@ function matchesKeepBlock(): string {
   return m![0];
 }
 
-function matcher(keep: string): (label: string) => boolean {
+function matcher(keep: string, alias = ''): (label: string) => boolean {
   const factory = new Function(
     'keep',
+    'alias',
     `${nameOfBlock()}${matchesKeepBlock()} return matchesKeep;`,
-  ) as (keep: string) => (state: { label: string }) => boolean;
-  const matches = factory(keep);
+  ) as (keep: string, alias: string) => (state: { label: string }) => boolean;
+  const matches = factory(keep, alias);
   // The real function takes the checkbox state object, so wrap it for readable assertions.
   return (label: string) => matches({ label });
 }
@@ -69,5 +76,26 @@ describe('NotebookLM source isolation matching', () => {
     expect(matcher('Magical Realism: The Art of Creating Everest')(
       '选择“Magical Realism: The Art of Creating Everest in Your Living Room with VR (presented by NVIDIA)”',
     )).toBe(false);
+  });
+
+  it('matches the alias second identity exactly', () => {
+    const matches = matcher('DkT6oJLDXgE', 'Tokyo Jungle and Japan');
+    expect(matches('选择“Tokyo Jungle and Japan”')).toBe(true);
+  });
+
+  it('does not match a neighbour by alias prefix', () => {
+    const matches = matcher('DkT6oJLDXgE', 'Tokyo Jungle and Japan');
+    expect(matches('选择“Tokyo Jungle and Japan\u2019s Gaming Potential”')).toBe(false);
+  });
+
+  it('keeps the same card across the 2026-09-27 metadata flip', () => {
+    // Before the flip the card is a URL placeholder kept by video id; after the flip
+    // the real title is kept by the catalog-title alias. One card, either form.
+    const before = matcher('DkT6oJLDXgE', 'Tokyo Jungle and Japan');
+    expect(before('选择“https://www.youtube.com/watch?v=DkT6oJLDXgE”')).toBe(true);
+    const after = matcher('DkT6oJLDXgE', 'Tokyo Jungle and Japan\u2019s Gaming Potential');
+    expect(after('选择“Tokyo Jungle and Japan\u2019s Gaming Potential”')).toBe(true);
+    // …and the alias never keeps a different lecture.
+    expect(after('选择“Classic Game Postmortem: Ultima Online”')).toBe(false);
   });
 });

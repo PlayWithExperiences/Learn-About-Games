@@ -295,3 +295,18 @@ Studio 卡片字符串里，未读徽标 `未读` 夹在图标类名和标题之
 - 修法：新增 `resolve_isolate_name()`，在隔离前用 `list_sources()` 的**当前**列表重新解析：
   恰好一个匹配才返回（URL 卡返回 video id、已解析卡返回真实标题），0 个或多个匹配直接报 `isolate-source` 失败。
   测试入口 `--isolate-name`；回归在 `tests/lib/notebooklm-source-identity.test.ts`。
+
+## 2026-09-27 补记：卡片在隔离**中途**翻牌（09-18 修法的未覆盖窗口）
+
+- 现象：连续两条（`DkT6oJLDXgE`、`ZLDK_yFW_NE`）import 时是 URL 占位、`keep`=video id，
+  约 1 分钟后解析出真实标题，而 61 来源逐个取消勾选要数分钟——`keep` 在循环中途失效，
+  isolate 以 0 匹配拒判，claim 已花。注意与 09-18 的区别：那次是隔离**之前**已翻牌，
+  这次是隔离**进行中**翻牌。
+- 修法（两层，都是精确匹配，不引入模糊）：
+  ① runner 新增 `await_source_settled()`：隔离前轮询至多 180 秒，等本条 URL 卡消失再取新鲜列表
+  解析（已解析的导入即时通过，不多等；空读当面板故障跳过，超时则沿用旧行为）。真实标题一旦落定不再变，
+  此时 `keep`=真实标题全程稳定。
+  ② `nblm-isolate-source.cjs` 新增可选 `--keep-alias=`：每轮按“主 keep 或别名（catalog 标题）或 video-id”
+  三者任一精确命中即保留，覆盖翻牌恰好落在 catalog 标题上的情况。`nblm-generate-artifact.cjs` 的重隔离调用不变（别名可选）。
+- 验证：全量单测 258 通过（+3 别名/翻牌用例）；真机三项——不存在 keep 拒判无副作用、真实标题 60 pass 隔离成功、
+  主 miss＋别名命中隔离成功；事后重载页面恢复 61/61 全选，共享本无残留。失败的两条 ledger 保留，不自动重跑。
