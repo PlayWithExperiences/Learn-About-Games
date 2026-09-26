@@ -2,6 +2,17 @@
 
 更新于 2026-09-27 · 记录者 DSH agent（本会话）
 
+## 0300 收集端收官：runner 已修并验证，上传凭证 401 停止批次
+
+决策：無涘（授权修 runner 再跑批） ｜ 记录：DSH agent ｜ 2026-09-27T03:00:00+08:00
+
+- 修：`await_source_settled()`（隔离前至多等 180 秒 URL 占位消失）＋ `nblm-isolate-source.cjs --keep-alias`（catalog 标题第二精确身份）；全量单测 **258 通过（+3）**；真机三项验证（不存在拒判无副作用 / 真实标题 60 pass 隔离成功 / 主 miss＋别名命中成功），重载恢复 61/61 全选。提交 **`40780d0`** 已推送（仅 5 个自有文件；`cdp.cjs` 的 clickxy/dlto 系既有他人改动，未动）。
+- 跑：`youtube-2owa2s8GdlM`（Luck and Skill）修后流水线全通到导出——总结 2870 字、三卡就绪（match_n=1）、导图全部展开 3 级 0 折叠 56 节点、deck 本地 15,167,237B；信息图＋导图已上传（200、sha256 一致）。
+- 停：deck PUT 被 PicGo github 后端连拒两次 `401 Bad credentials`（02:55/02:57，15MB 传 107 秒后拒；证据 PicGo 日志）；同一凭证 02:52–02:53 两张 PNG 正常。判为凭证侧系统阻塞，非瞬时抖动，不再烧 claim。
+- 全日账（ledger 实证）：claim 4（sibling 1＋本会话 3），**剩余 6**；ready 66 / failed 61；无遗留 generating。三条本会话 failed 均保留，不自动重跑。`2owa2s8GdlM` 凭证修好后可用 `finish-notebooklm-item.py` 续传（信息图复用、导图重验、deck 重传）。
+- 未交付、未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关，无残留。证据：`runs/2026-09-27T0003-manual/report.json`、`2026-09-27T0129-item-2owa2s8GdlM/`。
+- 下一步待無涘定：检查 PicGo github 凭证（token 是否过期/被撤，09-24 批次同链路正常）；修好后先续传本条，再跑剩余 6 条。另：sibling 会话已停批，本会话为单主；但 `cdp.cjs` 与 dialogues 仍有他人未提交改动，提交时注意隔离。
+
 ## 0055 收集端：首条 isolate 同签名失败，确认并发归属后停批
 
 决策：無涘（本批 ≤10/串行1/重试0，已批准） ｜ 记录：DSH agent ｜ 2026-09-27T00:55:00+08:00
