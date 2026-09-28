@@ -1,5 +1,19 @@
 # ProjectProgress
 
+更新于 2026-09-28 · 记录者 DSH agent（本会话）
+
+## 1205 收集端收官：凭证恢复，续传 1 条＋新交付 3 条，deck 限流停批
+
+决策：無涘（启动常规批次 ≤10/串行1/重试0；先续传验证凭证；授权 retry+finish 续传 2owa2s8GdlM） ｜ 记录：DSH agent ｜ 2026-09-28T12:05:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪 `available`（Studio 138 卡、deck 即时可生成、chat 可用）。批次前按 skill＋批量调用规则三问确认后才 claim。
+- **09-27 的 PicGo github 401 已恢复**：续传与 3 条新条目的全部 12 次上传皆 200＋sha256 一致，含 15–20MB deck。凭证侧阻塞解除。
+- attempted4 / **ready4 / remote_delivered4** / failed0；当日 claim 用 4、**剩余 6 未动**；ledger **70 ready / 60 failed / 0 generating**，无遗留。
+- 交付：`youtube-2owa2s8GdlM`（续传 → `2026-0928-1104-narrative-expression.json`，blob `173494e9`；首推被消费端超前拒绝，零重叠合并后只重跑交付脚本）、`youtube-W9gGjRhogPU`（→ `2026-0928-1124`，导图 37 节点）、`youtube-HpjbkKjqPE8`（→ `2026-0928-1141`，45 节点，URL 占位＋keep-alias 隔离成功）、`youtube-LNidsMesxSE`（→ `2026-0928-1159`，96 节点 4 级）。导图均为全部展开 3＋级、折叠 0，三件皆页面资产后台路径。
+- 停止原因：`quota_block(deck)`——第 4 条 `youtube-vX3kjPgvcFU` 在 claim 前 deck 门被限流（`claim_consumed=false`，无 ledger 条目），停止当天剩余批次。账号级节流，换 notebook 无用。
+- 未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关，无残留。证据：`runs/2026-09-28T1056-manual/` 及 `runs/2026-09-28T1105-item-2owa2s8GdlM-resume/`。摘要：`sessions/2026-0928-notebooklm-daily.md`。
+- 下一步：deck 额度恢复后（几小时）可继续跑剩余 6 条（`youtube-vX3kjPgvcFU` 起）；既有 failed 均不自动重跑。
+
 更新于 2026-09-27 · 记录者 DSH agent（本会话）
 
 ## 0300 收集端收官：runner 已修并验证，上传凭证 401 停止批次
