@@ -442,3 +442,7 @@
 ## 2026-09-23T12:10:00+08:00：同名资产识别缺陷修复与跑批收官
 
 决策：無涘（先修 runner 再跑批）｜记录：DSH agent。新旧 Studio 卡片同名时 (icon,title) 去重误判 absent、按标题导出歧义，改为 surplus 计数定位新卡（未读优先、年龄次之）并以 --match-n 序号精确导出（默认 1 保持旧行为）。本批 3 条 ready 并远端交付（ledger 63 ready / 56 failed），deck 节流触发 quota_block 停止当天。两条 URL 占位标题的 isolate-source 失败计 per-candidate，不自动重跑。
+
+## 2026-09-29T12:15:00+08:00：收集端 2 条交付，并修掉静默丢失败记录的 runner 缺陷
+
+决策：無涘（跑满 10 条 / 串行 1 / 自动重试 0；quota_block 即停当天）｜记录：DSH agent。跑批在 generation 阶段撞上账号级 deck 限流，2 条 ready 并远端交付（远端 blob 逐字节回读一致），第 5 条在 claim 前被拦下即停当天，当日 4 次 claim、剩余 6 次未动。本轮定位并修掉一处此前未暴露的缺陷：`run-notebooklm-item.py` 的 deck 限流复探分支把状态目录变量 `state` 改绑成 gate JSON，使 `producer fail --state-dir` 写错目录且被 `check=False` 吞掉，结果是"已 claim、已打印 ITEM_FAIL、ledger 永久停在 generating"——直接违反 skill 关于 claimed 候选必须留下 ready 或带阶段/原因 failed 的不变量。改名为 `gate_state` 并加 AST 绑定回归（已反向验证能捕获该 bug），全量单测 261 通过。影响面限于"claim 前门放行、item 内才限流"这一路径，故此前批次未暴露；既有 failed 不自动重跑。

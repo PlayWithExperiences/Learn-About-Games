@@ -1,5 +1,17 @@
 # ProjectProgress
 
+## 1215 收集端收官：2 条交付，deck 限流停批；修掉静默丢失败记录的 runner 缺陷
+
+决策：無涘（跑满 10 条 / 串行 1 / 自动重试 0；quota_block 即停当天） ｜ 记录：DSH agent ｜ 2026-09-29T12:15:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪 `available`（长期本 `2ce16a4b…` 可编辑、Studio 147 卡、deck 可立即生成、chat 可用）。批次前按 skill ＋批量调用规则确认后才 claim。
+- attempted 5 / **ready 2 / remote_delivered 2** / failed 2 / skipped 5；当日 claim 用 4、**剩余 6 未动**；ledger **72 ready / 62 failed / 0 generating**。
+- 交付：`youtube-vX3kjPgvcFU`（Clash of Clones → `2026-0929-1140-design-fundamentals.json`，导图全展开 4 级 0 折叠 77 节点，blob 已回读）、`youtube-8_KBjd0iaCU`（Klei 2D 动画 → `2026-0929-1158-narrative-expression.json`，48 节点 3 级）。首件首推被消费端新提交拒绝，零重叠合并后**只重跑交付脚本**，未重调 NotebookLM。
+- 失败：`youtube-W20t1zCZv8M`、`youtube-NwPIoVW65pE` 均在 generation 阶段遇 deck 限流，claim 已消耗、计 per-candidate failed，不自动重跑。第 5 条 `youtube-axkPXCNjOh8` 在 claim 前被 deck 门拦下（`claim_consumed=false`、无 ledger 条目）→ `quota_block(deck)` 停止当天。
+- **修掉一条静默丢失败记录的缺陷**：`main()` 的 `state` 被 deck 限流复探分支改绑成 gate JSON，导致 `producer fail --state-dir str(state)` 写错目录且被 `check=False` 吞掉——两条 claim 已消耗的候选打印了 `ITEM_FAIL` 却永远停在 `generating`。复探变量改名 `gate_state`；`tests/lib/notebooklm-fail-state-dir.test.ts` 3 例用 AST 读真身绑定（已反向验证能捕获该 bug）；全量单测 **261 通过**（+3）。两条 stranded 记录已用 producer `fail` 手工补记。
+- 未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关，无残留。证据：`runs/2026-09-29T1055-manual/`（preflight.json、browser-readiness.json、batch-driver.log、report.json）；摘要：`sessions/2026-0929-notebooklm-daily.md`。
+- 下一步：deck 额度恢复后（几小时）可继续跑剩余 6 条（`youtube-pLbmZT70rtA` 起）；既有 failed 均不自动重跑。
+
 更新于 2026-09-28 · 记录者 DSH agent（本会话）
 
 ## 1205 收集端收官：凭证恢复，续传 1 条＋新交付 3 条，deck 限流停批

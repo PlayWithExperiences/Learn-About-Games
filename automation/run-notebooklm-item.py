@@ -1014,12 +1014,17 @@ def main() -> int:
                 if kind == "slides" and re.search(r"no generate button|GEN_FAIL", str(exc)):
                     gate = run(["node", str(BROWSER / "nblm-deck-available.cjs")], timeout=180, check=False)
                     try:
-                        state = json.loads(gate.stdout.strip().splitlines()[-1])
+                        # Local name matters: rebinding `state` here shadows the state
+                        # DIRECTORY bound in main(), so the `fail`/`publish` calls that
+                        # pass `--state-dir str(state)` would silently write the ledger
+                        # somewhere else (observed 2026-09-29: two deck-throttle failures
+                        # were printed but left the entries stuck in `generating`).
+                        gate_state = json.loads(gate.stdout.strip().splitlines()[-1])
                     except Exception:  # noqa: BLE001 - classification is advisory
-                        state = {}
-                    if "throttled" in str(state.get("reason", "")):
-                        item.note("deck-throttle", state)
-                        raise StageError("deck feature throttled mid-item: " + str(state.get("reason")), "generation")
+                        gate_state = {}
+                    if "throttled" in str(gate_state.get("reason", "")):
+                        item.note("deck-throttle", gate_state)
+                        raise StageError("deck feature throttled mid-item: " + str(gate_state.get("reason")), "generation")
                 raise
             item.note(f"generate-{kind}", {"submitted": True})
         for kind in ("infographic", "mindmap", "slides"):
