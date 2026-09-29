@@ -41,6 +41,14 @@ v0.2 removes site-authored resource quality tiers and demotes Learning Trail fro
 
 The repository must let any future AI continue the project without access to the original chat UI. At every substantive milestone, update the latest decision summary and sanitized transcript, then keep this entrypoint pointed at them. The repository must preserve project origin, decision history and reasons, current verified state, unresolved questions, and exact next direction. Never claim a transcript is complete when the runtime cannot export the full conversation.
 
+## Answer style
+
+Report the result, not the narration. Lead with the outcome in one or two lines, then
+only what the reader needs in order to act or verify. No step-by-step recap of tool
+calls, no restating the request, no repeating context the reader already has. Detail
+belongs in the run report and the `ProjectInfo/` records, which exist on disk for
+exactly that purpose; reprinting them in chat is duplication, not evidence.
+
 ## Implementation simplicity
 
 For early milestones, complexity must be justified by a current user journey, an observed failure, deployment correctness, or a misleading relationship. Do not delay a visible vertical slice to handle theoretical extreme cases. Adversarial review should remove misleading semantics and unnecessary machinery; introduce additional validation, abstraction, migration, or recovery behavior only when real data or a failing acceptance test demonstrates the need.
