@@ -1,5 +1,18 @@
 # ProjectProgress
 
+## 2315 收集端收官：4 条交付（2 条补推），当日 10 claim 用尽；PicGo github 401 间歇复发
+
+决策：無涘（本批 ≤10 / 串行 1 / 自动重试 0，已批准） ｜ 记录：DSH agent ｜ 2026-10-03T23:15:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪 `available`（长期本 `2ce16a4b…` 可编辑、Studio 157 卡、deck 可立即生成、chat 可用）。批次前按 skill＋批量调用规则确认后才 claim。
+- attempted 10 / **ready 4 / remote_delivered 4** / failed 6；当日 claim **10/10 用尽、剩余 0**；ledger **76 ready / 68 failed / 0 generating**。
+- 交付：`youtube-axkPXCNjOh8`（炉石 UI → `2026-1003-0037-collaboration-teams.json`，导图 44 节点 3 级）、`youtube-pLbmZT70rtA`（Stanley Parable 喜剧 → `2026-1003-0055-narrative-expression.json`）、`youtube-B11RlHZsmGE`（PCG → `2026-1003-2233-production-iteration.json`）、`youtube-wHqbKFGyCdQ`（→ `2026-1003-2307-narrative-expression.json`）。后两条首推被消费端超前提交拒绝（non-fast-forward），零重叠合并后**只重跑交付脚本**，远端 blob 已回读。
+- 失败：`fYBvYWf_dTg`、`1xWg54mdQos` 均在 slides 上传遇 PicGo github 后端 **401**（runner 侧报 HTTP 500；PNG 已传成功、22MB PPTX 被拒；本地三件齐全，可续传）；`zB0vUMKkmuI` isolate 前 0 匹配；`miu3ldl-nY4`、`oDC4Rzh1viw` 导入标题与 catalog 精确不一致（Metagame Balance For eSports… / The GDC 2018 Micro Postmortems）；`zqQPFeiiUKg` summary 抽取失败。失败 claim 均已消耗，不自动重跑。
+- 注意：401 是间歇性的（B11RlH 约 22:30 上传成功），非持续凭证失效；09-27 同类 401 曾自行恢复。未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关，无残留。证据：`runs/2026-09-30T1000-manual/`（preflight.json、browser-readiness.json、batch-driver.log、batch-driver-resume.log、report.json）。
+- 下一步待無涘定：① 两条 upload-401（本地件齐）是否授权只重跑上传＋发布＋交付（不耗 claim、不调 NotebookLM）；② 两条标题不一致是否修 catalog 后用 retry（耗新 claim）；③ 其余 failed 均不自动重跑。
+
+更新于 2026-10-03 · 记录者 DSH agent（本会话）
+
 ## 1215 收集端收官：2 条交付，deck 限流停批；修掉静默丢失败记录的 runner 缺陷
 
 决策：無涘（跑满 10 条 / 串行 1 / 自动重试 0；quota_block 即停当天） ｜ 记录：DSH agent ｜ 2026-09-29T12:15:00+08:00
