@@ -1,5 +1,18 @@
 # ProjectProgress
 
+## 0455 收集端收官：5 claim 换 2 交付，deck 限流停批；push 竞态合并恢复
+
+决策：無涘（本批 ≤10/串行1/重试0，已批准；oDC4Rzh1viw 再 retry 一次，已批准） ｜ 记录：DSH agent ｜ 2026-10-05T04:55:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，10-05 新自然日剩余 10）；浏览器就绪 `available`（隔离 headless 9222，长期本可编辑，deck 当时可用）。确认后才 claim。
+- attempted 6（耗 claim 5）/ **ready 2 / remote_delivered 2** / failed 3 / deck 门拦 1（未耗 claim）；当日 claim **5/10、剩余 5**；ledger **81 ready / 67 failed / 0 generating**。
+- 交付：`oDC4Rzh1viw` retry（run…48122 → `2026-1005-0212-production-iteration.json`，导图 3 级 0 折叠）、`5lNDq5yZKJE`（→ `2026-1005-0232-practitioner-interviews-podcasts.json`，54 节点）。两条 push 均被消费端超前提交拒绝（fetch first）→ 确认零重叠（远端只加 briefings＋pkm-index）后合并，**只重跑交付脚本**，blob 回读确认。
+- 失败：`wUQ1hFp1_Zs`、`xae7FYq7g2U` 连续同签名（import 见 URL 占位 → resolve 0 匹配，疑列表竞态）；`rPeeaqA2St0` 三卡齐但导出双路径失败（asset cdp 超时；下载控件 card not found），finish 续跑亦败。均不自动重跑。
+- 停止原因：`quota_block(deck)`（`_qqGXjNI-_Y` claim 前被限流“几小时后生成”，未耗 claim）。未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关。证据：`runs/2026-10-05T0148-manual/`。摘要：`sessions/2026-1005-notebooklm-daily.md`。
+- 下一步待無涘定：① 两条 0 匹配是否修 runner 后 retry；② rPee 是否再试导出（不耗 claim）；③ deck 恢复后跑剩余 5 条（`_qqGXjNI-_Y` 起）。
+
+更新于 2026-10-05 · 记录者 DSH agent（本会话）
+
 ## 0130 修复收官（無涘授权 2 项）：401 两条续传交付＋标题规则修好跑通 1 条；oDC 待定
 
 决策：無涘（① upload-401 只重跑上传＋发布＋交付；② 修标题后 retry） ｜ 记录：DSH agent ｜ 2026-10-04T01:30:00+08:00
