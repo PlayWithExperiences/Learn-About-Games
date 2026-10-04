@@ -170,6 +170,38 @@ describe('NotebookLM source identity', () => {
     expect(seriesOnly).toBe(true);
   });
 
+  it('accepts a real title that is the catalog title plus affix words', () => {
+    // 2026-10-04: two correct imports failed because the real YouTube title adds a
+    // subtitle/prefix ("Metagame Balance" vs "... For eSports & Fighting Games" at
+    // 0.53, "Micro Postmortems" vs "The GDC 2018 ..." at 0.74). A contiguous
+    // substring with at least two catalog tokens can only differ by affix words.
+    const [suffix, prefix] = identity([
+      {
+        catalog_title: 'Metagame Balance',
+        video_id: 'miu3ldl-nY4',
+        source_title: 'Metagame Balance For eSports & Fighting Games',
+      },
+      {
+        catalog_title: 'Micro Postmortems',
+        video_id: 'oDC4Rzh1viw',
+        source_title: 'The GDC 2018 Micro Postmortems',
+      },
+    ]);
+
+    expect(suffix).toBe(true);
+    expect(prefix).toBe(true);
+    // Single-token catalogs keep the character guard: one shared word is not
+    // identity ("Balance" vs "Work Life Balance" measures below 0.75).
+    const [oneWord] = identity([
+      {
+        catalog_title: 'Balance',
+        video_id: 'miu3ldl-nY4',
+        source_title: 'Work Life Balance Tips',
+      },
+    ]);
+    expect(oneWord).toBe(false);
+  });
+
   it('resolves the isolation name from the live source list, not from import time', () => {
     // 2026-09-18: the card swapped its URL placeholder for the real title between the
     // import step and the isolation step. The runner still passed the video id it captured

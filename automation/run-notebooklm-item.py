@@ -132,6 +132,18 @@ def title_matches(catalog_title: str, source_title: str, threshold: float = 0.6)
         return catalog_title.strip() == source_title.strip()
     if len(want & got) / len(want) < threshold:
         return False
+    # 2026-10-04: two candidates failed import with a REAL title that is the catalog
+    # title plus affix words ("Metagame Balance" vs "Metagame Balance For eSports &
+    # Fighting Games" at 0.53, "Micro Postmortems" vs "The GDC 2018 Micro Postmortems"
+    # at 0.74). When the normalized catalog title is a contiguous substring of the
+    # source title (or vice versa) the two differ only by affix words, so the
+    # character guard adds nothing. Single-token catalogs keep the guard: one shared
+    # word is not identity. The 09-18 series-template clash is unaffected (neither
+    # side is a substring of the other).
+    norm_cata = normalize_title(catalog_title)
+    norm_src = normalize_title(source_title)
+    if len(want) >= 2 and (norm_cata in norm_src or norm_src in norm_cata):
+        return True
     # Measured on the real cases: every source currently in the production notebook matches
     # its candidate at 1.0, the documented punctuation/subtitle variant sits at 0.81, and the
     # 2026-09-18 series-template clash at 0.68 — 0.75 keeps a ~0.06 margin on both sides.
