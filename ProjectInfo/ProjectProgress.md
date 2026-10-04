@@ -1,5 +1,17 @@
 # ProjectProgress
 
+## 0130 修复收官（無涘授权 2 项）：401 两条续传交付＋标题规则修好跑通 1 条；oDC 待定
+
+决策：無涘（① upload-401 只重跑上传＋发布＋交付；② 修标题后 retry） ｜ 记录：DSH agent ｜ 2026-10-04T01:30:00+08:00
+
+- ① `fYBvYWf_dTg`、`1xWg54mdQos`：本地件齐（mindmap-verification.json 按 driver-log 实测值补记：56 节点 3 级／86 节点 4 级），经 producer `retry` 取新 run（旧失败保留在 attempt_history），`finish --reuse-artifacts` 上传＋发布＋交付一次通过（401 已消失），两条皆 **FINISH_OK、远端 blob 回读确认**，不耗 NotebookLM 生成。
+- ② 标题不一致两条未改 catalog（网站可见数据不动），改为修 runner：`title_matches` 新增“归一化连续子串＋≥2 token”即过（0.53/0.74 的真标题放行；09-18 Ultima/Galaxies 串台仍拒绝；单 token 仍守 0.75）。回归 `notebooklm-source-identity` 11/11＋相关两套件 12/12 全绿。提交 **`0938ef4`** 已推送。
+- `miu3ldl-nY4` retry 后全链路 **ITEM_OK＋远端交付**（`2026-1004-0056-narrative-expression.json`，导图 46 节点 3 级）；`oDC4Rzh1viw` retry 在 mindmap 提交后遇 CDP `Runtime.evaluate` 超时记 generation failed（SUBMIT 本体 ok:true，疑似通道瞬断；claim 已耗）。
+- 今日（10-04）claim 用 4（4 次 retry）、**剩余 6**；ledger **79 ready / 65 failed / 0 generating**。浏览器已关，无残留。未写 PKM/建 Issue/触发 Daily Check-in/发布网站。
+- 下一步待無涘定：oDC4Rzh1viw 是否再 retry 一次（规则已修＋源已隔离，成功概率高，再耗 1 claim）；其余 failed 不动。
+
+更新于 2026-10-04 · 记录者 DSH agent（本会话）
+
 ## 2315 收集端收官：4 条交付（2 条补推），当日 10 claim 用尽；PicGo github 401 间歇复发
 
 决策：無涘（本批 ≤10 / 串行 1 / 自动重试 0，已批准） ｜ 记录：DSH agent ｜ 2026-10-03T23:15:00+08:00

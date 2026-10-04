@@ -9,3 +9,9 @@
 - 待決（需無涘授权）：① 两条 401 是否只重跑上传＋发布＋交付；② 两条标题不一致是否修 catalog 后 retry；③ 其余 failed 不动。
 
 决策：無涘（批次范围已批；失败不自动重跑） ｜ 记录：DSH agent ｜ 2026-10-03T23:15:00+08:00
+
+# 2026-1004 0115-0130 修复段（無涘授权 ①②）
+
+- ① 两条 401：补 verification JSON（driver-log 实测值）→ retry 取新 run → finish --reuse-artifacts，两条 FINISH_OK＋远端交付（`2026-1004-0036/0037-leadership-creative-direction.json`）。教训：ledger failed 不能直接 publish，必须先 retry 回到 generating。
+- ② 修 runner 子串规则＋测试（commit 0938ef4），miu3ldl-nY4 ITEM_OK＋交付；oDC4Rzh1viw 倒在 mindmap 提交后 CDP 超时（SUBMIT ok），已记 failed，不自动再试。
+- 今日 claim 4/10（剩 6）；ledger 79/65。证据：`runs/2026-10-04T0033-retries/`。
