@@ -1,5 +1,18 @@
 # ProjectProgress
 
+## 1730 收集端收官：4 claim 换 3 交付，deck 限流停批；_qqGXjNI isolate 0 匹配
+
+决策：無涘（本批 ≤10/串行1/重试0，已批准） ｜ 记录：DSH agent ｜ 2026-10-06T17:30:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，10-06 新自然日剩余 10）；浏览器就绪 `available`（隔离 headless 9222，长期本可编辑，Studio 189 卡、deck 当时可立即生成、chat 可用）。确认后才 claim。
+- attempted 5（耗 claim 4）/ **ready 3 / remote_delivered 3** / failed 1 / deck 门拦 1（未耗 claim）；当日 claim **4/10、剩余 6**。
+- 交付：`WUNygTII6p0`（→ `2026-1006-1649-chinese-industry-cross-discipline.json`，导图 45 节点 3 级）、`HfUqTNiiSDI`（→ `2026-1006-1707-design-fundamentals.json`，39 节点 4 级）、`9j3I3owY8a8`（→ `2026-1006-1727-systems-mechanics.json`，46 节点 3 级）。三条上传全 200＋sha256 一致，push＋远端 blob 回读确认，无冲突。
+- 失败：`_qqGXjNI-_Y` 在 `isolate-source` 0 匹配（import URL 占位→keep 别名失效，与 10-05 wUQ/xae 同签名，claim 已耗，不自动重跑）。
+- 停止原因：`quota_block(deck)`（`UTE_bVUeHCQ` claim 前被限流“几小时后生成”，未耗 claim）。未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关。证据：`runs/2026-10-06T1600-manual/`。摘要：`sessions/2026-1006-notebooklm-daily.md`。
+- 下一步待無涘定：① 三条 0 匹配是否修 runner 后 retry；② deck 恢复后跑剩余 6 条（`UTE_bVUeHCQ` 起）；③ 其余 failed 不动。
+
+更新于 2026-10-06 · 记录者 DSH agent（本会话）
+
 ## 0455 收集端收官：5 claim 换 2 交付，deck 限流停批；push 竞态合并恢复
 
 决策：無涘（本批 ≤10/串行1/重试0，已批准；oDC4Rzh1viw 再 retry 一次，已批准） ｜ 记录：DSH agent ｜ 2026-10-05T04:55:00+08:00
