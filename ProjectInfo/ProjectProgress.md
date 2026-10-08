@@ -1,5 +1,25 @@
 # ProjectProgress
 
+## 1140 收集端收官：3 claim 换 3 交付，deck 限流停批；首条补推一次 push 竞态
+
+决策：無涘（本批 ≤10/串行1/重试0，已批准） ｜ 记录：DSH agent ｜ 2026-10-08T11:40:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，10-08 新自然日剩余 10）；浏览器就绪 `available`
+  （隔离 headless 9222，长期本可编辑，Studio 198 卡、deck 当时可立即生成、chat 无限额）。确认后才 claim。
+- attempted 4（耗 claim 3）/ **ready 3 / remote_delivered 3** / failed 0 / deck 门拦 1（未耗 claim）；
+  当日 claim **3/10、剩余 7**。
+- 交付：`UTE_bVUeHCQ`（→ `2026-1008-1058-systems-mechanics.json`，导图 51 节点 4 级；
+  首推被消费端超前提交拒绝，零重叠合并后只重跑交付脚本，blob 回读确认）、
+  `jabxQvibuvQ`（→ `2026-1008-1116-design-fundamentals.json`，39 节点 3 级，一次推送）、
+  `yj5pYktC3X8`（→ `2026-1008-1135-production-iteration.json`，一次推送）。
+  三条上传全 200＋sha256 一致。
+- 停止原因：`quota_block(deck)`（`smNiyzAkOQs` claim 前被限流“几小时后生成”，未耗 claim）。
+  未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关。证据：`runs/2026-10-08T1035-manual/`。
+  摘要：`sessions/2026-1008-notebooklm-daily.md`。
+- 下一步待無涘定：deck 恢复后跑剩余 7 条（`smNiyzAkOQs` 起）。
+
+更新于 2026-10-08 · 记录者 DSH agent（本会话）
+
 ## 1730 收集端收官：4 claim 换 3 交付，deck 限流停批；_qqGXjNI isolate 0 匹配
 
 决策：無涘（本批 ≤10/串行1/重试0，已批准） ｜ 记录：DSH agent ｜ 2026-10-06T17:30:00+08:00
