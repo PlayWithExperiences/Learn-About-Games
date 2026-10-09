@@ -1,5 +1,27 @@
 # ProjectProgress
 
+## 1410 收集端收官：9 claim 换 2 交付，deck 限流停批；常规批次每次默认执行已确认
+
+决策：無涘（常规批次每次默认执行：本批 ≤10/串行1/重试0；2026-10-09 明示“每次都批准，写回项目信息”） ｜ 记录：DSH agent ｜ 2026-10-09T14:10:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪 `available`
+  （隔离 headless 9222，长期本可编辑，Studio 216 卡、deck 当时可立即生成、chat 可用）。确认后才 claim。
+- attempted 10（耗 claim 9）/ **ready 2 / remote_delivered 2** / failed 7 / deck 门拦 1（未耗 claim）；
+  当日 claim **9/10、剩余 1（deck 限流未用）**。
+- 交付：`Z0TMRCTuKsc`（→ `2026-1009-1229-production-iteration.json`，导图 30 节点 3 级；
+  首推被消费端超前提交拒绝，零重叠合并后只重跑交付脚本，blob 回读确认）、
+  `Q3Scw3dzxWE`（→ `2026-1009-1407-level-spatial-design.json`，53 节点 3 级，一次推送）。
+  两条上传全 200＋sha256 一致。
+- 失败：`smNiyzAkOQs` 导出空捕获；`BLzWLIk0_e8`/`qNQnW7cbYsw`/`9D0WOL9LFvQ` 总结抽取超时；
+  `t8uPyazzWzE` 隔离 0 匹配；`tq2n-DEUiVw` 验证抽取超时；`lk-gXFMkCMU` 信息图 2700 秒未现。
+  claim 均已耗，不自动重跑。中途 Studio 空读拦停一次后复探恢复，resume 属已批准范围续跑。
+- 停止原因：`quota_block(deck)`（`rdDRQ6IeyrU` claim 前被限流“几小时后生成”，未耗 claim）。
+  未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关。证据：`runs/2026-10-09T0800-manual/`。
+  摘要：`sessions/2026-1009-notebooklm-daily.md`。
+- 下一步待無涘定：deck 恢复后跑剩余 1 条（`rdDRQ6IeyrU` 起）；7 条 failed 是否修 runner 后 retry。
+
+更新于 2026-10-09 · 记录者 DSH agent（本会话）
+
 ## 1140 收集端收官：3 claim 换 3 交付，deck 限流停批；首条补推一次 push 竞态
 
 决策：無涘（本批 ≤10/串行1/重试0，已批准） ｜ 记录：DSH agent ｜ 2026-10-08T11:40:00+08:00
