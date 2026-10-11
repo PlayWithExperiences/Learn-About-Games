@@ -1,6 +1,25 @@
 # ProjectProgress
 
-## 1820 收集端收官：3 claim 换 2 交付，deck 限流停批；常规批次每次默认执行已确认
+## 1550 收集端收官：10 claim 零交付，长期本来源上限停批；待定轮换＋retry
+
+决策：無涘（常规批次每次默认执行：本批 ≤10/串行1/重试0；2026-10-09 明示“每次都批准，写回项目信息”，本批当面确认后执行） ｜ 记录：DSH agent ｜ 2026-10-11T15:50:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪 `available`
+  （隔离 headless 9222，长期本可编辑，Studio 227 卡、deck 可立即生成、chat 可用；昨日 deck 限流已恢复）。
+- attempted 10（耗 claim 10）/ **ready 0 / remote_delivered 0** / failed 10；
+  当日 claim **10/10、剩余 0**；ledger 现 **91 ready / 86 failed-partial**。
+- 失败：10 条同签名，claim 后 `import-source` 阶段 `STEP1: no dialog`
+  （`xoh15qANv-w`、`Qj6dCd8KPKc`、`IbJfZS0o2kg`、`EqyOi1TPWqM`、`HgYcgfO7P4I`、
+  `VvVcKGC3w6g`、`3vtR-m0U7TY`、`p5plb-zU5F8`、`o_NGucEip08`、`NR0Icd98Z4o`），
+  run ID 已记 ledger，不自动重跑。
+- 根因：长期本（`2ce16a4b`）来源面板明示“已达到来源数量上限”；添加来源按钮点击后无 dialog。
+  系 skill §3 轮换条件，非视频各自问题。
+- 停止原因：`source_limit(notebook-2ce16a4b)`＋当日 claim 耗尽。
+  未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关。证据：`runs/2026-1011T15*/`。
+  摘要：`sessions/2026-1011-notebooklm-daily.md`。
+- 下一步待無涘定：① 是否轮换长期本（不删既有资产依赖来源）；② 10 条 failed 是否新自然日用 retry 显式重跑。
+
+更新于 2026-10-11 · 记录者 DSH agent（本会话）
 
 决策：無涘（常规批次每次默认执行：本批 ≤10/串行1/重试0；2026-10-09 明示“每次都批准，写回项目信息”） ｜ 记录：DSH agent ｜ 2026-10-10T18:20:00+08:00
 
