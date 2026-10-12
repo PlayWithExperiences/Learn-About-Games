@@ -1,6 +1,6 @@
 export const ecosystemUrl = 'https://playwithexperiences.github.io/Game-Program-Atlas/research-ecosystem.json';
 export interface Centre { id: string; organization_id: string; host_organization_id: string | null; name: string; host_label: string; country: string; topics: string[]; identity_status: string; source_url: string; verified_at: string }
-export interface Institution { id: string; name: string; type: string; country: string }
+export interface Institution { id: string; name: string; type: string; country: string; root_id: string }
 export interface Program { id: string; name: string; degree_level: string; organization_ids: string[]; official_url: string }
 export interface Ecosystem { schema_version: string; catalog_owner: string; generated_at: string; catalog_generated_at: string; centres: Centre[]; organizations: Institution[]; programs: Program[] }
 const centreKeys = 'id organization_id host_organization_id name host_label country topics identity_status source_url verified_at'.split(' ');
@@ -33,7 +33,8 @@ export function parseEcosystem(value: unknown): Ecosystem {
   }
   const ids = new Set((data.organizations as Record<string,unknown>[]).map(r=>r.id));
   for (const value of data.organizations as unknown[]) {
-    const row = record(value,['id','name','type','country']); texts(row,['id','name','type']);
+    const row = record(value,['id','name','type','country','root_id']);
+    if (!ids.has(row.root_id)) throw new Error('机构归属缺失'); texts(row,['id','name','type']);
     if (typeof row.country !== 'string') throw new Error('地区无效');
   }
   for (const value of data.centres as unknown[]) {

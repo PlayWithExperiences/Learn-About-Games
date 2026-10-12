@@ -38,7 +38,8 @@ if (root) {
       fragment.append(card);
     }
     else for (const row of data.organizations) {
-      const programs=data.programs.filter(p=>p.organization_ids.includes(row.id));
+      const memberIds=new Set(data.organizations.filter(o=>o.id===row.id || o.root_id===row.id).map(o=>o.id));
+      const programs=data.programs.filter(p=>p.organization_ids.some(id=>memberIds.has(id)));
       if ((host && row.id!==host) || (country && row.country!==country) || ![row.name,...programs.map(p=>p.name)].join(' ').toLocaleLowerCase().includes(q)) continue;
       shown++;
       const card=make('article','');card.dataset.organizationId=row.id;

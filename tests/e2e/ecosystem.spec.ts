@@ -39,3 +39,15 @@ test('the native filter area leaves room for multiple records on a short screen'
   expect(height).toBeLessThan(180);
   await expect(page.locator('[data-centre-id]').nth(1)).toBeInViewport();
 });
+
+
+test('institution view includes programmes attached to an existing department',async({page})=>{
+  const data=structuredClone(fixture);
+  data.organizations.push({id:'org:department',name:'Example Department',type:'department',country:'Finland',root_id:'org:sample'});
+  data.programs[0].organization_ids=['org:department'];
+  await page.route(ecosystemUrl,route=>route.fulfill({json:data}));
+  await page.goto('./ecosystem/');
+  await page.getByRole('button',{name:'查看关联机构与学位项目'}).click();
+  await page.getByText('1 个已收录学位项目',{exact:true}).click();
+  await expect(page.getByRole('link',{name:'博士 · Game Research PhD'})).toBeVisible();
+});
