@@ -120,7 +120,7 @@ test('pairs each EGDS practice action with its causal layer', async ({ page }) =
   await expect(page.locator('[data-egds-experience-form-entry]')).toContainText('体验曲线、体验段落、体验循环、体验瞬间');
 });
 
-test('links the EGDS method from About and the capability map without adding a fifth top task', async ({ page }, testInfo) => {
+test('links the EGDS method from About and the capability map without promoting the method to a separate top task', async ({ page }, testInfo) => {
   await page.goto('./about/');
   await expect(page.getByRole('link', { name: '系统了解 EGDS', exact: true })).toHaveAttribute(
     'href',
@@ -134,7 +134,7 @@ test('links the EGDS method from About and the capability map without adding a f
   );
 
   if (testInfo.project.name === 'chromium') {
-    await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link')).toHaveCount(4);
+    await expect(page.getByRole('navigation', { name: '主导航' }).getByRole('link')).toHaveCount(5);
   }
 });
 

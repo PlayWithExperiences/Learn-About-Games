@@ -15,18 +15,19 @@ import sources from '../../src/data/sources.json' with { type: 'json' };
 const resources = rawResources as Catalog['resources'];
 const accessVersionCount = resources.reduce((total, resource) => total + resource.accessVersions.length, 0);
 
-test('focuses desktop navigation on exactly four Chinese user tasks', async ({ page }, testInfo) => {
+test('focuses desktop navigation on five Chinese user tasks', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'Desktop navigation is intentionally replaced by the compact menu on mobile.');
   await page.goto('./');
 
   const navigation = page.getByRole('navigation', { name: '主导航' });
   const links = navigation.getByRole('link');
 
-  await expect(links).toHaveCount(4);
+  await expect(links).toHaveCount(5);
   await expect(links).toHaveText([
     '能力地图',
     '成长资源',
     '创新变迁',
+    '研究生态',
     '关于本项目',
   ]);
 
