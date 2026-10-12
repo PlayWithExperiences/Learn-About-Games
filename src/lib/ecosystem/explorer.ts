@@ -62,7 +62,7 @@ if (root) {
   async function load() {
     retry.hidden=true;error.hidden=true;count.textContent='正在读取公共目录…';
     try {
-      const response=await fetch(ecosystemUrl,{cache:'no-cache',referrerPolicy:'no-referrer',credentials:'omit'});
+      const response=await fetch(ecosystemUrl,{cache:'no-cache',referrerPolicy:'no-referrer',credentials:'omit',signal:AbortSignal.timeout(15000)});
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       data=parseEcosystem(await response.json());
       const countries=[...new Set([...data.centres,...data.organizations].map(r=>r.country).filter(Boolean))].sort();
@@ -75,6 +75,7 @@ if (root) {
       render();
     } catch (reason) {
       data=undefined;results.replaceChildren();count.textContent='目录暂不可用，收录数量未知。';
+      root!.querySelector('[data-snapshot]')!.textContent='公共目录暂不可用，数据版本未知。';
       error.textContent=`公开目录读取失败（${reason instanceof Error ? reason.message : '未知错误'}），请重试或使用下方数据入口。`;
       error.hidden=false;retry.hidden=false;
     }

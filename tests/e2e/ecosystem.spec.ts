@@ -25,6 +25,7 @@ test('source failure stays visibly unavailable rather than an empty directory',a
   await page.route(ecosystemUrl,route=>route.fulfill({status:503,body:'unavailable'}));
   await page.goto('./ecosystem/');
   await expect(page.getByRole('alert')).toContainText('读取失败');
+  await expect(page.locator('[data-snapshot]')).toContainText('版本未知');
   await expect(page.locator('[data-result-count]')).toContainText('数量未知');
   await expect(page.getByRole('button',{name:'重新读取目录'})).toBeVisible();
 });
