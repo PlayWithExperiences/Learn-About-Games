@@ -1,5 +1,32 @@
 # ProjectProgress
 
+## 1945 收集端收官：轮换新本＋10 retry 换 3 交付，AI 配额限流停批；待定 7 retry
+
+决策：無涘（①轮换长期本新建；②昨日 10 failed 新自然日 retry；③本批 ≤10/串行1/重试0 确认执行） ｜ 记录：DSH agent ｜ 2026-10-12T19:45:00+08:00
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪可用，
+  长期本 `2ce16a4b` 上限只读复核仍在，deck/chat 当时可用。
+- 轮换：旧本 `880ad454` 确认不可复用（09-10 多来源混杂记）；新建长期本 `c8090f54`
+  （Learn About Games 长期本 2026-10-12），空本可导入；旧本来源未删。
+  runner/finish 硬编码 notebook_url 改为 `NOTEBOOK_URL`（`LAG_NOTEBOOK_URL` 可覆盖）；
+  `studio_cards()` 允许 0 来源空基线。vitest card-wait 9 例通过。
+- attempted 10（全为显式 retry，耗 claim 10）/ **ready 3 / remote_delivered 3** / failed 7；
+  当日 claim **10/10、剩余 0**；ledger 现 **94 ready / 83 failed**。
+- 交付：`xoh15qANv-w`（→ `2026-1012-1850-collaboration-teams.json`）、
+  `Qj6dCd8KPKc`（→ `2026-1012-1903-production-iteration.json`）、
+  `IbJfZS0o2kg`（→ `2026-1012-1917-narrative-expression.json`），上传全 200＋sha256 一致、
+  远端 blob 回读确认。两次首推被消费端超前提交拒绝，零重叠 merge 后只重跑交付脚本。
+- 失败（AI 用量配额，claim 已耗，不自动重跑）：`EqyOi1TPWqM` generation 无生成按钮；
+  `HgYcgfO7P4I` extract 4/5；`VvVcKGC3w6g`/`3vtR-m0U7TY`/`p5plb-zU5F8`/`o_NGucEip08`/
+  `NR0Icd98Z4o` ask `no send button`。配额文案“11:38 PM 后可用”。
+- 停止原因：`quota_block(chat/AI)`＋当日 claim 耗尽。
+  未写 PKM/建 Issue/触发 Daily Check-in/发布网站。浏览器已关。证据：`runs/retry-batch-20261012-driver.log`。
+  摘要：`sessions/2026-1012-notebooklm-daily.md`。
+- 下一步待無涘定：① 7 条 failed 新自然日是否 retry（`EqyOi1TPWqM` 先核对滞后信息图去重）；
+  ② 预检 10 条新候选（`-jM9Tx6AVIE` 起）顺延。
+
+更新于 2026-10-12 · 记录者 DSH agent（本会话）
+
 ## 1550 收集端收官：10 claim 零交付，长期本来源上限停批；待定轮换＋retry
 
 决策：無涘（常规批次每次默认执行：本批 ≤10/串行1/重试0；2026-10-09 明示“每次都批准，写回项目信息”，本批当面确认后执行） ｜ 记录：DSH agent ｜ 2026-10-11T15:50:00+08:00

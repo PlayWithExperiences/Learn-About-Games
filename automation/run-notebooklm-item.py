@@ -39,6 +39,13 @@ SPLITTER = ROOT / "automation" / "notebooklm-split-answer.py"
 AI_ROOT = Path(os.environ.get("LAG_AI_MENTOR_ROOT", "/Users/haodong/Documents/GitHub/AI-Life-Mentor"))
 INBOX = AI_ROOT / "notebooklm-resources"
 PICGO = os.environ.get("LAG_PICGO_URL", "http://127.0.0.1:36677/upload")
+# Production NotebookLM notebook written into result JSON. Rotated 2026-10-12: 2ce16a4b hit
+# the source-count limit (verified 10-11 and 10-12, "此笔记本已达到来源数量上限"); 880ad454 is
+# not a reusable production notebook (set aside 2026-09-10 for source mixing). Override with
+# LAG_NOTEBOOK_URL when rotating again; do not delete sources the old notebook still serves.
+NOTEBOOK_URL = os.environ.get(
+    "LAG_NOTEBOOK_URL",
+    "https://notebook.google.com/notebook/c8090f54-827f-47ce-8b60-b59acc95f9fe")
 
 ICON = {"infographic": "stacked_bar_chart", "mindmap": "flowchart", "slides": "tablet"}
 # Wording NotebookLM uses in an artifact card that failed to generate; used to fail fast
@@ -335,6 +342,20 @@ def studio_cards(*, require_items: bool = False, what: str = "studio card list")
     if not cards and payload.get("panel") is False:
         raise StageError(f"{what}: the Studio panel is not rendering ({detail})", "studio-read")
     if not cards and require_items:
+        # A freshly rotated production notebook genuinely has no cards yet: with zero
+        # sources no artifact can exist (rotation 2026-10-12 to c8090f54). A failed
+        # source read must never pass as "empty", so require rc==0 plus a list here;
+        # any other shape keeps the old refusal. Notebooks that already hold sources
+        # but show zero cards keep the old refusal too (frozen-panel risk).
+        proc_src = run(["node", str(BROWSER / "nblm-list-sources.cjs")], timeout=180, check=False)
+        try:
+            src_payload = json.loads(proc_src.stdout.strip().splitlines()[-1])
+            src_ok = proc_src.returncode == 0 and isinstance(src_payload.get("sources"), list)
+            n_sources = len(src_payload.get("sources", [])) if src_ok else -1
+        except Exception:  # noqa: BLE001 - unreadable source read is not "empty"
+            src_ok, n_sources = False, -1
+        if src_ok and n_sources == 0:
+            return []
         raise StageError(f"{what}: the panel returned no artifact cards ({detail})", "studio-read")
     return cards
 
@@ -1114,7 +1135,7 @@ def main() -> int:
                              "expansion_verification": item.mindmap_verification},
                 "slide_deck": {"label": "中文简体详细演示文稿（PPTX）", "url": item.uploads["slides"]["url"]},
             },
-            "notebook_url": "https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17",
+            "notebook_url": NOTEBOOK_URL,
             "export_note": ("信息图：CDP Fetch 流式取回 lh3 原始字节（asset-capture.cjs）；思维导图：viewer 内 Expand all nodes "
                             "+ DOM 核验（折叠 0、层级不少于三级、渲染稳定）后以 SVG 抽取渲染；演示文稿："
                             + ("页面网络栈取回原始 PPTX（nblm-capture-deck.cjs，浏览器的下载控件在本机不可靠）"

@@ -31,6 +31,11 @@ PUBLISH_SH = ROOT / "automation" / "publish-notebooklm-resource.sh"
 AI_ROOT = Path(os.environ.get("LAG_AI_MENTOR_ROOT", "/Users/haodong/Documents/GitHub/AI-Life-Mentor"))
 INBOX = AI_ROOT / "notebooklm-resources"
 PICGO = os.environ.get("LAG_PICGO_URL", "http://127.0.0.1:36677/upload")
+# Production notebook; rotated 2026-10-12 (2ce16a4b hit source-count limit). See
+# run-notebooklm-item.py NOTEBOOK_URL for the rotation record; override via LAG_NOTEBOOK_URL.
+NOTEBOOK_URL = os.environ.get(
+    "LAG_NOTEBOOK_URL",
+    "https://notebook.google.com/notebook/c8090f54-827f-47ce-8b60-b59acc95f9fe")
 
 sys.path.insert(0, str(ROOT / "scripts"))
 import notebooklm_producer as producer  # noqa: E402
@@ -212,7 +217,7 @@ def main() -> int:
                          "expansion_verification": mindmap_verification},
             "slide_deck": {"label": "中文简体详细演示文稿（PPTX）", "url": uploads["slides"]["url"]},
         },
-        "notebook_url": "https://notebook.google.com/notebook/2ce16a4b-c41a-42f4-8e03-d387494cdd17",
+        "notebook_url": NOTEBOOK_URL,
         "export_note": ("信息图：CDP Fetch 流式取回 lh3 原始字节；思维导图：viewer 内 Expand all nodes + DOM 核验"
                         "（折叠 0、层级不少于三级、渲染稳定）后 SVG 抽取渲染；演示文稿："
                         + ("页面网络栈取回原始 PPTX（nblm-capture-deck.cjs）" if deck_route == "page-asset-capture"
