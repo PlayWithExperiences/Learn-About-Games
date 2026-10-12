@@ -33,6 +33,7 @@ test('focuses desktop navigation on exactly four Chinese user tasks', async ({ p
   for (const [name, href] of [
     ['能力地图', '/Learn-About-Games/map/'],
     ['成长资源', '/Learn-About-Games/resources/'],
+    ['研究生态', '/Learn-About-Games/ecosystem/'],
     ['创新变迁', '/Learn-About-Games/atlas/'],
     ['关于本项目', '/Learn-About-Games/about/'],
   ] as const) {
@@ -155,14 +156,15 @@ test('makes three career lenses useful inside the map without creating a separat
   await expect(evidence.getByRole('link', { name: 'Ubisoft Massive：Senior AI Game Designer', exact: true })).toBeVisible();
 });
 
-test('sends the three home actions to map, career lenses, and resources', async ({ page }) => {
+test('sends home actions to map, career lenses, resources, and research ecosystem', async ({ page }) => {
   await page.goto('./');
-  const journeyIndex = page.getByLabel('三个入口');
+  const journeyIndex = page.getByLabel('探索入口');
 
   for (const [name, href] of [
     ['看全貌', '/Learn-About-Games/map/'],
     ['职业方向', '/Learn-About-Games/map/#career-lenses'],
     ['成长资源', '/Learn-About-Games/resources/'],
+    ['研究生态', '/Learn-About-Games/ecosystem/'],
   ] as const) {
     await expect(journeyIndex.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// GPA owns public entities, IDs, evidence and curation. Display its published
+// view directly: no second catalog and no connection to the private Radar DB.
+const atlasUrl = 'https://playwithexperiences.github.io/Game-Program-Atlas/';
+---
+
+<BaseLayout title="研究生态" description="通过 Game Program Atlas 探索游戏相关院校、学位项目与学术关系。">
+  <section class="page-shell ecosystem-intro">
+    <p class="plain-label">研究生态</p>
+    <h1>找到研究所在的地方。</h1>
+    <p class="lede">浏览游戏相关院校、学位项目与学术关系，沿着证据了解研究环境。</p>
+    <p>下方直接展示 Game Program Atlas 的公开目录，与其独立站使用同一份数据、机构标识和来源。目录持续修订，不代表所有游戏研究中心，也不表示项目正在招生。</p>
+    <p><a class="text-link" href={atlasUrl} target="_blank" rel="noopener noreferrer">在独立窗口打开完整目录 ↗</a> · <a href={`${atlasUrl}data-sources.html`}>查看收录范围与数据来源</a></p>
+    <p class="reference-note">这里展示公开事实。个人契合度、申请策略、私人备注和排除记录留在私人机会雷达中。</p>
+  </section>
+  <section class="page-shell ecosystem-atlas" aria-label="公开学术目录">
+    <iframe src={atlasUrl} title="Game Program Atlas 公开院校、项目与机构关系" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    <p>若目录未能加载，可使用上方独立窗口入口；此处不保留另一份过期副本。</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .ecosystem-intro { padding-block: 2rem 1rem; }
+  .ecosystem-intro h1 { margin-block: .6rem 1rem; font-size: clamp(2rem, 4vw, 3rem); max-width: none; }
+  .ecosystem-intro p { max-width: 78ch; }
+  .ecosystem-atlas { padding-bottom: 3rem; }
+  iframe { display: block; width: 100%; height: 80vh; min-height: 540px; border: 1px solid currentColor; border-radius: .4rem; }
+  @media (max-width: 640px) { iframe { min-height: 650px; } }
+</style>
