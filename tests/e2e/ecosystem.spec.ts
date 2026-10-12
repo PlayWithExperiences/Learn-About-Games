@@ -12,6 +12,7 @@ test('native centres filter and connect to the same public institutions and prog
   await page.getByLabel('国家／地区',{exact:true}).selectOption('Canada');
   await expect(page.locator('[data-centre-id]')).toHaveCount(2);
   await page.getByRole('button',{name:'清除筛选'}).click();
+  await expect(page.locator('[data-centre-id]')).toHaveCount(3);
   await page.getByRole('button',{name:'查看关联机构与学位项目'}).click();
   await expect(page.getByRole('heading',{name:'Example University',exact:true})).toBeVisible();
   await page.getByText('1 个已收录学位项目',{exact:true}).click();

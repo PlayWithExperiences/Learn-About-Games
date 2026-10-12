@@ -11,10 +11,10 @@ import { ecosystemUrl } from '../../lib/ecosystem/contract';
       <p class="ecosystem-meta" data-snapshot>正在读取公共目录…</p>
     </header>
     <form class="ecosystem-filters" data-filters aria-label="研究生态筛选">
-      <label>查看<select name="kind"><option value="centres">研究中心</option><option value="organizations">机构与学位项目</option></select></label>
+      <label><span id="ecosystem-kind-label">查看</span><select name="kind" aria-labelledby="ecosystem-kind-label"><option value="centres">研究中心</option><option value="organizations">机构与学位项目</option></select></label>
       <label class="ecosystem-query">搜索<input type="search" name="q" placeholder="中心、机构或研究方向" autocomplete="off" /></label>
-      <label>国家／地区<select name="country"><option value="">全部地区</option></select></label>
-      <label>中心方向<select name="topic"><option value="">全部方向</option></select></label>
+      <label><span id="ecosystem-country-label">国家／地区</span><select name="country" aria-labelledby="ecosystem-country-label"><option value="">全部地区</option></select></label>
+      <label><span id="ecosystem-topic-label">中心方向</span><select name="topic" aria-labelledby="ecosystem-topic-label"><option value="">全部方向</option></select></label>
       <button type="reset">清除筛选</button>
     </form>
     <p role="status" aria-live="polite" data-result-count>加载中，尚未得出收录数量。</p>

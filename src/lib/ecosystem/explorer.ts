@@ -83,7 +83,8 @@ if (root) {
   }
   form.addEventListener('submit',e=>e.preventDefault());
   form.addEventListener('input',()=>{host=null;render();});
-  form.addEventListener('reset',()=>{host=null;queueMicrotask(render);});
+  // The reset default action runs after this event; render in the next task.
+  form.addEventListener('reset',()=>{host=null;setTimeout(render,0);});
   retry.addEventListener('click',load);
   void load();
 }
