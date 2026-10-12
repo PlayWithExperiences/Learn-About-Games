@@ -446,3 +446,7 @@
 ## 2026-09-29T12:15:00+08:00：收集端 2 条交付，并修掉静默丢失败记录的 runner 缺陷
 
 决策：無涘（跑满 10 条 / 串行 1 / 自动重试 0；quota_block 即停当天）｜记录：DSH agent。跑批在 generation 阶段撞上账号级 deck 限流，2 条 ready 并远端交付（远端 blob 逐字节回读一致），第 5 条在 claim 前被拦下即停当天，当日 4 次 claim、剩余 6 次未动。本轮定位并修掉一处此前未暴露的缺陷：`run-notebooklm-item.py` 的 deck 限流复探分支把状态目录变量 `state` 改绑成 gate JSON，使 `producer fail --state-dir` 写错目录且被 `check=False` 吞掉，结果是"已 claim、已打印 ITEM_FAIL、ledger 永久停在 generating"——直接违反 skill 关于 claimed 候选必须留下 ready 或带阶段/原因 failed 的不变量。改名为 `gate_state` 并加 AST 绑定回归（已反向验证能捕获该 bug），全量单测 261 通过。影响面限于"claim 前门放行、item 内才限流"这一路径，故此前批次未暴露；既有 failed 不自动重跑。
+
+## 2026-10-12 研究生态入口
+
+决策：無涘｜记录：Codex。统一研究生态入口，公开院校/项目/关系直接复用 GPA 已发布站点，不重复维护实体数据；私人契合、备注、排除、申请策略留在 Radar。新增 `/ecosystem/`，保持 Innovation Atlas 的作品创新证据关系独立，不按关键词自动造边。
