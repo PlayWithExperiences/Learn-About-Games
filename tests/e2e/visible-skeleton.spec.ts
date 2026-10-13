@@ -27,14 +27,14 @@ test('focuses desktop navigation on five Chinese user tasks', async ({ page }, t
     '能力地图',
     '成长资源',
     '创新变迁',
-    '研究生态',
+    '院校与申请 ↗',
     '关于本项目',
   ]);
 
   for (const [name, href] of [
     ['能力地图', '/Learn-About-Games/map/'],
     ['成长资源', '/Learn-About-Games/resources/'],
-    ['研究生态', '/Learn-About-Games/ecosystem/'],
+    ['院校与申请 ↗', 'https://playwithexperiences.github.io/Game-Program-Atlas/ecosystem.html'],
     ['创新变迁', '/Learn-About-Games/atlas/'],
     ['关于本项目', '/Learn-About-Games/about/'],
   ] as const) {
@@ -165,7 +165,7 @@ test('sends home actions to map, career lenses, resources, and research ecosyste
     ['看全貌', '/Learn-About-Games/map/'],
     ['职业方向', '/Learn-About-Games/map/#career-lenses'],
     ['成长资源', '/Learn-About-Games/resources/'],
-    ['研究生态', '/Learn-About-Games/ecosystem/'],
+    ['院校与申请 ↗', 'https://playwithexperiences.github.io/Game-Program-Atlas/ecosystem.html'],
   ] as const) {
     await expect(journeyIndex.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);
   }

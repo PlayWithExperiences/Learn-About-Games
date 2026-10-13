@@ -1,54 +1,13 @@
 import { expect, test } from '@playwright/test';
-import { fixture } from '../lib/ecosystem-fixture';
-import { ecosystemUrl } from '../../src/lib/ecosystem/contract';
 
-test('native centres filter and connect to the same public institutions and programmes',async({page})=>{
-  const requested: string[]=[];
-  await page.route(ecosystemUrl,route=>{requested.push(route.request().url());return route.fulfill({json:fixture});});
+test('old research link points to GPA without loading or forwarding personal query state', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', request => requests.push(request.url()));
   await page.goto('./ecosystem/?fit=PRIVATE_SENTINEL');
-  await expect(page.locator('iframe')).toHaveCount(0);
-  await expect(page.locator('[data-centre-id]')).toHaveCount(3);
-  await expect(page.getByText('拟建',{exact:false}).first()).toBeVisible();
-  await page.getByLabel('国家／地区',{exact:true}).selectOption('Canada');
-  await expect(page.locator('[data-centre-id]')).toHaveCount(2);
-  await page.getByRole('button',{name:'清除筛选'}).click();
-  await expect(page.locator('[data-centre-id]')).toHaveCount(3);
-  await page.getByRole('button',{name:'查看关联机构与学位项目'}).click();
-  await expect(page.getByRole('heading',{name:'Example University',exact:true})).toBeVisible();
-  await page.getByText('1 个已收录学位项目',{exact:true}).click();
-  await expect(page.getByRole('link',{name:'博士 · Game Research PhD'})).toHaveAttribute('href','https://example.edu/phd');
-  await page.getByRole('button',{name:'查看 1 个关联中心'}).click();
-  await expect(page.locator('[data-centre-id]')).toHaveCount(1);
-  expect(requested).toEqual([ecosystemUrl]);
-});
-
-test('source failure stays visibly unavailable rather than an empty directory',async({page})=>{
-  await page.route(ecosystemUrl,route=>route.fulfill({status:503,body:'unavailable'}));
-  await page.goto('./ecosystem/');
-  await expect(page.getByRole('alert')).toContainText('读取失败');
-  await expect(page.locator('[data-snapshot]')).toContainText('版本未知');
-  await expect(page.locator('[data-result-count]')).toContainText('数量未知');
-  await expect(page.getByRole('button',{name:'重新读取目录'})).toBeVisible();
-});
-
-test('the native filter area leaves room for multiple records on a short screen',async({page})=>{
-  await page.setViewportSize({width:1280,height:720});
-  await page.route(ecosystemUrl,route=>route.fulfill({json:fixture}));
-  await page.goto('./ecosystem/');
-  await expect(page.locator('[data-centre-id]')).toHaveCount(3);
-  const height=await page.locator('[data-filters]').evaluate(e=>e.getBoundingClientRect().height);
-  expect(height).toBeLessThan(180);
-  await expect(page.locator('[data-centre-id]').nth(1)).toBeInViewport();
-});
-
-
-test('institution view includes programmes attached to an existing department',async({page})=>{
-  const data=structuredClone(fixture);
-  data.organizations.push({id:'org:department',name:'Example Department',type:'department',country:'Finland',root_id:'org:sample'});
-  data.programs[0].organization_ids=['org:department'];
-  await page.route(ecosystemUrl,route=>route.fulfill({json:data}));
-  await page.goto('./ecosystem/');
-  await page.getByRole('button',{name:'查看关联机构与学位项目'}).click();
-  await page.getByText('1 个已收录学位项目',{exact:true}).click();
-  await expect(page.getByRole('link',{name:'博士 · Game Research PhD'})).toBeVisible();
+  await expect(page.getByRole('heading', { name: '研究目录已迁至 GPA' })).toBeVisible();
+  const link = page.getByRole('link', { name: '查看 GPA 研究组织目录 ↗', exact: true });
+  await expect(link).toHaveAttribute('href', 'https://playwithexperiences.github.io/Game-Program-Atlas/ecosystem.html');
+  await expect(link).toHaveAttribute('rel', 'noreferrer');
+  await expect(page.locator('iframe, [data-ecosystem], [data-centre-id]')).toHaveCount(0);
+  expect(requests.some(url => url.includes('research-ecosystem.json'))).toBe(false);
 });
