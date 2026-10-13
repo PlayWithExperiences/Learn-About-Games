@@ -199918,5 +199918,36 @@
         "checkedAt": "2026-08-22"
       }
     ]
+  },
+  {
+    "id": "egggrass-europe-game-research-phd-experience",
+    "title": {
+      "zh-CN": "欧洲游戏研究博士申请经验分享"
+    },
+    "summary": {
+      "zh-CN": "egggrass 于 2026-10-13 分享从游戏设计硕士到欧洲博士申请的个人经历，讨论跨学科定位、学术社群、会议投稿与岗位匹配。个案经验不代表普遍录取规律，招生信息须另查当年官方公告。"
+    },
+    "sourceId": "indienova",
+    "capabilityIds": [],
+    "knowledgeTopicIds": [],
+    "resourceTopicIds": [
+      "career-industry-practice"
+    ],
+    "mediaType": "article",
+    "canonicalUrl": "https://mp.weixin.qq.com/s/89mZvJeJ5Ar6qQwchogOBQ",
+    "whyRelevant": {
+      "zh-CN": "署名：egggrass（2026-10-13）。egggrass 于 2026-10-13 分享从游戏设计硕士到欧洲博士申请的个人经历，讨论跨学科定位、学术社群、会议投稿与岗位匹配。个案经验不代表普遍录取规律，招生信息须另查当年官方公告。 本站只提供导读和原文链接，不转载正文。"
+    },
+    "originalLanguage": "zh-Hans",
+    "accessVersions": [
+      {
+        "language": "zh-Hans",
+        "url": "https://mp.weixin.qq.com/s/89mZvJeJ5Ar6qQwchogOBQ",
+        "accessModel": "free",
+        "versionRelation": "original",
+        "presentationMode": "original",
+        "checkedAt": "2026-10-13"
+      }
+    ]
   }
 ]

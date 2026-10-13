@@ -1,9 +1,9 @@
 # Learn About Games v0.2 — 成长资源证据 Intake
 
 - 研究日期：2026-08-09；扩展核验：2026-08-15
-- 状态：研究证据 notebook；Batch A–I 已正规化为 3127 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘，Batch L 新增 7 条 Values at Play 研究与课程资料
+- 状态：研究证据 notebook；Batch A–I 已正规化为 3128 个 catalog Work Item；2026-08-15 GDC 扩展在此基础上新增 500 条，Batch J 再新增 1000 条官方 GDC 会话，Batch K 新增 10 条 Game Developer 设计复盘，Batch L 新增 7 条 Values at Play 研究与课程资料；2026-10-13 另增 1 条署名博士申请经验文章
 - 输入：Batch A 50 项、Batch B 44 项、Batch C 38 项、Batch D 20 项、Batch E 16 项、Batch F 10 项、Batch G 5 项、Batch H 30 项、Batch I 16 项
-- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；正规化后为 **3127 个 Work Item**
+- 确定性 canonical URL 去重后：首批 **229 项研究记录**；既有扩展批次核验 386 条候选，本次 GDC 官方 sitemap 扩展再核验 500 条；Batch J 从官方 sitemap 的 1402 个新候选中筛出 1000 个 HTTP 200、标题唯一的会话；Batch K 逐页核验 10 条 Game Developer 文章；2026-10-13 按用户剪藏全文新增 1 条经验文章；正规化后为 **3128 个 Work Item**
 - 本文件记录公开来源的存在、访问事实、主题关联建议与可追溯外部观察，不构成本站评分、审核等级或学习顺序。
 
 ## 使用边界
@@ -25,11 +25,11 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 
 ## 当前正规化 catalog coverage
 
-- Work Item：3127；Source：42；Access Version：3280；Resource Topic：16。
-- 原始语言：en 3072、ja 17、zh-Hans 38。
-- 可消费语言（Work Item 计，可重叠）：en 3073、ja 17、zh-Hans 40。Apple 中文界面仍未计为中文内容。
-- Access Version 语言：en 3223、ja 17、zh-Hans 40。
-- 媒介：article 1076、book 29、course 39、paper 38、podcast 11、talk 1835、video 15、website 84。
+- Work Item：3128；Source：43；Access Version：3281；Resource Topic：16。
+- 原始语言：en 3072、ja 17、zh-Hans 39。
+- 可消费语言（Work Item 计，可重叠）：en 3073、ja 17、zh-Hans 41。Apple 中文界面仍未计为中文内容。
+- Access Version 语言：en 3223、ja 17、zh-Hans 41。
+- 媒介：article 1077、book 29、course 39、paper 38、podcast 11、talk 1835、video 15、website 84。
 - 本轮没有增加 externalSignals；既有 12 条外部观察继续只保存来源事实，不参与顺序或评分。
 - coverage 由当前 catalog 逐项重新计算；研究记录数量与最终 Work Item 数不同，是因为正规化时会合并同一作品的 Access Version，并排除身份或访问事实不足的候选。
 
@@ -56,8 +56,8 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | 研究方法与玩家体验 | 74 |
 | 从业者访谈与播客 | 7 |
 | 中文行业实践与跨专业语境 | 11 |
-| 职业与行业实践 | 29 |
-| 合计 | 3127 |
+| 职业与行业实践 | 30 |
+| 合计 | 3128 |
 
 ## 接受候选
 
@@ -1466,6 +1466,13 @@ Access Version 使用现行 schema 的 versionRelation 与 presentationMode，�
 | L-005<br>canonicalUrl=https://www.valuesatplay.org/wp-content/uploads/2007/09/Values-at-Play_Curriculum_2014.pdf | Values at Play: Curriculum & Teaching Guide (4-week version) | course / en | 批判、价值观与历史语境 |
 | L-006<br>canonicalUrl=https://www.valuesatplay.org/wp-content/uploads/2007/09/vapquickref.pdf | The Values at Play Framework: A (Semi-) Quick Reference | article / en | 设计基础与概念 |
 | L-007<br>canonicalUrl=https://www.valuesatplay.org/grow-a-game-overview | Grow-A-Game Cards — Overview | website / en | 原型与实验 |
+
+### 2026-10-13 用户提供的经验文章
+
+- canonicalUrl=https://mp.weixin.qq.com/s/89mZvJeJ5Ar6qQwchogOBQ
+- 作者 egggrass，题名《欧洲游戏研究博士申请经验分享》，发表于2026-10-13；来源正文声明为作者独立观点，由indienova刊载。用户通过Web Clipper保存的完整正文已读，未使用AI摘要替代原文。
+- 主题 career-industry-practice；中文文章、免费原文。当前自动直连遇微信验证，浏览器工具访问被站点策略拒绝；checkedAt代表本地原文核对日期，不承诺链接全球可访问。
+- 仅保存署名导读和原链接，不转载全文；会议、招生预测、报录比和地区偏好不转为已核制度事实。与已有canonical URL和标题查重后新增一条。
 
 ## 拒绝与待核证据
 

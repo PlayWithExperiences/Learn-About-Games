@@ -662,5 +662,19 @@
     "languages": [
       "en"
     ]
+  },
+  {
+    "id": "indienova",
+    "name": {
+      "zh-CN": "indienova"
+    },
+    "kind": "website",
+    "summary": {
+      "zh-CN": "刊载游戏文化、开发及研究相关文章的网站；具体文章保留署名与观点来源。"
+    },
+    "homepage": "https://indienova.com/",
+    "languages": [
+      "zh-Hans"
+    ]
   }
 ]
