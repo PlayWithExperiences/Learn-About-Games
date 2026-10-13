@@ -1,0 +1,13 @@
+{
+  "url": "https://playwithexperiences.github.io/Learn-About-Games/resources/",
+  "sha256": "46f2545b47c16c402e0b258af8e9604ab5272a200cf2a973dab1a105eaa4de11",
+  "checks": {
+    "matches_local": true,
+    "title": true,
+    "author": true,
+    "source_url": true,
+    "boundary": true
+  },
+  "run_id": 38342523647,
+  "runtime_commit": "d1ee18c84fc63606eb95a08ff756ab868bef532e"
+}
