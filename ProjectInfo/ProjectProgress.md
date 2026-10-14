@@ -1,5 +1,13 @@
 # ProjectProgress
 
+## 每日自动收集已取消（2026-10-14 · DSH agent）
+
+决策：無涘（取消每日自动化任务） ｜ 记录：DSH agent ｜ 2026-10-14T13:50:00+08:00
+
+- `com.lag.notebooklm-daily-batch` 已 bootout 并删除 LaunchAgents 内 plist，`launchctl list` 无残留；
+  从未触发过一次自动运行，ledger 当日 claim 保持 0/10。仓库 `automation/` 三件留档未删，
+  重启只需复制 plist＋bootstrap。goal 已 blocked，不再跟进。详见 `sessions/2026-1014-notebooklm-daily-automation.md`。
+
 ## 每日自动收集改走 DSH 内同模型 agent（2026-10-14 · DSH agent）
 
 决策：無涘（B 全自动每日批量＋固定范围授权：≤10 claim/串行1/重试0，配额停批；定时跑借用 dsh 内 opencode muse-spark-1.3-contributor） ｜ 记录：DSH agent ｜ 2026-10-14T13:50:00+08:00

@@ -24,3 +24,10 @@
 - 成功条数＝远端 inbox blob 回读确认数；失败条均有阶段＋原因，无空链接 ready；
 - `ProjectInfo/sessions/2026-1015-notebooklm-daily.md` 已写；git 无越界提交（只含当日 session＋ProjectProgress）。
 - 以上全过则 goal 可 complete；任一不过则按实际失败修 prompt/触发器后继续观察，goal 保持 active。
+
+## 取消（2026-10-14 · 無涘决定）
+
+- 無涘指示取消每日自动化任务。已 `launchctl bootout` 并删除
+  `~/Library/LaunchAgents/com.lag.notebooklm-daily-batch.plist`，`launchctl list` 确认无残留。
+- 仓库内 `automation/` 三件（plist、agent.sh、prompt.md）保留未删，仅作留档；若日后重启用：
+  复制 plist 到 LaunchAgents 后 bootstrap＋enable 即可；goal 已 blocked，不再跟进。
