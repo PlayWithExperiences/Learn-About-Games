@@ -30,6 +30,8 @@
    本地落后时只允许 `git pull --ff-only`，非 fast-forward 即停，不 claim。
 4. 串行驱动用仓库已验证脚本 `automation/run-notebooklm-batch.sh 10`（不要自己重造驱动）；
    单条用 `automation/run-notebooklm-item.py`，失败走 producer `fail` 留阶段，不删 ledger。
+   若首条在 claim 前即被 deck/chat/studio 门禁挡住（未耗 claim），直接整批停记运行级阻塞，
+   不要把剩下候选逐条空转（门禁是整批同条件，不会因换候选恢复）。
 5. 交付只用 `automation/publish-notebooklm-resource.sh`，push 后必须远端 blob 回读确认；
    回读失败就是交付失败，保留本地 ready 与证据，不冒充已交付。
 
