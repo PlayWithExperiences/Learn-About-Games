@@ -15,3 +15,12 @@
   AI 用量限额（19:38 后可用），门禁会在该状态下正确停批。
 - 待：10-12 的 7 条 failed 不自动重跑；首轮自动运行（明 08:00）待 goal 回合验日报。
   goal-14d898e1 保持 armed 跟首轮验证。
+
+## 首轮验收标准（明早 08:00 触发后核对）
+
+- `runs/daily-20261015-trigger.log` 存在且首行时间戳为 08:00 左右（睡眠则为唤醒时刻）；
+- `runs/daily-20261015-report.json` 含 `preflight_status/attempted/ready/failed/skipped/remaining_today/stop_reason`；
+- ledger 当日 claim（含失败）≤10；未出现 `retry` 调用（`attempt_history` 无新增）；
+- 成功条数＝远端 inbox blob 回读确认数；失败条均有阶段＋原因，无空链接 ready；
+- `ProjectInfo/sessions/2026-1015-notebooklm-daily.md` 已写；git 无越界提交（只含当日 session＋ProjectProgress）。
+- 以上全过则 goal 可 complete；任一不过则按实际失败修 prompt/触发器后继续观察，goal 保持 active。
