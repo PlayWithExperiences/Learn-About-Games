@@ -1,5 +1,15 @@
 # ProjectProgress
 
+## 每日自动收集改走 DSH 内同模型 agent（2026-10-14 · DSH agent）
+
+决策：無涘（B 全自动每日批量＋固定范围授权：≤10 claim/串行1/重试0，配额停批；定时跑借用 dsh 内 opencode muse-spark-1.3-contributor） ｜ 记录：DSH agent ｜ 2026-10-14T13:50:00+08:00
+
+- launchd `com.lag.notebooklm-daily-batch` 每天 08:00 触发 `automation/notebooklm-daily-agent.sh`，
+  boot 同模型 headless agent，按 `automation/notebooklm-daily-prompt.md` 跑 skill 批量；
+  已 bootstrap＋enable，互斥锁防重叠，手动批量仍用 `run-notebooklm-batch.sh`。
+- 验证 0 claim：headless 探针＋agent 全链探针（preflight `ready_to_claim`、剩余 10/10）。
+  10-12 的 7 条 failed 不自动重跑；首轮自动运行待 goal 回合验日报。详见 `sessions/2026-1014-notebooklm-daily-automation.md`。
+
 ## 研究目录由GPA承载（2026-10-14 · Codex）
 
 更新：2026-10-14T00:52:02.944855+08:00；记录：Codex。本站聚焦游戏变迁、设计知识与学习资源；研究组织、机构、学位与申请由GPA承载。原生搜索/筛选/关联学位界面完整迁至GPA，本站移除目录读取代码，导航/首页直达GPA，旧 /ecosystem/ 保留迁移说明；固定外链不传递页面查询参数。没有复制公共事实库。

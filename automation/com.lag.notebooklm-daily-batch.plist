@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.lag.notebooklm-daily-batch</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/haodong/Documents/GitHub/Learn-About-Games/automation/notebooklm-daily-agent.sh</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>LAG_CDP_PORT</key>
+		<string>9222</string>
+		<key>LAG_BROWSER_PROFILE</key>
+		<string>/Users/haodong/.local/state/learn-about-games/browser-profile</string>
+		<key>LAG_CHROME_ARGS</key>
+		<string>--disable-features=LocalNetworkAccessChecks</string>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
+	<key>RunAtLoad</key>
+	<false/>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>8</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>/Users/haodong/.local/state/learn-about-games/notebooklm-daily/daily-batch.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/haodong/.local/state/learn-about-games/notebooklm-daily/daily-batch.error.log</string>
+</dict>
+</plist>
