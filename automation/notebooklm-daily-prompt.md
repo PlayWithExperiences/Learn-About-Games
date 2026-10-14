@@ -24,6 +24,10 @@
    `daily_limit_reached`/`no_candidate` 原样报告并结束（`[]` 只在有效查询确实无候选时报告）。
 3. 浏览器：CDP（默认 9222）不通就用 `automation/browser/launch.cjs --headless` 拉起持久 profile；
    出现 Google 登录/二次验证页立刻停，等用户亲手处理，绝不输入凭据。
+   上传通道：先 `curl` 通 PicGo 上传地址（GET 返回任何 HTTP 状态即存活）；连不上即运行级阻塞停批，不 claim
+   （上传失败发生在 claim 之后，会白白消耗当日额度）。
+   远端交付通道：AI-Life-Mentor 须在 main 分支、无暂存混入、`git fetch origin main` 成功；
+   本地落后时只允许 `git pull --ff-only`，非 fast-forward 即停，不 claim。
 4. 串行驱动用仓库已验证脚本 `automation/run-notebooklm-batch.sh 10`（不要自己重造驱动）；
    单条用 `automation/run-notebooklm-item.py`，失败走 producer `fail` 留阶段，不删 ledger。
 5. 交付只用 `automation/publish-notebooklm-resource.sh`，push 后必须远端 blob 回读确认；
