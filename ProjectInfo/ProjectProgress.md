@@ -1,5 +1,16 @@
 # ProjectProgress
 
+## 1015 收集端：工作台 location=unsupported，未领取候选（2026-10-15 · DSH agent）
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪
+  `unavailable`：隔离 headless CDP 可达，但长期本直链经浏览器＋纯 curl 双通道均被服务端
+  302 到 `notebook.google/?location=unsupported`（与 09-24 1130 轮同源），来源/Studio 不可验证。
+- 按 skill 不得 claim：attempted 0 / ready 0 / failed 0 / skipped 10，当日 claim **0/10**；
+  ledger 未动（96 ready / 84 failed）。PicGo 存活、AI-Life-Mentor fetch 成功。
+- 停止原因：`browser-notebook-access`（BLOCKED）。浏览器已关。证据 `runs/2026-1015-manual/`。
+  摘要：`sessions/2026-1015-notebooklm-daily.md`。
+- 下一步：查 unsupported 落点恢复工作台后重跑当日 preflight；本轮 10 条顺延；failed 不自动重跑。
+
 ## 每日自动收集已取消（2026-10-14 · DSH agent）
 
 决策：無涘（取消每日自动化任务） ｜ 记录：DSH agent ｜ 2026-10-14T13:50:00+08:00
