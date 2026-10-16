@@ -1,5 +1,22 @@
 # ProjectProgress
 
+## 1016 收集端：unsupported 恢复，3 claim 换 3 交付，deck 限流停批（2026-10-16 · DSH agent）
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪
+  `available`：隔离 headless CDP 直达长期本 `c8090f54` 可编辑工作台，
+  10-15 与 09-24 的 `location=unsupported` 服务端落点阻塞已恢复；deck/chat 探针皆可用。
+- attempted 3 / **ready 3 / remote_delivered 3** / failed 0；当日 claim **3/10、剩余 7**；
+  ledger 现 99 ready / 84 failed。PicGo 全 200＋sha256 一致，三件皆页面资产后台路径。
+- 交付：`QpwgBc1PcVQ`（→ `2026-1016-1021-collaboration-teams.json`，导图 63 节点 3 级）、
+  `_4h5kUrYezQ`（→ `2026-1016-1035-collaboration-teams.json`，54 节点）、
+  `Sx_IWZHcqUA`（→ `2026-1016-1049-career-industry-practice.json`，60 节点），
+  远端 blob 逐字节回读确认。三条首推被消费端超前提交拒绝，隔离 worktree 零重叠合并后推送
+  （origin/main=`31c1e26`）；主仓他人未提交改动在位，未动其工作区。浏览器已关。
+  证据 `~/.local/state/learn-about-games/notebooklm-daily/runs/2026-1016-manual/`。
+  摘要：`sessions/2026-1016-notebooklm-daily.md`。
+- 停止原因：`quota_block(deck)`（第 4 条 `i5CJWgq256g` claim 前被限流“几小时后生成”，未耗 claim）。
+  下一步：deck 恢复后跑剩余 7 条（`i5CJWgq256g` 起）；failed 不自动重跑。
+
 ## 1015 收集端：工作台 location=unsupported，未领取候选（2026-10-15 · DSH agent）
 
 - preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪
