@@ -1,5 +1,19 @@
 # ProjectProgress
 
+## 1017 收集端：1 claim 零交付，工作台失访停批（2026-10-17 · DSH agent）
+
+- preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；开工浏览器就绪
+  `available`：隔离 headless CDP 直达长期本 `c8090f54` 可编辑工作台，deck/chat 探针皆可用。
+- attempted 2 / **ready 0 / remote_delivered 0** / failed 1 / 预检阻断 1；当日 claim **1/10、剩余 9**；
+  ledger 现 99 ready / 85 failed。PicGo 存活、AI-Life-Mentor fetch 成功（本地分叉，交付时按先例合并）。
+- 首条 `i5CJWgq256g`（claim 已耗，run-20261017100242-43598）：总结/信息图/导图均就绪，
+  演示文稿 2700 秒未现、终检面板读空，记 generation failed，不自动重跑。
+  第二条 `9fms9kUzn3Y` claim 前 `studio-read NO_PAGE_TARGET`（未耗 claim）→ 排查发现工作台先掉
+  `location=unsupported`，重启后长期本直链落 `accessrequest`“无权查看”页（账号仍登录，未点请求权限）。
+- 停止原因：`browser-notebook-access`（BLOCKED）。浏览器已关。证据 `runs/2026-1017-manual/`。
+  摘要：`sessions/2026-1017-notebooklm-daily.md`。
+- 下一步：恢复自动化账号对长期本访问后重跑剩余 9 条（`9fms9kUzn3Y` 起，未耗 claim）；failed 不自动重跑。
+
 ## 1016 收集端：unsupported 恢复，3 claim 换 3 交付，deck 限流停批（2026-10-16 · DSH agent）
 
 - preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；浏览器就绪
