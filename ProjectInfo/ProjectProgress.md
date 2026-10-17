@@ -1,5 +1,16 @@
 # ProjectProgress
 
+## 1017 收集端续跑：浏览器仍失访，零 claim 停批（2026-10-17 · DSH agent）
+
+- 新 preflight `ready_to_claim`（当日已 claim 1/10、剩余 9；9 候选自 `9fms9kUzn3Y` 起，
+  `i5CJWgq256g` 已在册不重复）。ledger `99 ready / 85 failed`，无非终态条目，未删改。
+- 浏览器就绪 `unavailable`：全新拉起隔离 headless 复现长期本直链落 `accessrequest` 无权查看页，
+  Studio/deck/chat 零配额探针皆不可用；按技能不得 claim，本轮 claim 消耗 0（累计仍 1/10）。
+- attempted 0 / ready 0 / failed 0 / skipped 9 / remote_delivered 0；停止原因
+  `browser-notebook-access`（BLOCKED）。浏览器已关。证据 `runs/2026-1017-continue/`。
+  摘要：`sessions/2026-1017-notebooklm-daily-continue.md`。
+- 下一步：账号恢复对长期本访问后从 `9fms9kUzn3Y` 起跑剩余 9 条；failed 不自动重跑。
+
 ## 1017 收集端：1 claim 零交付，工作台失访停批（2026-10-17 · DSH agent）
 
 - preflight `ready_to_claim`（2454 候选/选中 10，当日已 claim 0、剩余 10）；开工浏览器就绪
