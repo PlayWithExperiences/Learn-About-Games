@@ -1,5 +1,20 @@
 # ProjectProgress
 
+## 1018 收集端 headed 重跑：登录墙，零 claim 停批（2026-10-18 · muse-spark-1.3-contributor）
+
+- 新 preflight `ready_to_claim`（目录候选 2454/选中 10，当日已 claim 0/10、剩余 10；
+  10 条自 `9fms9kUzn3Y` 起，与早轮一致）。ledger `99 ready / 85 failed`，无非终态条目，未删改。
+- 浏览器就绪 `unavailable`：headed（channel=chrome, headless=False）复用隔离画像
+  `~/.local/state/learn-about-games/browser-profile`，长期本 `c8090f54` 直链落
+  Google Sign in（Email or phone）页，全程无 notebook 页面目标；
+  Studio `panel:false/0`、deck 不可用，chat 字面 true 系登录页假阳性。
+  复用画像登录态已过期，未输凭据，未点请求权限（与早轮 unsupported/accessrequest 不同源）。
+- attempted 0 / ready 0 / failed 0 / skipped 10 / remote_delivered 0；停止原因
+  `browser-notebook-access`（BLOCKED）。浏览器已关，9223 无残留。证据 `runs/2026-1018-headed/`。
+  摘要：`sessions/2026-1018-notebooklm-daily-headed.md`。
+- 下一步：用户亲手在复用画像 headed 窗口完成 Google 登录（或恢复账号对长期本访问）后从
+  `9fms9kUzn3Y` 起跑剩余 10 条；failed 不自动重跑。
+
 ## 1018 收集端重跑（权限恢复后）：长期本仍失访，零 claim 停批（2026-10-18 · muse-spark-1.3-contributor）
 
 - 新 preflight `ready_to_claim`（目录候选 2454/选中 10，当日已 claim 0/10、剩余 10；
