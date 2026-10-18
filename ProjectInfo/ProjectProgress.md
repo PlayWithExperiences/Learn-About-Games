@@ -1,5 +1,18 @@
 # ProjectProgress
 
+## 1018 收集端重跑（权限恢复后）：长期本仍失访，零 claim 停批（2026-10-18 · muse-spark-1.3-contributor）
+
+- 新 preflight `ready_to_claim`（目录候选 2454/选中 10，当日已 claim 0/10、剩余 10；
+  10 条自 `9fms9kUzn3Y` 起，与早轮一致）。ledger `99 ready / 85 failed`，无非终态条目，未删改。
+- 浏览器就绪 `unavailable`：全新拉起隔离 headless 直连长期本 `c8090f54`，首载短暂渲染出
+  notebook 标题/URL 后跳转落 `location=unsupported` 营销页，重导航复核一致；
+  按上游指令加查旧本 `880ad454` 同样落 unsupported（与 10-15 同源）。
+  Studio/来源/deck/chat 零配额探针皆无可用页面目标；账号仍登录，未点请求权限，未输凭据。
+- attempted 0 / ready 0 / failed 0 / skipped 10 / remote_delivered 0；停止原因
+  `browser-notebook-access`（BLOCKED）。浏览器已关。证据 `runs/2026-1018-2nd/`。
+  摘要：`sessions/2026-1018-notebooklm-daily-rerun.md`。
+- 下一步：账号恢复对长期本可编辑访问后从 `9fms9kUzn3Y` 起跑剩余 10 条；failed 不自动重跑。
+
 ## 1018 收集端补跑：长期本仍失访，零 claim 停批（2026-10-18 · muse-spark-1.3-contributor）
 
 - 新 preflight `ready_to_claim`（目录候选 2454/选中 10，当日已 claim 0/10、剩余 10；
