@@ -1,5 +1,25 @@
 # ProjectProgress
 
+## 1018 收集链续跑：4 claim 换 1 交付，deck 限流停批（2026-10-18 · muse-spark-1.3-contributor)
+
+- preflight `ready_to_claim`（2454 候选/选中 8 自 `AsFK1tC5plU` 起，当日已 claim 2/10、剩余 8）。
+  浏览器就绪 `available`：复用现活 headed CDP 9223，长期本 `c8090f54` 可编辑；
+  Studio 38 卡、deck/chat 零配额探针皆可用。PicGo 存活（注：探活 POST 误产生远端
+  测试文件 `20261018153417089.png`，非候选资产）。
+- attempted 4 / **ready 1 / remote_delivered 1** / failed 3 / skipped 4（配额停批）；
+  当日 claim **6/10、剩余 4**；ledger 现 101 ready / 89 failed，无非终态条目。
+- 成功：`Ohp-aEEupBg`（run-20261018160738-88027 → `2026-1018-1624-playtesting.json`，
+  导图 33 节点 4 级 0 折叠；deck 经 viewer-download 回退；三件 200＋sha256 一致，
+  push＋远端 blob 回读确认）。
+- 失败（claim 已耗，不自动重跑）：`AsFK1tC5plU` export（mindmap 导出命令失败）；
+  `HycjDyGIjfQ` generation（信息图 GEN_UNCONFIRMED）；
+  `bVDwtA40-iY` upload（两图已传，slides 遇 HTTP 500；本地件齐，可授权后 finish 续传）。
+- 停止原因：`quota_block(deck)`（第 5 条 `oLjVwfUABvw` claim 前被限流“几小时后生成”，未耗 claim）。
+  浏览器未关（现活 CDP 保留）。证据 `runs/batch-20261018T15*/`；摘要
+  `sessions/2026-1018-notebooklm-collect-8batch.md`。
+- 下一步：deck 恢复后跑剩余 4 条（`oLjVwfUABvw` 起）；`bVDwtA40-iY` 是否授权 finish 续传待定；
+  另两条 failed 不自动重跑。
+
 ## 1018 收集链：坏 deck 修补受阻＋首条失败停批（2026-10-18 · muse-spark-1.3-contributor）
 
 - preflight `ready_to_claim`（2454 候选/选中 9，当日已 claim 1/10、剩余 9；9 条自 `R-ftXx3POZM` 起）。
