@@ -1,5 +1,22 @@
 # ProjectProgress
 
+## 1018 收集链：坏 deck 修补受阻＋首条失败停批（2026-10-18 · muse-spark-1.3-contributor）
+
+- preflight `ready_to_claim`（2454 候选/选中 9，当日已 claim 1/10、剩余 9；9 条自 `R-ftXx3POZM` 起）。
+  浏览器就绪 `available`：复用现活 headed CDP 9223，长期本 `c8090f54` 可编辑（未杀浏览器）；
+  Studio 38 卡、deck 可立即生成、chat 正常。PicGo 存活。
+- 修坏 deck 未完成（按技能阻断）：`9fms9kUzn3Y` 现为 ledger-ready＋已交付，字面 retry 被拒
+  （只允许 failed/partial，未耗 claim）；两版 page-asset-capture PPTX 均无中央目录（坏件实锤），
+  viewer-download 诊断重取 19.3MB 有效 deck（unzip -l/-t 全过，仅存 /tmp 未发）。
+  producer 无修改 ready 的原子接口，补发待消费端 quarantine/补发或改动。证据见
+  `sessions/2026-1018-notebooklm-collect-chain.md`。
+- 批量 attempted 1 / **ready 0 / remote_delivered 0** / failed 1 / skipped 8；
+  当日 claim **2/10、剩余 8**；ledger 现 100 ready / 86 failed，无非终态条目。
+  `R-ftXx3POZM`（run-20261018150117-52818）`isolate-source` URL 占位 0 匹配，claim 已耗，
+  按授权失败即停批。浏览器未关。send_message 父级同步不可用。
+- 下一步待定：坏 deck 补发路径、R-ftXx3POZM 是否修 runner 后新自然日 retry、后 8 条顺延；
+  failed 均不自动重跑。
+
 ## 1018 收集端 headed 重跑：登录墙，零 claim 停批（2026-10-18 · muse-spark-1.3-contributor）
 
 - 新 preflight `ready_to_claim`（目录候选 2454/选中 10，当日已 claim 0/10、剩余 10；
