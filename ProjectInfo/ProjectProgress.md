@@ -1,5 +1,19 @@
 # ProjectProgress
 
+## 1019 收集端：2 claim 零交付，工作台抖动停批（2026-10-19 · muse-spark-1.3-contributor)
+
+- preflight `ready_to_claim`（2454 候选/选中 10 自 `oLjVwfUABvw` 起，当日已 claim 0/10、剩余 10）。
+  浏览器就绪先 `available` 后抖动：复用隔离画像 headed CDP 9223，长期本 `c8090f54` 经
+  notebooklm.google.com 中转打开（Studio 47 卡、来源 23、deck/chat 皆可用）；跑批中途翻转
+  unsupported → accessrequest → unsupported。
+- attempted 3（耗 claim 2）/ **ready 0 / remote_delivered 0** / failed 2 / 门拦 1（未耗 claim）；
+  当日 claim **2/10、剩余 8**；ledger 现 101 ready / 91 failed，无非终态条目。
+- 失败（claim 已耗，不自动重跑）：`oLjVwfUABvw` summary suspect-verify 抽取 11/12；
+  `ug5PuBXSOkc` isolate-source 面板读空 0 匹配。`jI-5nZgtWc8` claim 前 studio 不可读停批。
+- 停止原因：`browser-notebook-access`（BLOCKED）。浏览器未关（9223 保留）。证据
+  `runs/batch-20261019T1000-manual/`。摘要 `sessions/2026-1019-notebooklm-daily.md`。
+- 下一步：工作台稳定后从 `jI-5nZgtWc8` 起跑剩余 8 条；failed 不自动重跑。
+
 ## 1018 收集链续跑：4 claim 换 1 交付，deck 限流停批（2026-10-18 · muse-spark-1.3-contributor)
 
 - preflight `ready_to_claim`（2454 候选/选中 8 自 `AsFK1tC5plU` 起，当日已 claim 2/10、剩余 8）。
