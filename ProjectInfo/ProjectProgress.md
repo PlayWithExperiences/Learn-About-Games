@@ -1,5 +1,18 @@
 # ProjectProgress
 
+## 1020 收集端：工作台失访，零 claim 停批（2026-10-20 · muse-spark-1.3-contributor)
+
+- preflight `ready_to_claim`（2454 候选/选中 10 自 `jI-5nZgtWc8` 起，当日已 claim 0/10、剩余 10）。
+- 浏览器就绪 `unavailable`：复用隔离画像 headed CDP 9223；到场零标签页，重建长期本
+  `c8090f54` 标签后先落 `accessrequest` 无权查看页、再自行翻转 `location=unsupported`
+  营销页，直链重导航复核一致；Studio `panel:false/0 卡`、来源/deck/chat 皆无可用目标。
+  Google 会话仍在，未输凭据、未点请求权限。
+- attempted 0 / **ready 0 / remote_delivered 0** / failed 0 / skipped 10（未耗 claim）；
+  当日 claim **0/10、剩余 10**；ledger 现 101 ready / 91 failed，无非终态条目。
+- 停止原因：`browser-notebook-access`（BLOCKED）。浏览器未关（9223 保留）。证据
+  `runs/batch-20261020T1000-manual/`。摘要 `sessions/2026-1020-notebooklm-daily.md`。
+- 下一步：账号恢复对长期本可编辑访问后从 `jI-5nZgtWc8` 起跑剩余 10 条；failed 不自动重跑。
+
 ## 1019 收集端：2 claim 零交付，工作台抖动停批（2026-10-19 · muse-spark-1.3-contributor)
 
 - preflight `ready_to_claim`（2454 候选/选中 10 自 `oLjVwfUABvw` 起，当日已 claim 0/10、剩余 10）。
