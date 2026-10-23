@@ -1,5 +1,24 @@
 # ProjectProgress
 
+## 1023 收集端：3 claim 零交付，导图查看器改中文致 export 系统性失败停批（2026-10-23 · muse-spark-1.3-contributor)
+
+- preflight `ready_to_claim`（2454 候选/选中 10，自 `jI-5nZgtWc8` 起；当日已 claim 0/10、剩余 10）。
+  浏览器就绪 `available`：复用隔离画像 headed CDP 9223，到场零标签页后重建长期本
+  `c8090f54` 标签，直链可编辑（Studio 47 卡/9 创建钮、来源 25、deck-immediate/chat 可用）。
+- attempted 3（耗 claim 3）/ **ready 0 / remote_delivered 0** / failed 3 / skipped 7（主动停批）；
+  当日 claim **3/10、剩余 7**；ledger 现 101 ready / 94 failed，无非终态条目。
+- 失败（claim 已耗，不自动重跑）：`jI-5nZgtWc8` export 信息图页面资产路径未捕获 200 体
+  （第二条下载路径补试成功 5.6MB PNG，但 ledger 已 failed 且无 retry 授权，仍记 failed）；
+  `_ez3DAnaxTU`、`gdBACyIOCtc` export 导图 `no expand button`。
+- 根因确诊：导图 viewer（OOPIF 帧）工具栏已中文化（展开=`展开所有节点`），runner
+  `nblm-export-mindmap.cjs` 只查英文 aria-label，条条必败；帧内 12 文本节点内容正常。
+  证据 `runs/batch-20261023T1000-manual/` 及三条 `runs/2026-10-23T10*-item-*/`。摘要
+  `sessions/2026-1023-notebooklm-daily.md`。
+- 停止原因：`export-mindmap-systematic`（BLOCKED，为保剩余 claim 及服务端配额停批）。
+  浏览器未关（9223 保留）。PicGo 存活。本轮无 ready，无交付动作。
+- 下一步待無涘定：① 是否授权修 runner（兼容中英文展开标签＋回归验证）；
+  ② 修好后三条 failed 是否新自然日 retry（各耗 1 新 claim）；③ 剩余 7 条（`10YhD9HMsPA` 起）顺延。
+
 ## 1022 收集端：工作台仍失访，零 claim 停批（2026-10-22 · muse-spark-1.3-contributor)
 
 - preflight `ready_to_claim`（2454 候选/选中 10 自 `jI-5nZgtWc8` 起，当日已 claim 0/10、剩余 10）。
