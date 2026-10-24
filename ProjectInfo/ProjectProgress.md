@@ -1,5 +1,22 @@
 # ProjectProgress
 
+## 1024 收集端：导图中文标签未修复，零 claim 停批（2026-10-24 · muse-spark-1.3-contributor)
+
+- preflight `ready_to_claim`（2454 候选/选中 10，自 `10YhD9HMsPA` 起；当日已 claim 0/10、剩余 10）。
+  浏览器就绪 `available`：复用隔离画像 headed CDP 9223，长期本 `c8090f54` 可编辑
+  （Studio 56 卡/9 创建钮、来源 28、deck 可立即生成、chat 可用；均为零配额探针）。
+- 零 claim 复现系统性失败：既有卡片 viewer 正常打开且 SVG 存在，但 `EXPAND: no expand button`
+  （与 10-23 同签名）；只读 toolbar dump 确诊 viewer 工具栏已中文化（`展开所有节点`），
+  runner `nblm-export-mindmap.cjs` 只查英文标签。修 runner 未获授权，本轮不改代码。
+- attempted 0（耗 claim 0）/ **ready 0 / remote_delivered 0** / failed 0 / skipped 10；
+  当日 claim **0/10、剩余 10**；ledger 未动（101 ready / 94 failed，无非终态条目）。
+  历史 failed 未重跑。未写 PKM/建 Issue/触发 Daily Check-in/发布网站。
+- 停止原因：`export-mindmap-systematic`（BLOCKED，首 claim 前停批以保全配额）。
+  浏览器未关（9223 保留）。证据 `runs/batch-20261024T1000-manual/`（state dir）。
+  摘要 `sessions/2026-1024-notebooklm-daily.md`。
+- 下一步待無涘定：① 是否授权修 runner（兼容中英文展开标签＋回归验证）；
+  ② 修好后历史 failed 是否新自然日 retry（各耗 1 新 claim）；③ 剩余 10 条顺延。
+
 ## 1023 收集端：3 claim 零交付，导图查看器改中文致 export 系统性失败停批（2026-10-23 · muse-spark-1.3-contributor)
 
 - preflight `ready_to_claim`（2454 候选/选中 10，自 `jI-5nZgtWc8` 起；当日已 claim 0/10、剩余 10）。
