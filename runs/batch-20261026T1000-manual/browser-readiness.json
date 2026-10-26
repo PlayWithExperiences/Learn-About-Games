@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-26T10:33:00+08:00",
+  "mode": "headed",
+  "profile": "~/.local/state/learn-about-games/browser-profile",
+  "cdp_port": 9223,
+  "notebook_id": "c8090f54-827f-47ce-8b60-b59acc95f9fe",
+  "result": "available",
+  "evidence": {
+    "studio": "panel:true create:9 artifacts:56",
+    "sources": 28,
+    "deck": {"available": true, "reason": "immediate generation offered", "generateButtons": 1},
+    "chat": {"available": true, "reason": "composer present but disabled and no limit notice found (normal while an artifact generates)"}
+  },
+  "quota_consumed": 0
+}

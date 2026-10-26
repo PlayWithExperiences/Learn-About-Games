@@ -1,0 +1,7 @@
+viewer open: OPEN: opened (card: 游戏职业 思维导图)
+VIEWER_TARGET: 0f1374a1-4fff-40ce-b106-ea6047436b2c
+EXPAND: no expand button
+MINDMAP_FAIL: no expand button
+OOPIF toolbar buttons: 收起所有节点 | 放大 | 缩小 | Download mindmap as image
+SVG text nodes: 86 (sample: 游戏职业研讨会：共管理与有效关系建设, <, 核心问题与挑战, <, 直属员工应对策略, <, 管理者责任与策略, <)
+note: 收起所有节点 = Collapse all nodes (Chinese); viewer already expanded, but runner nblm-export-mindmap.cjs L124/150-152 only matches English aria-labels, so reports no expand button. Content exists; tool bug systematic.
