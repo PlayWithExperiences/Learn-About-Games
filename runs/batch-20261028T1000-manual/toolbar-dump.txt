@@ -1,0 +1,3 @@
+toolbar buttons (aria-label | icon text), read-only CDP dump of scf.usercontent viewer for existing card「卡通渲染 思维导图」, 2026-10-28:
+[{"label":"展开所有节点","text":"expand_all"},{"label":"放大","text":"add"},{"label":"缩小","text":"remove"},{"label":"Download mindmap as image","text":"download"}]
+runner nblm-export-mindmap.cjs L124/150-152 queries only button[aria-label="Expand all nodes"] / "Collapse all nodes" -> systematic EXPAND: no expand button (same signature as 10-23/24/25/26/27).
