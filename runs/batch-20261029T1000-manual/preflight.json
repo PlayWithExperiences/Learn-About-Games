@@ -1,0 +1,91 @@
+{
+  "candidate_count": 2454,
+  "candidates": [
+    {
+      "catalog_id": "yt-20260820-gdc-10YhD9HMsPA",
+      "resource_id": "youtube-10YhD9HMsPA",
+      "source_url": "https://www.youtube.com/watch?v=10YhD9HMsPA",
+      "title": "Make the Trailer Before the Game: A Marketing First Way to Prototype",
+      "topic": "prototyping-experimentation",
+      "video_id": "10YhD9HMsPA"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-WMlEyfqVZLk",
+      "resource_id": "youtube-WMlEyfqVZLk",
+      "source_url": "https://www.youtube.com/watch?v=WMlEyfqVZLk",
+      "title": "Thwips and Hugs: The Animation of 'Marvel's Spider-Man 2'",
+      "topic": "game-feel-feedback",
+      "video_id": "WMlEyfqVZLk"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-lxRgmZTEBHM",
+      "resource_id": "youtube-lxRgmZTEBHM",
+      "source_url": "https://www.youtube.com/watch?v=lxRgmZTEBHM",
+      "title": "Making Connections: Real-Time Path-Traced Light Transport in Game Engines",
+      "topic": "design-fundamentals",
+      "video_id": "lxRgmZTEBHM"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-OhRZWuuBN8w",
+      "resource_id": "youtube-OhRZWuuBN8w",
+      "source_url": "https://www.youtube.com/watch?v=OhRZWuuBN8w",
+      "title": "The Music of 'Tchia': Channeling the Soul of New Caledonia",
+      "topic": "narrative-expression",
+      "video_id": "OhRZWuuBN8w"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-dSe7eg8Dj98",
+      "resource_id": "youtube-dSe7eg8Dj98",
+      "source_url": "https://www.youtube.com/watch?v=dSe7eg8Dj98",
+      "title": "Quaternions to Homogeneous Points, Lines, and Planes",
+      "topic": "design-fundamentals",
+      "video_id": "dSe7eg8Dj98"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-mHc2iCfDoro",
+      "resource_id": "youtube-mHc2iCfDoro",
+      "source_url": "https://www.youtube.com/watch?v=mHc2iCfDoro",
+      "title": "Classic Game Postmortem: 'Karateka'",
+      "topic": "production-iteration",
+      "video_id": "mHc2iCfDoro"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-QgmIs32SWdM",
+      "resource_id": "youtube-QgmIs32SWdM",
+      "source_url": "https://www.youtube.com/watch?v=QgmIs32SWdM",
+      "title": "Cult of the Twitch: How 'Cult of the Lamb' Used Twitch Integration to Reach a Massive Audience",
+      "topic": "systems-mechanics",
+      "video_id": "QgmIs32SWdM"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-3SAdUHgaF9w",
+      "resource_id": "youtube-3SAdUHgaF9w",
+      "source_url": "https://www.youtube.com/watch?v=3SAdUHgaF9w",
+      "title": "Step Into Your Player's Shoes: Making the Most of Team Playtests on 'skate'",
+      "topic": "playtesting",
+      "video_id": "3SAdUHgaF9w"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-uUtQb81UMlw",
+      "resource_id": "youtube-uUtQb81UMlw",
+      "source_url": "https://www.youtube.com/watch?v=uUtQb81UMlw",
+      "title": "How to Make Things \"POP\" with Audio and Color",
+      "topic": "game-feel-feedback",
+      "video_id": "uUtQb81UMlw"
+    },
+    {
+      "catalog_id": "yt-20260820-gdc-MdmY9Mt-vz8",
+      "resource_id": "youtube-MdmY9Mt-vz8",
+      "source_url": "https://www.youtube.com/watch?v=MdmY9Mt-vz8",
+      "title": "Larian Cinematics: A Top-Down Look at Our Bottom-Up Approach in 'Baldur's Gate 3'",
+      "topic": "production-iteration",
+      "video_id": "MdmY9Mt-vz8"
+    }
+  ],
+  "claimed_today": 0,
+  "reason": "按目录顺序返回未在 ledger 或 inbox 留痕的候选",
+  "remaining_today": 10,
+  "requested_limit": 10,
+  "selected_count": 10,
+  "status": "ready_to_claim"
+}
