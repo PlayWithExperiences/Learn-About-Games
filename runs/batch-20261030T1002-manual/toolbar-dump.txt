@@ -1,0 +1,9 @@
+toolbar buttons (aria-label | icon text), read-only CDP dump of scf.usercontent viewer for existing card「卡通渲染 思维导图」, 2026-10-30 (zero-claim, no generation):
+[{"label":"展开所有节点","text":"expand_all"},{"label":"放大","text":"add"},{"label":"缩小","text":"remove"},{"label":"Download mindmap as image","text":"download"}]
+SVG texts: 12 (content present, not a loading issue)
+runner nblm-export-mindmap.cjs L124/150-152 queries only button[aria-label="Expand all nodes"] / "Collapse all nodes" -> systematic EXPAND: no expand button (same signature as 10-23/24/25/26/27/28/29).
+修 runner 未获授权，本轮不改代码。
+RAW:
+OPEN: opened
+VIEWER: blob:https://0rykt3a1dcede4ezaiixipyjlbfdxjs9jhm1usvbjx62jx7vxx-h1008167276.scf.
+DUMP:{"btns":[{"label":"展开所有节点","text":"expand_all"},{"label":"放大","text":"add"},{"label":"缩小","text":"remove"},{"label":"Download mindmap as image","text":"download"}],"allAria":["BUTTON:展开所有节点","BUTTON:放大","BUTTON:缩小","BUTTON:Download mindmap as image","svg:Interactive mindmap tree. Use arrow keys to navigate.","g:Hi-Fi Rush 3D卡通渲染技术解析, 5 children","g:核心问题与挑战, 2 children","g:案例与系统迭代, 3 children","g:设计取舍与引擎修改, 2 children","g:玩家影响与美术体验, 2 children","g:可迁移方法与架构, 2 children"],"svg":true,"texts":12,"htmlLen":726406}
