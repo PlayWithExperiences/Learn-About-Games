@@ -1,0 +1,13 @@
+toolbar buttons (text||icon), read-only CDP dump of scf.usercontent viewer for existing card「游戏职业思维导图」, 2026-10-31 (zero-claim, no generation):
+收起所有节点||collapse_all /// 放大||add /// 缩小||remove /// Download mindmap as image||download
+SVG texts: 104 (content present, not a loading issue; app-root data-app-data contains 游戏行业职业晋升讲座 full tree)
+runner nblm-export-mindmap.cjs L124/150-152 queries only button[aria-label="Expand all nodes"] / "Collapse all nodes" -> systematic EXPAND: no expand button (same signature as 10-23/24/25/26/27/28/29/30).
+本次为已展开态（收起所有节点 present，即英文 Collapse all 的中文等价），但 runner 无中文分支，仍必败；与 10-26 同为收起态、10-30 同为展开态，均为同一英文硬编码根因。
+修 runner 未获授权，本轮不改代码。
+RAW:
+OPEN: opened
+VIEWER_TARGET: 370828a8-96ad-4726-a5e3-b7455a743c4e
+EXPAND: no expand button
+MINDMAP_FAIL: no expand button
+OOPIF_URL: blob:https://12godmy8uaowgvgjfjtrop55i5tvvwu2it8hgfnsejmg3knbst-h1008167276.scf.usercontent.goog/370828a8-96ad-4726-a5e3
+SVG: hasSvg true, texts 104
