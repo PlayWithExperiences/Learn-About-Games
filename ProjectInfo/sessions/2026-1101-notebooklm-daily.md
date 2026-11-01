@@ -16,3 +16,12 @@
 - 收官统计：attempted 0 / ready 0 / remote_delivered 0 / failed 0 / skipped 10；claim 0/10，remaining_today 10；停止原因 `browser-notebook-access`。未 claim、NotebookLM 生成、上传、远端 inbox 交付、PKM/Issue、Daily Check-in 或网站发布；历史 failed 未 retry。headed 隔离 Chrome 保留，本收口段未触碰。
 - run 证据：`runs/batch-20261101T1505-continue/report.json`、`browser-readiness.json`、`mindmap-compatibility.json`、`preflight.json`。`automation/browser/cdp.cjs` 的既有脏改动非获批修复，未改动也不纳入提交。
 - 原始对话：`dialogues/2026-1101.md「1540 续跑收口」`（脱敏摘录；当前 DSH session `e0d845f0-1aa9-4143-acd3-92771b8a947f` 的原始 transcript 未找到可读取归档，故不宣称完整转录）。
+
+## 事后归档定位更正（2026-11-01）
+
+- 上述“未找到”保留为收口时的真实情况；收口后独立只读复核定位到以下归档，均可读取且 `zstd -t` 通过：
+  - 收口代理 `e0d845f0-1aa9-4143-acd3-92771b8a947f`：`/Users/haodong/.dsh/sessions/--Users-haodong-Documents-AI-DeepSeek-Misc--/e0d845f0-1aa9-4143-acd3-92771b8a947f/session.v4.jsonl.zstd`
+  - producer `47424afc-a2eb-4358-82fd-a0317b504a68`：`/Users/haodong/.dsh/sessions/--Users-haodong-Documents-AI-DeepSeek-Misc--/47424afc-a2eb-4358-82fd-a0317b504a68/session.v4.jsonl.zstd`
+  - 恢复 session `c575325a-fee6-4e6f-b4a0-106a457c6008`：`/Users/haodong/.dsh/sessions/--Users-haodong-Documents-AI-DeepSeek-Misc--/c575325a-fee6-4e6f-b4a0-106a457c6008/session.v4.jsonl.zstd`
+  - 主 session `session-5da5e7b5-3bdd-4fa4-a746-ebda50835ac2`：`/Users/haodong/.dsh/sessions/--Users-haodong-Documents-AI-DeepSeek-Misc--/session-5da5e7b5-3bdd-4fa4-a746-ebda50835ac2/session.v4.jsonl.zstd`
+- 该验证只证明归档可读且压缩流校验通过，不证明原始逐回合记录完整，也未核实摘要覆盖；未读取 NotebookLM 正文。
