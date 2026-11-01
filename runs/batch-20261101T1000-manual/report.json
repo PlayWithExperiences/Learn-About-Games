@@ -1,5 +1,7 @@
 {
-  "run_at": "2026-11-01T10:00:25+08:00",
+  "scheduled_for": "2026-11-01T10:00:00+08:00",
+  "request_time_sampled": "2026-11-01T10:00:25+08:00",
+  "browser_readiness_checked_at": "2026-11-01T10:03:52+08:00",
   "preflight_status": "ready_to_claim",
   "preflight_candidate_count": 2454,
   "selected_count": 10,
@@ -41,7 +43,8 @@
     "producer_claim_or_fail": false,
     "notebooklm_generation": false,
     "picgo_upload": false,
-    "inbox_publish_or_push": false,
+    "ai_life_mentor_inbox_delivery": false,
+    "project_documentation_git_push": true,
     "pkm_write_or_issue": false,
     "public_site_publish": false
   }
