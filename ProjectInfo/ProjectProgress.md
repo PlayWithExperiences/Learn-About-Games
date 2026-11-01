@@ -1,22 +1,20 @@
 # ProjectProgress
 
-## 1031 收集端：导图中文标签未修复，零 claim 停批（2026-10-31 · muse-spark-1.3-contributor)
+## 1101 收集端：导图中文标签阻断，零 claim 停批（2026-11-01 · DSH headed)
 
-- preflight `ready_to_claim`（2454 候选/选中 10，自 `10YhD9HMsPA` 起；
-  当日已 claim 0/10、剩余 10）。浏览器就绪 `available`：复用隔离画像 headed CDP 9223；
-  长期本 `c8090f54` 可编辑（Studio 56 卡/9 创建钮、来源 28、deck 可立即生成、chat 可用，均为零配额探针）。
-- 零 claim 复验证实系统性失败：既有卡片「游戏职业思维导图」viewer 正常打开且 SVG 存在（104 texts），
-  toolbar 已中文化（本次 `收起所有节点`＝已展开态；另有 放大/缩小/Download mindmap as image），
-  runner `nblm-export-mindmap.cjs` L124/150-152 只查英文标签，必报 `EXPAND: no expand button`
-  （与 10-23/24/25/26/27/28/29/30 同签名）。修 runner 未获授权，本轮不改代码。
+- preflight `ready_to_claim`（2454 候选/选中 10，自 `10YhD9HMsPA` 起；当日 claim 0/10）。
+  浏览器复用隔离画像 headed Chrome、CDP 9223：来源 28、Studio 56 卡/9 创建钮、deck 立即生成可用；
+  chat composer 存在但 disabled、无明确限额提示，因此未声称聊天请求已验证可发送。
+- 首 claim 前零配额复验现存导图：viewer 可打开，工具栏展开标签为 `展开所有节点`，
+  `nblm-export-mindmap.cjs` 只查英文 `Expand all nodes`/`Collapse all nodes`，返回 `EXPAND: no expand button`。
+  该系统性阻断本轮复现；修 runner 仍待明确授权，本轮不改代码。Studio 已恢复列表态，浏览器保持 headed。
 - attempted 0（耗 claim 0）/ **ready 0 / remote_delivered 0** / failed 0 / skipped 10；
-  当日 claim **0/10、剩余 10**；ledger 未动（101 ready / 94 failed，无非终态条目）。
-  历史 failed 未重跑。未写 PKM/建 Issue/触发 Daily Check-in/发布网站。
-- 停止原因：`export-mindmap-systematic`（BLOCKED，首 claim 前停批以保全配额）。
-  浏览器未关（9223 headed 保留，viewer 已恢复列表态）。证据 `runs/batch-20261031T1000-manual/`。
-  摘要 `sessions/2026-1031-notebooklm-daily.md`。
-- 下一步待無涘定：① 是否授权修 runner（兼容中英文展开/收起标签＋回归验证）；
-  ② 修好后历史 failed 是否新自然日 retry（各耗 1 新 claim）；③ 剩余 10 条顺延。
+  当日 claim **0/10、剩余 10**。未 claim 候选，故无候选失败记录；历史 failed 未重跑。
+  未生成、上传、发布 inbox、写 PKM/建 Issue/触发 Daily Check-in/发布网站。
+- 停止原因：`export-mindmap-systematic`（BLOCKED，思维导图展开/深度证明是 ready 硬门槛；首条 claim 前停批保全额度）。
+  证据 `runs/batch-20261101T1000-manual/`；日报 `sessions/2026-1101-notebooklm-daily.md`。
+- 下一步待定：待無涘明确授权修复并验证中英文展开/收起标签兼容后，重新预检并处理当前候选；历史 failed 不自动 retry。
+
 
 ## 1030 收集端：导图中文标签未修复，零 claim 停批（2026-10-30 · muse-spark-1.3-contributor)
 

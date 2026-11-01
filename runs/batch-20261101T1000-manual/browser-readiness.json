@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-11-01T10:03:52+08:00",
+  "check_mode": "zero-quota probes only; no claim or generation",
+  "status": "available",
+  "profile": "isolation profile, headed Chrome, CDP 9223",
+  "notebook_title_match": true,
+  "notebook_path_verified": true,
+  "sources": {
+    "available": true,
+    "count": 28
+  },
+  "studio": {
+    "available": true,
+    "panel": true,
+    "count": 56,
+    "createButtons": 9,
+    "how": "already-list"
+  },
+  "deck": {
+    "available": true,
+    "reason": "immediate generation offered",
+    "generateButtons": 1
+  },
+  "chat": {
+    "available": true,
+    "reason": "composer present but disabled and no limit notice found",
+    "composerVisible": true,
+    "caveat": "The composer was not proven writable; do not treat this probe as proof a chat request can be sent."
+  }
+}

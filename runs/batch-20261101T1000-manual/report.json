@@ -1,0 +1,48 @@
+{
+  "run_at": "2026-11-01T10:00:25+08:00",
+  "preflight_status": "ready_to_claim",
+  "preflight_candidate_count": 2454,
+  "selected_count": 10,
+  "attempted": 0,
+  "ready": [],
+  "failed": [],
+  "skipped": [
+    "youtube-10YhD9HMsPA",
+    "youtube-WMlEyfqVZLk",
+    "youtube-lxRgmZTEBHM",
+    "youtube-OhRZWuuBN8w",
+    "youtube-dSe7eg8Dj98",
+    "youtube-mHc2iCfDoro",
+    "youtube-QgmIs32SWdM",
+    "youtube-3SAdUHgaF9w",
+    "youtube-uUtQb81UMlw",
+    "youtube-MdmY9Mt-vz8"
+  ],
+  "claimed_today": 0,
+  "remaining_today": 10,
+  "remote_delivered": 0,
+  "browser_readiness": "available",
+  "browser_mode": "headed Chrome, isolated collection profile, CDP 9223",
+  "browser_readiness_caveat": "NotebookLM page, source panel, Studio, and immediate-deck offer were observable; chat composer was present but disabled without an explicit quota notice, so writable chat was not proven.",
+  "mindmap_zero_claim_test": {
+    "exporter_exit_code": 1,
+    "expand_result": "no expand button",
+    "observed_expand_button_label": "展开所有节点",
+    "runner_only_queries_english_labels": true,
+    "candidate_failure_recorded": false
+  },
+  "stop_reason": "export-mindmap-systematic: the mandatory mind-map viewer verification/export cannot run because the current toolbar exposes aria-label=\"展开所有节点\" but the repository runner only finds English Expand/Collapse all labels. Reproduced before the first claim; the runner has not been authorized for repair.",
+  "evidence": {
+    "preflight": "runs/batch-20261101T1000-manual/preflight.json",
+    "browser_readiness": "runs/batch-20261101T1000-manual/browser-readiness.json",
+    "mindmap_probe": "runs/batch-20261101T1000-manual/mindmap-zero-claim.json"
+  },
+  "side_effects": {
+    "producer_claim_or_fail": false,
+    "notebooklm_generation": false,
+    "picgo_upload": false,
+    "inbox_publish_or_push": false,
+    "pkm_write_or_issue": false,
+    "public_site_publish": false
+  }
+}

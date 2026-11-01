@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-11-01T10:04:30+08:00",
+  "purpose": "zero-claim check of the existing mind-map export adapter; no candidate was claimed and no generation was requested",
+  "exporter_exit_code": 1,
+  "card_opened": true,
+  "expand_result": "no expand button",
+  "viewer_toolbar_labels": [
+    "展开所有节点",
+    "放大",
+    "缩小",
+    "Download mindmap as image"
+  ],
+  "runner_expected_selector": "button[aria-label=\"Expand all nodes\"]",
+  "root_cause": "The current viewer exposes a Chinese expansion label, while the exporter only queries the English aria-label. It cannot prove or perform the required expand-all check.",
+  "candidate_failure_recorded": false,
+  "claim_consumed": 0,
+  "studio_restored": {
+    "success": true,
+    "panel": true,
+    "createButtons": 9,
+    "cards": 56,
+    "method": "closed viewer via Studio control"
+  },
+  "stop_reason": "export-mindmap-systematic"
+}
