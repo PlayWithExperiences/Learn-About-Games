@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-11-01T15:34:00+08:00",
+  "status": "passed",
+  "change_already_present": true,
+  "code_path": "automation/browser/nblm-export-mindmap.cjs",
+  "syntax_check": "passed",
+  "selector_support": [
+    "button[aria-label=\"Expand all nodes\"]",
+    "button[aria-label=\"展开所有节点\"]",
+    "button[aria-label=\"Collapse all nodes\"]",
+    "button[aria-label=\"收起所有节点\"]"
+  ],
+  "live_existing_card_test": {
+    "consumed_claim": false,
+    "generated_notebook_artifact": false,
+    "card_kind_only": "flowchart",
+    "runner_open": "opened",
+    "expand_action": "clicked",
+    "toolbar_label_after_expansion": "收起所有节点",
+    "content_nodes": 40,
+    "columns_including_root": 4,
+    "observed_depth_below_root": 3,
+    "collapsed_node_count": 0,
+    "render_stable": true,
+    "rendered_png": {
+      "dimensions": "2664x4535",
+      "bytes": 882096,
+      "signature": "PNG",
+      "local_verification_only": true
+    },
+    "visual_layout_review": "passed; image showed a complete multi-level tree with no visible collapsed-node markers"
+  },
+  "local_verification_output": "/tmp/lag-mindmap-compat-20261101.K8pWYh/mindmap.png",
+  "notebook_url_recorded": false,
+  "notebook_body_recorded": false
+}

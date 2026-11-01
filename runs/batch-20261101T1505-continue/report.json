@@ -1,0 +1,55 @@
+{
+  "run_id": "batch-20261101T1505-continue",
+  "completed_at": "2026-11-01T15:38:57+08:00",
+  "live_quota_checked_at": "2026-11-01T15:38:57+08:00",
+  "preflight_status": "ready_to_claim",
+  "preflight_candidate_count": 2454,
+  "selected_count": 10,
+  "attempted": 0,
+  "ready": [],
+  "failed": [],
+  "skipped": [
+    "youtube-10YhD9HMsPA",
+    "youtube-WMlEyfqVZLk",
+    "youtube-lxRgmZTEBHM",
+    "youtube-OhRZWuuBN8w",
+    "youtube-dSe7eg8Dj98",
+    "youtube-mHc2iCfDoro",
+    "youtube-QgmIs32SWdM",
+    "youtube-3SAdUHgaF9w",
+    "youtube-uUtQb81UMlw",
+    "youtube-MdmY9Mt-vz8"
+  ],
+  "claimed_today": 0,
+  "daily_limit": 10,
+  "remaining_today": 10,
+  "ledger_state_counts": {
+    "ready": 101,
+    "failed": 94,
+    "nonterminal": 0
+  },
+  "remote_delivered": 0,
+  "browser_readiness": "unknown",
+  "browser_mode": "headed Chrome, reused isolated collection profile, CDP 9223",
+  "fix_verification": {
+    "status": "passed",
+    "evidence": "runs/batch-20261101T1505-continue/mindmap-compatibility.json"
+  },
+  "stop_reason": "browser-notebook-access: NotebookLM chat composer is disabled with no explicit quota message; summary generation/write access cannot be proven, so the hard pre-claim browser gate stops the run.",
+  "evidence": {
+    "preflight": "runs/batch-20261101T1505-continue/preflight.json",
+    "browser_readiness": "runs/batch-20261101T1505-continue/browser-readiness.json",
+    "mindmap_compatibility": "runs/batch-20261101T1505-continue/mindmap-compatibility.json"
+  },
+  "side_effects": {
+    "producer_claim_or_fail": false,
+    "notebooklm_generation": false,
+    "picgo_upload": false,
+    "ai_life_mentor_inbox_delivery": false,
+    "pkm_write_or_issue": false,
+    "daily_checkin": false,
+    "public_site_publish": false,
+    "remote_git_push": false,
+    "browser_navigation_and_existing_card_expansion_test": true
+  }
+}

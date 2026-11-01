@@ -1,5 +1,13 @@
 # ProjectProgress
 
+## 1540 收集端续跑收口：导图兼容修复实机通过，chat 权限不明零 claim 停批（2026-11-01 · DSH）
+
+- 15:05 续跑预检 `ready_to_claim`（2454 候选/选中 10）；复用 headed 隔离 Chrome 的零配额检查仍不能证明总结生成权限：chat composer disabled，且无明确配额提示，浏览器 readiness 为 `unknown`。
+- `automation/browser/nblm-export-mindmap.cjs` 已兼容中英文展开/收起标签；在既有卡片实测通过（40 节点、根节点外深度 3、4 列、折叠 0、渲染稳定）。这验证修复，不代表本轮生成了新资产。
+- attempted **0** / ready **0** / remote_delivered **0** / failed **0** / skipped **10**；claim **0/10**，剩余 **10**。未 claim/生成/上传/交付/写 PKM 或 Issue/触发 Daily Check-in/发布网站；停止原因 `browser-notebook-access`。无候选失败记录，历史 failed 未重试。
+- 证据：`runs/batch-20261101T1505-continue/{report.json,browser-readiness.json,mindmap-compatibility.json,preflight.json}`；本工作段摘要与脱敏对话摘录见 `sessions/2026-1101-notebooklm-daily.md`、`dialogues/2026-1101.md`。原始 DSH transcript 未在本机归档位置找到，不声称完整导出。
+- 下一步：只有 NotebookLM chat 的可写能力得到明确验证后，才在新运行中 fresh preflight；未获授权时不 claim/retry。现存 headed 隔离 Chrome 保留，本收口段未触碰。`automation/browser/cdp.cjs` 的既有改动与本轮获批修复无关，保留不提交。
+
 ## 1101 收集端：导图中文标签阻断，零 claim 停批（2026-11-01 · DSH headed)
 
 - preflight `ready_to_claim`（2454 候选/选中 10，自 `10YhD9HMsPA` 起；当日 claim 0/10）。

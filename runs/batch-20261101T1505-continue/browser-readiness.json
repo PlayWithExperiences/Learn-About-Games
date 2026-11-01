@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-11-01T15:30:00+08:00",
+  "browser_mode": "headed Chrome, reused isolated collection profile, CDP 9223",
+  "status": "unknown",
+  "observations": {
+    "notebook_page_loaded": true,
+    "login_wall": false,
+    "access_denied": false,
+    "unsupported_location": false,
+    "source_count": 28,
+    "studio_panel": true,
+    "studio_create_buttons": 9,
+    "studio_artifact_cards": 56,
+    "generation_in_progress": false,
+    "immediate_deck_generation": true,
+    "chat_composer_present": true,
+    "chat_composer_enabled": false,
+    "explicit_chat_quota_notice": false
+  },
+  "reason": "The configured NotebookLM page, sources, Studio controls, and immediate deck option are reachable, but the chat composer is disabled without an explicit quota notice. A source-grounded summary requires the NotebookLM chat; its write capability cannot be established. The chat probe reports available=true when no explicit quota wording exists, so that value is not treated as proof of editability.",
+  "post_reload_recheck": {
+    "checked_at": "2026-11-01T15:38:13+08:00",
+    "safe_page_reload": true,
+    "studio_panel": true,
+    "studio_create_buttons": 9,
+    "artifact_cards": 56,
+    "source_checkboxes": 29,
+    "selected_source_checkboxes": 29,
+    "chat_composer_enabled": false,
+    "explicit_quota_notice": false,
+    "generation_in_progress": false,
+    "result": "disabled chat state persisted after reload; no safe basis to claim"
+  },
+  "claim_gate": "blocked-before-claim",
+  "private_notebook_url_recorded": false,
+  "private_notebook_body_recorded": false,
+  "screenshot_read": false
+}

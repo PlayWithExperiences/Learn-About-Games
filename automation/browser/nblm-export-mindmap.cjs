@@ -6,7 +6,8 @@
 // three levels below the root, and a render that stops changing.
 //
 // Route: the viewer is an OOPIF (*.scf.usercontent.goog, MindmapApp) whose
-// "Expand all nodes" toolbar button is the v2 contract path. The render is produced by
+// English or Simplified Chinese expand/collapse toolbar button is the v2 contract path.
+// The render is produced by
 // extracting the SVG with computed styles inlined and rasterising it in a standalone
 // headless Chrome (a viewer download stalls in headless, and this adapter has no
 // pageAssets/bundle capability).
@@ -19,6 +20,9 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const port = process.env.LAG_CDP_PORT || '9222';
+const EXPAND_BUTTON_SELECTOR = 'button[aria-label="Expand all nodes"], button[aria-label="展开所有节点"]';
+const COLLAPSE_BUTTON_SELECTOR = 'button[aria-label="Collapse all nodes"], button[aria-label="收起所有节点"]';
+const MINDMAP_BUTTON_SELECTOR = `${EXPAND_BUTTON_SELECTOR}, ${COLLAPSE_BUTTON_SELECTOR}`;
 const cardTitle = process.argv[2];
 const outPng = process.argv[3];
 const targetWidth = Number(process.argv[4] || 2664);
@@ -121,7 +125,7 @@ function makeSend(ws) {
           ws = await connect(cand.webSocketDebuggerUrl);
           const send = makeSend(ws);
           const r = await send('Runtime.evaluate', {
-            expression: `!!document.querySelector('svg') || !!document.querySelector('button[aria-label="Expand all nodes"], button[aria-label="Collapse all nodes"]')`,
+            expression: `!!document.querySelector('svg') || !!document.querySelector(${JSON.stringify(MINDMAP_BUTTON_SELECTOR)})`,
             returnByValue: true,
           });
           ws.close();
@@ -147,9 +151,9 @@ function makeSend(ws) {
   };
 
   const expanded = await vEval(`(async () => {
-    const btn = document.querySelector('button[aria-label="Expand all nodes"]');
+    const btn = document.querySelector(${JSON.stringify(EXPAND_BUTTON_SELECTOR)});
     if (!btn) {
-      const already = document.querySelector('button[aria-label="Collapse all nodes"]');
+      const already = document.querySelector(${JSON.stringify(COLLAPSE_BUTTON_SELECTOR)});
       return already ? 'already-expanded' : 'no expand button';
     }
     btn.click();
