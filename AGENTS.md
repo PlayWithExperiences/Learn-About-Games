@@ -1,8 +1,8 @@
 <!-- director:wire BEGIN -->
 - Director 看板接线〔本项目；此节由 Director 看板维护，勿手改〕
-    - 开工前必读：ProjectInfo/ProjectProgress.md（现在到哪 / 下一步 / 阻塞）
-    - 收工后必做：更新 ProjectInfo/ProjectProgress.md（覆盖写现状快照）；有决策则追加 ProjectInfo/roadmap.md
-    - 留痕：按 ProjectInfo/ 规范（sessions/ 摘要 + dialogues/ 原始对话）；每步落盘 + git 备份
+    - 恢复/接手项目时用 ProjectInfo/ProjectProgress.md 定位；局部修改按需读相关代码与说明
+    - 收工后：进展变化时更新 ProjectInfo/ProjectProgress.md（覆盖写现状快照）；有决策则追加 ProjectInfo/roadmap.md
+    - 留痕：按全局规范在回合/工作段结束记录；按可恢复工作段 Git 备份，不逐次工具调用提交
     - 全项目规矩：见用户级 AGENTS.md / CLAUDE.md 内 Director 治理节
 <!-- director:wire END -->
 

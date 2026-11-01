@@ -1,5 +1,9 @@
 # ProjectProgress
 
+## 技能与旧接线流程精简（2026-11-01 17:42:53 +0800 · Codex）
+
+决策：無涘（全局要求精简过度流程）｜记录：Codex。收集技能的普通小批次确认条款对齐现行全局费用规则；保留实际每日 claim 限制、串行/零自动重试默认、失败候选显式重跑授权、浏览器 readiness、来源隔离及全部产物合同。项目接线取 Director 当前模板，按工作段留痕、仅状态变化更新 Progress。未调用 NotebookLM、claim/retry、上传或改生产代码；此前浏览器阻塞状态仍以原工作段证据为准。本场完整对照在 Director/GlobalInfo/RuleChanges/20261101T173911+0800-proportionate-skill-audit/Review.md，摘要在 AI-Life-Mentor/ProjectInfo/sessions/2026-1101-proportionate-work.md。
+
 ## 1540 收集端续跑收口：导图兼容修复实机通过，chat 权限不明零 claim 停批（2026-11-01 · DSH）
 
 - 15:05 续跑预检 `ready_to_claim`（2454 候选/选中 10）；复用 headed 隔离 Chrome 的零配额检查仍不能证明总结生成权限：chat composer disabled，且无明确配额提示，浏览器 readiness 为 `unknown`。

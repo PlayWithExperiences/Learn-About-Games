@@ -57,7 +57,7 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" preflight \
 
 1. 开始前读取项目 `AGENTS.md`/`CLAUDE.md` 和 `ProjectInfo/ProjectProgress.md` 的相关段落，确认当前合同和阻塞；不需要为一次候选加载全部历史。
 2. 运行一次 `preflight --limit 10`，不写 ledger、不调用 NotebookLM。若返回 `daily_limit_reached` 或 `no_candidate`，原样报告并结束。
-3. 真实 NotebookLM/PicGo/Git 操作可能消耗第三方配额或产生现实金额。手动批次须在第一次真实调用前确认本批范围、服务、最多 10 条、并发 1、自动重试 0；已有明确授权的固定自动任务只可在原范围内执行。扩大数量、换服务/模型、重试或付费操作必须重新确认。
+3. 在当前任务和既有服务授权内的常规小批次调用自主执行；`--limit 10`、并发 1、自动重试 0 是本流程的保守执行默认，不是新增逐次审批门槛。保留 producer 实际每日 claim 限制、服务配额和用户明确停止条件；仅预计几百次以上超大规模调用、有依据的高额总费用风险、突破用户硬性金额上限或新增采购时先确认。费用放宽不扩大数据、任务、公开发布或对人操作权限。
 4. 在第一次 claim 前完成**不消耗配额**的浏览器就绪检查。适配器必须返回：
    - `available`：已登录、可编辑的 NotebookLM 页面，来源面板和 Studio 控件均可用；
    - `unavailable`：浏览器/登录/页面/权限明确不可用；
