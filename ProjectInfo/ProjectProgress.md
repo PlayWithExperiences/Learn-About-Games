@@ -1,5 +1,14 @@
 # ProjectProgress
 
+## 1103 收集端：2 条 ready 已远端交付，2 条失败，演示文稿配额停批（2026-11-02 · DSH headed）
+
+- 单次 preflight `ready_to_claim`（2454 个目录候选，按顺序选取 10；当日初始 claim 0/10）。复用隔离画像并以 headed Chrome 打开既有长期本；首 claim 前确认来源面板 28 项、Studio 控件 9 个、chat panel 编辑框可写、演示文稿可立即生成。
+- 本轮依序评估 5 项：实际 claim 4（4/10，剩余 6）；ready 并远端 blob 回读确认 2（`10YhD9HMsPA`、`OhRZWuuBN8w`）；claimed 后失败 2（`WMlEyfqVZLk` generation、`lxRgmZTEBHM` upload HTTP 500）；`dSe7eg8Dj98` 在 claim 前遇演示文稿“几小时后生成”限额，未耗 claim，记 `quota_block(deck)` 并停批。后 5 项未 claim。
+- `OhRZWuuBN8w` 首次交付因 origin/main 前进而 push rejected；在隔离干净发布克隆中 fast-forward rebase 单文件提交，仅重跑交付脚本，未重跑 NotebookLM；远端路径与 blob SHA 匹配。AI-Life-Mentor 原有脏工作树未修改。两条远端 inbox 文件分别为 `2026-1102-1023-prototyping-experimentation.json`、`2026-1102-1102-narrative-expression.json`。
+- 无 429；未重试 failed 候选。实际费用计量不可见，未购买或升级服务。未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站。停止原因 `quota_block(deck)`。
+- 证据：`runs/batch-20261102T1000-scheduled/{batch-report.json,preflight.json,delivery-retry.json}` 及对应 `item-01` 至 `item-05` 报告。无 NotebookLM 私有正文或工作台 URL 写入本记录。
+- 下一步：演示文稿限额恢复后另开批次并重新 preflight；本批剩余 5 项顺延，2 条 failed 不自动 retry。
+
 ## 技能与旧接线流程精简（2026-11-01 17:42:53 +0800 · Codex）
 
 决策：無涘（全局要求精简过度流程）｜记录：Codex。收集技能的普通小批次确认条款对齐现行全局费用规则；保留实际每日 claim 限制、串行/零自动重试默认、失败候选显式重跑授权、浏览器 readiness、来源隔离及全部产物合同。项目接线取 Director 当前模板，按工作段留痕、仅状态变化更新 Progress。未调用 NotebookLM、claim/retry、上传或改生产代码；此前浏览器阻塞状态仍以原工作段证据为准。本场完整对照在 Director/GlobalInfo/RuleChanges/20261101T173911+0800-proportionate-skill-audit/Review.md，摘要在 AI-Life-Mentor/ProjectInfo/sessions/2026-1101-proportionate-work.md。
