@@ -1,4 +1,6 @@
-# Learn About Games 收集端批次（2026-11-02）
+# Learn About Games 收集端每日摘要
+
+## 1000 批次收口（2026-11-02）
 
 记录者：DSH。按 `collect-resources-about-game` 共享技能执行；技能及 `references/resource-contract.md` 已读取。本报告只记运行状态与可核查证据，不含 NotebookLM 私有正文、工作台 URL、凭据或 token。
 
@@ -20,3 +22,5 @@
 没有写 PKM 或 Issue marker、触发 Daily Check-in、发布网站、改生产代码或使用新的付费资源。无 429；账单/实际费用读数不可得，因此费用实际值未知。本轮的用户目标是 ≤$1，但没有可观察计量证据证明具体金额。AI-Life-Mentor 原工作树原有改动未触碰；隔离发布克隆只提交本批 JSON。
 
 `runs/batch-20261102T1000-scheduled/batch-report.json` 保存结构化完整验收报告，`preflight.json` 保存唯一原始候选清单，`item-01` 至 `item-05` 子目录保存逐项证据。下一轮须在演示文稿即时生成恢复后重新 preflight；当前两个 failed 项不自动 retry。
+
+原始对话：`dialogues/2026-1102.md「1000 收集资源自动化」`（仅保存可核验的请求/结果摘录；完整 DSH transcript 未找到，不声称逐回合覆盖）。
