@@ -1,5 +1,14 @@
 # ProjectProgress
 
+## 1115 收集端：4 条 ready 已远端交付，1 条上传失败，演示文稿配额停批（2026-11-03 · DSH headed）
+
+- 单次 preflight `ready_to_claim`（2454 个目录候选，按顺序选取 10；当日初始 claim 0/10）。复用隔离画像以 headed Chrome 打开既有长期本；首 claim 前确认来源面板 32 项、Studio 控件 9 个、chat panel 编辑框可写、演示文稿可立即生成。
+- 依序评估 6 项：实际 claim 5（5/10，剩余 5）；ready 并远端 blob 回读确认 4（`dSe7eg8Dj98`、`QgmIs32SWdM`、`3SAdUHgaF9w`、`uUtQb81UMlw`，导图深度 3–4、折叠 0）；claimed 后失败 1（`mHc2iCfDoro` upload HTTP 500，PicGo 日志为到 GitHub 的 TLS 建链前断开，瞬时网络故障）；`MdmY9Mt-vz8` 在 claim 前遇演示文稿“几小时后生成”限额，未耗 claim，记 `quota_block(deck)` 并停批。后 4 项未 claim。
+- 四条远端 inbox 文件：`2026-1103-1016-design-fundamentals.json`（`59d0fc7b`）、`2026-1103-1045-systems-mechanics.json`（`d3fbe4e5`）、`2026-1103-1058-playtesting.json`（`3fa9a5ba`）、`2026-1103-1114-game-feel-feedback.json`（`1553af9a`）；远端 main 验证时 `be4e745e`。隔离发布克隆只提交本批 JSON，AI-Life-Mentor 原工作树未动。
+- 无 429；未重试 failed 候选。实际费用计量不可见，未购买或升级服务。未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站。停止原因 `quota_block(deck)`。
+- 证据：`runs/batch-20261103T1000-scheduled/{batch-report.json,preflight.json,deck-probe.json,browser-workbench-state.json}` 及 `item-01` 至 `item-06` 报告。无 NotebookLM 私有正文或工作台 URL 写入本记录。
+- 下一步：演示文稿限额恢复后另开批次并重新 preflight；本批剩余 4 项顺延，`mHc2iCfDoro` 不自动 retry。
+
 ## 1103 收集端：2 条 ready 已远端交付，2 条失败，演示文稿配额停批（2026-11-02 · DSH headed）
 
 - 单次 preflight `ready_to_claim`（2454 个目录候选，按顺序选取 10；当日初始 claim 0/10）。复用隔离画像并以 headed Chrome 打开既有长期本；首 claim 前确认来源面板 28 项、Studio 控件 9 个、chat panel 编辑框可写、演示文稿可立即生成。
