@@ -1,5 +1,13 @@
 # ProjectProgress
 
+## 1012 收集端：回答缺边界标记，summary 格式系统性阻断，ready 0（2026-11-04 · DSH headed）
+
+- 单次 preflight `ready_to_claim`（2454 个目录候选，按序取 10；当日初始 claim 0/10）。headed 复用隔离画像打开长期本；首 claim 前确认来源面板 37 项、Studio 控件 9 个、chat 编辑框可写、演示文稿可立即生成。
+- 评估 2 项（claim 2/10，剩余 8）：`MdmY9Mt-vz8`（`run-20261104100158-96345`）与 `NPGZRcXvuso`（`run-20261104100607-98211`）均在 summary 阶段失败，签名相同——NotebookLM 回答含“来源边界”字样但非精确 `来源边界：` 内联标记、也非独立标题行，`notebooklm-split-answer.py` 按设计拒绝猜测切分。两条已记 ledger `failed`，不自动重试。
+- 判定为系统性阻断（不同候选连续复现），为保全剩余 8 个 claim 停批：attempted 2 / **ready 0 / remote_delivered 0** / failed 2 / skipped 8，停止原因 `summary-format-systematic`。
+- 未生成上线资产、未上传、未写 ready JSON 或交付；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261104T1000-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json}` 与 `item-01`、`item-02` 报告；回答原文仅本机。下一步需明确授权修 `automation/notebooklm-split-answer.py` 边界识别并回归，再另开批次；余下 8 项顺延。
+
 ## 1115 收集端：4 条 ready 已远端交付，1 条上传失败，演示文稿配额停批（2026-11-03 · DSH headed）
 
 - 单次 preflight `ready_to_claim`（2454 个目录候选，按顺序选取 10；当日初始 claim 0/10）。复用隔离画像以 headed Chrome 打开既有长期本；首 claim 前确认来源面板 32 项、Studio 控件 9 个、chat panel 编辑框可写、演示文稿可立即生成。
