@@ -1,5 +1,14 @@
 # ProjectProgress
 
+## 1200 收集端第二批：解析器修复生效，3 条 ready 已远端交付（2026-11-04 · DSH headed）
+
+- 授权：無涘 11:15 明确授权的补充批次（当日剩余 8 claim、串行 1、不重试上午两条 failed、单批 ≤60 分钟）。核对 `0a9a96f` 已在 HEAD 与 origin，工作区脚本与远端一致；首条 summary 即切分成功，证明修复生效，ledger 未追溯改写。
+- 实时 preflight `ready_to_claim`（8 项；当日已 claim 2、剩余 8），与授权参考顺序一致；远程去重 0 命中。claim 前通道全通：headed 长期本 `available`（来源 39、Studio 9 控件、chat 可写、演示文稿可立即生成）、PicGo 存活、AI-Life-Mentor main 干净且 fetch 正常、干净发布克隆 `d58f2325`。
+- 串行完成 3 条并远端 blob 回读验证：`YoOCUpdYYm4`（`0bc026fe`）、`vyafiQG6XEU`（`faac94c1`；首次 push 被拒后仅重跑交付脚本，未重调 NotebookLM）、`W9R132PueC4`（`6da98e44`）；导图深度均 3、折叠 0。远端 main 验证时 `ba99ecf8`。
+- 达 50 分钟（预算 60）停批：attempted 3 / **ready 3 / remote_delivered 3** / failed 0 / skipped 5；今日 claim 5/10、剩余 5；停止原因 `batch-time-budget-60m`。未 claim：`N-dPDsLTrTE`、`UfUjrGheJvk`、`HRfl3xVL32Q`、`DLyW2rmVukk`、`pG4UxqRMNX0`。
+- 未重试上午两条 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未扩量、未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261104T1110-second/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json}` 与 `item-01` 至 `item-03` 报告；本批摘要 `sessions/2026-1104-notebooklm-daily-second-batch.md`。
+
 ## 1012 收集端：回答缺边界标记，summary 格式系统性阻断，ready 0（2026-11-04 · DSH headed）
 
 - 单次 preflight `ready_to_claim`（2454 个目录候选，按序取 10；当日初始 claim 0/10）。headed 复用隔离画像打开长期本；首 claim 前确认来源面板 37 项、Studio 控件 9 个、chat 编辑框可写、演示文稿可立即生成。
