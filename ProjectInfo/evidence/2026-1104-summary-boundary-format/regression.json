@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-04",
+  "script": "automation/notebooklm-split-answer.py",
+  "reason": "NotebookLM 2026-11-04 emitted a bilingual heading line 来源边界（Source Boundaries）; the old exact-match heading regex refused to split, so two claimed items failed at the summary stage.",
+  "method": "existing split_answer() imported and called in memory on the two saved raw answers; no answer content exported; no NotebookLM call; no claim consumed",
+  "items": [
+    {
+      "resource_id": "youtube-MdmY9Mt-vz8",
+      "raw_chars": 4162,
+      "raw_sha256": "43ccf939a8d4b78b1a899cf9bfe6632a77ed720e52d2acc5af7fad093cb245e5",
+      "status": "ok",
+      "summary_chars": 3703,
+      "boundary_chars": 350,
+      "boundary_head": "说明来源未覆盖或无法确认的内容：",
+      "advisory_sections_missing": ["玩家影响"]
+    },
+    {
+      "resource_id": "youtube-NPGZRcXvuso",
+      "raw_chars": 3449,
+      "raw_sha256": "c55e4645513ad08fa3f93954a7dcb76f767a782c039107000ca4915c8bbc4a34",
+      "status": "ok",
+      "summary_chars": 3049,
+      "boundary_chars": 375,
+      "boundary_head": "说明来源未覆盖或无法确认的内容：",
+      "advisory_sections_missing": ["设计取舍", "玩家影响"]
+    }
+  ],
+  "notes": "advisory_sections_missing 只是脚本的章节提示，不阻断切分；内容质量与 ready 资产验证本次未重做。两个 failed 候选不自动重试；修复后需另开批次才可能产出 ready。"
+}

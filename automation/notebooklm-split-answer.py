@@ -13,11 +13,21 @@ import re
 import sys
 from pathlib import Path
 
-BOUNDARY_MARKER = "来源边界："
-# Fallback: model sometimes writes a standalone heading line ("来源边界",
-# "来源边界:", "## 来源边界" etc.) instead of the exact inline "来源边界：".
+INLINE_BOUNDARY_MARKERS = ("来源边界：", "来源边界:")
+# Fallback: the model sometimes writes a standalone heading line ("来源边界",
+# "来源边界:", "## 来源边界", or a bilingual heading such as
+# "来源边界（Source Boundaries）") instead of the exact inline "来源边界：".
 # Accept it only as a full-line heading to avoid guessing inside body text.
-BOUNDARY_HEADING_RE = re.compile(r"^(?:#{1,6}\s*)?来源边界\s*[:：]?\s*$", re.MULTILINE)
+# 2026-11-04: NotebookLM began emitting the bilingual heading variant, which the
+# previous exact-match regex rejected; accept an optional parenthetical or
+# trailing English annotation on the heading line only.
+BOUNDARY_HEADING_RE = re.compile(
+    r"^(?:#{1,6}[ \t]*)?来源边界[ \t]*[:：]?[ \t]*"
+    r"(?:[（(][^）)\n]{0,80}[）)])?"
+    r"(?:[ \t]*[-–—|/]?[ \t]*[A-Za-z][A-Za-z0-9 '\u2019&/,()\-]{0,60})?"
+    r"[ \t]*$",
+    re.MULTILINE,
+)
 # An offer-to-continue line: starts with an emoji/symbol, or uses second-person
 # follow-up phrasing. Cut from there to the end.
 SUGGESTION_RE = re.compile(
@@ -31,17 +41,25 @@ def split_answer(raw: str) -> tuple[str, str]:
     # drop the "Thoughts / expand_more" affordance if it survived
     text = re.sub(r"^Thoughts\s*\n?\s*expand_more\s*\n?", "", text).strip()
 
-    idx = text.find(BOUNDARY_MARKER)
-    if idx < 0:
-        m = BOUNDARY_HEADING_RE.search(text)
-        if m:
-            summary = text[:m.start()].strip()
-            rest = text[m.end():]
+    # Prefer a standalone heading line: it is the strongest separator, and it
+    # also keeps a leading markdown marker ("## ") out of the summary. Fall back
+    # to an exact inline marker only when no heading line exists.
+    m = BOUNDARY_HEADING_RE.search(text)
+    if m:
+        summary = text[:m.start()].strip()
+        rest = text[m.end():]
+    else:
+        inline = [
+            (text.find(marker), marker)
+            for marker in INLINE_BOUNDARY_MARKERS
+            if text.find(marker) >= 0
+        ]
+        if inline:
+            idx, marker = min(inline)
+            summary = text[:idx].strip()
+            rest = text[idx + len(marker):]
         else:
             raise SystemExit("no 来源边界 marker: refusing to guess the boundary split")
-    else:
-        summary = text[:idx].strip()
-        rest = text[idx + len(BOUNDARY_MARKER):]
 
     # keep only up to the first offer-to-continue line
     kept: list[str] = []
