@@ -1,5 +1,15 @@
 # ProjectProgress
 
+## 1107 收集端：3 条 ready 已远端交付，1 条 summary 疑点核验失败，演示文稿配额停批（2026-11-05 · DSH headed）
+
+- 本地 main 与 origin 同 `84c784a`；边界解析器工作区与远端一致（含 11-04 双语修复）。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 11-04 的 `N-dPDsLTrTE`）；10 个 ID 远程去重 0 命中。
+- claim 前通道全通：headed 长期本 `available`（来源 42、Studio 9 控件、chat 可写、演示文稿可立即生成）、PicGo 存活、AI-Life-Mentor main 干净、干净发布克隆 `c50059a`。
+- 评估 5 项（claim 4）：ready 并远端 blob 验证 3 —— `N-dPDsLTrTE`（`939f7b64`）、`HRfl3xVL32Q`（`6271e3ec`）、`DLyW2rmVukk`（`c449fdd5`），导图深度均 3、折叠 0；claim 后失败 1 —— `UfUjrGheJvk`（summary 疑点核验：`nblm-extract-answer.cjs` 期望 ≥12 条回答、实际 11 条，probe 回答未出现）；`pG4UxqRMNX0` 在 claim 前遇演示文稿“几小时后生成”，未耗 claim。
+- 停止原因 `quota_block(deck)`（11:05）：attempted 5 / **ready 3 / remote_delivered 3** / failed 1 / skipped 5；今日 claim 4/10、剩余 6。远端 main 验证时 `15c5a6f8`。
+- 未重试既有 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261105T1000-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json}` 与 `item-01` 至 `item-05` 报告；摘要 `sessions/2026-1105-notebooklm-daily.md`。
+- 下一步：演示文稿限额恢复后另开批次（剩余 5 项顺延：`oz_mTRuiIYg`、`yQFTFS9ZO5E`、`2ZHOUAjzDj0`、`en2QcehKJd8`、`yeyMASDMfB4`）；`UfUjrGheJvk` 不自动 retry。
+
 ## 1200 收集端第二批：解析器修复生效，3 条 ready 已远端交付（2026-11-04 · DSH headed）
 
 - 授权：無涘 11:15 明确授权的补充批次（当日剩余 8 claim、串行 1、不重试上午两条 failed、单批 ≤60 分钟）。核对 `0a9a96f` 已在 HEAD 与 origin，工作区脚本与远端一致；首条 summary 即切分成功，证明修复生效，ledger 未追溯改写。
