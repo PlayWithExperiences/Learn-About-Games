@@ -1,5 +1,15 @@
 # ProjectProgress
 
+## 0830 收集端：3 条 ready 全部远端交付、零失败，演示文稿配额停批（2026-11-07 · DSH headed）
+
+- 本地 main 与 origin 同 `62ebf36`，无暂存。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `2ZHOUAjzDj0`）；10 个 ID 远程去重 0 命中。
+- claim 前通道全通：headed 长期本 `available`（来源 49、Studio 9 控件、chat 可写、演示文稿可立即生成）、PicGo 存活、AI-Life-Mentor main 干净、干净发布克隆 `34afec9`。
+- 评估 4 项（claim 3）：**3 条全部 ready 并远端 blob 验证** —— `2ZHOUAjzDj0`（`dd328b52`）、`en2QcehKJd8`（`d6159a69`）、`yeyMASDMfB4`（`a6016c5d`），导图深度均 3、折叠 0；`Xpfm_xtKZdc` 在 claim 前遇演示文稿“几小时后生成”，未耗 claim。本批 failed 0。
+- 停止原因 `quota_block(deck)`（08:29，早于此前 11:00 左右，符合滚动窗口内额度被连续批次消耗的观察）：attempted 4 / **ready 3 / remote_delivered 3** / failed 0 / skipped 6；今日 claim 3/10、剩余 7。远端 main 验证时 `edc66bb7`。
+- 未重试既有 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261107T0740-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json}` 与 `item-01` 至 `item-04` 报告；摘要 `sessions/2026-1107-notebooklm-daily.md`。
+- 下一步：演示文稿限额恢复后另开批次（未处理 6 项：`2RPdqg5fiz8`、`n0bFSdch8rk`、`cY7JAkOayQM`、`s30pjYV8aBM`、`D9glo1vLS-I`、`RspwD7uVRDE`）。
+
 ## 1126 收集端：2 条 ready 已远端交付，1 条上传瞬时失败，演示文稿配额停批（2026-11-06 · DSH headed）
 
 - 本地 main 与 origin 同 `7b9b0c0`，无暂存。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `pG4UxqRMNX0`）；10 个 ID 远程去重 0 命中。
