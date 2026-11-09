@@ -56,7 +56,7 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" preflight \
 ### 1. 预检、授权与领取
 
 1. 开始前读取项目 `AGENTS.md`/`CLAUDE.md` 和 `ProjectInfo/ProjectProgress.md` 的相关段落，确认当前合同和阻塞；不需要为一次候选加载全部历史。
-2. 运行一次 `preflight --limit 10`，不写 ledger、不调用 NotebookLM。若返回 `daily_limit_reached` 或 `no_candidate`，原样报告并结束。
+2. 运行一次 `preflight --limit 10`，不写 ledger、不调用 NotebookLM。若返回 `daily_limit_reached` 或 `no_candidate`，原样报告并结束基本资源批次；仅当本次是既有私人学习例行任务且下方可选视频策略已启用时，再独立检查该阶段。不把基本资源无候选或 claim 用尽当成视频生成失败。
 3. 在当前任务和既有服务授权内的常规小批次调用自主执行；`--limit 10`、并发 1、自动重试 0 是本流程的保守执行默认，不是新增逐次审批门槛。保留 producer 实际每日 claim 限制、服务配额和用户明确停止条件；仅预计几百次以上超大规模调用、有依据的高额总费用风险、突破用户硬性金额上限或新增采购时先确认。费用放宽不扩大数据、任务、公开发布或对人操作权限。
 4. 在第一次 claim 前完成**不消耗配额**的浏览器就绪检查。适配器必须返回：
    - `available`：已登录、可编辑的 NotebookLM 页面，来源面板和 Studio 控件均可用；
@@ -153,3 +153,9 @@ python3 "$PROJECT_ROOT/scripts/notebooklm_producer.py" retry \
 不要生成空链接、`not-generated` 的 ready、假成功的 partial 或删除失败记录。远端交付脚本失败时，不要把它改写成 NotebookLM 生成失败，也不要继续声称该资源已交付；必须把脚本的非零退出、资源文件和可核查错误写入本次运行报告。普通生产失败可继续预检已返回的下一个 distinct candidate；明确配额阻断则停止当天，不消耗剩余 claim 位。claim 前的运行时不可用属于运行级阻塞，不伪造 candidate failure。
 
 每次运行结束输出结构化报告，至少区分：`preflight_status`、`attempted`、`ready`、`failed`、`skipped`、`remaining_today` 和 `stop_reason`。若候选列表是 `[]`，只在预检命令本身成功且状态为 `no_candidate` 时这样报告；如果通道失败，报告错误本身。
+
+## 可选私人学习视频（2026-11-10 無涘要求）
+
+無涘明确要求 Learn 优先复用 NotebookLM 的视频转化，把已有材料做成可刷的学习内容；这是私人学习媒体补充，不是公开发布任务。既有例行收集任务完成基本批次后，读取 AI-Life-Mentor `learning/plan.json` 的 `media_policy.video.enabled`：开启时加载 [私人视频交付](references/pwe-learning-video.md)，由 Learner 在已有服务内执行有界补充，当前默认每天最多1个新视频、串行、零自动重做。只有检查/预检、修管线、只收集原文等明确窄请求不触发视频阶段；策略缺失/关闭也不触发。
+
+视频生成、私有文件注册和失败记录独立于原四项资产的v2合同；不重领已有资源、不重写其ready/consumed状态、不上传公开图床、不分享Notebook、不另建排程。不把媒介生成等同本人理解或接受；视频内容保留来源和AI身份。既有07:40任务直接读取本技能，因此无需启用已暂停的Codex任务或旧launchd任务。

@@ -34,6 +34,7 @@
    不要把剩下候选逐条空转（门禁是整批同条件，不会因换候选恢复）。
 5. 交付只用 `automation/publish-notebooklm-resource.sh`，push 后必须远端 blob 回读确认；
    回读失败就是交付失败，保留本地 ready 与证据，不冒充已交付。
+6. 给私人 PWE Learn 补充视频时，按共享skill的「可选私人学习视频」读取 `references/pwe-learning-video.md`；读取Mentor的media_policy与注册器next结果，保持每日1个新视频、串行、零自动重做、私有保存与独立失败回执。不另建排程，不把视频生成当作本人理解。
 
 ## 留痕（每次必须）
 
