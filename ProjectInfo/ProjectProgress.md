@@ -1,3 +1,9 @@
+## 既有资源任务的可选NotebookLM视频阶段 · 2026-11-10 03:35 +0800 · 记录：Codex
+
+已将可选视频步骤接到实际07:40 DSH任务读取的共享skill，旧prompt仅引用同一参考。根据Mentor media_policy每日最多一份、串行、零自动重做；只读真实来源，下载后完整音画解码/SHA注册，失败留痕，不公开上传视频。
+
+当前66秒中文竖屏样片已取得并在PWE学习流播完；手机缓存单元检查通过，物理原生播放仍待本人解锁。未来自然轮尚未发生，未启用已暂停的Codex自动化、不改公开站点内容。实现链与边界见`../PWE-Harness/ProjectInfo/handoffs/2026-1110-learning-flow.md`。
+
 # ProjectProgress
 
 ## 0842 收集端：2 条 ready 已远端交付，2 条失败，演示文稿中途限流停批（2026-11-09 · DSH headed）
