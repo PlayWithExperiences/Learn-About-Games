@@ -1,5 +1,15 @@
 # ProjectProgress
 
+## 0842 收集端：2 条 ready 已远端交付，2 条失败，演示文稿中途限流停批（2026-11-09 · DSH headed）
+
+- 本地 main 与 origin 同 `7a10d08`，无暂存。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `cY7JAkOayQM`）；10 个 ID 远程去重 0 命中。claim 前通道全通（来源 55、Studio 9 控件、chat 可写、演示文稿可立即生成；PicGo 存活；干净发布克隆 `cd47c4d`）。
+- 评估 4 项（claim 4）：ready 并远端 blob 验证 2 —— `s30pjYV8aBM`（`a6276b19`）、`D9glo1vLS-I`（`beba51a0`），导图深度均 3、折叠 0。
+- 失败 2：`cY7JAkOayQM`（generation：信息图卡片等待 900s 未识别，两次强制刷新后 cards=131；只读检查显示 Studio 中该候选 3 张新卡片确实存在且图标合规，属卡片身份等待环节失败，非内容缺失）；`RspwD7uVRDE`（claim 后信息图/导图已提交，演示文稿中途被限流“几小时后生成”）。
+- 停止原因 `quota_block(deck)`（RspwD7uVRDE 生成中途触发）：attempted 4 / **ready 2 / remote_delivered 2** / failed 2 / skipped 6；今日 claim 4/10、剩余 6。远端 main 验证时 `abe69573`。
+- 未重试既有 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261109T0740-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json}` 与 `item-01` 至 `item-04` 报告；摘要 `sessions/2026-1109-notebooklm-daily.md`。
+- 下一步：演示文稿限额恢复后另开批次（未处理 6 项：`WkW3FicsKUU`、`6GiLZ2YoHSc`、`3wNHW50J0UI`、`jbZ3ntEvs4Y`、`hku42qk-0FI`、`2E1sH-tg_to`）；两条 failed 不自动 retry。若 `cY7JAkOayQM` 类卡片等待失败再次出现，需授权排查卡片等待/基线逻辑。
+
 ## 0830 收集端：3 条 ready 全部远端交付、零失败，演示文稿配额停批（2026-11-08 · DSH headed）
 
 - 本地 main 与 origin 同 `cf4c04e`，无暂存。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `Xpfm_xtKZdc`）；10 个 ID 远程去重 0 命中。
