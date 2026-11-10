@@ -326,13 +326,14 @@ test('career and map bootstraps remain single owners when compiled modules run a
   await expect(reloadedExplorer.locator('[data-egds-map]')).toHaveAttribute('data-career-profile-id', roleProfiles[1].id);
 });
 
-test('visible career labels and unlisted names keep AA contrast and redundant priority shapes', async ({ page }) => {
-  const seenPriorities = new Set<string>();
-  for (const colorScheme of ['light', 'dark'] as const) {
-    await page.emulateMedia({ colorScheme });
-    for (const width of [1440, 320]) {
-      await page.setViewportSize({ width, height: 900 });
-      for (const profile of roleProfiles) {
+// Keep the same appearance/profile matrix, with one bounded static check per case.
+for (const colorScheme of ['light', 'dark'] as const) {
+  for (const width of [1440, 320]) {
+    for (const profile of roleProfiles) {
+      test(`visible career labels and controls keep AA contrast: ${colorScheme}/${width}/${profile.id}`, async ({ page }) => {
+        const seenPriorities = new Set<string>();
+        await page.emulateMedia({ colorScheme, reducedMotion: 'reduce' });
+        await page.setViewportSize({ width, height: 900 });
         await page.goto('./careers/');
         const explorer = page.locator('[data-career-explorer]');
         const map = explorer.locator('[data-egds-map]');
@@ -353,15 +354,17 @@ test('visible career labels and unlisted names keep AA contrast and redundant pr
                 ? element.querySelector<HTMLElement>(':scope > strong')
                 : element.querySelector<HTMLElement>('[data-role-label]:not([hidden])');
               if (!target?.checkVisibility()) return [];
-              const targetStyle = getComputedStyle(target);
               const nodeStyle = getComputedStyle(element);
-              return [{
-                label: target.textContent?.trim() ?? '',
-                color: targetStyle.color,
+              const targets = [target, ...element.querySelectorAll<HTMLElement>(
+                '[data-map-entity-controls] button:not(:disabled), [data-map-entity-controls] a',
+              )].filter((control) => control.checkVisibility());
+              return targets.map((control) => ({
+                label: control.textContent?.trim() ?? '',
+                color: getComputedStyle(control).color,
                 background: nodeStyle.backgroundColor,
                 priority: element.dataset.rolePriority,
                 borderStyle: nodeStyle.borderTopStyle,
-              }];
+              }));
             }));
           expect(samples.length, `${colorScheme}/${width}/${profile.id}/${capabilityId}`).toBeGreaterThan(0);
           for (const sample of samples) {
@@ -377,11 +380,11 @@ test('visible career labels and unlisted names keep AA contrast and redundant pr
             }
           }
         }
-      }
+        expect([...seenPriorities].sort()).toEqual(['core', 'important', 'suggested']);
+      });
     }
   }
-  expect([...seenPriorities].sort()).toEqual(['core', 'important', 'suggested']);
-});
+}
 
 test('career summary focus delegates selection to the map and replacing a profile does not accumulate state', async ({ page }) => {
   const firstProfile = roleProfiles[0];

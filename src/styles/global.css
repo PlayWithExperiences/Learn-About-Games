@@ -1596,6 +1596,11 @@ h2 {
   background: var(--career-core-surface);
 }
 
+/* Core tint needs ink for small control text; aurora stays on the border/focus. */
+[data-career-node][data-role-priority='core'] [data-map-entity-controls] :is(button, a) {
+  color: var(--ink);
+}
+
 .map-entity[data-role-priority='important'],
 .egds-outline-entities [data-role-priority='important'] {
   border: 2px dashed var(--accent-strong);
