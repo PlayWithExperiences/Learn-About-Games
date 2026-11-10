@@ -1,0 +1,37 @@
+{
+  "verifiedAt": "2026-11-10T22:09:49.812921+08:00",
+  "runtimeCommit": "53addcbf1f41265be7c4ede70985e3000c1e85cf",
+  "workflowRun": 42828249384,
+  "workflowUrl": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/42828249384",
+  "workflowEvent": "push",
+  "ciConclusion": "success",
+  "verification": {
+    "checkedFiles": 113,
+    "errors": 0,
+    "warnings": 0,
+    "unitTests": 262,
+    "chromiumPassed": 171,
+    "chromiumConditionalSkips": 4,
+    "pagesBuilt": 161,
+    "publicHomeAndMapCssEqualValidatedBuild": true,
+    "publicCssSha256": "e3b2c3ceca7fa1b829d3723e4c43a046c37001fd0d796a15f8b19b28ab2444f5",
+    "actualControlSamples": 24,
+    "controlContrastMinimum": 5.049504802389392
+  },
+  "scope": [
+    "Shared PWE career-priority fills, existing labels and line shapes retained",
+    "Core-node controls use existing ink foreground in desktop and outline",
+    "Sharp 0.35.5 and required native lock graph",
+    "Static contrast matrix split into the same 12 appearance/profile cases with existing reduced-motion preference; 4.5:1 and 30-second per-test default retained, controls added"
+  ],
+  "sourceDataAndRoleMappingsUnchanged": true,
+  "initialAttempt": {
+    "run": 42824576133,
+    "conclusion": "failure",
+    "deployment": "skipped",
+    "issue": "Aggregate contrast matrix exhausted its test budget while waiting for a stable focus control"
+  },
+  "authorization": "Specific maintainer approval for this release and necessary verification repair; consumed, not future publication authority",
+  "wholeSiteBrandSignoff": false,
+  "remaining": "Other dependency advisories and the broader site/asset brand review remain outside this release."
+}
