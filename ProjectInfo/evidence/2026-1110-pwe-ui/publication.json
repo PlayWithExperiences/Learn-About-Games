@@ -1,0 +1,58 @@
+{
+  "verified_at": "2026-11-10T13:34:22+08:00",
+  "target": "https://playwithexperiences.github.io/Learn-About-Games/",
+  "runtime_commit": "7ec4ce94ceac872dc0f91b3b2d7ecb60c3a3444b",
+  "approved_candidate": "957724119b050b986e343f8fec8fb216cfbce64c",
+  "workflow_run": 42760306259,
+  "workflow_url": "https://github.com/PlayWithExperiences/Learn-About-Games/actions/runs/42760306259",
+  "build": "success",
+  "deploy": "success",
+  "verification": {
+    "typecheck_files": 113,
+    "typecheck_errors": 0,
+    "unit_tests_passed": 262,
+    "chromium_passed": 160,
+    "chromium_conditionally_skipped": 4,
+    "pages_built": 161,
+    "published_css_equals_validated_build": true,
+    "published_css_sha256": "c7081b8388c6a6367e38b18a15856b34c424e9d7dafef9a40783d0396270d6d3",
+    "home_and_map_http_ok": true,
+    "ordinary_body_font_family": "LXGW WenKai",
+    "ordinary_font_source_and_sample_woff_reachable": true,
+    "methods": [
+      "Existing CI Chromium regression suite",
+      "Targeted career-label AA regression",
+      "Anonymous live asset byte comparison",
+      "Font stylesheet and WOFF2 prefix checks"
+    ]
+  },
+  "corrections_after_candidate": [
+    {
+      "commit": "ea72416",
+      "scope": "Required devlog title metadata"
+    },
+    {
+      "commit": "7ec4ce9",
+      "scope": "Career-label foreground uses existing PWE ink; semantic fill and test thresholds unchanged"
+    }
+  ],
+  "earlier_failed_runs": [
+    {
+      "id": 42757362118,
+      "cause": "Devlog title metadata missing",
+      "deployment": "skipped"
+    },
+    {
+      "id": 42757895408,
+      "cause": "Career-label contrast below AA",
+      "deployment": "skipped"
+    }
+  ],
+  "limits": [
+    "Classification and career fill migration remains a separate unit; this is not whole-site brand sign-off.",
+    "Verification covers CI/local browser behavior and delivered assets, not a new all-page live visual inspection."
+  ],
+  "metadata_record_only": true,
+  "ci_skip_rationale": "Only AGENTS.md and ProjectInfo records changed after the successful run; all site build inputs remain identical.",
+  "ci_skip_reference": "https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs"
+}
