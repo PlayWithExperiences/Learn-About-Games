@@ -6,6 +6,17 @@
 
 # ProjectProgress
 
+## 0841 收集端：3 条 ready 已远端交付，来源身份误配连发两次后停批（2026-11-10 · DSH headed）
+
+- 本地 main 与 origin 同 `feaca7c`，无暂存（含 Codex 新增的可选视频阶段接线）。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `WkW3FicsKUU`）；10 个 ID 远程去重 0 命中；claim 前通道全通（来源 59、Studio 9 控件、chat 可写、deck 可立即生成；PicGo 存活；干净发布克隆 `d2dc853`）。
+- 评估 5 项（claim 5）：ready 并远端 blob 验证 3 —— `WkW3FicsKUU`（`4c55c099`）、`6GiLZ2YoHSc`（`873fa263`）、`3wNHW50J0UI`（`4d490ec4`），导图深度均 3、折叠 0。
+- **新阻断（同签名两次）**：`jbZ3ntEvs4Y` 与 `hku42qk-0FI` 均被 `source_identity_ok` 误匹配到标题近似但 video_id 不同的既有来源（Ceremony 被当成 Winners Montage），import reused=true、隔离后仍指向旧来源。前者在生成前、后者在导出前停止，均手工记 `failed`（阶段 source-identity，含原因）；后者的 3 张工件留在 Notebook 未发布。判定为系统性来源身份缺陷，停批。
+- 次要阻断：停批后复核 deck probe 亦返回「此内容将在几小时后生成」。停止原因 `source-identity-systematic`。attempted 5 / **ready 3 / remote_delivered 3** / failed 2 / skipped 5；今日 claim 5/10、剩余 5。远端 main 验证时 `b2075d47`。
+- 可选视频阶段：`learning/plan.json` 的 `media_policy.video.enabled=true`；`PWE-Harness/scripts/learning-video.mjs next` 返回 `daily_limit_reached`（limit 1），按合同未领取、未生成、未重做，不影响基本批次。
+- 未重试既有 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261110T0740-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json}` 与 `item-01` 至 `item-05` 报告；摘要 `sessions/2026-1110-notebooklm-daily.md`。
+- 下一步：授权排查 `source_identity_ok` 对“同名系列不同 video_id”的判定并回归（建议以 video_id 硬校验为主）；修好前不建议继续处理标题近似的系列候选。未处理 5 项：`2E1sH-tg_to`、`P0iluGzYGpY`、`shXiIlgJnec`、`wnKI3BsSmUE`、`da2MK5qPRRg`。
+
 ## 0842 收集端：2 条 ready 已远端交付，2 条失败，演示文稿中途限流停批（2026-11-09 · DSH headed）
 
 - 本地 main 与 origin 同 `7a10d08`，无暂存。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `cY7JAkOayQM`）；10 个 ID 远程去重 0 命中。claim 前通道全通（来源 55、Studio 9 控件、chat 可写、演示文稿可立即生成；PicGo 存活；干净发布克隆 `cd47c4d`）。
