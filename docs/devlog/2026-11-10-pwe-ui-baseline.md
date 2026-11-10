@@ -1,4 +1,6 @@
-# 公共界面接入PWE基线：本地候选
+---
+title: 公共界面接入 PWE 基线
+---
 
 2026-11-10｜实现与核对：Codex / Brand Owner。依据现行PWE全项目视觉规则与Director `brand-site-remediation`授权；这是当前active项目的一项局部维护，没有重做资料、地图、作品表达或Logo。
 
