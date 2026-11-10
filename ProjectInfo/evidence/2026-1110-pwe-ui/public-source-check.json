@@ -1,0 +1,30 @@
+{
+  "scope": "One public homepage and its same-host primary CSS only; no account interaction",
+  "checks": [
+    {
+      "step": "homepage",
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/",
+      "status": 200,
+      "final_url": "https://playwithexperiences.github.io/Learn-About-Games/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes_read": 5420,
+      "truncated": false,
+      "sha256": "c5932c98e3a67884e65e8034ca635e11d0b0e7caac91ce99ea97aff00cdcaeb3",
+      "checked_at": "2026-11-10T03:54:17.619217+00:00"
+    },
+    {
+      "step": "stylesheet",
+      "url": "https://playwithexperiences.github.io/Learn-About-Games/_astro/BaseLayout.jHuNS1Bn.css",
+      "status": 200,
+      "final_url": "https://playwithexperiences.github.io/Learn-About-Games/_astro/BaseLayout.jHuNS1Bn.css",
+      "content_type": "text/css; charset=utf-8",
+      "bytes_read": 88511,
+      "truncated": false,
+      "sha256": "596a48adea714299426776ae355f15322311af1cb2b5a2cdd6d366c535328b68",
+      "checked_at": "2026-11-10T03:54:23.930210+00:00",
+      "contains_old_blue_accent": true,
+      "contains_pwe_token_name": false,
+      "contains_system_font": true
+    }
+  ]
+}

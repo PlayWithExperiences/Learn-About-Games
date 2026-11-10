@@ -3,45 +3,45 @@ version: alpha
 name: PlayWithExperiences Knowledge Cartography
 description: A dual-theme editorial knowledge system for Learn About Games.
 colors:
-  primary: "#2459C7"
-  light-page: "#F3F5F7"
-  light-surface: "#E8EDF3"
-  light-surface-strong: "#DCE4ED"
-  light-ink: "#18212B"
-  light-muted: "#536170"
-  light-line: "#C7D0DA"
-  light-accent: "#2459C7"
-  light-accent-strong: "#173F94"
-  dark-page: "#111820"
-  dark-surface: "#18232D"
-  dark-surface-strong: "#22313D"
-  dark-ink: "#E8EEF4"
-  dark-muted: "#A8B5C2"
-  dark-line: "#3A4A58"
-  dark-accent: "#86A8FF"
-  dark-accent-strong: "#B7CAFF"
-  focus-light: "#174EAE"
-  focus-dark: "#AFC4FF"
+  primary: "#226B66"
+  light-page: "#EEF0F4"
+  light-surface: "#F9FAFC"
+  light-surface-strong: "#E3E7EE"
+  light-ink: "#141A28"
+  light-muted: "#3F4860"
+  light-line: "#CDD3DE"
+  light-accent: "#226B66"
+  light-accent-strong: "#226B66"
+  dark-page: "#0F1420"
+  dark-surface: "#161D2E"
+  dark-surface-strong: "#0A0E17"
+  dark-ink: "#E4E7EE"
+  dark-muted: "#A9B1C3"
+  dark-line: "#263049"
+  dark-accent: "#7FC8C2"
+  dark-accent-strong: "#7FC8C2"
+  focus-light: "#226B66"
+  focus-dark: "#7FC8C2"
 typography:
   display:
-    fontFamily: ui-sans-serif
+    fontFamily: LXGW WenKai
     fontSize: 64px
     fontWeight: 760
     lineHeight: 1.05
     letterSpacing: -0.05em
   heading:
-    fontFamily: ui-sans-serif
+    fontFamily: LXGW WenKai
     fontSize: 32px
     fontWeight: 740
     lineHeight: 1.15
     letterSpacing: -0.025em
   body:
-    fontFamily: ui-sans-serif
+    fontFamily: LXGW WenKai
     fontSize: 16px
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.7
   label:
-    fontFamily: ui-sans-serif
+    fontFamily: LXGW WenKai
     fontSize: 14px
     fontWeight: 700
     lineHeight: 1.3
@@ -88,19 +88,21 @@ The product is not a marketing landing page. Data relationships, sources and unc
 
 ## Colors
 
-The existing cool neutral palette and blue accent remain the brand foundation. v0.2 adds a matching dark palette instead of replacing the product identity.
+The shared PWE v0.4 baseline is the UI authority: `PWE-Branding/BRAND.md` and `tokens/pwe.css`. This project vendors that exact token snapshot in `src/styles/pwe.css` and maps existing UI variable names to it; it does not define another palette.
 
-- Light mode uses the existing blue-gray page, surface, ink and line tokens.
-- Dark mode uses blue-charcoal surfaces with a lighter version of the same blue accent.
-- The accent marks links, focus, selected filters and the currently focused knowledge relation.
+- Light mode uses the PWE morning page, surface, ink and line tokens.
+- Dark mode uses PWE ink-blue surfaces and the existing aurora accent. System, Light and Dark preferences remain available.
+- Aurora marks links, focus, selected filters and the currently focused knowledge relation; star gold is not distributed across these secondary controls.
 - Domain, entity, relation and role states never rely on hue alone. Labels, shapes, line styles and borders carry the same meaning.
 - A page uses one appearance mode at a time. Sections do not invert independently.
 
 WCAG AA is the minimum contrast target for text and controls. Body text should reach AAA where practical.
 
+偏离 PWE 基线（既有、待续）：知识图的既有分类色与职业层级填色本单位保留，仍需按语义单独核对后迁移，避免在公共UI换色时改变图意；文字、边框样式与关系语义保持。1180px图谱外壳保留给现有可视化，长文仍由原阅读宽度约束。本次不是全站品牌验收。
+
 ## Typography
 
-Use the existing system sans stack so Chinese and English remain fast and readable without new network font dependencies.
+Use the existing PWE `--pwe-font-brand` WenKai stack for interface text. Load the baseline-approved LXGW WenKai 1.7.0 stylesheet; local WenKai and the documented Kai fallbacks keep content readable if that public font source is unavailable. Logo assets and author wording are unchanged.
 
 - Display text is reserved for page titles and the home statement.
 - Section headings use weight and spacing, not oversized type.

@@ -1,0 +1,27 @@
+
+Running 14 tests using 2 workers
+
+(node:99884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:99883) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/14] [mobile-chromium] › tests/e2e/theme.spec.ts:19:1 › offers a disabled-until-bound 系统、浅色、深色外观控件
+[2/14] [chromium] › tests/e2e/theme.spec.ts:19:1 › offers a disabled-until-bound 系统、浅色、深色外观控件
+[3/14] [chromium] › tests/e2e/theme.spec.ts:32:1 › uses system light and dark when no explicit preference is stored
+[4/14] [mobile-chromium] › tests/e2e/theme.spec.ts:32:1 › uses system light and dark when no explicit preference is stored
+[5/14] [chromium] › tests/e2e/theme.spec.ts:44:1 › overrides an opposing system preference and persists after reload
+[6/14] [mobile-chromium] › tests/e2e/theme.spec.ts:44:1 › overrides an opposing system preference and persists after reload
+[7/14] [mobile-chromium] › tests/e2e/theme.spec.ts:65:1 › falls back safely from corrupt storage and reapplies state on pageshow
+[8/14] [chromium] › tests/e2e/theme.spec.ts:65:1 › falls back safely from corrupt storage and reapplies state on pageshow
+[9/14] [mobile-chromium] › tests/e2e/theme.spec.ts:82:1 › keeps the appearance control and all five navigation destinations within 320px
+[10/14] [chromium] › tests/e2e/theme.spec.ts:82:1 › keeps the appearance control and all five navigation destinations within 320px
+[11/14] [chromium] › tests/e2e/theme.spec.ts:94:1 › uses readable system colors and an honestly disabled control without JavaScript
+[12/14] [chromium] › tests/e2e/theme.spec.ts:118:1 › keeps the 320px no-JavaScript brand, appearance control and note in non-overlapping rows
+[13/14] [mobile-chromium] › tests/e2e/theme.spec.ts:94:1 › uses readable system colors and an honestly disabled control without JavaScript
+[14/14] [mobile-chromium] › tests/e2e/theme.spec.ts:118:1 › keeps the 320px no-JavaScript brand, appearance control and note in non-overlapping rows
+  1 skipped
+  13 passed (55.1s)

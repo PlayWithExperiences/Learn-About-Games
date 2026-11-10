@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-11-10T03:58:57.343Z",
+  "preview": "http://127.0.0.1:4387/Learn-About-Games/",
+  "checks": [
+    {
+      "width": 375,
+      "theme": "dark",
+      "route": "",
+      "metrics": {
+        "background": "rgb(15, 20, 32)",
+        "bodyWidth": 375,
+        "viewport": 375,
+        "appearanceLabelPx": "12px",
+        "fontFamily": "\"LXGW WenKai\", 霞鹜文楷, \"LXGW WenKai Screen\", \"Kaiti SC\", STKaiti, serif"
+      },
+      "platformFonts": [
+        {
+          "family": "LXGW WenKai",
+          "custom": true,
+          "glyphs": 6
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "route": "map/",
+      "metrics": {
+        "background": "rgb(238, 240, 244)",
+        "bodyWidth": 1440,
+        "viewport": 1440,
+        "appearanceLabelPx": "12px",
+        "fontFamily": "\"LXGW WenKai\", 霞鹜文楷, \"LXGW WenKai Screen\", \"Kaiti SC\", STKaiti, serif"
+      },
+      "platformFonts": [
+        {
+          "family": "LXGW WenKai",
+          "custom": true,
+          "glyphs": 6
+        }
+      ]
+    }
+  ]
+}

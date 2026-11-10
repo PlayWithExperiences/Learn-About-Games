@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 const themeStorageKey = 'learn-about-games:theme:v1';
-const lightPage = 'rgb(243, 245, 247)';
-const darkPage = 'rgb(17, 24, 32)';
+const lightPage = 'rgb(238, 240, 244)';
+const darkPage = 'rgb(15, 20, 32)';
 
 async function seedTheme(page: import('@playwright/test').Page, value: string | null) {
   await page.goto('./');
