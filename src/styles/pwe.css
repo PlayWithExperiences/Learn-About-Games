@@ -1,4 +1,4 @@
-/* Snapshot: PWE-Branding/tokens/pwe.css @ cdc1054; sha256 fba9cb36b585c758317708759511131d39604a30e82fa231f206489c850590ce. Update from that source; do not edit locally. */
+/* Snapshot: PWE-Branding/tokens/pwe.css; sha256 53224cbb1b3465239165cab87949e244ddc9e8df1901c45efedff777ba0e8ec5. Update from that source; do not edit locally. */
 /* 由 tools/build.py 从 pwe.tokens.json 生成，勿手改。PWE v0.4 暂定字标；UI 沿用 v0.3。 */
 
 /* 夜为主：默认暗色；系统为亮时跟随为晨；<html data-theme="light|dark"> 可手动指定。 */
@@ -52,6 +52,9 @@
   --pwe-star: #F0C96A;
   --pwe-aurora: #7FC8C2;
   --pwe-on-star: #0F1420;
+  --pwe-priority-core: #2F4652;
+  --pwe-priority-important: #233240;
+  --pwe-priority-suggested: #1A2434;
   --pwe-data-dian: #A9B6E8;
   --pwe-data-qing: #7FC8C2;
   --pwe-data-shan: #E59A8A;
@@ -77,6 +80,9 @@
     --pwe-star: #80600F;
     --pwe-aurora: #226B66;
     --pwe-on-star: #F9FAFC;
+    --pwe-priority-core: #C5D8D8;
+    --pwe-priority-important: #DFE9EA;
+    --pwe-priority-suggested: #F0F4F6;
     --pwe-data-dian: #3D4F9A;
     --pwe-data-qing: #226B66;
     --pwe-data-shan: #A2463A;
@@ -102,6 +108,9 @@
   --pwe-star: #80600F;
   --pwe-aurora: #226B66;
   --pwe-on-star: #F9FAFC;
+  --pwe-priority-core: #C5D8D8;
+  --pwe-priority-important: #DFE9EA;
+  --pwe-priority-suggested: #F0F4F6;
   --pwe-data-dian: #3D4F9A;
   --pwe-data-qing: #226B66;
   --pwe-data-shan: #A2463A;
@@ -126,6 +135,9 @@
   --pwe-star: #F0C96A;
   --pwe-aurora: #7FC8C2;
   --pwe-on-star: #0F1420;
+  --pwe-priority-core: #2F4652;
+  --pwe-priority-important: #233240;
+  --pwe-priority-suggested: #1A2434;
   --pwe-data-dian: #A9B6E8;
   --pwe-data-qing: #7FC8C2;
   --pwe-data-shan: #E59A8A;

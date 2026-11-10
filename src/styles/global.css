@@ -1,6 +1,6 @@
 @import './pwe.css';
 
-/* Existing UI names resolve to the shared PWE baseline; content and map semantics stay unchanged. */
+/* Existing UI names resolve to the shared PWE baseline; content and map semantics stay unchanged; career fills use shared priority tokens. */
 :root {
   color-scheme: dark;
   --page: var(--pwe-bg);
@@ -17,9 +17,9 @@
   --status-positive: var(--pwe-success);
   --status-caution: var(--pwe-warning);
   --status-negative: var(--pwe-danger);
-  --career-core-surface: #42547e;
-  --career-important-surface: #30405b;
-  --career-suggested-surface: #17222b;
+  --career-core-surface: var(--pwe-priority-core);
+  --career-important-surface: var(--pwe-priority-important);
+  --career-suggested-surface: var(--pwe-priority-suggested);
   --radius: var(--pwe-radius-md);
   --page-width: 1180px;
 }
@@ -27,24 +27,15 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
     color-scheme: light;
-    --career-core-surface: #c1cfe3;
-    --career-important-surface: #d0dbee;
-    --career-suggested-surface: #ebeff4;
   }
 }
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --career-core-surface: #c1cfe3;
-  --career-important-surface: #d0dbee;
-  --career-suggested-surface: #ebeff4;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --career-core-surface: #42547e;
-  --career-important-surface: #30405b;
-  --career-suggested-surface: #17222b;
 }
 
 * {

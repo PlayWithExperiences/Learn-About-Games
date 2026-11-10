@@ -20,6 +20,12 @@ colors:
   dark-line: "#263049"
   dark-accent: "#7FC8C2"
   dark-accent-strong: "#7FC8C2"
+  dark-priority-core: "#2F4652"
+  dark-priority-important: "#233240"
+  dark-priority-suggested: "#1A2434"
+  light-priority-core: "#C5D8D8"
+  light-priority-important: "#DFE9EA"
+  light-priority-suggested: "#F0F4F6"
   focus-light: "#226B66"
   focus-dark: "#7FC8C2"
 typography:
@@ -98,7 +104,9 @@ The shared PWE v0.4 baseline is the UI authority: `PWE-Branding/BRAND.md` and `t
 
 WCAG AA is the minimum contrast target for text and controls. Body text should reach AAA where practical.
 
-偏离 PWE 基线（既有、待续）：知识图的既有分类色与职业层级填色本单位保留，仍需按语义单独核对后迁移，避免在公共UI换色时改变图意；文字、边框样式与关系语义保持。1180px图谱外壳保留给现有可视化，长文仍由原阅读宽度约束。本次不是全站品牌验收。
+Career priority surfaces use the shared `--pwe-priority-core/important/suggested` tokens: 24%, 12% and 4% aurora over the existing surface, resolved in the PWE source. Explicit labels and solid/dashed/dotted borders preserve the existing priority meaning; text remains ink. No role mappings, completion state or knowledge relations change.
+
+图谱分类节点及区域底色在本次有界源码核对中已引用 PWE 的 surface / sunk / ink / aurora；保留既有标签、形状、线型与分类含义。本次未做图谱全页视觉验收，不能据职业填色与这些源码定位称全站品牌已完成。偏离 PWE 基线（既有）：1180px图谱外壳保留给现有可视化，长文仍由原阅读宽度约束。
 
 ## Typography
 
