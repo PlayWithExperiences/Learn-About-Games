@@ -1619,7 +1619,7 @@ h2 {
 
 .map-entity .career-node-role-label,
 .egds-outline-entities .career-node-role-label {
-  color: var(--accent-strong);
+  color: var(--ink);
   font-size: 0.625rem;
   font-weight: 800;
 }
