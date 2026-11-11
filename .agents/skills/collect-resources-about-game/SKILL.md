@@ -126,6 +126,8 @@ producer 会补入/校验稳定 ID、状态、时间和指纹；不要手填或�
 
 交付成功只表示资源已进入 AI-Life-Mentor 的持久化消费队列，不表示已经写入 PKM。Daily Check-in 消费端每天最多选一条未被 Issue marker 标记的 `ready` 资源，先幂等写入 PKM 资源笔记，再追加 Issue marker；只有两者都确认后才算 `consumed`。生产端不在本 skill 内创建 Issue、写 PKM、触发 Daily Check-in、启用 launchd 或发布网站。
 
+基础资源和启用的视频阶段均结束，写完本轮 `batch-report.json` 后执行 `python3 "$PROJECT_ROOT/automation/prune-delivered-notebooklm.py" --batch-dir <本轮 runs 下的绝对路径> --apply`。工具用 AI-Life-Mentor 正式远端记录和图床文件内容核对本轮媒体副本，并核对临时交付克隆的所有活动引用与工作区。只清理已证明可从远端取回的本地副本。失败、未交付、来源不符的文件以及报告、账本、浏览器资料继续保留。记录实际清理量和回执路径。远端核对失败保留对应文件并写进本轮收尾结果，已交付资源的成功状态保持有效。
+
 ## 失败路径
 
 候选已 claim 后，在浏览器、导入、来源隔离、生成、思维导图展开、导出、上传、URL 校验或 JSON 校验阶段失败，立即用实际阶段调用：
