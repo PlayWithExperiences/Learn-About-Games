@@ -22,6 +22,16 @@ runtime53addcb经具体批准及必要AA验证修正发布，run42828249384成�
 
 # ProjectProgress
 
+## 0834 收集端：3 条 ready 已远端交付，1 条演示文稿限流，视频阶段生成失败（2026-11-11 · DSH headed）
+
+- 本地 main 与 origin 同 `e2b5590`，无暂存；`source_identity_ok` 仍为标题式匹配（11-10 的问题未修）。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `2E1sH-tg_to`）；远程去重 0 命中；新增标题相似度前置检查：62 个来源 vs 10 候选，最高 0.51、0 高风险。
+- 评估 4 项（claim 4）：ready 并远端 blob 验证 3 —— `2E1sH-tg_to`（`ca75ad89`，push 被拒后仅重跑交付）、`P0iluGzYGpY`（`a920ec78`）、`shXiIlgJnec`（`6b1089a2`），导图深度均 3、折叠 0；`wnKI3BsSmUE` claim 后信息图已提交、演示文稿中途限流，记 failed 并停批。
+- 停止原因 `quota_block(deck)`：attempted 4 / **ready 3 / remote_delivered 3** / failed 1 / skipped 6；今日 claim 4/10、剩余 6。远端 main 验证时 `e44c2da4`。
+- 视频阶段：策略开启、next 返回 `ready_to_generate`；`begin` 成功，完成来源隔离（唯一候选来源）、确认简洁版 9:16 + 中文简体 + 1 来源后点「立即生成」；约 9 分钟无新视频卡片（Studio 仍 172），现存匹配卡片为 14 小时前旧产物，不冒充结果，按零自动重做登记 `failed`（stage=generation），未取得 mp4。
+- 未重试既有 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码、未上传公开图床。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261111T0740-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json,source-titles.json}` 与 `item-01` 至 `item-04` 报告；摘要 `sessions/2026-1111-notebooklm-daily.md`。
+- 下一步：deck 额度恢复后处理未 claim 6 项（`da2MK5qPRRg`、`BWPpAccQt3k`、`L10d3953FnU`、`OvT0lpaQhsk`、`h2iKIVRLv3U`、`y7DSWCnGInA`）；视频阶段需单独排查“立即生成后无新卡片”，并复核 11-10 的 `source_identity_ok` 修复需求。
+
 ## 0841 收集端：3 条 ready 已远端交付，来源身份误配连发两次后停批（2026-11-10 · DSH headed）
 
 - 本地 main 与 origin 同 `feaca7c`，无暂存（含 Codex 新增的可选视频阶段接线）。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `WkW3FicsKUU`）；10 个 ID 远程去重 0 命中；claim 前通道全通（来源 59、Studio 9 控件、chat 可写、deck 可立即生成；PicGo 存活；干净发布克隆 `d2dc853`）。
