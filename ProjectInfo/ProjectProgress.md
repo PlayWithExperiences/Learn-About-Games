@@ -22,6 +22,17 @@ runtime53addcb经具体批准及必要AA验证修正发布，run42828249384成�
 
 # ProjectProgress
 
+## 0844 收集端：1 条 ready 交付，身份异常连发两次停批，prune 清理 7 项（2026-11-12 · DSH headed）
+
+- 本地 main 比 origin 多 1 个未推送提交 `4ee4d5d`（prune 工具），本轮一并推送。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `da2MK5qPRRg`）；远程去重 0 命中；标题碰撞前置检查 0 高风险（开跑 66 来源 + 新增来源后复算）。
+- 评估 4 项（claim 4）：ready 并远端 blob 验证 1 —— `da2MK5qPRRg`（`59a0978b`，导图深度 3/折叠 0/50 节点）；失败 3 —— `BWPpAccQt3k`（导图深度 2 < 3 硬门槛）、`L10d3953FnU`（来源身份误配：匹配到本批新增的 GDCA Host 来源而非 IGF Host）、`OvT0lpaQhsk`（卡片身份误配：匹配到第 2 条同名旧信息图卡）。
+- 停止原因 `identity-systematic`（同批连续两次身份异常；停批时演示文稿额度仍可用）：attempted 4 / **ready 1 / remote_delivered 1** / failed 3 / skipped 6；今日 claim 4/10、剩余 6。远端 main 验证时 `d95b0a55`。
+- 视频阶段：策略开启、`next` 选中 `shXiIlgJnec`，begin 成功；隔离唯一来源、简洁版 9:16 + 中文简体后「立即生成」，约 10 分钟产出新卡「动画师如何在第一人称里演戏」1:07、1 个来源（viewer video duration 67.57s）；但「下载」2 分钟未落盘、无 `.crdownload`，页面资产路径不可用 → 未取得 mp4，登记 `failed`(export)，未注册、未重做。
+- 收尾清理（按技能新要求）：`prune-delivered-notebooklm.py --batch-dir <本轮> --apply` → removed 7（artifact 6 + publisher-clone 1）、634,576,896 B、issues 空；回执 `~/.local/state/learn-about-games/notebooklm-daily/retention-20261112T083612443566.json`。失败/未交付文件与报告、账本、浏览器资料保留。
+- 未重试既有 failed；未写 PKM / Issue marker，未触发 Daily Check-in，未发布网站，未改生产代码。无 429、无 HTTP 500。费用计量不可见。浏览器用后已关。
+- 证据：`runs/batch-20261112T0740-scheduled/{batch-report.json,preflight.json,browser-workbench-state.json,deck-probe.json,source-titles.json,source-titles-now.json,video-cards-before.json}` 与 `item-01`~`item-04` 报告；摘要 `sessions/2026-1112-notebooklm-daily.md`。
+- 下一步：优先修 `source_identity_ok`（video_id 硬校验）与卡片身份等待（同标题多卡去歧义）；未处理 6 项 `h2iKIVRLv3U`、`y7DSWCnGInA`、`chY8bfGa5rU`、`TO23gOGZkcA`、`SXQT4J110Dg`、`WDK4FBm3DDY`；视频导出路径需排查下载控件不落盘问题。
+
 ## 0834 收集端：3 条 ready 已远端交付，1 条演示文稿限流，视频阶段生成失败（2026-11-11 · DSH headed）
 
 - 本地 main 与 origin 同 `e2b5590`，无暂存；`source_identity_ok` 仍为标题式匹配（11-10 的问题未修）。唯一 preflight `ready_to_claim`（2454 候选、选 10、当日 0/10、首项承接 `2E1sH-tg_to`）；远程去重 0 命中；新增标题相似度前置检查：62 个来源 vs 10 候选，最高 0.51、0 高风险。
