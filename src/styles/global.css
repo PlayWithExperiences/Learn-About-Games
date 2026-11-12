@@ -1474,7 +1474,7 @@ h2 {
   width: max-content;
   max-width: 100%;
   color: var(--ink);
-  font-size: 0.62rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 720;
 }
 
@@ -1616,7 +1616,7 @@ h2 {
 .map-entity .career-node-role-label,
 .egds-outline-entities .career-node-role-label {
   color: var(--ink);
-  font-size: 0.625rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 800;
 }
 
@@ -1629,7 +1629,7 @@ h2 {
   justify-self: end;
   color: var(--accent-strong);
   content: '外部';
-  font-size: 0.62rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 760;
 }
 
@@ -1649,7 +1649,7 @@ h2 {
 
 .map-inspector__heading span {
   color: var(--accent-strong);
-  font-size: 0.72rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 780;
 }
 
@@ -1662,7 +1662,7 @@ h2 {
   max-width: 62ch;
   margin: 0;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: var(--pwe-fs-md);
 }
 
 .map-inspector > section {
@@ -1964,7 +1964,7 @@ h2 {
 
 .egds-outline-relations li strong {
   color: var(--ink);
-  font-size: 0.68rem;
+  font-size: var(--pwe-fs-xs);
 }
 
 .egds-outline-relations li span {
@@ -3478,7 +3478,7 @@ h2 {
 
 .atlas-family-directory__families summary small {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 620;
   white-space: nowrap;
 }
@@ -3780,7 +3780,7 @@ h2 {
 .atlas-event-index__navigator > summary span {
   margin-left: auto;
   color: var(--accent-strong);
-  font-size: 0.74rem;
+  font-size: var(--pwe-fs-xs);
   font-variant-numeric: tabular-nums;
 }
 
@@ -3817,7 +3817,7 @@ h2 {
 
 .atlas-event-index__navigator li time {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: var(--pwe-fs-xs);
   font-variant-numeric: tabular-nums;
 }
 
@@ -3829,7 +3829,7 @@ h2 {
 
 .atlas-event-index__navigator li span {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: var(--pwe-fs-xs);
   text-align: right;
 }
 
@@ -3854,7 +3854,7 @@ h2 {
 
 .atlas-network-node[data-atlas-event] .atlas-network-node__type {
   color: var(--focus);
-  font-size: 0.72rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 820;
 }
 
@@ -3963,7 +3963,7 @@ h2 {
 
 [data-atlas-global-network][data-map-mode='true'] .atlas-lens-control__current > p {
   max-width: 12rem;
-  font-size: 0.68rem;
+  font-size: var(--pwe-fs-xs);
   line-height: 1.25;
 }
 
@@ -4013,7 +4013,7 @@ h2 {
 
 .atlas-perspective-controls > span {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 720;
   white-space: nowrap;
 }
@@ -4021,7 +4021,7 @@ h2 {
 .atlas-perspective-controls button {
   min-height: 2.25rem;
   padding: 0.35rem 0.6rem;
-  font-size: 0.74rem;
+  font-size: var(--pwe-fs-xs);
 }
 
 .atlas-perspective-controls button[aria-pressed='true'] {
@@ -4136,7 +4136,7 @@ h2 {
   top: 0.7rem;
   left: 0.55rem;
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--pwe-fs-xs);
   font-variant-numeric: tabular-nums;
 }
 
@@ -4254,7 +4254,7 @@ h2 {
 
 .atlas-network-node__type {
   color: var(--accent-strong);
-  font-size: 0.68rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 780;
   letter-spacing: 0.035em;
   line-height: 1.1;
@@ -4262,14 +4262,14 @@ h2 {
 }
 
 .atlas-network-node strong {
-  font-size: 0.69rem;
+  font-size: var(--pwe-fs-xs);
   line-height: 1.08;
   overflow-wrap: anywhere;
 }
 
 .atlas-network-node time {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: var(--pwe-fs-xs);
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
 }
@@ -4462,7 +4462,7 @@ h2 {
 
 .atlas-detail__facts dt {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--pwe-fs-xs);
 }
 
 .atlas-detail__facts dd {
@@ -4663,7 +4663,7 @@ h2 {
 
 .atlas-selected-detail__panel > header span {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--pwe-fs-xs);
   font-weight: 720;
 }
 
@@ -4925,7 +4925,7 @@ h2 {
   .atlas-outline-node > header span,
   .atlas-outline-node > header time {
     color: var(--muted);
-    font-size: 0.72rem;
+    font-size: var(--pwe-fs-xs);
   }
 
   .atlas-outline-node > header time {
@@ -4967,7 +4967,7 @@ h2 {
   .atlas-outline-node details > p {
     margin: 0.8rem 0 0;
     color: var(--muted);
-    font-size: 0.85rem;
+    font-size: var(--pwe-fs-md);
   }
 
   .atlas-outline-node details > a {

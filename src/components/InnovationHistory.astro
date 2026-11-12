@@ -450,7 +450,7 @@ if (root) {
 }
 .history-readings__label span {
   display: block;
-  font-size: 11px;
+  font-size: var(--pwe-fs-xs);
   color: var(--muted);
   font-weight: 400;
   margin-top: 5px;
@@ -472,7 +472,7 @@ if (root) {
 }
 .history-readings button > span:first-child {
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--pwe-fs-xs);
 }
 .history-readings button:hover,
 .history-readings button[aria-pressed='true'] {
@@ -537,7 +537,7 @@ if (root) {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem;
-  font-size: 11px;
+  font-size: var(--pwe-fs-xs);
   color: var(--muted);
   margin-bottom: 0.65rem;
 }
@@ -572,7 +572,7 @@ if (root) {
 }
 .history-axis > span {
   padding: 15px 10px;
-  font-size: 11px;
+  font-size: var(--pwe-fs-xs);
   position: sticky;
   left: 0;
   background: var(--surface-strong);
@@ -585,7 +585,7 @@ if (root) {
 .history-axis small {
   display: block;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--pwe-fs-xs);
   margin-top: 5px;
 }
 .history-track {
@@ -606,7 +606,7 @@ if (root) {
 }
 .history-track-title small {
   display: block;
-  font-size: 10px;
+  font-size: var(--pwe-fs-xs);
   line-height: 1.6;
   margin-top: 7px;
   color: var(--muted);
@@ -621,14 +621,14 @@ if (root) {
 }
 .history-node {
   display: grid;
-  grid-template-columns: 28px 1fr;
+  grid-template-columns: max-content minmax(0, 1fr);
   gap: 4px;
   padding: 5px 4px;
   border: 1px solid transparent;
   border-radius: 3px;
   color: var(--ink);
   text-decoration: none;
-  font-size: 11px;
+  font-size: var(--pwe-fs-xs);
   line-height: 1.4;
   position: relative;
   z-index: 2;
@@ -636,9 +636,10 @@ if (root) {
   overflow-wrap: anywhere;
 }
 .history-node time {
-  font-size: 9px;
+  font-size: var(--pwe-fs-xs);
   color: var(--muted);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   line-height: 1.75;
 }
 .history-node--innovation {
@@ -714,7 +715,7 @@ if (root) {
 }
 .history-inspector p,
 .history-inspector :global(p) {
-  font-size: 13px;
+  font-size: var(--pwe-fs-md);
   line-height: 1.85;
 }
 .history-inspector :global(h3) {
@@ -782,7 +783,7 @@ if (root) {
   margin-right: 1rem;
 }
 .history-entry > summary small {
-  font-size: 11px;
+  font-size: var(--pwe-fs-xs);
   color: var(--muted);
   margin-left: 1rem;
 }
@@ -798,12 +799,12 @@ if (root) {
 .history-relation-type,
 .history-inspector :global(.history-relation-type) {
   color: var(--muted);
-  font-size: 11px !important;
+  font-size: var(--pwe-fs-xs) !important;
 }
 .history-tags,
 .history-inspector :global(.history-tags) {
   color: var(--muted);
-  font-size: 11px !important;
+  font-size: var(--pwe-fs-xs) !important;
 }
 .history-source-links,
 .history-inspector :global(.history-source-links) {
@@ -820,7 +821,7 @@ if (root) {
 .history-inspector :global(.history-source-links small) {
   display: block;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--pwe-fs-xs);
   line-height: 1.7;
   margin-top: 0.35rem;
 }
